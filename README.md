@@ -85,9 +85,9 @@
   + `2` 앱을 구성하는 데 있어 지금 당장 구현하지 않아도 큰 지장이 없는 기능
   + `3` 앱을 구성하는 데 있어 추후 업데이트 시 구현해도 크게 무리가 없는 기능
 
-## 데이터 풀로우 다이어그램
+## 데이터플로우 다이어그램
 
-* (공란)
+<img width="1799" alt="스크린샷 2023-03-17 오후 9 55 06" src="https://user-images.githubusercontent.com/21079970/225910472-9c644b6c-5e8d-4b4d-8e65-c1d1e3c75577.png">
 
 ## UI 설계서 
 
@@ -132,7 +132,12 @@
 | :--: | :--: | :-- |
 | **1** | [Human Interface Guideline](https://developer.apple.com/design/human-interface-guidelines/guidelines/overview/) | |
 
+<br>
+
 ---
+
+<br>
+
 ## Commit 가이드라인
 
 > 일관성있는 작업 기록을 남기기 위하여 아래와 같은 규칙을 지킵니다.
