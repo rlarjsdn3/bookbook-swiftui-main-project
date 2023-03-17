@@ -108,7 +108,7 @@
 |    | | 목표 도서 상세 | ▪︎ 선택 도서의 상세 기능을 제공하고, 목표 달성 현황을 텍스트와 그래프로 한 눈에 볼 수 있도록 함 | | - Hero Animation |
 | **4** | 도서 | 목표 도서 추가 | ▪︎ 목표 완독 도서 정보를 추가하고자 함(완독 목표일, 사용자 테마 등) <br> → [수동 추가]: 직접 도서 제목 등 정보를 입력해 추가 <br> → [검색 추가]: 알라딘에서 검색한 도서를 추가(ContextMenu) | | - Sheet View |
 |   |  | 목표 도서 수정 | ▪︎ 목표 완독 도서 정보를 수정하고자 함(상동) | | - Sheet View |
-|   |  | 목표 도서 삭제 | ▪︎ 목표 완독 도서 정보를 삭제하고자 함(상동) | | - Sheet View |
+|   |  | 목표 도서 삭제 | ▪︎ 목표 완독 도서 정보를 삭제하고자 함(상동) | | - ActionSheet |
 | **6** | 검색 | 도서 검색 | ▪︎ 검색 결과 도서 정보를 분류 별로 정리하여 보여주고자 함 | | - Hero Animation |
 |   |  | | ▪︎ 검색 결과 도서 정보를 분류 별로 색을 삽입해 한 눈에 볼 수 있도록 함 | | |
 |   | | 검색 상세 | ▪︎ 검색한 도서 정보를 상세하게 보여주도록 함 | | - Hero Animation |
@@ -121,16 +121,16 @@
 ## 참고 자료
 
 | 번호 | 참고 앱 | 비고 |
-| :--: | :-- | :-- |
-| **1** | (공란) | (공란) |
+| :--: | :--: | :-- |
+| **1** | <img src="https://user-images.githubusercontent.com/21079970/225893316-ba084fe4-476a-4836-8fd4-43a8bdf4deaf.png" align="center" width="150" height="150"> | |
 
 | 번호 | 참고 서적 | 비고 |
-| :--: | :-- | :-- |
-| **1** | (공란) | (공란) |
+| :--: | :--: | :-- |
+| **1** | [SwiftUI for Masterminds 3rd Edition 2022](https://product.kyobobook.co.kr/detail/S000061917457) | |
 
 | 번호 | 참고 사이트 | 비고 |
-| :--: | :-- | :-- |
-| **1** | (공란) | (공란) |
+| :--: | :--: | :-- |
+| **1** | [Human Interface Guideline](https://developer.apple.com/design/human-interface-guidelines/guidelines/overview/) | |
 
 ---
 ## Commit 가이드라인
