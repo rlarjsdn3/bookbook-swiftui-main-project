@@ -91,15 +91,33 @@
 
 ## 데이터베이스 모델
 
-### TargetBook 모델
+### CompleteBook 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
-| **1** | id | | | |
+| **1** | id | ObjectID | 주요 키(Primary Key) | |
+| **2** | book | List\<Book\> | Book 모델 타입의 List | |
 
-#### - Date 하위 모델
+#### - Book 하위 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
-| **1** | id | | | |
+| **1** | id | ObjectID | 주요 키(Primary Key) | |
+| **2** | originaltitle | String | 도서 제목 | |
+| **3** | subTitle | String | 도서 부제목 | |
+| **4** | author | String | 저자/아티스트 | |
+| **5** | publisher | String | 출판사 | |
+| **6** | pubDate | Date | 출판일(출시일) | |
+| **7** | cover | String | 커버(표지) | url로 저장 |
+| **8** | itemPage | Int | 상품의 쪽수 | |
+| **9** | link | String | 상품 링크 URL | url로 저장 |
+| **10** | readingDate | List\<readingDate\> | readingDate 모델 타입의 List | 독서일과 쪽 수를 저장 |
+| **10** | isCompleted | Bool | 완독 여부 | |
+
+
+##### - readingDate 하위 모델
+| 번호 | 이름 | 타입 | 설명 | 비고 |
+| :--: |:--: | :--: | :-- | :-- |
+| **1** | id | ObjectID | 주요 키(primary Key) | |
+| **2** | date | Map<Date, Int> | 독서일과 쪽 수를 저장 | |
 
 * 완독 목표로 설정한 도서 정보를 저장하는 DB 모델입니다.
 
