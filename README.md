@@ -97,7 +97,7 @@
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
 | **1** | id | ObjectID | 주요 키(Primary Key) | |
-| **2** | book | List\<Book\> | Book 모델 타입의 List | |
+| **2** | book | List\<Book\> | Book 모델 타입의 List | - Embedded Object |
 
 #### - Book 하위 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
@@ -111,7 +111,7 @@
 | **7** | cover | String | 커버(표지) | url로 저장 |
 | **8** | itemPage | Int | 상품의 쪽수 | |
 | **9** | link | String | 상품 링크 URL | url로 저장 |
-| **10** | date | List\<Date\> | date 모델 타입의 List | 독서일과 쪽 수를 저장 |
+| **10** | date | List\<Date\> | date 모델 타입의 List | - Embedded Object |
 | **10** | isCompleted | Bool | 완독 여부 | |
 
 
