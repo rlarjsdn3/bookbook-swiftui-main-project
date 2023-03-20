@@ -40,12 +40,11 @@
 
 * Charts
 * Alamofire
-* SwiftDate
-* SwiftyJSON
 * RealmSwift
 * SVProgressHUB
 * TextFieldEffects
 * Lottie-ios
+* SwiftUI-Shimmer
 
 ### 최소 요구 사양
 
@@ -63,8 +62,8 @@
 | 번호 | 구분 | 요구사항 명 | 상세 설명 | 우선 순위 | 비고 |
 | :--: | :--: | :--: | :-- | :--: | :-- |
 | **1** | 디자인 | 앱 스플래시 | ▪︎ 앱의 데이터를 로딩하는 동안 스플래시 화면을 보여주도록 함 | `2` | |
-| **2** | 기능<br>(로그인) | 로그인<br>(SNS 회원) | ▪︎ SNS 회원의 경우 [애플] 등 소셜 수단으로 로그인할 수 있도록 함 | `2` | - 프로젝트 초기에는 LocalRealm으로 구현 <br> - 프로젝트 후기에 FlexibleSyncRealm으로 구현 |
-| **3** | 기능<br>(프로필・앱설정) | 프로필 보기・앱설정 | ▪︎ 소셜 개인 이미지를 볼 수 있도록 함 <br> ▪︎ In-App Purchase 및 구독 관리 기능을 제공하도록 함 | `2` | - Realm DB 연동을 위한 기초 정보 |
+| **2** | 기능<br>(로그인) | 로그인<br>(SNS 회원) | ▪︎ SNS 회원의 경우 [애플] 등 소셜 수단으로 로그인할 수 있도록 함 | `3` | - 프로젝트 초기에는 LocalRealm으로 구현 <br> - 프로젝트 후기에 FlexibleSyncRealm 혹은 LocalRealm + CloudKit으로 구현 |
+| **3** | 기능<br>(프로필・앱설정) | 프로필 보기・앱설정 | ▪︎ 소셜 개인 이미지를 볼 수 있도록 함 <br> ▪︎ In-App Purchase 및 구독 관리 기능을 제공하도록 함 | `3` | - Realm DB 연동을 위한 기초 정보 |
 | **4** | 기능<br>(목표) | 도서 진척도 보기 | ▪︎ 목표 도서의 진척도 정보를 리스트로 한 눈에 볼 수 있도록 함 <br> → 셀(Cell)에는 도서 표지(Cover), 제목, 부제, 저자, 출판일, 진척도 정보를 간략하게 표시하도록 함 <br> → 목표 도서를 도서 분류 별로 볼 수 있도록 함 <br> ▪︎ 목표 도서의 진척도 정보를 리스트의 순서를 임의로 수정 가능하도록 함 | `1` | |
 | **5** | 기능<br>(목표) | 도서 진척도 상세 | ▪︎ 선택 도서의 상세 기능을 제공하고, 목표 달성 현황을 텍스트와 그래프로 한 눈에 볼 수 있도록 함 <br> → ⌜독서 완료⌟, ⌜목표 수정⌟, ⌜목표 삭제⌟ 기능을 제공하고, 완독 목표 달성일까지 D-Day, 일일 독서 현황 막대 그래프 정보를 표시하도록 함 | `1` | - ⌜독서 완료⌟ 기능은 일일 독서 페이지 기록 기능을 의미함 <br> - ⌜목표 수정⌟, ⌜목표 삭제⌟ 기능은 후술 |
 | **6** | 기능<br>(추가) | 목표 도서 추가 | ▪︎ 완독하고자 하는 도서 정보를 추가할 수 있도록 함(Sheet) <br> → [수동 추가]: 직접 도서 제목 등 정보를 입력해 추가 <br> → [검색 추가]: 알라딘에서 검색한 도서를 추가(ContextMenu) <br> → 완독 목표 날짜, 사용자 테마도 함께 설정함| `1` | |
@@ -97,28 +96,22 @@
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
 | **1** | id | ObjectID | 주요 키(Primary Key) | |
-| **2** | book | List\<Book\> | Book 모델 타입의 List | - Embedded Object |
-
-#### - Book 하위 모델
-| 번호 | 이름 | 타입 | 설명 | 비고 |
-| :--: |:--: | :--: | :-- | :-- |
-| **1** | id | ObjectID | 주요 키(Primary Key) | |
-| **2** | originaltitle | String | 도서 제목 | |
+| **2** | title | String | 도서 제목 | |
 | **3** | subTitle | String | 도서 부제목 | |
-| **7** | cover | String | 커버(표지) | url로 저장 |
 | **4** | author | String | 저자/아티스트 | |
 | **5** | publisher | String | 출판사 | |
 | **6** | pubDate | Date | 출판일(출시일) | |
+| **7** | cover | String | 커버(표지) | url로 저장 |
 | **8** | itemPage | Int | 상품의 쪽수 | |
-| **9** | link | String | 상품 링크 URL | url로 저장 |
-| **10** | date | List\<Date\> | date 모델 타입의 List | - 포함(Embedded Object) |
-| **10** | isCompleted | Bool | 완독 여부 | |
+| **9** | link | String | 상품 링크 URL(알라딘) | url로 저장 |
+| **10** | readingDate | List\<readingDate\> | date 모델 타입의 List | - 포함(Embedded Object) |
+| **11** | isCompleted | Bool | 완독 여부 | |
 
-#### - Date 하위 모델
+#### - readingDate 하위 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
-| **1** | id | ObjectID | 주요 키(primary Key) | |
-| **2** | date | Map<Date, Int> | 독서일과 쪽 수를 저장 | |
+| **1** | date | Date | 독서일 | |
+| **1** | page | Int | 읽으 쪽 수 | |
 
 * 완독 목표로 설정한 도서 정보를 저장하는 DB 모델입니다.
 
@@ -148,7 +141,7 @@
 
 | 번호 | 구분 | 주 기능 | 상세 기능 | 구현 여부 | 비고 |
 | :--: | :--: | :-- | :-- | :--: | :-- |
-| **1** | 로그인 | SNS 로그인 | ▪︎ 애플, 네이버 등 | | - 프로젝트 초기에는 LocalRealm으로 구현 <br> - 프로젝트 후기에 FlexibleSyncRealm으로 구현 | 
+| **1** | 로그인 | SNS 로그인 | ▪︎ 애플, 네이버 등 | | - 프로젝트 초기에는 LocalRealm으로 구현 <br> - 프로젝트 후기에 FlexibleSyncRealm 혹은 LocalRealm + CloudKit으로 구현 | 
 | **2** | 프로필 | 프로필 관리 | ▪︎ SNS의 프로필 이미지를 볼 수 있도록 함 | | - 애플 ⌜건강⌟앱 참조 |
 |   | | | ▪︎ In-App-Purchase 및 구독 관리를 할 수 있도록 함 | | |
 | **3** | 홈 | 목표 도서 보기 | ▪︎ 목표 완독 도서 정보를 분류 별로 정리하여 부여주고자 함 | | - Hero Animation |
