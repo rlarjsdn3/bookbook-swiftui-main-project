@@ -103,6 +103,7 @@
 | **6** | pubDate | Date | 출판일(출시일) | |
 | **7** | cover | String | 커버(표지) | url로 저장 |
 | **8** | itemPage | Int | 상품의 쪽수 | |
+| **9** | categoryName | String | 카테고리 명 | 프리미엄API 승인 필요 |
 | **9** | link | String | 상품 링크 URL(알라딘) | url로 저장 |
 | **10** | readingDate | List\<readingDate\> | date 모델 타입의 List | - 포함(Embedded Object) |
 | **11** | isCompleted | Bool | 완독 여부 | |
