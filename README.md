@@ -102,17 +102,24 @@
 | **5** | publisher | String | 출판사 | |
 | **6** | pubDate | Date | 출판일(출시일) | |
 | **7** | cover | String | 커버(표지) | url로 저장 |
-| **8** | itemPage | Int | 상품의 쪽수 | |
-| **9** | categoryName | String | 카테고리 명 | 프리미엄API 승인 필요 |
-| **9** | link | String | 상품 링크 URL(알라딘) | url로 저장 |
-| **10** | readingDate | List\<readingDate\> | date 모델 타입의 List | - 포함(Embedded Object) |
-| **11** | isCompleted | Bool | 완독 여부 | |
+| **8** | isbn13 | String | ISBN-13 | |
+| **9** | itemPage | Int | 상품의 쪽수 | |
+| **10** | categoryName | String | 카테고리 명 | 프리미엄API 승인 필요 |
+| **11** | link | String | 상품 링크 URL(알라딘) | url로 저장 |
+| **12** | readingDate | List\<readingDate\> | readingDate 모델 타입의 List | - 포함(Embedded Object) |
+| **13** | collectBook | List\<collectBook\> | collectBook 모델 타입의 List | - 포함(Embedded Object) |
+| **14** | isCompleted | Bool | 완독 여부 | |
 
 #### - readingDate 하위 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
 | **1** | date | Date | 독서일 | |
-| **1** | page | Int | 읽으 쪽 수 | |
+| **2** | page | Int | 읽으 쪽 수 | |
+
+#### - readingDate 하위 모델
+| 번호 | 이름 | 타입 | 설명 | 비고 |
+| :--: |:--: | :--: | :-- | :-- |
+| **1** | sentence | String | 한 줄 글귀 | |
 
 * 완독 목표로 설정한 도서 정보를 저장하는 DB 모델입니다.
 
@@ -127,6 +134,7 @@
 | **6** | pubDate | Date | 출판일(출시일) | |
 | **7** | cover | String | 커버(표지) | url로 저장 |
 | **8** | link | String | 상품 링크 URL | url로 저장 |
+| **9** | isbn13 | String | ISBN-13 | |
 
 * 좋아요 표시를 한 도서 정보를 저장하는 DB 모델입니다.
 
