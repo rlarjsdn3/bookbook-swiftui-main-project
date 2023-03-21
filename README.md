@@ -125,7 +125,7 @@
 #### - ReadingDate 하위 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
-| **1** | date | Date | 독서일 | 년, 월, 일만 저장 |
+| **1** | date | Date | 독서일 | - 년, 월, 일만 저장 |
 | **2** | totalPageRead | Int | 읽은 총 페이지 쪽 수 | |
 
 #### - CollectBook 하위 모델
@@ -154,14 +154,14 @@
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
 | **1** | id | ObjectID | 주요 키(Primary Key) | |
-| **2** | date | Date | 독서일 | 년, 월만 저장 |
+| **2** | date | Date | 독서일 | - 년, 월만 저장 |
 | **3** | numberOfPagesRead | Int | 읽은 페이지 쪽 수 | |
 
 ### AnalyzeCompleteBook 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
 | **1** | id | ObjectID | 주요 키(Primary Key) | |
-| **2** | date | Date | 독서일 | 년, 월만 저장 |
+| **2** | date | Date | 독서일 | - 년, 월만 저장 |
 | **3** | numberOfCompleteBook | Int | 완독한 책의 권 수 | |
 
 * 월별 완독 현황 기록 정보를 저장하는 DB 모델입니다.
