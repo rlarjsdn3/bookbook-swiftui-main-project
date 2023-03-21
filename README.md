@@ -126,7 +126,8 @@
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
 | **1** | date | Date | 독서일 | - 년, 월, 일만 저장 |
-| **2** | totalPageRead | Int | 읽은 총 페이지 쪽 수 | |
+| **2** | totalPagesRead | Int | 읽은 총 페이지 쪽 수 | |
+| **3** | numberOfPagesRead | Int | 읽은 총 페이지 쪽 수 | |
 
 #### - CollectBook 하위 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
