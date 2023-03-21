@@ -45,6 +45,7 @@
 * TextFieldEffects
 * Lottie-ios
 * SwiftUI-Shimmer
+* IceCream
 
 ### 최소 요구 사양
 
@@ -66,7 +67,7 @@
 | **3** | | 로그인<br>(SNS 회원) | ▪︎ SNS 회원의 경우 [애플] 등 소셜 수단으로 로그인할 수 있도록 함 | `2` | - 프로젝트 초기에는 LocalRealm으로 구현 <br> - 프로젝트 후기에 FlexibleSyncRealm 혹은 LocalRealm + CloudKit으로 구현 |
 | **4** | 기능<br>(프로필・앱설정) | 프로필 보기・앱설정 | ▪︎ 소셜 개인 이미지를 볼 수 있도록 함 <br> ▪︎ In-App Purchase 및 구독 관리 기능을 제공하도록 함 | `3` | - Realm DB 연동을 위한 기초 정보 |
 | **5** | 기능<br>(목표) | 도서 진척도 보기 | ▪︎ 목표 도서의 진척도 정보를 리스트로 한 눈에 볼 수 있도록 함 <br> → 셀(Cell)에는 도서 표지(Cover), 제목, 부제, 저자, 출판일, 진척도 정보를 간략하게 표시하도록 함 <br> → 목표 도서를 도서 분류 별로 볼 수 있도록 함 <br> ▪︎ 목표 도서의 진척도 정보를 리스트의 순서를 임의로 수정 가능하도록 함 | `1` | |
-| **6** |  | 도서 진척도 상세 | ▪︎ 선택 도서의 상세 기능을 제공하고, 목표 달성 현황을 텍스트와 그래프로 한 눈에 볼 수 있도록 함 <br> → ⌜독서 완료⌟, ⌜목표 수정⌟, ⌜목표 삭제⌟ 기능을 제공하고, 완독 목표 달성일까지 D-Day, 일일 독서 현황 막대 그래프 정보를 표시하도록 함 <br> ▪︎ 한줄 글귀 수집 기능으로 인상 깊은 문장을 수집할 수 있도록 함 |
+| **6** |  | 도서 진척도 상세 | ▪︎ 선택 도서의 상세 기능을 제공하고, 목표 달성 현황을 텍스트와 그래프로 한 눈에 볼 수 있도록 함 <br> → ⌜독서 완료⌟, ⌜목표 수정⌟, ⌜목표 삭제⌟ 기능을 제공하고, 완독 목표 달성일까지 D-Day, 일일 독서 현황 막대 그래프 정보를 표시하도록 함 <br> ▪︎ 한줄 글귀 수집 기능으로 인상 깊은 문장을 수집할 수 있도록 함 <br> ▪︎ 페이지 히스토리로 그래프뿐만 아니라 리스트로도 언제 얼마나 읽었는지 볼  있도로 함 |
 | **7** | 기능<br>(추가) | 목표 도서 추가 | ▪︎ 완독하고자 하는 도서 정보를 추가할 수 있도록 함(Sheet) <br> → [수동 추가]: 직접 도서 제목 등 정보를 입력해 추가 <br> → [검색 추가]: 알라딘에서 검색한 도서를 추가(ContextMenu) <br> → 완독 목표 날짜, 사용자 테마도 함께 설정함| `1` | |
 | **8** | 기능<br>(수정) | 목표 도서 수정 | ▪︎ 목표 도서 정보를 수정할 수 있도록 함(Sheet) <br> → 완독 목표 날짜, 사용자 테마 수정 | `1` | |
 | **9** | 기능<br>(삭제) | 목표 도서 삭제 | ▪︎ 목표 도서 정보를 삭제할 수 있도록 함 | `1` | |
@@ -111,26 +112,26 @@
 | **4** | author | String | 저자/아티스트 | |
 | **5** | publisher | String | 출판사 | |
 | **6** | pubDate | Date | 출판일(출시일) | |
-| **7** | cover | String | 커버(표지) | url로 저장 |
+| **7** | cover | String | 커버(표지) | |
 | **8** | isbn13 | String | ISBN-13 | |
-| **9** | itemPage | Int | 상품의 쪽수 | |
-| **10** | categoryName | String | 카테고리 명 | 프리미엄API 승인 필요 |
-| **11** | link | String | 상품 링크 URL(알라딘) | url로 저장 |
-| **12** | readingDate | List\<ReadingDate\> | readingDate 모델 타입의 List | - 포함(Embedded Object) |
-| **13** | collectBook | List\<CollectBook\> | collectBook 모델 타입의 List | - 포함(Embedded Object) |
+| **9** | itemPage | Int | 상품의 페이지 쪽 수 | |
+| **10** | categoryName | String | 카테고리 명 | - 프리미엄API 승인 필요 |
+| **11** | link | String | 상품 링크 URL(알라딘) | |
+| **12** | readingDate | List\<ReadingDate\> | readingDate 모델 타입의 List | - 포함 관계(Embedded Object) |
+| **13** | collectBook | List\<CollectBook\> | collectBook 모델 타입의 List | - 포함 관계(Embedded Object) |
 | **14** | userRating | Int | 사용자 평점 | |
 | **15** | isCompleted | Bool | 완독 여부 | |
 
 #### - ReadingDate 하위 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
-| **1** | date | Date | 독서일 | |
-| **2** | page | Int | 읽은 쪽 수 | |
+| **1** | date | Date | 독서일 | 년, 월, 일만 저장 |
+| **2** | totalPageRead | Int | 읽은 총 페이지 쪽 수 | |
 
 #### - CollectBook 하위 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
-| **1** | sentence | String | 한 줄 글귀 | |
+| **1** | sentence | String | 수집된 문장 | |
 
 * 완독 목표로 설정한 도서 정보를 저장하는 DB 모델입니다.
 
@@ -143,8 +144,8 @@
 | **4** | author | String | 저자/아티스트 | |
 | **5** | publisher | String | 출판사 | |
 | **6** | pubDate | Date | 출판일(출시일) | |
-| **7** | cover | String | 커버(표지) | url로 저장 |
-| **8** | link | String | 상품 링크 URL | url로 저장 |
+| **7** | cover | String | 커버(표지) | |
+| **8** | link | String | 상품 링크 URL | |
 | **9** | isbn13 | String | ISBN-13 | |
 
 * 좋아요 표시를 한 도서 정보를 저장하는 DB 모델입니다.
@@ -186,6 +187,7 @@
 | 번호 | 참고 앱 | 비고 |
 | :--: | :--: | :-- |
 | **1** | <img src="https://user-images.githubusercontent.com/21079970/225893316-ba084fe4-476a-4836-8fd4-43a8bdf4deaf.png" align="center" width="150" height="150"> | |
+| **2** | <img src="https://user-images.githubusercontent.com/21079970/226530275-b53ae16a-337d-496e-9779-6fb09795cb0b.png" align="center" width="150" height="150"> | |
 
 | 번호 | 참고 서적 | 비고 |
 | :--: | :--: | :-- |
@@ -194,7 +196,7 @@
 | 번호 | 참고 사이트 | 비고 |
 | :--: | :--: | :-- |
 | **1** | [Human Interface Guideline](https://developer.apple.com/design/human-interface-guidelines/guidelines/overview/) | |
-| **2** | [Realm Swift SDK]([https://developer.apple.com/design/human-interface-guidelines/guidelines/overview/](https://www.mongodb.com/docs/realm/sdk/swift/)) | |
+| **2** | [Realm Swift SDK](https://www.mongodb.com/docs/realm/sdk/swift/) | |
 
 <br>
 
