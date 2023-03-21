@@ -124,7 +124,7 @@
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
 | **1** | date | Date | 독서일 | |
-| **2** | page | Int | 읽으 쪽 수 | |
+| **2** | page | Int | 읽은 쪽 수 | |
 
 #### - CollectBook 하위 모델
 | 번호 | 이름 | 타입 | 설명 | 비고 |
@@ -165,7 +165,7 @@
 | **2** | 프로필 | 프로필 관리 | ▪︎ SNS의 프로필 이미지를 볼 수 있도록 함 | | - 애플 ⌜건강⌟앱 참조 |
 |   | | | ▪︎ In-App-Purchase 및 구독 관리를 할 수 있도록 함 | | |
 | **3** | 홈 | 목표 도서 보기 | ▪︎ 목표 완독 도서 정보를 분류 별로 정리하여 부여주고자 함 | | - Hero Animation |
-|   | | 목표 도서 정렬 | ▪︎ 목표 도서의 진척도 정보를 리스트의 순서를 임의로 수정 가능하도록 함 | | |
+|   | | 목표 도서 정렬 | ▪︎ 목표 도서의 진척도 정보를 리스트의 순서를 임의로 수정 가능하도록 함 | | - 도서 명 오른차순/내림차순, 사용자 설정 순서 등 |
 |   | | 목표 도서 상세 | ▪︎ 선택 도서의 상세 기능을 제공하고, 목표 달성 현황을 텍스트와 그래프로 한 눈에 볼 수 있도록 함 | | - Hero Animation |
 |   | | | ▪︎ 한줄 글귀 수집 기능으로 인상 깊은 문장을 수집할 수 있도록 함 | | - Hero Animation |
 | **4** | 도서 | 목표 도서 추가 | ▪︎ 목표 완독 도서 정보를 추가하고자 함(완독 목표일, 사용자 테마 등) <br> → [수동 추가]: 직접 도서 제목 등 정보를 입력해 추가 <br> → [검색 추가]: 알라딘에서 검색한 도서를 추가(ContextMenu) | | - Sheet View |
@@ -193,6 +193,7 @@
 | 번호 | 참고 사이트 | 비고 |
 | :--: | :--: | :-- |
 | **1** | [Human Interface Guideline](https://developer.apple.com/design/human-interface-guidelines/guidelines/overview/) | |
+| **2** | [Realm Swift SDK]([https://developer.apple.com/design/human-interface-guidelines/guidelines/overview/](https://www.mongodb.com/docs/realm/sdk/swift/)) | |
 
 <br>
 
