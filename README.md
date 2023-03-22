@@ -112,19 +112,18 @@
 | :--: |:--: | :--: | :-- | :-- |
 | **1** | id | ObjectID | 주요 키(Primary Key) | |
 | **2** | title | String | 도서 제목 | |
-| **3** | subTitle | String | 도서 부제목 | |
-| **4** | author | String | 저자/아티스트 | |
-| **5** | publisher | String | 출판사 | |
-| **6** | pubDate | Date | 출판일(출시일) | |
-| **7** | cover | String | 커버(표지) | - 이미지 파일 이름(isbn13)을 저장 |
-| **8** | isbn13 | String | ISBN-13 | |
-| **9** | itemPage | Int | 상품의 페이지 쪽 수 | |
-| **10** | categoryName | String | 카테고리 명 | |
-| **11** | link | String | 상품 링크 URL(알라딘) | |
-| **12** | readingDate | List\<ReadingDate\> | readingDate 모델 타입의 List | - 포함 관계(Embedded Object) |
-| **13** | collectBook | List\<CollectBook\> | collectBook 모델 타입의 List | - 포함 관계(Embedded Object) |
-| **14** | userRating | Int | 사용자 평점 | |
-| **15** | isCompleted | Bool | 완독 여부 | |
+| **3** | author | String | 저자/아티스트 | |
+| **4** | publisher | String | 출판사 | |
+| **5** | pubDate | Date | 출판일(출시일) | |
+| **6** | cover | String | 커버(표지) | - 이미지 파일 이름(isbn13)을 저장 |
+| **7** | isbn13 | String | ISBN-13 | |
+| **8** | itemPage | Int | 상품의 페이지 쪽 수 | |
+| **9** | categoryName | String | 카테고리 명 | |
+| **10** | link | String | 상품 링크 URL(알라딘) | |
+| **11** | readingDate | List\<ReadingDate\> | readingDate 모델 타입의 List | - 포함 관계(Embedded Object) |
+| **12** | collectBook | List\<CollectBook\> | collectBook 모델 타입의 List | - 포함 관계(Embedded Object) |
+| **13** | userRating | Int | 사용자 평점 | |
+| **14** | isCompleted | Bool | 완독 여부 | |
 
  - 단, DB에는 이미지 파일 이름(isbn13)을 저장합니다. 커버(표지) 이미지 파일은 앱 고유의 Documents 폴더에 저장합니다. 이는 DB의 부하를 줄이고 속도를 빠르게 하기 위함입니다.
 
@@ -148,15 +147,14 @@
 | 번호 | 이름 | 타입 | 설명 | 비고 |
 | :--: |:--: | :--: | :-- | :-- |
 | **1** | id | ObjectID | 주요 키(Primary Key) | |
-| **2** | originaltitle | String | 도서 제목 | |
-| **3** | subTitle | String | 도서 부제목 | |
-| **4** | author | String | 저자/아티스트 | |
-| **5** | publisher | String | 출판사 | |
-| **6** | pubDate | Date | 출판일(출시일) | |
-| **7** | cover | String | 커버(표지) | |
-| **8** | categoryName | String | 카테고리 명 | |
-| **9** | link | String | 상품 링크 URL | |
-| **10** | isbn13 | String | ISBN-13 | |
+| **2** | title | String | 도서 제목 | |
+| **3** | author | String | 저자/아티스트 | |
+| **4** | publisher | String | 출판사 | |
+| **5** | pubDate | Date | 출판일(출시일) | |
+| **6** | cover | String | 커버(표지) | |
+| **7** | categoryName | String | 카테고리 명 | |
+| **8** | link | String | 상품 링크 URL | |
+| **9** | isbn13 | String | ISBN-13 | |
 
 * 좋아요 표시를 한 도서 정보를 저장하는 DB 모델입니다.
 
