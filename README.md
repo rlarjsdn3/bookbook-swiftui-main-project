@@ -151,7 +151,7 @@
 | **3** | author | String | 저자/아티스트 | |
 | **4** | publisher | String | 출판사 | |
 | **5** | pubDate | Date | 출판일(출시일) | |
-| **6** | cover | String | 커버(표지) | |
+| **6** | cover | String | 커버(표지) | - 이미지 파일 이름(isbn13)을 저장 |
 | **7** | categoryName | String | 카테고리 명 | |
 | **8** | link | String | 상품 링크 URL | |
 | **9** | isbn13 | String | ISBN-13 | |
