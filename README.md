@@ -100,6 +100,7 @@
 | **1** | id | ObjectID | 주요 키(Primary Key) | |
 | **2** | nickName | String | 닉네임 | |
 | **3** | image | String | 프로필 이미지 | - 이미지 파일 이름을 저장 |
+| **4** | theme | Enum<Theme> | 메인 테마 | |
 
  - 단, DB에는 이미지 파일 이름을 저장합니다. 프로필 이미지 파일은 앱 고유의 Documents 폴더에 저장합니다. 이는 DB의 부하를 줄이고 속도를 빠르게 하기 위함입니다.
 
