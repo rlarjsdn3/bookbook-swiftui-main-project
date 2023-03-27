@@ -12,6 +12,7 @@
 		9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325D29D11A6B004D6D5B /* RealmSwift */; };
 		9ECA326129D11ADA004D6D5B /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA326029D11ADA004D6D5B /* SwiftDate */; };
 		9ECA326429D11AFF004D6D5B /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA326329D11AFF004D6D5B /* Shimmer */; };
+		9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECA326829D11C02004D6D5B /* RoundedTabView.swift */; };
 		9ECD921129BF1FA600FCDD2F /* BookyBookyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD921029BF1FA600FCDD2F /* BookyBookyApp.swift */; };
 		9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD921229BF1FA600FCDD2F /* ContentView.swift */; };
 		9ECD921529BF1FA700FCDD2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ECD921429BF1FA700FCDD2F /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9ECA326829D11C02004D6D5B /* RoundedTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTabView.swift; sourceTree = "<group>"; };
 		9ECD920D29BF1FA600FCDD2F /* BookyBooky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookyBooky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ECD921029BF1FA600FCDD2F /* BookyBookyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookyBookyApp.swift; sourceTree = "<group>"; };
 		9ECD921229BF1FA600FCDD2F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 		9ECA326629D11BB4004D6D5B /* TabView */ = {
 			isa = PBXGroup;
 			children = (
+				9ECA326829D11C02004D6D5B /* RoundedTabView.swift */,
 			);
 			path = TabView;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
+				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,
 				9ECD921129BF1FA600FCDD2F /* BookyBookyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
