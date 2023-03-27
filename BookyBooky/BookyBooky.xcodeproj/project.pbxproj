@@ -42,6 +42,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9ECA326529D11B93004D6D5B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9ECD921229BF1FA600FCDD2F /* ContentView.swift */,
+				9ECA326629D11BB4004D6D5B /* TabView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9ECA326629D11BB4004D6D5B /* TabView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TabView;
+			sourceTree = "<group>";
+		};
+		9ECA326729D11BC1004D6D5B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		9ECD920429BF1FA600FCDD2F = {
 			isa = PBXGroup;
 			children = (
@@ -62,7 +85,8 @@
 			isa = PBXGroup;
 			children = (
 				9ECD921029BF1FA600FCDD2F /* BookyBookyApp.swift */,
-				9ECD921229BF1FA600FCDD2F /* ContentView.swift */,
+				9ECA326529D11B93004D6D5B /* Views */,
+				9ECA326729D11BC1004D6D5B /* Models */,
 				9ECD921429BF1FA700FCDD2F /* Assets.xcassets */,
 				9ECD921629BF1FA700FCDD2F /* Preview Content */,
 			);
