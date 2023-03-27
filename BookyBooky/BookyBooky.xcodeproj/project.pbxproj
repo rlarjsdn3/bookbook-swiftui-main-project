@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E524DF829D1CF3500FD7B98 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E524DF729D1CF3500FD7B98 /* TabButtonView.swift */; };
 		9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325829D119FE004D6D5B /* Alamofire */; };
 		9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325B29D11A6B004D6D5B /* Realm */; };
 		9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325D29D11A6B004D6D5B /* RealmSwift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9E524DF729D1CF3500FD7B98 /* TabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		9ECA326829D11C02004D6D5B /* RoundedTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTabView.swift; sourceTree = "<group>"; };
 		9ECA326A29D12044004D6D5B /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
 		9ECD920D29BF1FA600FCDD2F /* BookyBooky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookyBooky.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				9ECA326829D11C02004D6D5B /* RoundedTabView.swift */,
+				9E524DF729D1CF3500FD7B98 /* TabButtonView.swift */,
 			);
 			path = RoundedTabView;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 			files = (
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
 				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,
+				9E524DF829D1CF3500FD7B98 /* TabButtonView.swift in Sources */,
 				9ECA326B29D12044004D6D5B /* TabItem.swift in Sources */,
 				9ECD921129BF1FA600FCDD2F /* BookyBookyApp.swift in Sources */,
 			);

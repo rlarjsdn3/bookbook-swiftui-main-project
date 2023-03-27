@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct RoundedTabView: View {
+    @Binding var selected: TabItem
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            ForEach(TabItem.allCases, id: \.self) { item in
+                TabButtonView(selected: $selected, item: item)
+            }
+        }
     }
 }
 
 struct RoundedTabView_Previews: PreviewProvider {
     static var previews: some View {
-        RoundedTabView()
+        RoundedTabView(selected: .constant(.home))
     }
 }

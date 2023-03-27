@@ -8,14 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var tabSelected: TabItem = .home
+    
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            TabView(selection: $tabSelected) {
+                Text("Home View")
+                    .tag(TabItem.home)
+                
+                Text("Search View")
+                    .tag(TabItem.search)
+                
+                Text("BookShelf View")
+                    .tag(TabItem.bookShelf)
+                
+                Text("Analysis View")
+                    .tag(TabItem.analysis)
+            }
+            
+            RoundedTabView(selected: $tabSelected)
         }
-        .padding()
     }
 }
 
