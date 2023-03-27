@@ -10,11 +10,12 @@ import SwiftUI
 struct TabButtonView: View {
     @Binding var selected: TabItem
     var item: TabItem
+    var namespace: Namespace.ID
     
     var body: some View {
         Spacer()
         Button {
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.5)) {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                 selected = item
             }
         } label: {
@@ -29,13 +30,24 @@ struct TabButtonView: View {
                         .foregroundColor(.black)
                 }
             }
+            .overlay {
+                if selected == item {
+                    TabShape()
+                        .foregroundColor(.black)
+                        .frame(width: 40, height: 5)
+                        .offset(y: -30)
+                        .matchedGeometryEffect(id: "tabShape", in: namespace)
+                }
+            }
         }
         Spacer()
     }
 }
 
 struct TabButtonView_Previews: PreviewProvider {
+    @Namespace static var namespace: Namespace.ID
+    
     static var previews: some View {
-        TabButtonView(selected: .constant(.home), item: .home)
+        TabButtonView(selected: .constant(.home), item: .home, namespace: namespace)
     }
 }

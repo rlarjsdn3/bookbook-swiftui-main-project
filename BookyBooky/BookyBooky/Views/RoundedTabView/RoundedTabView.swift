@@ -9,11 +9,12 @@ import SwiftUI
 
 struct RoundedTabView: View {
     @Binding var selected: TabItem
+    @Namespace var namespace: Namespace.ID
     
     var body: some View {
         HStack {
             ForEach(TabItem.allCases, id: \.self) { item in
-                TabButtonView(selected: $selected, item: item)
+                TabButtonView(selected: $selected, item: item, namespace: namespace)
             }
         }
     }
