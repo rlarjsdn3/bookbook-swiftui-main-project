@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */; };
 		9E524DF829D1CF3500FD7B98 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E524DF729D1CF3500FD7B98 /* TabButtonView.swift */; };
 		9E524DFB29D1D14C00FD7B98 /* TabShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E524DFA29D1D14C00FD7B98 /* TabShape.swift */; };
 		9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325829D119FE004D6D5B /* Alamofire */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		9E524DF729D1CF3500FD7B98 /* TabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		9E524DFA29D1D14C00FD7B98 /* TabShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabShape.swift; sourceTree = "<group>"; };
 		9ECA326829D11C02004D6D5B /* RoundedTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTabView.swift; sourceTree = "<group>"; };
@@ -50,6 +52,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E0C0A6029D1D85500F1F5F6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		9E524DF929D1D13700FD7B98 /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +115,7 @@
 			children = (
 				9ECD921029BF1FA600FCDD2F /* BookyBookyApp.swift */,
 				9ECA326529D11B93004D6D5B /* Views */,
+				9E0C0A6029D1D85500F1F5F6 /* Extensions */,
 				9E524DF929D1D13700FD7B98 /* Shapes */,
 				9ECA326729D11BC1004D6D5B /* Models */,
 				9ECD921429BF1FA700FCDD2F /* Assets.xcassets */,
@@ -207,6 +218,7 @@
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
 				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,
 				9E524DF829D1CF3500FD7B98 /* TabButtonView.swift in Sources */,
+				9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */,
 				9E524DFB29D1D14C00FD7B98 /* TabShape.swift in Sources */,
 				9ECA326B29D12044004D6D5B /* TabItem.swift in Sources */,
 				9ECD921129BF1FA600FCDD2F /* BookyBookyApp.swift in Sources */,

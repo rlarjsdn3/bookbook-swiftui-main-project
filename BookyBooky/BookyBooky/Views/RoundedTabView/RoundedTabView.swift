@@ -20,11 +20,15 @@ struct RoundedTabView: View {
         .background {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
+                    .stroke(.gray, lineWidth: 0.2)
+                
+                RoundedRectangle(cornerRadius: 20)
                     .fill(.white)
                     .frame(height: 100)
             }
             .offset(y: 18)
         }
+        .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
     }
 }
 
