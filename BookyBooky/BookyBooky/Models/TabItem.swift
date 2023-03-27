@@ -14,7 +14,7 @@ enum TabItem: CaseIterable {
     case bookShelf
     case analysis
     
-    var tabName: String {
+    var name: String {
         switch self {
         case .home:
             return "홈"
@@ -27,7 +27,7 @@ enum TabItem: CaseIterable {
         }
     }
     
-    var tabIcon: String {
+    var icon: String {
         switch self {
         case .home:
             return "house"
@@ -40,7 +40,7 @@ enum TabItem: CaseIterable {
         }
     }
     
-    var tabIconPressed: String {
+    var iconPressed: String {
         switch self {
         case .home:
             return "house.fill"
@@ -53,14 +53,14 @@ enum TabItem: CaseIterable {
         }
     }
     
-    var tabColor: Color {
+    var color: Color {
         switch self {
         case .home, .search, .bookShelf, .analysis:
             return .gray
         }
     }
     
-    var tabColorPressed: Color {
+    var colorPressed: Color {
         switch self {
         case .home, .search, .bookShelf, .analysis:
             return .black
