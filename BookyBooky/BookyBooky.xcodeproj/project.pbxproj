@@ -48,17 +48,17 @@
 			isa = PBXGroup;
 			children = (
 				9ECD921229BF1FA600FCDD2F /* ContentView.swift */,
-				9ECA326629D11BB4004D6D5B /* TabView */,
+				9ECA326629D11BB4004D6D5B /* RoundedTabView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		9ECA326629D11BB4004D6D5B /* TabView */ = {
+		9ECA326629D11BB4004D6D5B /* RoundedTabView */ = {
 			isa = PBXGroup;
 			children = (
 				9ECA326829D11C02004D6D5B /* RoundedTabView.swift */,
 			);
-			path = TabView;
+			path = RoundedTabView;
 			sourceTree = "<group>";
 		};
 		9ECA326729D11BC1004D6D5B /* Models */ = {
