@@ -40,19 +40,6 @@ enum TabItem: CaseIterable {
         }
     }
     
-    var iconPressed: String {
-        switch self {
-        case .home:
-            return "house.fill"
-        case .search:
-            return "magnifyingglass.circle.fill"
-        case .bookShelf:
-            return "books.vertical.fill"
-        case .analysis:
-            return "chart.bar.fill"
-        }
-    }
-    
     var color: Color {
         switch self {
         case .home, .search, .bookShelf, .analysis:
