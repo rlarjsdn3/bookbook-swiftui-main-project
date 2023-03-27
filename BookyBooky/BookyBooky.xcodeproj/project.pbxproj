@@ -10,6 +10,7 @@
 		9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325829D119FE004D6D5B /* Alamofire */; };
 		9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325B29D11A6B004D6D5B /* Realm */; };
 		9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325D29D11A6B004D6D5B /* RealmSwift */; };
+		9ECA326129D11ADA004D6D5B /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA326029D11ADA004D6D5B /* SwiftDate */; };
 		9ECD921129BF1FA600FCDD2F /* BookyBookyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD921029BF1FA600FCDD2F /* BookyBookyApp.swift */; };
 		9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD921229BF1FA600FCDD2F /* ContentView.swift */; };
 		9ECD921529BF1FA700FCDD2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ECD921429BF1FA700FCDD2F /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ECA326129D11ADA004D6D5B /* SwiftDate in Frameworks */,
 				9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */,
 				9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */,
 				9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */,
@@ -93,6 +95,7 @@
 				9ECA325829D119FE004D6D5B /* Alamofire */,
 				9ECA325B29D11A6B004D6D5B /* Realm */,
 				9ECA325D29D11A6B004D6D5B /* RealmSwift */,
+				9ECA326029D11ADA004D6D5B /* SwiftDate */,
 			);
 			productName = BookyBooky;
 			productReference = 9ECD920D29BF1FA600FCDD2F /* BookyBooky.app */;
@@ -125,6 +128,7 @@
 			packageReferences = (
 				9ECA325729D119FE004D6D5B /* XCRemoteSwiftPackageReference "Alamofire" */,
 				9ECA325A29D11A6B004D6D5B /* XCRemoteSwiftPackageReference "realm-swift" */,
+				9ECA325F29D11ADA004D6D5B /* XCRemoteSwiftPackageReference "SwiftDate" */,
 			);
 			productRefGroup = 9ECD920E29BF1FA600FCDD2F /* Products */;
 			projectDirPath = "";
@@ -370,6 +374,14 @@
 				kind = branch;
 			};
 		};
+		9ECA325F29D11ADA004D6D5B /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftDate";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -387,6 +399,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9ECA325A29D11A6B004D6D5B /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		9ECA326029D11ADA004D6D5B /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9ECA325F29D11ADA004D6D5B /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
