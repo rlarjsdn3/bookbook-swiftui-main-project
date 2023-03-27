@@ -7,9 +7,15 @@
 
 import SwiftUI
 
-struct TabShape: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct TabShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: [.bottomLeft, .bottomRight],
+            cornerRadii: CGSize(width: 30, height: 30)
+        )
+        
+        return Path(path.cgPath)
     }
 }
 
