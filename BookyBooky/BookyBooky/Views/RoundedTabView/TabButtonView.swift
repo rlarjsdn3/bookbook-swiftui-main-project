@@ -30,12 +30,13 @@ struct TabButtonView: View {
                         .foregroundColor(.black)
                 }
             }
+            .frame(height: 20)
             .overlay {
                 if selected == item {
                     TabShape()
                         .foregroundColor(.black)
                         .frame(width: 40, height: 5)
-                        .offset(y: -30)
+                        .offset(y: -29)
                         .matchedGeometryEffect(id: "tabShape", in: namespace)
                 }
             }

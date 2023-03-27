@@ -17,6 +17,14 @@ struct RoundedTabView: View {
                 TabButtonView(selected: $selected, item: item, namespace: namespace)
             }
         }
+        .background {
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.white)
+                    .frame(height: 100)
+            }
+            .offset(y: 18)
+        }
     }
 }
 
