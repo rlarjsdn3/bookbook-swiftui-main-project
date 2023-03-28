@@ -32,9 +32,6 @@ struct ContentView: View {
             
             RoundedTabView(selected: $tabSelected)
         }
-        .onAppear {
-            ViewModel().requestBookSearchAPI(search: "스위프트")
-        }
     }
 }
 
