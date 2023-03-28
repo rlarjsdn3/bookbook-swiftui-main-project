@@ -22,9 +22,10 @@ struct TabButtonView: View {
         } label: {
             VStack(spacing: -5) {
                 Image(systemName: "\(item.icon)")
+                    .font(.title3)
                     .offset(y: selected != item ? 0 : -8)
                     .foregroundColor(selected != item ? item.color : item.colorPressed)
-                    .scaleEffect(selected != item ? 1.0 : 1.1)
+                    .scaleEffect(selected != item ? 1.0 : 1.05)
                 
                 if selected == item {
                     Text("\(item.name)")
