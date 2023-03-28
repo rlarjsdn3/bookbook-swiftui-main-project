@@ -10,6 +10,7 @@ import Alamofire
 
 class ViewModel: ObservableObject {
     @Published var bookSearchList: BookSearch? // 검색 결과 리스트를 저장하는 변수
+    @Published var bookDetailList: BookDetail? // 상세 도서 결과값을 저장하는 변수
     
     /// 알라딘 검색 API를 호출하여 도서 검색 결과를 반환하는 함수입니다,
     /// - Parameter query: 검색할 도서/저자 명
@@ -56,6 +57,48 @@ class ViewModel: ObservableObject {
             }
         }
     }
+    
+    /// 알라딘 상품 API를 호출하여 상세 도서 정보를 반환하는 함수입니다,
+    /// - Parameter isbn: 상세 보고자 하는 도서의 ISBN-13 값
+    func requestBookDetailAPI(isbn13 isbn: String) {
+        var baseURL = "http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?"
+        
+        let parameters = [
+            "ttbKey": "\(AladinAPI.TTBKey)",
+            "itemType": "ISBN",
+            "Cover": "BIG",
+            "ItemID": "\(isbn)",
+            "output": "js",
+            "Version": "20131101"
+        ]
+        
+        for (key, value) in parameters {
+            baseURL += "\(key)=\(value)&"
+        }
+        
+        AF.request(
+            baseURL,
+            method: .get,
+            parameters: nil,
+            encoding: URLEncoding.default,
+            headers: nil
+        )
+        .responseDecodable(of: BookDetail.self) { response in
+            switch response.result {
+            case .success(let data):
+                guard let statusCode = response.response?.statusCode else { return }
+                if statusCode == 200 {
+                    DispatchQueue.main.async {
+                        self.bookDetailList = data
+                        print(data) // 디버그 - 검색 결과 데이터 콘솔 출력
+                    }
+                }
+            case .failure(let error):
+                print("알라딘 상품 API 호출 실패: \(error)")
+            }
+        }
+    }
+    
     
     /// 코드 출처: StackOverflow(https://url.kr/spleh9)
     func euckrEncoding(_ query: String) -> String {
