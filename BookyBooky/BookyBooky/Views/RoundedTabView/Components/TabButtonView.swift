@@ -18,6 +18,7 @@ struct TabButtonView: View {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                 selected = item
             }
+            Haptics.shared.play(.light)
         } label: {
             VStack(spacing: -5) {
                 Image(systemName: "\(item.icon)")
