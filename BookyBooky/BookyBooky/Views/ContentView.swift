@@ -32,6 +32,9 @@ struct ContentView: View {
             
             RoundedTabView(selected: $tabSelected)
         }
+        .onAppear {
+            ViewModel().requestBookDetailAPI(isbn13: "9791168473690")
+        }
     }
 }
 

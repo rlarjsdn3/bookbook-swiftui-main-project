@@ -30,7 +30,7 @@ extension BookSearch {
             item: [
                 .init(
                     title: "아라비안 나이트",
-                    author: "작자 미상",
+                    author: "작자 미상(지은이)",
                     publisher: "삼성출판사",
                     pubDate: "2016-03-01",
                     cover: "https://image.aladin.co.kr/product/10917/74/cover/8915104323_1.jpg",
