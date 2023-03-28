@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class ViewModel: ObservableObject {
-    var bookSearchList: BookSearch?
+    @Published var bookSearchList: BookSearch? // 검색 결과 리스트를 저장하는 변수
     
     /// 알라딘 검색 API를 호출하여 도서 검색 결과를 반환하는 함수입니다,
     /// - Parameter query: 검색할 도서/저자 명
