@@ -30,6 +30,7 @@ struct HomeHeaderView: View {
             
             Spacer()
             
+            // 추후 프로필 이미지 기능 구현 시 코드 수정 예정
             Button {
                 
             } label: {
