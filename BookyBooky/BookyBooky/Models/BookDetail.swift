@@ -8,24 +8,22 @@
 import Foundation
 
 struct BookDetail: Codable {
-    var totalResults: Int // API 결과의 제목
+    var totalResults: Int           // 검색 결과의 총 개수
     
     var item: [Item]
     struct Item: Codable {
-        var title: String
-        var author: String
-        var publisher: String
-        var pubDate: String
-        var cover: String
-        var description: String
-        var link: String
-        var categoryName: String
+        var title: String           // 제목
+        var author: String          // 저자
+        var publisher: String       // 출판사
+        var pubDate: String         // 출판일
+        var cover: String           // 커버(표지)
+        var description: String     // 설명
+        var link: String            // 상세 페이지
+        var categoryName: String    // 카테고리 분류
         
         var subInfo: SubInfo
         struct SubInfo: Codable {
-            var originalTitle: String
-            var subTitle: String
-            var itemPage: Int
+            var itemPage: Int       // 상품의 총 페이지
         }
     }
 }
