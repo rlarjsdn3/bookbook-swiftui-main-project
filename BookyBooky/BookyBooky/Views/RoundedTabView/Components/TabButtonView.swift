@@ -24,6 +24,7 @@ struct TabButtonView: View {
                 Image(systemName: "\(item.icon)")
                     .offset(y: selected != item ? 0 : -8)
                     .foregroundColor(selected != item ? item.color : item.colorPressed)
+                    .scaleEffect(selected != item ? 1.0 : 1.1)
                 
                 if selected == item {
                     Text("\(item.name)")
@@ -32,12 +33,13 @@ struct TabButtonView: View {
                 }
             }
             .frame(height: 20)
+            .padding(.bottom, 5)
             .overlay {
                 if selected == item {
                     TabShape()
                         .foregroundColor(.black)
                         .frame(width: 40, height: 5)
-                        .offset(y: -30)
+                        .offset(y: -32)
                         .matchedGeometryEffect(id: "tabShape", in: namespace)
                 }
             }

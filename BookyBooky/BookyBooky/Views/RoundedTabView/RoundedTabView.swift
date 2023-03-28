@@ -26,7 +26,7 @@ struct RoundedTabView: View {
                     .fill(.white)
                     .frame(height: 100)
             }
-            .offset(y: 18)
+            .offset(y: 16)
         }
         // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
         // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 20으로 설정
