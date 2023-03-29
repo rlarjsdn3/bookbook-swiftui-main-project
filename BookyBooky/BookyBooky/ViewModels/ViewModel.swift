@@ -8,9 +8,60 @@
 import Foundation
 import Alamofire
 
+enum BookList: String {
+    case itemNewAll = "ItemNewAll"              // 신간 전체 리스트
+    case itemNewSpecial = "ItemNewSpacial"      // 주목할 만한 신간 리스트
+    case itemEditorChoice = "ItemEditorChoice"  // 편집자 추천 리스트
+    case bestSeller = "Bestseller"              // 베스트셀러
+    case blogBest = "BlogBest"                  // 블로그 베스트셀러
+}
+
 class ViewModel: ObservableObject {
     @Published var bookSearchList: BookSearch? // 검색 결과 리스트를 저장하는 변수
     @Published var bookDetailList: BookDetail? // 상세 도서 결과값을 저장하는 변수
+    
+    /// 알라딘 리스트 API를 호출하여 도서 리스트(베스트셀러 등) 결과를 반환하는 함수입니다,
+    /// - Parameter query: 검색할 도서/저자 명
+    func requestBookListAPI(type queryType: BookList) {
+        var baseURL = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?"
+        
+        let parameters = [
+            "ttbKey": "\(AladinAPI.TTBKey)",
+            "QueryType": "\(queryType.rawValue)",
+            "MaxResults": "50",
+            "start": "1",
+            "SearchTarget": "Book",
+            "output": "js",
+            "Version": "20131101"
+        ]
+        
+        for (key, value) in parameters {
+            baseURL += "\(key)=\(value)&"
+        }
+
+        AF.request(
+            baseURL,
+            method: .get,
+            parameters: nil,
+            encoding: URLEncoding.default,
+            headers: nil
+        )
+        .validate(statusCode: 200...500)
+        .responseDecodable(of: BookSearch.self) { response in
+            switch response.result {
+            case .success(let data):
+                guard let statusCode = response.response?.statusCode else { return }
+                if statusCode == 200 {
+                    DispatchQueue.main.async {
+                        self.bookSearchList = data
+                        print(data) // 디버그 - 검색 결과 데이터 콘솔 출력
+                    }
+                }
+            case .failure(let error):
+                print("알라딘 리스트 API 호출 실패: \(error)")
+            }
+        }
+    }
     
     /// 알라딘 검색 API를 호출하여 도서 검색 결과를 반환하는 함수입니다,
     /// - Parameter query: 검색할 도서/저자 명
