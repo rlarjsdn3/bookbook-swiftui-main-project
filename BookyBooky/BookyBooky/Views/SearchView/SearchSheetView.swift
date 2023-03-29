@@ -47,8 +47,6 @@ struct SearchSheetView: View {
                 }
                 .padding(.trailing)
             }
-            .padding(.horizontal, 0)
-            
             
             Spacer()
         }
