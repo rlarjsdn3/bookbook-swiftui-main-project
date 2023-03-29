@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-enum TabItem: CaseIterable {
+enum RoundedTabItem: CaseIterable {
     case home
     case search
     case bookShelf

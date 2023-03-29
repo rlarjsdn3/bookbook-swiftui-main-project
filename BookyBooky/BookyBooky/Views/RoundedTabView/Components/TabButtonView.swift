@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TabButtonView: View {
-    @Binding var selected: TabItem
-    var item: TabItem
+    @Binding var selected: RoundedTabItem
+    var item: RoundedTabItem
     var namespace: Namespace.ID
     
     var body: some View {
