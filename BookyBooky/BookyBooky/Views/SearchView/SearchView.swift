@@ -16,28 +16,7 @@ struct SearchView: View {
             SearchHeaderView()
             
             ScrollView(showsIndicators: false) {
-                VStack {
-                    ForEach(0..<100) { index in
-                        Text("\(index)")
-                    }
-                }
-                .overlay(
-                    GeometryReader { geometry -> Color in
-                        DispatchQueue.main.async {
-                            if startOffset == .zero {
-                                startOffset = geometry.frame(in: .global).minY
-                            }
-                            
-                            let offset = geometry.frame(in: .global).minY
-                            scrollOffset = offset - startOffset
-                            print(scrollOffset) // 디버
-                        }
-                        
-                        return Color.clear
-                    }
-                    .frame(width: 0, height: 0)
-                    , alignment: .top
-                )
+                
             }
             
             Spacer()
