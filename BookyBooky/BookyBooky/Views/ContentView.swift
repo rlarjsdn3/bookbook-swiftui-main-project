@@ -20,7 +20,7 @@ struct ContentView: View {
                 HomeView()
                     .tag(TabItem.home)
                 
-                Text("Search View")
+                SearchView()
                     .tag(TabItem.search)
                 
                 Text("BookShelf View")
