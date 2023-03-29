@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ListTypeButtonView: View {
-    @Binding var selected: ListType
-    let type: ListType
+    @Binding var selected: BookListType
+    let type: BookListType
     let proxy: ScrollViewProxy
     let namespace: Namespace.ID
     

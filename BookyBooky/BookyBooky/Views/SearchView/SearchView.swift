@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
     @EnvironmentObject var viewModel: ViewModel
-    @State private var listTypeSelected = ListType.itemNewAll
+    @State private var listTypeSelected = BookListType.itemNewAll
     
     var body: some View {
         VStack(spacing: 0) {

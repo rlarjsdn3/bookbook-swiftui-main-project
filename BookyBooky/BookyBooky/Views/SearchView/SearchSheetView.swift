@@ -12,8 +12,6 @@ struct SearchSheetView: View {
     @State private var query = ""
     
     var body: some View {
-        // 검색 결과가 없으면 '결과 없음' 출력하기
-        // 코드 리팩토링 진행하기
         VStack {
             SearchSheetTextFieldView(query: $query)
             

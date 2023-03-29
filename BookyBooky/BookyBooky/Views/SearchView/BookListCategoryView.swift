@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct BookListCategoryView: View {
-    @Binding var selected: ListType
+    @Binding var selected: BookListType
     @Namespace var underlineAnimation: Namespace.ID
     
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(ListType.allCases, id: \.self) { type in
+                    ForEach(BookListType.allCases, id: \.self) { type in
                         ListTypeButtonView(
                             selected: $selected,
                             type: type,

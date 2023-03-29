@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ListType: String, CaseIterable {
+enum BookListType: String, CaseIterable {
     case itemNewAll = "ItemNewAll"              // 시간 도서
     case itemNewSpecial = "ItemNewSpecial"      // 신간 베스트
     case bestSeller = "Bestseller"              // 베스트셀러
