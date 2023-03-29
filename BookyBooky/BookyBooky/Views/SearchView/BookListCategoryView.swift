@@ -19,8 +19,8 @@ struct BookListCategoryView: View {
                         ListTypeButtonView(
                             selected: $selected,
                             type: type,
-                            scrollViewProxy: proxy,
-                            effectNamespace: underlineAnimation
+                            proxy: proxy,
+                            namespace: underlineAnimation
                         )
                         .padding(.horizontal, 5)
                     }

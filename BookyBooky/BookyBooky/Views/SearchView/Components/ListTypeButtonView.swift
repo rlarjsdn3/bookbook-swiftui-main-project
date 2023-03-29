@@ -10,14 +10,14 @@ import SwiftUI
 struct ListTypeButtonView: View {
     @Binding var selected: ListType
     let type: ListType
-    let scrollViewProxy: ScrollViewProxy
-    let effectNamespace: Namespace.ID
+    let proxy: ScrollViewProxy
+    let namespace: Namespace.ID
     
     var body: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                 selected = type
-                scrollViewProxy.scrollTo(type.name)
+                proxy.scrollTo(type.name)
             }
         } label: {
             VStack {
@@ -36,7 +36,7 @@ struct ListTypeButtonView: View {
                     .offset(y: 21)
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
-                    .matchedGeometryEffect(id: "rectangle", in: effectNamespace)
+                    .matchedGeometryEffect(id: "rectangle", in: namespace)
             }
         }
         .id(type.name)
@@ -49,7 +49,7 @@ struct ListTypeButtonView_Previews: PreviewProvider {
     
     static var previews: some View {
         ScrollViewReader { proxy in
-            ListTypeButtonView(selected: .constant(.itemNewAll), type: .itemNewAll, scrollViewProxy: proxy,  effectNamespace: effectNamespace)
+            ListTypeButtonView(selected: .constant(.itemNewAll), type: .itemNewAll, proxy: proxy,  namespace: effectNamespace)
         }
     }
 }
