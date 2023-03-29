@@ -30,6 +30,12 @@ struct SearchView: View {
             
             Spacer()
         }
+        .onAppear {
+            ViewModel().requestBookListAPI(type: .itemNewAll)
+        }
+        .onChange(of: listTypeSelected) { selected in
+            ViewModel().requestBookListAPI(type: selected)
+        }
     }
 }
 

@@ -12,11 +12,7 @@ class ViewModel: ObservableObject {
     @Published var bookSearchList: BookSearch? // 검색 결과 리스트를 저장하는 변수
     @Published var bookDetailList: BookDetail? // 상세 도서 결과값을 저장하는 변수
     
-    @Published var bookNewItem: BookList?      // 신간 리스트를 저장하는 변수
-    @Published var bookNewSpecial: BookList?   // 주목할 만한 신간 리스트를 저장하는 변수
-    @Published var bookEditorChoice: BookList? // 편집자 추천 리스트를 저장하는 변수
-    @Published var bookBestSeller: BookList?   // 베스트셀러 리스트를 저장하는 변수
-    @Published var bookBlogBest: BookList?     // 블로그 베스트셀러 리스트를 저장하는 변수
+    @Published var bookItemList: BookList?     // 도서 리스트를 저장하는 변수
     
     /// 알라딘 리스트 API를 호출하여 도서 리스트(베스트셀러 등) 결과를 반환하는 함수입니다,
     /// - Parameter query: 검색할 도서/저자 명
@@ -51,18 +47,7 @@ class ViewModel: ObservableObject {
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
                     DispatchQueue.main.async {
-                        switch queryType {
-                        case .itemNewAll:
-                            self.bookNewItem = data
-                        case .itemNewSpecial:
-                            self.bookNewSpecial = data
-                        case .itemEditorChoice:
-                            self.bookEditorChoice = data
-                        case .bestSeller:
-                            self.bookBestSeller = data
-                        case .blogBest:
-                            self.bookBlogBest = data
-                        }
+                        self.bookItemList = data
                         print(data) // 디버그 - 검색 결과 데이터 콘솔 출력
                     }
                 }
@@ -70,6 +55,22 @@ class ViewModel: ObservableObject {
                 print("알라딘 리스트 API 호출 실패: \(error)")
             }
         }
+        
+//        .validate(statusCode: 200...500)
+//        .responseDecodable(of: BookList.self) { response in
+//            switch response.result {
+//            case .success(let data):
+//                guard let statusCode = response.response?.statusCode else { return }
+//                if statusCode == 200 {
+//                    DispatchQueue.main.async {
+//                        self.bookItemList = data
+//                        print(data) // 디버그 - 검색 결과 데이터 콘솔 출력
+//                    }
+//                }
+//            case .failure(let error):
+//                print("알라딘 리스트 API 호출 실패: \(error)")
+//            }
+//        }
     }
     
     /// 알라딘 검색 API를 호출하여 도서 검색 결과를 반환하는 함수입니다,

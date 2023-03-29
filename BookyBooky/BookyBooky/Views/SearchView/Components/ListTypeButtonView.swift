@@ -45,7 +45,6 @@ struct ListTypeButtonView: View {
 
 struct ListTypeButtonView_Previews: PreviewProvider {
     @Namespace static var effectNamespace: Namespace.ID
-    @Namespace static var scrollNamespace: Namespace.ID
     
     static var previews: some View {
         ScrollViewReader { proxy in

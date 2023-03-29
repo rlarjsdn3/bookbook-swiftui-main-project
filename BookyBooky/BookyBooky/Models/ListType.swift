@@ -8,10 +8,10 @@
 import Foundation
 
 enum ListType: String, CaseIterable {
-    case itemNewAll = "ItemNewAll"              // 신간 전체 리스트
-    case itemNewSpecial = "ItemNewSpacial"      // 주목할 만한 신간 리스트
+    case itemNewAll = "ItemNewAll"              // 시간 도서
+    case itemNewSpecial = "ItemNewSpecial"      // 신간 베스트
     case bestSeller = "Bestseller"              // 베스트셀러
-    case itemEditorChoice = "ItemEditorChoice"  // 편집자 추천 리스트
+//    case itemEditorChoice = "ItemEditorChoice"  // 편집자 추천
     case blogBest = "BlogBest"                  // 블로거 추천
     
     var name: String {
@@ -22,8 +22,8 @@ enum ListType: String, CaseIterable {
             return "신간 베스트"
         case .bestSeller:
             return "베스트셀러"
-        case .itemEditorChoice:
-            return "편집자 추천"
+//        case .itemEditorChoice:
+//            return "편집자 추천"
         case .blogBest:
             return "블로거 추천"
         }
