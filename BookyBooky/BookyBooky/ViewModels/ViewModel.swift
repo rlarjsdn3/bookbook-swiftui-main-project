@@ -12,6 +12,7 @@ class ViewModel: ObservableObject {
     @Published var bookSearchList: BookSearch? // 검색 결과 리스트를 저장하는 변수
     @Published var bookDetailList: BookDetail? // 상세 도서 결과값을 저장하는 변수
     
+    @Published var bookNewItem: BookList?      // 신간 리스트를 저장하는 변수
     @Published var bookNewSpecial: BookList?   // 주목할 만한 신간 리스트를 저장하는 변수
     @Published var bookEditorChoice: BookList? // 편집자 추천 리스트를 저장하는 변수
     @Published var bookBestSeller: BookList?   // 베스트셀러 리스트를 저장하는 변수
@@ -50,7 +51,18 @@ class ViewModel: ObservableObject {
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
                     DispatchQueue.main.async {
-                        self.bookBestSeller = data
+                        switch queryType {
+                        case .itemNewAll:
+                            self.bookNewItem = data
+                        case .itemNewSpecial:
+                            self.bookNewSpecial = data
+                        case .itemEditorChoice:
+                            self.bookEditorChoice = data
+                        case .bestSeller:
+                            self.bookBestSeller = data
+                        case .blogBest:
+                            self.bookBlogBest = data
+                        }
                         print(data) // 디버그 - 검색 결과 데이터 콘솔 출력
                     }
                 }
