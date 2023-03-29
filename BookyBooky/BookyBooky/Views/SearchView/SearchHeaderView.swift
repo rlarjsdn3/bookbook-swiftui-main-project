@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SearchHeaderView: View {
+    @State private var showSearchSheetView = false
+    
     var body: some View {
         HStack {
             Image(systemName: "square")
@@ -24,7 +26,7 @@ struct SearchHeaderView: View {
             Spacer()
             
             Button {
-                
+                showSearchSheetView = true
             } label: {
                 Image(systemName: "magnifyingglass")
                     .font(.title2)
@@ -33,6 +35,9 @@ struct SearchHeaderView: View {
             }
         }
         .padding()
+        .sheet(isPresented: $showSearchSheetView) {
+            SearchSheetView()
+        }
     }
 }
 
