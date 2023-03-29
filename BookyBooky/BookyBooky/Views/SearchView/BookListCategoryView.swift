@@ -9,22 +9,25 @@ import SwiftUI
 
 struct BookListCategoryView: View {
     @Binding var selected: ListType
-    @Namespace var namespace: Namespace.ID
+    @Namespace var underlineAnimation: Namespace.ID
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(ListType.allCases, id: \.self) { type in
-                    ListTypeButtonView(
-                        selected: $selected,
-                        type: type,
-                        namespace: namespace
-                    )
-                    .padding(.horizontal, 5)
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(ListType.allCases, id: \.self) { type in
+                        ListTypeButtonView(
+                            selected: $selected,
+                            type: type,
+                            scrollViewProxy: proxy,
+                            effectNamespace: underlineAnimation
+                        )
+                        .padding(.horizontal, 5)
+                    }
                 }
+                .padding(.leading, 8)
+                .padding(.trailing, 8)
             }
-            .padding(.leading, 8)
-            .padding(.trailing, 8)
         }
     }
 }
