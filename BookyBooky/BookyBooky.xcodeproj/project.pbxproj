@@ -180,10 +180,10 @@
 			children = (
 				9ECA326A29D12044004D6D5B /* RoundedTabItem.swift */,
 				9E0C0A7C29D3D0F900F1F5F6 /* BookListType.swift */,
+				9EDA9B0029D4509A00B4F169 /* BookCategory.swift */,
 				9E0C0A7929D3CEAF00F1F5F6 /* BookList.swift */,
 				9E0C0A7029D2866100F1F5F6 /* BookSearch.swift */,
 				9E0C0A7629D2B5BC00F1F5F6 /* BookDetail.swift */,
-				9EDA9B0029D4509A00B4F169 /* BookCategory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
