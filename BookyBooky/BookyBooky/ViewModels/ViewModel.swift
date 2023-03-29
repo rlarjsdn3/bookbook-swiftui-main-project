@@ -14,13 +14,14 @@ class ViewModel: ObservableObject {
     @Published var bookDetailList: BookDetail? // 상세 도서 결과값을 저장하는 변수
     
     /// 알라딘 리스트 API를 호출하여 도서 리스트(베스트셀러 등) 결과를 반환하는 함수입니다,
-    /// - Parameter query: 검색할 도서/저자 명
+    /// - Parameter query: 도서 리스트 출력 타입
     func requestBookListAPI(type queryType: ListType) {
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?"
         
         let parameters = [
             "ttbKey": "\(AladinAPI.TTBKey)",
             "QueryType": "\(queryType.rawValue)",
+            "Cover": "BIG",
             "MaxResults": "50",
             "start": "1",
             "SearchTarget": "Book",
