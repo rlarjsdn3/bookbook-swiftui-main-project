@@ -37,7 +37,6 @@
 		9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6629D4046400CA493D /* SearchSheetView.swift */; };
 		9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */; };
 		9EDA9B0129D4509A00B4F169 /* BookCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDA9B0029D4509A00B4F169 /* BookCategory.swift */; };
-		9EDA9B0329D4587800B4F169 /* BookCategoryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDA9B0229D4587800B4F169 /* BookCategoryInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,7 +67,6 @@
 		9ED4CB6629D4046400CA493D /* SearchSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetView.swift; sourceTree = "<group>"; };
 		9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetTextFieldView.swift; sourceTree = "<group>"; };
 		9EDA9B0029D4509A00B4F169 /* BookCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCategory.swift; sourceTree = "<group>"; };
-		9EDA9B0229D4587800B4F169 /* BookCategoryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCategoryInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +181,6 @@
 				9ECA326A29D12044004D6D5B /* RoundedTabItem.swift */,
 				9E0C0A7C29D3D0F900F1F5F6 /* BookListType.swift */,
 				9EDA9B0029D4509A00B4F169 /* BookCategory.swift */,
-				9EDA9B0229D4587800B4F169 /* BookCategoryInfo.swift */,
 				9E0C0A7929D3CEAF00F1F5F6 /* BookList.swift */,
 				9E0C0A7029D2866100F1F5F6 /* BookSearch.swift */,
 				9E0C0A7629D2B5BC00F1F5F6 /* BookDetail.swift */,
@@ -338,7 +335,6 @@
 				9ED4CB6429D3E21C00CA493D /* ListTypeButtonView.swift in Sources */,
 				9E524DF829D1CF3500FD7B98 /* TabButtonView.swift in Sources */,
 				9E0C0A6629D1DF4800F1F5F6 /* HomeHeaderView.swift in Sources */,
-				9EDA9B0329D4587800B4F169 /* BookCategoryInfo.swift in Sources */,
 				9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */,
 				9E524DFB29D1D14C00FD7B98 /* TabShape.swift in Sources */,
 				9E0C0A6229D1DB4700F1F5F6 /* HomeView.swift in Sources */,

@@ -8,6 +8,7 @@
 import Foundation
 
 enum BookCategory: String {
+    case all = "전체"
     case action = "액션/어드벤처"
     case autobiography = "전기/자서전"
     case cartoon = "만화"
@@ -21,7 +22,7 @@ enum BookCategory: String {
     case criticalBiography = "인물/평전"
     case design = "건축/디자인"
     case documentary = "교양/다큐멘터리"
-    case economicManagement = "경제경영"
+    case economic = "경제경영"
     case education = "교육/자료"
     case elementarySchool = "초등참고서"
     case elt = "ELT/어학/사전"
@@ -64,6 +65,7 @@ enum BookCategory: String {
     case thriller = "공포/스릴러"
     case toddler = "유아"
     case travel = "여행"
+    case etc = "기타"
 }
 
 
