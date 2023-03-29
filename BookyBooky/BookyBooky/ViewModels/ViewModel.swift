@@ -60,8 +60,6 @@ class ViewModel: ObservableObject {
                             self.bookEditorChoice = data
                         case .bestSeller:
                             self.bookBestSeller = data
-                        case .blogBest:
-                            self.bookBlogBest = data
                         }
                         print(data) // 디버그 - 검색 결과 데이터 콘솔 출력
                     }
