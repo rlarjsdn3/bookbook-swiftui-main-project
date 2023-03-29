@@ -22,7 +22,7 @@ struct BookListCategoryView: View {
                             proxy: proxy,
                             namespace: underlineAnimation
                         )
-                        .padding(.horizontal, 5)
+                        .padding(.horizontal, 8)
                     }
                 }
                 .padding(.leading, 8)

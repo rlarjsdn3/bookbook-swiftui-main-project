@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
+    @EnvironmentObject var viewModel: ViewModel
     @State private var listTypeSelected: ListType = .itemNewAll
     
     var body: some View {
@@ -21,8 +22,12 @@ struct SearchView: View {
                 
                 ScrollView(showsIndicators: false) {
                     VStack {
-                        ForEach(1...100, id: \.self) { index in
-                            Text("\(index)")
+                        if let bookItemList = viewModel.bookItemList {
+                            ForEach(bookItemList.item, id: \.self) { item in
+                                Text("\(item.title)")
+                            }
+                        } else {
+                            Text("결과 없음")
                         }
                     }
                 }
@@ -31,10 +36,10 @@ struct SearchView: View {
             Spacer()
         }
         .onAppear {
-            ViewModel().requestBookListAPI(type: .itemNewAll)
+            viewModel.requestBookListAPI(type: listTypeSelected)
         }
         .onChange(of: listTypeSelected) { selected in
-            ViewModel().requestBookListAPI(type: selected)
+            viewModel.requestBookListAPI(type: selected)
         }
     }
 }
@@ -42,5 +47,6 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         SearchView()
+            .environmentObject(ViewModel())
     }
 }
