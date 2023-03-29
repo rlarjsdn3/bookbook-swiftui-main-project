@@ -12,6 +12,7 @@ enum ListType: String, CaseIterable {
     case itemNewSpecial = "ItemNewSpacial"      // 주목할 만한 신간 리스트
     case itemEditorChoice = "ItemEditorChoice"  // 편집자 추천 리스트
     case bestSeller = "Bestseller"              // 베스트셀러
+    case blogBest = "BlogBest"
     
     var name: String {
         switch self {
@@ -23,6 +24,8 @@ enum ListType: String, CaseIterable {
             return "편집자 추천"
         case .bestSeller:
             return "베스트셀러"
+        case .blogBest:
+            return "블로거 추천"
         }
     }
 }

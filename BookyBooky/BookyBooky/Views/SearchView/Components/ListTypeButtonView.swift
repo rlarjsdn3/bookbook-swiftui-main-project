@@ -18,25 +18,25 @@ struct ListTypeButtonView: View {
                 selected = type
             }
         } label: {
-            VStack(alignment: .leading, spacing: -5) {
+            VStack {
                 Text(type.name)
                     .font(.headline)
                     .fontWeight(.bold)
-                    .foregroundColor(selected == type ? .white : .black)
-                    .padding(.horizontal, selected == type ? 20 : 0)
-                    .padding(.vertical, 5)
-                    .background {
-                        if selected == type {
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.black)
-                                .matchedGeometryEffect(id: "rectangle", in: namespace)
-                        }
-                    }
+                    .foregroundColor(selected == type ? .black : .gray)
             }
         }
-        .padding(.vertical, 5)
-        .padding(.horizontal, 10)
-
+        .padding(.vertical, 10)
+        .padding(.horizontal, 5)
+        .padding(.bottom, 5)
+        .overlay {
+            if selected == type {
+                RoundedRectangle(cornerRadius: 5)
+                    .offset(y: 21)
+                    .frame(height: 1)
+                    .frame(maxWidth: .infinity)
+                    .matchedGeometryEffect(id: "rectangle", in: namespace)
+            }
+        }
     }
 }
 

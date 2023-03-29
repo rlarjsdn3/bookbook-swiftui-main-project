@@ -11,15 +11,19 @@ struct SearchView: View {
     @State private var listTypeSelected: ListType = .itemNewAll
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             SearchHeaderView()
+            
+            BookListCategoryView(selected: $listTypeSelected)
 
-            ScrollView(showsIndicators: false) {
-                LazyVStack(pinnedViews: [.sectionHeaders]) {
-                    Section {
-                        
-                    } header: {
-                        BookListCategoryView(selected: $listTypeSelected)
+            ZStack {
+                Color("Background")
+                
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        ForEach(1...100, id: \.self) { index in
+                            Text("\(index)")
+                        }
                     }
                 }
             }

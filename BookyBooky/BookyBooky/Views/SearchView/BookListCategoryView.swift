@@ -20,8 +20,11 @@ struct BookListCategoryView: View {
                         type: type,
                         namespace: namespace
                     )
+                    .padding(.horizontal, 5)
                 }
             }
+            .padding(.leading, 8)
+            .padding(.trailing, 8)
         }
     }
 }
