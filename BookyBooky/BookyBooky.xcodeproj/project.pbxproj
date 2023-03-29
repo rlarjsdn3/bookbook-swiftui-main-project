@@ -35,6 +35,7 @@
 		9ED4CB6129D3E0AA00CA493D /* BookListCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6029D3E0AA00CA493D /* BookListCategoryView.swift */; };
 		9ED4CB6429D3E21C00CA493D /* ListTypeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6329D3E21C00CA493D /* ListTypeButtonView.swift */; };
 		9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6629D4046400CA493D /* SearchSheetView.swift */; };
+		9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		9ED4CB6029D3E0AA00CA493D /* BookListCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListCategoryView.swift; sourceTree = "<group>"; };
 		9ED4CB6329D3E21C00CA493D /* ListTypeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTypeButtonView.swift; sourceTree = "<group>"; };
 		9ED4CB6629D4046400CA493D /* SearchSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetView.swift; sourceTree = "<group>"; };
+		9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetTextFieldView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,8 +121,9 @@
 			children = (
 				9E0C0A6B29D284FD00F1F5F6 /* SearchView.swift */,
 				9E0C0A7E29D3D56A00F1F5F6 /* SearchHeaderView.swift */,
-				9ED4CB6629D4046400CA493D /* SearchSheetView.swift */,
 				9ED4CB6029D3E0AA00CA493D /* BookListCategoryView.swift */,
+				9ED4CB6629D4046400CA493D /* SearchSheetView.swift */,
+				9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */,
 				9ED4CB6229D3E20B00CA493D /* Components */,
 			);
 			path = SearchView;
@@ -317,6 +320,7 @@
 			files = (
 				9E0C0A7A29D3CEAF00F1F5F6 /* BookList.swift in Sources */,
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
+				9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */,
 				9E0C0A7329D28C0300F1F5F6 /* AladinAPI.swift in Sources */,
 				9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */,
 				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,
