@@ -22,7 +22,7 @@ struct SearchView: View {
                 
                 ScrollView(showsIndicators: false) {
                     VStack {
-                        if let bookItemList = bookViewModel.bookItemList {
+                        if let bookItemList = bookViewModel.bestSeller {
                             ForEach(bookItemList.item, id: \.self) { item in
                                 Text("\(item.title)")
                             }

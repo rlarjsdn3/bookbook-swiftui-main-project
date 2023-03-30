@@ -9,25 +9,32 @@ import Foundation
 import Alamofire
 
 class BookViewModel: ObservableObject {
-    @Published var bookItemList: BookList?     // 도서 리스트를 저장하는 변수
+    @Published var bestSeller: BookList?     // 베스트셀러 리스트를 저장하는 변수
+    @Published var itemNewAll: BookList?     // 신간 도서 리스트를 저장하는 변수
+    @Published var itemNewSpecial: BookList? // 신간 베스트 리스트를 저장하는 변수
+    @Published var blogBest: BookList?       // 블로그 베스트 리스트를 저장하는 변수
     
     @Published var bookSearchList: BookSearch? // 검색 결과 리스트를 저장하는 변수
     @Published var bookDetailList: BookDetail? // 상세 도서 결과값을 저장하는 변수
     
-    @Published var bookCategory: [Category]? // 도서 카테고리 분류 정보를 저장하는 변수
+    @Published var bookCategory: [Category] = [] // 도서 카테고리 분류 정보를 저장하는 변수
     
-    func getBookCategory() {
-        var category: [Category] = [.all]
+    func setCategory() {
+        var category: [Category] = []
         
+        // 중복되지 않게 카테고리 항목 저장하기
         if let bookSearchList = bookSearchList {
-            for item in bookSearchList.item {
-                if !category.contains(item.category) {
-                    category.append(item.category)
-                }
+            for item in bookSearchList.item where !category.contains(item.category) {
+                category.append(item.category)
             }
         }
+        // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬하기
+        category.sort {
+            $0.rawValue < $1.rawValue
+        }
+        // 카테고리의 첫 번째에 '전체' 항목 추가하기
+        category.insert(.all, at: 0)
         
-        print(category) // 디버그 - 도서 카테고리 정보 출력
         bookCategory = category
     }
     
@@ -64,9 +71,15 @@ class BookViewModel: ObservableObject {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
-                    DispatchQueue.main.async {
-                        self.bookItemList = data
-                        print(data) // 디버그 - 검색 결과 데이터 콘솔 출력
+                    switch queryType {
+                    case .bestSeller:
+                        self.bestSeller = data
+                    case .itemNewAll:
+                        self.itemNewAll = data
+                    case .itemNewSpecial:
+                        self.itemNewSpecial = data
+                    case .blogBest:
+                        self.blogBest = data
                     }
                 }
             case .failure(let error):
@@ -112,8 +125,7 @@ class BookViewModel: ObservableObject {
                 if statusCode == 200 {
                     DispatchQueue.main.async {
                         self.bookSearchList = data
-                        self.getBookCategory()
-                        print(data) // 디버그 - 검색 결과 데이터 콘솔 출력
+                        self.setCategory()
                     }
                 }
             case .failure(let error):
@@ -155,7 +167,6 @@ class BookViewModel: ObservableObject {
                 if statusCode == 200 {
                     DispatchQueue.main.async {
                         self.bookDetailList = data
-                        print(data) // 디버그 - 검색 결과 데이터 콘솔 출력
                     }
                 }
             case .failure(let error):
