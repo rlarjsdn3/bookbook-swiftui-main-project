@@ -19,6 +19,7 @@ struct SearchSheetTextFieldView: View {
                     .foregroundColor(.gray)
                 
                 TextField("제목 / 저자 검색", text: $query)
+                    .frame(height: 45)
                     .submitLabel(.search)
                     .onSubmit {
                         requestBookSearch(query: query)
@@ -33,19 +34,19 @@ struct SearchSheetTextFieldView: View {
                     }
                 }
             }
-            .padding(.vertical, 15)
             .padding(.horizontal, 10)
             .background(Color("Background"))
             .cornerRadius(15)
-            .padding()
+            .padding(.leading)
             
             Button {
                 requestBookSearch(query: query)
             } label: {
                 Text("검색")
             }
-            .padding(.trailing)
+            .padding(.horizontal)
         }
+        .padding(.top)
     }
     
     func requestBookSearch(query: String) {
