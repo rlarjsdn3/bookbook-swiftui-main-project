@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum BookCategory: String {
+enum Category: String {
     case all = "전체"
     case action = "액션/어드벤처"
     case autobiography = "전기/자서전"
