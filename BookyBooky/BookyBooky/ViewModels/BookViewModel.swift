@@ -17,7 +17,7 @@ class BookViewModel: ObservableObject {
     @Published var bookSearchItems: [BookSearch.Item] = [] // 검색 결과 리스트를 저장하는 변수
     @Published var bookDetailInfo: [BookDetail.Item] = []  // 상세 도서 결과값을 저장하는 변수
     
-    @Published var categories: [Category] = [] // 도서 카테고리 분류 정보를 저장하는 변수
+    @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
     
     func setCategory() {
         var category: [Category] = []

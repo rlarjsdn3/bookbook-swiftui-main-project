@@ -12,7 +12,7 @@ struct SearchSheetView: View {
     @State private var query = ""
     @State private var categorySelected: Category = .all
     
-    var filteredSearchList: [BookSearch.Item] {
+    var filteredSearchItems: [BookSearch.Item] {
         var list: [BookSearch.Item] = []
         
         // '전체' 혹은 해당 분류에 맞게 도서를 모으기
@@ -31,20 +31,17 @@ struct SearchSheetView: View {
         VStack {
             SearchSheetTextFieldView(query: $query)
             
-            ScrollView {
-                LazyVStack(pinnedViews: [.sectionHeaders]) {
-                    Section {
-                        VStack {
-                            ForEach(filteredSearchList, id: \.self) { item in
-                                Text("\(item.title)")
-                            }
-                        }
-                    } header: {
-                        SearchCategoryView(categorySelected: $categorySelected)
+            SearchCategoryView(categorySelected: $categorySelected)
+            
+            ZStack {
+                ScrollView {
+                    ForEach(filteredSearchItems, id: \.self) { item in
+                        Text("\(item.title)")
                     }
-
                 }
             }
+            
+            Spacer()
         }
     }
 }

@@ -21,6 +21,10 @@ struct CategoryButtonView: View {
             categorySelected = category
         } label: {
             ZStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(.gray.opacity(0.1))
+                    .frame(height: 30)
+                
                 if selectedAnimation == category {
                     RoundedRectangle(cornerRadius: 15)
                         .fill(.black)
@@ -29,10 +33,10 @@ struct CategoryButtonView: View {
                 }
                 
                 Text(category.rawValue)
-                    .font(.title3)
+                    .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(selectedAnimation == category ? .white : .black)
-                    .padding(.horizontal, selectedAnimation == category ? 20 : 0)
+                    .padding(.horizontal, selectedAnimation == category ? 25 : 15)
             }
         }
     }
