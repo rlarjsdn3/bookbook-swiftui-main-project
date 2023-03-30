@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct ListCategoryView: View {
-    @Binding var selected: BookListType
+struct ListTypeView: View {
+    @Binding var selected: ListType
     @Namespace var underlineAnimation: Namespace.ID
     
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(BookListType.allCases, id: \.self) { type in
+                    ForEach(ListType.allCases, id: \.self) { type in
                         ListTypeButtonView(
                             selected: $selected,
                             type: type,
@@ -34,6 +34,6 @@ struct ListCategoryView: View {
 
 struct BookListCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        ListCategoryView(selected: .constant(.itemNewAll))
+        ListTypeView(selected: .constant(.itemNewAll))
     }
 }
