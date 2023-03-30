@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchSheetTextFieldView: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var bookViewModel: BookViewModel
     @Binding var query: String
     
     var body: some View {
@@ -48,7 +48,7 @@ struct SearchSheetTextFieldView: View {
     }
     
     func requestBookSearch(query: String) {
-        viewModel.requestBookSearchAPI(search: query)
+        bookViewModel.requestBookSearchAPI(search: query)
         self.query = ""
     }
 }
@@ -56,6 +56,6 @@ struct SearchSheetTextFieldView: View {
 struct SearchSheetTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetTextFieldView(query: .constant(""))
-            .environmentObject(ViewModel())
+            .environmentObject(BookViewModel())
     }
 }

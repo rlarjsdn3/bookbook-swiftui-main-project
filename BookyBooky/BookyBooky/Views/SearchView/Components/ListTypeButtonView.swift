@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct ListTypeButtonView: View {
-    @Binding var selected: BookListType
-    let type: BookListType
-    let proxy: ScrollViewProxy
+    @Binding var selected: ListType
+    let type: ListType
+    let redearProxy: ScrollViewProxy
     let namespace: Namespace.ID
     
     var body: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                 selected = type
-                proxy.scrollTo(type.name)
+                redearProxy.scrollTo(type.name)
             }
         } label: {
             VStack {
@@ -44,11 +44,16 @@ struct ListTypeButtonView: View {
 }
 
 struct ListTypeButtonView_Previews: PreviewProvider {
-    @Namespace static var effectNamespace: Namespace.ID
+    @Namespace static var underlineAnimation: Namespace.ID
     
     static var previews: some View {
         ScrollViewReader { proxy in
-            ListTypeButtonView(selected: .constant(.itemNewAll), type: .itemNewAll, proxy: proxy,  namespace: effectNamespace)
+            ListTypeButtonView(
+                selected: .constant(.itemNewAll),
+                type: .itemNewAll,
+                redearProxy: proxy,
+                namespace: underlineAnimation
+            )
         }
     }
 }

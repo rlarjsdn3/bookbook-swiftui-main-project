@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var tabSelected: RoundedTabItem = .home
+    @State private var tabSelected: TabItem = .home
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -18,16 +18,16 @@ struct ContentView: View {
         VStack {
             TabView(selection: $tabSelected) {
                 HomeView()
-                    .tag(RoundedTabItem.home)
+                    .tag(TabItem.home)
                 
                 SearchView()
-                    .tag(RoundedTabItem.search)
+                    .tag(TabItem.search)
                 
                 Text("BookShelf View")
-                    .tag(RoundedTabItem.bookShelf)
+                    .tag(TabItem.bookShelf)
                 
                 Text("Analysis View")
-                    .tag(RoundedTabItem.analysis)
+                    .tag(TabItem.analysis)
             }
             
             RoundedTabView(selected: $tabSelected)
@@ -38,6 +38,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(ViewModel())
+            .environmentObject(BookViewModel())
     }
 }

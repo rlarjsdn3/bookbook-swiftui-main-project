@@ -8,24 +8,11 @@
 import SwiftUI
 import Foundation
 
-enum RoundedTabItem: CaseIterable {
-    case home
-    case search
-    case bookShelf
-    case analysis
-    
-    var name: String {
-        switch self {
-        case .home:
-            return "홈"
-        case .search:
-            return "검색"
-        case .bookShelf:
-            return "책장"
-        case .analysis:
-            return "분석"
-        }
-    }
+enum TabItem: String, CaseIterable {
+    case home = "홈"
+    case search = "검색"
+    case bookShelf = "책장"
+    case analysis = "분석"
     
     var icon: String {
         switch self {

@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct BookyBookyApp: App {
-    @StateObject var viewModel = ViewModel()
+    @StateObject var bookViewModel = BookViewModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(viewModel)
+                .environmentObject(bookViewModel)
         }
     }
 }

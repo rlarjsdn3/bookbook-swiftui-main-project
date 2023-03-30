@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct SearchSheetView: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var bookViewModel: BookViewModel
     @State private var query = ""
     
-    @State private var bookCategorySelected: BookCategory = .all
+    @State private var bookCategorySelected: Category = .all
     
     var filteredSearchBookList: [BookSearch.Item] {
         var filter: [BookSearch.Item] = []
         
-        if let bookSearchList = viewModel.bookSearchList {
+        if let bookSearchList = bookViewModel.bookSearchList {
             if bookCategorySelected == .all {
                 return bookSearchList.item
             } else {
@@ -35,7 +35,7 @@ struct SearchSheetView: View {
             
             ScrollView {
                 HStack {
-                    if let bookCategory = viewModel.bookCategory {
+                    if let bookCategory = bookViewModel.bookCategory {
                         ForEach(bookCategory, id: \.self) { category in
                             Button {
                                 bookCategorySelected = category
@@ -62,6 +62,6 @@ struct SearchSheetView: View {
 struct SearchSheetView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetView()
-            .environmentObject(ViewModel())
+            .environmentObject(BookViewModel())
     }
 }

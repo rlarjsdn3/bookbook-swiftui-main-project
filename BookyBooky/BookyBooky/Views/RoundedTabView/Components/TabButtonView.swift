@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TabButtonView: View {
-    @Binding var selected: RoundedTabItem
-    var item: RoundedTabItem
+    @Binding var selected: TabItem
+    var item: TabItem
     var namespace: Namespace.ID
     
     var body: some View {
@@ -21,14 +21,14 @@ struct TabButtonView: View {
             Haptics.shared.play(.light)
         } label: {
             VStack(spacing: -5) {
-                Image(systemName: "\(item.icon)")
+                Image(systemName: item.icon)
                     .font(.title3)
                     .offset(y: selected == item ? -8 : 0)
                     .foregroundColor(selected == item ? item.colorPressed : item.color)
                     .scaleEffect(selected == item ? 1.0 : 0.95)
                 
                 if selected == item {
-                    Text("\(item.name)")
+                    Text(item.rawValue)
                         .font(.caption2)
                         .foregroundColor(.black)
                 }
@@ -50,9 +50,13 @@ struct TabButtonView: View {
 }
 
 struct TabButtonView_Previews: PreviewProvider {
-    @Namespace static var namespace: Namespace.ID
+    @Namespace static var shapeAnimation: Namespace.ID
     
     static var previews: some View {
-        TabButtonView(selected: .constant(.home), item: .home, namespace: namespace)
+        TabButtonView(
+            selected: .constant(.home),
+            item: .home,
+            namespace: shapeAnimation
+        )
     }
 }

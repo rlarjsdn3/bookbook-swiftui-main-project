@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct SearchView: View {
-    @EnvironmentObject var viewModel: ViewModel
-    @State private var listTypeSelected = BookListType.itemNewAll
+    @EnvironmentObject var bookViewModel: BookViewModel
+    @State private var listTypeSelected = ListType.bestSeller
     
     var body: some View {
         VStack(spacing: 0) {
             SearchHeaderView()
             
-            ListCategoryView(selected: $listTypeSelected)
+            ListTypeView(selected: $listTypeSelected)
 
             ZStack {
                 Color("Background")
                 
                 ScrollView(showsIndicators: false) {
                     VStack {
-                        if let bookItemList = viewModel.bookItemList {
+                        if let bookItemList = bookViewModel.bookItemList {
                             ForEach(bookItemList.item, id: \.self) { item in
                                 Text("\(item.title)")
                             }
@@ -36,10 +36,10 @@ struct SearchView: View {
             Spacer()
         }
         .onAppear {
-            viewModel.requestBookListAPI(type: listTypeSelected)
+            bookViewModel.requestBookListAPI(type: listTypeSelected)
         }
         .onChange(of: listTypeSelected) { selected in
-            viewModel.requestBookListAPI(type: selected)
+            bookViewModel.requestBookListAPI(type: selected)
         }
     }
 }
@@ -47,6 +47,6 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         SearchView()
-            .environmentObject(ViewModel())
+            .environmentObject(BookViewModel())
     }
 }

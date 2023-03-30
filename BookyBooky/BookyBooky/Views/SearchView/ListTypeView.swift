@@ -19,7 +19,7 @@ struct ListTypeView: View {
                         ListTypeButtonView(
                             selected: $selected,
                             type: type,
-                            proxy: proxy,
+                            redearProxy: proxy,
                             namespace: underlineAnimation
                         )
                         .padding(.horizontal, 8)
@@ -32,7 +32,7 @@ struct ListTypeView: View {
     }
 }
 
-struct BookListCategoryView_Previews: PreviewProvider {
+struct ListTypeView_Previews: PreviewProvider {
     static var previews: some View {
         ListTypeView(selected: .constant(.itemNewAll))
     }

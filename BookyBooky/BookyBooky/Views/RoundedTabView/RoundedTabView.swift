@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct RoundedTabView: View {
-    @Binding var selected: RoundedTabItem
-    @Namespace var namespace: Namespace.ID
+    @Binding var selected: TabItem
+    @Namespace var shapeAnimation: Namespace.ID
     
     var body: some View {
         HStack {
-            ForEach(RoundedTabItem.allCases, id: \.self) { item in
-                TabButtonView(selected: $selected, item: item, namespace: namespace)
+            ForEach(TabItem.allCases, id: \.self) { item in
+                TabButtonView(
+                    selected: $selected,
+                    item: item,
+                    namespace: shapeAnimation
+                )
             }
         }
         .background {

@@ -31,7 +31,7 @@ extension BookSearch.Item {
         return "카테고리 없음"
     }
     
-    var category: BookCategory {
+    var category: Category {
         switch filteredCategoryName {
         case "액션/어드벤처":
             return .action

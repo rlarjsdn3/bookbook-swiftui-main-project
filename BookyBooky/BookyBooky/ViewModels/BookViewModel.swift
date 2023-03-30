@@ -8,15 +8,16 @@
 import Foundation
 import Alamofire
 
-class ViewModel: ObservableObject {
+class BookViewModel: ObservableObject {
     @Published var bookItemList: BookList?     // 도서 리스트를 저장하는 변수
+    
     @Published var bookSearchList: BookSearch? // 검색 결과 리스트를 저장하는 변수
     @Published var bookDetailList: BookDetail? // 상세 도서 결과값을 저장하는 변수
     
-    @Published var bookCategory: [BookCategory]? // 도서 카테고리 분류 정보를 저장하는 변수
+    @Published var bookCategory: [Category]? // 도서 카테고리 분류 정보를 저장하는 변수
     
     func getBookCategory() {
-        var category: [BookCategory] = [.all]
+        var category: [Category] = [.all]
         
         if let bookSearchList = bookSearchList {
             for item in bookSearchList.item {
@@ -32,7 +33,7 @@ class ViewModel: ObservableObject {
     
     /// 알라딘 리스트 API를 호출하여 도서 리스트(베스트셀러 등) 결과를 반환하는 함수입니다,
     /// - Parameter query: 도서 리스트 출력 타입
-    func requestBookListAPI(type queryType: BookListType) {
+    func requestBookListAPI(type queryType: ListType) {
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?"
         
         let parameters = [
