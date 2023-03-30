@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListTypeView: View {
-    @State private var underlineSelected = ListType.bestSeller
+    @State private var selectedAnimation = ListType.bestSeller
     
     @Binding var listTypeSelected: ListType
     @Namespace var namespace: Namespace.ID
@@ -20,10 +20,10 @@ struct ListTypeView: View {
                     ForEach(ListType.allCases, id: \.self) { type in
                         ListTypeButtonView(
                             listTypeSelected: $listTypeSelected,
-                            underlineSelected: $underlineSelected,
                             type: type,
                             redearProxy: proxy,
-                            underlineAnimation: namespace
+                            selectedAnimation: $selectedAnimation,
+                            selectedNamespace: namespace
                         )
                         .padding(.horizontal, 8)
                     }

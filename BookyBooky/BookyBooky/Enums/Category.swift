@@ -33,7 +33,6 @@ enum Category: String {
     case foreignLanguage = "외국어"
     case game = "게임/토이"
     case genreNovel = "장르소설"
-    case goodParents = "좋은 부모"
     case habit = "취미/레저"
     case health = "건강"
     case highSchool = "고등참고서"

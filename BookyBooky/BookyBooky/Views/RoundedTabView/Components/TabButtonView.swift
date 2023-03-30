@@ -50,13 +50,13 @@ struct TabButtonView: View {
 }
 
 struct TabButtonView_Previews: PreviewProvider {
-    @Namespace static var shapeAnimation: Namespace.ID
+    @Namespace static var shapeNamespace: Namespace.ID
     
     static var previews: some View {
         TabButtonView(
             selected: .constant(.home),
             item: .home,
-            namespace: shapeAnimation
+            namespace: shapeNamespace
         )
     }
 }

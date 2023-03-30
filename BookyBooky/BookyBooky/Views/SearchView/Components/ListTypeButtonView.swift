@@ -9,16 +9,16 @@ import SwiftUI
 
 struct ListTypeButtonView: View {
     @Binding var listTypeSelected: ListType
-    @Binding var underlineSelected: ListType
     let type: ListType
     let redearProxy: ScrollViewProxy
-    let underlineAnimation: Namespace.ID
+    @Binding var selectedAnimation: ListType
+    let selectedNamespace: Namespace.ID
     
     var body: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                 redearProxy.scrollTo(type.name)
-                underlineSelected = type
+                selectedAnimation = type
             }
             listTypeSelected = type
         } label: {
@@ -33,12 +33,12 @@ struct ListTypeButtonView: View {
         .padding(.horizontal, 5)
         .padding(.bottom, 5)
         .overlay {
-            if underlineSelected == type {
+            if selectedAnimation == type {
                 RoundedRectangle(cornerRadius: 5)
                     .offset(y: 21)
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
-                    .matchedGeometryEffect(id: "rectangle", in: underlineAnimation)
+                    .matchedGeometryEffect(id: "rectangle", in: selectedNamespace)
             }
         }
         .id(type.name)
@@ -52,10 +52,10 @@ struct ListTypeButtonView_Previews: PreviewProvider {
         ScrollViewReader { proxy in
             ListTypeButtonView(
                 listTypeSelected: .constant(.bestSeller),
-                underlineSelected: .constant(.bestSeller),
                 type: .bestSeller,
                 redearProxy: proxy,
-                underlineAnimation: namespace
+                selectedAnimation: .constant(.bestSeller),
+                selectedNamespace: namespace
             )
         }
     }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RoundedTabView: View {
     @Binding var selected: TabItem
-    @Namespace var shapeAnimation: Namespace.ID
+    @Namespace var shapeNamespace: Namespace.ID
     
     var body: some View {
         HStack {
@@ -17,7 +17,7 @@ struct RoundedTabView: View {
                 TabButtonView(
                     selected: $selected,
                     item: item,
-                    namespace: shapeAnimation
+                    namespace: shapeNamespace
                 )
             }
         }

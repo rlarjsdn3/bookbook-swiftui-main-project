@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchSheetTextFieldView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
+    
     @Binding var query: String
     
     var body: some View {

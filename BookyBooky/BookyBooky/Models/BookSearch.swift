@@ -23,16 +23,18 @@ struct BookSearch: Codable {
 }
 
 extension BookSearch.Item {
-    var filteredCategoryName: String {
-        let filteredName = categoryName.split(separator: ">")
-        if filteredName.count > 1 {
-            return String(filteredName[1])
+    /// 1차 카테고리 분류 정보를 반환하는 프로퍼티
+    var oneDepthCategoryName: String {
+        let category = categoryName.split(separator: ">")
+        if category.count > 1 {
+            return String(category[1])
         }
-        return "카테고리 없음"
+        return "기타" // '기타'로 분류
     }
     
+    /// 1차 카테고리 분류 정보를 기반으로 앱 내부에 출력될 카테고리 정보를 반환하는 프로퍼티(카테고리 정제)
     var category: Category {
-        switch filteredCategoryName {
+        switch oneDepthCategoryName {
         case "액션/어드벤처":
             return .action
         case "전기/자서전":
@@ -71,7 +73,7 @@ extension BookSearch.Item {
             return .essay
         case "수험서/자격증", "수험서":
             return .examination
-        case "가족/관계":
+        case "가족/관계", "좋은부모":
             return .family
         case "S.F/판타지", "판타지/무협":
             return .fantasy
@@ -81,8 +83,6 @@ extension BookSearch.Item {
             return .game
         case "장르소설":
             return .genreNovel
-        case "좋은부모":
-            return .goodParents
         case "건강/취미/레저":
             return .habit
         case "건강/스포츠":

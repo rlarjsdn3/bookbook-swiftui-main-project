@@ -10,23 +10,23 @@ import SwiftUI
 struct SearchSheetView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
     @State private var query = ""
+    @State private var categorySelected: Category = .all
     
-    @State private var bookCategorySelected: Category = .all
-    
-    var filteredSearchBookList: [BookSearch.Item] {
-        var filter: [BookSearch.Item] = []
+    var filteredSearchList: [BookSearch.Item] {
+        var list: [BookSearch.Item] = []
         
-        if let bookSearchList = bookViewModel.bookSearchList {
-            if bookCategorySelected == .all {
-                return bookSearchList.item
+        // '전체' 혹은 해당 분류에 맞게 도서를 모으기
+        if let searchList = bookViewModel.bookSearchList {
+            if categorySelected == .all {
+                return searchList.item
             } else {
-                for item in bookSearchList.item where item.category == bookCategorySelected {
-                    filter.append(item)
+                for item in searchList.item where item.category == categorySelected {
+                    list.append(item)
                 }
             }
         }
         
-        return filter
+        return list
     }
     
     var body: some View {
@@ -38,7 +38,7 @@ struct SearchSheetView: View {
                     if let bookCategory = bookViewModel.bookCategory {
                         ForEach(bookCategory, id: \.self) { category in
                             Button {
-                                bookCategorySelected = category
+                                categorySelected = category
                             } label: {
                                 Text("\(category.rawValue)")
                             }
@@ -48,7 +48,7 @@ struct SearchSheetView: View {
                 }
                 
                 VStack {
-                        ForEach(filteredSearchBookList, id: \.self) { item in
+                        ForEach(filteredSearchList, id: \.self) { item in
                             Text("\(item.title)")
                         }
                 }
