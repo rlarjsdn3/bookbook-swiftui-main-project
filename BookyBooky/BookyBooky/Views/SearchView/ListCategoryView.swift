@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BookListCategoryView: View {
+struct ListCategoryView: View {
     @Binding var selected: BookListType
     @Namespace var underlineAnimation: Namespace.ID
     
@@ -34,6 +34,6 @@ struct BookListCategoryView: View {
 
 struct BookListCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        BookListCategoryView(selected: .constant(.itemNewAll))
+        ListCategoryView(selected: .constant(.itemNewAll))
     }
 }

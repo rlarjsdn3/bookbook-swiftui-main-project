@@ -15,7 +15,7 @@ struct SearchView: View {
         VStack(spacing: 0) {
             SearchHeaderView()
             
-            BookListCategoryView(selected: $listTypeSelected)
+            ListCategoryView(selected: $listTypeSelected)
 
             ZStack {
                 Color("Background")
