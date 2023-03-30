@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ListTypeView: View {
-    @Binding var selected: ListType
-    @Namespace var underlineAnimation: Namespace.ID
+    @State private var underlineSelected = ListType.bestSeller
+    
+    @Binding var listTypeSelected: ListType
+    @Namespace var namespace: Namespace.ID
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -17,10 +19,11 @@ struct ListTypeView: View {
                 HStack {
                     ForEach(ListType.allCases, id: \.self) { type in
                         ListTypeButtonView(
-                            selected: $selected,
+                            listTypeSelected: $listTypeSelected,
+                            underlineSelected: $underlineSelected,
                             type: type,
                             redearProxy: proxy,
-                            namespace: underlineAnimation
+                            underlineAnimation: namespace
                         )
                         .padding(.horizontal, 8)
                     }
@@ -34,6 +37,6 @@ struct ListTypeView: View {
 
 struct ListTypeView_Previews: PreviewProvider {
     static var previews: some View {
-        ListTypeView(selected: .constant(.itemNewAll))
+        ListTypeView(listTypeSelected: .constant(.itemNewAll))
     }
 }

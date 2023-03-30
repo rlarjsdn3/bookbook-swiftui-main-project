@@ -8,35 +8,37 @@
 import SwiftUI
 
 struct ListTypeButtonView: View {
-    @Binding var selected: ListType
+    @Binding var listTypeSelected: ListType
+    @Binding var underlineSelected: ListType
     let type: ListType
     let redearProxy: ScrollViewProxy
-    let namespace: Namespace.ID
+    let underlineAnimation: Namespace.ID
     
     var body: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                selected = type
                 redearProxy.scrollTo(type.name)
+                underlineSelected = type
             }
+            listTypeSelected = type
         } label: {
             VStack {
                 Text(type.name)
                     .font(.headline)
                     .fontWeight(.bold)
-                    .foregroundColor(selected == type ? .black : .gray)
+                    .foregroundColor(listTypeSelected == type ? .black : .gray)
             }
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 5)
         .padding(.bottom, 5)
         .overlay {
-            if selected == type {
+            if underlineSelected == type {
                 RoundedRectangle(cornerRadius: 5)
                     .offset(y: 21)
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
-                    .matchedGeometryEffect(id: "rectangle", in: namespace)
+                    .matchedGeometryEffect(id: "rectangle", in: underlineAnimation)
             }
         }
         .id(type.name)
@@ -44,15 +46,16 @@ struct ListTypeButtonView: View {
 }
 
 struct ListTypeButtonView_Previews: PreviewProvider {
-    @Namespace static var underlineAnimation: Namespace.ID
+    @Namespace static var namespace: Namespace.ID
     
     static var previews: some View {
         ScrollViewReader { proxy in
             ListTypeButtonView(
-                selected: .constant(.itemNewAll),
-                type: .itemNewAll,
+                listTypeSelected: .constant(.bestSeller),
+                underlineSelected: .constant(.bestSeller),
+                type: .bestSeller,
                 redearProxy: proxy,
-                namespace: underlineAnimation
+                underlineAnimation: namespace
             )
         }
     }

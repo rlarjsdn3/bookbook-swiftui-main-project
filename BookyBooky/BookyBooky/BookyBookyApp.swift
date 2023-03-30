@@ -14,6 +14,12 @@ struct BookyBookyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    bookViewModel.requestBookListAPI(type: .bestSeller)
+                    bookViewModel.requestBookListAPI(type: .itemNewAll)
+                    bookViewModel.requestBookListAPI(type: .itemNewSpecial)
+                    bookViewModel.requestBookListAPI(type: .blogBest)
+                }
                 .environmentObject(bookViewModel)
         }
     }

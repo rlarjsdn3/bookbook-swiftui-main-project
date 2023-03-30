@@ -11,19 +11,32 @@ struct SearchView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
     @State private var listTypeSelected = ListType.bestSeller
     
+    var bookList: BookList? {
+        switch listTypeSelected {
+        case .bestSeller:
+            return bookViewModel.bestSeller
+        case .itemNewAll:
+            return bookViewModel.itemNewAll
+        case .itemNewSpecial:
+            return bookViewModel.itemNewSpecial
+        case .blogBest:
+            return bookViewModel.blogBest
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             SearchHeaderView()
             
-            ListTypeView(selected: $listTypeSelected)
+            ListTypeView(listTypeSelected: $listTypeSelected)
 
             ZStack {
                 Color("Background")
                 
                 ScrollView(showsIndicators: false) {
                     VStack {
-                        if let bookItemList = bookViewModel.bestSeller {
-                            ForEach(bookItemList.item, id: \.self) { item in
+                        if let list = bookList {
+                            ForEach(list.item, id: \.self) { item in
                                 Text("\(item.title)")
                             }
                         } else {
