@@ -13,7 +13,7 @@ class ViewModel: ObservableObject {
     @Published var bookSearchList: BookSearch? // 검색 결과 리스트를 저장하는 변수
     @Published var bookDetailList: BookDetail? // 상세 도서 결과값을 저장하는 변수
     
-    @Published var bookCategory: [BookCategory]? // 도서 카테고리 정보를 저장하는 변수
+    @Published var bookCategory: [BookCategory]? // 도서 카테고리 분류 정보를 저장하는 변수
     
     func getBookCategory() {
         var category: [BookCategory] = [.all]
@@ -166,7 +166,7 @@ class ViewModel: ObservableObject {
     }
     
     
-    /// 코드 출처: StackOverflow(https://url.kr/spleh9)
+    /// 문자열을 euc-kr 방식으로 인코딩한 결과값을 반환하는 함수 (코드 출처: https://url.kr/spleh9)
     func euckrEncoding(_ query: String) -> String {
         let rawEncoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.EUC_KR.rawValue))
         let encoding = String.Encoding(rawValue: rawEncoding)

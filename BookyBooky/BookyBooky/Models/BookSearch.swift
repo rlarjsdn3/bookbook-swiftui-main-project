@@ -25,7 +25,10 @@ struct BookSearch: Codable {
 extension BookSearch.Item {
     var filteredCategoryName: String {
         let filteredName = categoryName.split(separator: ">")
+        if filteredName.count > 1 {
             return String(filteredName[1])
+        }
+        return "카테고리 없음"
     }
     
     var category: BookCategory {
