@@ -16,13 +16,11 @@ struct SearchSheetView: View {
         var list: [BookSearch.Item] = []
         
         // '전체' 혹은 해당 분류에 맞게 도서를 모으기
-        if let searchList = bookViewModel.bookSearchList {
-            if categorySelected == .all {
-                return searchList.item
-            } else {
-                for item in searchList.item where item.category == categorySelected {
-                    list.append(item)
-                }
+        if categorySelected == .all {
+            return bookViewModel.bookSearchItems
+        } else {
+            for item in bookViewModel.bookSearchItems where item.category == categorySelected {
+                list.append(item)
             }
         }
         
@@ -34,27 +32,19 @@ struct SearchSheetView: View {
             SearchSheetTextFieldView(query: $query)
             
             ScrollView {
-                HStack {
-                    if let bookCategory = bookViewModel.bookCategory {
-                        ForEach(bookCategory, id: \.self) { category in
-                            Button {
-                                categorySelected = category
-                            } label: {
-                                Text("\(category.rawValue)")
+                LazyVStack(pinnedViews: [.sectionHeaders]) {
+                    Section {
+                        VStack {
+                            ForEach(filteredSearchList, id: \.self) { item in
+                                Text("\(item.title)")
                             }
-
                         }
+                    } header: {
+                        SearchCategoryView(categorySelected: $categorySelected)
                     }
-                }
-                
-                VStack {
-                        ForEach(filteredSearchList, id: \.self) { item in
-                            Text("\(item.title)")
-                        }
+
                 }
             }
-            
-            
         }
     }
 }

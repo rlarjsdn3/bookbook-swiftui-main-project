@@ -8,13 +8,29 @@
 import SwiftUI
 
 struct SearchCategoryView: View {
+    @EnvironmentObject var bookViewModel: BookViewModel
+    
+    @Binding var categorySelected: Category
+    @Namespace var namespace: Namespace.ID
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(bookViewModel.categories, id: \.self) { category in
+                    Button {
+                        categorySelected = category
+                    } label: {
+                        Text("\(category.rawValue)")
+                    }
+                }
+            }
+        }
     }
 }
 
 struct SearchCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchCategoryView()
+        SearchCategoryView(categorySelected: .constant(.all))
+            .environmentObject(BookViewModel())
     }
 }

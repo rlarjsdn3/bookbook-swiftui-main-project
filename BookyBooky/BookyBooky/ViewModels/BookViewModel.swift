@@ -9,24 +9,22 @@ import Foundation
 import Alamofire
 
 class BookViewModel: ObservableObject {
-    @Published var bestSeller: BookList?     // 베스트셀러 리스트를 저장하는 변수
-    @Published var itemNewAll: BookList?     // 신간 도서 리스트를 저장하는 변수
-    @Published var itemNewSpecial: BookList? // 신간 베스트 리스트를 저장하는 변수
-    @Published var blogBest: BookList?       // 블로그 베스트 리스트를 저장하는 변수
+    @Published var bestSeller: [BookList.Item] = []     // 베스트셀러 리스트를 저장하는 변수
+    @Published var itemNewAll: [BookList.Item] = []     // 신간 도서 리스트를 저장하는 변수
+    @Published var itemNewSpecial: [BookList.Item] = [] // 신간 베스트 리스트를 저장하는 변수
+    @Published var blogBest: [BookList.Item] = []       // 블로그 베스트 리스트를 저장하는 변수
     
-    @Published var bookSearchList: BookSearch? // 검색 결과 리스트를 저장하는 변수
-    @Published var bookDetailList: BookDetail? // 상세 도서 결과값을 저장하는 변수
+    @Published var bookSearchItems: [BookSearch.Item] = [] // 검색 결과 리스트를 저장하는 변수
+    @Published var bookDetailInfo: [BookDetail.Item] = []  // 상세 도서 결과값을 저장하는 변수
     
-    @Published var bookCategory: [Category] = [] // 도서 카테고리 분류 정보를 저장하는 변수
+    @Published var categories: [Category] = [] // 도서 카테고리 분류 정보를 저장하는 변수
     
     func setCategory() {
         var category: [Category] = []
         
         // 중복되지 않게 카테고리 항목 저장하기
-        if let bookSearchList = bookSearchList {
-            for item in bookSearchList.item where !category.contains(item.category) {
-                category.append(item.category)
-            }
+        for item in bookSearchItems where !category.contains(item.category) {
+            category.append(item.category)
         }
         // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬하기
         category.sort {
@@ -35,7 +33,7 @@ class BookViewModel: ObservableObject {
         // 카테고리의 첫 번째에 '전체' 항목 추가하기
         category.insert(.all, at: 0)
         
-        bookCategory = category
+        self.categories = category
     }
     
     /// 알라딘 리스트 API를 호출하여 도서 리스트(베스트셀러 등) 결과를 반환하는 함수입니다,
@@ -73,13 +71,13 @@ class BookViewModel: ObservableObject {
                 if statusCode == 200 {
                     switch queryType {
                     case .bestSeller:
-                        self.bestSeller = data
+                        self.bestSeller = data.item
                     case .itemNewAll:
-                        self.itemNewAll = data
+                        self.itemNewAll = data.item
                     case .itemNewSpecial:
-                        self.itemNewSpecial = data
+                        self.itemNewSpecial = data.item
                     case .blogBest:
-                        self.blogBest = data
+                        self.blogBest = data.item
                     }
                 }
             case .failure(let error):
@@ -124,7 +122,7 @@ class BookViewModel: ObservableObject {
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
                     DispatchQueue.main.async {
-                        self.bookSearchList = data
+                        self.bookSearchItems = data.item
                         self.setCategory()
                     }
                 }
@@ -166,7 +164,7 @@ class BookViewModel: ObservableObject {
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
                     DispatchQueue.main.async {
-                        self.bookDetailList = data
+                        self.bookDetailInfo = data.item
                     }
                 }
             case .failure(let error):

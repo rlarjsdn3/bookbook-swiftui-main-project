@@ -11,7 +11,7 @@ struct SearchView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
     @State private var listTypeSelected = ListType.bestSeller
     
-    var bookList: BookList? {
+    var bookListItems: [BookList.Item] {
         switch listTypeSelected {
         case .bestSeller:
             return bookViewModel.bestSeller
@@ -35,12 +35,8 @@ struct SearchView: View {
                 
                 ScrollView(showsIndicators: false) {
                     VStack {
-                        if let list = bookList {
-                            ForEach(list.item, id: \.self) { item in
-                                Text("\(item.title)")
-                            }
-                        } else {
-                            Text("결과 없음")
+                        ForEach(bookListItems, id: \.self) { item in
+                            Text("\(item.title)")
                         }
                     }
                 }
