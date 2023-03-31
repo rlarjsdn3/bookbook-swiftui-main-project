@@ -128,9 +128,6 @@
 				9E0C0A6B29D284FD00F1F5F6 /* SearchView.swift */,
 				9E0C0A7E29D3D56A00F1F5F6 /* SearchHeaderView.swift */,
 				9ED4CB6029D3E0AA00CA493D /* ListTypeView.swift */,
-				9ED4CB6629D4046400CA493D /* SearchSheetView.swift */,
-				9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */,
-				9E54A9F929D5D44000FE080C /* SearchCategoryView.swift */,
 				9ED4CB6229D3E20B00CA493D /* Components */,
 			);
 			path = SearchView;
@@ -160,6 +157,25 @@
 			path = Shapes;
 			sourceTree = "<group>";
 		};
+		9E54A9FD29D66BD100FE080C /* SearchSheetView */ = {
+			isa = PBXGroup;
+			children = (
+				9ED4CB6629D4046400CA493D /* SearchSheetView.swift */,
+				9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */,
+				9E54A9F929D5D44000FE080C /* SearchCategoryView.swift */,
+				9E54A9FE29D66BE600FE080C /* Components */,
+			);
+			path = SearchSheetView;
+			sourceTree = "<group>";
+		};
+		9E54A9FE29D66BE600FE080C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9E54A9FB29D5DC9800FE080C /* CategoryButtonView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		9EB749F329D5C26100610D97 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +192,7 @@
 				9ECD921229BF1FA600FCDD2F /* ContentView.swift */,
 				9E0C0A6329D1DB4B00F1F5F6 /* HomeView */,
 				9E0C0A6A29D284ED00F1F5F6 /* SearchView */,
+				9E54A9FD29D66BD100FE080C /* SearchSheetView */,
 				9ECA326629D11BB4004D6D5B /* RoundedTabView */,
 			);
 			path = Views;
@@ -247,7 +264,6 @@
 			isa = PBXGroup;
 			children = (
 				9ED4CB6329D3E21C00CA493D /* ListTypeButtonView.swift */,
-				9E54A9FB29D5DC9800FE080C /* CategoryButtonView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
