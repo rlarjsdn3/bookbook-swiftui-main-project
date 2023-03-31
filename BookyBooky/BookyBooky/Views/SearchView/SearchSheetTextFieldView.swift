@@ -25,11 +25,6 @@ struct SearchSheetTextFieldView: View {
                     .submitLabel(.search)
                     .onSubmit {
                         requestBookSearch(query: query)
-                        
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                            animationSelected = .all
-                        }
-                        categorySelected = .all
                     }
                 
                 if !query.isEmpty {
@@ -48,11 +43,6 @@ struct SearchSheetTextFieldView: View {
             
             Button {
                 requestBookSearch(query: query)
-                
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                    animationSelected = .all
-                }
-                categorySelected = .all
             } label: {
                 Text("검색")
             }
@@ -62,8 +52,14 @@ struct SearchSheetTextFieldView: View {
     }
     
     func requestBookSearch(query: String) {
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+            animationSelected = .all
+        }
+        categorySelected = .all
+        
         bookViewModel.requestBookSearchAPI(search: query)
         self.query = ""
+        
     }
 }
 

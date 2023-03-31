@@ -20,20 +20,27 @@ class BookViewModel: ObservableObject {
     @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
     
     func setCategory() {
-        var category: [Category] = []
+        var categories: [Category] = []
         
         // 중복되지 않게 카테고리 항목 저장하기
-        for item in bookSearchItems where !category.contains(item.category) {
-            category.append(item.category)
+        for item in bookSearchItems where !categories.contains(item.category) {
+            categories.append(item.category)
         }
-        // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬하기
-        category.sort {
-            $0.rawValue < $1.rawValue
+        // 카테고리 항목에 '기타'가 있다면
+        if let index = categories.firstIndex(of: .etc) {
+            categories.remove(at: index)
+            // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬하기
+            categories.sort {
+                $0.rawValue < $1.rawValue
+            }
+            // '기타'를 제일 뒤로 보내기
+            categories.append(.etc)
         }
-        // 카테고리의 첫 번째에 '전체' 항목 추가하기
-        category.insert(.all, at: 0)
         
-        self.categories = category
+        // 카테고리의 첫 번째에 '전체' 항목 추가하기
+        categories.insert(.all, at: 0)
+        
+        self.categories = categories
     }
     
     /// 알라딘 리스트 API를 호출하여 도서 리스트(베스트셀러 등) 결과를 반환하는 함수입니다,
@@ -171,8 +178,6 @@ class BookViewModel: ObservableObject {
                 print("알라딘 상품 API 호출 실패: \(error)")
             }
         }
-        
-        
     }
     
     
