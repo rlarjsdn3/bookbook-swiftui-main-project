@@ -87,6 +87,7 @@ class BookViewModel: ObservableObject {
                         self.blogBest = data.item
                     }
                 }
+                print(data)
             case .failure(let error):
                 print("알라딘 리스트 API 호출 실패: \(error)")
             }

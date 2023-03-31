@@ -268,8 +268,8 @@
 		9ED4CB6229D3E20B00CA493D /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				9E54AA0329D6F54B00FE080C /* ListTypeCellView.swift */,
 				9ED4CB6329D3E21C00CA493D /* ListTypeButtonView.swift */,
+				9E54AA0329D6F54B00FE080C /* ListTypeCellView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";

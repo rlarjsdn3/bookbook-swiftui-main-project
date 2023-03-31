@@ -34,9 +34,9 @@ struct SearchView: View {
                 Color("Background")
                 
                 ScrollView(showsIndicators: false) {
-                    VStack {
+                    LazyVStack {
                         ForEach(bookListItems, id: \.self) { item in
-                            Text("\(item.title)") // 도서 리스트 셀 작성 필요!
+                            ListTypeCellView(bookItem: item)
                         }
                     }
                 }

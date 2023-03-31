@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - STRUCT
+
 struct BookList: Codable {
     var totalResults: Int           // 검색 결과의 총 개수
     var startIndex: Int             // 현재 페이지 수
@@ -23,7 +25,60 @@ struct BookList: Codable {
     }
 }
 
+// MARK: - EXTENSIONS
+
+extension BookList {
+    static var preview: BookList {
+        .init(
+            totalResults: 1,
+            startIndex: 1,
+            item: [
+                .init(
+                    title: "Java의 정석 - 3rd Edition",
+                    author: "남궁성 (지은이)",
+                    publisher: "도우출판",
+                    pubDate: "2016-01-28",
+                    cover: "https://image.aladin.co.kr/product/22460/28/cover/8994492046_1.jpg",
+                    categoryName: "국내도서>컴퓨터/모바일>프로그래밍 언어>자바",
+                    isbn13: "9788994492049"
+                )
+            ]
+        )
+    }
+}
+
 extension BookList.Item {
+    /// 도서 제목을 반환하는 프로퍼티
+    var originalTitle: String {
+        return String(title.split(separator: " - ")[0])
+    }
+    
+    /// 도서 부제를 반환하는 프로퍼티 (부제 없을 시, 빈 문자열 반환)
+    var subTitle: String {
+        let titles = title.split(separator: " - ")
+        if titles.count > 1 {
+            return String(titles[1])
+        }
+        return ""
+    }
+    
+    /// 저자 정보를 반환하는 프로퍼티
+    var authorInfo: String {
+        var writer = author.split(separator: " (지은이)").map { String($0) }
+        // 저자 정보가 ' (지은이)'를 기준으로 제대로 나누어지면
+        if writer.count > 1 {
+            // 복수 저자가 있으면
+            var writers = writer[0].split(separator: ", ").map { String($0) }
+            if writers.count > 1 {
+                return writers[0] + "외 \(writers.count - 1)명"
+            }
+            return writers[0]
+        // 저자 정보가 제대로 나누어지지 못하면
+        } else {
+            return author.split(separator: " ").map { String($0) }[0]
+        }
+    }
+    
     /// 1차 카테고리 분류 정보를 반환하는 프로퍼티
     var oneDepthCategoryName: String {
         let category = categoryName.split(separator: ">")
