@@ -41,6 +41,7 @@ extension SearchListTypeView {
                     selectedNamespace: namespace
                 )
                 .padding(.horizontal, 8)
+                .id(type.rawValue)
             }
         }
         .padding(.leading, 8)

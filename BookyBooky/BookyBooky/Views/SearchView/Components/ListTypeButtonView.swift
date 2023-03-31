@@ -28,7 +28,6 @@ struct ListTypeButtonView: View {
                 underline
             }
         }
-        .id(type.rawValue)
     }
 }
 

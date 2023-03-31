@@ -42,7 +42,6 @@ struct CategoryButtonView: View {
             }
         }
         .padding(.horizontal, 15)
-        .id(category.rawValue)
     }
 }
 

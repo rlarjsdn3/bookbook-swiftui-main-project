@@ -51,6 +51,7 @@ extension SearchSheetCategoryView {
                     categoryNamespace: categoryNamespace,
                     scrollProxy: scrollProxy
                 )
+                .id(category.rawValue)
             }
         }
     }
