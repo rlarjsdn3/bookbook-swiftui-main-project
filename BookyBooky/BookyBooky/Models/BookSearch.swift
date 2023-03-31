@@ -9,6 +9,7 @@ import Foundation
 
 struct BookSearch: Codable {
     var totalResults: Int           // 검색 결과의 총 개수
+    var startIndex: Int             // 현재 페이지 수
     
     var item: [Item]
     struct Item: Codable, Hashable {

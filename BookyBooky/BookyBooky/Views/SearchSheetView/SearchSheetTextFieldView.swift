@@ -10,9 +10,10 @@ import SwiftUI
 struct SearchSheetTextFieldView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
     
-    @Binding var query: String
-    @Binding var categorySelected: Category
-    @Binding var animationSelected: Category
+    @Binding var searchQuery: String
+    @Binding var startIndex: Int
+    @Binding var selectedCategory: Category
+    @Binding var categoryAnimation: Category
     
     var body: some View {
         HStack {
@@ -20,16 +21,16 @@ struct SearchSheetTextFieldView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                 
-                TextField("제목 / 저자 검색", text: $query)
+                TextField("제목 / 저자 검색", text: $searchQuery)
                     .frame(height: 45)
                     .submitLabel(.search)
                     .onSubmit {
-                        requestBookSearch(query: query)
+                        requestBookSearch()
                     }
                 
-                if !query.isEmpty {
+                if !searchQuery.isEmpty {
                     Button {
-                        query = ""
+                        searchQuery.removeAll()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(.gray)
@@ -42,7 +43,7 @@ struct SearchSheetTextFieldView: View {
             .padding(.leading)
             
             Button {
-                requestBookSearch(query: query)
+                requestBookSearch()
             } label: {
                 Text("검색")
             }
@@ -51,14 +52,14 @@ struct SearchSheetTextFieldView: View {
         .padding(.top)
     }
     
-    func requestBookSearch(query: String) {
+    func requestBookSearch() {
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-            animationSelected = .all
+            categoryAnimation = .all
         }
-        categorySelected = .all
+        selectedCategory = .all
         
-        bookViewModel.requestBookSearchAPI(search: query)
-        self.query = ""
+        startIndex = 1 
+        bookViewModel.requestBookSearchAPI(query: searchQuery)
         
     }
 }
@@ -66,9 +67,10 @@ struct SearchSheetTextFieldView: View {
 struct SearchSheetTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetTextFieldView(
-            query: .constant(""),
-            categorySelected: .constant(.all),
-            animationSelected: .constant(.all)
+            searchQuery: .constant(""),
+            startIndex: .constant(0),
+            selectedCategory: .constant(.all),
+            categoryAnimation: .constant(.all)
         )
         .environmentObject(BookViewModel())
     }

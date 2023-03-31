@@ -8,37 +8,37 @@
 import SwiftUI
 
 struct CategoryButtonView: View {
-    @Binding var categorySelected: Category
+    @Binding var selectedCategory: Category
     var category: Category
-    var proxyReader: ScrollViewProxy
-    @Binding var selectedAnimation: Category
-    var selectedNamespace: Namespace.ID
+    @Binding var categoryAnimation: Category
+    var categoryNamespace: Namespace.ID
+    var scrollProxy: ScrollViewProxy
     
     var body: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                selectedAnimation = category
-                proxyReader.scrollTo(category.rawValue)
+                categoryAnimation = category
+                scrollProxy.scrollTo(category.rawValue)
             }
-            categorySelected = category
+            selectedCategory = category
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 15)
                     .fill(.gray.opacity(0.1))
                     .frame(height: 30)
                 
-                if selectedAnimation == category {
+                if categoryAnimation == category {
                     RoundedRectangle(cornerRadius: 15)
                         .fill(.black)
                         .frame(height: 30)
-                        .matchedGeometryEffect(id: "roundedRectangle", in: selectedNamespace)
+                        .matchedGeometryEffect(id: "roundedRectangle", in: categoryNamespace)
                 }
                 
                 Text(category.rawValue)
                     .font(.headline)
                     .fontWeight(.bold)
-                    .foregroundColor(selectedAnimation == category ? .white : .black)
-                    .padding(.horizontal, selectedAnimation == category ? 25 : 15)
+                    .foregroundColor(categoryAnimation == category ? .white : .black)
+                    .padding(.horizontal, categoryAnimation == category ? 25 : 15)
             }
         }
         .padding(.horizontal, 15)
@@ -47,16 +47,16 @@ struct CategoryButtonView: View {
 }
 
 struct CategoryButtonView_Previews: PreviewProvider {
-    @Namespace static var selectedNamespace: Namespace.ID
+    @Namespace static var categoryNamespace: Namespace.ID
     
     static var previews: some View {
         ScrollViewReader { proxy in
             CategoryButtonView(
-                categorySelected: .constant(.all),
+                selectedCategory: .constant(.all),
                 category: .all,
-                proxyReader: proxy,
-                selectedAnimation: .constant(.all),
-                selectedNamespace: selectedNamespace
+                categoryAnimation: .constant(.all),
+                categoryNamespace: categoryNamespace,
+                scrollProxy: proxy
             )
         }
     }

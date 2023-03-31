@@ -11,6 +11,8 @@ struct SearchSheetScrollView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
     
     @Binding var categorySelected: Category
+    @Binding var searchQuery: String
+    @Binding var startIndex: Int
     
     var filteredSearchItems: [BookSearch.Item] {
         var list: [BookSearch.Item] = []
@@ -28,17 +30,48 @@ struct SearchSheetScrollView: View {
     }
     
     var body: some View {
-        ScrollView {
-            ForEach(filteredSearchItems, id: \.self) { item in
-                Text("\(item.title)")
+        if !bookViewModel.bookSearchItems.isEmpty {
+            ScrollView {
+                ForEach(filteredSearchItems, id: \.self) { item in
+                    Text("\(item.title)")
+                }
+                
+                Button {
+                    startIndex += 1
+                    bookViewModel.requestBookSearchAPI(
+                        query: searchQuery,
+                        page: startIndex
+                    )
+                } label: {
+                    Text("더 보기")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .frame(
+                            width: UIScreen.main.bounds.width / 3,
+                            height: 40
+                        )
+                        .foregroundColor(.white)
+                        .background(.black)
+                        .cornerRadius(20)
+                }
+                .padding(.top, 20)
             }
+        } else {
+            Text("결과 없음")
+                .font(.title)
+                .fontWeight(.bold)
+                .frame(maxHeight: .infinity)
         }
     }
 }
 
 struct SearchSheetScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetScrollView(categorySelected: .constant(.all))
-            .environmentObject(BookViewModel())
+        SearchSheetScrollView(
+            categorySelected: .constant(.all),
+            searchQuery: .constant(""),
+            startIndex: .constant(1)
+        )
+        .environmentObject(BookViewModel())
     }
 }

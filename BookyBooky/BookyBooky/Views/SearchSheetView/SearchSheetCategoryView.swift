@@ -10,26 +10,34 @@ import SwiftUI
 struct SearchSheetCategoryView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
     
-    @Binding var categorySelected: Category
-    @Binding var selectedAnimation: Category
-    @Namespace var selectedNamespace: Namespace.ID
+    @Binding var selectedCategory: Category
+    @Binding var categoryAnimation: Category
+    
+    @Namespace var categoryNamespace: Namespace.ID
     
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: -20) {
-                    ForEach(bookViewModel.categories, id: \.self) { category in
-                        CategoryButtonView(
-                            categorySelected: $categorySelected,
-                            category: category,
-                            proxyReader: proxy,
-                            selectedAnimation: $selectedAnimation,
-                            selectedNamespace: selectedNamespace
-                        )
-                    }
-                }
+                categoryButtons(scrollProxy: proxy)
             }
             .frame(height: 35)
+        }
+    }
+}
+
+extension SearchSheetCategoryView {
+    @ViewBuilder
+    func categoryButtons(scrollProxy: ScrollViewProxy) -> some View {
+        HStack(spacing: -20) {
+            ForEach(bookViewModel.categories, id: \.self) { category in
+                CategoryButtonView(
+                    selectedCategory: $selectedCategory,
+                    category: category,
+                    categoryAnimation: $categoryAnimation,
+                    categoryNamespace: categoryNamespace,
+                    scrollProxy: scrollProxy
+                )
+            }
         }
     }
 }
@@ -37,8 +45,8 @@ struct SearchSheetCategoryView: View {
 struct SearchSheetCategoryView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetCategoryView(
-            categorySelected: .constant(.all),
-            selectedAnimation: .constant(.all)
+            selectedCategory: .constant(.all),
+            categoryAnimation: .constant(.all)
         )
         .environmentObject(BookViewModel())
     }
