@@ -28,7 +28,7 @@ struct SearchView: View {
         VStack(spacing: 0) {
             SearchHeaderView()
             
-            ListTypeView(listTypeSelected: $listTypeSelected)
+            SearchListTypeView(listTypeSelected: $listTypeSelected)
 
             ZStack {
                 Color("Background")
@@ -36,13 +36,11 @@ struct SearchView: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         ForEach(bookListItems, id: \.self) { item in
-                            Text("\(item.title)")
+                            Text("\(item.title)") // 도서 리스트 셀 작성 필요!
                         }
                     }
                 }
             }
-            
-            Spacer()
         }
     }
 }

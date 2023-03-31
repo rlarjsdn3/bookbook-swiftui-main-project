@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SearchSheetScrollView: View {
+    
+    // MARK: - PROPERTIES
+    
     @EnvironmentObject var bookViewModel: BookViewModel
     
     @Binding var categorySelected: Category
@@ -29,22 +32,30 @@ struct SearchSheetScrollView: View {
         return list
     }
     
+    // MARK: - BODY
+    
     var body: some View {
         if !bookViewModel.bookSearchItems.isEmpty {
-            ScrollView {
-                ForEach(filteredSearchItems, id: \.self) { item in
-                    Text("\(item.title)")
-                }
-                
-                seeMoreButton
-            }
+            scrollSearchItems
         } else {
             noResultLabel
         }
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension SearchSheetScrollView {
+    var scrollSearchItems: some View {
+        ScrollView {
+            ForEach(filteredSearchItems, id: \.self) { item in
+                Text("\(item.title)") // 검색 셀 코드 작성 필요!
+            }
+            
+            seeMoreButton
+        }
+    }
+    
     var seeMoreButton: some View {
         Button {
             startIndex += 1
@@ -88,6 +99,8 @@ extension SearchSheetScrollView {
         
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchSheetScrollView_Previews: PreviewProvider {
     static var previews: some View {

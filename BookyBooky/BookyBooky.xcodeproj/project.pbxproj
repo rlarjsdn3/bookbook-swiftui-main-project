@@ -36,7 +36,7 @@
 		9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD921229BF1FA600FCDD2F /* ContentView.swift */; };
 		9ECD921529BF1FA700FCDD2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ECD921429BF1FA700FCDD2F /* Assets.xcassets */; };
 		9ECD921829BF1FA700FCDD2F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ECD921729BF1FA700FCDD2F /* Preview Assets.xcassets */; };
-		9ED4CB6129D3E0AA00CA493D /* ListTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6029D3E0AA00CA493D /* ListTypeView.swift */; };
+		9ED4CB6129D3E0AA00CA493D /* SearchListTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6029D3E0AA00CA493D /* SearchListTypeView.swift */; };
 		9ED4CB6429D3E21C00CA493D /* ListTypeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6329D3E21C00CA493D /* ListTypeButtonView.swift */; };
 		9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6629D4046400CA493D /* SearchSheetView.swift */; };
 		9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */; };
@@ -69,7 +69,7 @@
 		9ECD921229BF1FA600FCDD2F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9ECD921429BF1FA700FCDD2F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9ECD921729BF1FA700FCDD2F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		9ED4CB6029D3E0AA00CA493D /* ListTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTypeView.swift; sourceTree = "<group>"; };
+		9ED4CB6029D3E0AA00CA493D /* SearchListTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListTypeView.swift; sourceTree = "<group>"; };
 		9ED4CB6329D3E21C00CA493D /* ListTypeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTypeButtonView.swift; sourceTree = "<group>"; };
 		9ED4CB6629D4046400CA493D /* SearchSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetView.swift; sourceTree = "<group>"; };
 		9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetTextFieldView.swift; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 			children = (
 				9E0C0A6B29D284FD00F1F5F6 /* SearchView.swift */,
 				9E0C0A7E29D3D56A00F1F5F6 /* SearchHeaderView.swift */,
-				9ED4CB6029D3E0AA00CA493D /* ListTypeView.swift */,
+				9ED4CB6029D3E0AA00CA493D /* SearchListTypeView.swift */,
 				9ED4CB6229D3E20B00CA493D /* Components */,
 			);
 			path = SearchView;
@@ -361,7 +361,7 @@
 				9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */,
 				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,
 				9E0C0A6929D281BF00F1F5F6 /* Haptics.swift in Sources */,
-				9ED4CB6129D3E0AA00CA493D /* ListTypeView.swift in Sources */,
+				9ED4CB6129D3E0AA00CA493D /* SearchListTypeView.swift in Sources */,
 				9E0C0A7D29D3D0F900F1F5F6 /* ListType.swift in Sources */,
 				9E0C0A7129D2866100F1F5F6 /* BookSearch.swift in Sources */,
 				9ED4CB6429D3E21C00CA493D /* ListTypeButtonView.swift in Sources */,

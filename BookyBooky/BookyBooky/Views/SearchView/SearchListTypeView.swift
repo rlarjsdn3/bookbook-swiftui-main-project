@@ -7,13 +7,19 @@
 
 import SwiftUI
 
-struct ListTypeView: View {
+struct SearchListTypeView: View {
     @State private var selectedAnimation = ListType.bestSeller
     
     @Binding var listTypeSelected: ListType
     @Namespace var namespace: Namespace.ID
     
     var body: some View {
+        scrollListTypeButtons
+    }
+}
+
+extension SearchListTypeView {
+    var scrollListTypeButtons: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 listTypeButtons(scrollProxy: proxy)
@@ -22,7 +28,7 @@ struct ListTypeView: View {
     }
 }
 
-extension ListTypeView {
+extension SearchListTypeView {
     @ViewBuilder
     func listTypeButtons(scrollProxy: ScrollViewProxy) -> some View {
         HStack {
@@ -42,8 +48,8 @@ extension ListTypeView {
     }
 }
 
-struct ListTypeView_Previews: PreviewProvider {
+struct SearchListTypeView_Previews: PreviewProvider {
     static var previews: some View {
-        ListTypeView(listTypeSelected: .constant(.itemNewAll))
+        SearchListTypeView(listTypeSelected: .constant(.itemNewAll))
     }
 }
