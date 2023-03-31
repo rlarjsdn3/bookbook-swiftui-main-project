@@ -11,6 +11,8 @@ struct SearchSheetTextFieldView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
     
     @Binding var query: String
+    @Binding var categorySelected: Category
+    @Binding var animationSelected: Category
     
     var body: some View {
         HStack {
@@ -23,6 +25,11 @@ struct SearchSheetTextFieldView: View {
                     .submitLabel(.search)
                     .onSubmit {
                         requestBookSearch(query: query)
+                        
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                            animationSelected = .all
+                        }
+                        categorySelected = .all
                     }
                 
                 if !query.isEmpty {
@@ -41,6 +48,11 @@ struct SearchSheetTextFieldView: View {
             
             Button {
                 requestBookSearch(query: query)
+                
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                    animationSelected = .all
+                }
+                categorySelected = .all
             } label: {
                 Text("검색")
             }
@@ -57,7 +69,11 @@ struct SearchSheetTextFieldView: View {
 
 struct SearchSheetTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetTextFieldView(query: .constant(""))
-            .environmentObject(BookViewModel())
+        SearchSheetTextFieldView(
+            query: .constant(""),
+            categorySelected: .constant(.all),
+            animationSelected: .constant(.all)
+        )
+        .environmentObject(BookViewModel())
     }
 }

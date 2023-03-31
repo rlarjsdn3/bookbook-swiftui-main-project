@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SearchCategoryView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
-    @State private var selectedAnimation = Category.all
     
     @Binding var categorySelected: Category
+    @Binding var selectedAnimation: Category
     @Namespace var selectedNamespace: Namespace.ID
     
     var body: some View {
@@ -34,7 +34,10 @@ struct SearchCategoryView: View {
 
 struct SearchCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchCategoryView(categorySelected: .constant(.all))
-            .environmentObject(BookViewModel())
+        SearchCategoryView(
+            categorySelected: .constant(.all),
+            selectedAnimation: .constant(.all)
+        )
+        .environmentObject(BookViewModel())
     }
 }

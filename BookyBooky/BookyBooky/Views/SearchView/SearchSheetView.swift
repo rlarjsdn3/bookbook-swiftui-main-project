@@ -11,6 +11,7 @@ struct SearchSheetView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
     @State private var query = ""
     @State private var categorySelected: Category = .all
+    @State private var selectedAnimation: Category = .all
     
     var filteredSearchItems: [BookSearch.Item] {
         var list: [BookSearch.Item] = []
@@ -29,9 +30,9 @@ struct SearchSheetView: View {
     
     var body: some View {
         VStack {
-            SearchSheetTextFieldView(query: $query)
+            SearchSheetTextFieldView(query: $query, categorySelected: $categorySelected, animationSelected: $selectedAnimation)
             
-            SearchCategoryView(categorySelected: $categorySelected)
+            SearchCategoryView(categorySelected: $categorySelected, selectedAnimation: $selectedAnimation)
             
             ZStack {
                 ScrollView {
