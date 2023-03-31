@@ -23,8 +23,9 @@ struct ListTypeCellView: View {
                     image
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 150, height: 200)
+                        .frame(width: 150, height: 200) // 이미지 크기 조정하기
                         .cornerRadius(10)
+                        .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
                         .onAppear {
                             isLoading = false
                         }
@@ -38,8 +39,13 @@ struct ListTypeCellView: View {
             Text(bookItem.originalTitle)
                 .font(.headline)
                 .fontWeight(.bold)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .frame(height: 25)
                 .redacted(reason: isLoading ? .placeholder : [])
                 .shimmering(active: isLoading)
+                .padding(.horizontal)
+                .padding(.bottom, -5)
             
             Text(bookItem.authorInfo)
                 .font(.subheadline)
@@ -53,9 +59,8 @@ struct ListTypeCellView: View {
 extension ListTypeCellView {
     var loadingImage: some View {
         RoundedRectangle(cornerRadius: 10)
-            .fill(.white)
-            .foregroundColor(.gray)
-            .frame(width: 150, height: 200)
+            .fill(.gray.opacity(0.1))
+            .frame(width: 150, height: 200) // 로딩 이미지 크기 조정하기
             .shimmering(active: isLoading)
     }
 }
