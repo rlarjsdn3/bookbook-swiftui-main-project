@@ -14,7 +14,7 @@ class BookViewModel: ObservableObject {
     @Published var itemNewSpecial: [BookList.Item] = [] // 신간 베스트 리스트를 저장하는 변수
     @Published var blogBest: [BookList.Item] = []       // 블로그 베스트 리스트를 저장하는 변수
     
-    @Published var bookSearchItems: [BookSearch.Item] = [] // 검색 결과 리스트를 저장하는 변수
+    @Published var bookSearchItems: [BookList.Item] = [] // 검색 결과 리스트를 저장하는 변수
     @Published var bookDetailInfo: [BookDetail.Item] = []  // 상세 도서 결과값을 저장하는 변수
     
     @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
@@ -124,7 +124,7 @@ class BookViewModel: ObservableObject {
             headers: nil
         )
         .validate(statusCode: 200...500)
-        .responseDecodable(of: BookSearch.self) { response in
+        .responseDecodable(of: BookList.self) { response in
             switch response.result {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }

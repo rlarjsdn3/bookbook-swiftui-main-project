@@ -17,8 +17,8 @@ struct SearchSheetScrollView: View {
     @Binding var searchQuery: String
     @Binding var startIndex: Int
     
-    var filteredSearchItems: [BookSearch.Item] {
-        var list: [BookSearch.Item] = []
+    var filteredSearchItems: [BookList.Item] {
+        var list: [BookList.Item] = []
         
         // '전체' 혹은 해당 분류에 맞게 도서를 모으기
         if categorySelected == .all {

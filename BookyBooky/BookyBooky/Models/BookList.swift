@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BookSearch: Codable {
+struct BookList: Codable {
     var totalResults: Int           // 검색 결과의 총 개수
     var startIndex: Int             // 현재 페이지 수
     
@@ -23,7 +23,7 @@ struct BookSearch: Codable {
     }
 }
 
-extension BookSearch.Item {
+extension BookList.Item {
     /// 1차 카테고리 분류 정보를 반환하는 프로퍼티
     var oneDepthCategoryName: String {
         let category = categoryName.split(separator: ">")
