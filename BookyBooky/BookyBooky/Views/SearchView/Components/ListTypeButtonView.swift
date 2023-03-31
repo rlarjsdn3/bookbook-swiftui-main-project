@@ -16,7 +16,7 @@ struct ListTypeButtonView: View {
     
     var body: some View {
         Button {
-            selectType(type: type)
+            selectType()
         } label: {
             typeLabel
         }
@@ -49,10 +49,11 @@ extension ListTypeButtonView {
 }
 
 extension ListTypeButtonView {
-    func selectType(type: ListType) {
+    func selectType() {
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
             selectedAnimation = type
             redearProxy.scrollTo(type.rawValue)
+            redearProxy.scrollTo("Scroll_To_Top", anchor: .top)
         }
         listTypeSelected = type
     }

@@ -22,7 +22,9 @@ extension SearchListTypeView {
     var scrollListTypeButtons: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
-                listTypeButtons(scrollProxy: proxy)
+                VStack {
+                    listTypeButtons(scrollProxy: proxy)
+                }
             }
         }
     }

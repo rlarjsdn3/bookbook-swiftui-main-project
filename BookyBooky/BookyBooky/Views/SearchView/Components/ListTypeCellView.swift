@@ -14,6 +14,8 @@ struct ListTypeCellView: View {
     let bookItem: BookList.Item
     
     var body: some View {
+        // 버튼으로 동작하게 코드 구현하기 (BookDetail)
+        
         VStack {
             AsyncImage(url: URL(string: bookItem.cover)) { phase in
                 switch phase {
