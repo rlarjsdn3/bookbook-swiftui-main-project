@@ -16,12 +16,26 @@ struct SearchSheetCategoryView: View {
     @Namespace var categoryNamespace: Namespace.ID
     
     var body: some View {
+        if !bookViewModel.bookSearchItems.isEmpty {
+            scrollCategoryButtons
+        } else {
+            emptyView
+        }
+    }
+}
+
+extension SearchSheetCategoryView {
+    var scrollCategoryButtons: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 categoryButtons(scrollProxy: proxy)
             }
             .frame(height: 35)
         }
+    }
+    
+    var emptyView: some View {
+        EmptyView()
     }
 }
 

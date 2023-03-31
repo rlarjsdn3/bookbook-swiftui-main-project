@@ -36,6 +36,9 @@ struct SearchSheetView: View {
                 )
             }
         }
+        .onDisappear {
+            bookViewModel.bookSearchItems.removeAll()
+        }
     }
 }
 
