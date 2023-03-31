@@ -16,32 +16,46 @@ struct ListTypeButtonView: View {
     
     var body: some View {
         Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                redearProxy.scrollTo(type.name)
-                selectedAnimation = type
-            }
-            listTypeSelected = type
+            selectType(type: type)
         } label: {
-            VStack {
-                Text(type.name)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(listTypeSelected == type ? .black : .gray)
-            }
+            typeLabel
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 5)
         .padding(.bottom, 5)
         .overlay {
             if selectedAnimation == type {
-                RoundedRectangle(cornerRadius: 5)
-                    .offset(y: 21)
-                    .frame(height: 1)
-                    .frame(maxWidth: .infinity)
-                    .matchedGeometryEffect(id: "rectangle", in: selectedNamespace)
+                underline
             }
         }
-        .id(type.name)
+        .id(type.rawValue)
+    }
+}
+
+extension ListTypeButtonView {
+    var typeLabel: some View {
+        Text(type.name)
+            .font(.headline)
+            .fontWeight(.bold)
+            .foregroundColor(listTypeSelected == type ? .black : .gray)
+    }
+    
+    var underline: some View {
+        RoundedRectangle(cornerRadius: 5)
+            .offset(y: 21)
+            .frame(height: 1)
+            .frame(maxWidth: .infinity)
+            .matchedGeometryEffect(id: "rectangle", in: selectedNamespace)
+    }
+}
+
+extension ListTypeButtonView {
+    func selectType(type: ListType) {
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+            selectedAnimation = type
+            redearProxy.scrollTo(type.rawValue)
+        }
+        listTypeSelected = type
     }
 }
 

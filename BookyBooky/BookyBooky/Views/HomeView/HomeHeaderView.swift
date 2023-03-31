@@ -23,9 +23,7 @@ struct HomeHeaderView: View {
                     Label("검색 추가", systemImage: "magnifyingglass")
                 }
             } label: {
-                Image(systemName: "plus")
-                    .font(.title)
-                    .fontWeight(.bold)
+                searchImage
             }
             
             Spacer()
@@ -34,14 +32,26 @@ struct HomeHeaderView: View {
             Button {
                 
             } label: {
-                Image(systemName: "person.crop.circle")
-                    .font(.title)
-                    .fontWeight(.bold)
+                profileImage
             }
 
         }
         .foregroundColor(.black)
         .padding()
+    }
+}
+
+extension HomeHeaderView {
+    var searchImage: some View {
+        Image(systemName: "plus")
+            .font(.title)
+            .fontWeight(.bold)
+    }
+    
+    var profileImage: some View {
+        Image(systemName: "person.crop.circle")
+            .font(.title)
+            .fontWeight(.bold)
     }
 }
 

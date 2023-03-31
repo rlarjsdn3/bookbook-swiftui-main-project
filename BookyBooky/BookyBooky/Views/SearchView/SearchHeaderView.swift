@@ -12,32 +12,46 @@ struct SearchHeaderView: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "square")
-                .font(.title)
-                .fontWeight(.semibold)
-                .hidden()
+            emptyImage
             
             Spacer()
             
-            Text("검색")
-                .font(.title2)
-                .fontWeight(.semibold)
+            searchLabel
             
             Spacer()
             
             Button {
                 showSearchSheetView = true
             } label: {
-                Image(systemName: "magnifyingglass")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.black)
+                searchImage
             }
         }
         .padding()
         .sheet(isPresented: $showSearchSheetView) {
             SearchSheetView()
         }
+    }
+}
+
+extension SearchHeaderView {
+    var emptyImage: some View {
+        Image(systemName: "square")
+            .font(.title)
+            .fontWeight(.semibold)
+            .hidden()
+    }
+    
+    var searchLabel: some View {
+        Text("검색")
+            .font(.title2)
+            .fontWeight(.semibold)
+    }
+    
+    var searchImage: some View {
+        Image(systemName: "magnifyingglass")
+            .font(.title2)
+            .fontWeight(.semibold)
+            .foregroundColor(.black)
     }
 }
 

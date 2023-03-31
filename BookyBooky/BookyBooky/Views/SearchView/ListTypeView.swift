@@ -16,22 +16,29 @@ struct ListTypeView: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(ListType.allCases, id: \.self) { type in
-                        ListTypeButtonView(
-                            listTypeSelected: $listTypeSelected,
-                            type: type,
-                            redearProxy: proxy,
-                            selectedAnimation: $selectedAnimation,
-                            selectedNamespace: namespace
-                        )
-                        .padding(.horizontal, 8)
-                    }
-                }
-                .padding(.leading, 8)
-                .padding(.trailing, 8)
+                listTypeButtons(scrollProxy: proxy)
             }
         }
+    }
+}
+
+extension ListTypeView {
+    @ViewBuilder
+    func listTypeButtons(scrollProxy: ScrollViewProxy) -> some View {
+        HStack {
+            ForEach(ListType.allCases, id: \.self) { type in
+                ListTypeButtonView(
+                    listTypeSelected: $listTypeSelected,
+                    type: type,
+                    redearProxy: scrollProxy,
+                    selectedAnimation: $selectedAnimation,
+                    selectedNamespace: namespace
+                )
+                .padding(.horizontal, 8)
+            }
+        }
+        .padding(.leading, 8)
+        .padding(.trailing, 8)
     }
 }
 

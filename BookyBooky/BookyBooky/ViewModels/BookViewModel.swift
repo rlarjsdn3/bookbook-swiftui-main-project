@@ -95,7 +95,7 @@ class BookViewModel: ObservableObject {
     
     /// 알라딘 검색 API를 호출하여 도서 검색 결과를 반환하는 함수입니다,
     /// - Parameter query: 검색할 도서/저자 명
-    func requestBookSearchAPI(search query: String) {
+    func requestBookSearchAPI(search query: String, page start: Int = 1) {
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?"
         
         let parameters = [
@@ -105,7 +105,7 @@ class BookViewModel: ObservableObject {
             "QueryType": "Title",
             "Cover": "BIG",
             "MaxResults": "100",
-            "start": "1",
+            "start": "\(start)",
             "SearchTarget": "Book",
             "output": "js",
             "Version": "20131101"

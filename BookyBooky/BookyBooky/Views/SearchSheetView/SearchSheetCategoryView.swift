@@ -15,20 +15,22 @@ struct SearchSheetCategoryView: View {
     @Namespace var selectedNamespace: Namespace.ID
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 15) {
-                ForEach(bookViewModel.categories, id: \.self) { category in
-                    CategoryButtonView(
-                        categorySelected: $categorySelected,
-                        category: category,
-                        selectedAnimation: $selectedAnimation,
-                        selectedNamespace: selectedNamespace
-                    )
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: -20) {
+                    ForEach(bookViewModel.categories, id: \.self) { category in
+                        CategoryButtonView(
+                            categorySelected: $categorySelected,
+                            category: category,
+                            proxyReader: proxy,
+                            selectedAnimation: $selectedAnimation,
+                            selectedNamespace: selectedNamespace
+                        )
+                    }
                 }
             }
-            .padding(.horizontal, 20)
+            .frame(height: 35)
         }
-        .frame(height: 35)
     }
 }
 
