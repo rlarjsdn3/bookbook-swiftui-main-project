@@ -21,7 +21,7 @@ struct SearchSheetView: View {
                 animationSelected: $selectedAnimation
             )
             
-            SearchCategoryView(
+            SearchSheetCategoryView(
                 categorySelected: $categorySelected,
                 selectedAnimation: $selectedAnimation
             )

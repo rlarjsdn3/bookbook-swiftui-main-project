@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchCategoryView: View {
+struct SearchSheetCategoryView: View {
     @EnvironmentObject var bookViewModel: BookViewModel
     
     @Binding var categorySelected: Category
@@ -32,9 +32,9 @@ struct SearchCategoryView: View {
     }
 }
 
-struct SearchCategoryView_Previews: PreviewProvider {
+struct SearchSheetCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchCategoryView(
+        SearchSheetCategoryView(
             categorySelected: .constant(.all),
             selectedAnimation: .constant(.all)
         )
