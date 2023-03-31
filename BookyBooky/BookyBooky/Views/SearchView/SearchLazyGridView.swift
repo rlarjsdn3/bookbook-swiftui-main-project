@@ -33,7 +33,7 @@ struct SearchLazyGridView: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(showsIndicators: false) {
-                LazyVGrid(columns: columns, spacing: 30) {
+                LazyVGrid(columns: columns, spacing: 25) {
                     ForEach(bookListItems, id: \.self) { item in
                         ListTypeCellView(bookItem: item)
                     }
