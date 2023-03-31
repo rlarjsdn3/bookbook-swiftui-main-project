@@ -13,33 +13,21 @@ struct SearchSheetView: View {
     @State private var categorySelected: Category = .all
     @State private var selectedAnimation: Category = .all
     
-    var filteredSearchItems: [BookSearch.Item] {
-        var list: [BookSearch.Item] = []
-        
-        // '전체' 혹은 해당 분류에 맞게 도서를 모으기
-        if categorySelected == .all {
-            return bookViewModel.bookSearchItems
-        } else {
-            for item in bookViewModel.bookSearchItems where item.category == categorySelected {
-                list.append(item)
-            }
-        }
-        
-        return list
-    }
-    
     var body: some View {
         VStack {
-            SearchSheetTextFieldView(query: $query, categorySelected: $categorySelected, animationSelected: $selectedAnimation)
+            SearchSheetTextFieldView(
+                query: $query,
+                categorySelected: $categorySelected,
+                animationSelected: $selectedAnimation
+            )
             
-            SearchCategoryView(categorySelected: $categorySelected, selectedAnimation: $selectedAnimation)
+            SearchCategoryView(
+                categorySelected: $categorySelected,
+                selectedAnimation: $selectedAnimation
+            )
             
             ZStack {
-                ScrollView {
-                    ForEach(filteredSearchItems, id: \.self) { item in
-                        Text("\(item.title)")
-                    }
-                }
+                SearchSheetScrollView(categorySelected: $categorySelected)
             }
             
             Spacer()
