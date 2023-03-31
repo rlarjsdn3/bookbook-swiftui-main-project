@@ -24,11 +24,6 @@ struct BookSearch: Codable {
 }
 
 extension BookSearch.Item {
-    /// 부제를 제외한 도서 제목만 반환하는 프로퍼티
-    var originalTitle: String {
-        return String(title.split(separator: " - ")[0])
-    }
-    
     /// 1차 카테고리 분류 정보를 반환하는 프로퍼티
     var oneDepthCategoryName: String {
         let category = categoryName.split(separator: ">")
