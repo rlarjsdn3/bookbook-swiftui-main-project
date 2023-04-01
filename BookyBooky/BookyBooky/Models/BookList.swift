@@ -93,7 +93,9 @@ extension BookList.Item {
         return "기타" // '기타'로 분류
     }
     
-    /// 1차 카테고리 분류 정보를 기반으로 앱 내부에 출력될 카테고리 정보를 반환하는 프로퍼티(카테고리 정제)
+    /// 카테고리 정보를 기반으로 앱 내부에 출력될 카테고리 정보를 반환하는 프로퍼티입니다.
+    /// 1차 카테고리 분류 정보를 적당히 묶어 앱 내부에 표시될 카테고리 정보를 반환합니다. 예를 들어, "고전", "고전/명작" 카테고리는 성격이 비슷하므로 한꺼번에 묶어서 "고전" 카테고리로 반환합니다.
+    /// 알라딘 API 공식 문서가 정확하지 않으므로 일부 카테고리는 직접 작성해야 합니다.
     var category: Category {
         switch oneDepthCategoryName {
         case "액션/어드벤처":
@@ -112,7 +114,7 @@ extension BookList.Item {
             return .comedy
         case "컴퓨터/모바일", "컴퓨터":
             return .computer
-        case "요리":
+        case "요리", "요리/살림":
             return .cook
         case "공예/취미/수집":
             return .craft

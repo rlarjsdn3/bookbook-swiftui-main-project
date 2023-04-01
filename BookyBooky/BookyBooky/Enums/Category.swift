@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 실제 앱 내부에 보여지는 카테고리입니다. 원시값(rawValue)으로 카테고리를 출력하세요.
 enum Category: String {
     case all = "전체"
     case action = "액션/어드벤처"
@@ -17,7 +18,7 @@ enum Category: String {
     case classic = "고전"
     case comedy = "유머"
     case computer = "컴퓨터/모바일"
-    case cook = "요리"
+    case cook = "요리/살림"
     case craft = "공예/취미/수집"
     case criticalBiography = "인물/평전"
     case design = "건축/디자인"
