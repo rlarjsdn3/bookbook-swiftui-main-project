@@ -58,7 +58,7 @@ enum Category: String {
     case selfImprovement = "자기계발"
     case socialScience = "사회과학"
     case society = "인문/사회"
-    case sports = "스포츠"
+    case sports = "건강/스포츠"
     case technical = "기술공학"
     case teenager = "청소년"
     case thriller = "공포/스릴러"

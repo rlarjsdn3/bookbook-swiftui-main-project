@@ -146,7 +146,9 @@ extension BookList.Item {
             return .genreNovel
         case "건강/취미/레저":
             return .habit
-        case "건강/스포츠":
+        case "건강/취미":
+            return .health
+        case "스포츠":
             return .sports
         case "고등학교참고서", "중고등참고서":
             return .highSchool
