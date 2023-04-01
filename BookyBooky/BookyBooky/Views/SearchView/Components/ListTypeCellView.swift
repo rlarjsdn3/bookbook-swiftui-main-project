@@ -9,9 +9,21 @@ import SwiftUI
 import Shimmer
 
 struct ListTypeCellView: View {
-    @State private var isLoading = true
+    
+    // MARK: - COSTANT PROPERTIES
+    
+    let COVER_WIDTH: CGFloat = 150
+    let COVER_HEIGHT: CGFloat = 200
+    
+    // MARK: - PROPERTIES
     
     let bookItem: BookList.Item
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @State private var isLoading = true
+    
+    // MARK: - BODY
     
     var body: some View {
         VStack {
@@ -31,6 +43,8 @@ struct ListTypeCellView: View {
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension ListTypeCellView {
     var asyncImage: some View {
         AsyncImage(url: URL(string: bookItem.cover)) { image in
@@ -43,7 +57,10 @@ extension ListTypeCellView {
     var loadingCover: some View {
         RoundedRectangle(cornerRadius: 10)
             .fill(.gray.opacity(0.1))
-            .frame(width: 150, height: 200) // 로딩 이미지 크기 조정하기
+            .frame(
+                width: COVER_WIDTH,
+                height: COVER_HEIGHT
+            )
             .shimmering(active: isLoading)
     }
     
@@ -71,7 +88,10 @@ extension ListTypeCellView {
         image
             .resizable()
             .scaledToFill()
-            .frame(width: 150, height: 200)
+            .frame(
+                width: COVER_WIDTH,
+                height: COVER_HEIGHT
+            )
             .cornerRadius(10)
             .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
             .onAppear {
