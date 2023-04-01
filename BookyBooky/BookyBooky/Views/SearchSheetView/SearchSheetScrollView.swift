@@ -47,15 +47,27 @@ struct SearchSheetScrollView: View {
 
 extension SearchSheetScrollView {
     var scrollSearchItems: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(filteredSearchItems, id: \.self) { item in
-                    SearchSheetCellView(bookItem: item)
+        ScrollViewReader { proxy in
+            ScrollView {
+                lazyListCells
+                
+                seeMoreButton
+            }
+            .onChange(of: categorySelected) { _ in
+                withAnimation {
+                    proxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }
             }
-            
-            seeMoreButton
         }
+    }
+    
+    var lazyListCells: some View {
+        LazyVStack {
+            ForEach(filteredSearchItems, id: \.self) { item in
+                SearchSheetCellView(bookItem: item)
+            }
+        }
+        .id("Scroll_To_Top")
     }
     
     var seeMoreButton: some View {

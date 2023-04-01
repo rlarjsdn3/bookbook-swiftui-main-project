@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct SearchLazyGridView: View {
-    @EnvironmentObject var bookViewModel: BookViewModel
     
-    @Binding var listTypeSelected: ListType
+    // MARK: - PROPERTIES
     
     var bookListItems: [BookList.Item] {
         switch listTypeSelected {
@@ -30,19 +29,18 @@ struct SearchLazyGridView: View {
         GridItem(.flexible())
     ]
     
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var bookViewModel: BookViewModel
+    
+    @Binding var listTypeSelected: ListType
+    
+    // MARK: - BODY
+    
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(showsIndicators: false) {
-                LazyVGrid(columns: columns, spacing: 25) {
-                    ForEach(bookListItems, id: \.self) { item in
-                        ListTypeCellView(bookItem: item)
-                    }
-                }
-                // 하단 사용자화 탭 뷰가 기본 탭 뷰와 높이가 상이하기 때문에 위/아래 간격을 달리함
-                .padding(.top, 20)
-                .padding(.bottom, 40)
-                .padding(.horizontal, 10)
-                .id("Scroll_To_Top")
+                lazyGridCells
             }
             // 도서 리스트 타입이 변경될 때마다 리스트의 스크롤을 맨 위로 올림
             .onChange(of: listTypeSelected) { _ in
@@ -51,6 +49,23 @@ struct SearchLazyGridView: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension SearchLazyGridView {
+    var lazyGridCells: some View {
+        LazyVGrid(columns: columns, spacing: 25) {
+            ForEach(bookListItems, id: \.self) { item in
+                ListTypeCellView(bookItem: item)
+            }
+        }
+        // 하단 사용자화 탭 뷰가 기본 탭 뷰와 높이가 상이하기 때문에 위/아래 간격을 달리함
+        .padding(.top, 20)
+        .padding(.bottom, 40)
+        .padding(.horizontal, 10)
+        .id("Scroll_To_Top")
     }
 }
 
