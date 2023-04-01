@@ -27,23 +27,19 @@ struct BookList: Codable {
 
 // MARK: - EXTENSIONS
 
-extension BookList {
-    static var preview: BookList {
-        .init(
-            totalResults: 1,
-            startIndex: 1,
-            item: [
-                .init(
-                    title: "Java의 정석 - 3rd Edition",
-                    author: "남궁성 (지은이)",
-                    publisher: "도우출판",
-                    pubDate: "2016-01-28",
-                    cover: "https://image.aladin.co.kr/product/22460/28/cover/8994492046_1.jpg",
-                    categoryName: "국내도서>컴퓨터/모바일>프로그래밍 언어>자바",
-                    isbn13: "9788994492049"
-                )
-            ]
-        )
+extension BookList.Item {
+    static var preview: [BookList.Item] {
+        [
+            .init(
+                title: "Java의 정석 - 3rd Edition",
+                author: "남궁성 (지은이)",
+                publisher: "도우출판",
+                pubDate: "2016-01-28",
+                cover: "https://image.aladin.co.kr/product/22460/28/cover/8994492046_1.jpg",
+                categoryName: "국내도서>컴퓨터/모바일>프로그래밍 언어>자바",
+                isbn13: "9788994492049"
+            )
+        ]
     }
 }
 

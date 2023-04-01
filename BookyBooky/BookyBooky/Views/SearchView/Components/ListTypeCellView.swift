@@ -69,6 +69,6 @@ extension ListTypeCellView {
 
 struct ListTypeCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ListTypeCellView(bookItem: BookList.preview.item[0])
+        ListTypeCellView(bookItem: BookList.Item.preview[0])
     }
 }

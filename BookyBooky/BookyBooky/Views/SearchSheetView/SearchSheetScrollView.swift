@@ -49,7 +49,7 @@ extension SearchSheetScrollView {
     var scrollSearchItems: some View {
         ScrollView {
             ForEach(filteredSearchItems, id: \.self) { item in
-                Text("\(item.title)") // 검색 셀 코드 작성 필요!
+                SearchSheetCellView(bookItem: item)
             }
             
             seeMoreButton
