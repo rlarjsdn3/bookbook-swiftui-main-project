@@ -48,7 +48,7 @@ extension SearchSheetTextFieldView {
     }
     
     var searchTextField: some View {
-        TextField("제목 / 저자 / 출판사 검색", text: $searchQuery)
+        TextField("제목 / 저자 검색", text: $searchQuery)
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {

@@ -104,7 +104,6 @@ class BookViewModel: ObservableObject {
             "ttbKey": "\(AladinAPI.TTBKey)",
             "Query": "\(euckrEncoding(query))",
             "InputEncoding": "euc-kr",
-            "QueryType": "Title",
             "Cover": "BIG",
             "MaxResults": "100",
             "start": "\(startIndex)",
