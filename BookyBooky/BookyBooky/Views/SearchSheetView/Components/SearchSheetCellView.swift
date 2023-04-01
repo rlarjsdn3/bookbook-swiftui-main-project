@@ -103,7 +103,7 @@ extension SearchSheetCellView {
             
             ZStack {
                 TextShape()
-                    .fill(.orange) // 도서 카테고리 별로 색상 변경! - 나중에
+                    .fill(bookItem.accentColor)
                     .offset(y: 4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                 
