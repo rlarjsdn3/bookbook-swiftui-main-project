@@ -14,56 +14,69 @@ struct ListTypeCellView: View {
     let bookItem: BookList.Item
     
     var body: some View {
-        // 버튼으로 동작하게 코드 구현하기 (BookDetail)
-        
         VStack {
-            AsyncImage(url: URL(string: bookItem.cover)) { phase in
-                switch phase {
-                case .empty:
-                    loadingImage
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 150, height: 200) // 이미지 크기 조정하기
-                        .cornerRadius(10)
-                        .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
-                        .onAppear {
-                            isLoading = false
-                        }
-                case .failure(_):
-                    loadingImage
-                @unknown default:
-                    loadingImage
-                }
+            asyncImage
+            
+            VStack {
+                title
+                
+                author
             }
-            
-            Text(bookItem.originalTitle)
-                .font(.headline)
-                .fontWeight(.bold)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-                .frame(height: 25)
-                .redacted(reason: isLoading ? .placeholder : [])
-                .shimmering(active: isLoading)
-                .padding(.horizontal)
-                .padding(.bottom, -5)
-            
-            Text(bookItem.authorInfo)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .redacted(reason: isLoading ? .placeholder : [])
-                .shimmering(active: isLoading)
+            .redacted(reason: isLoading ? .placeholder : [])
+            .shimmering(active: isLoading)
+        }
+        .onTapGesture {
+            // do seomthing...
         }
     }
 }
 
 extension ListTypeCellView {
-    var loadingImage: some View {
+    var asyncImage: some View {
+        AsyncImage(url: URL(string: bookItem.cover)) { image in
+            cover(image)
+        } placeholder: {
+            loadingCover
+        }
+    }
+    
+    var loadingCover: some View {
         RoundedRectangle(cornerRadius: 10)
             .fill(.gray.opacity(0.1))
             .frame(width: 150, height: 200) // 로딩 이미지 크기 조정하기
             .shimmering(active: isLoading)
+    }
+    
+    var title: some View {
+        Text(bookItem.originalTitle)
+            .font(.headline)
+            .fontWeight(.bold)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .frame(height: 25)
+            .padding(.horizontal)
+            .padding(.bottom, -5)
+    }
+    
+    var author: some View {
+        Text(bookItem.authorInfo)
+            .font(.subheadline)
+            .foregroundColor(.secondary)
+    }
+}
+
+extension ListTypeCellView {
+    @ViewBuilder
+    func cover(_ image: Image) -> some View {
+        image
+            .resizable()
+            .scaledToFill()
+            .frame(width: 150, height: 200)
+            .cornerRadius(10)
+            .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
+            .onAppear {
+                isLoading = false
+            }
     }
 }
 
