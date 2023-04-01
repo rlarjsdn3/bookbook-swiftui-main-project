@@ -9,33 +9,29 @@ import SwiftUI
 import SwiftDate
 
 struct SearchSheetCellView: View {
-    @State private var isLoading = true
+    
+    // MARK: - CONSTANT PROPERTIES
+    
+    let COVER_HEIGHT: CGFloat = 180 // 표지(커버) 이미지 높이
+    let COVER_WIDTH_RATIO = 0.32 // 표지(커버) 이미지의 화면 사이즈 대비 너비 비율
+    let TEXT_HEIGHT: CGFloat = 130 // 책 정보 도형 높이
+    let TEXT_WIDTH_RATIO = 0.71 // 책 정보 도형의 화면 사이즈 대비 너비 비율
+    
+    // MARK: - PROPERTIES
     
     let bookItem: BookList.Item
     
+    // MARK: - WRAPPER PROPERTIES
+    
+    @State private var isLoading = true
+    
+    // MARK: - BODY
+    
     var body: some View {
         GeometryReader { proxy in
-            let size = proxy.size
-            
             ZStack {
                 HStack {
-                    AsyncImage(url: URL(string: bookItem.cover)) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: size.width * 0.32, height: 180)
-                            .onAppear {
-                                isLoading = false
-                            }
-                    } placeholder: {
-                        CoverShape()
-                            .fill(.gray.opacity(0.25))
-                            .frame(width: size.width * 0.32, height: 180)
-                            .shimmering(active: isLoading)
-                    }
-                    .clipShape(CoverShape())
-                    .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
-                    .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: -5)
+                    asyncImage(geometryProxy: proxy)
                     
                     Spacer()
                 }
@@ -45,7 +41,7 @@ struct SearchSheetCellView: View {
                     
                     ZStack {
                         TextShape()
-                            .fill(.orange)
+                            .fill(.orange.opacity(0.8))
                             .offset(y: 4)
                             .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                         
@@ -56,41 +52,20 @@ struct SearchSheetCellView: View {
                         
                         
                         VStack( alignment: .leading, spacing: 2) {
-                            Text(bookItem.originalTitle)
-                                .font(.title3)
-                                .fontWeight(.bold)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.8)
-                                .padding(.bottom, 2)
+                            originalTitle
                             
-                            Text(bookItem.authorInfo)
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                            
-                            HStack(spacing: 2) {
-                                Text(bookItem.publisher)
-                                
-                                Text("・")
-                                
-                                Text(bookItem.category.rawValue)
-                            }
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .fontWeight(.semibold)
-                            
-                            Spacer()
-                            
-                            Text(bookItem.publishDate, style: .date)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            
+                            subInfo
                         }
+                        .font(.subheadline)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .redacted(reason: isLoading ? .placeholder : [])
                         .shimmering(active: isLoading)
                         .padding()
                     }
-                    .frame(width: size.width * 0.71, height: 130)
+                    .frame(
+                        width: proxy.size.width * TEXT_WIDTH_RATIO,
+                        height: TEXT_HEIGHT
+                    )
                 }
             }
         }
@@ -99,8 +74,90 @@ struct SearchSheetCellView: View {
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension SearchSheetCellView {
+    var originalTitle: some View {
+        Text(bookItem.originalTitle)
+            .font(.title3)
+            .fontWeight(.bold)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .padding(.bottom, 2)
+    }
     
+    var subInfo: some View {
+        VStack (alignment: .leading) {
+            author
+            
+            publisher
+            
+            Spacer()
+            
+            pubDate
+        }
+        .foregroundColor(.secondary)
+    }
+    
+    var author: some View {
+        Text(bookItem.authorInfo)
+            .foregroundColor(.primary)
+            .fontWeight(.bold)
+    }
+    
+    var publisher: some View {
+        HStack(spacing: 2) {
+            Text(bookItem.publisher)
+            
+            Text("・")
+            
+            Text(bookItem.category.rawValue)
+        }
+        .fontWeight(.semibold)
+    }
+    
+    var pubDate: some View {
+        Text(bookItem.publishDate, style: .date)
+    }
+}
+
+extension SearchSheetCellView {
+    @ViewBuilder
+    func asyncImage(geometryProxy proxy: GeometryProxy) -> some View {
+        AsyncImage(url: URL(string: bookItem.cover)) { image in
+            cover(image, geometryProxy: proxy)
+        } placeholder: {
+            loadingCover(geometryProxy: proxy)
+        }
+        .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
+        .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: -5)
+    }
+    
+    @ViewBuilder
+    func cover(_ image: Image, geometryProxy proxy: GeometryProxy) -> some View {
+        image
+            .resizable()
+            .scaledToFill()
+            .frame(
+                width: proxy.size.width * COVER_WIDTH_RATIO,
+                height: COVER_HEIGHT
+            )
+            .clipShape(CoverShape())
+            .onAppear {
+                isLoading = false
+            }
+    }
+    
+    @ViewBuilder
+    func loadingCover(geometryProxy proxy: GeometryProxy) -> some View {
+        CoverShape()
+            .fill(.gray.opacity(0.25))
+            .frame(
+                width: proxy.size.width * COVER_WIDTH_RATIO,
+                height: COVER_HEIGHT
+            )
+            .shimmering(active: isLoading)
+    }
 }
 
 struct SearchSheetCellView_Previews: PreviewProvider {

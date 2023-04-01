@@ -48,8 +48,10 @@ struct SearchSheetScrollView: View {
 extension SearchSheetScrollView {
     var scrollSearchItems: some View {
         ScrollView {
-            ForEach(filteredSearchItems, id: \.self) { item in
-                SearchSheetCellView(bookItem: item)
+            LazyVStack {
+                ForEach(filteredSearchItems, id: \.self) { item in
+                    SearchSheetCellView(bookItem: item)
+                }
             }
             
             seeMoreButton
