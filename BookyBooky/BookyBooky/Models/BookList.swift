@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftDate
 
 // MARK: - STRUCT
 
@@ -72,6 +73,14 @@ extension BookList.Item {
         // 저자 정보가 제대로 나누어지지 못하면
         } else {
             return author.split(separator: " ").map { String($0) }[0]
+        }
+    }
+    
+    var publishDate: Date {
+        if let date = pubDate.toDate() {
+            return date.date
+        } else {
+            return Date()
         }
     }
     

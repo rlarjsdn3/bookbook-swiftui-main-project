@@ -12,7 +12,7 @@ struct TextShape: Shape {
         let path = UIBezierPath(
             roundedRect: rect,
             byRoundingCorners: [.topLeft, .bottomLeft],
-            cornerRadii: CGSize(width: 30, height: 30)
+            cornerRadii: CGSize(width: 25, height: 25)
         )
         
         return Path(path.cgPath)

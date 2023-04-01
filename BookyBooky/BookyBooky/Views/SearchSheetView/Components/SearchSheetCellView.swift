@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftDate
 
 struct SearchSheetCellView: View {
-    @State private var isLoading = false
+    @State private var isLoading = true
     
     let bookItem: BookList.Item
     
@@ -19,29 +19,23 @@ struct SearchSheetCellView: View {
             
             ZStack {
                 HStack {
-                    AsyncImage(url: URL(string: bookItem.cover)) { phase in
-                        switch phase {
-                        case .empty:
-                            CoverShape()
-                                .fill(.white)
-                                .frame(width: size.width * 0.33, height: 200)
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: size.width * 0.33, height: 200)
-                        case .failure(_):
-                            CoverShape()
-                                .fill(.white)
-                                .frame(width: size.width * 0.33, height: 200)
-                        @unknown default:
-                            CoverShape()
-                                .fill(.white)
-                                .frame(width: size.width * 0.33, height: 200)
-                        }
+                    AsyncImage(url: URL(string: bookItem.cover)) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: size.width * 0.32, height: 180)
+                            .onAppear {
+                                isLoading = false
+                            }
+                    } placeholder: {
+                        CoverShape()
+                            .fill(.gray.opacity(0.25))
+                            .frame(width: size.width * 0.32, height: 180)
+                            .shimmering(active: isLoading)
                     }
                     .clipShape(CoverShape())
                     .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
+                    .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: -5)
                     
                     Spacer()
                 }
@@ -51,10 +45,17 @@ struct SearchSheetCellView: View {
                     
                     ZStack {
                         TextShape()
-                            .fill(.white)
+                            .fill(.orange)
+                            .offset(y: 4)
                             .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                         
-                        VStack(alignment: .leading) {
+                        TextShape()
+                            .fill(.white)
+                            .offset(y: -4)
+                            .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: 5)
+                        
+                        
+                        VStack( alignment: .leading, spacing: 2) {
                             Text(bookItem.originalTitle)
                                 .font(.title3)
                                 .fontWeight(.bold)
@@ -66,7 +67,7 @@ struct SearchSheetCellView: View {
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                             
-                            HStack(spacing: -3) {
+                            HStack(spacing: 2) {
                                 Text(bookItem.publisher)
                                 
                                 Text("・")
@@ -75,23 +76,26 @@ struct SearchSheetCellView: View {
                             }
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                            .fontWeight(.bold)
+                            .fontWeight(.semibold)
                             
                             Spacer()
                             
-                            Text(bookItem.pubDate)
+                            Text(bookItem.publishDate, style: .date)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
                             
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .redacted(reason: isLoading ? .placeholder : [])
+                        .shimmering(active: isLoading)
                         .padding()
                     }
-                    .frame(width: size.width * 0.7, height: 145)
-                    .background(.white)
+                    .frame(width: size.width * 0.71, height: 130)
                 }
             }
         }
-        .frame(height: 200, alignment: .center)
-        .padding(.vertical, 5)
+        .frame(height: 180)
+        .padding(.top, 20)
     }
 }
 
