@@ -30,54 +30,20 @@ struct SearchSheetCellView: View {
     var body: some View {
         GeometryReader { proxy in
             ZStack {
-                HStack {
-                    asyncImage(geometryProxy: proxy)
-                    
-                    Spacer()
-                }
+                leftBookSearchShape(geometryProxy: proxy)
 
-                HStack {
-                    Spacer()
-                    
-                    ZStack {
-                        TextShape()
-                            .fill(.orange.opacity(0.8))
-                            .offset(y: 4)
-                            .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
-                        
-                        TextShape()
-                            .fill(.white)
-                            .offset(y: -4)
-                            .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: 5)
-                        
-                        
-                        VStack( alignment: .leading, spacing: 2) {
-                            originalTitle
-                            
-                            subInfo
-                        }
-                        .font(.subheadline)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .redacted(reason: isLoading ? .placeholder : [])
-                        .shimmering(active: isLoading)
-                        .padding()
-                    }
-                    .frame(
-                        width: proxy.size.width * TEXT_WIDTH_RATIO,
-                        height: TEXT_HEIGHT
-                    )
-                }
+                rightBookSearchShape(geometryProxy: proxy)
             }
         }
-        .frame(height: 180)
-        .padding(.top, 20)
+        .frame(height: COVER_HEIGHT)
+        .padding(.top, 18)
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchSheetCellView {
-    var originalTitle: some View {
+    var title: some View {
         Text(bookItem.originalTitle)
             .font(.title3)
             .fontWeight(.bold)
@@ -122,6 +88,50 @@ extension SearchSheetCellView {
 }
 
 extension SearchSheetCellView {
+    @ViewBuilder
+    func leftBookSearchShape(geometryProxy proxy: GeometryProxy) -> some View {
+        HStack {
+            asyncImage(geometryProxy: proxy)
+            
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    func rightBookSearchShape(geometryProxy proxy: GeometryProxy) -> some View {
+        HStack {
+            Spacer()
+            
+            ZStack {
+                TextShape()
+                    .fill(.orange) // 도서 카테고리 별로 색상 변경! - 나중에
+                    .offset(y: 4)
+                    .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
+                
+                TextShape()
+                    .fill(.white)
+                    .offset(y: -4)
+                    .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: 5)
+                
+                
+                VStack( alignment: .leading, spacing: 2) {
+                    title
+                    
+                    subInfo
+                }
+                .font(.subheadline)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .redacted(reason: isLoading ? .placeholder : [])
+                .shimmering(active: isLoading)
+                .padding()
+            }
+            .frame(
+                width: proxy.size.width * TEXT_WIDTH_RATIO,
+                height: TEXT_HEIGHT
+            )
+        }
+    }
+    
     @ViewBuilder
     func asyncImage(geometryProxy proxy: GeometryProxy) -> some View {
         AsyncImage(url: URL(string: bookItem.cover)) { image in
