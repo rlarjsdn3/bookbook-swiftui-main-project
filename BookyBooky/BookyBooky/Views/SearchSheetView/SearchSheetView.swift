@@ -39,6 +39,7 @@ struct SearchSheetView: View {
         .onDisappear {
             bookViewModel.bookSearchItems.removeAll()
         }
+        .presentationCornerRadius(30)
     }
 }
 
