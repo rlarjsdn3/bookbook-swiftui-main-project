@@ -83,14 +83,13 @@ extension SearchSheetTextFieldView {
 
 extension SearchSheetTextFieldView {
     func requestBookSearch() {
+        startIndex = 1
+        bookViewModel.requestBookSearchAPI(query: searchQuery)
+        
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
             categoryAnimation = .all
         }
         selectedCategory = .all
-        
-        startIndex = 1
-        bookViewModel.requestBookSearchAPI(query: searchQuery)
-        
         Haptics.shared.play(.rigid)
     }
 }

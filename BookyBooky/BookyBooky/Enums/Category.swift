@@ -35,7 +35,7 @@ enum Category: String {
     case game = "게임/토이"
     case genreNovel = "장르소설"                // 삭제
     case habit = "취미/레저"
-    case health = "건강"
+    case health = "건강/취미"
     case highSchool = "고등참고서"
     case history = "역사"
     case humanities = "인문학"
