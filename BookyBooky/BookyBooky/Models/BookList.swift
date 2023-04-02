@@ -63,16 +63,21 @@ extension BookList.Item {
     /// 저자 정보를 반환하는 프로퍼티
     var authorInfo: String {
         let writer = author.split(separator: " (지은이)").map { String($0) }
-        // 저자 정보가 ' (지은이)'를 기준으로 제대로 나누어지면
+        // 저자 정보가 ' (지은이)'를 기준으로 나누어지면
         if writer.count > 1 {
-            // 복수 저자가 있으면
+            // 저자가 많으면
             let writers = writer[0].split(separator: ", ").map { String($0) }
             if writers.count > 1 {
                 return writers[0] + "외 \(writers.count - 1)명"
             }
             return writers[0]
-        // 저자 정보가 제대로 나누어지지 못하면
+        // 저자 정보가 나누어지지 않으면
         } else {
+            //  저자가 없으면
+            if author.isEmpty {
+                return "(알 수 없음)"
+            }
+            
             return author.split(separator: " ").map { String($0) }[0]
         }
     }

@@ -72,6 +72,7 @@ extension SearchSheetTextFieldView {
     var searchButton: some View {
         Button {
             requestBookSearch()
+            hideKeyboard()
         } label: {
             Text("검색")
         }
@@ -90,6 +91,7 @@ extension SearchSheetTextFieldView {
         startIndex = 1
         bookViewModel.requestBookSearchAPI(query: searchQuery)
         
+        Haptics.shared.play(.rigid)
     }
 }
 
