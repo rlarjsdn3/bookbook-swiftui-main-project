@@ -176,6 +176,7 @@ class BookViewModel: ObservableObject {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
+                    print(data)
                     DispatchQueue.main.async {
                         self.bookDetailInfo = data.item
                     }

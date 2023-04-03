@@ -16,6 +16,7 @@ struct SearchSheetScrollView: View {
     @Binding var categorySelected: Category
     @Binding var searchQuery: String
     @Binding var startIndex: Int
+    @Binding var tapSearchIsbn13: String
     
     var filteredSearchItems: [BookList.Item] {
         var list: [BookList.Item] = []
@@ -65,6 +66,11 @@ extension SearchSheetScrollView {
         LazyVStack {
             ForEach(filteredSearchItems, id: \.self) { item in
                 SearchSheetCellView(bookItem: item)
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                            tapSearchIsbn13 = item.isbn13
+                        }
+                    }
             }
         }
         .id("Scroll_To_Top")
@@ -121,7 +127,8 @@ struct SearchSheetScrollView_Previews: PreviewProvider {
         SearchSheetScrollView(
             categorySelected: .constant(.all),
             searchQuery: .constant(""),
-            startIndex: .constant(1)
+            startIndex: .constant(1),
+            tapSearchIsbn13: .constant("")
         )
         .environmentObject(BookViewModel())
     }

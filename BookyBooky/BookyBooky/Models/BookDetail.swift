@@ -24,7 +24,7 @@ struct BookDetail: Codable {
         
         var subInfo: SubInfo
         struct SubInfo: Codable {
-            var itemPage: Int?      // 상품의 총 페이지
+            var itemPage: Int       // 상품의 총 페이지
         }
     }
 }
