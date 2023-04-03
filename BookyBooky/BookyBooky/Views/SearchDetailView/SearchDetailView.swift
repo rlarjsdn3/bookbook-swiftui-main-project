@@ -29,45 +29,7 @@ struct SearchDetailView: View {
                     
                     SearchDetailTitleView(bookInfo: bookInfo)
                     
-                    HStack {
-                        
-                        Spacer()
-                        
-                        VStack(spacing: 8) {
-                            Text("판매 포인트")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                            
-                            Text("\(bookInfo.salesPoint)")
-                        }
-                        
-                        Spacer()
-                        
-                        VStack(spacing: 8) {
-                            Text("페이지")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                            
-                            Text("\(bookInfo.subInfo.itemPage)")
-                        }
-                        
-                        Spacer()
-                        
-                        VStack(spacing: 8) {
-                            Text("카테고리")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                            
-                            Text(bookInfo.category.rawValue)
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding()
-                    .background(.gray.opacity(0.2))
-                    .cornerRadius(15)
-                    .padding(.horizontal)
-                    .frame(height: 100)
+                    SearchDetailSubInfoView(bookInfo: bookInfo)
                     
                     Divider()
                     
