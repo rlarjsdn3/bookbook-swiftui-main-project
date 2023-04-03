@@ -69,8 +69,8 @@ struct SearchDetailSubInfoView: View {
         .frame(height: 100)
         // 판매 포인트 설명을 위한 시트(Sheet)
         .sheet(isPresented: $showSalesPointDescriptionSheet) {
-            SalesPointDescriptionSheetView()
-                .presentationDetents([.height(300)])
+            SalesPointDescriptionSheetView(bookInfo: bookInfo)
+                .presentationDetents([.height(380)])
                 .presentationCornerRadius(30)
         }
     }

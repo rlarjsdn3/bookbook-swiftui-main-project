@@ -64,7 +64,7 @@ struct SearchDetailCoverView: View {
                         )
                     )
                     .onAppear {
-                        isLoading = true
+                        isLoading = false
                     }
             } placeholder: {
                 Rectangle()

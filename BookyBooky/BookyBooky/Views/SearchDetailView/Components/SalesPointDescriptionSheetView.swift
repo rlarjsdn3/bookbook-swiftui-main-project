@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct SalesPointDescriptionSheetView: View {
+    // MARK: - PROPERTIES
+
+    let bookInfo: BookDetail.Item
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("판매 포인트란?")
@@ -48,6 +56,20 @@ struct SalesPointDescriptionSheetView: View {
                 }
             }
             .foregroundColor(.secondary)
+            
+            Button {
+                dismiss()
+            } label: {
+                Text("나가기")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .frame(height: 55)
+                    .frame(maxWidth: .infinity)
+                    .background(bookInfo.category.accentColor) // 카테고리 별 강조 색상으로
+                    .cornerRadius(15)
+            }
+
         }
         .padding(.horizontal, 25)
     }
@@ -55,6 +77,6 @@ struct SalesPointDescriptionSheetView: View {
 
 struct SalesPointDescriptionSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        SalesPointDescriptionSheetView()
+        SalesPointDescriptionSheetView(bookInfo: BookDetail.Item.preview[0])
     }
 }
