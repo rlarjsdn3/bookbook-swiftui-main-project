@@ -39,7 +39,7 @@ struct SearchDetailTitleView: View {
                 Image(systemName: "heart.fill")
                     .foregroundColor(.white)
                     .padding()
-                    .background(.pink) // 카테고리별 강조 색상으로
+                    .background(bookInfo.category.accentColor) // 카테고리별 강조 색상으로
                     .clipShape(Circle())
             }
 

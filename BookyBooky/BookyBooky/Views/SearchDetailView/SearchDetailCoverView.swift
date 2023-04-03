@@ -27,7 +27,7 @@ struct SearchDetailCoverView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(.gray.gradient) // 카테고리 별 강조색상으로
+                .fill(bookInfo.category.accentColor.gradient) // 카테고리 별 강조색상으로
                 .ignoresSafeArea()
             
             VStack {

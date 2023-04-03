@@ -5,6 +5,7 @@
 //  Created by 김건우 on 2023/03/29.
 //
 
+import SwiftUI
 import Foundation
 
 /// 실제 앱 내부에 보여지는 카테고리입니다. 원시값(rawValue)으로 카테고리 명을 출력하세요.
@@ -66,6 +67,15 @@ enum Category: String {
     case toddler = "유아"
     case travel = "여행"
     case etc = "기타"
+    
+    var accentColor: Color {
+        switch self {
+        case .history:
+            return .brown
+        default:
+            return .gray
+        }
+    }
 }
 
 

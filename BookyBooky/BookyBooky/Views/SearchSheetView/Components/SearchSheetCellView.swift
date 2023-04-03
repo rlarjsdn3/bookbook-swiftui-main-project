@@ -103,7 +103,7 @@ extension SearchSheetCellView {
             
             ZStack {
                 TextShape()
-                    .fill(bookItem.accentColor)
+                    .fill(bookItem.category.accentColor)
                     .offset(y: 4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                 

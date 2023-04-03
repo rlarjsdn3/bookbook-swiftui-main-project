@@ -218,16 +218,4 @@ extension BookList.Item {
             return .etc
         }
     }
-    
-    /// 카테고리 정보를 기반으로 앱 내부에 표시할 강조 색상을 반환하는 프로퍼티입니다. (테스트 중입니다)
-    var accentColor: Color {
-        switch oneDepthCategoryName {
-        case "수험서/자격증", "수험서":
-            return Color.blue
-        case "유아", "유아/아동", "어린이":
-            return Color.yellow
-        default:
-            return Color.gray
-        }
-    }
 }

@@ -64,7 +64,7 @@ struct SearchDetailView: View {
                                     .foregroundColor(.white)
                                     .frame(height: 55)
                                     .frame(maxWidth: .infinity)
-                                    .background(.pink) // 카테고리 별 강조 색상으로
+                                    .background(bookInfo.category.accentColor) // 카테고리 별 강조 색상으로
                                     .cornerRadius(15)
                             }
                         }
