@@ -35,6 +35,7 @@
 		9E7A794929DA8D7500A51856 /* SearchDetailSubInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794829DA8D7500A51856 /* SearchDetailSubInfoView.swift */; };
 		9E7A794B29DA8EBD00A51856 /* SearchDetailDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794A29DA8EBD00A51856 /* SearchDetailDescriptionView.swift */; };
 		9E7A794D29DA998F00A51856 /* SalesPointDescriptionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794C29DA998F00A51856 /* SalesPointDescriptionSheetView.swift */; };
+		9E7A795029DAABA000A51856 /* SearchDetailButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794F29DAABA000A51856 /* SearchDetailButtonsView.swift */; };
 		9EB749FA29D5C43200610D97 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB749F629D5C3A500610D97 /* Category.swift */; };
 		9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325829D119FE004D6D5B /* Alamofire */; };
 		9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325B29D11A6B004D6D5B /* Realm */; };
@@ -83,6 +84,7 @@
 		9E7A794829DA8D7500A51856 /* SearchDetailSubInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailSubInfoView.swift; sourceTree = "<group>"; };
 		9E7A794A29DA8EBD00A51856 /* SearchDetailDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailDescriptionView.swift; sourceTree = "<group>"; };
 		9E7A794C29DA998F00A51856 /* SalesPointDescriptionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesPointDescriptionSheetView.swift; sourceTree = "<group>"; };
+		9E7A794F29DAABA000A51856 /* SearchDetailButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailButtonsView.swift; sourceTree = "<group>"; };
 		9EB749F629D5C3A500610D97 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		9ECA326829D11C02004D6D5B /* RoundedTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTabView.swift; sourceTree = "<group>"; };
 		9ECA326A29D12044004D6D5B /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				9E7A794629DA854D00A51856 /* SearchDetailTitleView.swift */,
 				9E7A794829DA8D7500A51856 /* SearchDetailSubInfoView.swift */,
 				9E7A794A29DA8EBD00A51856 /* SearchDetailDescriptionView.swift */,
+				9E7A794F29DAABA000A51856 /* SearchDetailButtonsView.swift */,
 				9E7A794E29DA999200A51856 /* Components */,
 			);
 			path = SearchDetailView;
@@ -404,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
+				9E7A795029DAABA000A51856 /* SearchDetailButtonsView.swift in Sources */,
 				9E7A794D29DA998F00A51856 /* SalesPointDescriptionSheetView.swift in Sources */,
 				9E54AA0E29D7D84100FE080C /* StringExtension.swift in Sources */,
 				9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */,
