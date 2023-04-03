@@ -68,10 +68,15 @@ enum Category: String {
     case travel = "여행"
     case etc = "기타"
     
+    /// 카테고리 별 강조 색상 정보를 반환하는 프로퍼티입니다. (Beta)
     var accentColor: Color {
         switch self {
+        case .computer:
+            return .black
         case .history:
             return .brown
+        case .professional:
+            return .blue
         default:
             return .gray
         }

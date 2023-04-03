@@ -69,7 +69,7 @@ extension BookDetail.Item {
     var authorInfo: String {
         let writer = author.split(separator: " (지은이)").map { String($0) }
         // 저자 정보가 ' (지은이)'를 기준으로 나누어지면
-        if writer.count > 1 {
+        if writer.count >= 1 {
             // 저자가 많으면
             let writers = writer[0].split(separator: ", ").map { String($0) }
             if writers.count > 1 {
