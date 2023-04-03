@@ -28,8 +28,6 @@ struct SearchDetailTitleView: View {
                 }
                 .font(.headline)
                 .foregroundColor(.secondary)
-                
-                Spacer()
             }
             
             Spacer()
@@ -47,9 +45,8 @@ struct SearchDetailTitleView: View {
 
         }
         .frame(height: 60)
-        .padding()
-        
-        Spacer()
+        .padding([.top, .horizontal])
+        .padding(.bottom, 8)
     }
 }
 
