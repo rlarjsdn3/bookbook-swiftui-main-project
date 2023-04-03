@@ -43,7 +43,9 @@ struct SearchDetailView: View {
                         
                         HStack {
                             Button {
-                                
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                                    isbn13 = ""
+                                }
                             } label: {
                                 Text("돌아가기")
                                     .font(.title3)
