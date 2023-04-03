@@ -17,11 +17,15 @@ struct SearchDetailView: View {
     
     @EnvironmentObject var bookViewModel: BookViewModel
     @State private var isLoading = true
+    @State private var animation = false
     
     // MARK: - BODY
     
     var body: some View {
         ZStack {
+            Color.white
+                .ignoresSafeArea()
+            
             if !bookViewModel.bookDetailInfo.isEmpty {
                 let bookInfo = bookViewModel.bookDetailInfo[0]
                 
@@ -32,22 +36,32 @@ struct SearchDetailView: View {
                         isLoading: $isLoading
                     )
                     
-                    SearchDetailTitleView(bookInfo: bookInfo, isLoading: $isLoading)
-                    
-                    SearchDetailSubInfoView(bookInfo: bookInfo, isLoading: $isLoading)
-                    
-                    Divider()
-                    
-                    SearchDetailDescriptionView(bookInfo: bookInfo, isLoading: $isLoading)
-                    
-                    Spacer()
-                    
-                    SearchDetailButtonsView(bookInfo: bookInfo, isbn13: $isbn13, isLoading: $isLoading)
+                    VStack {
+                        SearchDetailTitleView(bookInfo: bookInfo, isLoading: $isLoading)
+                        
+                        SearchDetailSubInfoView(bookInfo: bookInfo, isLoading: $isLoading)
+                        
+                        Divider()
+                        
+                        SearchDetailDescriptionView(bookInfo: bookInfo, isLoading: $isLoading)
+                        
+                        Spacer()
+                        
+                        SearchDetailButtonsView(bookInfo: bookInfo, isbn13: $isbn13, isLoading: $isLoading)
+                    }
+                    .opacity(animation ? 1 : 0)
+                    .offset(y: animation ? 0 : -30)
                 }
             }
         }
         .onAppear {
             bookViewModel.requestBookDetailAPI(isbn13: isbn13)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                withAnimation(.spring()) {
+                    animation = true
+                }
+            }
         }
         .onDisappear {
             bookViewModel.bookDetailInfo.removeAll()

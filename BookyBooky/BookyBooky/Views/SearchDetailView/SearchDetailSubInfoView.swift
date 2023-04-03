@@ -15,7 +15,7 @@ struct SearchDetailSubInfoView: View {
     
     var body: some View {
         HStack {
-            Spacer()
+            Spacer(minLength: 0)
             
             VStack(spacing: 8) {
                 HStack(spacing: 3) {
@@ -35,6 +35,7 @@ struct SearchDetailSubInfoView: View {
                     .redacted(reason: isLoading ? .placeholder : [])
                     .shimmering(active: isLoading)
             }
+            .frame(maxWidth: .infinity)
             
             Spacer()
             
@@ -47,6 +48,7 @@ struct SearchDetailSubInfoView: View {
                     .redacted(reason: isLoading ? .placeholder : [])
                     .shimmering(active: isLoading)
             }
+            .frame(maxWidth: .infinity)
             
             Spacer()
             
@@ -59,8 +61,10 @@ struct SearchDetailSubInfoView: View {
                     .redacted(reason: isLoading ? .placeholder : [])
                     .shimmering(active: isLoading)
             }
+            .frame(maxWidth: .infinity)
+        
             
-            Spacer()
+            Spacer(minLength: 0)
         }
         .padding()
         .background(.gray.opacity(0.2))

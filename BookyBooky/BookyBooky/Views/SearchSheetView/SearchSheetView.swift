@@ -20,28 +20,29 @@ struct SearchSheetView: View {
     
     var body: some View {
         ZStack {
-            if tapSearchIsbn13.isEmpty {
-                VStack {
-                    SearchSheetTextFieldView(
-                        searchQuery: $searchQuery,
-                        startIndex: $startIndex,
-                        selectedCategory: $selectedCategory,
-                        categoryAnimation: $categoryAnimation
-                    )
-                    
-                    SearchSheetCategoryView(
-                        selectedCategory: $selectedCategory,
-                        categoryAnimation: $categoryAnimation
-                    )
-                    
-                    SearchSheetScrollView(
-                        categorySelected: $selectedCategory,
-                        searchQuery: $searchQuery,
-                        startIndex: $startIndex,
-                        tapSearchIsbn13: $tapSearchIsbn13
-                    )
-                }
-            } else {
+            VStack {
+                SearchSheetTextFieldView(
+                    searchQuery: $searchQuery,
+                    startIndex: $startIndex,
+                    selectedCategory: $selectedCategory,
+                    categoryAnimation: $categoryAnimation
+                )
+                
+                SearchSheetCategoryView(
+                    selectedCategory: $selectedCategory,
+                    categoryAnimation: $categoryAnimation
+                )
+                
+                SearchSheetScrollView(
+                    categorySelected: $selectedCategory,
+                    searchQuery: $searchQuery,
+                    startIndex: $startIndex,
+                    tapSearchIsbn13: $tapSearchIsbn13
+                )
+            }
+            .opacity(!tapSearchIsbn13.isEmpty ? 0 : 1)
+            
+            if !tapSearchIsbn13.isEmpty {
                 SearchDetailView(isbn13: $tapSearchIsbn13)
             }
         }
