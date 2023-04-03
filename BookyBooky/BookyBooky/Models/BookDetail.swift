@@ -30,6 +30,50 @@ struct BookDetail: Codable {
 }
 
 extension BookDetail.Item {
+    /// 도서 제목을 반환하는 프로퍼티
+    var originalTitle: String {
+        return String(title.split(separator: " - ")[0])
+    }
+    
+    /// 도서 부제를 반환하는 프로퍼티 (부제 없을 시, 빈 문자열 반환)
+    var subTitle: String {
+        let titles = title.split(separator: " - ")
+        if titles.count > 1 {
+            return String(titles[1])
+        }
+        return ""
+    }
+    
+    /// 저자 정보를 반환하는 프로퍼티
+    var authorInfo: String {
+        let writer = author.split(separator: " (지은이)").map { String($0) }
+        // 저자 정보가 ' (지은이)'를 기준으로 나누어지면
+        if writer.count > 1 {
+            // 저자가 많으면
+            let writers = writer[0].split(separator: ", ").map { String($0) }
+            if writers.count > 1 {
+                return writers[0] + "외 \(writers.count - 1)명"
+            }
+            return writers[0]
+        // 저자 정보가 나누어지지 않으면
+        } else {
+            //  저자가 없으면
+            if author.isEmpty {
+                return "(알 수 없음)"
+            }
+            
+            return author.split(separator: " ").map { String($0) }[0]
+        }
+    }
+    
+    var publishDate: Date {
+        if let date = pubDate.toDate() {
+            return date.date
+        } else {
+            return Date()
+        }
+    }
+    
     /// 1차 카테고리 분류 정보를 반환하는 프로퍼티
     var oneDepthCategoryName: String {
         let category = categoryName.split(separator: ">")
@@ -39,7 +83,9 @@ extension BookDetail.Item {
         return "기타" // '기타'로 분류
     }
     
-    /// 1차 카테고리 분류 정보를 기반으로 앱 내부에 출력될 카테고리 정보를 반환하는 프로퍼티(카테고리 정제)
+    /// 카테고리 정보를 기반으로 앱 내부에 출력될 카테고리 정보를 반환하는 프로퍼티입니다.
+    /// 1차 카테고리 분류 정보를 적당히 묶어 앱 내부에 표시될 카테고리 정보를 반환합니다. 예를 들어, "고전", "고전/명작" 카테고리는 성격이 비슷하므로 한꺼번에 묶어서 "고전" 카테고리로 반환합니다.
+    /// 알라딘 API 공식 문서가 정확하지 않으므로 일부 카테고리는 직접 작성해야 합니다.
     var category: Category {
         switch oneDepthCategoryName {
         case "액션/어드벤처":
@@ -58,7 +104,7 @@ extension BookDetail.Item {
             return .comedy
         case "컴퓨터/모바일", "컴퓨터":
             return .computer
-        case "요리":
+        case "요리", "요리/살림":
             return .cook
         case "공예/취미/수집":
             return .craft
@@ -92,7 +138,9 @@ extension BookDetail.Item {
             return .genreNovel
         case "건강/취미/레저":
             return .habit
-        case "건강/스포츠":
+        case "건강/취미":
+            return .health
+        case "스포츠":
             return .sports
         case "고등학교참고서", "중고등참고서":
             return .highSchool

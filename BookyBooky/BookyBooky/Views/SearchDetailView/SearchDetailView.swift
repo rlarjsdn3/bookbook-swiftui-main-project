@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct SearchDetailView: View {
-    // MARK: - PROPERTIES
-    
-    
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var bookViewModel: BookViewModel
@@ -20,48 +17,46 @@ struct SearchDetailView: View {
     var body: some View {
         ZStack {
             if !bookViewModel.bookDetailInfo.isEmpty {
+                let bookDetail = bookViewModel.bookDetailInfo[0]
+                
                 VStack {
-                    ZStack {
-                        Rectangle()
-                            .fill(.gray.gradient)
-                            .ignoresSafeArea()
-                        
-                        VStack {
-                            HStack {
-                                Button {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                                        isbn13 = ""
-                                    }
-                                } label: {
-                                    Image(systemName: "chevron.left")
-                                        .font(.title3)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.black)
-                                }
+                    SearchDetailCoverView(isbn13: $isbn13)
+                    
+                    HStack {
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(bookDetail.originalTitle)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .minimumScaleFactor(0.8)
+                                .lineLimit(1)
+                            
+                            HStack(spacing: 2) {
+                                Text(bookDetail.authorInfo)
                                 
-                                Spacer()
+                                Text("・")
+                                
+                                Text(bookDetail.publisher)
                             }
+                            .font(.headline)
+                            .foregroundColor(.secondary)
                             
                             Spacer()
                         }
-                        .padding()
                         
-                        AsyncImage(url: URL(string: bookViewModel.bookDetailInfo[0].cover)) { image in
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 150, height: 200)
-                                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                        } placeholder: {
-                            // 로딩 이미지 추가
+                        Spacer()
+                        
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "heart")
                         }
 
                     }
-                    .frame(height: 230)
+                    .frame(height: 60)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal)
                     
                     Spacer()
-                    
-                    Text(bookViewModel.bookDetailInfo[0].title)
                 }
             } else {
                 // 로딩 뷰 따로 출력하기
