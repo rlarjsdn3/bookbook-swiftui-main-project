@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SearchDetailSubInfoView: View {
+    @State private var showSalesPointDescriptionSheet = false
+    
     var bookInfo: BookDetail.Item
     
     var body: some View {
@@ -15,9 +17,19 @@ struct SearchDetailSubInfoView: View {
             Spacer()
             
             VStack(spacing: 8) {
-                Text("판매 포인트")
-                    .font(.headline)
-                    .fontWeight(.bold)
+                HStack(spacing: 3) {
+                    Text("판매 포인트")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    
+                    Button {
+                        showSalesPointDescriptionSheet = true
+                    } label: {
+                        Image(systemName: "questionmark.circle")
+                            .foregroundColor(.primary)
+                    }
+
+                }
                 
                 Text("\(bookInfo.salesPoint)")
             }
@@ -49,6 +61,12 @@ struct SearchDetailSubInfoView: View {
         .cornerRadius(15)
         .padding(.horizontal)
         .frame(height: 100)
+        // 판매 포인트 설명을 위한 시트(Sheet)
+        .sheet(isPresented: $showSalesPointDescriptionSheet) {
+            SalesPointDescriptionSheetView()
+                .presentationDetents([.height(300)])
+                .presentationCornerRadius(30)
+        }
     }
 }
 

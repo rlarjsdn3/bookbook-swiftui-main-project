@@ -39,14 +39,15 @@ struct SearchDetailTitleView: View {
                 Image(systemName: "heart.fill")
                     .foregroundColor(.white)
                     .padding()
-                    .background(.pink)
+                    .background(.pink) // 카테고리별 강조 색상으로
                     .clipShape(Circle())
             }
 
         }
         .frame(height: 60)
-        .padding([.top, .horizontal])
-        .padding(.bottom, 8)
+        .padding(.top, 5)
+        .padding(.bottom, 0)
+        .padding(.horizontal)
     }
 }
 
