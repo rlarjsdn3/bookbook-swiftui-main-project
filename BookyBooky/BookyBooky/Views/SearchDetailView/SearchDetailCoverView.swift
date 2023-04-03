@@ -40,7 +40,7 @@ struct SearchDetailCoverView: View {
                         Image(systemName: "chevron.left")
                             .font(.title3)
                             .fontWeight(.semibold)
-                            .foregroundColor(.black)
+                            .foregroundColor(bookInfo.category.foregroundColor)
                     }
                     
                     Spacer()

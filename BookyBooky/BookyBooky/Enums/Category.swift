@@ -68,6 +68,16 @@ enum Category: String {
     case travel = "여행"
     case etc = "기타"
     
+    /// 카테고리 별 전경 색상 정보를 반환하는 프로퍼티입니다. (Beta)
+    var foregroundColor: Color {
+        switch self {
+        case .computer:
+            return .white
+        default:
+            return .black
+        }
+    }
+    
     /// 카테고리 별 강조 색상 정보를 반환하는 프로퍼티입니다. (Beta)
     var accentColor: Color {
         switch self {
