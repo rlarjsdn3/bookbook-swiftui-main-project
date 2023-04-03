@@ -85,7 +85,7 @@ enum Category: String {
             return .black
         case .history:
             return .brown
-        case .professional:
+        case .professional, .economic:
             return .blue
         default:
             return .gray
