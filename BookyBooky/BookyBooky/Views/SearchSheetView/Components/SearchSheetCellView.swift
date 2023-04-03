@@ -11,10 +11,10 @@ struct SearchSheetCellView: View {
     
     // MARK: - CONSTANT PROPERTIES
     
-    let COVER_HEIGHT: CGFloat = 180 // 표지(커버) 이미지 높이
-    let COVER_WIDTH_RATIO = 0.32 // 표지(커버) 이미지의 화면 사이즈 대비 너비 비율
+    let COVER_HEIGHT: CGFloat = 200 // 표지(커버) 이미지 높이
+    let COVER_WIDTH_RATIO = 0.32 // 화면 사이즈 대비 표지(커버) 너비 비율
     let TEXT_HEIGHT: CGFloat = 130 // 책 정보 도형 높이
-    let TEXT_WIDTH_RATIO = 0.71 // 책 정보 도형의 화면 사이즈 대비 너비 비율
+    let TEXT_WIDTH_RATIO = 0.71 // 화면 사이즈 대미 책 정보 도형 너비 비율
     
     // MARK: - PROPERTIES
     
@@ -168,6 +168,8 @@ extension SearchSheetCellView {
             .shimmering(active: isLoading)
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchSheetCellView_Previews: PreviewProvider {
     static var previews: some View {

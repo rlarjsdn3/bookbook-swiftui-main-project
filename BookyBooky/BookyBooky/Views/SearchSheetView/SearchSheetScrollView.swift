@@ -36,10 +36,12 @@ struct SearchSheetScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        if !bookViewModel.bookSearchItems.isEmpty {
-            scrollSearchItems
-        } else {
-            noResultLabel
+        ZStack {
+            if !bookViewModel.bookSearchItems.isEmpty {
+                scrollSearchItems
+            } else {
+                noResultLabel
+            }
         }
     }
 }

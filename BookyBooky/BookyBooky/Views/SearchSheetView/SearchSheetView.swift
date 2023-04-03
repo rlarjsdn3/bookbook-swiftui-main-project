@@ -34,14 +34,12 @@ struct SearchSheetView: View {
                         categoryAnimation: $categoryAnimation
                     )
                     
-                    ZStack {
-                        SearchSheetScrollView(
-                            categorySelected: $selectedCategory,
-                            searchQuery: $searchQuery,
-                            startIndex: $startIndex,
-                            tapSearchIsbn13: $tapSearchIsbn13
-                        )
-                    }
+                    SearchSheetScrollView(
+                        categorySelected: $selectedCategory,
+                        searchQuery: $searchQuery,
+                        startIndex: $startIndex,
+                        tapSearchIsbn13: $tapSearchIsbn13
+                    )
                 }
             } else {
                 SearchDetailView(isbn13: $tapSearchIsbn13)
