@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchDetailDescriptionView: View {
     let bookInfo: BookDetail.Item
+    @Binding var isLoading: Bool
     
     var body: some View {
         VStack {
@@ -16,12 +17,17 @@ struct SearchDetailDescriptionView: View {
                 Text("이 책에 관하여")
                     .font(.title2)
                     .fontWeight(.bold)
+                    .redacted(reason: isLoading ? .placeholder : [])
+                    .shimmering(active: isLoading)
                 
                 Spacer()
                 
                 Link(destination: URL(string: bookInfo.link)!) {
                     Text("자세히 보기")
                 }
+                .redacted(reason: isLoading ? .placeholder : [])
+                .shimmering(active: isLoading)
+                .disabled(isLoading)
             }
             .padding(.top, 5)
             .padding(.horizontal)
@@ -29,6 +35,8 @@ struct SearchDetailDescriptionView: View {
             ScrollView(showsIndicators: false) {
                 Text(bookInfo.description)
                     .multilineTextAlignment(.leading)
+                    .redacted(reason: isLoading ? .placeholder : [])
+                    .shimmering(active: isLoading)
             }
             .padding(.horizontal)
         }
@@ -37,6 +45,6 @@ struct SearchDetailDescriptionView: View {
 
 struct SearchDetailDescriptionView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchDetailDescriptionView(bookInfo: BookDetail.Item.preview[0])
+        SearchDetailDescriptionView(bookInfo: BookDetail.Item.preview[0], isLoading: .constant(false))
     }
 }

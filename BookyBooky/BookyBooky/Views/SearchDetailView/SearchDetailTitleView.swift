@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchDetailTitleView: View {
     let bookInfo: BookDetail.Item
+    @Binding var isLoading: Bool
     
     var body: some View {
         HStack {
@@ -18,6 +19,8 @@ struct SearchDetailTitleView: View {
                     .fontWeight(.bold)
                     .minimumScaleFactor(0.8)
                     .lineLimit(1)
+                    .redacted(reason: isLoading ? .placeholder : [])
+                    .shimmering(active: isLoading)
                 
                 HStack(spacing: 2) {
                     Text(bookInfo.authorInfo)
@@ -28,6 +31,8 @@ struct SearchDetailTitleView: View {
                 }
                 .font(.headline)
                 .foregroundColor(.secondary)
+                .redacted(reason: isLoading ? .placeholder : [])
+                .shimmering(active: isLoading)
             }
             
             Spacer()
@@ -42,6 +47,7 @@ struct SearchDetailTitleView: View {
                     .background(bookInfo.category.accentColor) // 카테고리별 강조 색상으로
                     .clipShape(Circle())
             }
+            .disabled(isLoading)
 
         }
         .frame(height: 60)
@@ -53,6 +59,6 @@ struct SearchDetailTitleView: View {
 
 struct BookDetailTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchDetailTitleView(bookInfo: BookDetail.Item.preview[0])
+        SearchDetailTitleView(bookInfo: BookDetail.Item.preview[0], isLoading: .constant(false))
     }
 }

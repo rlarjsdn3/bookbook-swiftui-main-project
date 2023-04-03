@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Shimmer
 
 struct SearchDetailCoverView: View {
     // MARK: - CONSTANT PROPERTIES
@@ -21,6 +22,7 @@ struct SearchDetailCoverView: View {
     
     var bookInfo: BookDetail.Item
     @Binding var isbn13: String
+    @Binding var isLoading: Bool
     
     // MARK: - BODY
     
@@ -61,8 +63,13 @@ struct SearchDetailCoverView: View {
                             style: .continuous
                         )
                     )
+                    .onAppear {
+                        isLoading = true
+                    }
             } placeholder: {
-                // 로딩 이미지 추가
+                Rectangle()
+                    .fill(.gray.opacity(0.2))
+                    .shimmering()
             }
         }
         .frame(height: mainScreen.height * BACKGROUND_HEIGHT_RATIO)
@@ -74,7 +81,8 @@ struct SearchDetailCoverView_Previews: PreviewProvider {
         GeometryReader { proxy in
             SearchDetailCoverView(
                 bookInfo: BookDetail.Item.preview[0],
-                isbn13: .constant("9788994492049")
+                isbn13: .constant("9788994492049"),
+                isLoading: .constant(false)
             )
             .environmentObject(BookViewModel())
         }

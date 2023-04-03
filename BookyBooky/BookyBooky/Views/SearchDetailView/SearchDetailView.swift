@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct SearchDetailView: View {
+    
+    // MARK: - PROPERTIES
+    
+    @Binding var isbn13: String
+    
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var bookViewModel: BookViewModel
-    
-    @Binding var isbn13: String
+    @State private var isLoading = true
     
     // MARK: - BODY
     
@@ -24,23 +28,22 @@ struct SearchDetailView: View {
                 VStack {
                     SearchDetailCoverView(
                         bookInfo: bookInfo,
-                        isbn13: $isbn13
+                        isbn13: $isbn13,
+                        isLoading: $isLoading
                     )
                     
-                    SearchDetailTitleView(bookInfo: bookInfo)
+                    SearchDetailTitleView(bookInfo: bookInfo, isLoading: $isLoading)
                     
-                    SearchDetailSubInfoView(bookInfo: bookInfo)
+                    SearchDetailSubInfoView(bookInfo: bookInfo, isLoading: $isLoading)
                     
                     Divider()
                     
-                    SearchDetailDescriptionView(bookInfo: bookInfo)
+                    SearchDetailDescriptionView(bookInfo: bookInfo, isLoading: $isLoading)
                     
                     Spacer()
                     
-                    SearchDetailButtonsView(bookInfo: bookInfo, isbn13: $isbn13)
+                    SearchDetailButtonsView(bookInfo: bookInfo, isbn13: $isbn13, isLoading: $isLoading)
                 }
-            } else {
-                // 로딩 뷰 따로 출력하기
             }
         }
         .onAppear {

@@ -11,6 +11,7 @@ struct SearchDetailSubInfoView: View {
     @State private var showSalesPointDescriptionSheet = false
     
     var bookInfo: BookDetail.Item
+    @Binding var isLoading: Bool
     
     var body: some View {
         HStack {
@@ -28,10 +29,11 @@ struct SearchDetailSubInfoView: View {
                         Image(systemName: "questionmark.circle")
                             .foregroundColor(.primary)
                     }
-
                 }
                 
                 Text("\(bookInfo.salesPoint)")
+                    .redacted(reason: isLoading ? .placeholder : [])
+                    .shimmering(active: isLoading)
             }
             
             Spacer()
@@ -42,6 +44,8 @@ struct SearchDetailSubInfoView: View {
                     .fontWeight(.bold)
                 
                 Text("\(bookInfo.subInfo.itemPage)")
+                    .redacted(reason: isLoading ? .placeholder : [])
+                    .shimmering(active: isLoading)
             }
             
             Spacer()
@@ -52,6 +56,8 @@ struct SearchDetailSubInfoView: View {
                     .fontWeight(.bold)
                 
                 Text(bookInfo.category.rawValue)
+                    .redacted(reason: isLoading ? .placeholder : [])
+                    .shimmering(active: isLoading)
             }
             
             Spacer()
@@ -72,6 +78,6 @@ struct SearchDetailSubInfoView: View {
 
 struct SearchDetailSubInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchDetailSubInfoView(bookInfo: BookDetail.Item.preview[0])
+        SearchDetailSubInfoView(bookInfo: BookDetail.Item.preview[0], isLoading: .constant(false))
     }
 }

@@ -10,11 +10,19 @@ import SwiftUI
 struct SearchDetailButtonsView: View {
     let bookInfo: BookDetail.Item
     @Binding var isbn13: String
+    @Binding var isLoading: Bool
     
     var body: some View {
         VStack {
-            Text("도서 DB 제공 : 알라딘 인터넷서점(www.aladin.co.kr)")
-                .font(.caption)
+            HStack(spacing: 0) {
+                Text("도서 DB 제공 : ")
+                
+                Link("알라딘 인터넷 서점", destination: URL(string: "https://www.aladin.co.kr")!)
+                    .disabled(isLoading)
+            }
+            .font(.caption)
+            .redacted(reason: isLoading ? .placeholder : [])
+            .shimmering(active: isLoading)
             
             HStack {
                 Button {
@@ -44,6 +52,7 @@ struct SearchDetailButtonsView: View {
                         .background(bookInfo.category.accentColor) // 카테고리 별 강조 색상으로
                         .cornerRadius(15)
                 }
+                .disabled(isLoading)
             }
             .padding([.horizontal, .bottom])
         }
@@ -54,7 +63,8 @@ struct SearchDetailButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         SearchDetailButtonsView(
             bookInfo: BookDetail.Item.preview[0],
-            isbn13: .constant("9788994492049")
+            isbn13: .constant("9788994492049"),
+            isLoading: .constant(false)
         )
     }
 }
