@@ -13,7 +13,7 @@ struct SearchSheetView: View {
     @State private var startIndex = 1   // 검색 결과 시작페이지를 저장하는 변수
     @State private var selectedCategory: Category = .all    // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
     @State private var categoryAnimation: Category = .all   // 카테고리 애니메이션 효과를 위한 변수
-    @State private var tapSearchIsbn13: String = "" // 검색 리스트에서 선택한 도서의 ISBN13값을 저장하는 변수
+    @Binding var tapSearchIsbn13: String // 검색 리스트에서 선택한 도서의 ISBN13값을 저장하는 변수
     
     var body: some View {
         ZStack {
@@ -54,7 +54,7 @@ struct SearchSheetView: View {
 
 struct SearchSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetView()
+        SearchSheetView(tapSearchIsbn13: .constant(""))
             .environmentObject(BookViewModel())
     }
 }

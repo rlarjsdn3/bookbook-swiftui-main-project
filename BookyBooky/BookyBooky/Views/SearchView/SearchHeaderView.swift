@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SearchHeaderView: View {
+    @State private var tapSearchIsbn13 = ""
     @State private var showSearchSheetView = false
     
     var body: some View {
@@ -28,7 +29,7 @@ struct SearchHeaderView: View {
         }
         .padding()
         .sheet(isPresented: $showSearchSheetView) {
-            SearchSheetView()
+            SearchSheetView(tapSearchIsbn13: $tapSearchIsbn13)
         }
     }
 }

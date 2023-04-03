@@ -46,6 +46,9 @@ struct SearchDetailView: View {
         .onAppear {
             bookViewModel.requestBookDetailAPI(isbn13: isbn13)
         }
+        .onDisappear {
+            bookViewModel.bookDetailInfo.removeAll()
+        }
     }
 }
 

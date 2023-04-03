@@ -37,9 +37,6 @@ struct ListTypeCellView: View {
             .redacted(reason: isLoading ? .placeholder : [])
             .shimmering(active: isLoading)
         }
-        .onTapGesture {
-            // do seomthing...
-        }
     }
 }
 
