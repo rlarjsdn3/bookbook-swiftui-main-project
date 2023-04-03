@@ -41,7 +41,7 @@ struct SearchSheetView: View {
                     }
                 }
             } else {
-                SearchDetailView(isbn13: tapSearchIsbn13)
+                SearchDetailView(isbn13: $tapSearchIsbn13)
             }
         }
         .onDisappear {
