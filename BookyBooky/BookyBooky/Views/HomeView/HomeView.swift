@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    // MARK: - BODY
+    
     var body: some View {
         VStack {
             HomeHeaderView()
@@ -16,6 +19,8 @@ struct HomeView: View {
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

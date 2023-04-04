@@ -8,37 +8,41 @@
 import SwiftUI
 
 struct SearchListTypeView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @State private var selectedAnimation = ListType.bestSeller
     
     @Binding var listTypeSelected: ListType
     @Namespace var namespace: Namespace.ID
     
+    // MARK: - BODY
+    
     var body: some View {
-        scrollListTypeButtons
-    }
-}
-
-extension SearchListTypeView {
-    var scrollListTypeButtons: some View {
         ScrollViewReader { proxy in
-            ScrollView(.horizontal, showsIndicators: false) {
-                VStack {
-                    listTypeButtons(scrollProxy: proxy)
-                }
-            }
+            scrollListTypeButtons(scrollProxy: proxy)
         }
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension SearchListTypeView {
     @ViewBuilder
-    func listTypeButtons(scrollProxy: ScrollViewProxy) -> some View {
+    func scrollListTypeButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            listTypeButtons(scrollProxy: proxy)
+        }
+    }
+    
+    @ViewBuilder
+    func listTypeButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack {
             ForEach(ListType.allCases, id: \.self) { type in
                 ListTypeButtonView(
                     listTypeSelected: $listTypeSelected,
                     type: type,
-                    redearProxy: scrollProxy,
+                    scrollProxy: proxy,
                     selectedAnimation: $selectedAnimation,
                     selectedNamespace: namespace
                 )
@@ -50,6 +54,8 @@ extension SearchListTypeView {
         .padding(.trailing, 8)
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchListTypeView_Previews: PreviewProvider {
     static var previews: some View {

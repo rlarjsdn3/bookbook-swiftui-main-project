@@ -35,17 +35,30 @@ struct SearchDetailView: View {
                         isLoading: $isLoading
                     )
                     
-                    SearchDetailTitleView(bookInfo: bookInfo, isLoading: $isLoading)
+                    SearchDetailTitleView(
+                        bookInfo: bookInfo,
+                        isLoading: $isLoading
+                    )
                     
-                    SearchDetailSubInfoView(bookInfo: bookInfo, isLoading: $isLoading)
+                    SearchDetailSubInfoView(
+                        bookInfo: bookInfo,
+                        isLoading: $isLoading
+                    )
                     
                     Divider()
                     
-                    SearchDetailDescriptionView(bookInfo: bookInfo, isLoading: $isLoading)
+                    SearchDetailDescriptionView(
+                        bookInfo: bookInfo,
+                        isLoading: $isLoading
+                    )
                     
                     Spacer()
                     
-                    SearchDetailButtonsView(bookInfo: bookInfo, isbn13: $isbn13, isLoading: $isLoading)
+                    SearchDetailButtonsView(
+                        bookInfo: bookInfo,
+                        isbn13: $isbn13,
+                        isLoading: $isLoading
+                    )
                 }
             }
         }

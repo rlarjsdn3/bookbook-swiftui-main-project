@@ -9,7 +9,12 @@ import SwiftUI
 
 @main
 struct BookyBookyApp: App {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @StateObject var bookViewModel = BookViewModel()
+    
+    // MARK: - BODY
     
     var body: some Scene {
         WindowGroup {

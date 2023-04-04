@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeHeaderView: View {
+    
+    // MARK: - BODY
+    
     var body: some View {
         HStack {
             Menu {
@@ -41,6 +44,8 @@ struct HomeHeaderView: View {
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension HomeHeaderView {
     var searchImage: some View {
         Image(systemName: "plus")
@@ -54,6 +59,8 @@ extension HomeHeaderView {
             .fontWeight(.bold)
     }
 }
+
+// MARK: - PREVIEW
 
 struct HomeHeaderView_Previews: PreviewProvider {
     static var previews: some View {

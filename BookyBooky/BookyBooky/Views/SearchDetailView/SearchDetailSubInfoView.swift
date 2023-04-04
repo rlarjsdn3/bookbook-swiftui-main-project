@@ -8,10 +8,17 @@
 import SwiftUI
 
 struct SearchDetailSubInfoView: View {
-    @State private var showSalesPointDescriptionSheet = false
+    
+    // MARK: - PROPERTIES
     
     var bookInfo: BookDetail.Item
     @Binding var isLoading: Bool
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @State private var showSalesPointDescriptionSheet = false
+    
+    // MARK: - BODY
     
     var body: some View {
         HStack {
@@ -79,6 +86,8 @@ struct SearchDetailSubInfoView: View {
         }
     }
 }
+
+// MARK: - RPEVIEW
 
 struct SearchDetailSubInfoView_Previews: PreviewProvider {
     static var previews: some View {

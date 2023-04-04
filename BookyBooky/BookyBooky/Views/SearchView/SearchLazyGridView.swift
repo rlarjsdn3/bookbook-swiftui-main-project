@@ -41,15 +41,7 @@ struct SearchLazyGridView: View {
     
     var body: some View {
         ScrollViewReader { proxy in
-            ScrollView(showsIndicators: false) {
-                lazyGridCells
-            }
-            // 도서 리스트 타입이 변경될 때마다 리스트의 스크롤을 맨 위로 올림
-            .onChange(of: listTypeSelected) { _ in
-                withAnimation {
-                    proxy.scrollTo("Scroll_To_Top", anchor: .top)
-                }
-            }
+            scrollLazyGridCells(scrollProxy: proxy)
         }
     }
 }
@@ -75,6 +67,21 @@ extension SearchLazyGridView {
         .padding(.bottom, 40)
         .padding(.horizontal, 10)
         .id("Scroll_To_Top")
+    }
+}
+
+extension SearchLazyGridView {
+    @ViewBuilder
+    func scrollLazyGridCells(scrollProxy proxy: ScrollViewProxy) -> some View {
+        ScrollView(showsIndicators: false) {
+            lazyGridCells
+        }
+        // 도서 리스트 타입이 변경될 때마다 리스트의 스크롤을 맨 위로 올림
+        .onChange(of: listTypeSelected) { _ in
+            withAnimation {
+                proxy.scrollTo("Scroll_To_Top", anchor: .top)
+            }
+        }
     }
 }
 

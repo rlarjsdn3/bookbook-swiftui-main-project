@@ -75,6 +75,8 @@ struct SalesPointDescriptionSheetView: View {
     }
 }
 
+// MARK: - PREVIEW
+
 struct SalesPointDescriptionSheetView_Previews: PreviewProvider {
     static var previews: some View {
         SalesPointDescriptionSheetView(bookInfo: BookDetail.Item.preview[0])

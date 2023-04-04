@@ -14,15 +14,16 @@ struct SearchDetailCoverView: View {
     let COVER_HEGHT_RATIO = 0.27        // 화면 사이즈 대비 표지(커버) 이미지 높이 비율
     let BACKGROUND_HEIGHT_RATIO = 0.3   // 화면 사이즈 대비 바탕 색상 높이 비율
     
-    // MARK: - WRAPPER PROPERTIES
-    
-    @EnvironmentObject var bookViewModel: BookViewModel
     
     // MARK: - PROERTIES
     
     var bookInfo: BookDetail.Item
     @Binding var isbn13: String
     @Binding var isLoading: Bool
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var bookViewModel: BookViewModel
     
     // MARK: - BODY
     
@@ -75,6 +76,8 @@ struct SearchDetailCoverView: View {
         .frame(height: mainScreen.height * BACKGROUND_HEIGHT_RATIO)
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchDetailCoverView_Previews: PreviewProvider {
     static var previews: some View {

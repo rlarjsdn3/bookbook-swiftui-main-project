@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct SearchView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @EnvironmentObject var bookViewModel: BookViewModel
+    
     @State private var listTypeSelected = ListType.bestSeller
+    
+    // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
@@ -25,6 +31,8 @@ struct SearchView: View {
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {

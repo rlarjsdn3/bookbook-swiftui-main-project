@@ -8,32 +8,49 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @State private var tabSelected: TabItem = .home
+    
+    // MARK: - INTIALIZER
     
     init() {
         UITabBar.appearance().isHidden = true
     }
     
+    // MARK: - BODY
+    
     var body: some View {
         VStack {
-            TabView(selection: $tabSelected) {
-                HomeView()
-                    .tag(TabItem.home)
-                
-                SearchView()
-                    .tag(TabItem.search)
-                
-                Text("BookShelf View")
-                    .tag(TabItem.bookShelf)
-                
-                Text("Analysis View")
-                    .tag(TabItem.analysis)
-            }
+            tapView
             
             RoundedTabView(selected: $tabSelected)
         }
     }
 }
+
+// MARK: - EXTENSIONS
+
+extension ContentView {
+    var tapView: some View {
+        TabView(selection: $tabSelected) {
+            HomeView()
+                .tag(TabItem.home)
+            
+            SearchView()
+                .tag(TabItem.search)
+            
+            Text("BookShelf View")
+                .tag(TabItem.bookShelf)
+            
+            Text("Analysis View")
+                .tag(TabItem.analysis)
+        }
+    }
+}
+
+// MARK: - PREVIEW
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

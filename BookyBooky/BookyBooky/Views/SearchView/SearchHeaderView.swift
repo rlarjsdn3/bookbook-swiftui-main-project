@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct SearchHeaderView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @State private var tapSearchIsbn13 = ""
     @State private var showSearchSheetView = false
+    
+    // MARK: - BODY
     
     var body: some View {
         HStack {
@@ -34,6 +39,8 @@ struct SearchHeaderView: View {
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension SearchHeaderView {
     var emptyImage: some View {
         Image(systemName: "square")
@@ -55,6 +62,8 @@ extension SearchHeaderView {
             .foregroundColor(.black)
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchHeaderView_Previews: PreviewProvider {
     static var previews: some View {

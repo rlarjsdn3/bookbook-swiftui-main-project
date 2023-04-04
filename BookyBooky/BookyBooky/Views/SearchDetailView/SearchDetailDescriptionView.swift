@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct SearchDetailDescriptionView: View {
+    
+    // MARK: - PROPERTIEs
+    
     let bookInfo: BookDetail.Item
     @Binding var isLoading: Bool
+    
+    // MARK: - BODY
     
     var body: some View {
         VStack {
@@ -42,6 +47,8 @@ struct SearchDetailDescriptionView: View {
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchDetailDescriptionView_Previews: PreviewProvider {
     static var previews: some View {

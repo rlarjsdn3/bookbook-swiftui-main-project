@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct ListTypeButtonView: View {
+    
+    // MARK: - PROPERTIES
+    
     @Binding var listTypeSelected: ListType
     let type: ListType
-    let redearProxy: ScrollViewProxy
+    let scrollProxy: ScrollViewProxy
     @Binding var selectedAnimation: ListType
     let selectedNamespace: Namespace.ID
+    
+    // MARK: - BODY
     
     var body: some View {
         Button {
@@ -30,6 +35,8 @@ struct ListTypeButtonView: View {
         }
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension ListTypeButtonView {
     var typeLabel: some View {
@@ -52,12 +59,14 @@ extension ListTypeButtonView {
     func selectType() {
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
             selectedAnimation = type
-            redearProxy.scrollTo(type.rawValue)
-            redearProxy.scrollTo("Scroll_To_Top", anchor: .top)
+            scrollProxy.scrollTo(type.rawValue)
+            scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
         }
         listTypeSelected = type
     }
 }
+
+// MARK: - PREVIEW
 
 struct ListTypeButtonView_Previews: PreviewProvider {
     @Namespace static var namespace: Namespace.ID
@@ -67,7 +76,7 @@ struct ListTypeButtonView_Previews: PreviewProvider {
             ListTypeButtonView(
                 listTypeSelected: .constant(.bestSeller),
                 type: .bestSeller,
-                redearProxy: proxy,
+                scrollProxy: proxy,
                 selectedAnimation: .constant(.bestSeller),
                 selectedNamespace: namespace
             )

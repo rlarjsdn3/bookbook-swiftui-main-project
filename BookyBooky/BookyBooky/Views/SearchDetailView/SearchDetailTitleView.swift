@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct SearchDetailTitleView: View {
+    
+    // MARK: - PROPERTIES
+    
     let bookInfo: BookDetail.Item
     @Binding var isLoading: Bool
+    
+    // MARK: - BODY
     
     var body: some View {
         HStack {
@@ -56,6 +61,8 @@ struct SearchDetailTitleView: View {
         .padding(.horizontal)
     }
 }
+
+// MARK: - PREVIEW
 
 struct BookDetailTitleView_Previews: PreviewProvider {
     static var previews: some View {
