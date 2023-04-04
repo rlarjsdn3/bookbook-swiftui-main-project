@@ -19,6 +19,8 @@ struct CoverShape: Shape {
     }
 }
 
+// MARK: - PREVIEW
+
 struct CoverShape_Previews: PreviewProvider {
     static var previews: some View {
         CoverShape()

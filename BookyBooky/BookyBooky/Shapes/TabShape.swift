@@ -19,6 +19,8 @@ struct TabShape: Shape {
     }
 }
 
+// MARK: - PREVIEW
+
 struct TabShape_Previews: PreviewProvider {
     static var previews: some View {
         TabShape()

@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct CategoryButtonView: View {
+    
+    // MARK: - PROPERTIES
+    
     @Binding var selectedCategory: Category
-    var category: Category
+    let category: Category
     @Binding var categoryAnimation: Category
-    var categoryNamespace: Namespace.ID
-    var scrollProxy: ScrollViewProxy
+    let categoryNamespace: Namespace.ID
+    let scrollProxy: ScrollViewProxy
+    
+    // MARK: - BODY
     
     var body: some View {
         Button {
@@ -44,6 +49,8 @@ struct CategoryButtonView: View {
         .padding(.horizontal, 15)
     }
 }
+
+// MARK: - PREVIEW
 
 struct CategoryButtonView_Previews: PreviewProvider {
     @Namespace static var categoryNamespace: Namespace.ID

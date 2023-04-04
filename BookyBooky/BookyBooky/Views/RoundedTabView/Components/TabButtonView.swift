@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct TabButtonView: View {
+    
+    // MARK: - PROPERTIES
+    
     @Binding var selected: TabItem
     var item: TabItem
     var namespace: Namespace.ID
+    
+    // MARK: - BODY
     
     var body: some View {
         Spacer()
@@ -48,6 +53,8 @@ struct TabButtonView: View {
         Spacer()
     }
 }
+
+// MARK: - PREVIEW
 
 struct TabButtonView_Previews: PreviewProvider {
     @Namespace static var shapeNamespace: Namespace.ID

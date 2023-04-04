@@ -11,12 +11,12 @@ struct SearchSheetScrollView: View {
     
     // MARK: - PROPERTIES
     
-    @EnvironmentObject var bookViewModel: BookViewModel
-    
     @Binding var categorySelected: Category
     @Binding var searchQuery: String
     @Binding var startIndex: Int
     @Binding var tapSearchIsbn13: String
+    
+    // MARK: - COMPUTED PROPERTIES
     
     var filteredSearchItems: [BookList.Item] {
         var list: [BookList.Item] = []
@@ -32,6 +32,11 @@ struct SearchSheetScrollView: View {
         
         return list
     }
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var bookViewModel: BookViewModel
+    
     
     // MARK: - BODY
     

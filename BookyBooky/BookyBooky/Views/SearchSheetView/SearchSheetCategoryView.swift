@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct SearchSheetCategoryView: View {
-    @EnvironmentObject var bookViewModel: BookViewModel
+    
+    // MARK: - PROPERTIES
     
     @Binding var selectedCategory: Category
     @Binding var categoryAnimation: Category
     
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var bookViewModel: BookViewModel
+    
     @Namespace var categoryNamespace: Namespace.ID
+    
+    // MARK: - BODY
     
     var body: some View {
         if !bookViewModel.bookSearchItems.isEmpty {
@@ -23,6 +30,8 @@ struct SearchSheetCategoryView: View {
         }
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension SearchSheetCategoryView {
     var scrollCategoryButtons: some View {
@@ -56,6 +65,8 @@ extension SearchSheetCategoryView {
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchSheetCategoryView_Previews: PreviewProvider {
     static var previews: some View {

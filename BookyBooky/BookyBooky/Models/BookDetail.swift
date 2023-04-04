@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - STRUCT
+
 struct BookDetail: Codable {
     var totalResults: Int           // 검색 결과의 총 개수
     
@@ -28,6 +30,8 @@ struct BookDetail: Codable {
         }
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension BookDetail.Item {
     static var preview: [BookDetail.Item] {

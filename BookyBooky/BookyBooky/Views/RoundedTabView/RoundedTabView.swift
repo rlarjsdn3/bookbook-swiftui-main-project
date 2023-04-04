@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct RoundedTabView: View {
+    
+    // MARK: - PROPERTIES
+    
     @Binding var selected: TabItem
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @Namespace var shapeNamespace: Namespace.ID
+    
+    // MARK: - BODY
     
     var body: some View {
         HStack {
@@ -37,6 +45,8 @@ struct RoundedTabView: View {
         .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
     }
 }
+
+// MARK: - PREVIEW
 
 struct RoundedTabView_Previews: PreviewProvider {
     static var previews: some View {

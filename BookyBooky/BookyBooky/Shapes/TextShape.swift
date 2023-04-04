@@ -19,6 +19,8 @@ struct TextShape: Shape {
     }
 }
 
+// MARK: - PREVIEW
+
 struct TextShape_Previews: PreviewProvider {
     static var previews: some View {
         TextShape()

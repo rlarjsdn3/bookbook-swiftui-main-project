@@ -12,8 +12,8 @@ struct ListTypeCellView: View {
     
     // MARK: - COSTANT PROPERTIES
     
-    let COVER_WIDTH: CGFloat = 150
-    let COVER_HEIGHT: CGFloat = 200
+    let COVER_WIDTH: CGFloat = 150  // 표지(커버) 이미지 너비
+    let COVER_HEIGHT: CGFloat = 200 // 표지(커버) 이미지 높이
     
     // MARK: - PROPERTIES
     
@@ -96,6 +96,8 @@ extension ListTypeCellView {
             }
     }
 }
+
+// MARK: - RREVIEW
 
 struct ListTypeCellView_Previews: PreviewProvider {
     static var previews: some View {

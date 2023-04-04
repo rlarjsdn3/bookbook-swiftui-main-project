@@ -9,6 +9,9 @@ import Foundation
 import Alamofire
 
 class BookViewModel: ObservableObject {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @Published var bestSeller: [BookList.Item] = []     // 베스트셀러 리스트를 저장하는 변수
     @Published var itemNewAll: [BookList.Item] = []     // 신간 도서 리스트를 저장하는 변수
     @Published var itemNewSpecial: [BookList.Item] = [] // 신간 베스트 리스트를 저장하는 변수
@@ -18,6 +21,8 @@ class BookViewModel: ObservableObject {
     @Published var bookDetailInfo: [BookDetail.Item] = []  // 상세 도서 결과값을 저장하는 변수
     
     @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
+    
+    // MARK: - FUNCTIONS
     
     func setCategory() {
         var categories: [Category] = []
