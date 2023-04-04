@@ -17,7 +17,6 @@ struct SearchDetailView: View {
     
     @EnvironmentObject var bookViewModel: BookViewModel
     @State private var isLoading = true
-    @State private var animation = false
     
     // MARK: - BODY
     
@@ -36,38 +35,30 @@ struct SearchDetailView: View {
                         isLoading: $isLoading
                     )
                     
-                    VStack {
-                        SearchDetailTitleView(bookInfo: bookInfo, isLoading: $isLoading)
-                        
-                        SearchDetailSubInfoView(bookInfo: bookInfo, isLoading: $isLoading)
-                        
-                        Divider()
-                        
-                        SearchDetailDescriptionView(bookInfo: bookInfo, isLoading: $isLoading)
-                        
-                        Spacer()
-                        
-                        SearchDetailButtonsView(bookInfo: bookInfo, isbn13: $isbn13, isLoading: $isLoading)
-                    }
-                    .opacity(animation ? 1 : 0)
-                    .offset(y: animation ? 0 : -30)
+                    SearchDetailTitleView(bookInfo: bookInfo, isLoading: $isLoading)
+                    
+                    SearchDetailSubInfoView(bookInfo: bookInfo, isLoading: $isLoading)
+                    
+                    Divider()
+                    
+                    SearchDetailDescriptionView(bookInfo: bookInfo, isLoading: $isLoading)
+                    
+                    Spacer()
+                    
+                    SearchDetailButtonsView(bookInfo: bookInfo, isbn13: $isbn13, isLoading: $isLoading)
                 }
             }
         }
         .onAppear {
             bookViewModel.requestBookDetailAPI(isbn13: isbn13)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                withAnimation(.spring()) {
-                    animation = true
-                }
-            }
         }
         .onDisappear {
             bookViewModel.bookDetailInfo.removeAll()
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchDetailView_Previews: PreviewProvider {
     static var previews: some View {
