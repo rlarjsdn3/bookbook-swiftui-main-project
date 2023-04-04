@@ -8,12 +8,20 @@
 import SwiftUI
 
 struct SearchSheetTextFieldView: View {
-    @EnvironmentObject var bookViewModel: BookViewModel
+    
+    // MARK: - PROPERTIES
     
     @Binding var searchQuery: String
     @Binding var startIndex: Int
     @Binding var selectedCategory: Category
     @Binding var categoryAnimation: Category
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var bookViewModel: BookViewModel
+    @FocusState var focusedField: Bool
+    
+    // MARK: - BODY
     
     var body: some View {
         HStack {
@@ -21,9 +29,16 @@ struct SearchSheetTextFieldView: View {
             
             searchButton
         }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                focusedField = true
+            }
+        }
         .padding(.top)
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension SearchSheetTextFieldView {
     var textFieldArea: some View {
@@ -54,11 +69,13 @@ extension SearchSheetTextFieldView {
             .onSubmit {
                 requestBookSearch()
             }
+            .focused($focusedField)
     }
     
     var xmarkButton: some View {
         Button {
             searchQuery.removeAll()
+            focusedField = true
         } label: {
             xmarkImage
         }
@@ -93,6 +110,8 @@ extension SearchSheetTextFieldView {
         Haptics.shared.play(.rigid)
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchSheetTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
