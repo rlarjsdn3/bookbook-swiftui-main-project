@@ -19,32 +19,48 @@ struct SearchInfoDescView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("이 책에 관하여")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .redacted(reason: isLoading ? .placeholder : [])
-                    .shimmering(active: isLoading)
+                aboutBook
                 
                 Spacer()
                 
-                Link(destination: URL(string: bookInfo.link)!) {
-                    Text("자세히 보기")
-                }
-                .redacted(reason: isLoading ? .placeholder : [])
-                .shimmering(active: isLoading)
-                .disabled(isLoading)
+                bookLink
             }
             .padding(.top, 5)
             .padding(.horizontal)
             
-            ScrollView(showsIndicators: false) {
-                Text(bookInfo.description)
-                    .multilineTextAlignment(.leading)
-                    .redacted(reason: isLoading ? .placeholder : [])
-                    .shimmering(active: isLoading)
-            }
-            .padding(.horizontal)
+            bookDesc
         }
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension SearchInfoDescView {
+    var aboutBook: some View {
+        Text("이 책에 관하여")
+            .font(.title2)
+            .fontWeight(.bold)
+            .redacted(reason: isLoading ? .placeholder : [])
+            .shimmering(active: isLoading)
+    }
+    
+    var bookLink: some View {
+        Link(destination: URL(string: bookInfo.link)!) {
+            Text("자세히 보기")
+        }
+        .redacted(reason: isLoading ? .placeholder : [])
+        .shimmering(active: isLoading)
+        .disabled(isLoading)
+    }
+    
+    var bookDesc: some View {
+        ScrollView(showsIndicators: false) {
+            Text(bookInfo.description)
+                .multilineTextAlignment(.leading)
+                .redacted(reason: isLoading ? .placeholder : [])
+                .shimmering(active: isLoading)
+        }
+        .padding(.horizontal)
     }
 }
 

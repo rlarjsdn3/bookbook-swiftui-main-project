@@ -56,10 +56,7 @@ extension SearchInfoCoverView {
                         isbn13 = ""
                     }
                 } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundColor(bookInfo.category.foregroundColor)
+                    chvronLeft
                 }
                 
                 Spacer()
@@ -68,6 +65,13 @@ extension SearchInfoCoverView {
             Spacer()
         }
         .padding()
+    }
+    
+    var chvronLeft: some View {
+        Image(systemName: "chevron.left")
+            .font(.title3)
+            .fontWeight(.semibold)
+            .foregroundColor(bookInfo.category.foregroundColor)
     }
     
     var asyncImage: some View {

@@ -24,53 +24,16 @@ struct SearchInfoBoxView: View {
         HStack {
             Spacer(minLength: 0)
             
-            VStack(spacing: 8) {
-                HStack(spacing: 3) {
-                    Text("판매 포인트")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                    
-                    Button {
-                        showSalesPointDescriptionSheet = true
-                    } label: {
-                        Image(systemName: "questionmark.circle")
-                            .foregroundColor(.primary)
-                    }
-                }
-                
-                Text("\(bookInfo.salesPoint)")
-                    .redacted(reason: isLoading ? .placeholder : [])
-                    .shimmering(active: isLoading)
-            }
-            .frame(maxWidth: .infinity)
+            salesPoint
             
             Spacer()
             
-            VStack(spacing: 8) {
-                Text("페이지")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                
-                Text("\(bookInfo.subInfo.itemPage)")
-                    .redacted(reason: isLoading ? .placeholder : [])
-                    .shimmering(active: isLoading)
-            }
-            .frame(maxWidth: .infinity)
+            page
             
             Spacer()
             
-            VStack(spacing: 8) {
-                Text("카테고리")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                
-                Text(bookInfo.category.rawValue)
-                    .redacted(reason: isLoading ? .placeholder : [])
-                    .shimmering(active: isLoading)
-            }
-            .frame(maxWidth: .infinity)
+            category
         
-            
             Spacer(minLength: 0)
         }
         .padding()
@@ -80,10 +43,62 @@ struct SearchInfoBoxView: View {
         .frame(height: 100)
         // 판매 포인트 설명을 위한 시트(Sheet)
         .sheet(isPresented: $showSalesPointDescriptionSheet) {
-            SalesPointDescriptionSheetView(bookInfo: bookInfo)
+            SalesPointDescSheetView(bookInfo: bookInfo)
                 .presentationDetents([.height(380)])
                 .presentationCornerRadius(30)
         }
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension SearchInfoBoxView {
+    var salesPoint: some View {
+        VStack(spacing: 8) {
+            HStack(spacing: 3) {
+                Text("판매 포인트")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                
+                Button {
+                    showSalesPointDescriptionSheet = true
+                } label: {
+                    Image(systemName: "questionmark.circle")
+                        .foregroundColor(.primary)
+                }
+            }
+            
+            Text("\(bookInfo.salesPoint)")
+                .redacted(reason: isLoading ? .placeholder : [])
+                .shimmering(active: isLoading)
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    var page: some View {
+        VStack(spacing: 8) {
+            Text("페이지")
+                .font(.headline)
+                .fontWeight(.bold)
+            
+            Text("\(bookInfo.subInfo.itemPage)")
+                .redacted(reason: isLoading ? .placeholder : [])
+                .shimmering(active: isLoading)
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    var category: some View {
+        VStack(spacing: 8) {
+            Text("카테고리")
+                .font(.headline)
+                .fontWeight(.bold)
+            
+            Text(bookInfo.category.rawValue)
+                .redacted(reason: isLoading ? .placeholder : [])
+                .shimmering(active: isLoading)
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 
