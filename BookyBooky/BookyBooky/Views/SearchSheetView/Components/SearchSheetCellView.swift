@@ -133,13 +133,22 @@ extension SearchSheetCellView {
     
     @ViewBuilder
     func asyncImage(geometryProxy proxy: GeometryProxy) -> some View {
-        AsyncImage(url: URL(string: bookItem.cover)) { image in
-            cover(image, geometryProxy: proxy)
-        } placeholder: {
-            loadingCover(geometryProxy: proxy)
-        }
-        .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
-        .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: -5)
+        AsyncImage(
+            url: URL(string: bookItem.cover),
+            transaction: Transaction(animation: .default)) { phase in
+                switch phase {
+                case .success(let image):
+                    cover(image, geometryProxy: proxy)
+                case .failure(_):
+                    loadingCover(geometryProxy: proxy)
+                case.empty:
+                    loadingCover(geometryProxy: proxy)
+                @unknown default:
+                    loadingCover(geometryProxy: proxy)
+                }
+            }
+            .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
+            .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: -5)
     }
     
     @ViewBuilder
