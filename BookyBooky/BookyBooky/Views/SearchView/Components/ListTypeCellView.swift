@@ -44,10 +44,19 @@ struct ListTypeCellView: View {
 
 extension ListTypeCellView {
     var asyncImage: some View {
-        AsyncImage(url: URL(string: bookItem.cover)) { image in
-            cover(image)
-        } placeholder: {
-            loadingCover
+        AsyncImage(url: URL(string: bookItem.cover),
+                   transaction: Transaction(animation: .default)) { phase in
+            switch phase {
+            case .success(let image):
+                cover(image)
+            case .empty:
+                loadingCover
+            case .failure(_):
+                loadingCover
+            @unknown default:
+                loadingCover
+                
+            }
         }
     }
     
