@@ -16,6 +16,7 @@ struct SearchInfoView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var bookViewModel: BookViewModel
+    
     @State private var isLoading = true
     
     // MARK: - BODY
