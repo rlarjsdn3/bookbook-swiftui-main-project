@@ -24,11 +24,13 @@ class BookViewModel: ObservableObject {
     
     // MARK: - FUNCTIONS
     
-    func setCategory() {
+    /// 도서 목록 속의 카테고리 정보를 모아 categories 변수에 결과값을 저장하는 함수입니다. 카테고리는 오름차순 정렬되며, '전체'는 제일 앞에, '기타'는 제일 뒤에 배치됩니다.
+    /// - Parameter list: 도서 리스트 배열
+    func getCategory(bookItems: [BookList.Item]) {
         var categories: [Category] = []
         
         // 중복되지 않게 카테고리 항목 저장하기
-        for item in bookSearchItems where !categories.contains(item.category) {
+        for item in bookItems where !categories.contains(item.category) {
             categories.append(item.category)
         }
         // 카테고리 항목에 '기타'가 있다면
@@ -47,6 +49,8 @@ class BookViewModel: ObservableObject {
         
         self.categories = categories
     }
+    
+    // MARK: - ALADIN API FUNCTIONS
     
     /// 알라딘 리스트 API를 호출하여 도서 리스트(베스트셀러 등) 결과를 반환하는 함수입니다,
     /// - Parameter query: 도서 리스트 출력 타입
@@ -107,7 +111,7 @@ class BookViewModel: ObservableObject {
         
         let parameters = [
             "ttbKey": "\(AladinAPI.TTBKey)",
-            "Query": "\(euckrEncoding(query))",
+            "Query": "\(query.euckrEncoding)",
             "InputEncoding": "euc-kr",
             "Cover": "BIG",
             "MaxResults": "100",
@@ -134,14 +138,14 @@ class BookViewModel: ObservableObject {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [self] in
                         print(data)
                         // 다른 도서를 새로 검색한다면 검색 결과 배열 초기화하기
                         if startIndex == 1 {
                             self.bookSearchItems.removeAll()
                         }
                         self.bookSearchItems.append(contentsOf: data.item)
-                        self.setCategory()
+                        self.getCategory(bookItems: bookSearchItems)
                     }
                 }
             case .failure(let error):
@@ -190,29 +194,5 @@ class BookViewModel: ObservableObject {
                 print("알라딘 상품 API 호출 실패: \(error)")
             }
         }
-    }
-    
-    
-    /// 문자열을 euc-kr 방식으로 인코딩한 결과값을 반환하는 함수 (코드 출처: https://url.kr/spleh9)
-    func euckrEncoding(_ query: String) -> String {
-        let rawEncoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.EUC_KR.rawValue))
-        let encoding = String.Encoding(rawValue: rawEncoding)
-
-        let eucKRStringData = query.data(using: encoding) ?? Data()
-        let outputQuery = eucKRStringData.map {byte->String in
-            if byte >= UInt8(ascii: "A") && byte <= UInt8(ascii: "Z")
-                || byte >= UInt8(ascii: "a") && byte <= UInt8(ascii: "z")
-                || byte >= UInt8(ascii: "0") && byte <= UInt8(ascii: "9")
-                || byte == UInt8(ascii: "_") || byte == UInt8(ascii: ".") || byte == UInt8(ascii: "-")
-            {
-                return String(Character(UnicodeScalar(UInt32(byte))!))
-            } else if byte == UInt8(ascii: " ") {
-                return "+"
-            } else {
-                return String(format: "%%%02X", byte)
-            }
-            }.joined()
-
-        return outputQuery
     }
 }
