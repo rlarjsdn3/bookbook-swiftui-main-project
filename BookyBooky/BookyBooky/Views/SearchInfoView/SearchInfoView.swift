@@ -29,6 +29,8 @@ struct SearchInfoView: View {
             
             if !item.isEmpty {
                 bookInformation(item: item[0])
+            } else {
+                // 로딩 UI 구현
             }
         }
         .onAppear {
