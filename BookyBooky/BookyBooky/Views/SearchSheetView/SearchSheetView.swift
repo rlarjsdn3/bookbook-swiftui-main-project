@@ -33,6 +33,7 @@ struct SearchSheetView: View {
                 SearchSheetTextFieldView(
                     searchQuery: $searchQuery,
                     startIndex: $startIndex,
+                    tapSearchIsbn13: $tapSearchIsbn13,
                     selectedCategory: $selectedCategory,
                     categoryAnimation: $categoryAnimation
                 )

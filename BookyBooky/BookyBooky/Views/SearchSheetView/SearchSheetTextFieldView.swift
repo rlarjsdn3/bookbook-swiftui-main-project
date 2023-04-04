@@ -13,6 +13,7 @@ struct SearchSheetTextFieldView: View {
     
     @Binding var searchQuery: String
     @Binding var startIndex: Int
+    @Binding var tapSearchIsbn13: String
     @Binding var selectedCategory: Category
     @Binding var categoryAnimation: Category
     
@@ -30,8 +31,10 @@ struct SearchSheetTextFieldView: View {
             searchButton
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                focusedField = true
+            if tapSearchIsbn13.isEmpty {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                    focusedField = true
+                }
             }
         }
         .padding(.top)
@@ -118,6 +121,7 @@ struct SearchSheetTextFieldView_Previews: PreviewProvider {
         SearchSheetTextFieldView(
             searchQuery: .constant(""),
             startIndex: .constant(0),
+            tapSearchIsbn13: .constant(""),
             selectedCategory: .constant(.all),
             categoryAnimation: .constant(.all)
         )
