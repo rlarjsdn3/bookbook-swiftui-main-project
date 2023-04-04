@@ -85,6 +85,7 @@ extension ListTypeCellView {
         Text(bookItem.authorInfo)
             .font(.subheadline)
             .foregroundColor(.secondary)
+            .lineLimit(1)
     }
 }
 
