@@ -25,41 +25,10 @@ struct SearchInfoView: View {
             Color.white
                 .ignoresSafeArea()
             
-            if !bookViewModel.BookInfoItem.isEmpty {
-                let bookInfo = bookViewModel.BookInfoItem[0]
-                
-                VStack {
-                    SearchInfoCoverView(
-                        bookInfo: bookInfo,
-                        isbn13: $isbn13,
-                        isLoading: $isLoading
-                    )
-                    
-                    SearchInfoTitleView(
-                        bookInfo: bookInfo,
-                        isLoading: $isLoading
-                    )
-                    
-                    SearchInfoBoxView(
-                        bookInfo: bookInfo,
-                        isLoading: $isLoading
-                    )
-                    
-                    Divider()
-                    
-                    SearchInfoDescView(
-                        bookInfo: bookInfo,
-                        isLoading: $isLoading
-                    )
-                    
-                    Spacer()
-                    
-                    SearchInfoButtonsView(
-                        bookInfo: bookInfo,
-                        isbn13: $isbn13,
-                        isLoading: $isLoading
-                    )
-                }
+            let item = bookViewModel.BookInfoItem
+            
+            if !item.isEmpty {
+                bookInformation(item: item[0])
             }
         }
         .onAppear {
@@ -67,6 +36,45 @@ struct SearchInfoView: View {
         }
         .onDisappear {
             bookViewModel.BookInfoItem.removeAll()
+        }
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension SearchInfoView {
+    func bookInformation(item: BookInfo.Item) -> some View {
+        VStack {
+            SearchInfoCoverView(
+                bookInfo: item,
+                isbn13: $isbn13,
+                isLoading: $isLoading
+            )
+            
+            SearchInfoTitleView(
+                bookInfo: item,
+                isLoading: $isLoading
+            )
+            
+            SearchInfoBoxView(
+                bookInfo: item,
+                isLoading: $isLoading
+            )
+            
+            Divider()
+            
+            SearchInfoDescView(
+                bookInfo: item,
+                isLoading: $isLoading
+            )
+            
+            Spacer()
+            
+            SearchInfoButtonsView(
+                bookInfo: item,
+                isbn13: $isbn13,
+                isLoading: $isLoading
+            )
         }
     }
 }

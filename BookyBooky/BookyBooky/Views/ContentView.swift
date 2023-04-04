@@ -23,7 +23,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            tapView
+            tabView
             
             RoundedTabView(selected: $tabSelected)
         }
@@ -33,7 +33,7 @@ struct ContentView: View {
 // MARK: - EXTENSIONS
 
 extension ContentView {
-    var tapView: some View {
+    var tabView: some View {
         TabView(selection: $tabSelected) {
             HomeView()
                 .tag(TabItem.home)

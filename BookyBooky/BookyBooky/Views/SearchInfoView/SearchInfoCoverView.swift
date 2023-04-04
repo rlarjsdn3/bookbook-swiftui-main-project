@@ -29,64 +29,80 @@ struct SearchInfoCoverView: View {
     
     var body: some View {
         ZStack {
-            Rectangle()
-                .fill(bookInfo.category.accentColor.gradient) // 카테고리 별 강조색상으로
-                .ignoresSafeArea()
+            backgroundRectangle
             
-            VStack {
-                HStack {
-                    Button {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                            isbn13 = ""
-                        }
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundColor(bookInfo.category.foregroundColor)
+            backButton
+            
+            asyncImage
+        }
+        .frame(height: mainScreen.height * BACKGROUND_HEIGHT_RATIO)
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension SearchInfoCoverView {
+    var backgroundRectangle: some View {
+        Rectangle()
+            .fill(bookInfo.category.accentColor.gradient)
+            .ignoresSafeArea()
+    }
+    
+    var backButton: some View {
+        VStack {
+            HStack {
+                Button {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                        isbn13 = ""
                     }
-                    
-                    Spacer()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(bookInfo.category.foregroundColor)
                 }
                 
                 Spacer()
             }
-            .padding()
             
-            AsyncImage(url: URL(string: bookInfo.cover),
-                       transaction: Transaction(animation: .default)) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: mainScreen.height * COVER_HEGHT_RATIO)
-                        .clipShape(
-                            RoundedRectangle(
-                                cornerRadius: 20,
-                                style: .continuous
-                            )
+            Spacer()
+        }
+        .padding()
+    }
+    
+    var asyncImage: some View {
+        AsyncImage(url: URL(string: bookInfo.cover),
+                   transaction: Transaction(animation: .default)) { phase in
+            switch phase {
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: mainScreen.height * COVER_HEGHT_RATIO)
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 20,
+                            style: .continuous
                         )
-                        .onAppear {
-                            isLoading = false
-                        }
-                case .empty:
-                    Rectangle()
-                        .fill(.gray.opacity(0.2))
-                        .shimmering()
-                case .failure(_):
-                    Rectangle()
-                        .fill(.gray.opacity(0.2))
-                        .shimmering()
-                @unknown default:
-                    Rectangle()
-                        .fill(.gray.opacity(0.2))
-                        .shimmering()
-                    
-                }
+                    )
+                    .onAppear {
+                        isLoading = false
+                    }
+            case .empty:
+                loadingCover
+            case .failure(_):
+                loadingCover
+            @unknown default:
+                loadingCover
+                
             }
         }
-        .frame(height: mainScreen.height * BACKGROUND_HEIGHT_RATIO)
+    }
+    
+    var loadingCover: some View {
+        Rectangle()
+            .fill(.gray.opacity(0.2))
+            .shimmering()
     }
 }
 
