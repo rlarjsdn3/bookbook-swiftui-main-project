@@ -10,7 +10,7 @@ import SwiftUI
 struct SalesPointDescriptionSheetView: View {
     // MARK: - PROPERTIES
 
-    let bookInfo: BookDetail.Item
+    let bookInfo: BookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -79,6 +79,6 @@ struct SalesPointDescriptionSheetView: View {
 
 struct SalesPointDescriptionSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        SalesPointDescriptionSheetView(bookInfo: BookDetail.Item.preview[0])
+        SalesPointDescriptionSheetView(bookInfo: BookInfo.Item.preview[0])
     }
 }

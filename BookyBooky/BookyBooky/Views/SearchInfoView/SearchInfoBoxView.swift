@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct SearchDetailSubInfoView: View {
+struct SearchInfoBoxView: View {
     
     // MARK: - PROPERTIES
     
-    var bookInfo: BookDetail.Item
+    var bookInfo: BookInfo.Item
     @Binding var isLoading: Bool
     
     // MARK: - WRAPPER PROPERTIES
@@ -89,8 +89,8 @@ struct SearchDetailSubInfoView: View {
 
 // MARK: - RPEVIEW
 
-struct SearchDetailSubInfoView_Previews: PreviewProvider {
+struct SearchInfoBoxView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchDetailSubInfoView(bookInfo: BookDetail.Item.preview[0], isLoading: .constant(false))
+        SearchInfoBoxView(bookInfo: BookInfo.Item.preview[0], isLoading: .constant(false))
     }
 }

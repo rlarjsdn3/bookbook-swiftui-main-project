@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - STRUCT
 
-struct BookDetail: Codable {
+struct BookInfo: Codable {
     var totalResults: Int           // 검색 결과의 총 개수
     
     var item: [Item]
@@ -33,8 +33,8 @@ struct BookDetail: Codable {
 
 // MARK: - EXTENSIONS
 
-extension BookDetail.Item {
-    static var preview: [BookDetail.Item] {
+extension BookInfo.Item {
+    static var preview: [BookInfo.Item] {
         [
             .init(
                 title: "Java의 정석 - 3rd Edition",
@@ -54,7 +54,7 @@ extension BookDetail.Item {
     }
 }
 
-extension BookDetail.Item {
+extension BookInfo.Item {
     /// 도서 제목을 반환하는 프로퍼티
     var originalTitle: String {
         return String(title.split(separator: " - ")[0])

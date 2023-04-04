@@ -8,7 +8,7 @@
 import SwiftUI
 import Shimmer
 
-struct SearchDetailCoverView: View {
+struct SearchInfoCoverView: View {
     // MARK: - CONSTANT PROPERTIES
     
     let COVER_HEGHT_RATIO = 0.27        // 화면 사이즈 대비 표지(커버) 이미지 높이 비율
@@ -17,7 +17,7 @@ struct SearchDetailCoverView: View {
     
     // MARK: - PROERTIES
     
-    var bookInfo: BookDetail.Item
+    var bookInfo: BookInfo.Item
     @Binding var isbn13: String
     @Binding var isLoading: Bool
     
@@ -92,11 +92,11 @@ struct SearchDetailCoverView: View {
 
 // MARK: - PREVIEW
 
-struct SearchDetailCoverView_Previews: PreviewProvider {
+struct SearchInfoCoverView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { proxy in
-            SearchDetailCoverView(
-                bookInfo: BookDetail.Item.preview[0],
+            SearchInfoCoverView(
+                bookInfo: BookInfo.Item.preview[0],
                 isbn13: .constant("9788994492049"),
                 isLoading: .constant(false)
             )

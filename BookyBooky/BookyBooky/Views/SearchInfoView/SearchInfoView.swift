@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchDetailView: View {
+struct SearchInfoView: View {
     
     // MARK: - PROPERTIES
     
@@ -25,36 +25,36 @@ struct SearchDetailView: View {
             Color.white
                 .ignoresSafeArea()
             
-            if !bookViewModel.bookDetailInfo.isEmpty {
-                let bookInfo = bookViewModel.bookDetailInfo[0]
+            if !bookViewModel.BookInfoItem.isEmpty {
+                let bookInfo = bookViewModel.BookInfoItem[0]
                 
                 VStack {
-                    SearchDetailCoverView(
+                    SearchInfoCoverView(
                         bookInfo: bookInfo,
                         isbn13: $isbn13,
                         isLoading: $isLoading
                     )
                     
-                    SearchDetailTitleView(
+                    SearchInfoTitleView(
                         bookInfo: bookInfo,
                         isLoading: $isLoading
                     )
                     
-                    SearchDetailSubInfoView(
+                    SearchInfoBoxView(
                         bookInfo: bookInfo,
                         isLoading: $isLoading
                     )
                     
                     Divider()
                     
-                    SearchDetailDescriptionView(
+                    SearchInfoDescView(
                         bookInfo: bookInfo,
                         isLoading: $isLoading
                     )
                     
                     Spacer()
                     
-                    SearchDetailButtonsView(
+                    SearchInfoButtonsView(
                         bookInfo: bookInfo,
                         isbn13: $isbn13,
                         isLoading: $isLoading
@@ -66,7 +66,7 @@ struct SearchDetailView: View {
             bookViewModel.requestBookDetailAPI(isbn13: isbn13)
         }
         .onDisappear {
-            bookViewModel.bookDetailInfo.removeAll()
+            bookViewModel.BookInfoItem.removeAll()
         }
     }
 }
@@ -75,7 +75,7 @@ struct SearchDetailView: View {
 
 struct SearchDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchDetailView(isbn13: .constant("9788994492049"))
+        SearchInfoView(isbn13: .constant("9788994492049"))
             .environmentObject(BookViewModel())
     }
 }

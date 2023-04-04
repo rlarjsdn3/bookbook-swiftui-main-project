@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct SearchDetailButtonsView: View {
+struct SearchInfoButtonsView: View {
     
     // MARK: - PROPERTIES
     
-    let bookInfo: BookDetail.Item
+    let bookInfo: BookInfo.Item
     @Binding var isbn13: String
     @Binding var isLoading: Bool
     
@@ -66,10 +66,10 @@ struct SearchDetailButtonsView: View {
 
 // MARK: - PREVIEW
 
-struct SearchDetailButtonsView_Previews: PreviewProvider {
+struct SearchInfoButtonsView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchDetailButtonsView(
-            bookInfo: BookDetail.Item.preview[0],
+        SearchInfoButtonsView(
+            bookInfo: BookInfo.Item.preview[0],
             isbn13: .constant("9788994492049"),
             isLoading: .constant(false)
         )

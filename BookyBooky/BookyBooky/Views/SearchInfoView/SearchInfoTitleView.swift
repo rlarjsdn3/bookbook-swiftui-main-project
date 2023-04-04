@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct SearchDetailTitleView: View {
+struct SearchInfoTitleView: View {
     
     // MARK: - PROPERTIES
     
-    let bookInfo: BookDetail.Item
+    let bookInfo: BookInfo.Item
     @Binding var isLoading: Bool
     
     // MARK: - BODY
@@ -64,8 +64,8 @@ struct SearchDetailTitleView: View {
 
 // MARK: - PREVIEW
 
-struct BookDetailTitleView_Previews: PreviewProvider {
+struct SearchInfoTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchDetailTitleView(bookInfo: BookDetail.Item.preview[0], isLoading: .constant(false))
+        SearchInfoTitleView(bookInfo: BookInfo.Item.preview[0], isLoading: .constant(false))
     }
 }

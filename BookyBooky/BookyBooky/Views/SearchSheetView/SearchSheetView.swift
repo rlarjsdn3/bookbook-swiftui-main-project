@@ -53,12 +53,12 @@ struct SearchSheetView: View {
             .opacity(!tapSearchIsbn13.isEmpty ? 0 : 1)
             
             if !tapSearchIsbn13.isEmpty {
-                SearchDetailView(isbn13: $tapSearchIsbn13)
+                SearchInfoView(isbn13: $tapSearchIsbn13)
             }
         }
         .onDisappear {
             bookViewModel.bookSearchItems.removeAll()
-            bookViewModel.bookDetailInfo.removeAll()
+            bookViewModel.BookInfoItem.removeAll()
         }
         .presentationCornerRadius(30)
     }

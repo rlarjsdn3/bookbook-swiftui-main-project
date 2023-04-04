@@ -18,7 +18,7 @@ class BookViewModel: ObservableObject {
     @Published var blogBest: [BookList.Item] = []       // 블로그 베스트 리스트를 저장하는 변수
     
     @Published var bookSearchItems: [BookList.Item] = [] // 검색 결과 리스트를 저장하는 변수
-    @Published var bookDetailInfo: [BookDetail.Item] = []  // 상세 도서 결과값을 저장하는 변수
+    @Published var BookInfoItem: [BookInfo.Item] = []  // 상세 도서 결과값을 저장하는 변수
     
     @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
     
@@ -180,14 +180,14 @@ class BookViewModel: ObservableObject {
             encoding: URLEncoding.default,
             headers: nil
         )
-        .responseDecodable(of: BookDetail.self) { response in
+        .responseDecodable(of: BookInfo.self) { response in
             switch response.result {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
                     print(data)
                     DispatchQueue.main.async {
-                        self.bookDetailInfo = data.item
+                        self.BookInfoItem = data.item
                     }
                 }
             case .failure(let error):
