@@ -53,24 +53,37 @@ struct SearchDetailCoverView: View {
             }
             .padding()
             
-            AsyncImage(url: URL(string: bookInfo.cover)) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: mainScreen.height * COVER_HEGHT_RATIO)
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 20,
-                            style: .continuous
+            AsyncImage(url: URL(string: bookInfo.cover),
+                       transaction: Transaction(animation: .default)) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: mainScreen.height * COVER_HEGHT_RATIO)
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 20,
+                                style: .continuous
+                            )
                         )
-                    )
-                    .onAppear {
-                        isLoading = false
-                    }
-            } placeholder: {
-                Rectangle()
-                    .fill(.gray.opacity(0.2))
-                    .shimmering()
+                        .onAppear {
+                            isLoading = false
+                        }
+                case .empty:
+                    Rectangle()
+                        .fill(.gray.opacity(0.2))
+                        .shimmering()
+                case .failure(_):
+                    Rectangle()
+                        .fill(.gray.opacity(0.2))
+                        .shimmering()
+                @unknown default:
+                    Rectangle()
+                        .fill(.gray.opacity(0.2))
+                        .shimmering()
+                    
+                }
             }
         }
         .frame(height: mainScreen.height * BACKGROUND_HEIGHT_RATIO)
