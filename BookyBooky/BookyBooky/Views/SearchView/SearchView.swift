@@ -23,11 +23,7 @@ struct SearchView: View {
             
             SearchListTypeView(listTypeSelected: $listTypeSelected)
 
-            ZStack {
-                Color("Background")
-                
-                SearchLazyGridView(listTypeSelected: $listTypeSelected)
-            }
+            SearchLazyGridView(listTypeSelected: $listTypeSelected)
         }
     }
 }

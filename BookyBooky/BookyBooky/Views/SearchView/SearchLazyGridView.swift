@@ -40,8 +40,21 @@ struct SearchLazyGridView: View {
     // MARK: - BODY
     
     var body: some View {
-        ScrollViewReader { proxy in
-            scrollLazyGridCells(scrollProxy: proxy)
+        ZStack {
+            Color("Background")
+            
+            if !bookListItems.isEmpty {
+                ScrollViewReader { proxy in
+                    scrollLazyGridCells(scrollProxy: proxy)
+                }
+            } else {
+                VStack {
+                    noResultsLabel
+                    
+                    refreshButton
+                }
+                .frame(maxHeight: .infinity)
+            }
         }
     }
 }
@@ -68,6 +81,31 @@ extension SearchLazyGridView {
         .padding(.horizontal, 10)
         .id("Scroll_To_Top")
     }
+    
+    var noResultsLabel: some View {
+        VStack {
+            Text("도서 정보 불러오기 실패")
+                .font(.title2)
+                .fontWeight(.bold)
+                .frame(maxHeight: .infinity)
+            
+            Text("잠시 후 다시 시도하십시오.")
+                .font(.headline)
+                .foregroundColor(.secondary)
+        }
+        .frame(height: 50)
+    }
+    
+    var refreshButton: some View {
+        Button("다시 불러오기") {
+            for type in ListType.allCases {
+                bookViewModel.requestBookListAPI(type: type)
+            }
+            Haptics.shared.play(.rigid)
+        }
+        .buttonStyle(.borderedProminent)
+        .padding()
+    }
 }
 
 extension SearchLazyGridView {
@@ -84,6 +122,8 @@ extension SearchLazyGridView {
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct SearchLazyGridView_Previews: PreviewProvider {
     static var previews: some View {
