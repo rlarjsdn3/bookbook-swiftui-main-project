@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ToastUI
 
 struct SearchSheetTextFieldView: View {
     
@@ -36,6 +37,10 @@ struct SearchSheetTextFieldView: View {
                     focusedField = true
                 }
             }
+        }
+        .toast(isPresented: $bookViewModel.isLoading) {
+            ToastView("Loading...")
+                .toastViewStyle(.indeterminate)
         }
         .padding(.top)
     }
@@ -91,6 +96,7 @@ extension SearchSheetTextFieldView {
     
     var searchButton: some View {
         Button {
+//            bookViewModel.isLoading = true
             requestBookSearch()
             hideKeyboard()
         } label: {
