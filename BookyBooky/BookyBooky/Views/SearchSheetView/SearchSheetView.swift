@@ -20,7 +20,7 @@ struct SearchSheetView: View {
     
     // MARK: - WRAPPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: AladinAPIManager
+    @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var searchQuery = "" // 검색어를 저장하는 변수
     @State private var startIndex = 1   // 검색 결과 시작페이지를 저장하는 변수, 새로운 검색을 시도하는지 안하는지 판별하는 변수
@@ -58,14 +58,14 @@ struct SearchSheetView: View {
                 SearchInfoView(isbn13: $tapSearchIsbn13)
             }
         }
-        .toast(isPresenting: $bookViewModel.showSearchLoading)  {
+        .toast(isPresenting: $aladinAPIManager.showSearchLoading)  {
             AlertToast(
                 displayMode: .banner(.pop),
                 type: .loading,
                 title: "도서 정보 불러오는 중..."
             )
         }
-        .toast(isPresenting: $bookViewModel.showSearchError, duration: 3.0)  {
+        .toast(isPresenting: $aladinAPIManager.showSearchError, duration: 3.0)  {
             AlertToast(
                 displayMode: .banner(.pop),
                 type: .error(.red),
@@ -74,8 +74,8 @@ struct SearchSheetView: View {
             )
         }
         .onDisappear {
-            bookViewModel.bookSearchItems.removeAll()
-            bookViewModel.BookInfoItem.removeAll()
+            aladinAPIManager.bookSearchItems.removeAll()
+            aladinAPIManager.BookInfoItem.removeAll()
         }
         .presentationCornerRadius(30)
     }

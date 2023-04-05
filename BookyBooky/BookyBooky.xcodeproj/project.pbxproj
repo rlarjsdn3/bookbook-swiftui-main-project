@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
+		9E06070E29DD516D000D542D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070D29DD516D000D542D /* RealmManager.swift */; };
 		9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */; };
 		9E0C0A6229D1DB4700F1F5F6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6129D1DB4700F1F5F6 /* HomeView.swift */; };
 		9E0C0A6629D1DF4800F1F5F6 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6529D1DF4800F1F5F6 /* HomeHeaderView.swift */; };
@@ -56,6 +57,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9E06070D29DD516D000D542D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		9E0C0A6129D1DB4700F1F5F6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9E0C0A6529D1DF4800F1F5F6 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
@@ -117,6 +119,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E06070C29DD5160000D542D /* RealmManager */ = {
+			isa = PBXGroup;
+			children = (
+				9E06070D29DD516D000D542D /* RealmManager.swift */,
+			);
+			path = RealmManager;
+			sourceTree = "<group>";
+		};
 		9E0C0A6029D1D85500F1F5F6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +307,7 @@
 				9ECA326529D11B93004D6D5B /* Views */,
 				9E0C0A6029D1D85500F1F5F6 /* Extensions */,
 				9E524DF929D1D13700FD7B98 /* Shapes */,
+				9E06070C29DD5160000D542D /* RealmManager */,
 				9E0C0A6D29D2855200F1F5F6 /* AladinAPIManager */,
 				9ECA326729D11BC1004D6D5B /* Models */,
 				9EB749F329D5C26100610D97 /* Enums */,
@@ -437,6 +448,7 @@
 				9E0C0A6229D1DB4700F1F5F6 /* HomeView.swift in Sources */,
 				9ECA326B29D12044004D6D5B /* TabItem.swift in Sources */,
 				9E7A794529DA6AFF00A51856 /* SearchInfoCoverView.swift in Sources */,
+				9E06070E29DD516D000D542D /* RealmManager.swift in Sources */,
 				9E7A794B29DA8EBD00A51856 /* SearchInfoDescView.swift in Sources */,
 				9E7A794329DA5B8F00A51856 /* SearchInfoView.swift in Sources */,
 				9E54AA0829D7C9B500FE080C /* SearchSheetCellView.swift in Sources */,

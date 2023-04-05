@@ -23,9 +23,9 @@ struct SearchSheetScrollView: View {
         var list: [BookList.Item] = []
         
         if selectedCategory == .all {
-            return bookViewModel.bookSearchItems
+            return aladinAPIManager.bookSearchItems
         } else {
-            for item in bookViewModel.bookSearchItems where item.category == selectedCategory {
+            for item in aladinAPIManager.bookSearchItems where item.category == selectedCategory {
                 list.append(item)
             }
         }
@@ -35,13 +35,13 @@ struct SearchSheetScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: AladinAPIManager
+    @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     // MARK: - BODY
     
     var body: some View {
         // 검색 결과가 존재하는 경우
-        if !bookViewModel.bookSearchItems.isEmpty {
+        if !aladinAPIManager.bookSearchItems.isEmpty {
             scrollSearchItems // 각 검색 도서 셀 출력
         // 검색 결과가 존재하지 않는 경우
         } else {
@@ -94,7 +94,7 @@ extension SearchSheetScrollView {
     var seeMoreButton: some View {
         Button {
             startIndex += 1
-            bookViewModel.requestBookSearchAPI(
+            aladinAPIManager.requestBookSearchAPI(
                 query: searchQuery,
                 page: startIndex
             )

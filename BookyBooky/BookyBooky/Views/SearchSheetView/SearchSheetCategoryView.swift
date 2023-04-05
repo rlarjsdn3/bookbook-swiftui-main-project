@@ -16,7 +16,7 @@ struct SearchSheetCategoryView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: AladinAPIManager
+    @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @Namespace var categoryNamespace: Namespace.ID  // 카테고리 버튼 간 애니메이션 효과를 주기 위한 이름 공간 변수
     
@@ -24,7 +24,7 @@ struct SearchSheetCategoryView: View {
     
     var body: some View {
         // 검색 결과가 존재하는 경우
-        if !bookViewModel.bookSearchItems.isEmpty {
+        if !aladinAPIManager.bookSearchItems.isEmpty {
             scrollCategoryButtons // 도서 카테고리 버튼 뷰 출력
         // 검색 결과가 존재하지 않는 경우
         } else {
@@ -54,7 +54,7 @@ extension SearchSheetCategoryView {
     @ViewBuilder
     func categoryButtons(scrollProxy: ScrollViewProxy) -> some View {
         HStack(spacing: -20) {
-            ForEach(bookViewModel.categories, id: \.self) { category in
+            ForEach(aladinAPIManager.categories, id: \.self) { category in
                 CategoryButtonView(
                     selectedCategory: $selectedCategory,
                     category: category,

@@ -12,7 +12,7 @@ struct BookyBookyApp: App {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @StateObject var bookViewModel = AladinAPIManager()
+    @StateObject var aladinAPIManager = AladinAPIManager()
     
     // MARK: - BODY
     
@@ -21,10 +21,10 @@ struct BookyBookyApp: App {
             ContentView()
                 .onAppear {
                     for type in ListType.allCases {
-                        bookViewModel.requestBookListAPI(type: type)
+                        aladinAPIManager.requestBookListAPI(type: type)
                     }
                 }
-                .environmentObject(bookViewModel)
+                .environmentObject(aladinAPIManager)
         }
     }
 }

@@ -11,7 +11,7 @@ struct SearchView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: AladinAPIManager
+    @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var listTypeSelected = ListType.bestSeller
     

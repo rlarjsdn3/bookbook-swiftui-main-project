@@ -15,7 +15,7 @@ struct SearchInfoView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: AladinAPIManager
+    @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var isLoading = true
     
@@ -26,7 +26,7 @@ struct SearchInfoView: View {
             Color.white
                 .ignoresSafeArea()
             
-            let item = bookViewModel.BookInfoItem
+            let item = aladinAPIManager.BookInfoItem
             
             if !item.isEmpty {
                 bookInformation(item: item[0])
@@ -34,10 +34,10 @@ struct SearchInfoView: View {
         }
         .onAppear {
             hideKeyboard()
-            bookViewModel.requestBookDetailAPI(isbn13: isbn13)
+            aladinAPIManager.requestBookDetailAPI(isbn13: isbn13)
         }
         .onDisappear {
-            bookViewModel.BookInfoItem.removeAll()
+            aladinAPIManager.BookInfoItem.removeAll()
         }
     }
 }
