@@ -13,8 +13,8 @@ class BookViewModel: ObservableObject {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @Published var showLoading = false
-    @Published var showError = false
+    @Published var showLoading = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
+    @Published var showError = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
     
     @Published var bestSeller: [BookList.Item] = []     // 베스트셀러 리스트를 저장하는 변수
     @Published var itemNewAll: [BookList.Item] = []     // 신간 도서 리스트를 저장하는 변수
@@ -100,7 +100,6 @@ class BookViewModel: ObservableObject {
                         self.blogBest = data.item
                     }
                 }
-                print(data)
             case .failure(let error):
                 print("알라딘 리스트 API 호출 실패: \(error)")
             }
@@ -147,14 +146,12 @@ class BookViewModel: ObservableObject {
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
                     DispatchQueue.main.async { [self] in
-                        print(data)
-                        // 다른 도서를 새로 검색한다면 검색 결과 배열 초기화하기
+                        // 다른 도서를 새로 검색한다면 검색 결과 초기화하기
                         if startIndex == 1 {
                             self.bookSearchItems.removeAll()
                         }
-                        
-                            self.bookSearchItems.append(contentsOf: data.item)
-                            self.getCategory(bookItems: self.bookSearchItems)
+                        self.bookSearchItems.append(contentsOf: data.item)
+                        self.getCategory(bookItems: self.bookSearchItems)
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -199,7 +196,6 @@ class BookViewModel: ObservableObject {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
-                    print(data)
                     DispatchQueue.main.async {
                         self.BookInfoItem = data.item
                     }
