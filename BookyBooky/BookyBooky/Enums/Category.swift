@@ -23,7 +23,7 @@ enum Category: String {
     case craft = "공예/취미"
     case criticalBiography = "인물/평전"
     case design = "건축/디자인"
-    case documentary = "교양/다큐멘터리"
+    case documentary = "교양/다큐"
     case economic = "경제/경영"
     case education = "교육/자료"
     case elementarySchool = "초등참고서"
@@ -45,7 +45,7 @@ enum Category: String {
     case korea = "한국"
     case law = "법률"
     case life = "가정/요리"
-    case lightNovel = "라이트 노벨"
+    case lightNovel = "라이트노벨"
     case linguistic = "언어학"
     case magazine = "잡지"
     case medical = "의학"
@@ -53,7 +53,7 @@ enum Category: String {
     case naturalScience = "자연과학"
     case poem = "소설/시"
     case culture = "예술/대중문화"
-    case professional = "대학교재/전문서적"
+    case professional = "전문서적"
     case religion = "종교/명상"
     case romance = "로맨스"
     case science = "과학"
@@ -81,14 +81,34 @@ enum Category: String {
     /// 카테고리 별 강조 색상 정보를 반환하는 프로퍼티입니다. (Beta)
     var accentColor: Color {
         switch self {
-        case .computer:
+        case .computer, .naturalScience, .science, .socialScience, .technical:
             return .black
-        case .history:
-            return .brown
-        case .professional, .economic:
+        case .economic, .law, .linguistic, .medical, .professional:
             return .blue
-        case .poem:
+        case .classic, .history, .religion:
+            return .brown
+        case .sports, .travel:
+            return .cyan
+        case .cook, .craft, .family, .habit, .health, .life:
+            return .green
+        case .elt, .examination, .foreignLanguage:
+            return .indigo
+        case .documentary, .education, .selfImprovement:
+            return .mint
+        case .elementarySchool, .middleSchool, .highSchool, .teenager:
+            return .orange
+        case .romance:
+            return .pink
+        case .action, .essay, .fantasy, .genreNovel, .lightNovel, .poem, .thriller:
             return .purple
+        case .design, .interior, .culture:
+            return .red
+        case .autobiography, .criticalBiography, .humanities:
+            return .teal
+        case .cartoon, .children, .comedy, .game, .toddler:
+            return .yellow
+        case .korea:
+            return .primary
         default:
             return .gray
         }
