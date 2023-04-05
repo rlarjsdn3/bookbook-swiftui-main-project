@@ -9,6 +9,11 @@ import SwiftUI
 
 struct HomeHeaderView: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
+    @State private var bookDetailsISBN13 = ""
+    @State private var showSearchSheetView = false
+    
     // MARK: - BODY
     
     var body: some View {
@@ -21,7 +26,7 @@ struct HomeHeaderView: View {
                 }
                 
                 Button {
-                    // do somethings...
+                    showSearchSheetView = true
                 } label: {
                     Label("검색 추가", systemImage: "magnifyingglass")
                 }
@@ -39,6 +44,9 @@ struct HomeHeaderView: View {
             }
 
         }
+        .sheet(isPresented: $showSearchSheetView) {
+            SearchSheetView(bookDetailsISBN13: $bookDetailsISBN13)
+        }
         .foregroundColor(.black)
         .padding()
     }
@@ -49,14 +57,14 @@ struct HomeHeaderView: View {
 extension HomeHeaderView {
     var searchImage: some View {
         Image(systemName: "plus")
-            .font(.title)
-            .fontWeight(.bold)
+            .font(.title2)
+            .fontWeight(.semibold)
     }
     
     var profileImage: some View {
         Image(systemName: "person.crop.circle")
-            .font(.title)
-            .fontWeight(.bold)
+            .font(.title2)
+            .fontWeight(.semibold)
     }
 }
 
