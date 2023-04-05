@@ -41,6 +41,7 @@ struct SearchSheetView: View {
                 )
                 
                 SearchSheetCategoryView(
+                    startIndex: $startIndex,
                     selectedCategory: $selectedCategory,
                     categoryAnimation: $categoryAnimation
                 )

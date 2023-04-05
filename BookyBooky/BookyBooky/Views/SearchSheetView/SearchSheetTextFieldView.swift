@@ -20,7 +20,7 @@ struct SearchSheetTextFieldView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: AladinAPIManager
+    @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @FocusState var focusedField: Bool
     
@@ -112,7 +112,7 @@ extension SearchSheetTextFieldView {
             startIndex = 1
         }
         
-        bookViewModel.requestBookSearchAPI(query: searchQuery)
+        aladinAPIManager.requestBookSearchAPI(query: searchQuery)
         
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
             categoryAnimation = .all

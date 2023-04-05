@@ -87,8 +87,8 @@ extension SearchSheetScrollView {
                         }
                     }
             }
+            .id("Scroll_To_Top")
         }
-        .id("Scroll_To_Top")
     }
     
     var seeMoreButton: some View {
