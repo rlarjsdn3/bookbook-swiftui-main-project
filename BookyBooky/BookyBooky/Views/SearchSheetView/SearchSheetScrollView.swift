@@ -14,7 +14,7 @@ struct SearchSheetScrollView: View {
     @Binding var selectedCategory: Category
     @Binding var searchQuery: String
     @Binding var startIndex: Int
-    @Binding var tapSearchIsbn13: String
+    @Binding var bookDetailsISBN13: String
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -83,7 +83,7 @@ extension SearchSheetScrollView {
                 SearchSheetCellView(bookItem: item)
                     .onTapGesture {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                            tapSearchIsbn13 = item.isbn13
+                            bookDetailsISBN13 = item.isbn13
                         }
                     }
             }
@@ -143,7 +143,7 @@ struct SearchSheetScrollView_Previews: PreviewProvider {
             selectedCategory: .constant(.all),
             searchQuery: .constant(""),
             startIndex: .constant(1),
-            tapSearchIsbn13: .constant("")
+            bookDetailsISBN13: .constant("")
         )
         .environmentObject(AladinAPIManager())
     }

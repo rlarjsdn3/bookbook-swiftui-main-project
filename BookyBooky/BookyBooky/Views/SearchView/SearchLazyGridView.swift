@@ -67,7 +67,7 @@ extension SearchLazyGridView {
             ForEach(bookListItems, id: \.self) { item in
                 ListTypeCellView(bookItem: item)
                     .sheet(isPresented: $showSearchDetailView) {
-                        SearchSheetView(tapSearchIsbn13: $tapSearchIsbn13)
+                        SearchSheetView(bookDetailsISBN13: $tapSearchIsbn13)
                     }
                     .onTapGesture {
                         showSearchDetailView = true

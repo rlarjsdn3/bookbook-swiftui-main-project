@@ -8,15 +8,17 @@
 import SwiftUI
 import AlertToast
 
-/// 실질적인 검색 기능을 수행하는 검색 시트 뷰입니다.  매개 변수로 상세 보기하고자 하는 도서의 ISBN13값을 showInfoIsbn13으로 전달하세요.
-/// 만약 뷰를 호출하자마자 검색 필드를 보고 싶으면 빈 문자열("")을 전달하세요. 곧바로 상세 보기를 하고자 한다면 해당 도서의 ISBN13값을 전달하세요.
-/// 이렇게 하는 이유는 곧바로 상세 보기를 하더라도 '뒤로 가기'버튼을 클릭하면 검색 필드를 보이게 하기 위함입니다.
+/*!
+ * 실질적인 검색 기능을 수행하는 검색 시트 뷰입니다.  매개 변수로 상세 보기하고자 하는 도서의 ISBN13값을 showInfoIsbn13으로 전달하세요.
+ * 만약 뷰를 호출하자마자 검색 필드를 보고 싶으면 빈 문자열("")을 전달하세요. 곧바로 상세 보기를 하고자 한다면 해당 도서의 ISBN13값을 전달하세요.
+ * 이렇게 하는 이유는 곧바로 상세 보기를 하더라도 '뒤로 가기'버튼을 클릭하면 검색 필드를 보이게 하기 위함입니다.
+ */
 struct SearchSheetView: View {
     
     // MARK: - PROPERTIES
     
     // 검색 리스트에서 선택한 도서의 ISBN13값을 저장하는 변수, 현재 뷰(검색/상세)의 위치를 파악하는 변수
-    @Binding var tapSearchIsbn13: String
+    @Binding var bookDetailsISBN13: String
     
     // MARK: - WRAPPPER PROPERTIES
     
@@ -35,7 +37,7 @@ struct SearchSheetView: View {
                 SearchSheetTextFieldView(
                     searchQuery: $searchQuery,
                     startIndex: $startIndex,
-                    tapSearchIsbn13: $tapSearchIsbn13,
+                    bookDetailsISBN13: $bookDetailsISBN13,
                     selectedCategory: $selectedCategory,
                     categoryAnimation: $categoryAnimation
                 )
@@ -50,13 +52,13 @@ struct SearchSheetView: View {
                     selectedCategory: $selectedCategory,
                     searchQuery: $searchQuery,
                     startIndex: $startIndex,
-                    tapSearchIsbn13: $tapSearchIsbn13
+                    bookDetailsISBN13: $bookDetailsISBN13
                 )
             }
-            .opacity(!tapSearchIsbn13.isEmpty ? 0 : 1)
+            .opacity(!bookDetailsISBN13.isEmpty ? 0 : 1)
             
-            if !tapSearchIsbn13.isEmpty {
-                SearchInfoView(isbn13: $tapSearchIsbn13)
+            if !bookDetailsISBN13.isEmpty {
+                SearchInfoView(isbn13: $bookDetailsISBN13)
             }
         }
         .toast(isPresenting: $aladinAPIManager.showSearchLoading)  {
@@ -86,7 +88,7 @@ struct SearchSheetView: View {
 
 struct SearchSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetView(tapSearchIsbn13: .constant(""))
+        SearchSheetView(bookDetailsISBN13: .constant(""))
             .environmentObject(AladinAPIManager())
     }
 }
