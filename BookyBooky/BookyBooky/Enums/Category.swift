@@ -24,7 +24,7 @@ enum Category: String {
     case criticalBiography = "인물/평전"
     case design = "건축/디자인"
     case documentary = "교양/다큐멘터리"
-    case economic = "경제경영"
+    case economic = "경제/경영"
     case education = "교육/자료"
     case elementarySchool = "초등참고서"
     case elt = "어학/사전"
@@ -34,7 +34,7 @@ enum Category: String {
     case fantasy = "무협/판타지"
     case foreignLanguage = "외국어"
     case game = "게임/토이"
-    case genreNovel = "장르소설"                // 삭제
+    case genreNovel = "장르소설"
     case habit = "취미/레저"
     case health = "건강/취미"
     case highSchool = "고등참고서"
