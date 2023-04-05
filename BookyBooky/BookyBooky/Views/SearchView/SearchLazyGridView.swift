@@ -66,9 +66,9 @@ extension SearchLazyGridView {
         LazyVGrid(columns: columns, spacing: 25) {
             ForEach(bookListItems, id: \.self) { item in
                 ListTypeCellView(bookItem: item)
-                    .sheet(isPresented: $showSearchDetailView, content: {
+                    .sheet(isPresented: $showSearchDetailView) {
                         SearchSheetView(tapSearchIsbn13: $tapSearchIsbn13)
-                    })
+                    }
                     .onTapGesture {
                         showSearchDetailView = true
                         tapSearchIsbn13 = item.isbn13
@@ -83,17 +83,21 @@ extension SearchLazyGridView {
     }
     
     var noResultsLabel: some View {
-        VStack {
+        VStack(spacing: 5) {
+            Image(systemName: "xmark.circle")
+                .font(.largeTitle)
+                .foregroundColor(.red)
+                .padding(.vertical, 16)
+            
             Text("도서 정보 불러오기 실패")
                 .font(.title2)
                 .fontWeight(.bold)
-                .frame(maxHeight: .infinity)
             
             Text("잠시 후 다시 시도하십시오.")
                 .font(.headline)
                 .foregroundColor(.secondary)
         }
-        .frame(height: 50)
+        .frame(height: 110)
     }
     
     var refreshButton: some View {

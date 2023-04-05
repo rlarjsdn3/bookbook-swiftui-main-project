@@ -43,8 +43,8 @@ struct SearchHeaderView: View {
 
 extension SearchHeaderView {
     var emptyImage: some View {
-        Image(systemName: "square")
-            .font(.title)
+        Image(systemName: "magnifyingglass")
+            .font(.title2)
             .fontWeight(.semibold)
             .hidden()
     }
