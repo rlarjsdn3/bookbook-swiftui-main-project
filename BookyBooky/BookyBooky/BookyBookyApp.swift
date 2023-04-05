@@ -10,6 +10,10 @@ import SwiftUI
 @main
 struct BookyBookyApp: App {
     
+    // MARK: - CONSTATNT PROPERTIES
+    
+    let realmManager = RealmManager.shared
+    
     // MARK: - WRAPPER PROPERTIES
     
     @StateObject var aladinAPIManager = AladinAPIManager()
@@ -18,13 +22,18 @@ struct BookyBookyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .onAppear {
-                    for type in ListType.allCases {
-                        aladinAPIManager.requestBookListAPI(type: type)
+            if let realm = realmManager.realm {
+                ContentView()
+                    .onAppear {
+                        for type in ListType.allCases {
+                            aladinAPIManager.requestBookListAPI(type: type)
+                        }
                     }
-                }
-                .environmentObject(aladinAPIManager)
+                    .environmentObject(aladinAPIManager)
+                    .environment(\.realm, realm)
+            } else {
+                // 스플래쉬 뷰ㅋ
+            }
         }
     }
 }
