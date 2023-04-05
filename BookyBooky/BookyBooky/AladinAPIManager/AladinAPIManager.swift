@@ -35,8 +35,8 @@ class AladinAPIManager: ObservableObject {
         var categories: [Category] = []
         
         // 중복되지 않게 카테고리 항목 저장하기
-        for item in bookItems where !categories.contains(item.category) {
-            categories.append(item.category)
+        for item in bookItems where !categories.contains(item.categoryName.refinedCategory) {
+            categories.append(item.categoryName.refinedCategory)
         }
         // 카테고리 항목에 '기타'가 있다면
         if let index = categories.firstIndex(of: .etc) {
@@ -124,7 +124,7 @@ class AladinAPIManager: ObservableObject {
             "Query": "\(query.euckrEncoding)",
             "InputEncoding": "euc-kr",
             "Cover": "BIG",
-            "MaxResults": "100",
+            "MaxResults": "50",
             "start": "\(startIndex)",
             "SearchTarget": "Book",
             "output": "js",

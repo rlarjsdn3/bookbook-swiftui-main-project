@@ -43,7 +43,7 @@ struct SearchSheetCellView: View {
 
 extension SearchSheetCellView {
     var title: some View {
-        Text(bookItem.originalTitle)
+        Text(bookItem.title.refinedTitle)
             .font(.title3)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -65,7 +65,7 @@ extension SearchSheetCellView {
     }
     
     var author: some View {
-        Text(bookItem.authorInfo)
+        Text(bookItem.author.refinedAuthor)
             .foregroundColor(.primary)
             .fontWeight(.bold)
     }
@@ -76,13 +76,13 @@ extension SearchSheetCellView {
             
             Text("・")
             
-            Text(bookItem.category.rawValue)
+            Text(bookItem.categoryName.refinedCategory.rawValue)
         }
         .fontWeight(.semibold)
     }
     
     var pubDate: some View {
-        Text(bookItem.publishDate, style: .date)
+        Text(bookItem.pubDate.refinedPublishDate, style: .date)
     }
 }
 
@@ -103,7 +103,7 @@ extension SearchSheetCellView {
             
             ZStack {
                 TextShape()
-                    .fill(bookItem.category.accentColor)
+                    .fill(bookItem.categoryName.refinedCategory.accentColor)
                     .offset(y: 4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                 

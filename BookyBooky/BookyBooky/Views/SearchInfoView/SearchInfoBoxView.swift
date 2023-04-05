@@ -94,7 +94,7 @@ extension SearchInfoBoxView {
                 .font(.headline)
                 .fontWeight(.bold)
             
-            Text(bookInfo.category.rawValue)
+            Text(bookInfo.categoryName.refinedCategory.rawValue)
                 .redacted(reason: isLoading ? .placeholder : [])
                 .shimmering(active: isLoading)
         }

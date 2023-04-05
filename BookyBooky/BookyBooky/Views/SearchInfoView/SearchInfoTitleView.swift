@@ -36,7 +36,7 @@ struct SearchInfoTitleView: View {
 extension SearchInfoTitleView {
     var title: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(bookInfo.originalTitle)
+            Text(bookInfo.title.refinedTitle)
                 .font(.title)
                 .fontWeight(.bold)
                 .minimumScaleFactor(0.8)
@@ -45,7 +45,7 @@ extension SearchInfoTitleView {
                 .shimmering(active: isLoading)
             
             HStack(spacing: 2) {
-                Text(bookInfo.authorInfo)
+                Text(bookInfo.author.refinedAuthor)
                 
                 Text("・")
                 
@@ -66,7 +66,7 @@ extension SearchInfoTitleView {
             Image(systemName: "heart.fill")
                 .foregroundColor(.white)
                 .padding()
-                .background(bookInfo.category.accentColor) // 카테고리별 강조 색상으로
+                .background(bookInfo.categoryName.refinedCategory.accentColor) // 카테고리별 강조 색상으로
                 .clipShape(Circle())
         }
         .disabled(isLoading)

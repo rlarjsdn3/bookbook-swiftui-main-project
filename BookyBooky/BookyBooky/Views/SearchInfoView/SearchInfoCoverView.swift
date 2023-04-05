@@ -44,7 +44,7 @@ struct SearchInfoCoverView: View {
 extension SearchInfoCoverView {
     var backgroundRectangle: some View {
         Rectangle()
-            .fill(bookInfo.category.accentColor.gradient)
+            .fill(bookInfo.categoryName.refinedCategory.accentColor.gradient)
             .ignoresSafeArea()
     }
     
@@ -71,7 +71,7 @@ extension SearchInfoCoverView {
         Image(systemName: "chevron.left")
             .font(.title3)
             .fontWeight(.semibold)
-            .foregroundColor(bookInfo.category.foregroundColor)
+            .foregroundColor(bookInfo.categoryName.refinedCategory.foregroundColor)
     }
     
     var asyncImage: some View {

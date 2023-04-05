@@ -83,7 +83,7 @@ extension SearchInfoButtonsView {
             .foregroundColor(.white)
             .frame(height: 55)
             .frame(maxWidth: .infinity)
-            .background(bookInfo.category.accentColor)
+            .background(bookInfo.categoryName.refinedCategory.accentColor)
             .cornerRadius(15)
     }
 }

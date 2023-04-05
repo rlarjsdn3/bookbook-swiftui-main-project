@@ -25,7 +25,8 @@ struct SearchSheetScrollView: View {
         if selectedCategory == .all {
             return aladinAPIManager.bookSearchItems
         } else {
-            for item in aladinAPIManager.bookSearchItems where item.category == selectedCategory {
+            for item in aladinAPIManager.bookSearchItems
+                where item.categoryName.refinedCategory == selectedCategory {
                 list.append(item)
             }
         }

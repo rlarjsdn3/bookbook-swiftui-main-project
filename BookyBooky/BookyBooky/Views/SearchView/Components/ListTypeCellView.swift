@@ -71,7 +71,7 @@ extension ListTypeCellView {
     }
     
     var title: some View {
-        Text(bookItem.originalTitle)
+        Text(bookItem.title.refinedTitle)
             .font(.headline)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -82,7 +82,7 @@ extension ListTypeCellView {
     }
     
     var author: some View {
-        Text(bookItem.authorInfo)
+        Text(bookItem.author.refinedAuthor)
             .font(.subheadline)
             .foregroundColor(.secondary)
             .lineLimit(1)
