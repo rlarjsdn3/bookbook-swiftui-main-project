@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
 		9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */; };
 		9E0C0A6229D1DB4700F1F5F6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6129D1DB4700F1F5F6 /* HomeView.swift */; };
 		9E0C0A6629D1DF4800F1F5F6 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6529D1DF4800F1F5F6 /* HomeHeaderView.swift */; };
@@ -107,6 +108,7 @@
 				9ECA326129D11ADA004D6D5B /* SwiftDate in Frameworks */,
 				9ECA326429D11AFF004D6D5B /* Shimmer in Frameworks */,
 				9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */,
+				9E06070B29DD10D8000D542D /* AlertToast in Frameworks */,
 				9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */,
 				9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */,
 			);
@@ -345,6 +347,7 @@
 				9ECA325D29D11A6B004D6D5B /* RealmSwift */,
 				9ECA326029D11ADA004D6D5B /* SwiftDate */,
 				9ECA326329D11AFF004D6D5B /* Shimmer */,
+				9E06070A29DD10D8000D542D /* AlertToast */,
 			);
 			productName = BookyBooky;
 			productReference = 9ECD920D29BF1FA600FCDD2F /* BookyBooky.app */;
@@ -380,6 +383,7 @@
 				9ECA325F29D11ADA004D6D5B /* XCRemoteSwiftPackageReference "SwiftDate" */,
 				9ECA326229D11AFF004D6D5B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 				9E06070629DC61C9000D542D /* XCRemoteSwiftPackageReference "ToastUI" */,
+				9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = 9ECD920E29BF1FA600FCDD2F /* Products */;
 			projectDirPath = "";
@@ -671,6 +675,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		9ECA325729D119FE004D6D5B /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -706,6 +718,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9E06070A29DD10D8000D542D /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
 		9ECA325829D119FE004D6D5B /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9ECA325729D119FE004D6D5B /* XCRemoteSwiftPackageReference "Alamofire" */;

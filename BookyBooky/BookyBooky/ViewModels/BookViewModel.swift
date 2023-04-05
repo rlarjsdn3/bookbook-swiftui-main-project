@@ -13,7 +13,7 @@ class BookViewModel: ObservableObject {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @Published var isLoading = false
+    @Published var showError = false
     
     @Published var bestSeller: [BookList.Item] = []     // 베스트셀러 리스트를 저장하는 변수
     @Published var itemNewAll: [BookList.Item] = []     // 신간 도서 리스트를 저장하는 변수
@@ -112,8 +112,6 @@ class BookViewModel: ObservableObject {
     func requestBookSearchAPI(query: String, page startIndex: Int = 1) {
         guard !query.isEmpty else { return }
         
-        self.isLoading = true
-        
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?"
         
         let parameters = [
@@ -157,9 +155,8 @@ class BookViewModel: ObservableObject {
                 }
             case .failure(let error):
                 print("알라딘 검색 API 호출 실패: \(error)")
+                self.showError = true
             }
-
-                self.isLoading = false
         }
         
     }

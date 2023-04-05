@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import ToastUI
+import AlertToast
 
 /// 실질적인 검색 기능을 수행하는 검색 시트 뷰입니다.  매개 변수로 상세 보기하고자 하는 도서의 ISBN13값을 showInfoIsbn13으로 전달하세요.
 /// 만약 뷰를 호출하자마자 검색 필드를 보고 싶으면 빈 문자열("")을 전달하세요. 곧바로 상세 보기를 하고자 한다면 해당 도서의 ISBN13값을 전달하세요.
@@ -56,6 +56,14 @@ struct SearchSheetView: View {
             if !tapSearchIsbn13.isEmpty {
                 SearchInfoView(isbn13: $tapSearchIsbn13)
             }
+        }
+        .toast(isPresenting: $bookViewModel.showError, duration: 2.0)  {
+            AlertToast(
+                displayMode: .banner(.pop),
+                type: .error(.red),
+                title: "도서 정보 불러오기 실패",
+                subTitle: "       잠시 후 다시 시도하십시오."
+            )
         }
         .onDisappear {
             bookViewModel.bookSearchItems.removeAll()

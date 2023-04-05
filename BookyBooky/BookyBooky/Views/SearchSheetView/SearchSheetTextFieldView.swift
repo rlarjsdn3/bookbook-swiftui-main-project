@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import ToastUI
+import AlertToast
 
 struct SearchSheetTextFieldView: View {
     
@@ -97,6 +97,7 @@ extension SearchSheetTextFieldView {
         } label: {
             Text("검색")
         }
+        .padding(.horizontal)
     }
 }
 
