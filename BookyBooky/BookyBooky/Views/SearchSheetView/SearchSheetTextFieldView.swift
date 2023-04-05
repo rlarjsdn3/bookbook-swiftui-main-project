@@ -103,7 +103,13 @@ extension SearchSheetTextFieldView {
 
 extension SearchSheetTextFieldView {
     func requestBookSearch() {
-        startIndex = 1
+        startIndex = 0
+        // 새로운 검색 시도 시, 스크롤을 제일 위로 올립니다.
+        // startIndex 변수값을 짧은 시간에 변경(0→1)함으로써 onChange 제어자가 이를 알아차려 스크롤을 위로 올립니다.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+            startIndex = 1
+        }
+        
         bookViewModel.requestBookSearchAPI(query: searchQuery)
         
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {

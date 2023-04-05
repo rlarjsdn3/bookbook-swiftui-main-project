@@ -57,7 +57,14 @@ struct SearchSheetView: View {
                 SearchInfoView(isbn13: $tapSearchIsbn13)
             }
         }
-        .toast(isPresenting: $bookViewModel.showError, duration: 2.0)  {
+        .toast(isPresenting: $bookViewModel.showLoading)  {
+            AlertToast(
+                displayMode: .banner(.pop),
+                type: .loading,
+                title: "도서 정보 불러오는 중..."
+            )
+        }
+        .toast(isPresenting: $bookViewModel.showError, duration: 3.0)  {
             AlertToast(
                 displayMode: .banner(.pop),
                 type: .error(.red),

@@ -13,6 +13,7 @@ class BookViewModel: ObservableObject {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @Published var showLoading = false
     @Published var showError = false
     
     @Published var bestSeller: [BookList.Item] = []     // 베스트셀러 리스트를 저장하는 변수
@@ -112,6 +113,8 @@ class BookViewModel: ObservableObject {
     func requestBookSearchAPI(query: String, page startIndex: Int = 1) {
         guard !query.isEmpty else { return }
         
+        self.showLoading = true
+        
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?"
         
         let parameters = [
@@ -149,16 +152,21 @@ class BookViewModel: ObservableObject {
                         if startIndex == 1 {
                             self.bookSearchItems.removeAll()
                         }
-                        self.bookSearchItems.append(contentsOf: data.item)
-                        self.getCategory(bookItems: self.bookSearchItems)
+                        
+                            self.bookSearchItems.append(contentsOf: data.item)
+                            self.getCategory(bookItems: self.bookSearchItems)
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.showLoading = false
                     }
                 }
             case .failure(let error):
                 print("알라딘 검색 API 호출 실패: \(error)")
+                self.showLoading = false
                 self.showError = true
             }
         }
-        
     }
     
     /// 알라딘 상품 API를 호출하여 상세 도서 정보를 반환하는 함수입니다,
