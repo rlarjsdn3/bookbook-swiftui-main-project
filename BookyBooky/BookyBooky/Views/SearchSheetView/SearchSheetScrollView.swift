@@ -11,7 +11,7 @@ struct SearchSheetScrollView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var categorySelected: Category
+    @Binding var selectedCategory: Category
     @Binding var searchQuery: String
     @Binding var startIndex: Int
     @Binding var tapSearchIsbn13: String
@@ -22,10 +22,10 @@ struct SearchSheetScrollView: View {
         var list: [BookList.Item] = []
         
         // '전체' 혹은 해당 분류에 맞게 도서를 모으기
-        if categorySelected == .all {
+        if selectedCategory == .all {
             return bookViewModel.bookSearchItems
         } else {
-            for item in bookViewModel.bookSearchItems where item.category == categorySelected {
+            for item in bookViewModel.bookSearchItems where item.category == selectedCategory {
                 list.append(item)
             }
         }
@@ -61,7 +61,7 @@ extension SearchSheetScrollView {
                 
                 seeMoreButton
             }
-            .onChange(of: categorySelected) { _ in
+            .onChange(of: selectedCategory) { _ in
                 withAnimation {
                     proxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }
@@ -132,7 +132,7 @@ extension SearchSheetScrollView {
 struct SearchSheetScrollView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetScrollView(
-            categorySelected: .constant(.all),
+            selectedCategory: .constant(.all),
             searchQuery: .constant(""),
             startIndex: .constant(1),
             tapSearchIsbn13: .constant("")

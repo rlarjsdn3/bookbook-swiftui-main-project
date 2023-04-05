@@ -45,7 +45,7 @@ struct SearchSheetView: View {
                 )
                 
                 SearchSheetScrollView(
-                    categorySelected: $selectedCategory,
+                    selectedCategory: $selectedCategory,
                     searchQuery: $searchQuery,
                     startIndex: $startIndex,
                     tapSearchIsbn13: $tapSearchIsbn13
