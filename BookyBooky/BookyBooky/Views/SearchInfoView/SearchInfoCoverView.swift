@@ -23,7 +23,7 @@ struct SearchInfoCoverView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: BookViewModel
+    @EnvironmentObject var bookViewModel: AladinAPIManager
     
     // MARK: - BODY
     
@@ -120,7 +120,7 @@ struct SearchInfoCoverView_Previews: PreviewProvider {
                 isbn13: .constant("9788994492049"),
                 isLoading: .constant(false)
             )
-            .environmentObject(BookViewModel())
+            .environmentObject(AladinAPIManager())
         }
     }
 }

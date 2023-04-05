@@ -33,7 +33,7 @@ struct SearchLazyGridView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: BookViewModel
+    @EnvironmentObject var bookViewModel: AladinAPIManager
     @State private var showSearchDetailView = false
     @State private var tapSearchIsbn13 = ""
     
@@ -128,6 +128,6 @@ extension SearchLazyGridView {
 struct SearchLazyGridView_Previews: PreviewProvider {
     static var previews: some View {
         SearchLazyGridView(listTypeSelected: .constant(.bestSeller))
-            .environmentObject(BookViewModel())
+            .environmentObject(AladinAPIManager())
     }
 }

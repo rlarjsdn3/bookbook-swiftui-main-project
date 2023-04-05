@@ -9,12 +9,12 @@ import SwiftUI
 import Foundation
 import Alamofire
 
-class BookViewModel: ObservableObject {
+class AladinAPIManager: ObservableObject {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @Published var showLoading = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
-    @Published var showError = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
+    @Published var showSearchLoading = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
+    @Published var showSearchError = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
     
     @Published var bestSeller: [BookList.Item] = []     // 베스트셀러 리스트를 저장하는 변수
     @Published var itemNewAll: [BookList.Item] = []     // 신간 도서 리스트를 저장하는 변수
@@ -28,7 +28,8 @@ class BookViewModel: ObservableObject {
     
     // MARK: - FUNCTIONS
     
-    /// 도서 목록 속의 카테고리 정보를 모아 categories 변수에 결과값을 저장하는 함수입니다. 카테고리는 오름차순 정렬되며, '전체'는 제일 앞에, '기타'는 제일 뒤에 배치됩니다.
+    /// 도서 목록 속의 카테고리 정보를 모아 categories 변수에 결과값을 저장하는 함수입니다.
+    /// 카테고리는 오름차순 정렬되며, '전체'는 제일 앞에, '기타'는 제일 뒤에 배치됩니다.
     /// - Parameter list: 도서 리스트 배열
     func getCategory(bookItems: [BookList.Item]) {
         var categories: [Category] = []
@@ -39,8 +40,8 @@ class BookViewModel: ObservableObject {
         }
         // 카테고리 항목에 '기타'가 있다면
         if let index = categories.firstIndex(of: .etc) {
-            categories.remove(at: index)
-            // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬하기
+            categories.remove(at: index) // '기타' 항목 제거
+            // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬
             categories.sort {
                 $0.rawValue < $1.rawValue
             }
@@ -48,7 +49,7 @@ class BookViewModel: ObservableObject {
             categories.append(.etc)
         }
         
-        // 카테고리의 첫 번째에 '전체' 항목 추가하기
+        // 카테고리의 첫 번째에 '전체' 항목 추가
         categories.insert(.all, at: 0)
         
         self.categories = categories
@@ -89,15 +90,17 @@ class BookViewModel: ObservableObject {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
-                    switch queryType {
-                    case .bestSeller:
-                        self.bestSeller = data.item
-                    case .itemNewAll:
-                        self.itemNewAll = data.item
-                    case .itemNewSpecial:
-                        self.itemNewSpecial = data.item
-                    case .blogBest:
-                        self.blogBest = data.item
+                    DispatchQueue.main.async {
+                        switch queryType {
+                        case .bestSeller:
+                            self.bestSeller = data.item
+                        case .itemNewAll:
+                            self.itemNewAll = data.item
+                        case .itemNewSpecial:
+                            self.itemNewSpecial = data.item
+                        case .blogBest:
+                            self.blogBest = data.item
+                        }
                     }
                 }
             case .failure(let error):
@@ -112,7 +115,7 @@ class BookViewModel: ObservableObject {
     func requestBookSearchAPI(query: String, page startIndex: Int = 1) {
         guard !query.isEmpty else { return }
         
-        self.showLoading = true
+        self.showSearchLoading = true
         
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?"
         
@@ -155,13 +158,13 @@ class BookViewModel: ObservableObject {
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.showLoading = false
+                        self.showSearchLoading = false
                     }
                 }
             case .failure(let error):
                 print("알라딘 검색 API 호출 실패: \(error)")
-                self.showLoading = false
-                self.showError = true
+                self.showSearchLoading = false
+                self.showSearchError = true
             }
         }
     }

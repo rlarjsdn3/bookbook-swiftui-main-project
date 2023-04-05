@@ -11,7 +11,7 @@ struct SearchView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: BookViewModel
+    @EnvironmentObject var bookViewModel: AladinAPIManager
     
     @State private var listTypeSelected = ListType.bestSeller
     
@@ -33,6 +33,6 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         SearchView()
-            .environmentObject(BookViewModel())
+            .environmentObject(AladinAPIManager())
     }
 }

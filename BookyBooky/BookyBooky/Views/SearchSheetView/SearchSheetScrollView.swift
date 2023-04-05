@@ -35,7 +35,7 @@ struct SearchSheetScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: BookViewModel
+    @EnvironmentObject var bookViewModel: AladinAPIManager
     
     // MARK: - BODY
     
@@ -145,6 +145,6 @@ struct SearchSheetScrollView_Previews: PreviewProvider {
             startIndex: .constant(1),
             tapSearchIsbn13: .constant("")
         )
-        .environmentObject(BookViewModel())
+        .environmentObject(AladinAPIManager())
     }
 }

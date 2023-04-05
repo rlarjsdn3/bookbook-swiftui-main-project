@@ -16,7 +16,7 @@ struct SearchSheetCategoryView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: BookViewModel
+    @EnvironmentObject var bookViewModel: AladinAPIManager
     
     @Namespace var categoryNamespace: Namespace.ID  // 카테고리 버튼 간 애니메이션 효과를 주기 위한 이름 공간 변수
     
@@ -76,6 +76,6 @@ struct SearchSheetCategoryView_Previews: PreviewProvider {
             selectedCategory: .constant(.all),
             categoryAnimation: .constant(.all)
         )
-        .environmentObject(BookViewModel())
+        .environmentObject(AladinAPIManager())
     }
 }

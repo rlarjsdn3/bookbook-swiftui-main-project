@@ -15,7 +15,7 @@ struct SearchInfoView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: BookViewModel
+    @EnvironmentObject var bookViewModel: AladinAPIManager
     
     @State private var isLoading = true
     
@@ -30,11 +30,10 @@ struct SearchInfoView: View {
             
             if !item.isEmpty {
                 bookInformation(item: item[0])
-            } else {
-                // 로딩 UI 구현
             }
         }
         .onAppear {
+            hideKeyboard()
             bookViewModel.requestBookDetailAPI(isbn13: isbn13)
         }
         .onDisappear {
@@ -87,6 +86,6 @@ extension SearchInfoView {
 struct SearchDetailView_Previews: PreviewProvider {
     static var previews: some View {
         SearchInfoView(isbn13: .constant("9788994492049"))
-            .environmentObject(BookViewModel())
+            .environmentObject(AladinAPIManager())
     }
 }

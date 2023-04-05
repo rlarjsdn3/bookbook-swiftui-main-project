@@ -12,7 +12,7 @@ struct BookyBookyApp: App {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @StateObject var bookViewModel = BookViewModel()
+    @StateObject var bookViewModel = AladinAPIManager()
     
     // MARK: - BODY
     

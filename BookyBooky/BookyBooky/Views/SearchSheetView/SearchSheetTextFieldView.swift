@@ -20,7 +20,7 @@ struct SearchSheetTextFieldView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var bookViewModel: BookViewModel
+    @EnvironmentObject var bookViewModel: AladinAPIManager
     
     @FocusState var focusedField: Bool
     
@@ -133,6 +133,6 @@ struct SearchSheetTextFieldView_Previews: PreviewProvider {
             selectedCategory: .constant(.all),
             categoryAnimation: .constant(.all)
         )
-        .environmentObject(BookViewModel())
+        .environmentObject(AladinAPIManager())
     }
 }
