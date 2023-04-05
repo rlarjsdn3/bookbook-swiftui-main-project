@@ -18,10 +18,10 @@ struct SearchSheetScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
+    // 선택된 도서 카테고리에 맞게 리스트를 필터링한 결과를 반환하는 프로퍼티
     var filteredSearchItems: [BookList.Item] {
         var list: [BookList.Item] = []
         
-        // '전체' 혹은 해당 분류에 맞게 도서를 모으기
         if selectedCategory == .all {
             return bookViewModel.bookSearchItems
         } else {
@@ -37,15 +37,15 @@ struct SearchSheetScrollView: View {
     
     @EnvironmentObject var bookViewModel: BookViewModel
     
-    
     // MARK: - BODY
     
     var body: some View {
+        // 검색 결과가 존재하는 경우
         if !bookViewModel.bookSearchItems.isEmpty {
-            scrollSearchItems
-//            noResultLabel
+            scrollSearchItems // 각 검색 도서 셀 출력
+        // 검색 결과가 존재하지 않는 경우
         } else {
-            noResultLabel
+            noResultLabel // '결과 없음' 뷰 출력
         }
     }
 }

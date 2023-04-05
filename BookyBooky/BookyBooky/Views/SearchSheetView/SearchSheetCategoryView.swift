@@ -11,22 +11,24 @@ struct SearchSheetCategoryView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedCategory: Category
-    @Binding var categoryAnimation: Category
+    @Binding var selectedCategory: Category     // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
+    @Binding var categoryAnimation: Category    // 카테고리 애니메이션 효과를 위한 변수
     
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var bookViewModel: BookViewModel
     
-    @Namespace var categoryNamespace: Namespace.ID
+    @Namespace var categoryNamespace: Namespace.ID  // 카테고리 버튼 간 애니메이션 효과를 주기 위한 이름 공간 변수
     
     // MARK: - BODY
     
     var body: some View {
+        // 검색 결과가 존재하는 경우
         if !bookViewModel.bookSearchItems.isEmpty {
-            scrollCategoryButtons
+            scrollCategoryButtons // 도서 카테고리 버튼 뷰 출력
+        // 검색 결과가 존재하지 않는 경우
         } else {
-            emptyView
+            emptyView // 빈 공간 뷰 출력
         }
     }
 }

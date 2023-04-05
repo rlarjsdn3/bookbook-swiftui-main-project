@@ -15,14 +15,15 @@ struct SearchSheetView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var tapSearchIsbn13: String // 검색 리스트에서 선택한 도서의 ISBN13값을 저장하는 변수
+    // 검색 리스트에서 선택한 도서의 ISBN13값을 저장하는 변수, 현재 뷰(검색/상세)의 위치를 파악하는 변수
+    @Binding var tapSearchIsbn13: String
     
     // MARK: - WRAPPPER PROPERTIES
     
     @EnvironmentObject var bookViewModel: BookViewModel
     
     @State private var searchQuery = "" // 검색어를 저장하는 변수
-    @State private var startIndex = 1   // 검색 결과 시작페이지를 저장하는 변수
+    @State private var startIndex = 1   // 검색 결과 시작페이지를 저장하는 변수, 새로운 검색을 시도하는지 안하는지 판별하는 변수
     @State private var selectedCategory: Category = .all    // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
     @State private var categoryAnimation: Category = .all   // 카테고리 애니메이션 효과를 위한 변수
     
