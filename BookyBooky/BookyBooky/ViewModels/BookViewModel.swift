@@ -5,6 +5,7 @@
 //  Created by 김건우 on 2023/03/28.
 //
 
+import SwiftUI
 import Foundation
 import Alamofire
 
@@ -109,6 +110,8 @@ class BookViewModel: ObservableObject {
     /// - Parameter query: 검색할 도서/저자 명
     /// - Parameter page: 검색 결과 페이지
     func requestBookSearchAPI(query: String, page startIndex: Int = 1) {
+        guard !query.isEmpty else { return }
+        
         self.isLoading = true
         
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?"
@@ -149,13 +152,14 @@ class BookViewModel: ObservableObject {
                             self.bookSearchItems.removeAll()
                         }
                         self.bookSearchItems.append(contentsOf: data.item)
-                        self.getCategory(bookItems: bookSearchItems)
+                        self.getCategory(bookItems: self.bookSearchItems)
                     }
                 }
-                self.isLoading = false
             case .failure(let error):
                 print("알라딘 검색 API 호출 실패: \(error)")
             }
+
+                self.isLoading = false
         }
         
     }

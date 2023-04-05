@@ -38,10 +38,6 @@ struct SearchSheetTextFieldView: View {
                 }
             }
         }
-        .toast(isPresented: $bookViewModel.isLoading) {
-            ToastView("Loading...")
-                .toastViewStyle(.indeterminate)
-        }
         .padding(.top)
     }
 }
@@ -96,14 +92,11 @@ extension SearchSheetTextFieldView {
     
     var searchButton: some View {
         Button {
-//            bookViewModel.isLoading = true
             requestBookSearch()
             hideKeyboard()
         } label: {
             Text("검색")
         }
-        .disabled(searchQuery.isEmpty)
-        .padding(.horizontal)
     }
 }
 
