@@ -60,7 +60,7 @@ extension SearchSheetScrollView {
                 
                 seeMoreButton
             }
-            .onChange(of: startIndex, perform: { _ in
+            .onChange(of: startIndex) { _ in
                 // 새로운 검색을 시도할 때만 스크롤을 제일 위로 올립니다.
                 // '더 보기' 버튼을 클릭해도 스크롤이 올라가지 않습니다.
                 if startIndex == 1 {
@@ -68,7 +68,7 @@ extension SearchSheetScrollView {
                         proxy.scrollTo("Scroll_To_Top", anchor: .top)
                     }
                 }
-            })
+            }
             .onChange(of: selectedCategory) { _ in
                 withAnimation {
                     proxy.scrollTo("Scroll_To_Top", anchor: .top)

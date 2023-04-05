@@ -11,7 +11,7 @@ struct SearchSheetCategoryView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var startIndex: Int
+    @Binding var startIndex: Int                // 검색 결과 시작페이지를 저장하는 변수, 새로운 검색을 시도하는지 안하는지 판별하는 변수
     @Binding var selectedCategory: Category     // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
     @Binding var categoryAnimation: Category    // 카테고리 애니메이션 효과를 위한 변수
     
@@ -42,7 +42,7 @@ extension SearchSheetCategoryView {
             ScrollView(.horizontal, showsIndicators: false) {
                 categoryButtons(scrollProxy: proxy)
             }
-            .onChange(of: startIndex, perform: { _ in
+            .onChange(of: startIndex) { _ in
                 // 새로운 검색을 시도할 때만 스크롤을 제일 위로 올립니다.
                 // '더 보기' 버튼을 클릭해도 스크롤이 올라가지 않습니다.
                 if startIndex == 1 {
@@ -50,7 +50,7 @@ extension SearchSheetCategoryView {
                         proxy.scrollTo("Scroll_To_Leading", anchor: .top)
                     }
                 }
-            })
+            }
             .frame(height: 35)
         }
     }
