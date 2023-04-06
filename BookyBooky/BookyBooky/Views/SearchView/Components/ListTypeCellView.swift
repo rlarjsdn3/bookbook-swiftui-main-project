@@ -22,6 +22,7 @@ struct ListTypeCellView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @State private var isLoading = true
+    @State private var isPresentingBookInfoView = false
     
     // MARK: - BODY
     
@@ -36,6 +37,12 @@ struct ListTypeCellView: View {
             }
             .redacted(reason: isLoading ? .placeholder : [])
             .shimmering(active: isLoading)
+        }
+        .onTapGesture {
+            isPresentingBookInfoView = true
+        }
+        .sheet(isPresented: $isPresentingBookInfoView) {
+            SearchSheetView(viewType: .withBackButton(isbn13: bookItem.isbn13))
         }
     }
 }

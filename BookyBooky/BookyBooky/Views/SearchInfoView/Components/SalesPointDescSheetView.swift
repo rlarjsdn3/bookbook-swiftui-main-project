@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SalesPointDescSheetView: View {
+    
     // MARK: - CONSTANT PROPERTIES
     
     let descriptions = [

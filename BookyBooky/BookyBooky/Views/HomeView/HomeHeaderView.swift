@@ -11,7 +11,6 @@ struct HomeHeaderView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var bookDetailsISBN13 = ""
     @State private var showSearchSheetView = false
     
     // MARK: - BODY
@@ -47,7 +46,7 @@ struct HomeHeaderView: View {
 
         }
         .sheet(isPresented: $showSearchSheetView) {
-            SearchSheetView(bookDetailsISBN13: $bookDetailsISBN13)
+            SearchSheetView(viewType: .search)
         }
         .foregroundColor(.black)
         .padding()

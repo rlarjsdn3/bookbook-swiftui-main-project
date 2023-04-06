@@ -18,8 +18,7 @@ struct SearchSheetView: View {
     
     // MARK: - PROPERTIES
     
-    // 검색 리스트에서 선택한 도서의 ISBN13값을 저장하는 변수, 현재 뷰(검색/상세)의 위치를 파악하는 변수
-    @Binding var bookDetailsISBN13: String
+    let viewType: SearchViewType
     
     // MARK: - WRAPPPER PROPERTIES
     
@@ -29,6 +28,20 @@ struct SearchSheetView: View {
     @State private var startIndex = 1   // 검색 결과 시작페이지를 저장하는 변수, 새로운 검색을 시도하는지 안하는지 판별하는 변수
     @State private var selectedCategory: Category = .all    // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
     @State private var categoryAnimation: Category = .all   // 카테고리 애니메이션 효과를 위한 변수
+    @State private var bookInfoISBN13: String = "" // 검색 리스트에서 선택한 도서의 ISBN13값을 저장하는 변수, 현재 뷰(검색/상세)의 위치를 파악하는 변수
+    
+    init(viewType: SearchViewType = .search) {
+        self.viewType = viewType
+        
+        switch viewType {
+        case .search:
+            self._bookInfoISBN13 = State(initialValue: "")
+        case .withBackButton(let isbn13):
+            self._bookInfoISBN13 = State(initialValue: isbn13)
+        case .withoutBackButton(let isbn13):
+            self._bookInfoISBN13 = State(initialValue: isbn13)
+        }
+    }
     
     // MARK: - BODY
     
@@ -38,7 +51,7 @@ struct SearchSheetView: View {
                 SearchSheetTextFieldView(
                     searchQuery: $searchQuery,
                     startIndex: $startIndex,
-                    bookDetailsISBN13: $bookDetailsISBN13,
+                    bookDetailsISBN13: $bookInfoISBN13,
                     selectedCategory: $selectedCategory,
                     categoryAnimation: $categoryAnimation
                 )
@@ -53,13 +66,13 @@ struct SearchSheetView: View {
                     selectedCategory: $selectedCategory,
                     searchQuery: $searchQuery,
                     startIndex: $startIndex,
-                    bookDetailsISBN13: $bookDetailsISBN13
+                    bookDetailsISBN13: $bookInfoISBN13
                 )
             }
-            .opacity(!bookDetailsISBN13.isEmpty ? 0 : 1)
+            .opacity(!bookInfoISBN13.isEmpty ? 0 : 1)
             
-            if !bookDetailsISBN13.isEmpty {
-                SearchInfoView(isbn13: $bookDetailsISBN13)
+            if !bookInfoISBN13.isEmpty {
+                SearchInfoView(viewType: viewType, isbn13: $bookInfoISBN13)
             }
         }
         .toast(isPresenting: $aladinAPIManager.showSearchLoading)  {
@@ -78,7 +91,7 @@ struct SearchSheetView: View {
             )
         }
         .onDisappear {
-            bookDetailsISBN13 = "" // 다시 검색 시트를 불러오더라도
+            bookInfoISBN13 = "" // 다시 검색 시트를 불러오더라도
             aladinAPIManager.bookSearchItems.removeAll()
             aladinAPIManager.BookInfoItem.removeAll()
         }
@@ -90,7 +103,7 @@ struct SearchSheetView: View {
 
 struct SearchSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetView(bookDetailsISBN13: .constant(""))
+        SearchSheetView(viewType: .search)
             .environmentObject(AladinAPIManager())
     }
 }

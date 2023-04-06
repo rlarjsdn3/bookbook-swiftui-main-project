@@ -11,7 +11,6 @@ struct SearchHeaderView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var tapSearchIsbn13 = ""
     @State private var showSearchSheetView = false
     
     // MARK: - BODY
@@ -35,7 +34,7 @@ struct SearchHeaderView: View {
         }
         .padding()
         .sheet(isPresented: $showSearchSheetView) {
-            SearchSheetView(bookDetailsISBN13: $tapSearchIsbn13)
+            SearchSheetView(viewType: .search)
         }
     }
 }

@@ -20,6 +20,7 @@ struct SearchInfoCoverView: View {
     var bookInfo: BookInfo.Item
     @Binding var isbn13: String
     @Binding var isLoading: Bool
+    let viewType: SearchViewType
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -31,7 +32,12 @@ struct SearchInfoCoverView: View {
         ZStack {
             backgroundRectangle
             
-            backButton
+            switch viewType {
+            case .withBackButton(_):
+                backButton
+            default:
+                EmptyView()
+            }
             
             asyncImage
         }
@@ -118,7 +124,8 @@ struct SearchInfoCoverView_Previews: PreviewProvider {
             SearchInfoCoverView(
                 bookInfo: BookInfo.Item.preview[0],
                 isbn13: .constant("9788994492049"),
-                isLoading: .constant(false)
+                isLoading: .constant(false),
+                viewType: .withBackButton(isbn13: "")
             )
             .environmentObject(AladinAPIManager())
         }

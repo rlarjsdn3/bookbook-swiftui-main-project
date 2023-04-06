@@ -35,8 +35,6 @@ struct SearchLazyGridView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var bookViewModel: AladinAPIManager
-    @State private var showSearchDetailView = false
-    @State private var tapSearchIsbn13 = ""
     
     // MARK: - BODY
     
@@ -66,14 +64,8 @@ extension SearchLazyGridView {
         LazyVGrid(columns: columns, spacing: 25) {
             ForEach(bookListItems, id: \.self) { item in
                 ListTypeCellView(bookItem: item)
-                    .sheet(isPresented: $showSearchDetailView) {
-                        SearchSheetView(bookDetailsISBN13: $tapSearchIsbn13)
-                    }
-                    .onTapGesture {
-                        showSearchDetailView = true
-                        tapSearchIsbn13 = item.isbn13
-                    }
             }
+
         }
         // 하단 사용자화 탭 뷰가 기본 탭 뷰와 높이가 상이하기 때문에 위/아래 간격을 달리함
         .padding(.top, 20)
