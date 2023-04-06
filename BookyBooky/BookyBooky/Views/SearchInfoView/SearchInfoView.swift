@@ -26,15 +26,14 @@ struct SearchInfoView: View {
             Color.white
                 .ignoresSafeArea()
             
-            let item = aladinAPIManager.BookInfoItem
-            
-            if !item.isEmpty {
-                bookInformation(item: item[0])
+            // 도서 상세 데이터가 정상적으로 로드된 경우
+            if aladinAPIManager.BookInfoItem.isEmpty {
+                bookInformation(item: aladinAPIManager.BookInfoItem[0]) // 상세 뷰 출력하기
             }
         }
         .onAppear {
-            hideKeyboard()
             aladinAPIManager.requestBookDetailAPI(isbn13: isbn13)
+            hideKeyboard()
         }
         .onDisappear {
             aladinAPIManager.BookInfoItem.removeAll()
