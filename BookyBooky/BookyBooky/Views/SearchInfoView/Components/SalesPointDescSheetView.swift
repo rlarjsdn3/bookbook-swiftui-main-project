@@ -34,6 +34,9 @@ struct SalesPointDescSheetView: View {
             backButton
         }
         .padding(.horizontal, 25)
+        .padding(safeAreaInsets.bottom == 0 ? 18 : 0)
+        .presentationDetents([.height(safeAreaInsets.bottom == 0 ? 450 : 380)])
+        .presentationCornerRadius(30)
     }
 }
 

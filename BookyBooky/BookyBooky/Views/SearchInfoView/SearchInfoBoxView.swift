@@ -41,12 +41,6 @@ struct SearchInfoBoxView: View {
         .cornerRadius(15)
         .padding(.horizontal)
         .frame(height: 100)
-        // 판매 포인트 설명을 위한 시트(Sheet)
-        .sheet(isPresented: $showSalesPointDescriptionSheet) {
-            SalesPointDescSheetView(bookInfo: bookInfo)
-                .presentationDetents([.height(380)])
-                .presentationCornerRadius(30)
-        }
     }
 }
 
@@ -65,6 +59,10 @@ extension SearchInfoBoxView {
                 } label: {
                     Image(systemName: "questionmark.circle")
                         .foregroundColor(.primary)
+                }
+                // 판매 포인트 설명을 위한 시트(Sheet)
+                .sheet(isPresented: $showSalesPointDescriptionSheet) {
+                    SalesPointDescSheetView(bookInfo: bookInfo)
                 }
             }
             
