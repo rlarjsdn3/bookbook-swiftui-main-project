@@ -48,8 +48,17 @@ struct SearchLazyGridView: View {
                     scrollLazyGridCells(scrollProxy: proxy)
                 }
             } else {
+                // 로딩 UI 수정하기 (미완성)
                 VStack {
-                    noResultsLabel
+                    VStack {
+                        ProgressView()
+                            .tint(.black)
+                        
+                        noResultsLabel
+                    }
+                    .padding()
+                    .background(.gray.opacity(0.2))
+                    .cornerRadius(15)
                     
                     refreshButton
                 }
@@ -84,18 +93,13 @@ extension SearchLazyGridView {
     
     var noResultsLabel: some View {
         VStack(spacing: 5) {
-            Image(systemName: "xmark.circle")
-                .font(.largeTitle)
-                .foregroundColor(.red)
-                .padding(.vertical, 16)
-            
-            Text("도서 정보 불러오기 실패")
+            Text("불러오는 중...")
                 .font(.title2)
                 .fontWeight(.bold)
-            
-            Text("잠시 후 다시 시도하십시오.")
-                .font(.headline)
-                .foregroundColor(.secondary)
+//
+//            Text("잠시만 기다려주세요.")
+//                .font(.headline)
+//                .foregroundColor(.secondary)
         }
         .frame(height: 110)
     }
