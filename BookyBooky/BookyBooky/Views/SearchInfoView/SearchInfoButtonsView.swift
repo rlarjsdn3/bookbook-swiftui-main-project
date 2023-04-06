@@ -14,6 +14,9 @@ struct SearchInfoButtonsView: View {
     let bookInfo: BookInfo.Item
     @Binding var isbn13: String
     @Binding var isLoading: Bool
+    let viewType: SearchSheetViewType
+    
+    @Environment(\.dismiss) var dismiss
     
     // MARK: - BODY
     
@@ -23,7 +26,6 @@ struct SearchInfoButtonsView: View {
             
             HStack {
                 backButton
-                
                 addButton
             }
             .padding([.horizontal, .bottom])
@@ -48,9 +50,16 @@ extension SearchInfoButtonsView {
     
     var backButton: some View {
         Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                isbn13 = ""
+            switch viewType {
+            case .search(_):
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                    isbn13 = ""
+                }
+            case .favorite(_):
+                dismiss()
             }
+            
+            
         } label: {
             backLabel
         }
@@ -95,7 +104,8 @@ struct SearchInfoButtonsView_Previews: PreviewProvider {
         SearchInfoButtonsView(
             bookInfo: BookInfo.Item.preview[0],
             isbn13: .constant("9788994492049"),
-            isLoading: .constant(false)
+            isLoading: .constant(false),
+            viewType: .search(isbn13: "9788994492049")
         )
     }
 }

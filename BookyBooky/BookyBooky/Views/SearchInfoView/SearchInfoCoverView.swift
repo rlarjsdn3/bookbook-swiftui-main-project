@@ -20,7 +20,7 @@ struct SearchInfoCoverView: View {
     var bookInfo: BookInfo.Item
     @Binding var isbn13: String
     @Binding var isLoading: Bool
-    let viewType: SearchViewType
+    let viewType: SearchSheetViewType
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -33,9 +33,9 @@ struct SearchInfoCoverView: View {
             backgroundRectangle
             
             switch viewType {
-            case .withBackButton(_):
+            case .search(_):
                 backButton
-            default:
+            case .favorite(_):
                 EmptyView()
             }
             
@@ -125,7 +125,7 @@ struct SearchInfoCoverView_Previews: PreviewProvider {
                 bookInfo: BookInfo.Item.preview[0],
                 isbn13: .constant("9788994492049"),
                 isLoading: .constant(false),
-                viewType: .withBackButton(isbn13: "")
+                viewType: .search(isbn13: "9788994492049")
             )
             .environmentObject(AladinAPIManager())
         }

@@ -11,8 +11,8 @@ struct SearchInfoView: View {
     
     // MARK: - PROPERTIES
     
-    let viewType: SearchViewType
     @Binding var isbn13: String
+    let viewType: SearchSheetViewType
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -76,7 +76,8 @@ extension SearchInfoView {
             SearchInfoButtonsView(
                 bookInfo: item,
                 isbn13: $isbn13,
-                isLoading: $isLoading
+                isLoading: $isLoading,
+                viewType: viewType
             )
         }
     }
@@ -86,7 +87,7 @@ extension SearchInfoView {
 
 struct SearchDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchInfoView(viewType: .withBackButton(isbn13: ""), isbn13: .constant("9788994492049"))
+        SearchInfoView(isbn13: .constant("9788994492049"), viewType: .search(isbn13: "9788994492049"))
             .environmentObject(AladinAPIManager())
     }
 }

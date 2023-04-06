@@ -34,7 +34,7 @@ struct SearchHeaderView: View {
         }
         .padding()
         .sheet(isPresented: $showSearchSheetView) {
-            SearchSheetView(viewType: .search)
+            SearchSheetView(viewType: .search(isbn13: ""))
         }
     }
 }

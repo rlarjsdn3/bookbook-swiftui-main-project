@@ -42,7 +42,7 @@ struct ListTypeCellView: View {
             isPresentingBookInfoView = true
         }
         .sheet(isPresented: $isPresentingBookInfoView) {
-            SearchSheetView(viewType: .withBackButton(isbn13: bookItem.isbn13))
+            SearchSheetView(viewType: .search(isbn13: bookItem.isbn13))
         }
     }
 }
