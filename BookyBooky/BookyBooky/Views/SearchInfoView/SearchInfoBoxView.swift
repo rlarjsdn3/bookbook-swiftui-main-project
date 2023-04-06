@@ -26,11 +26,11 @@ struct SearchInfoBoxView: View {
             
             salesPoint
             
-            Spacer()
+            Spacer(minLength: 0)
             
             page
             
-            Spacer()
+            Spacer(minLength: 0)
             
             category
         
