@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct SearchLazyGridView: View {
     
@@ -48,21 +49,11 @@ struct SearchLazyGridView: View {
                     scrollLazyGridCells(scrollProxy: proxy)
                 }
             } else {
-                // 로딩 UI 수정하기 (미완성)
                 VStack {
-                    VStack {
-                        ProgressView()
-                            .tint(.black)
-                        
-                        noResultsLabel
-                    }
-                    .padding()
-                    .background(.gray.opacity(0.2))
-                    .cornerRadius(15)
+                    noResultsLabel
                     
                     refreshButton
                 }
-                .frame(maxHeight: .infinity)
             }
         }
     }
@@ -93,15 +84,15 @@ extension SearchLazyGridView {
     
     var noResultsLabel: some View {
         VStack(spacing: 5) {
-            Text("불러오는 중...")
+            Text("도서 정보 불러오기 실패")
                 .font(.title2)
                 .fontWeight(.bold)
-//
-//            Text("잠시만 기다려주세요.")
-//                .font(.headline)
-//                .foregroundColor(.secondary)
+
+            Text("잠시 후 다시 시도하십시오.")
+                .font(.headline)
+                .foregroundColor(.secondary)
         }
-        .frame(height: 110)
+        .padding(.bottom, 0)
     }
     
     var refreshButton: some View {
