@@ -27,7 +27,7 @@ struct SalesPointDescSheetView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            abouSalesPointLabel
+            aboutSalesPointLabel
             
             scrollDescriptions
             
@@ -50,7 +50,7 @@ struct SalesPointDescSheetView: View {
 // MARK: - EXTENSIONS
 
 extension SalesPointDescSheetView {
-    var abouSalesPointLabel: some View {
+    var aboutSalesPointLabel: some View {
         Text("판매 포인트란?")
             .font(.title2)
             .fontWeight(.bold)

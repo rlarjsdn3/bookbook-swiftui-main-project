@@ -27,7 +27,7 @@ struct SearchInfoView: View {
                 .ignoresSafeArea()
             
             // 도서 상세 데이터가 정상적으로 로드된 경우
-            if aladinAPIManager.BookInfoItem.isEmpty {
+            if !aladinAPIManager.BookInfoItem.isEmpty {
                 bookInformation(item: aladinAPIManager.BookInfoItem[0]) // 상세 뷰 출력하기
             }
         }
