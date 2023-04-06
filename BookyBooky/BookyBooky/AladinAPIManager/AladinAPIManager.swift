@@ -153,7 +153,7 @@ class AladinAPIManager: ObservableObject {
                         if startIndex == 1 {
                             self.bookSearchItems.removeAll()
                         }
-                        // 도서 검색 결과 및 카테고리 목록이 자연스럽게 보이도록 함
+                        // 도서 검색 결과 및 카테고리 목록이 자연스럽게 나타나도록 함
                         withAnimation(.easeInOut(duration: 0.1)) {
                             self.bookSearchItems.append(contentsOf: data.item)
                             self.getCategory(bookItems: self.bookSearchItems)
@@ -203,7 +203,7 @@ class AladinAPIManager: ObservableObject {
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
                     DispatchQueue.main.async {
-                        // 도서 상세 화면으로 넘어갈 때, 뷰가 자연스럽게 보이도록 함
+                        // 도서 상세 화면으로 넘어갈 때, 뷰가 자연스럽게 나타나도록 함
                         withAnimation(.easeInOut(duration: 0.1)) {
                             self.BookInfoItem = data.item
                         }

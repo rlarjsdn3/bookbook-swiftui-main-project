@@ -78,6 +78,7 @@ struct SearchSheetView: View {
             )
         }
         .onDisappear {
+            bookDetailsISBN13 = "" // 다시 검색 시트를 불러오더라도
             aladinAPIManager.bookSearchItems.removeAll()
             aladinAPIManager.BookInfoItem.removeAll()
         }

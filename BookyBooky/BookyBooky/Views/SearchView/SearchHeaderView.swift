@@ -30,6 +30,7 @@ struct SearchHeaderView: View {
                 showSearchSheetView = true
             } label: {
                 searchImage
+                    .padding(5)
             }
         }
         .padding()
@@ -47,6 +48,7 @@ extension SearchHeaderView {
             .font(.title2)
             .fontWeight(.semibold)
             .hidden()
+            .padding(5)
     }
     
     var searchLabel: some View {

@@ -32,6 +32,7 @@ struct HomeHeaderView: View {
                 }
             } label: {
                 searchImage
+                    .padding(5)
             }
             
             Spacer()
@@ -41,6 +42,7 @@ struct HomeHeaderView: View {
                 
             } label: {
                 profileImage
+                    .padding(5)
             }
 
         }
