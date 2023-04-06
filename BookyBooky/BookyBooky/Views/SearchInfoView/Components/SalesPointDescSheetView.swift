@@ -34,7 +34,11 @@ struct SalesPointDescSheetView: View {
             backButton
         }
         .padding(.horizontal, 25)
+        // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
+        // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 18으로 설정
         .padding(safeAreaInsets.bottom == 0 ? 18 : 0)
+        // 베젤이 없는 아이폰(iPhone 14 등)은 시트 높이를 450으로 설정
+        // 베젤이 있는 아이폰(iPhone SE 등)은 시트 높이를 380으로 설정
         .presentationDetents([.height(safeAreaInsets.bottom == 0 ? 450 : 380)])
         .presentationCornerRadius(30)
     }
