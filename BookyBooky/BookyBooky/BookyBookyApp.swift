@@ -10,10 +10,6 @@ import SwiftUI
 @main
 struct BookyBookyApp: App {
     
-    // MARK: - CONSTATNT PROPERTIES
-    
-    let realmManager = RealmManager.shared
-    
     // MARK: - WRAPPER PROPERTIES
     
     @StateObject var aladinAPIManager = AladinAPIManager()
@@ -29,7 +25,6 @@ struct BookyBookyApp: App {
                     }
                 }
                 .environmentObject(aladinAPIManager)
-                .environment(\.realm, realmManager.realm)
         }
     }
 }
