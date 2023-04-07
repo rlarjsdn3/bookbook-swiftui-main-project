@@ -34,8 +34,7 @@ class RealmManager {
                 }
             }
         } catch let error as NSError {
-            // handle error
             print("error - \(error.localizedDescription)")
-            }
+        }
     }
 }

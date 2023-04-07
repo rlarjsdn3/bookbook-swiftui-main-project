@@ -12,5 +12,6 @@ class FavoriteBook: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var title: String    // 제목
     @Persisted var author: String   // 저자
+    @Persisted var cover: String    // 표지(커버)
     @Persisted var isbn13: String   // ISBN-13
 }
