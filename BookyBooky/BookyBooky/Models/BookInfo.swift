@@ -22,7 +22,8 @@ struct BookInfo: Codable {
         var description: String     // 설명
         var link: String            // 상세 페이지
         var categoryName: String    // 카테고리 분류
-        var salesPoint: Int         // 세일즈 포인트
+        var salesPoint: Int         // 판매 포인트
+        var isbn13: String          // ISBN-13
         
         var subInfo: SubInfo
         struct SubInfo: Codable {
@@ -46,6 +47,7 @@ extension BookInfo.Item {
                 link: "http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=76083001&amp;partner=openAPI&amp;start=api",
                 categoryName: "국내도서>컴퓨터/모바일>프로그래밍 언어>자바",
                 salesPoint: 16494,
+                isbn13: "9788994492032",
                 subInfo: .init(
                     itemPage: 1022
                 )

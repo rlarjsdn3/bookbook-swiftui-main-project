@@ -22,7 +22,6 @@ struct BookyBookyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if let realm = realmManager.realm {
                 ContentView()
                     .onAppear {
                         for type in ListType.allCases {
@@ -30,10 +29,7 @@ struct BookyBookyApp: App {
                         }
                     }
                     .environmentObject(aladinAPIManager)
-                    .environment(\.realm, realm)
-            } else {
-                // 스플래쉬 뷰ㅋ
-            }
+                    .environment(\.realm, realmManager.realm)
         }
     }
 }

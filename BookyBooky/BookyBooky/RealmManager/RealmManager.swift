@@ -15,18 +15,27 @@ class RealmManager {
     
     private init() { }
     
-    static func openLocalRealm() -> Realm? {
-        do {
-            let config = Realm.Configuration(
-                schemaVersion: 0,
-                deleteRealmIfMigrationNeeded: true)
-            print("Realm DB 저장소의 위치: \(config.fileURL!)")
-            
-            return try Realm(configuration: config)
-        } catch {
-            print("Realm DB 초기화 예외: \(error)")
-        }
+    static func openLocalRealm() -> Realm {
+        let config = Realm.Configuration(
+            schemaVersion: 0,
+            deleteRealmIfMigrationNeeded: true)
+        print("Realm DB 저장소의 위치: \(config.fileURL!)")
         
-        return nil
+        return try! Realm(configuration: config)
+    }
+    
+    func deleteFavoriteBook(_ isbn13: String) {
+        do {
+            let object = realm.objects(FavoriteBook.self).filter("isbn13 == %@", isbn13).first
+
+            try realm.write {
+                if let obj = object {
+                    realm.delete(obj)
+                }
+            }
+        } catch let error as NSError {
+            // handle error
+            print("error - \(error.localizedDescription)")
+            }
     }
 }

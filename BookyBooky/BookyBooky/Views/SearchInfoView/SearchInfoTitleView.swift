@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct SearchInfoTitleView: View {
     
@@ -13,6 +14,16 @@ struct SearchInfoTitleView: View {
     
     let bookInfo: BookInfo.Item
     @Binding var isLoading: Bool
+    @Binding var isPresentingFavoriteAlert: Bool
+    
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @Environment(\.realm) var realm
+    
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    
+    @State private var isFavorite: Bool = false
     
     // MARK: - BODY
     
@@ -28,6 +39,12 @@ struct SearchInfoTitleView: View {
         .padding(.top, 5)
         .padding(.bottom, 0)
         .padding(.horizontal)
+        .onAppear {
+            for favoriteBook in favoriteBooks where bookInfo.isbn13 == favoriteBook.isbn13 {
+                isFavorite = true
+                break
+            }
+        }
     }
 }
 
@@ -46,7 +63,7 @@ extension SearchInfoTitleView {
             
             HStack(spacing: 2) {
                 Text(bookInfo.author.refinedAuthor)
-                
+               
                 Text("・")
                 
                 Text(bookInfo.publisher)
@@ -61,13 +78,31 @@ extension SearchInfoTitleView {
     var favoriteButton: some View {
         // '좋아요' 버튼은 미완성입니다. (디자인, 기능 등)
         Button {
+            isFavorite.toggle()
             
+            if isFavorite {
+                $favoriteBooks.append(FavoriteBook(value: ["title": "\(bookInfo.title.refinedTitle)", "author": "\(bookInfo.author.refinedAuthor)", "isbn13": "\(bookInfo.isbn13)"]))
+                Haptics.shared.play(.rigid)
+                isPresentingFavoriteAlert = true
+            } else {
+                RealmManager.shared.deleteFavoriteBook(bookInfo.isbn13)
+            }
         } label: {
-            Image(systemName: "heart.fill")
-                .foregroundColor(.white)
-                .padding()
-                .background(bookInfo.categoryName.refinedCategory.accentColor) // 카테고리별 강조 색상으로
-                .clipShape(Circle())
+            if isFavorite {
+                Image(systemName: "heart.fill")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(bookInfo.categoryName.refinedCategory.accentColor) // 카테고리별 강조 색상으로
+                    .clipShape(Circle())
+            } else {
+                Image(systemName: "heart.fill")
+                    .foregroundColor(bookInfo.categoryName.refinedCategory.accentColor)
+                    .padding()
+                    .background {
+                        Circle()
+                            .stroke(bookInfo.categoryName.refinedCategory.accentColor, lineWidth: 2)
+                    }
+            }
         }
         .disabled(isLoading)
     }
@@ -77,6 +112,11 @@ extension SearchInfoTitleView {
 
 struct SearchInfoTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchInfoTitleView(bookInfo: BookInfo.Item.preview[0], isLoading: .constant(false))
+        SearchInfoTitleView(
+            bookInfo: BookInfo.Item.preview[0],
+            isLoading: .constant(false),
+            isPresentingFavoriteAlert: .constant(false)
+        )
+        .environment(\.realm, RealmManager.openLocalRealm())
     }
 }

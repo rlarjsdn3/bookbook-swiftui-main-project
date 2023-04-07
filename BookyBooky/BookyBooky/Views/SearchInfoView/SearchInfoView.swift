@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct SearchInfoView: View {
     
@@ -14,11 +15,12 @@ struct SearchInfoView: View {
     @Binding var isbn13: String
     let viewType: SearchSheetViewType
     
-    // MARK: - WRAPPER PROPERTIES
+    // MARK: - WRAPPER PROPERTIES]
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var isLoading = true
+    @State private var isPresentingFavoriteAlert = false
     
     // MARK: - BODY
     
@@ -31,6 +33,13 @@ struct SearchInfoView: View {
             if !aladinAPIManager.BookInfoItem.isEmpty {
                 bookInformation(item: aladinAPIManager.BookInfoItem[0]) // 상세 뷰 출력하기
             }
+        }
+        .toast(isPresenting: $isPresentingFavoriteAlert, duration: 1.0) {
+            AlertToast(
+                displayMode: .alert,
+                type: .complete(!aladinAPIManager.BookInfoItem.isEmpty ? aladinAPIManager.BookInfoItem[0].categoryName.refinedCategory.accentColor : .gray),
+                title: "좋아요!"
+            )
         }
         .onAppear {
             aladinAPIManager.requestBookDetailAPI(isbn13: isbn13)
@@ -56,7 +65,8 @@ extension SearchInfoView {
             
             SearchInfoTitleView(
                 bookInfo: item,
-                isLoading: $isLoading
+                isLoading: $isLoading,
+                isPresentingFavoriteAlert: $isPresentingFavoriteAlert
             )
             
             SearchInfoBoxView(
