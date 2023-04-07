@@ -8,18 +8,11 @@
 import SwiftUI
 import AlertToast
 
-/*
- * 실질적인 검색 기능을 수행하는 검색 시트 뷰입니다.
- * 만약 뷰를 호출하자마자 검색 뷰를 보고 싶으면 .search(isbn13: "")을 전달하세요.
- * 곧바로 상세 보기 뷰를 보고자 한다면 .search(isbn13: 해당 도서의 ISBN13)값을 전달하세요.
- * 좋아요 뷰에서 곧바로 상세 보기 뷰를 보고자 한다면 .favorite(isbn13: 해당 도서의 ISBN13)값을 전달하세요.
- * 이렇게 하는 이유는 뷰를 재활용 하고, 그리고 곧바로 상세 보기 뷰를 보더라도 '뒤로 가기'버튼을 클릭하면 검색 필드를 보이게 하기 위함입니다. (search 타입 한정)
- */
 struct SearchSheetView: View {
     
     // MARK: - PROPERTIES
     
-    let viewType: SearchSheetViewType
+    let viewType: SearchSheetViewType // 검색 시트 뷰의 성격을 결정하는 변수
     
     // MARK: - WRAPPPER PROPERTIES
     
@@ -31,6 +24,14 @@ struct SearchSheetView: View {
     @State private var categoryAnimation: Category = .all   // 카테고리 애니메이션 효과를 위한 변수
     @State private var bookInfoISBN13: String = "" // 검색 리스트에서 선택한 도서의 ISBN13값을 저장하는 변수, 현재 뷰(검색/상세)의 위치를 파악하는 변수
     
+    // MARK: - INITALISZER
+    
+    /*
+     * 뷰를 호출하자마자 검색 필드가 보이게 하고 싶은 경우: .searcg(isbn13: "")을 전달
+     * 뷰를 호출하자마자 상세 화면을 보이게 하고 싶은 경우: .search(isbn13:) 혹은 .favorite(isbn13:)을 전달
+     * 이때, .favorite 타입에서는 isbn13값으로 빈 문자열("")을 전달할 수 없음
+     * .search와 .favorite 타입의 차이점은 '뒤로가기'버튼의 유무임
+     */
     init(viewType: SearchSheetViewType = .search(isbn13: "")) {
         self.viewType = viewType
         
@@ -38,6 +39,10 @@ struct SearchSheetView: View {
         case .search(let isbn13):
             self._bookInfoISBN13 = State(initialValue: isbn13)
         case .favorite(let isbn13):
+            // .favorite타입의 연관된 값으로 빈 문자열("")을 전달 할 수 없음
+            guard !isbn13.isEmpty else {
+                exit(-1)
+            }
             self._bookInfoISBN13 = State(initialValue: isbn13)
         }
     }
