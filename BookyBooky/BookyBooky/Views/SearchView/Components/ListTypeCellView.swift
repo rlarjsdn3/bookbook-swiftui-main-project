@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Shimmer
+import RealmSwift
 
 struct ListTypeCellView: View {
     
@@ -21,6 +22,8 @@ struct ListTypeCellView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    
     @State private var isLoading = true
     @State private var isPresentingBookInfoView = false
     
@@ -33,7 +36,31 @@ struct ListTypeCellView: View {
             VStack {
                 title
                 
-                author
+                HStack {
+                    // 현재 읽고 있는 중이면 아이콘 출력하기 (미완성)
+                    Image(systemName: "heart.fill")
+                        .font(.title3)
+                        .padding(.leading)
+                        .hidden()
+                    
+                    Spacer(minLength: 0)
+                    
+                    author
+                    
+                    Spacer(minLength: 0)
+                    
+                    if isFavoriteBook() {
+                        Image(systemName: "heart.fill")
+                            .font(.title3)
+                            .foregroundColor(.pink)
+                            .padding(.trailing)
+                    } else {
+                        Image(systemName: "heart.fill")
+                            .font(.title3)
+                            .padding(.leading)
+                            .hidden()
+                    }
+                }
             }
             .redacted(reason: isLoading ? .placeholder : [])
             .shimmering(active: isLoading)
@@ -44,6 +71,13 @@ struct ListTypeCellView: View {
         .sheet(isPresented: $isPresentingBookInfoView) {
             SearchSheetView(viewType: .search(isbn13: bookItem.isbn13))
         }
+    }
+    
+    func isFavoriteBook() -> Bool {
+        for favoriteBook in favoriteBooks where bookItem.isbn13 == favoriteBook.isbn13 {
+            return true
+        }
+        return false
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct SearchSheetCellView: View {
     
@@ -22,6 +23,8 @@ struct SearchSheetCellView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    
     @State private var isLoading = true
     
     // MARK: - BODY
@@ -36,6 +39,13 @@ struct SearchSheetCellView: View {
         }
         .frame(height: COVER_HEIGHT)
         .padding(.top, 18)
+    }
+    
+    func isFavoriteBook() -> Bool {
+        for favoriteBook in favoriteBooks where bookItem.isbn13 == favoriteBook.isbn13 {
+            return true
+        }
+        return false
     }
 }
 
@@ -59,7 +69,17 @@ extension SearchSheetCellView {
             
             Spacer()
             
-            pubDate
+            HStack {
+                pubDate
+                
+                Spacer()
+                
+                if isFavoriteBook() {
+                    Image(systemName: "heart.fill")
+                        .font(.title2)
+                        .foregroundColor(bookItem.categoryName.refinedCategory.accentColor)
+                }
+            }
         }
         .foregroundColor(.secondary)
     }
