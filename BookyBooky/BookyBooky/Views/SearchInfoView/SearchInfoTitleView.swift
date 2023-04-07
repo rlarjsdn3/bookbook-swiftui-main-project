@@ -19,8 +19,6 @@ struct SearchInfoTitleView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @Environment(\.realm) var realm
-    
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @State private var isFavorite: Bool = false
@@ -81,8 +79,15 @@ extension SearchInfoTitleView {
             isFavorite.toggle()
             
             if isFavorite {
-                $favoriteBooks.append(FavoriteBook(value: ["title": "\(bookInfo.title.refinedTitle)", "author": "\(bookInfo.author.refinedAuthor)", "isbn13": "\(bookInfo.isbn13)"]))
-                Haptics.shared.play(.rigid)
+                let favorite = FavoriteBook(
+                    value: [
+                        "title": "\(bookInfo.title.refinedTitle)",
+                        "author": "\(bookInfo.author.refinedAuthor)",
+                        "isbn13": "\(bookInfo.isbn13)"
+                    ]
+                )
+                RealmManager.shared.addFavoriteBook(favorite)
+                
                 isPresentingFavoriteAlert = true
             } else {
                 RealmManager.shared.deleteFavoriteBook(bookInfo.isbn13)
@@ -117,6 +122,5 @@ struct SearchInfoTitleView_Previews: PreviewProvider {
             isLoading: .constant(false),
             isPresentingFavoriteAlert: .constant(false)
         )
-        .environment(\.realm, RealmManager.openLocalRealm())
     }
 }

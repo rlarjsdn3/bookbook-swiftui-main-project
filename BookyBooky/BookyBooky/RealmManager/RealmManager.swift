@@ -9,6 +9,8 @@ import Foundation
 import RealmSwift
 
 class RealmManager {
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    
     let realm = openLocalRealm()
     
     static let shared = RealmManager()
@@ -22,6 +24,11 @@ class RealmManager {
         print("Realm DB 저장소의 위치: \(config.fileURL!)")
         
         return try! Realm(configuration: config)
+    }
+    
+    func addFavoriteBook(_ object: FavoriteBook) {
+        $favoriteBooks.append(object)
+        Haptics.shared.play(.rigid)
     }
     
     func deleteFavoriteBook(_ isbn13: String) {

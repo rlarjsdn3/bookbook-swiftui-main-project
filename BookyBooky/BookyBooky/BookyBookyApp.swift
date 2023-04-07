@@ -22,14 +22,14 @@ struct BookyBookyApp: App {
     
     var body: some Scene {
         WindowGroup {
-                ContentView()
-                    .onAppear {
-                        for type in ListType.allCases {
-                            aladinAPIManager.requestBookListAPI(type: type)
-                        }
+            ContentView()
+                .onAppear {
+                    for type in ListType.allCases {
+                        aladinAPIManager.requestBookListAPI(type: type)
                     }
-                    .environmentObject(aladinAPIManager)
-                    .environment(\.realm, realmManager.realm)
+                }
+                .environmentObject(aladinAPIManager)
+                .environment(\.realm, realmManager.realm)
         }
     }
 }
