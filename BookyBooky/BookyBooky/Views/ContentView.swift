@@ -41,7 +41,7 @@ extension ContentView {
             SearchView()
                 .tag(TabItem.search)
             
-            Text("BookShelf View")
+            BookShelfView()
                 .tag(TabItem.bookShelf)
             
             Text("Analysis View")

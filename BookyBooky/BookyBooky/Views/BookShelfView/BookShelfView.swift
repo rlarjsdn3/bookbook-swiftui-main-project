@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct BookShelfView: View {
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            ForEach(favoriteBooks) { favoriteBook in
+                Text(favoriteBook.title)
+            }
+        }
     }
 }
 
