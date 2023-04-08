@@ -30,13 +30,7 @@ struct BookShelfView: View {
                         
                     } header: {
                         HStack {
-                            Label("내 서재", systemImage: "book")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                            
-                            Label("좋아요", systemImage: "heart.fill")
-                                .font(.title2)
-                                .fontWeight(.semibold)
+                            Spacer()
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }

@@ -11,7 +11,7 @@ struct RoundedTabView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selected: TabItem
+    @Binding var selected: ContentsTabItem
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -21,7 +21,7 @@ struct RoundedTabView: View {
     
     var body: some View {
         HStack {
-            ForEach(TabItem.allCases, id: \.self) { item in
+            ForEach(ContentsTabItem.allCases, id: \.self) { item in
                 TabButtonView(
                     selected: $selected,
                     item: item,

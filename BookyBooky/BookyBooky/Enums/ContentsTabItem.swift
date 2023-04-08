@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-enum TabItem: String, CaseIterable {
+enum ContentsTabItem: String, CaseIterable {
     case home = "홈"
     case search = "검색"
     case bookShelf = "책장"

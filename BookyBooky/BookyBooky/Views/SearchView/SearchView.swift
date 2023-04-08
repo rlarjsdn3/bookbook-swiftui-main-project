@@ -13,7 +13,7 @@ struct SearchView: View {
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
-    @State private var listTypeSelected = ListType.bestSeller
+    @State private var listTypeSelected = BookListTabItem.bestSeller
     
     // MARK: - BODY
     

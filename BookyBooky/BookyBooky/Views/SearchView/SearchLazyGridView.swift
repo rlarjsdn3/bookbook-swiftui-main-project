@@ -12,7 +12,7 @@ struct SearchLazyGridView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var listTypeSelected: ListType
+    @Binding var listTypeSelected: BookListTabItem
     
     var bookListItems: [BookList.Item] {
         switch listTypeSelected {
@@ -89,7 +89,7 @@ extension SearchLazyGridView {
     
     var refreshButton: some View {
         Button("다시 불러오기") {
-            for type in ListType.allCases {
+            for type in BookListTabItem.allCases {
                 bookViewModel.requestBookListAPI(type: type)
             }
             Haptics.shared.play(.rigid)

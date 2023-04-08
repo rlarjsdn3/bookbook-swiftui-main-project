@@ -11,7 +11,7 @@ struct ContentView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var tabSelected: TabItem = .home
+    @State private var tabSelected: ContentsTabItem = .home
     
     // MARK: - INTIALIZER
     
@@ -36,16 +36,16 @@ extension ContentView {
     var tabView: some View {
         TabView(selection: $tabSelected) {
             HomeView()
-                .tag(TabItem.home)
+                .tag(ContentsTabItem.home)
             
             SearchView()
-                .tag(TabItem.search)
+                .tag(ContentsTabItem.search)
             
             BookShelfView()
-                .tag(TabItem.bookShelf)
+                .tag(ContentsTabItem.bookShelf)
             
             Text("Analysis View")
-                .tag(TabItem.analysis)
+                .tag(ContentsTabItem.analysis)
         }
     }
 }
