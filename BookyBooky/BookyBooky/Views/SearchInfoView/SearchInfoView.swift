@@ -38,7 +38,7 @@ struct SearchInfoView: View {
             AlertToast(
                 displayMode: .alert,
                 type: .complete(!aladinAPIManager.BookInfoItem.isEmpty ? aladinAPIManager.BookInfoItem[0].categoryName.refinedCategory.accentColor : .gray),
-                title: "좋아요!"
+                title: "찜하기!"
             )
         }
         .onAppear {

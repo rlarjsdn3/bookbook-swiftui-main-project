@@ -27,7 +27,15 @@ struct BookShelfScrollView: View {
                     .padding(.horizontal)
                 
                 Section {
-                    scrollFavoriteBooks
+                    if !favoriteBooks.isEmpty {
+                        scrollFavoriteBooks
+                    } else {
+                        Text("찜한 도서가 없음")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .foregroundColor(.secondary)
+                            .padding(.vertical, 30)
+                    }
                 } header: {
                     HStack {
                         Text("찜한 도서")
@@ -40,6 +48,7 @@ struct BookShelfScrollView: View {
                         } label: {
                             Text("자세히 보기")
                         }
+                        .disabled(favoriteBooks.isEmpty)
 
                     }
                     .padding(.vertical, 12)
@@ -55,7 +64,12 @@ struct BookShelfScrollView: View {
                 Section {
                     ForEach(1..<100) { index in
                         Text("UI 미완성")
+                            .font(.title3)
                             .padding()
+                            .background(.gray.opacity(0.3))
+                            .cornerRadius(15)
+                            .shimmering()
+                            .padding(.vertical, 25)
                     }
                 } header: {
                     HStack {
@@ -71,7 +85,7 @@ struct BookShelfScrollView: View {
                     .background(.white)
                     .overlay(alignment: .bottom) {
                         Divider()
-                            .opacity(scrollYOffset > 410.0 ? 1 : 0)
+                            .opacity(!favoriteBooks.isEmpty ? scrollYOffset > 410.0 ? 1 : 0 : scrollYOffset > 245.0 ? 1 : 0)
                     }
                 }
             }
@@ -119,7 +133,7 @@ extension BookShelfScrollView {
     var scrollFavoriteBooks: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
-                ForEach(favoriteBooks) { favoriteBook in
+                ForEach(favoriteBooks.reversed()) { favoriteBook in
                     FavoriteBookCellView(favoriteBook: favoriteBook)
                   
                 }
