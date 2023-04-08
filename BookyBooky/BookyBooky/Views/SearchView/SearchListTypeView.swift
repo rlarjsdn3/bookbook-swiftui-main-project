@@ -14,6 +14,7 @@ struct SearchListTypeView: View {
     @State private var selectedAnimation = BookListTabItem.bestSeller
     
     @Binding var listTypeSelected: BookListTabItem
+    @Binding var scrollYOffset: CGFloat
     @Namespace var namespace: Namespace.ID
     
     // MARK: - BODY
@@ -52,6 +53,10 @@ extension SearchListTypeView {
         }
         .padding(.leading, 8)
         .padding(.trailing, 8)
+        .overlay(alignment: .bottom) {
+            Divider()
+                .opacity(scrollYOffset > 20.0 ? 1 : 0)
+        }
     }
 }
 
@@ -59,6 +64,6 @@ extension SearchListTypeView {
 
 struct SearchListTypeView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchListTypeView(listTypeSelected: .constant(.itemNewAll))
+        SearchListTypeView(listTypeSelected: .constant(.itemNewAll), scrollYOffset: .constant(0.0))
     }
 }

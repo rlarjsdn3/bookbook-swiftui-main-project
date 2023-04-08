@@ -21,11 +21,19 @@ struct BookShelfHeaderView: View {
             
             Spacer()
         }
-        .padding(.vertical)
-        .overlay(alignment: .bottom) {
-            Divider()
-                .opacity(scrollYOffset > 30.0 ? 1 : 0)
+        .overlay(alignment: .trailing) {
+            Button {
+                
+            } label: {
+                Image(systemName: "text.book.closed.fill")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.black)
+                    .padding(25)
+            }
+
         }
+        .padding(.vertical)
     }
 }
 

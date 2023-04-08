@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9E04349E29E16370009A2161 /* BookShelfTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04349D29E16370009A2161 /* BookShelfTabItem.swift */; };
+		9E0434A029E164CA009A2161 /* BookShelfScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */; };
 		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
 		9E06070E29DD516D000D542D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070D29DD516D000D542D /* RealmManager.swift */; };
 		9E06071029DEE89F000D542D /* SearchSheetViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		9E04349D29E16370009A2161 /* BookShelfTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfTabItem.swift; sourceTree = "<group>"; };
+		9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfScrollView.swift; sourceTree = "<group>"; };
 		9E06070D29DD516D000D542D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetViewType.swift; sourceTree = "<group>"; };
 		9E06071329DF9847000D542D /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			children = (
 				9E06071629DFDC1D000D542D /* BookShelfView.swift */,
 				9E852F1629E1283C00A78EC2 /* BookShelfHeaderView.swift */,
+				9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */,
 			);
 			path = BookShelfView;
 			sourceTree = "<group>";
@@ -266,9 +269,9 @@
 			children = (
 				9ECA326A29D12044004D6D5B /* ContentsTabItem.swift */,
 				9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItem.swift */,
+				9E04349D29E16370009A2161 /* BookShelfTabItem.swift */,
 				9EB749F629D5C3A500610D97 /* Category.swift */,
 				9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */,
-				9E04349D29E16370009A2161 /* BookShelfTabItem.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				9E0C0A7D29D3D0F900F1F5F6 /* BookListTabItem.swift in Sources */,
 				9E7A794729DA854D00A51856 /* SearchInfoTitleView.swift in Sources */,
 				9E0C0A7129D2866100F1F5F6 /* BookList.swift in Sources */,
+				9E0434A029E164CA009A2161 /* BookShelfScrollView.swift in Sources */,
 				9ED4CB6429D3E21C00CA493D /* ListTypeButtonView.swift in Sources */,
 				9E54AA0029D6704900FE080C /* SearchSheetScrollView.swift in Sources */,
 				9E524DF829D1CF3500FD7B98 /* TabButtonView.swift in Sources */,

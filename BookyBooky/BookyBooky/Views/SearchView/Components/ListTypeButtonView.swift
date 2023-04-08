@@ -28,7 +28,7 @@ struct ListTypeButtonView: View {
         .padding(.vertical, 10)
         .padding(.horizontal, 5)
         .padding(.bottom, 5)
-        .overlay {
+        .overlay(alignment: .bottom) {
             if selectedAnimation == type {
                 underline
             }
@@ -48,7 +48,6 @@ extension ListTypeButtonView {
     
     var underline: some View {
         RoundedRectangle(cornerRadius: 5)
-            .offset(y: 21)
             .frame(height: 1)
             .frame(maxWidth: .infinity)
             .matchedGeometryEffect(id: "rectangle", in: selectedNamespace)

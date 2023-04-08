@@ -13,6 +13,9 @@ struct SearchLazyGridView: View {
     // MARK: - PROPERTIES
     
     @Binding var listTypeSelected: BookListTabItem
+    @Binding var scrollYOffset: CGFloat
+    
+    @State private var startOffset: CGFloat = 0.0
     
     var bookListItems: [BookList.Item] {
         switch listTypeSelected {
@@ -67,6 +70,22 @@ extension SearchLazyGridView {
             }
 
         }
+        .overlay(alignment: .top) {
+            GeometryReader { proxy -> Color in
+                DispatchQueue.main.async {
+                    let offset = proxy.frame(in: .global).minY
+                    if startOffset == 0 {
+                        self.startOffset = offset
+                    }
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        scrollYOffset = startOffset - offset
+                    }
+                    print(scrollYOffset)
+                }
+                return Color.clear
+            }
+            .frame(width: 0, height: 0)
+        }
         // 하단 사용자화 탭 뷰가 기본 탭 뷰와 높이가 상이하기 때문에 위/아래 간격을 달리함
         .padding(.top, 20)
         .padding(.bottom, 40)
@@ -118,7 +137,7 @@ extension SearchLazyGridView {
 
 struct SearchLazyGridView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchLazyGridView(listTypeSelected: .constant(.bestSeller))
+        SearchLazyGridView(listTypeSelected: .constant(.bestSeller), scrollYOffset: .constant(0.0))
             .environmentObject(AladinAPIManager())
     }
 }

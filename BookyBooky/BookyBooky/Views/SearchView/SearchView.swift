@@ -13,6 +13,7 @@ struct SearchView: View {
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
+    @State private var scrollYOffset: CGFloat = 0.0
     @State private var listTypeSelected = BookListTabItem.bestSeller
     
     // MARK: - BODY
@@ -21,9 +22,9 @@ struct SearchView: View {
         VStack(spacing: 0) {
             SearchHeaderView()
             
-            SearchListTypeView(listTypeSelected: $listTypeSelected)
+            SearchListTypeView(listTypeSelected: $listTypeSelected, scrollYOffset: $scrollYOffset)
 
-            SearchLazyGridView(listTypeSelected: $listTypeSelected)
+            SearchLazyGridView(listTypeSelected: $listTypeSelected, scrollYOffset: $scrollYOffset)
         }
     }
 }

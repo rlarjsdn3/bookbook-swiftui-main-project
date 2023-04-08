@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+enum BookShelfTabItem: CaseIterable {
+    case myLibrary
+    case sentence
+    
+    var name: String {
+        switch self {
+        case .myLibrary:
+            return "내 서재"
+        case .sentence:
+            return "문장 수집"
+        }
+    }
+}
