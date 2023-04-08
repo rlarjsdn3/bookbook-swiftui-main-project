@@ -34,50 +34,37 @@ struct BookShelfScrollView: View {
                     .padding(.horizontal)
                 
                 HStack {
-                    VStack {
-                        HStack {
-                            ForEach(0..<3) { index in
-                                Spacer()
-                                Image(systemName: systemImages[index])
-                                    .font(.largeTitle)
-                                    .foregroundColor(.white)
-                                    .background {
-                                        Circle()
-                                            .fill(imageColors[index].gradient)
-                                            .frame(width: 70, height: 70)
-                                    }
-                                    .padding(10)
-                                Spacer()
-                            }
-                        }
+                    ForEach(0..<3) { index in
+                        Spacer()
                         
-                        HStack {
-                            ForEach(0..<3) { index in
-                                Spacer()
-                                Text(labelTitle[index])
-                                    .fontWeight(.bold)
-                                    .padding(.vertical, 8)
-                                Spacer()
-                            }
-                        }
-                        
-                        HStack {
-                            ForEach(0..<3) { index in
-                                Spacer()
-                                switch labelTitle[index] {
-                                case "찜한 도서 수":
-                                    Text("\(favoriteBooks.count)")
-                                        .font(.title2)
-                                default:
-                                    Text("0")
-                                        .font(.title2)
+                        VStack(spacing: 5) {
+                            Image(systemName: systemImages[index])
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                                .background {
+                                    Circle()
+                                        .fill(imageColors[index].gradient)
+                                        .frame(width: 70, height: 70)
                                 }
-                                Spacer()
+                                .frame(width: 80, height: 80)
+                            
+                            Text(labelTitle[index])
+                                .fontWeight(.bold)
+                            
+                            switch labelTitle[index] {
+                            case "찜한 도서 수":
+                                Text("\(favoriteBooks.count)")
+                                    .font(.title2)
+                            default:
+                                Text("0")
+                                    .font(.title2)
                             }
-                            .padding(.top, -13)
                         }
+                        
+                        Spacer()
                     }
                 }
+                .frame(maxWidth: .infinity)
                 .padding(.horizontal, 30)
                 
                 Section {
@@ -111,7 +98,7 @@ struct BookShelfScrollView: View {
                     .background(.white)
                     .overlay(alignment: .bottom) {
                         Divider()
-                            .opacity(scrollYOffset > 70.0 ? 1 : 0)
+                            .opacity(scrollYOffset > 219.0 ? 1 : 0)
                     }
                 }
                 
@@ -139,7 +126,7 @@ struct BookShelfScrollView: View {
                     .background(.white)
                     .overlay(alignment: .bottom) {
                         Divider()
-                            .opacity(!favoriteBooks.isEmpty ? scrollYOffset > 410.0 ? 1 : 0 : scrollYOffset > 245.0 ? 1 : 0)
+                            .opacity(!favoriteBooks.isEmpty ? scrollYOffset > 560.0 ? 1 : 0 : scrollYOffset > 369.0 ? 1 : 0)
                     }
                 }
             }
