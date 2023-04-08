@@ -91,7 +91,9 @@ extension SearchInfoTitleView {
                 
                 isPresentingFavoriteAlert = true
             } else {
-                RealmManager.shared.deleteFavoriteBook(bookInfo.isbn13)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    RealmManager.shared.deleteFavoriteBook(bookInfo.isbn13)
+                }
             }
         } label: {
             if isFavorite {

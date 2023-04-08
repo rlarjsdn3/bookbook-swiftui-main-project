@@ -16,6 +16,7 @@ struct BookShelfHeaderView: View {
             
             Text("책장")
                 .font(.title2)
+                .font(.system(size: 30))
                 .fontWeight(.semibold)
                 .opacity(scrollYOffset > 30.0 ? 1 : 0)
             
