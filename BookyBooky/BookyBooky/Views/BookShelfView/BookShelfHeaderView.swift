@@ -26,7 +26,7 @@ struct BookShelfHeaderView: View {
             Button {
                 // do something...
             } label: {
-                Image(systemName: "text.book.closed.fill")
+                Image(systemName: "bookmark.fill")
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
