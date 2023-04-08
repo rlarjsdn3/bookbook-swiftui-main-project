@@ -59,7 +59,7 @@ extension SearchHeaderView {
             .font(.title2)
             .fontWeight(.semibold)
             .foregroundColor(.black)
-            .padding(.trailing, 20)
+            .padding(25)
     }
 }
 
