@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9E04349E29E16370009A2161 /* BookShelfTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04349D29E16370009A2161 /* BookShelfTabItem.swift */; };
 		9E0434A029E164CA009A2161 /* BookShelfScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */; };
+		9E0434A629E19C48009A2161 /* FavoriteBookCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */; };
 		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
 		9E06070E29DD516D000D542D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070D29DD516D000D542D /* RealmManager.swift */; };
 		9E06071029DEE89F000D542D /* SearchSheetViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */; };
@@ -65,6 +66,7 @@
 /* Begin PBXFileReference section */
 		9E04349D29E16370009A2161 /* BookShelfTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfTabItem.swift; sourceTree = "<group>"; };
 		9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfScrollView.swift; sourceTree = "<group>"; };
+		9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBookCellView.swift; sourceTree = "<group>"; };
 		9E06070D29DD516D000D542D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetViewType.swift; sourceTree = "<group>"; };
 		9E06071329DF9847000D542D /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
@@ -131,6 +133,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E0434A429E19C36009A2161 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		9E06070C29DD5160000D542D /* RealmManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +155,7 @@
 				9E06071629DFDC1D000D542D /* BookShelfView.swift */,
 				9E852F1629E1283C00A78EC2 /* BookShelfHeaderView.swift */,
 				9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */,
+				9E0434A429E19C36009A2161 /* Components */,
 			);
 			path = BookShelfView;
 			sourceTree = "<group>";
@@ -455,6 +466,7 @@
 				9E7A794D29DA998F00A51856 /* SalesPointDescSheetView.swift in Sources */,
 				9E54AA0E29D7D84100FE080C /* StringExtension.swift in Sources */,
 				9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */,
+				9E0434A629E19C48009A2161 /* FavoriteBookCellView.swift in Sources */,
 				9E0C0A7329D28C0300F1F5F6 /* AladinAPI.swift in Sources */,
 				9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */,
 				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,

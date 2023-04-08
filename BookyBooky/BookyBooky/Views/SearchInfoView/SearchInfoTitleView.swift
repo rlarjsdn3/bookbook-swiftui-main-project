@@ -83,6 +83,7 @@ extension SearchInfoTitleView {
                     value: [
                         "title": "\(bookInfo.title.refinedTitle)",
                         "author": "\(bookInfo.author.refinedAuthor)",
+                        "cover": "\(bookInfo.cover)",
                         "isbn13": "\(bookInfo.isbn13)"
                     ]
                 )

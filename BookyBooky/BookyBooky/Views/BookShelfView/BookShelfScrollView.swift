@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct BookShelfScrollView: View {
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    
+    @State private var tapISBN13 = ""
+    @State private var showFavoriteBookInfo = false
     @State private var startOffset: CGFloat = 0.0
     @Binding var scrollYOffset: CGFloat
-    
-    @Namespace var selectedNamespace: Namespace.ID
     
     var body: some View {
         ScrollView {
@@ -23,19 +26,11 @@ struct BookShelfScrollView: View {
                     .padding(.horizontal)
                 
                 Section {
-                    ZStack {
-                        Color("Background")
-                        
-                        VStack {
-                            ForEach(1..<100) { index in
-                                Text("\(index)")
-                            }
-                        }
-                    }
+                    scrollFavoriteBooks
                 } header: {
                     HStack {
                         Text("찜한 도서")
-                            .font(.title3)
+                            .font(.title2)
                             .fontWeight(.bold)
                         Spacer()
                         
@@ -46,7 +41,8 @@ struct BookShelfScrollView: View {
                         }
 
                     }
-                    .padding()
+                    .padding(.vertical, 12)
+                    .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(.white)
                     .overlay(alignment: .bottom) {
@@ -72,7 +68,25 @@ struct BookShelfScrollView: View {
                 .frame(width: 0, height: 0)
             }
         }
-        
+        .sheet(isPresented: $showFavoriteBookInfo) {
+            if !tapISBN13.isEmpty {
+                SearchSheetView(viewType: .favorite(isbn13: tapISBN13))
+            }
+        }
+    }
+}
+
+extension BookShelfScrollView {
+    var scrollFavoriteBooks: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 0) {
+                ForEach(favoriteBooks) { favoriteBook in
+                    FavoriteBookCellView(favoriteBook: favoriteBook)
+                  
+                }
+            }
+        }
+        .padding(.horizontal, 3)
     }
 }
 
@@ -81,55 +95,3 @@ struct BookShelfScrollView_Previews: PreviewProvider {
         BookShelfScrollView(scrollYOffset: .constant(0.0))
     }
 }
-
-/*
-
-struct SearchListTypeView: View {
-    
-    // MARK: - WRAPPER PROPERTIES
-    
-    @State private var selectedAnimation = BookListTabItem.bestSeller
-    
-    @Binding var listTypeSelected: BookListTabItem
-    @Namespace var namespace: Namespace.ID
-    
-    // MARK: - BODY
-    
-    var body: some View {
-        ScrollViewReader { proxy in
-            scrollListTypeButtons(scrollProxy: proxy)
-        }
-    }
-}
-
-// MARK: - EXTENSIONS
-
-extension SearchListTypeView {
-    @ViewBuilder
-    func scrollListTypeButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            listTypeButtons(scrollProxy: proxy)
-        }
-    }
-    
-    @ViewBuilder
-    func listTypeButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
-        HStack {
-            ForEach(BookListTabItem.allCases, id: \.self) { type in
-                ListTypeButtonView(
-                    listTypeSelected: $listTypeSelected,
-                    type: type,
-                    scrollProxy: proxy,
-                    selectedAnimation: $selectedAnimation,
-                    selectedNamespace: namespace
-                )
-                .padding(.horizontal, 8)
-                .id(type.rawValue)
-            }
-        }
-        .padding(.leading, 8)
-        .padding(.trailing, 8)
-    }
-}
-
-*/

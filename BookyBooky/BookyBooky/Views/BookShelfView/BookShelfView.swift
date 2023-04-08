@@ -14,12 +14,10 @@ struct BookShelfView: View {
     @State private var scrollYOffset: CGFloat = 0.0
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack {
             BookShelfHeaderView(scrollYOffset: $scrollYOffset)
             
             BookShelfScrollView(scrollYOffset: $scrollYOffset)
-            
-            Spacer()
         }
     }
 }
