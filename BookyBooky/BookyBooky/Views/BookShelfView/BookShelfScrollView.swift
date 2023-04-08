@@ -9,7 +9,15 @@ import SwiftUI
 import RealmSwift
 
 struct BookShelfScrollView: View {
+    
     @ObservedResults(FavoriteBook.self) var favoriteBooks
+    
+    
+    // 열거형으로 리팩토링하기
+    let labelTitle = ["읽은 도서 수", "찜한 도서 수", "수집 문장 수"]
+    let systemImages = ["book", "heart.fill", "bookmark.fill"]
+    let imageColors = [Color.blue, Color.pink, Color.green]
+    
     
     @State private var tapISBN13 = ""
     @State private var showFavoriteBookInfo = false
@@ -25,6 +33,128 @@ struct BookShelfScrollView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .minimumScaleFactor(0.001)
                     .padding(.horizontal)
+                
+                HStack {
+//                    Spacer(minLength: 0)
+                    
+                    
+                    VStack {
+                        HStack {
+                            ForEach(0..<3) { index in
+                                Spacer()
+                                Image(systemName: systemImages[index])
+                                    .font(.largeTitle)
+                                    .foregroundColor(.white)
+                                    .background {
+                                        Circle()
+                                            .fill(imageColors[index].gradient)
+                                            .frame(width: 70, height: 70)
+                                    }
+                                    .padding(10)
+                                Spacer()
+                            }
+                        }
+                        
+                        HStack {
+                            ForEach(0..<3) { index in
+                                Spacer()
+                                Text(labelTitle[index])
+                                    .fontWeight(.bold)
+                                    .padding(.vertical, 8)
+                                Spacer()
+                            }
+                        }
+                        
+                        HStack {
+                            ForEach(0..<3) { index in
+                                Spacer()
+                                switch labelTitle[index] {
+                                case "찜한 도서 수":
+                                    Text("\(favoriteBooks.count)")
+                                        .font(.title2)
+                                default:
+                                    Text("0")
+                                        .font(.title2)
+                                }
+                                Spacer()
+                            }
+                            .padding(.top, -13)
+                        }
+                    }
+                    
+//                    ForEach(0..<3) { index in
+//                        Spacer(minLength: 0)
+//                        VStack {
+//                            Image(systemName: systemImages[index])
+//                                .font(.largeTitle)
+//                                .foregroundColor(.white)
+//                                .background {
+//                                    Circle()
+//                                        .fill(imageColors[index].gradient)
+//                                        .frame(width: 70, height: 70)
+//                                }
+//                                .padding(10)
+//
+//                            Spacer(minLength: 10)
+//
+//                            Text(labelTitle[index])
+//                                .fontWeight(.semibold)
+//                                .padding(.vertical, 4)
+//
+//                            Spacer(minLength: 0)
+//
+//                            Text("0")
+//                                .font(.title)
+//                        }
+//                        .offset(y: index == 2 ? -2 : 0)
+//
+//
+//                        Spacer(minLength: 0)
+//                    }
+//
+//                    Spacer(minLength: 0)
+//
+//                    VStack {
+//                        Image(systemName: "heart.fill")
+//                            .font(.largeTitle)
+//                            .foregroundColor(.white)
+//                            .padding()
+//                            .background {
+//                                Circle()
+//                                    .fill(.pink.gradient)
+//                        }
+//
+//                        Text("찜한 도서 수")
+//                            .fontWeight(.semibold)
+//                            .frame(height: 30)
+//
+//                        Text("\(favoriteBooks.count)")
+//                            .font(.title)
+//                    }
+//
+//                    Spacer(minLength: 0)
+//
+//                    VStack {
+//                        Image(systemName: "text.book.closed.fill")
+//                            .font(.largeTitle)
+//                            .foregroundColor(.white)
+//                            .padding()
+//                            .background {
+//                                Circle()
+//                                    .fill(.green.gradient)
+//                        }
+//
+//                        Text("수집 문장 수")
+//                            .fontWeight(.semibold)
+//                            .frame(height: 30)
+//
+//                        Text("0")
+//                            .font(.title)
+//                    }
+                    
+//                    Spacer(minLength: 0)
+                }
+                .padding(.horizontal, 30)
                 
                 Section {
                     if !favoriteBooks.isEmpty {
