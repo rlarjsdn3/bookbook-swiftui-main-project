@@ -10,6 +10,8 @@ import SwiftUI
 @main
 struct BookyBookyApp: App {
     
+    let realmManager = RealmManager.openLocalRealm()
+    
     // MARK: - WRAPPER PROPERTIES
     
     @StateObject var aladinAPIManager = AladinAPIManager()

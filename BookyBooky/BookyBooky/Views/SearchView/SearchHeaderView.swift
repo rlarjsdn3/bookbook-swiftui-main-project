@@ -17,25 +17,23 @@ struct SearchHeaderView: View {
     
     var body: some View {
         HStack {
-            emptyImage
-            
             Spacer()
             
             searchLabel
             
             Spacer()
-            
+        }
+        .overlay(alignment: .trailing) {
             Button {
                 showSearchSheetView = true
             } label: {
                 searchImage
-                    .padding(5)
             }
         }
         .sheet(isPresented: $showSearchSheetView) {
             SearchSheetView(viewType: .search(isbn13: ""))
         }
-        .padding()
+        .padding(.vertical)
     }
 }
 
@@ -47,7 +45,7 @@ extension SearchHeaderView {
             .font(.title2)
             .fontWeight(.semibold)
             .hidden()
-            .padding(5)
+            .padding(.leading, 15)
     }
     
     var searchLabel: some View {
@@ -61,6 +59,7 @@ extension SearchHeaderView {
             .font(.title2)
             .fontWeight(.semibold)
             .foregroundColor(.black)
+            .padding(.trailing, 20)
     }
 }
 
