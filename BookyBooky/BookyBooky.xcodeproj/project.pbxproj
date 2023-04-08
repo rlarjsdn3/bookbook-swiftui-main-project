@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E04349E29E16370009A2161 /* BookShelfTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04349D29E16370009A2161 /* BookShelfTabItem.swift */; };
 		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
 		9E06070E29DD516D000D542D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070D29DD516D000D542D /* RealmManager.swift */; };
 		9E06071029DEE89F000D542D /* SearchSheetViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9E04349D29E16370009A2161 /* BookShelfTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfTabItem.swift; sourceTree = "<group>"; };
 		9E06070D29DD516D000D542D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetViewType.swift; sourceTree = "<group>"; };
 		9E06071329DF9847000D542D /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItem.swift */,
 				9EB749F629D5C3A500610D97 /* Category.swift */,
 				9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */,
+				9E04349D29E16370009A2161 /* BookShelfTabItem.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,
 				9E0C0A6929D281BF00F1F5F6 /* Haptics.swift in Sources */,
 				9ED4CB6129D3E0AA00CA493D /* SearchListTypeView.swift in Sources */,
+				9E04349E29E16370009A2161 /* BookShelfTabItem.swift in Sources */,
 				9E0C0A7D29D3D0F900F1F5F6 /* BookListTabItem.swift in Sources */,
 				9E7A794729DA854D00A51856 /* SearchInfoTitleView.swift in Sources */,
 				9E0C0A7129D2866100F1F5F6 /* BookList.swift in Sources */,
