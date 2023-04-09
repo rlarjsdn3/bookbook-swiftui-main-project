@@ -9,6 +9,12 @@ import SwiftUI
 import RealmSwift
 
 struct FavoriteBooksView: View {
+    
+    let coulmns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @Environment(\.dismiss) var dismiss
@@ -46,9 +52,17 @@ struct FavoriteBooksView: View {
                 }
             }
             .padding(.top)
+            .padding(.vertical, 5)
             
-            Spacer()
+            ScrollView {
+                LazyVGrid(columns: coulmns) {
+                    ForEach(favoriteBooks) { favoriteBook in
+                        FavoriteBookCellView(favoriteBook: favoriteBook)
+                    }
+                }
+            }
         }
+        .presentationCornerRadius(30)
     }
 }
 
