@@ -17,6 +17,8 @@ struct BookShelfScrollView: View {
     let systemImages = ["book", "heart.fill", "bookmark.fill"]
     let imageColors = [Color.blue, Color.pink, Color.green]
     
+    @State private var isPresentingFavoriteBooksView = false
+    
     
     @State private var tapISBN13 = ""
     @State private var showFavoriteBookInfo = false
@@ -85,7 +87,7 @@ struct BookShelfScrollView: View {
                         Spacer()
                         
                         Button {
-                            
+                            isPresentingFavoriteBooksView = true
                         } label: {
                             Text("자세히 보기")
                         }
@@ -147,6 +149,9 @@ struct BookShelfScrollView: View {
                     return Color.clear
                 }
                 .frame(width: 0, height: 0)
+            }
+            .fullScreenCover(isPresented: $isPresentingFavoriteBooksView) {
+                FavoriteBooksView()
             }
         }
     }
