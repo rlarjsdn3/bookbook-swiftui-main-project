@@ -12,6 +12,7 @@
 		9E0434A629E19C48009A2161 /* FavoriteBookCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */; };
 		9E0434A929E24BA5009A2161 /* FavoriteBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */; };
 		9E0434AB29E28097009A2161 /* SortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434AA29E28097009A2161 /* SortBy.swift */; };
+		9E0434AE29E2A38D009A2161 /* NavigationBarItemStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */; };
 		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
 		9E06070E29DD516D000D542D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070D29DD516D000D542D /* RealmManager.swift */; };
 		9E06071429DF9847000D542D /* FavoriteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06071329DF9847000D542D /* FavoriteBook.swift */; };
@@ -70,6 +71,7 @@
 		9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBookCellView.swift; sourceTree = "<group>"; };
 		9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBooksView.swift; sourceTree = "<group>"; };
 		9E0434AA29E28097009A2161 /* SortBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortBy.swift; sourceTree = "<group>"; };
+		9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarItemStyle.swift; sourceTree = "<group>"; };
 		9E06070D29DD516D000D542D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		9E06071329DF9847000D542D /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
 		9E06071629DFDC1D000D542D /* BookShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfView.swift; sourceTree = "<group>"; };
@@ -149,6 +151,14 @@
 				9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */,
 			);
 			path = FavoriteBooksView;
+			sourceTree = "<group>";
+		};
+		9E0434AC29E2A374009A2161 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */,
+			);
+			path = Modifier;
 			sourceTree = "<group>";
 		};
 		9E06070C29DD5160000D542D /* RealmManager */ = {
@@ -354,6 +364,7 @@
 				9ECD921029BF1FA600FCDD2F /* BookyBookyApp.swift */,
 				9ECA326529D11B93004D6D5B /* Views */,
 				9E0C0A6029D1D85500F1F5F6 /* Extensions */,
+				9E0434AC29E2A374009A2161 /* Modifier */,
 				9E524DF929D1D13700FD7B98 /* Shapes */,
 				9E06070C29DD5160000D542D /* RealmManager */,
 				9E0C0A6D29D2855200F1F5F6 /* AladinAPIManager */,
@@ -514,6 +525,7 @@
 				9E0C0A6F29D2856B00F1F5F6 /* AladinAPIManager.swift in Sources */,
 				9E54AA0A29D7CACB00FE080C /* CoverShape.swift in Sources */,
 				9E0C0A6C29D284FD00F1F5F6 /* SearchView.swift in Sources */,
+				9E0434AE29E2A38D009A2161 /* NavigationBarItemStyle.swift in Sources */,
 				9E54AA0429D6F54B00FE080C /* ListTypeCellView.swift in Sources */,
 				9E0C0A7729D2B5BC00F1F5F6 /* BookInfo.swift in Sources */,
 				9E0C0A7F29D3D56A00F1F5F6 /* SearchHeaderView.swift in Sources */,

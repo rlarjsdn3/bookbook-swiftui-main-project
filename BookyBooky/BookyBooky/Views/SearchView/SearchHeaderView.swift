@@ -40,14 +40,6 @@ struct SearchHeaderView: View {
 // MARK: - EXTENSIONS
 
 extension SearchHeaderView {
-    var emptyImage: some View {
-        Image(systemName: "magnifyingglass")
-            .font(.title2)
-            .fontWeight(.semibold)
-            .hidden()
-            .padding(.leading, 15)
-    }
-    
     var searchLabel: some View {
         Text("검색")
             .font(.title2)
@@ -56,10 +48,7 @@ extension SearchHeaderView {
     
     var searchImage: some View {
         Image(systemName: "magnifyingglass")
-            .font(.title2)
-            .fontWeight(.semibold)
-            .foregroundColor(.black)
-            .padding(25)
+            .navigationBarItemStyle()
     }
 }
 

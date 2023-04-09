@@ -117,7 +117,7 @@ struct FavoriteBooksView: View {
         }
         .overlay(alignment: .bottom) {
                 Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                     searchQuery.removeAll()
                     query.removeAll()
                         isPresentingShowAll = false
@@ -164,7 +164,7 @@ extension FavoriteBooksView {
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
                     searchQuery = query
                     if !searchQuery.isEmpty {
                         isPresentingShowAll = true
@@ -178,7 +178,7 @@ extension FavoriteBooksView {
     
     var xmarkButton: some View {
         Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                 searchQuery.removeAll()
                 query.removeAll()
                 focusedField = true
