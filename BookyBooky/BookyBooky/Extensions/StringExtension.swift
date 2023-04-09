@@ -8,12 +8,17 @@
 import Foundation
 
 extension String {
-    /// 도서 제목을 반환하는 프로퍼티
+    /// 문자열을 정수로 변환 후 반환하는 프로퍼티입니다. 형 변환 불가 시, 정수 0을 반환합니다.
+    var toInteger: Int {
+        return Int(self) ?? 0
+    }
+    
+    /// 도서 제목을 반환하는 프로퍼티입니다.
     var refinedTitle: String {
         return String(self.split(separator: " - ")[0])
     }
     
-    /// 도서 부제를 반환하는 프로퍼티 (부제 없을 시, 빈 문자열 반환)
+    /// 도서 부제를 반환하는 프로퍼티입니다. (부제 없을 시, 빈 문자열 반환)
     var refinedSubTitle: String {
         let titles = self.split(separator: " - ")
         if titles.count > 1 {
@@ -22,7 +27,7 @@ extension String {
         return ""
     }
     
-    /// 저자 정보를 반환하는 프로퍼티
+    /// 저자 정보를 반환하는 프로퍼티입니다.
     var refinedAuthor: String {
         let writer = self.split(separator: "(지은이)").map { String($0) }
         // 저자 정보가 ' (지은이)'를 기준으로 나누어지면
@@ -44,7 +49,7 @@ extension String {
         }
     }
     
-    /// 발간일 정보를 반환하는 프로퍼티
+    /// 발간일 정보를 반환하는 프로퍼티입니다.
     var refinedPublishDate: Date {
         if let date = self.toDate() {
             return date.date
@@ -53,7 +58,7 @@ extension String {
         }
     }
     
-    /// 1차 카테고리 분류 정보를 반환하는 프로퍼티
+    /// 1차 카테고리 분류 정보를 반환하는 프로퍼티입니다.
     private var oneDepthCategory: String {
         let category = self.split(separator: ">")
         if category.count > 1 {
