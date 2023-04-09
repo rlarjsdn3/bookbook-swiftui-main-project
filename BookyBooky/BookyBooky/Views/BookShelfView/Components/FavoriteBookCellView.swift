@@ -14,6 +14,7 @@ struct FavoriteBookCellView: View {
     
     let favoriteBook: FavoriteBook
     
+    @State private var isLoading = true
     @State private var showFavoriteBookInfo = false
     
     var body: some View {
@@ -34,9 +35,9 @@ struct FavoriteBookCellView: View {
                             )
                             .cornerRadius(10)
                             .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
-//                                        .onAppear {
-//                                            isLoading = false
-//                                        }
+                            .onAppear {
+                                isLoading = false
+                            }
                     case .failure(_):
                         loadingCover
                     case .empty:
@@ -54,19 +55,23 @@ struct FavoriteBookCellView: View {
                     .frame(width: COVER_WIDTH, height: 25)
                     .padding(.horizontal)
                     .padding(.bottom, -5)
+                    .redacted(reason: isLoading ? .placeholder : [])
+                    .shimmering(active: isLoading)
                 
                 Text(favoriteBook.author)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
+                    .redacted(reason: isLoading ? .placeholder : [])
+                    .shimmering(active: isLoading)
             }
-            .padding(.vertical, 10)
             .onTapGesture {
                 showFavoriteBookInfo = true
             }
             .sheet(isPresented: $showFavoriteBookInfo) {
                 SearchInfoView(isbn13: favoriteBook.isbn13)
             }
+            .padding(.vertical, 10)
         }
     }
 }

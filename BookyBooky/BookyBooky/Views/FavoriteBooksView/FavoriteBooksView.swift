@@ -15,6 +15,8 @@ struct FavoriteBooksView: View {
         GridItem(.flexible())
     ]
     
+    @State private var selectedSort: SortBy = .latestOrder
+    
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @Environment(\.dismiss) var dismiss
@@ -22,11 +24,44 @@ struct FavoriteBooksView: View {
     @FocusState var focusedField: Bool
     @State private var searchQuery = ""
     
+    var sortedFavoritesBooks: [FavoriteBook] {
+        switch selectedSort {
+        // 최근 추가된 순으로 정렬
+        case .latestOrder:
+            return favoriteBooks.reversed()
+        // 제목 오름차순으로 정렬
+        case .titleOrder:
+            return favoriteBooks.sorted { $0.title < $1.title }
+        // 판매 포인트 내림차순으로 정렬
+        case .sellingPointOrder:
+            return favoriteBooks.sorted { $0.salesPoint > $1.salesPoint }
+        }
+    }
+    
     var body: some View {
         VStack {
             HStack {
-                Button {
-                    
+                Menu {
+                    Section {
+                        ForEach(SortBy.allCases, id: \.self) { sort in
+                            Button {
+                                selectedSort = sort
+                            } label: {
+                                HStack {
+                                    Text(sort.rawValue)
+                                    
+                                    if selectedSort == sort {
+                                        Image(systemName: "checkmark")
+                                            .font(.title3)
+                                    }
+                                }
+                            }
+                            
+                        }
+                    } header: {
+                        Text("도서 정렬")
+                    }
+
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                         .font(.title2)
@@ -53,11 +88,12 @@ struct FavoriteBooksView: View {
 
             ScrollView {
                 LazyVGrid(columns: coulmns) {
-                    ForEach(favoriteBooks) { favoriteBook in
+                    ForEach(sortedFavoritesBooks) { favoriteBook in
                         FavoriteBookCellView(favoriteBook: favoriteBook)
                     }
                 }
             }
+            .padding(.horizontal, 10)
         }
         .presentationCornerRadius(30)
     }

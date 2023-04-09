@@ -11,9 +11,9 @@
 		9E0434A029E164CA009A2161 /* BookShelfScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */; };
 		9E0434A629E19C48009A2161 /* FavoriteBookCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */; };
 		9E0434A929E24BA5009A2161 /* FavoriteBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */; };
+		9E0434AB29E28097009A2161 /* SortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434AA29E28097009A2161 /* SortBy.swift */; };
 		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
 		9E06070E29DD516D000D542D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070D29DD516D000D542D /* RealmManager.swift */; };
-		9E06071029DEE89F000D542D /* SearchSheetViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */; };
 		9E06071429DF9847000D542D /* FavoriteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06071329DF9847000D542D /* FavoriteBook.swift */; };
 		9E06071729DFDC1D000D542D /* BookShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06071629DFDC1D000D542D /* BookShelfView.swift */; };
 		9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */; };
@@ -69,8 +69,8 @@
 		9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfScrollView.swift; sourceTree = "<group>"; };
 		9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBookCellView.swift; sourceTree = "<group>"; };
 		9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBooksView.swift; sourceTree = "<group>"; };
+		9E0434AA29E28097009A2161 /* SortBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortBy.swift; sourceTree = "<group>"; };
 		9E06070D29DD516D000D542D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
-		9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetViewType.swift; sourceTree = "<group>"; };
 		9E06071329DF9847000D542D /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
 		9E06071629DFDC1D000D542D /* BookShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfView.swift; sourceTree = "<group>"; };
 		9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
@@ -292,7 +292,7 @@
 				9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItem.swift */,
 				9E04349D29E16370009A2161 /* BookShelfTabItem.swift */,
 				9EB749F629D5C3A500610D97 /* Category.swift */,
-				9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */,
+				9E0434AA29E28097009A2161 /* SortBy.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -474,7 +474,6 @@
 				9E06071729DFDC1D000D542D /* BookShelfView.swift in Sources */,
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
 				9E7A795029DAABA000A51856 /* SearchInfoButtonsView.swift in Sources */,
-				9E06071029DEE89F000D542D /* SearchSheetViewType.swift in Sources */,
 				9E7A794D29DA998F00A51856 /* SalesPointDescSheetView.swift in Sources */,
 				9E54AA0E29D7D84100FE080C /* StringExtension.swift in Sources */,
 				9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */,
@@ -496,6 +495,7 @@
 				9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */,
 				9E54A9FC29D5DC9800FE080C /* CategoryButtonView.swift in Sources */,
 				9EB749FA29D5C43200610D97 /* Category.swift in Sources */,
+				9E0434AB29E28097009A2161 /* SortBy.swift in Sources */,
 				9E524DFB29D1D14C00FD7B98 /* TabShape.swift in Sources */,
 				9E7A794929DA8D7500A51856 /* SearchInfoBoxView.swift in Sources */,
 				9E54AA0629D706F500FE080C /* SearchLazyGridView.swift in Sources */,
