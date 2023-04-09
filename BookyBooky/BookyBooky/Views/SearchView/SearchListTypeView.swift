@@ -47,8 +47,8 @@ extension SearchListTypeView {
                     selectedAnimation: $selectedAnimation,
                     selectedNamespace: namespace
                 )
-                .padding(.horizontal, 8)
                 .id(type.rawValue)
+                .padding(.horizontal, 8)
             }
         }
         .padding(.leading, 8)
