@@ -19,8 +19,7 @@ struct HomeHeaderView: View {
         HStack {
             Spacer()
             Text("홈")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .navigationTitleStyle()
             Spacer()
         }
         .overlay {

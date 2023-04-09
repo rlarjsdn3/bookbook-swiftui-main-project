@@ -29,4 +29,8 @@ extension View {
     func navigationBarItemStyle() -> some View {
         modifier(NavigationBarItemStyle())
     }
+    
+    func navigationTitleStyle() -> some View {
+        modifier(NavigationTitleStyle())
+    }
 }

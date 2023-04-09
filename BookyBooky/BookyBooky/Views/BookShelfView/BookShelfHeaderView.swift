@@ -15,8 +15,7 @@ struct BookShelfHeaderView: View {
             Spacer()
             
             Text("책장")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .navigationTitleStyle()
                 .opacity(scrollYOffset > 30.0 ? 1 : 0)
             
             Spacer()

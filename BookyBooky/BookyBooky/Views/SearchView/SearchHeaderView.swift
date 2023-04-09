@@ -19,7 +19,7 @@ struct SearchHeaderView: View {
         HStack {
             Spacer()
             
-            searchLabel
+            title
             
             Spacer()
         }
@@ -40,10 +40,9 @@ struct SearchHeaderView: View {
 // MARK: - EXTENSIONS
 
 extension SearchHeaderView {
-    var searchLabel: some View {
+    var title: some View {
         Text("검색")
-            .font(.title2)
-            .fontWeight(.semibold)
+            .navigationTitleStyle()
     }
     
     var searchImage: some View {
