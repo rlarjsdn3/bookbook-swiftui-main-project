@@ -80,7 +80,7 @@ struct BookShelfScrollView: View {
                 } header: {
                     HStack {
                         Text("찜한 도서")
-                            .font(.title2)
+                            .font(.headline)
                             .fontWeight(.bold)
                         Spacer()
                         
@@ -92,8 +92,9 @@ struct BookShelfScrollView: View {
                         .disabled(favoriteBooks.isEmpty)
 
                     }
-                    .padding(.vertical, 12)
+                    .padding(.vertical, 10)
                     .padding(.horizontal)
+                    .padding(.bottom, 5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(.white)
                     .overlay(alignment: .bottom) {
@@ -115,13 +116,14 @@ struct BookShelfScrollView: View {
                 } header: {
                     HStack {
                         Text("읽은 도서")
-                            .font(.title2)
+                            .font(.headline)
                             .fontWeight(.bold)
                         
                         Spacer()
                     }
-                    .padding(.vertical, 12)
+                    .padding(.vertical, 10)
                     .padding(.horizontal)
+                    .padding(.bottom, 5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(.white)
                     .overlay(alignment: .bottom) {
