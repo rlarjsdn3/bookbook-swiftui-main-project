@@ -26,15 +26,13 @@ struct BookShelfHeaderView: View {
                 // do something...
             } label: {
                 Image(systemName: "bookmark.fill")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.black)
-                    .padding(25)
+                    .navigationBarItemStyle()
             }
 
         }
-        .padding(.top)
-        .padding(.bottom, 9)
+        .padding(.vertical)
+//        .padding(.top)
+//        .padding(.bottom, 9)
     }
 }
 

@@ -26,8 +26,7 @@ struct ListTypeButtonView: View {
             typeLabel
         }
         .padding(.vertical, 10)
-        .padding(.horizontal, 5)
-        .padding(.bottom, 5)
+        .padding([.horizontal, .bottom], 5)
         .overlay(alignment: .bottom) {
             if selectedAnimation == type {
                 underline

@@ -17,39 +17,44 @@ struct HomeHeaderView: View {
     
     var body: some View {
         HStack {
-            Menu {
-                Button {
-                    // do somethings...
-                } label: {
-                    Label("직접 추가", systemImage: "pencil.line")
-                }
-                
-                Button {
-                    showSearchSheetView = true
-                } label: {
-                    Label("검색 추가", systemImage: "magnifyingglass")
-                }
-            } label: {
-                searchImage
-                    .padding(5)
-            }
-            
             Spacer()
-            
-            // 추후 프로필 이미지 기능 구현 시 코드 수정 예정
-            Button {
+            Text("홈")
+                .font(.title2)
+                .fontWeight(.semibold)
+            Spacer()
+        }
+        .overlay {
+            HStack {
+                Menu {
+                    Button {
+                        // do somethings...
+                    } label: {
+                        Label("직접 추가", systemImage: "pencil.line")
+                    }
+                    
+                    Button {
+                        showSearchSheetView = true
+                    } label: {
+                        Label("검색 추가", systemImage: "magnifyingglass")
+                    }
+                } label: {
+                    searchImage
+                }
                 
-            } label: {
-                profileImage
-                    .padding(5)
+                Spacer()
+                
+                // 추후 프로필 이미지 기능 구현 시 코드 수정 예정
+                Button {
+                    
+                } label: {
+                    profileImage
+                }
             }
-
         }
         .sheet(isPresented: $showSearchSheetView) {
             SearchSheetView()
         }
-        .foregroundColor(.black)
-        .padding()
+        .padding(.vertical)
     }
 }
 
@@ -58,14 +63,12 @@ struct HomeHeaderView: View {
 extension HomeHeaderView {
     var searchImage: some View {
         Image(systemName: "plus")
-            .font(.title2)
-            .fontWeight(.semibold)
+            .navigationBarItemStyle()
     }
     
     var profileImage: some View {
         Image(systemName: "person.crop.circle")
-            .font(.title2)
-            .fontWeight(.semibold)
+            .navigationBarItemStyle()
     }
 }
 

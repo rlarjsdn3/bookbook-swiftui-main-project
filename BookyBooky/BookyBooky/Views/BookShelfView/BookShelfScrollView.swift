@@ -94,9 +94,9 @@ struct BookShelfScrollView: View {
                         .disabled(favoriteBooks.isEmpty)
 
                     }
-                    .padding(.vertical, 10)
+                    .padding(.vertical, 6)
+                    .padding([.horizontal, .bottom], 5)
                     .padding(.horizontal)
-                    .padding(.bottom, 5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(.white)
                     .overlay(alignment: .bottom) {
@@ -123,9 +123,9 @@ struct BookShelfScrollView: View {
                         
                         Spacer()
                     }
-                    .padding(.vertical, 10)
+                    .padding(.vertical, 6)
+                    .padding([.horizontal, .bottom], 5)
                     .padding(.horizontal)
-                    .padding(.bottom, 5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(.white)
                     .overlay(alignment: .bottom) {
