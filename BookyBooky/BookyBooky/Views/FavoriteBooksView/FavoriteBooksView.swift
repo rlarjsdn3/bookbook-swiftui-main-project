@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 import RealmSwift
 
 struct FavoriteBooksView: View {
@@ -15,14 +16,18 @@ struct FavoriteBooksView: View {
         GridItem(.flexible())
     ]
     
-    @State private var selectedSort: SortBy = .latestOrder
+    @State private var selectedSort = SortBy.latestOrder
+    @State private var searchQuery = ""
+    @State private var query = ""
     
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @Environment(\.dismiss) var dismiss
     
     @FocusState var focusedField: Bool
-    @State private var searchQuery = ""
+    
+    @State var previousFavoriteBooks: [FavoriteBook] = []
+    @State var isPresentingShowAll = false
     
     var sortedFavoritesBooks: [FavoriteBook] {
         switch selectedSort {
@@ -35,6 +40,17 @@ struct FavoriteBooksView: View {
         // 판매 포인트 내림차순으로 정렬
         case .sellingPointOrder:
             return favoriteBooks.sorted { $0.salesPoint.toInteger > $1.salesPoint.toInteger }
+        }
+    }
+    
+    var filteredFavroriteBooks: [FavoriteBook] {
+        if !searchQuery.isEmpty {
+            let filteredFavoriteBooks = sortedFavoritesBooks.filter {
+                $0.title.contains(searchQuery) || $0.author.contains(searchQuery)
+            }
+            return filteredFavoriteBooks
+        } else {
+            return sortedFavoritesBooks
         }
     }
     
@@ -86,14 +102,37 @@ struct FavoriteBooksView: View {
             }
             .padding()
 
-            ScrollView {
-                LazyVGrid(columns: coulmns) {
-                    ForEach(sortedFavoritesBooks) { favoriteBook in
-                        FavoriteBookCellView(favoriteBook: favoriteBook)
+            if !filteredFavroriteBooks.isEmpty {
+                ScrollView {
+                    LazyVGrid(columns: coulmns) {
+                        ForEach(filteredFavroriteBooks) { favoriteBook in
+                            FavoriteBookCellView(favoriteBook: favoriteBook)
+                        }
                     }
                 }
+                .padding(.horizontal, 10)
+            } else {
+                noResultLabel
             }
-            .padding(.horizontal, 10)
+        }
+        .overlay(alignment: .bottom) {
+                Button {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                    searchQuery.removeAll()
+                    query.removeAll()
+                        isPresentingShowAll = false
+                    }
+                } label: {
+                    Text("모두 보기")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.black)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 25)
+                        .background(.gray.opacity(0.2))
+                        .cornerRadius(25)
+                }
+                .offset(y: isPresentingShowAll ? -20 : 100)
         }
         .presentationCornerRadius(30)
     }
@@ -121,19 +160,30 @@ extension FavoriteBooksView {
     }
     
     var searchTextField: some View {
-        TextField("제목 / 저자 검색", text: $searchQuery)
+        TextField("제목 / 저자 검색", text: $query)
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
-                
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                    searchQuery = query
+                    if !searchQuery.isEmpty {
+                        isPresentingShowAll = true
+                    } else {
+                        isPresentingShowAll = false
+                    }
+                }
             }
             .focused($focusedField)
     }
     
     var xmarkButton: some View {
         Button {
-            searchQuery.removeAll()
-            focusedField = true
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                searchQuery.removeAll()
+                query.removeAll()
+                focusedField = true
+                isPresentingShowAll = false
+            }
         } label: {
             xmarkImage
         }
@@ -151,6 +201,23 @@ extension FavoriteBooksView {
             Text("검색")
         }
         .padding(.horizontal)
+    }
+    
+    var noResultLabel: some View {
+        VStack {
+            VStack {
+                Text("결과 없음")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .frame(maxHeight: .infinity)
+                
+                Text("새로운 검색을 시도하십시오.")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            }
+            .frame(height: 50)
+        }
+        .frame(maxHeight: .infinity)
     }
 }
 

@@ -128,7 +128,6 @@ extension SearchSheetScrollView {
             .frame(height: 50)
         }
         .frame(maxHeight: .infinity)
-        
     }
 }
 
