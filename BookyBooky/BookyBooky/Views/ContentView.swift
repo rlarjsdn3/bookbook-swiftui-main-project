@@ -27,6 +27,8 @@ struct ContentView: View {
             
             RoundedTabView(selected: $tabSelected)
         }
+        // 키보드가 나타나더라도 탭 뷰도 함께 올라가지 않도록 합니다.
+        .ignoresSafeArea(.keyboard)
     }
 }
 
