@@ -150,7 +150,7 @@ struct BookShelfScrollView: View {
                 }
                 .frame(width: 0, height: 0)
             }
-            .fullScreenCover(isPresented: $isPresentingFavoriteBooksView) {
+            .sheet(isPresented: $isPresentingFavoriteBooksView) {
                 FavoriteBooksView()
             }
         }
