@@ -10,6 +10,7 @@
 		9E04349E29E16370009A2161 /* BookShelfTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04349D29E16370009A2161 /* BookShelfTabItem.swift */; };
 		9E0434A029E164CA009A2161 /* BookShelfScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */; };
 		9E0434A629E19C48009A2161 /* FavoriteBookCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */; };
+		9E0434A929E24BA5009A2161 /* FavoriteBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */; };
 		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
 		9E06070E29DD516D000D542D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070D29DD516D000D542D /* RealmManager.swift */; };
 		9E06071029DEE89F000D542D /* SearchSheetViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */; };
@@ -67,6 +68,7 @@
 		9E04349D29E16370009A2161 /* BookShelfTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfTabItem.swift; sourceTree = "<group>"; };
 		9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfScrollView.swift; sourceTree = "<group>"; };
 		9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBookCellView.swift; sourceTree = "<group>"; };
+		9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBooksView.swift; sourceTree = "<group>"; };
 		9E06070D29DD516D000D542D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		9E06070F29DEE89F000D542D /* SearchSheetViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetViewType.swift; sourceTree = "<group>"; };
 		9E06071329DF9847000D542D /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 				9E0434A529E19C48009A2161 /* FavoriteBookCellView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		9E0434A729E24B90009A2161 /* FavoriteBooksView */ = {
+			isa = PBXGroup;
+			children = (
+				9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */,
+			);
+			path = FavoriteBooksView;
 			sourceTree = "<group>";
 		};
 		9E06070C29DD5160000D542D /* RealmManager */ = {
@@ -296,6 +306,7 @@
 				9E54A9FD29D66BD100FE080C /* SearchSheetView */,
 				9E7A794129DA5B7C00A51856 /* SearchInfoView */,
 				9E06071529DFDC05000D542D /* BookShelfView */,
+				9E0434A729E24B90009A2161 /* FavoriteBooksView */,
 				9ECA326629D11BB4004D6D5B /* RoundedTabView */,
 			);
 			path = Views;
@@ -459,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E0434A929E24BA5009A2161 /* FavoriteBooksView.swift in Sources */,
 				9E06071729DFDC1D000D542D /* BookShelfView.swift in Sources */,
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
 				9E7A795029DAABA000A51856 /* SearchInfoButtonsView.swift in Sources */,
