@@ -62,6 +62,7 @@ struct FavoriteBookCellView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
+                    .frame(width: COVER_WIDTH)
                     .redacted(reason: isLoading ? .placeholder : [])
                     .shimmering(active: isLoading)
             }
@@ -84,7 +85,7 @@ extension FavoriteBookCellView {
                 width: COVER_WIDTH,
                 height: COVER_HEIGHT
             )
-//            .shimmering(active: isLoading)
+            .shimmering(active: isLoading)
     }
 }
 
