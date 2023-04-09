@@ -12,9 +12,7 @@ struct SearchInfoButtonsView: View {
     // MARK: - PROPERTIES
     
     let bookInfo: BookInfo.Item
-    @Binding var isbn13: String
     @Binding var isLoading: Bool
-    let viewType: SearchSheetViewType
     
     @Environment(\.dismiss) var dismiss
     
@@ -50,16 +48,7 @@ extension SearchInfoButtonsView {
     
     var backButton: some View {
         Button {
-            switch viewType {
-            case .search(_):
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                    isbn13 = ""
-                }
-            case .favorite(_):
-                dismiss()
-            }
-            
-            
+            dismiss()
         } label: {
             backLabel
         }
@@ -103,9 +92,7 @@ struct SearchInfoButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         SearchInfoButtonsView(
             bookInfo: BookInfo.Item.preview[0],
-            isbn13: .constant("9788994492049"),
-            isLoading: .constant(false),
-            viewType: .search(isbn13: "9788994492049")
+            isLoading: .constant(false)
         )
     }
 }

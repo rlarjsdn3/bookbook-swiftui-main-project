@@ -23,15 +23,15 @@ struct SearchHeaderView: View {
             
             Spacer()
         }
+        .fullScreenCover(isPresented: $showSearchSheetView) {
+            SearchSheetView()
+        }
         .overlay(alignment: .trailing) {
             Button {
                 showSearchSheetView = true
             } label: {
                 searchImage
             }
-        }
-        .sheet(isPresented: $showSearchSheetView) {
-            SearchSheetView(viewType: .search(isbn13: ""))
         }
         .padding(.vertical)
     }

@@ -18,9 +18,7 @@ struct SearchInfoCoverView: View {
     // MARK: - PROERTIES
     
     var bookInfo: BookInfo.Item
-    @Binding var isbn13: String
     @Binding var isLoading: Bool
-    let viewType: SearchSheetViewType
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -31,13 +29,6 @@ struct SearchInfoCoverView: View {
     var body: some View {
         ZStack {
             backgroundRectangle
-            
-            switch viewType {
-            case .search(_):
-                backButton
-            case .favorite(_):
-                EmptyView()
-            }
             
             asyncImage
         }
@@ -52,32 +43,6 @@ extension SearchInfoCoverView {
         Rectangle()
             .fill(bookInfo.categoryName.refinedCategory.accentColor.gradient)
             .ignoresSafeArea()
-    }
-    
-    var backButton: some View {
-        VStack {
-            HStack {
-                Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                        isbn13 = ""
-                    }
-                } label: {
-                    chvronLeft
-                }
-                
-                Spacer()
-            }
-            
-            Spacer()
-        }
-        .padding()
-    }
-    
-    var chvronLeft: some View {
-        Image(systemName: "chevron.left")
-            .font(.title3)
-            .fontWeight(.semibold)
-            .foregroundColor(bookInfo.categoryName.refinedCategory.foregroundColor)
     }
     
     var asyncImage: some View {
@@ -123,9 +88,7 @@ struct SearchInfoCoverView_Previews: PreviewProvider {
         GeometryReader { proxy in
             SearchInfoCoverView(
                 bookInfo: BookInfo.Item.preview[0],
-                isbn13: .constant("9788994492049"),
-                isLoading: .constant(false),
-                viewType: .search(isbn13: "9788994492049")
+                isLoading: .constant(false)
             )
             .environmentObject(AladinAPIManager())
         }

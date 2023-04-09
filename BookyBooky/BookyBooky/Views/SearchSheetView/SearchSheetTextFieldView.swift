@@ -10,15 +10,18 @@ import AlertToast
 
 struct SearchSheetTextFieldView: View {
     
+    
+    
     // MARK: - PROPERTIES
     
     @Binding var searchQuery: String            // 검색어를 저장하는 변수
     @Binding var startIndex: Int                // 검색 결과 시작페이지를 저장하는 변수, 새로운 검색을 시도하는지 안하는지 판별하는 변수
-    @Binding var bookDetailsISBN13: String        // 검색 리스트에서 선택한 도서의 ISBN13값을 저장하는 변수, 현재 뷰(검색/상세)의 위치를 파악하는 변수
     @Binding var selectedCategory: Category     // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
     @Binding var categoryAnimation: Category    // 카테고리 애니메이션 효과를 위한 변수
     
     // MARK: - WRAPPER PROPERTIES
+    
+    @Environment(\.dismiss) var dismiss
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
@@ -34,13 +37,12 @@ struct SearchSheetTextFieldView: View {
         }
         // 검색 시트가 나타난 후, 0.05초 뒤에 키보드를 보이게 합니다.
         .onAppear {
-            if bookDetailsISBN13.isEmpty {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                     focusedField = true
                 }
-            }
         }
-        .padding(.top)
+        .padding([.leading, .top, .trailing])
+        .padding(.bottom, 5)
     }
 }
 
@@ -60,7 +62,6 @@ extension SearchSheetTextFieldView {
         .padding(.horizontal, 10)
         .background(Color("Background"))
         .cornerRadius(15)
-        .padding(.leading)
     }
     
     var searchImage: some View {
@@ -94,12 +95,15 @@ extension SearchSheetTextFieldView {
     
     var searchButton: some View {
         Button {
-            requestBookSearch()
-            hideKeyboard()
+            dismiss()
         } label: {
-            Text("검색")
+            Image(systemName: "xmark")
+                .font(.title2)
+                .foregroundColor(.primary)
+                .frame(width: 45, height: 45)
+                .background(Color("Background"))
+                .cornerRadius(15)
         }
-        .padding(.horizontal)
     }
 }
 
@@ -129,7 +133,6 @@ struct SearchSheetTextFieldView_Previews: PreviewProvider {
         SearchSheetTextFieldView(
             searchQuery: .constant(""),
             startIndex: .constant(0),
-            bookDetailsISBN13: .constant(""),
             selectedCategory: .constant(.all),
             categoryAnimation: .constant(.all)
         )

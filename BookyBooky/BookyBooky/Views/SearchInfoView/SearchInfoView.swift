@@ -12,8 +12,7 @@ struct SearchInfoView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var isbn13: String
-    let viewType: SearchSheetViewType
+    let isbn13: String
     
     // MARK: - WRAPPER PROPERTIES]
     
@@ -48,6 +47,7 @@ struct SearchInfoView: View {
         .onDisappear {
             aladinAPIManager.BookInfoItem.removeAll()
         }
+        .presentationCornerRadius(30)
     }
 }
 
@@ -58,9 +58,7 @@ extension SearchInfoView {
         VStack {
             SearchInfoCoverView(
                 bookInfo: item,
-                isbn13: $isbn13,
-                isLoading: $isLoading,
-                viewType: viewType
+                isLoading: $isLoading
             )
             
             SearchInfoTitleView(
@@ -85,9 +83,7 @@ extension SearchInfoView {
             
             SearchInfoButtonsView(
                 bookInfo: item,
-                isbn13: $isbn13,
-                isLoading: $isLoading,
-                viewType: viewType
+                isLoading: $isLoading
             )
         }
     }
@@ -97,7 +93,7 @@ extension SearchInfoView {
 
 struct SearchDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchInfoView(isbn13: .constant("9788994492049"), viewType: .search(isbn13: "9788994492049"))
+        SearchInfoView(isbn13: "9788994492049")
             .environmentObject(AladinAPIManager())
     }
 }

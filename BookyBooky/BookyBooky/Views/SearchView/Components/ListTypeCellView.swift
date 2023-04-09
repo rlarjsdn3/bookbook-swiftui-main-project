@@ -69,7 +69,7 @@ struct ListTypeCellView: View {
             isPresentingBookInfoView = true
         }
         .sheet(isPresented: $isPresentingBookInfoView) {
-            SearchSheetView(viewType: .search(isbn13: bookItem.isbn13))
+            SearchInfoView(isbn13: bookItem.isbn13)
         }
     }
     

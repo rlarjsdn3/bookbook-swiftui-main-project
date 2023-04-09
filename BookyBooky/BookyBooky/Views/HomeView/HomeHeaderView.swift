@@ -46,7 +46,7 @@ struct HomeHeaderView: View {
 
         }
         .sheet(isPresented: $showSearchSheetView) {
-            SearchSheetView(viewType: .search(isbn13: ""))
+            SearchSheetView()
         }
         .foregroundColor(.black)
         .padding()

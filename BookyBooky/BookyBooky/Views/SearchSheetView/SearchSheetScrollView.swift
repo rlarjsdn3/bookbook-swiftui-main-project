@@ -9,12 +9,13 @@ import SwiftUI
 
 struct SearchSheetScrollView: View {
     
+    @State private var isPresentingSearchInfoView = false
+    
     // MARK: - PROPERTIES
     
     @Binding var selectedCategory: Category
     @Binding var searchQuery: String
     @Binding var startIndex: Int
-    @Binding var bookDetailsISBN13: String
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -82,11 +83,6 @@ extension SearchSheetScrollView {
         LazyVStack {
             ForEach(filteredSearchItems, id: \.self) { item in
                 SearchSheetCellView(bookItem: item)
-                    .onTapGesture {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                            bookDetailsISBN13 = item.isbn13
-                        }
-                    }
             }
             .id("Scroll_To_Top")
         }
@@ -143,8 +139,7 @@ struct SearchSheetScrollView_Previews: PreviewProvider {
         SearchSheetScrollView(
             selectedCategory: .constant(.all),
             searchQuery: .constant(""),
-            startIndex: .constant(1),
-            bookDetailsISBN13: .constant("")
+            startIndex: .constant(1)
         )
         .environmentObject(AladinAPIManager())
     }

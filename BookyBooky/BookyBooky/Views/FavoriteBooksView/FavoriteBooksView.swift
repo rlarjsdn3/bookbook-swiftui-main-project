@@ -34,7 +34,6 @@ struct FavoriteBooksView: View {
                         .frame(width: 45, height: 45)
                         .background(Color("Background"))
                         .cornerRadius(15)
-                        .padding(.leading, 10)
                 }
                 
                 textFieldArea
@@ -48,12 +47,10 @@ struct FavoriteBooksView: View {
                         .frame(width: 45, height: 45)
                         .background(Color("Background"))
                         .cornerRadius(15)
-                        .padding(.trailing, 10)
                 }
             }
-            .padding(.top)
-            .padding(.vertical, 5)
-            
+            .padding()
+
             ScrollView {
                 LazyVGrid(columns: coulmns) {
                     ForEach(favoriteBooks) { favoriteBook in

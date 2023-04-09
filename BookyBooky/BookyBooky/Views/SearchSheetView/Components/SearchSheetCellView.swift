@@ -26,6 +26,7 @@ struct SearchSheetCellView: View {
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @State private var isLoading = true
+    @State private var isPresentingSearchInfoView = false
     
     // MARK: - BODY
     
@@ -38,6 +39,12 @@ struct SearchSheetCellView: View {
             }
         }
         .frame(height: COVER_HEIGHT)
+        .onTapGesture {
+            isPresentingSearchInfoView = true
+        }
+        .sheet(isPresented: $isPresentingSearchInfoView) {
+            SearchInfoView(isbn13: bookItem.isbn13)
+        }
         .padding(.top, 18)
     }
     

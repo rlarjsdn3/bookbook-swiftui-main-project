@@ -65,7 +65,7 @@ struct FavoriteBookCellView: View {
                 showFavoriteBookInfo = true
             }
             .sheet(isPresented: $showFavoriteBookInfo) {
-                SearchSheetView(viewType: .favorite(isbn13: favoriteBook.isbn13))
+                SearchInfoView(isbn13: favoriteBook.isbn13)
             }
         }
     }
