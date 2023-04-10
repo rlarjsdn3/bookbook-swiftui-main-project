@@ -62,12 +62,6 @@ struct FavoriteBooksView: View {
     }
 }
 
-// MARK: - EXTENSIONS
-
-extension FavoriteBooksView {
-    
-}
-
 // MARK: - PREVIEWS
 
 struct FavoriteBooksView_Previews: PreviewProvider {
