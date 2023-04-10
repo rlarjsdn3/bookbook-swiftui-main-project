@@ -12,6 +12,7 @@ struct FavoriteBooksTextFieldView: View {
     // MARK: - PROPERTIES
     
     @Binding var selectedSort: BookSort
+    @Binding var searchWord: String
     @Binding var searchQuery: String
     @Binding var isPresentingShowAll: Bool
     let scrollProxy: ScrollViewProxy
@@ -19,8 +20,6 @@ struct FavoriteBooksTextFieldView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    
-    @State private var searchWord = ""
     
     @FocusState var focusedField: Bool
     
@@ -188,6 +187,7 @@ struct FavoriteBooksTextFieldView_Previews: PreviewProvider {
         ScrollViewReader { scrollProxy in
             FavoriteBooksTextFieldView(
                 selectedSort: .constant(.latestOrder),
+                searchWord: .constant(""),
                 searchQuery: .constant(""),
                 isPresentingShowAll: .constant(false),
                 scrollProxy: scrollProxy

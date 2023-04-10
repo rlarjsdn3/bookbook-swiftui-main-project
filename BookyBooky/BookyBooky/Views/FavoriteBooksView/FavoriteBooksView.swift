@@ -17,6 +17,7 @@ struct FavoriteBooksView: View {
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @State private var selectedSort = BookSort.latestOrder
+    @State private var searchWord = ""
     @State private var searchQuery = ""
     @State var isPresentingShowAll = false
     
@@ -29,6 +30,7 @@ struct FavoriteBooksView: View {
             VStack {
                 FavoriteBooksTextFieldView(
                     selectedSort: $selectedSort,
+                    searchWord: $searchWord,
                     searchQuery: $searchQuery,
                     isPresentingShowAll: $isPresentingShowAll,
                     scrollProxy: scrollProxy
@@ -42,6 +44,7 @@ struct FavoriteBooksView: View {
             .overlay(alignment: .bottom) {
                     Button {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
+                            searchWord.removeAll()
                             searchQuery.removeAll()
                             isPresentingShowAll = false
                         }
