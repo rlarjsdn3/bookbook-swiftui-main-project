@@ -11,23 +11,26 @@ import RealmSwift
 
 struct FavoriteBooksView: View {
     
+    // MARK: - CONSTANT PROPERTIES
+    
     let coulmns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
     
-    @State private var selectedSort = SortBy.latestOrder
-    @State private var searchQuery = ""
-    @State private var query = ""
+    // MARK: - WRAPPER PROPERTIES
     
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @Environment(\.dismiss) var dismiss
     
+    @State private var selectedSort = SortBy.latestOrder
+    @State private var searchQuery = ""
+    @State var isPresentingShowAll = false
+    
     @FocusState var focusedField: Bool
     
-    @State var previousFavoriteBooks: [FavoriteBook] = []
-    @State var isPresentingShowAll = false
+    // MARK: - COMPUTED PROPERTIES
     
     var sortedFavoritesBooks: [FavoriteBook] {
         switch selectedSort {
@@ -54,146 +57,58 @@ struct FavoriteBooksView: View {
         }
     }
     
+    // MARK: - BODY
+    
     var body: some View {
-        VStack {
-            HStack {
-                Menu {
-                    Section {
-                        ForEach(SortBy.allCases, id: \.self) { sort in
-                            Button {
-                                selectedSort = sort
-                            } label: {
-                                HStack {
-                                    Text(sort.rawValue)
-                                    
-                                    if selectedSort == sort {
-                                        Image(systemName: "checkmark")
-                                            .font(.title3)
-                                    }
-                                }
+        ScrollViewReader { scrollProxy in
+            VStack {
+                FavoriteBooksTextFieldView(
+                    selectedSort: $selectedSort,
+                    query: $searchQuery,
+                    isPresentingShowAll: $isPresentingShowAll,
+                    scrollProxy: scrollProxy
+                )
+
+                if !filteredFavroriteBooks.isEmpty {
+                    ScrollView {
+                        LazyVGrid(columns: coulmns) {
+                            ForEach(filteredFavroriteBooks) { favoriteBook in
+                                FavoriteBookCellView(favoriteBook: favoriteBook)
                             }
-                            
                         }
-                    } header: {
-                        Text("도서 정렬")
+                        .id("Scroll_To_Top")
+                        .padding(.horizontal, 10)
                     }
-
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
-                        .font(.title2)
-                        .foregroundColor(.primary)
-                        .frame(width: 45, height: 45)
-                        .background(Color("Background"))
-                        .cornerRadius(15)
-                }
-                
-                textFieldArea
-                
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.title2)
-                        .foregroundColor(.primary)
-                        .frame(width: 45, height: 45)
-                        .background(Color("Background"))
-                        .cornerRadius(15)
+                } else {
+                    noResultLabel
                 }
             }
-            .padding()
-
-            if !filteredFavroriteBooks.isEmpty {
-                ScrollView {
-                    LazyVGrid(columns: coulmns) {
-                        ForEach(filteredFavroriteBooks) { favoriteBook in
-                            FavoriteBookCellView(favoriteBook: favoriteBook)
+            .overlay(alignment: .bottom) {
+                    Button {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
+                            searchQuery.removeAll()
+                            isPresentingShowAll = false
                         }
+                    } label: {
+                        Text("모두 보기")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 25)
+                            .background(.gray.opacity(0.2))
+                            .cornerRadius(25)
                     }
-                    .padding(.horizontal, 10)
-                }
-            } else {
-                noResultLabel
+                    .offset(y: isPresentingShowAll ? -20 : 100)
             }
+            .presentationCornerRadius(30)
         }
-        .overlay(alignment: .bottom) {
-                Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                    searchQuery.removeAll()
-                    query.removeAll()
-                        isPresentingShowAll = false
-                    }
-                } label: {
-                    Text("모두 보기")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.black)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 25)
-                        .background(.gray.opacity(0.2))
-                        .cornerRadius(25)
-                }
-                .offset(y: isPresentingShowAll ? -20 : 100)
-        }
-        .presentationCornerRadius(30)
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension FavoriteBooksView {
-    var textFieldArea: some View {
-        HStack {
-            searchImage
-            
-            searchTextField
-            
-            if !searchQuery.isEmpty {
-                xmarkButton
-            }
-        }
-        .padding(.horizontal, 10)
-        .background(Color("Background"))
-        .cornerRadius(15)
-    }
-    
-    var searchImage: some View {
-        Image(systemName: "magnifyingglass")
-            .foregroundColor(.gray)
-    }
-    
-    var searchTextField: some View {
-        TextField("제목 / 저자 검색", text: $query)
-            .frame(height: 45)
-            .submitLabel(.search)
-            .onSubmit {
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
-                    searchQuery = query
-                    if !searchQuery.isEmpty {
-                        isPresentingShowAll = true
-                    } else {
-                        isPresentingShowAll = false
-                    }
-                }
-            }
-            .focused($focusedField)
-    }
-    
-    var xmarkButton: some View {
-        Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                searchQuery.removeAll()
-                query.removeAll()
-                focusedField = true
-                isPresentingShowAll = false
-            }
-        } label: {
-            xmarkImage
-        }
-    }
-    
-    var xmarkImage: some View {
-        Image(systemName: "xmark.circle.fill")
-            .foregroundColor(.gray)
-    }
-    
     var searchButton: some View {
         Button {
             hideKeyboard()
@@ -220,6 +135,8 @@ extension FavoriteBooksView {
         .frame(maxHeight: .infinity)
     }
 }
+
+// MARK: - PREVIEWS
 
 struct FavoriteBooksView_Previews: PreviewProvider {
     static var previews: some View {
