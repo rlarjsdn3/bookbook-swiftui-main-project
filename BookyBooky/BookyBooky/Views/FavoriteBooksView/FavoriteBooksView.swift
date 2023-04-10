@@ -10,13 +10,10 @@ import AlertToast
 import RealmSwift
 
 struct FavoriteBooksView: View {
+    
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
-    
-    @Environment(\.dismiss) var dismiss
-    
-    @State private var selectedSort = SortBy.latestOrder
+    @State private var selectedSort = BookSort.latestOrder
     @State private var searchQuery = ""
     @State var isPresentingShowAll = false
     
@@ -29,7 +26,7 @@ struct FavoriteBooksView: View {
             VStack {
                 FavoriteBooksTextFieldView(
                     selectedSort: $selectedSort,
-                    query: $searchQuery,
+                    searchQuery: $searchQuery,
                     isPresentingShowAll: $isPresentingShowAll,
                     scrollProxy: scrollProxy
                 )

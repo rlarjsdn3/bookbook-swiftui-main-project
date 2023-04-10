@@ -8,81 +8,101 @@
 import SwiftUI
 
 struct FavoriteBooksTextFieldView: View {
-    @Environment(\.dismiss) var dismiss
     
-    @Binding var selectedSort: SortBy
-    @Binding var query: String
+    // MARK: - PROPERTIES
+    
+    @Binding var selectedSort: BookSort
+    @Binding var searchQuery: String
     @Binding var isPresentingShowAll: Bool
-    
     let scrollProxy: ScrollViewProxy
     
-    @State private var searchQuery = ""
+    // MARK: - WRAPPER PROPERTIES
+    
+    @Environment(\.dismiss) var dismiss
+    
+    @State private var searchWord = ""
     
     @FocusState var focusedField: Bool
     
+    // MARK: - BODY
+    
     var body: some View {
         HStack {
-            Menu {
-                Section {
-                    ForEach(SortBy.allCases, id: \.self) { sort in
-                        Button {
-                            withAnimation(.spring()) {
-                                scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                                        selectedSort = sort
-                                    }
-                                }
-                            }
-                        } label: {
-                            HStack {
-                                Text(sort.rawValue)
-                                
-                                if selectedSort == sort {
-                                    Image(systemName: "checkmark")
-                                        .font(.title3)
-                                }
-                            }
-                        }
-                        
-                    }
-                } header: {
-                    Text("도서 정렬")
-                }
-            } label: {
-                Image(systemName: "line.3.horizontal.decrease.circle")
-                    .font(.title2)
-                    .foregroundColor(.primary)
-                    .frame(width: 45, height: 45)
-                    .background(Color("Background"))
-                    .cornerRadius(15)
-            }
+            sortMenu
             
-            textFieldArea
+            textField
             
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.title2)
-                    .foregroundColor(.primary)
-                    .frame(width: 45, height: 45)
-                    .background(Color("Background"))
-                    .cornerRadius(15)
-            }
+            dismissButton
         }
         .padding()
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension FavoriteBooksTextFieldView {
-    var textFieldArea: some View {
+    var sortMenu: some View {
+        Menu {
+            Section {
+                sortButtons
+            } header: {
+                Text("도서 정렬")
+            }
+        } label: {
+            line3HorizontalDecreaseCircle
+        }
+    }
+    
+    var sortButtons: some View {
+        ForEach(BookSort.allCases, id: \.self) { sort in
+            Button {
+                // 버튼을 클릭하면
+                withAnimation(.spring()) {
+                    // 곧바로 스크롤을 제일 위로 올리고
+                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
+                    // 0.3초 대기 후, 정렬 애니메이션 수행
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
+                            selectedSort = sort
+                        }
+                    }
+                }
+            } label: {
+                HStack {
+                    Text(sort.rawValue)
+                    
+                    // 현재 선택한 정렬 타입에 체크마크 표시
+                    if selectedSort == sort {
+                        checkmark
+                    }
+                }
+            }
+        }
+    }
+    
+    var line3HorizontalDecreaseCircle: some View {
+        Image(systemName: "line.3.horizontal.decrease.circle")
+            .font(.title2)
+            .foregroundColor(.primary)
+            .frame(width: 45, height: 45)
+            .background(Color("Background"))
+            .cornerRadius(15)
+    }
+    
+    var checkmark: some View {
+        Image(systemName: "checkmark")
+            .font(.title3)
+    }
+}
+
+extension FavoriteBooksTextFieldView {
+    var textField: some View {
         HStack {
-            searchImage
+            magnifyingglass
             
-            searchTextField
+            searchField
             
-            if !query.isEmpty {
+            if !searchWord.isEmpty {
                 xmarkButton
             }
         }
@@ -91,19 +111,19 @@ extension FavoriteBooksTextFieldView {
         .cornerRadius(15)
     }
     
-    var searchImage: some View {
+    var magnifyingglass: some View {
         Image(systemName: "magnifyingglass")
             .foregroundColor(.gray)
     }
     
-    var searchTextField: some View {
-        TextField("제목 / 저자 검색", text: $searchQuery)
+    var searchField: some View {
+        TextField("제목 / 저자 검색", text: $searchWord)
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
                 withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
-                    query = searchQuery
-                    if !searchQuery.isEmpty {
+                    searchQuery = searchWord
+                    if !searchWord.isEmpty {
                         isPresentingShowAll = true
                     } else {
                         isPresentingShowAll = false
@@ -116,28 +136,49 @@ extension FavoriteBooksTextFieldView {
     var xmarkButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
+                searchWord.removeAll()
                 searchQuery.removeAll()
-                query.removeAll()
                 focusedField = true
                 isPresentingShowAll = false
             }
         } label: {
-            xmarkImage
+            xmarkCircleFill
         }
     }
     
-    var xmarkImage: some View {
+    var xmarkCircleFill: some View {
         Image(systemName: "xmark.circle.fill")
             .foregroundColor(.gray)
     }
 }
+
+extension FavoriteBooksTextFieldView {
+    var dismissButton: some View {
+        Button {
+            dismiss()
+        } label: {
+            xmark
+        }
+    }
+    
+    var xmark: some View {
+        Image(systemName: "xmark")
+            .font(.title2)
+            .foregroundColor(.primary)
+            .frame(width: 45, height: 45)
+            .background(Color("Background"))
+            .cornerRadius(15)
+    }
+}
+
+// MARK: - PREVIEW
 
 struct FavoriteBooksTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
             FavoriteBooksTextFieldView(
                 selectedSort: .constant(.latestOrder),
-                query: .constant(""),
+                searchQuery: .constant(""),
                 isPresentingShowAll: .constant(false),
                 scrollProxy: scrollProxy
             )

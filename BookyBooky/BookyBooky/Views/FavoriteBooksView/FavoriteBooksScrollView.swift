@@ -50,8 +50,10 @@ struct FavoriteBooksScrollView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedSort: SortBy
+    @Binding var selectedSort: BookSort
     @Binding var searchQuery: String
+    
+    // MARK: - BODY
     
     var body: some View {
         if !filteredFavroriteBooks.isEmpty {
@@ -69,6 +71,8 @@ struct FavoriteBooksScrollView: View {
         }
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension FavoriteBooksScrollView {
     var noResultLabel: some View {
@@ -88,6 +92,8 @@ extension FavoriteBooksScrollView {
         .frame(maxHeight: .infinity)
     }
 }
+
+// MARK: - PREVIEW
 
 struct FavoriteBooksScrollView_Previews: PreviewProvider {
     static var previews: some View {
