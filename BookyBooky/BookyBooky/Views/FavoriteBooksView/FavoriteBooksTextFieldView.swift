@@ -65,6 +65,7 @@ extension FavoriteBooksTextFieldView {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                             selectedSort = sort
                         }
+                        Haptics.shared.play(.rigid)
                     }
                 }
             } label: {
@@ -121,12 +122,21 @@ extension FavoriteBooksTextFieldView {
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
-                    searchQuery = searchWord
-                    if !searchWord.isEmpty {
-                        isPresentingShowAll = true
-                    } else {
-                        isPresentingShowAll = false
+                // 버튼을 클릭하면
+                withAnimation(.spring()) {
+                    // 곧바로 스크롤을 제일 위로 올리고
+                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
+                    // 0.3초 대기 후, 정렬 애니메이션 수행
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
+                            searchQuery = searchWord
+                            if !searchWord.isEmpty {
+                                isPresentingShowAll = true
+                            } else {
+                                isPresentingShowAll = false
+                            }
+                        }
+                        Haptics.shared.play(.rigid)
                     }
                 }
             }
