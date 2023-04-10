@@ -57,15 +57,7 @@ struct FavoriteBooksScrollView: View {
     
     var body: some View {
         if !filteredFavroriteBooks.isEmpty {
-            ScrollView {
-                LazyVGrid(columns: coulmns) {
-                    ForEach(filteredFavroriteBooks) { favoriteBook in
-                        FavoriteBookCellView(favoriteBook: favoriteBook)
-                    }
-                }
-                .id("Scroll_To_Top")
-                .padding(.horizontal, 10)
-            }
+            scrollFavoriteBooks
         } else {
             noResultLabel
         }
@@ -73,6 +65,20 @@ struct FavoriteBooksScrollView: View {
 }
 
 // MARK: - EXTENSIONS
+
+extension FavoriteBooksScrollView {
+    var scrollFavoriteBooks: some View {
+        ScrollView {
+            LazyVGrid(columns: coulmns) {
+                ForEach(filteredFavroriteBooks) { favoriteBook in
+                    FavoriteBookCellView(favoriteBook: favoriteBook)
+                }
+            }
+            .id("Scroll_To_Top")
+            .padding(.horizontal, 10)
+        }
+    }
+}
 
 extension FavoriteBooksScrollView {
     var noResultLabel: some View {
