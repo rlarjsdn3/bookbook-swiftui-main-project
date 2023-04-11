@@ -181,7 +181,8 @@ extension BookShelfScrollView {
     var scrollFavoriteBooks: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
-                ForEach(favoriteBooks.reversed()) { favoriteBook in
+                // 최근에 추가된 상위 10게 힝목만 보여줌
+                ForEach(favoriteBooks.reversed()[0..<10]) { favoriteBook in
                     FavoriteBookCellView(favoriteBook: favoriteBook)
                   
                 }
