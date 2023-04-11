@@ -17,6 +17,8 @@
 		9E0434B229E3940E009A2161 /* FavoriteBooksTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B129E3940E009A2161 /* FavoriteBooksTextFieldView.swift */; };
 		9E0434B429E39920009A2161 /* FavoriteBooksScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B329E39920009A2161 /* FavoriteBooksScrollView.swift */; };
 		9E0434B629E537BE009A2161 /* CompleteTargetBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B529E537BE009A2161 /* CompleteTargetBook.swift */; };
+		9E0434BA29E53CA0009A2161 /* ReadingRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B929E53CA0009A2161 /* ReadingRecords.swift */; };
+		9E0434BC29E53CD8009A2161 /* CollectSentences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434BB29E53CD8009A2161 /* CollectSentences.swift */; };
 		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
 		9E06070E29DD516D000D542D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070D29DD516D000D542D /* RealmManager.swift */; };
 		9E06071429DF9847000D542D /* FavoriteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06071329DF9847000D542D /* FavoriteBook.swift */; };
@@ -80,6 +82,8 @@
 		9E0434B129E3940E009A2161 /* FavoriteBooksTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBooksTextFieldView.swift; sourceTree = "<group>"; };
 		9E0434B329E39920009A2161 /* FavoriteBooksScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBooksScrollView.swift; sourceTree = "<group>"; };
 		9E0434B529E537BE009A2161 /* CompleteTargetBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteTargetBook.swift; sourceTree = "<group>"; };
+		9E0434B929E53CA0009A2161 /* ReadingRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingRecords.swift; sourceTree = "<group>"; };
+		9E0434BB29E53CD8009A2161 /* CollectSentences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectSentences.swift; sourceTree = "<group>"; };
 		9E06070D29DD516D000D542D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		9E06071329DF9847000D542D /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
 		9E06071629DFDC1D000D542D /* BookShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfView.swift; sourceTree = "<group>"; };
@@ -172,12 +176,33 @@
 			path = Modifier;
 			sourceTree = "<group>";
 		};
-		9E06070C29DD5160000D542D /* RealmManager */ = {
+		9E0434B729E53C5A009A2161 /* AladinAPI */ = {
+			isa = PBXGroup;
+			children = (
+				9E0C0A7029D2866100F1F5F6 /* BookList.swift */,
+				9E0C0A7629D2B5BC00F1F5F6 /* BookInfo.swift */,
+			);
+			path = AladinAPI;
+			sourceTree = "<group>";
+		};
+		9E0434B829E53C66009A2161 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				9E0434B529E537BE009A2161 /* CompleteTargetBook.swift */,
+				9E0434B929E53CA0009A2161 /* ReadingRecords.swift */,
+				9E0434BB29E53CD8009A2161 /* CollectSentences.swift */,
+				9E06071329DF9847000D542D /* FavoriteBook.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		9E06070C29DD5160000D542D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
 				9E06070D29DD516D000D542D /* RealmManager.swift */,
+				9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */,
 			);
-			path = RealmManager;
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		9E06071529DFDC05000D542D /* BookShelfView */ = {
@@ -235,14 +260,6 @@
 				9ED4CB6229D3E20B00CA493D /* Components */,
 			);
 			path = SearchView;
-			sourceTree = "<group>";
-		};
-		9E0C0A6D29D2855200F1F5F6 /* AladinAPIManager */ = {
-			isa = PBXGroup;
-			children = (
-				9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */,
-			);
-			path = AladinAPIManager;
 			sourceTree = "<group>";
 		};
 		9E0C0A7429D28C0600F1F5F6 /* Settings */ = {
@@ -345,10 +362,8 @@
 		9ECA326729D11BC1004D6D5B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9E0C0A7029D2866100F1F5F6 /* BookList.swift */,
-				9E0C0A7629D2B5BC00F1F5F6 /* BookInfo.swift */,
-				9E06071329DF9847000D542D /* FavoriteBook.swift */,
-				9E0434B529E537BE009A2161 /* CompleteTargetBook.swift */,
+				9E0434B829E53C66009A2161 /* Realm */,
+				9E0434B729E53C5A009A2161 /* AladinAPI */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -378,8 +393,7 @@
 				9E0C0A6029D1D85500F1F5F6 /* Extensions */,
 				9E0434AC29E2A374009A2161 /* Modifier */,
 				9E524DF929D1D13700FD7B98 /* Shapes */,
-				9E06070C29DD5160000D542D /* RealmManager */,
-				9E0C0A6D29D2855200F1F5F6 /* AladinAPIManager */,
+				9E06070C29DD5160000D542D /* Managers */,
 				9ECA326729D11BC1004D6D5B /* Models */,
 				9EB749F329D5C26100610D97 /* Enums */,
 				9E0C0A6729D281AF00F1F5F6 /* Helpers */,
@@ -498,7 +512,9 @@
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
 				9E7A795029DAABA000A51856 /* SearchInfoButtonsView.swift in Sources */,
 				9E7A794D29DA998F00A51856 /* SalesPointDescSheetView.swift in Sources */,
+				9E0434BC29E53CD8009A2161 /* CollectSentences.swift in Sources */,
 				9E54AA0E29D7D84100FE080C /* StringExtension.swift in Sources */,
+				9E0434BA29E53CA0009A2161 /* ReadingRecords.swift in Sources */,
 				9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */,
 				9E0434A629E19C48009A2161 /* FavoriteBookCellView.swift in Sources */,
 				9E0C0A7329D28C0300F1F5F6 /* AladinAPI.swift in Sources */,
