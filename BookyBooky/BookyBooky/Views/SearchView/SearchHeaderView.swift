@@ -23,7 +23,7 @@ struct SearchHeaderView: View {
             
             Spacer()
         }
-        .fullScreenCover(isPresented: $showSearchSheetView) {
+        .sheet(isPresented: $showSearchSheetView) {
             SearchSheetView()
         }
         .overlay(alignment: .trailing) {

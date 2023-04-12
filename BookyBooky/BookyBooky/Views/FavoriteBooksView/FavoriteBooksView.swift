@@ -48,6 +48,7 @@ struct FavoriteBooksView: View {
                 .presentationCornerRadius(30)
             }
         }
+        .presentationCornerRadius(30)
     }
 }
 
