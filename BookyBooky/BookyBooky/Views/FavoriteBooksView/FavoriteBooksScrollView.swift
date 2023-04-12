@@ -71,7 +71,7 @@ extension FavoriteBooksScrollView {
         ScrollView {
             LazyVGrid(columns: coulmns) {
                 ForEach(filteredFavroriteBooks) { favoriteBook in
-                    FavoriteBookCellView(favoriteBook: favoriteBook)
+                    FavoriteBookCellView(favoriteBook: favoriteBook, viewType: .navigationStack)
                 }
             }
             .id("Scroll_To_Top")

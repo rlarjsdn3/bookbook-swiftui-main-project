@@ -37,9 +37,11 @@ struct SearchSheetTextFieldView: View {
         }
         // 검색 시트가 나타난 후, 0.05초 뒤에 키보드를 보이게 합니다.
         .onAppear {
+            if aladinAPIManager.bookSearchItems.isEmpty {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                     focusedField = true
                 }
+            }
         }
         .padding([.leading, .top, .trailing])
         .padding(.bottom, 5)

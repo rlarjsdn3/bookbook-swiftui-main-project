@@ -69,6 +69,7 @@
 		9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6629D4046400CA493D /* SearchSheetView.swift */; };
 		9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */; };
 		9EDC2FA829E6867D004E792A /* BookShelfSummaryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FA729E6867D004E792A /* BookShelfSummaryItems.swift */; };
+		9EDC2FAF29E6DDEF004E792A /* FavoriteBookCellViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FAE29E6DDEF004E792A /* FavoriteBookCellViewType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +131,7 @@
 		9ED4CB6629D4046400CA493D /* SearchSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetView.swift; sourceTree = "<group>"; };
 		9EDA9AFE29D4419B00B4F169 /* SearchSheetTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetTextFieldView.swift; sourceTree = "<group>"; };
 		9EDC2FA729E6867D004E792A /* BookShelfSummaryItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSummaryItems.swift; sourceTree = "<group>"; };
+		9EDC2FAE29E6DDEF004E792A /* FavoriteBookCellViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBookCellViewType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,9 +330,10 @@
 			children = (
 				9ECA326A29D12044004D6D5B /* ContentsTabItem.swift */,
 				9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItem.swift */,
+				9EDC2FA729E6867D004E792A /* BookShelfSummaryItems.swift */,
 				9EB749F629D5C3A500610D97 /* Category.swift */,
 				9E0434AA29E28097009A2161 /* BookSort.swift */,
-				9EDC2FA729E6867D004E792A /* BookShelfSummaryItems.swift */,
+				9EDC2FAE29E6DDEF004E792A /* FavoriteBookCellViewType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				9E0C0A7D29D3D0F900F1F5F6 /* BookListTabItem.swift in Sources */,
 				9E7A794729DA854D00A51856 /* SearchInfoTitleView.swift in Sources */,
 				9E0C0A7129D2866100F1F5F6 /* BookList.swift in Sources */,
+				9EDC2FAF29E6DDEF004E792A /* FavoriteBookCellViewType.swift in Sources */,
 				9E0434A029E164CA009A2161 /* BookShelfScrollView.swift in Sources */,
 				9ED4CB6429D3E21C00CA493D /* ListTypeButtonView.swift in Sources */,
 				9E54AA0029D6704900FE080C /* SearchSheetScrollView.swift in Sources */,

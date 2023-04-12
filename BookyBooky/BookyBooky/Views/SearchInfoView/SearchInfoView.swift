@@ -40,6 +40,16 @@ struct SearchInfoView: View {
                 title: "찜하기!"
             )
         }
+        .navigationBarBackButtonHidden(true)
+//        .navigationBarItems(leading:
+//            Button(action: {
+//                
+//            }) {
+//                Image(systemName: "chevron.left")
+//                    .foregroundColor(.blue)
+//                    .imageScale(.large)
+//            }
+//        )
         .onAppear {
             aladinAPIManager.requestBookDetailAPI(isbn13: isbn13)
             hideKeyboard()

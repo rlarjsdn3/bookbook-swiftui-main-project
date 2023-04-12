@@ -26,25 +26,27 @@ struct FavoriteBooksView: View {
     // MARK: - BODY
     
     var body: some View {
-        ScrollViewReader { scrollProxy in
-            VStack {
-                FavoriteBooksTextFieldView(
-                    selectedSort: $selectedSort,
-                    searchWord: $searchWord,
-                    searchQuery: $searchQuery,
-                    isPresentingShowAll: $isPresentingShowAll,
-                    scrollProxy: scrollProxy
-                )
-
-                FavoriteBooksScrollView(
-                    selectedSort: $selectedSort,
-                    searchQuery: $searchQuery
-                )
+        NavigationStack {
+            ScrollViewReader { scrollProxy in
+                VStack {
+                    FavoriteBooksTextFieldView(
+                        selectedSort: $selectedSort,
+                        searchWord: $searchWord,
+                        searchQuery: $searchQuery,
+                        isPresentingShowAll: $isPresentingShowAll,
+                        scrollProxy: scrollProxy
+                    )
+                    
+                    FavoriteBooksScrollView(
+                        selectedSort: $selectedSort,
+                        searchQuery: $searchQuery
+                    )
+                }
+                .overlay(alignment: .bottom) {
+                    seeAllButton
+                }
+                .presentationCornerRadius(30)
             }
-            .overlay(alignment: .bottom) {
-                seeAllButton
-            }
-            .presentationCornerRadius(30)
         }
     }
 }

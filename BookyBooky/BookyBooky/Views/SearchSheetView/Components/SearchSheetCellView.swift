@@ -34,7 +34,7 @@ struct SearchSheetCellView: View {
         GeometryReader { proxy in
             ZStack {
                 leftBookSearchShape(geometryProxy: proxy)
-
+                
                 rightBookSearchShape(geometryProxy: proxy)
             }
         }
@@ -42,8 +42,9 @@ struct SearchSheetCellView: View {
         .onTapGesture {
             isPresentingSearchInfoView = true
         }
-        .sheet(isPresented: $isPresentingSearchInfoView) {
+        .navigationDestination(isPresented: $isPresentingSearchInfoView) {
             SearchInfoView(isbn13: bookItem.isbn13)
+            
         }
         .padding(.top, 18)
     }

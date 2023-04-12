@@ -22,40 +22,42 @@ struct SearchSheetView: View {
     // MARK: - BODY
     
     var body: some View {
-        VStack {
-            SearchSheetTextFieldView(
-                searchQuery: $searchQuery,
-                startIndex: $startIndex,
-                selectedCategory: $selectedCategory,
-                categoryAnimation: $categoryAnimation
-            )
-            
-            SearchSheetCategoryView(
-                startIndex: $startIndex,
-                selectedCategory: $selectedCategory,
-                categoryAnimation: $categoryAnimation
-            )
-            
-            SearchSheetScrollView(
-                selectedCategory: $selectedCategory,
-                searchQuery: $searchQuery,
-                startIndex: $startIndex
-            )
-        }
-        .toast(isPresenting: $aladinAPIManager.showSearchLoading)  {
-            AlertToast(
-                displayMode: .banner(.pop),
-                type: .loading,
-                title: "도서 정보 불러오는 중..."
-            )
-        }
-        .toast(isPresenting: $aladinAPIManager.showSearchError, duration: 3.0)  {
-            AlertToast(
-                displayMode: .banner(.pop),
-                type: .error(.red),
-                title: "도서 정보 불러오기 실패",
-                subTitle: "       잠시 후 다시 시도하십시오."
-            )
+        NavigationStack {
+            VStack {
+                SearchSheetTextFieldView(
+                    searchQuery: $searchQuery,
+                    startIndex: $startIndex,
+                    selectedCategory: $selectedCategory,
+                    categoryAnimation: $categoryAnimation
+                )
+                
+                SearchSheetCategoryView(
+                    startIndex: $startIndex,
+                    selectedCategory: $selectedCategory,
+                    categoryAnimation: $categoryAnimation
+                )
+                
+                SearchSheetScrollView(
+                    selectedCategory: $selectedCategory,
+                    searchQuery: $searchQuery,
+                    startIndex: $startIndex
+                )
+            }
+            .toast(isPresenting: $aladinAPIManager.showSearchLoading)  {
+                AlertToast(
+                    displayMode: .banner(.pop),
+                    type: .loading,
+                    title: "도서 정보 불러오는 중..."
+                )
+            }
+            .toast(isPresenting: $aladinAPIManager.showSearchError, duration: 3.0)  {
+                AlertToast(
+                    displayMode: .banner(.pop),
+                    type: .error(.red),
+                    title: "도서 정보 불러오기 실패",
+                    subTitle: "       잠시 후 다시 시도하십시오."
+                )
+            }
         }
         .onDisappear {
             aladinAPIManager.bookSearchItems.removeAll()

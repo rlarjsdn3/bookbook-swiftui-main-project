@@ -18,11 +18,13 @@ struct FavoriteBookCellView: View {
     // MARK: - PROPERTIES
     
     let favoriteBook: FavoriteBook
+    let viewType: FavoriteBookCellViewType
     
     // MARK: - WRAPPER PROPERTIES
     
     @State private var isLoading = true
-    @State private var showFavoriteBookInfo = false
+    @State private var isPresentingFavoriteBookInfoSheet = false
+    @State private var isPresentingFavoriteBookInfoStack = false
     
     // MARK: - BODY
     
@@ -36,10 +38,19 @@ struct FavoriteBookCellView: View {
                 bookAuthor
             }
             .onTapGesture {
-                showFavoriteBookInfo = true
+                switch viewType {
+                case .sheet:
+                    isPresentingFavoriteBookInfoSheet = true
+                case .navigationStack:
+                    isPresentingFavoriteBookInfoStack = true
+                }
             }
-            .sheet(isPresented: $showFavoriteBookInfo) {
+            .sheet(isPresented: $isPresentingFavoriteBookInfoSheet) {
                 SearchInfoView(isbn13: favoriteBook.isbn13)
+            }
+            .navigationDestination(isPresented: $isPresentingFavoriteBookInfoStack) {
+                SearchInfoView(isbn13: favoriteBook.isbn13)
+                
             }
             .padding(.vertical, 10)
         }
@@ -118,6 +129,6 @@ struct FavoriteBookCellView_Previews: PreviewProvider {
     @ObservedResults(FavoriteBook.self) static var favoriteBooks
     
     static var previews: some View {
-        FavoriteBookCellView(favoriteBook: favoriteBooks[0])
+        FavoriteBookCellView(favoriteBook: favoriteBooks[0], viewType: .sheet)
     }
 }
