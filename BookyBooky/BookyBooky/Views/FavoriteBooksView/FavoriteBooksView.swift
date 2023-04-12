@@ -42,26 +42,38 @@ struct FavoriteBooksView: View {
                 )
             }
             .overlay(alignment: .bottom) {
-                    Button {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            searchWord.removeAll()
-                            searchQuery.removeAll()
-                            isPresentingShowAll = false
-                        }
-                    } label: {
-                        Text("모두 보기")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.black)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 25)
-                            .background(.gray.opacity(0.2))
-                            .cornerRadius(25)
-                    }
-                    .offset(y: isPresentingShowAll ? -20 : 100)
+                seeAllButton
             }
             .presentationCornerRadius(30)
         }
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension FavoriteBooksView {
+    var seeAllButton: some View {
+        Button {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
+                searchWord.removeAll()
+                searchQuery.removeAll()
+                isPresentingShowAll = false
+            }
+        } label: {
+            seeAllLabel
+        }
+        .offset(y: isPresentingShowAll ? -20 : 100)
+    }
+    
+    var seeAllLabel: some View {
+        Text("모두 보기")
+            .font(.title3)
+            .fontWeight(.semibold)
+            .foregroundColor(.black)
+            .padding(.vertical, 10)
+            .padding(.horizontal, 25)
+            .background(.gray.opacity(0.2))
+            .cornerRadius(25)
     }
 }
 

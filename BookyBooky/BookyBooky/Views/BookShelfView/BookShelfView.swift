@@ -9,9 +9,14 @@ import SwiftUI
 import RealmSwift
 
 struct BookShelfView: View {
+    
+    //  MARK: - WRAPPER PROPERTIES
+    
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @State private var scrollYOffset: CGFloat = 0.0
+    
+    // MARK: - BODY
     
     var body: some View {
         VStack {
@@ -21,6 +26,8 @@ struct BookShelfView: View {
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct BookShelfView_Previews: PreviewProvider {
     static var previews: some View {

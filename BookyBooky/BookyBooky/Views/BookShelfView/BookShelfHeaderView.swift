@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct BookShelfHeaderView: View {
+    
+    // MARK: - PROPERTIEs
+    
     @Binding var scrollYOffset: CGFloat
+    
+    // MARK: - BODY
     
     var body: some View {
         HStack {
@@ -24,6 +29,8 @@ struct BookShelfHeaderView: View {
         .padding(.vertical)
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension BookShelfHeaderView {
     var bookShelfTitle: some View {
@@ -41,6 +48,8 @@ extension BookShelfHeaderView {
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct BookShelfHeaderView_Previews: PreviewProvider {
     static var previews: some View {

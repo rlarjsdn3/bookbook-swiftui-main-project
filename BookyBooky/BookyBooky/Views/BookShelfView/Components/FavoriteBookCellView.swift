@@ -9,13 +9,22 @@ import SwiftUI
 import RealmSwift
 
 struct FavoriteBookCellView: View {
+    
+    // MARK: - CONSTANT PROPERTIES
+    
     let COVER_WIDTH: CGFloat = 150
     let COVER_HEIGHT: CGFloat = 200
     
+    // MARK: - PROPERTIES
+    
     let favoriteBook: FavoriteBook
+    
+    // MARK: - WRAPPER PROPERTIES
     
     @State private var isLoading = true
     @State private var showFavoriteBookInfo = false
+    
+    // MARK: - BODY
     
     var body: some View {
         HStack {
@@ -36,6 +45,8 @@ struct FavoriteBookCellView: View {
         }
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension FavoriteBookCellView {
     func asyncImage(_ url: String) -> some View {
@@ -100,6 +111,8 @@ extension FavoriteBookCellView {
             .shimmering(active: isLoading)
     }
 }
+
+// MARK: - PREVIEW
 
 struct FavoriteBookCellView_Previews: PreviewProvider {
     @ObservedResults(FavoriteBook.self) static var favoriteBooks

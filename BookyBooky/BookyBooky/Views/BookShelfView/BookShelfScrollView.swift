@@ -10,20 +10,20 @@ import RealmSwift
 
 struct BookShelfScrollView: View {
     
+    // MARK: - PROPERTIES
+    
+    @Binding var scrollYOffset: CGFloat
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
-    // 열거형으로 리팩토링하기
-    let labelTitle = ["읽은 도서 수", "찜한 도서 수", "수집 문장 수"]
-    let systemImages = ["book", "heart.fill", "bookmark.fill"]
-    let imageColors = [Color.blue, Color.pink, Color.green]
-    
     @State private var isPresentingFavoriteBooksView = false
-    
-    
     @State private var tapISBN13 = ""
     @State private var showFavoriteBookInfo = false
     @State private var startOffset: CGFloat = 0.0
-    @Binding var scrollYOffset: CGFloat
+    
+    // MARK: - BODY
     
     var body: some View {
         ScrollView {
@@ -106,6 +106,8 @@ struct BookShelfScrollView: View {
         return 0.0 // 폰트 추가 사이즈 없음
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension BookShelfScrollView {
     var bookShelfTitle: some View {
@@ -223,6 +225,8 @@ extension BookShelfScrollView {
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct BookShelfScrollView_Previews: PreviewProvider {
     static var previews: some View {
