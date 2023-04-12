@@ -13,9 +13,6 @@ struct FavoriteBooksView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    // 찜하기 삭제 시, 뷰의 애니메이션이 안 끊기게 하기 위해 선언
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
-    
     @State private var selectedSort = BookSort.latestOrder
     @State private var searchWord = ""
     @State private var searchQuery = ""

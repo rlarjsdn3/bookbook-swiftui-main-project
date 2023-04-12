@@ -14,6 +14,8 @@ struct SearchInfoButtonsView: View {
     let bookInfo: BookInfo.Item
     @Binding var isLoading: Bool
     
+    // MARK: - WRAPPER PROPERTIES
+    
     @Environment(\.dismiss) var dismiss
     
     // MARK: - BODY
