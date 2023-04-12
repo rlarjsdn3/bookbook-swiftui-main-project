@@ -20,51 +20,11 @@ struct FavoriteBookCellView: View {
     var body: some View {
         HStack {
             VStack {
-                AsyncImage(
-                    url: URL(string: favoriteBook.cover),
-                    transaction: Transaction(animation: .default)
-                ) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(
-                                width: COVER_WIDTH,
-                                height: COVER_HEIGHT
-                            )
-                            .cornerRadius(10)
-                            .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
-                            .onAppear {
-                                isLoading = false
-                            }
-                    case .failure(_):
-                        loadingCover
-                    case .empty:
-                        loadingCover
-                    @unknown default:
-                        loadingCover
-                    }
-                }
+                asyncImage(favoriteBook.title)
                 
-                Text(favoriteBook.title)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                    .frame(width: COVER_WIDTH, height: 25)
-                    .padding(.horizontal)
-                    .padding(.bottom, -5)
-                    .redacted(reason: isLoading ? .placeholder : [])
-                    .shimmering(active: isLoading)
+                bookTitle
                 
-                Text(favoriteBook.author)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
-                    .frame(width: COVER_WIDTH)
-                    .redacted(reason: isLoading ? .placeholder : [])
-                    .shimmering(active: isLoading)
+                bookAuthor
             }
             .onTapGesture {
                 showFavoriteBookInfo = true
@@ -78,6 +38,35 @@ struct FavoriteBookCellView: View {
 }
 
 extension FavoriteBookCellView {
+    func asyncImage(_ url: String) -> some View {
+        AsyncImage(
+            url: URL(string: favoriteBook.cover),
+            transaction: Transaction(animation: .default)
+        ) { phase in
+            switch phase {
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(
+                        width: COVER_WIDTH,
+                        height: COVER_HEIGHT
+                    )
+                    .cornerRadius(10)
+                    .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
+                    .onAppear {
+                        isLoading = false
+                    }
+            case .failure(_):
+                loadingCover
+            case .empty:
+                loadingCover
+            @unknown default:
+                loadingCover
+            }
+        }
+    }
+    
     var loadingCover: some View {
         RoundedRectangle(cornerRadius: 10)
             .fill(.gray.opacity(0.1))
@@ -85,6 +74,29 @@ extension FavoriteBookCellView {
                 width: COVER_WIDTH,
                 height: COVER_HEIGHT
             )
+            .shimmering(active: isLoading)
+    }
+    
+    var bookTitle: some View {
+        Text(favoriteBook.title)
+            .font(.headline)
+            .fontWeight(.bold)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .frame(width: COVER_WIDTH, height: 25)
+            .padding(.horizontal)
+            .padding(.bottom, -5)
+            .redacted(reason: isLoading ? .placeholder : [])
+            .shimmering(active: isLoading)
+    }
+    
+    var bookAuthor: some View {
+        Text(favoriteBook.author)
+            .font(.subheadline)
+            .foregroundColor(.secondary)
+            .lineLimit(1)
+            .frame(width: COVER_WIDTH)
+            .redacted(reason: isLoading ? .placeholder : [])
             .shimmering(active: isLoading)
     }
 }
