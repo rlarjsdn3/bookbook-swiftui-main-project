@@ -39,8 +39,7 @@ struct SearchInfoTitleView: View {
         .padding(.horizontal)
         .onAppear {
             for favoriteBook in favoriteBooks where bookInfo.isbn13 == favoriteBook.isbn13 {
-                isFavorite = true
-                break
+                isFavorite = true; break
             }
         }
     }
@@ -74,7 +73,6 @@ extension SearchInfoTitleView {
     }
     
     var favoriteButton: some View {
-        // '좋아요' 버튼은 미완성입니다. (디자인, 기능 등)
         Button {
             isFavorite.toggle()
             
@@ -96,6 +94,8 @@ extension SearchInfoTitleView {
                     RealmManager.shared.deleteFavoriteBook(bookInfo.isbn13)
                 }
             }
+            
+            Haptics.shared.play(.rigid)
         } label: {
             if isFavorite {
                 Image(systemName: "heart.fill")

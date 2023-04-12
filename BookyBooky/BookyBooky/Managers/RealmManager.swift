@@ -28,7 +28,6 @@ class RealmManager {
     
     func addFavoriteBook(_ object: FavoriteBook) {
         $favoriteBooks.append(object)
-        Haptics.shared.play(.rigid)
     }
     
     func deleteFavoriteBook(_ isbn13: String) {

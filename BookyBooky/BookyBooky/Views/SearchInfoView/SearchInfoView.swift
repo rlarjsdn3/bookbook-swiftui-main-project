@@ -37,19 +37,10 @@ struct SearchInfoView: View {
             AlertToast(
                 displayMode: .alert,
                 type: .complete(!aladinAPIManager.BookInfoItem.isEmpty ? aladinAPIManager.BookInfoItem[0].categoryName.refinedCategory.accentColor : .gray),
-                title: "찜하기!"
+                title: "찜하기"
             )
         }
-        .navigationBarBackButtonHidden(true)
-//        .navigationBarItems(leading:
-//            Button(action: {
-//                
-//            }) {
-//                Image(systemName: "chevron.left")
-//                    .foregroundColor(.blue)
-//                    .imageScale(.large)
-//            }
-//        )
+        .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             aladinAPIManager.requestBookDetailAPI(isbn13: isbn13)
             hideKeyboard()
