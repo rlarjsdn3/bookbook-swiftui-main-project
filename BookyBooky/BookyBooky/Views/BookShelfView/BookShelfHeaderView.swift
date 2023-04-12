@@ -14,24 +14,31 @@ struct BookShelfHeaderView: View {
         HStack {
             Spacer()
             
-            Text("책장")
-                .navigationTitleStyle()
-                .opacity(scrollYOffset > 30.0 ? 1 : 0)
+            bookShelfTitle
             
             Spacer()
         }
         .overlay(alignment: .trailing) {
-            Button {
-                // do something...
-            } label: {
-                Image(systemName: "bookmark.fill")
-                    .navigationBarItemStyle()
-            }
-
+            bookmarkButton
         }
         .padding(.vertical)
-//        .padding(.top)
-//        .padding(.bottom, 9)
+    }
+}
+
+extension BookShelfHeaderView {
+    var bookShelfTitle: some View {
+        Text("책장")
+            .navigationTitleStyle()
+            .opacity(scrollYOffset > 30.0 ? 1 : 0)
+    }
+    
+    var bookmarkButton: some View {
+        Button {
+            // do something...
+        } label: {
+            Image(systemName: "bookmark.fill")
+                .navigationBarItemStyle()
+        }
     }
 }
 

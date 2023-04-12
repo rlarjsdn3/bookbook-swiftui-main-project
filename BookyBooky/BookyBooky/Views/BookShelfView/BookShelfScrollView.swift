@@ -28,83 +28,13 @@ struct BookShelfScrollView: View {
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
-                Text("책장")
-                    .font(.system(size: 34 + getFontSizeOffset()))
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .minimumScaleFactor(0.001)
-                    .padding(.horizontal)
+                bookShelfTitle
                 
-                HStack {
-                    ForEach(0..<3) { index in
-                        Spacer()
-                        
-                        VStack(spacing: 5) {
-                            Image(systemName: systemImages[index])
-                                .font(.largeTitle)
-                                .foregroundColor(.white)
-                                .background {
-                                    Circle()
-                                        .fill(imageColors[index].gradient)
-                                        .frame(width: 70, height: 70)
-                                }
-                                .frame(width: 80, height: 80)
-                            
-                            Text(labelTitle[index])
-                                .fontWeight(.bold)
-                            
-                            switch labelTitle[index] {
-                            case "찜한 도서 수":
-                                Text("\(favoriteBooks.count)")
-                                    .font(.title2)
-                            default:
-                                Text("0")
-                                    .font(.title2)
-                            }
-                        }
-                        
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 30)
+                bookShelfSummary
                 
-                Section {
-                    if !favoriteBooks.isEmpty {
-                        scrollFavoriteBooks
-                    } else {
-                        Text("찜한 도서가 없음")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .foregroundColor(.secondary)
-                            .padding(.vertical, 30)
-                    }
-                } header: {
-                    HStack {
-                        Text("찜한 도서")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                        Spacer()
-                        
-                        Button {
-                            isPresentingFavoriteBooksView = true
-                        } label: {
-                            Text("자세히 보기")
-                        }
-                        .disabled(favoriteBooks.isEmpty)
-
-                    }
-                    .padding(.vertical, 6)
-                    .padding([.horizontal, .bottom], 5)
-                    .padding(.horizontal)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(.white)
-                    .overlay(alignment: .bottom) {
-                        Divider()
-                            .opacity(scrollYOffset > 219.0 ? 1 : 0)
-                    }
-                }
+                favoriteBookSection
                 
+                // 읽은 도서 섹션 (미완성)
                 Section {
                     ForEach(1..<100) { index in
                         Text("UI 미완성")
@@ -178,6 +108,74 @@ struct BookShelfScrollView: View {
 }
 
 extension BookShelfScrollView {
+    var bookShelfTitle: some View {
+        Text("책장")
+            .font(.system(size: 34 + getFontSizeOffset()))
+            .fontWeight(.bold)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .minimumScaleFactor(0.001)
+            .padding(.horizontal)
+    }
+    
+    var bookShelfSummary: some View {
+        HStack {
+            ForEach(BookShelfSummaryItems.allCases, id: \.self) { item in
+                Spacer()
+                
+                VStack(spacing: 5) {
+                    summaryImage(item)
+                    
+                    summaryLabel(item)
+                    
+                    summaryCount(item)
+                }
+                
+                Spacer()
+            }
+        }
+        .padding(.horizontal, 15)
+    }
+    
+    func summaryImage(_ item: BookShelfSummaryItems) -> some View {
+        Image(systemName: item.systemImage)
+            .font(.largeTitle)
+            .foregroundColor(.white)
+            .background {
+                Circle()
+                    .fill(item.color)
+                    .frame(width: 70, height: 70)
+            }
+            .frame(width: 80, height: 80)
+    }
+    
+    func summaryLabel(_ item: BookShelfSummaryItems) -> some View {
+        Text(item.name)
+            .fontWeight(.bold)
+    }
+    
+    func summaryCount(_ item: BookShelfSummaryItems) -> some View {
+        switch item {
+        case .completeBooksCount:
+            return Text("0").font(.title2)
+        case .favoriteBooksCount:
+            return Text("\(favoriteBooks.count)").font(.title2)
+        case .collectSentencesCount:
+            return Text("0").font(.title2)
+        }
+    }
+    
+    var favoriteBookSection: some View {
+        Section {
+            if !favoriteBooks.isEmpty {
+                scrollFavoriteBooks
+            } else {
+                noFavoriteBooksLabel
+            }
+        } header: {
+            favoriteBooksHeaderLabel
+        }
+    }
+    
     var scrollFavoriteBooks: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
@@ -189,6 +187,40 @@ extension BookShelfScrollView {
             }
         }
         .padding(.horizontal, 3)
+    }
+    
+    var noFavoriteBooksLabel: some View {
+        Text("찜한 도서가 없음")
+            .font(.title3)
+            .fontWeight(.bold)
+            .foregroundColor(.secondary)
+            .padding(.vertical, 30)
+    }
+    
+    var favoriteBooksHeaderLabel: some View {
+        HStack {
+            Text("찜한 도서")
+                .font(.headline)
+                .fontWeight(.bold)
+            Spacer()
+            
+            Button {
+                isPresentingFavoriteBooksView = true
+            } label: {
+                Text("자세히 보기")
+            }
+            .disabled(favoriteBooks.isEmpty)
+
+        }
+        .padding(.vertical, 6)
+        .padding([.horizontal, .bottom], 5)
+        .padding(.horizontal)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.white)
+        .overlay(alignment: .bottom) {
+            Divider()
+                .opacity(scrollYOffset > 219.0 ? 1 : 0)
+        }
     }
 }
 
