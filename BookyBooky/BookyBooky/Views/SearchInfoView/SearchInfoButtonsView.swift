@@ -70,7 +70,7 @@ extension SearchInfoButtonsView {
     var addButton: some View {
         // 이미 목표 도서에 추가되어 있는 경우, 버튼 잠그기 (안 보이게 하기)
         NavigationLink {
-            BookAddView()
+            BookAddView(bookInfoItem: bookInfo)
         } label: {
             addLabel
         }

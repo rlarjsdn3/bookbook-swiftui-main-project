@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct BookAddView: View {
+    let bookInfoItem: BookInfo.Item
+    
     var body: some View {
-        Text("Hello, World!")
-            .toolbar(.hidden, for: .navigationBar)
+        VStack {
+            Text(bookInfoItem.title.refinedTitle)
+        }
+        .toolbar(.hidden, for: .navigationBar)
     }
 }
 
 struct BookAddView_Previews: PreviewProvider {
     static var previews: some View {
-        BookAddView()
+        BookAddView(bookInfoItem: BookInfo.Item.preview[0])
     }
 }

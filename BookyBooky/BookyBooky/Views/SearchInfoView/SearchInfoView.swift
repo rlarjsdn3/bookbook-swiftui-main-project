@@ -22,7 +22,7 @@ struct SearchInfoView: View {
     // MARK: - PROPERTIES
     
     let isbn13: String
-    let showBackButton: Bool
+    let isPresentingBackButton: Bool
     
     // MARK: - WRAPPER PROPERTIES]
     
@@ -47,7 +47,7 @@ struct SearchInfoView: View {
                 }
             }
             .overlay(alignment: .topLeading) {
-                if let info = bookInfo, showBackButton {
+                if let info = bookInfo, isPresentingBackButton {
                     Button {
                         dismiss()
                     } label: {
@@ -72,7 +72,6 @@ struct SearchInfoView: View {
                 title: "찜하기"
             )
         }
-        .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             aladinAPIManager.requestBookDetailAPI(isbn13: isbn13)
             hideKeyboard()
@@ -80,6 +79,7 @@ struct SearchInfoView: View {
         .onDisappear {
             aladinAPIManager.BookInfoItem.removeAll()
         }
+        .toolbar(.hidden, for: .navigationBar)
         .presentationCornerRadius(30)
     }
 }
@@ -126,7 +126,7 @@ extension SearchInfoView {
 
 struct SearchDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchInfoView(isbn13: "9788994492049", showBackButton: true)
+        SearchInfoView(isbn13: "9788994492049", isPresentingBackButton: true)
             .environmentObject(AladinAPIManager())
     }
 }
