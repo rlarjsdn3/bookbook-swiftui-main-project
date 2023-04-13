@@ -43,7 +43,7 @@ struct SearchSheetCellView: View {
             isPresentingSearchInfoView = true
         }
         .navigationDestination(isPresented: $isPresentingSearchInfoView) {
-            SearchInfoView(isbn13: bookItem.isbn13)
+            SearchInfoView(isbn13: bookItem.isbn13, showBackButton: true)
             
         }
         .padding(.top, 18)

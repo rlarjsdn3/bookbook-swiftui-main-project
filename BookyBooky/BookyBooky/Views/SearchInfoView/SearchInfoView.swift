@@ -10,13 +10,25 @@ import AlertToast
 
 struct SearchInfoView: View {
     
+    // MARK: - COMPUTED PROPERTIES
+    
+    var bookInfo: BookInfo.Item? {
+        guard !aladinAPIManager.BookInfoItem.isEmpty else {
+            return nil
+        }
+        return aladinAPIManager.BookInfoItem[0]
+    }
+    
     // MARK: - PROPERTIES
     
     let isbn13: String
+    let showBackButton: Bool
     
     // MARK: - WRAPPER PROPERTIES]
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    
+    @Environment(\.dismiss) var dismiss
     
     @State private var isLoading = true
     @State private var isPresentingFavoriteAlert = false
@@ -30,9 +42,23 @@ struct SearchInfoView: View {
                     .ignoresSafeArea()
                 
                 // 도서 상세 데이터가 정상적으로 로드된 경우
-                if !aladinAPIManager.BookInfoItem.isEmpty {
-                    bookInformation(item: aladinAPIManager.BookInfoItem[0]) // 상세 뷰 출력하기
+                if let info = bookInfo {
+                    bookInformation(item: info) // 상세 뷰 출력하기
                 }
+            }
+            .overlay(alignment: .topLeading) {
+                if let info = bookInfo, showBackButton {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(info.categoryName.refinedCategory.foregroundColor)
+                            .padding()
+                    }
+                }
+
             }
         }
         .toast(isPresenting: $isPresentingFavoriteAlert, duration: 1.0) {
@@ -96,7 +122,7 @@ extension SearchInfoView {
 
 struct SearchDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchInfoView(isbn13: "9788994492049")
+        SearchInfoView(isbn13: "9788994492049", showBackButton: true)
             .environmentObject(AladinAPIManager())
     }
 }

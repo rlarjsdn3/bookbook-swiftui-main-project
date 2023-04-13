@@ -336,9 +336,9 @@
 				9ECA326A29D12044004D6D5B /* ContentsTabItem.swift */,
 				9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItem.swift */,
 				9EDC2FA729E6867D004E792A /* BookShelfSummaryItems.swift */,
+				9EDC2FAE29E6DDEF004E792A /* FavoriteBookCellViewType.swift */,
 				9EB749F629D5C3A500610D97 /* Category.swift */,
 				9E0434AA29E28097009A2161 /* BookSort.swift */,
-				9EDC2FAE29E6DDEF004E792A /* FavoriteBookCellViewType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";

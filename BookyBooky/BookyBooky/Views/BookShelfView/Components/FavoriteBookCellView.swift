@@ -46,10 +46,10 @@ struct FavoriteBookCellView: View {
                 }
             }
             .sheet(isPresented: $isPresentingFavoriteBookInfoSheet) {
-                SearchInfoView(isbn13: favoriteBook.isbn13)
+                SearchInfoView(isbn13: favoriteBook.isbn13, showBackButton: false)
             }
             .navigationDestination(isPresented: $isPresentingFavoriteBookInfoStack) {
-                SearchInfoView(isbn13: favoriteBook.isbn13)
+                SearchInfoView(isbn13: favoriteBook.isbn13, showBackButton: true)
                 
             }
             .padding(.vertical, 10)
