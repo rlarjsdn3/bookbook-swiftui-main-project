@@ -6,15 +6,24 @@
 //
 
 import SwiftUI
-import Foundation
 import Alamofire
+import AlertToast
 
 class AladinAPIManager: ObservableObject {
     
+    // MARK: - ALERT PROPERTIES
+    
+    let searchLoadingUI = AlertToast(displayMode: .banner(.pop), type: .loading, title: "도서 정보 불러오는 중...")
+    let searchErrorUI = AlertToast(displayMode: .banner(.pop), type: .error(.red), title: "도서 정보 불러오기 실패", subTitle: "       잠시 후 다시 시도하십시오.")
+    
+    let infoErrorUI = AlertToast(displayMode: .banner(.pop), type: .error(.red), title: "도서 정보 불러오기 실패", subTitle: "       해당 도서 정보를 찾을 수 없습니다.")
+    
     // MARK: - WRAPPER PROPERTIES
     
-    @Published var showSearchLoading = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
-    @Published var showSearchError = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
+    @Published var isPresentingSearchLoadingUI = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
+    @Published var isPresentingSearchErrorUI = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
+    
+    @Published var isPresentingInfoErrorUI = false      // 도서 상세 에러 UI의 출력을 제어하는 변수
     
     @Published var bestSeller: [BookList.Item] = []     // 베스트셀러 리스트를 저장하는 변수
     @Published var itemNewAll: [BookList.Item] = []     // 신간 도서 리스트를 저장하는 변수
@@ -115,7 +124,7 @@ class AladinAPIManager: ObservableObject {
     func requestBookSearchAPI(query: String, page startIndex: Int = 1) {
         guard !query.isEmpty else { return }
         
-        self.showSearchLoading = true
+        self.isPresentingSearchLoadingUI = true
         
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?"
         
@@ -161,13 +170,13 @@ class AladinAPIManager: ObservableObject {
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.showSearchLoading = false
+                        self.isPresentingSearchLoadingUI = false
                     }
                 }
             case .failure(let error):
+                self.isPresentingSearchLoadingUI = false
+                self.isPresentingSearchErrorUI = true
                 print("알라딘 검색 API 호출 실패: \(error)")
-                self.showSearchLoading = false
-                self.showSearchError = true
             }
         }
     }
@@ -211,8 +220,10 @@ class AladinAPIManager: ObservableObject {
                     }
                 }
             case .failure(let error):
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.isPresentingInfoErrorUI = true
+//                }
                 print("알라딘 상품 API 호출 실패: \(error)")
-                self.showSearchError = true
             }
         }
     }

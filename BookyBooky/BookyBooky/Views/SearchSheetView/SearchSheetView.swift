@@ -43,24 +43,15 @@ struct SearchSheetView: View {
                     startIndex: $startIndex
                 )
             }
-            .toast(isPresenting: $aladinAPIManager.showSearchLoading)  {
-                AlertToast(
-                    displayMode: .banner(.pop),
-                    type: .loading,
-                    title: "도서 정보 불러오는 중..."
-                )
+            .toast(isPresenting: $aladinAPIManager.isPresentingSearchLoadingUI)  {
+                aladinAPIManager.searchLoadingUI
             }
-            .toast(isPresenting: $aladinAPIManager.showSearchError, duration: 3.0)  {
-                AlertToast(
-                    displayMode: .banner(.pop),
-                    type: .error(.red),
-                    title: "도서 정보 불러오기 실패",
-                    subTitle: "       잠시 후 다시 시도하십시오."
-                )
+            .toast(isPresenting: $aladinAPIManager.isPresentingSearchErrorUI, duration: 2.0)  {
+                aladinAPIManager.searchErrorUI
             }
-        }
-        .onAppear {
-            aladinAPIManager.showSearchError = false
+            .toast(isPresenting: $aladinAPIManager.isPresentingInfoErrorUI, duration: 2.0) {
+                aladinAPIManager.infoErrorUI
+            }
         }
         .onDisappear {
             aladinAPIManager.bookSearchItems.removeAll()
