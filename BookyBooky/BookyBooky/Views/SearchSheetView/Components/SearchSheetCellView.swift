@@ -77,17 +77,7 @@ extension SearchSheetCellView {
             
             Spacer()
             
-            HStack {
-                pubDate
-                
-                Spacer()
-                
-                if isFavoriteBook() {
-                    Image(systemName: "heart.fill")
-                        .font(.title2)
-                        .foregroundColor(bookItem.categoryName.refinedCategory.accentColor)
-                }
-            }
+            pubDate
         }
         .foregroundColor(.secondary)
     }
@@ -148,6 +138,13 @@ extension SearchSheetCellView {
                 }
                 .font(.subheadline)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .overlay(alignment: .bottomTrailing) {
+                    if isFavoriteBook() {
+                        Image(systemName: "heart.fill")
+                            .font(.title2)
+                            .foregroundColor(bookItem.categoryName.refinedCategory.accentColor)
+                    }
+                }
                 .redacted(reason: isLoading ? .placeholder : [])
                 .shimmering(active: isLoading)
                 .padding()
