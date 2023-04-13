@@ -202,6 +202,7 @@ class AladinAPIManager: ObservableObject {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
+                    print(data)
                     DispatchQueue.main.async {
                         // 도서 상세 화면으로 넘어갈 때, 뷰가 자연스럽게 나타나도록 함
                         withAnimation(.easeInOut(duration: 0.1)) {

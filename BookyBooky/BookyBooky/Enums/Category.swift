@@ -71,7 +71,7 @@ enum Category: String {
     /// 카테고리 별 전경 색상 정보를 반환하는 프로퍼티입니다. (Beta)
     var foregroundColor: Color {
         switch self {
-        case .computer:
+        case .computer, .naturalScience, .science, .socialScience, .technical:
             return .white
         default:
             return .black

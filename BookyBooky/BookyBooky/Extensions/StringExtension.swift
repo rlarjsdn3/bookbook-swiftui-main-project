@@ -176,6 +176,8 @@ extension String {
             return .sports
         case "기술공학":
             return .technical
+        case "청소년":
+            return .teenager
         case "공포/스릴러":
             return .thriller
         case "유아", "유아/아동":
