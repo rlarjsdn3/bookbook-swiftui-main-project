@@ -59,6 +59,9 @@ struct SearchSheetView: View {
                 )
             }
         }
+        .onAppear {
+            aladinAPIManager.showSearchError = false
+        }
         .onDisappear {
             aladinAPIManager.bookSearchItems.removeAll()
             aladinAPIManager.BookInfoItem.removeAll()

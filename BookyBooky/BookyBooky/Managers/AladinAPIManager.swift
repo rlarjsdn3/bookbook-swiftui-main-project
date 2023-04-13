@@ -212,6 +212,7 @@ class AladinAPIManager: ObservableObject {
                 }
             case .failure(let error):
                 print("알라딘 상품 API 호출 실패: \(error)")
+                self.showSearchError = true
             }
         }
     }

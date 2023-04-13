@@ -58,7 +58,13 @@ struct SearchInfoView: View {
                             .padding()
                     }
                 }
-
+            }
+            // 도서 세부 정보를 불러올 수 없으면 (showSearchError가 true이면) 밖으로 빠져나가고, toastUI 출력 (SearchSheet뷰에서)
+            // 아마도 다양한 상황에 맞게 에러 메시지를 출력하는 코드를 추가 작성이 필요해 보임
+            .onChange(of: aladinAPIManager.showSearchError) { newValue in
+                if newValue {
+                    dismiss()
+                }
             }
         }
         .toast(isPresenting: $isPresentingFavoriteAlert, duration: 1.0) {
