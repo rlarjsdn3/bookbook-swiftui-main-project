@@ -69,7 +69,6 @@ extension SearchInfoCoverView {
                 loadingCover
             @unknown default:
                 loadingCover
-                
             }
         }
     }
