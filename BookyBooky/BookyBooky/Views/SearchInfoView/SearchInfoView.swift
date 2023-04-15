@@ -124,7 +124,7 @@ extension SearchInfoView {
 
 // MARK: - PREVIEW
 
-struct SearchDetailView_Previews: PreviewProvider {
+struct SearchInfoView_Previews: PreviewProvider {
     static var previews: some View {
         SearchInfoView(isbn13: "9788994492049", isPresentingBackButton: true)
             .environmentObject(AladinAPIManager())
