@@ -22,7 +22,7 @@ struct DatePickerSheetView: View {
             DatePicker(
                     "DatePicker",
                     selection: $selected,
-                    in: Date()...(Date() + 128.days),
+                    in: Date()...(Date() + 365.days),
                     displayedComponents: [.date]).datePickerStyle(.graphical
                 )
                 .labelsHidden()
