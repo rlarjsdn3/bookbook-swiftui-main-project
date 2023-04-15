@@ -44,6 +44,8 @@ struct BookAddView: View {
                     Spacer()
                 }
                 
+                LottieView()
+                
                 Spacer()
                 
                 Text("\(selectedDate.toFormat("yyyy년 MM월 dd일 (E)", locale: Locale(identifier: "ko")))")

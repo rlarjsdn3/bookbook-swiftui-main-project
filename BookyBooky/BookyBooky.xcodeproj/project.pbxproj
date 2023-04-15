@@ -73,6 +73,9 @@
 		9EDC2FB129E6E48C004E792A /* UINavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FB029E6E48C004E792A /* UINavigationControllerExtension.swift */; };
 		9EDC2FB429E6F108004E792A /* BookAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FB329E6F108004E792A /* BookAddView.swift */; };
 		9EDC2FB729E92E90004E792A /* DatePickerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FB629E92E90004E792A /* DatePickerSheetView.swift */; };
+		9EDC2FBA29EA3808004E792A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9EDC2FB929EA3808004E792A /* Lottie */; };
+		9EDC2FBC29EA3811004E792A /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBB29EA3811004E792A /* LottieView.swift */; };
+		9EDC2FBE29EA3898004E792A /* book.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBD29EA3898004E792A /* book.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +141,8 @@
 		9EDC2FB029E6E48C004E792A /* UINavigationControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationControllerExtension.swift; sourceTree = "<group>"; };
 		9EDC2FB329E6F108004E792A /* BookAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAddView.swift; sourceTree = "<group>"; };
 		9EDC2FB629E92E90004E792A /* DatePickerSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerSheetView.swift; sourceTree = "<group>"; };
+		9EDC2FBB29EA3811004E792A /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		9EDC2FBD29EA3898004E792A /* book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = book.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ECA326129D11ADA004D6D5B /* SwiftDate in Frameworks */,
+				9EDC2FBA29EA3808004E792A /* Lottie in Frameworks */,
 				9ECA326429D11AFF004D6D5B /* Shimmer in Frameworks */,
 				9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */,
 				9E06070B29DD10D8000D542D /* AlertToast in Frameworks */,
@@ -409,6 +415,7 @@
 				9EB749F329D5C26100610D97 /* Enums */,
 				9E0C0A6729D281AF00F1F5F6 /* Helpers */,
 				9E0C0A7429D28C0600F1F5F6 /* Settings */,
+				9EDC2FBF29EA38AD004E792A /* Resources */,
 				9ECD921429BF1FA700FCDD2F /* Assets.xcassets */,
 				9ECD921629BF1FA700FCDD2F /* Preview Content */,
 			);
@@ -445,8 +452,17 @@
 			isa = PBXGroup;
 			children = (
 				9EDC2FB629E92E90004E792A /* DatePickerSheetView.swift */,
+				9EDC2FBB29EA3811004E792A /* LottieView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		9EDC2FBF29EA38AD004E792A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9EDC2FBD29EA3898004E792A /* book.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -472,6 +488,7 @@
 				9ECA326029D11ADA004D6D5B /* SwiftDate */,
 				9ECA326329D11AFF004D6D5B /* Shimmer */,
 				9E06070A29DD10D8000D542D /* AlertToast */,
+				9EDC2FB929EA3808004E792A /* Lottie */,
 			);
 			productName = BookyBooky;
 			productReference = 9ECD920D29BF1FA600FCDD2F /* BookyBooky.app */;
@@ -508,6 +525,7 @@
 				9ECA326229D11AFF004D6D5B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 				9E06070629DC61C9000D542D /* XCRemoteSwiftPackageReference "ToastUI" */,
 				9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */,
+				9EDC2FB829EA3808004E792A /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 9ECD920E29BF1FA600FCDD2F /* Products */;
 			projectDirPath = "";
@@ -525,6 +543,7 @@
 			files = (
 				9ECD921829BF1FA700FCDD2F /* Preview Assets.xcassets in Resources */,
 				9ECD921529BF1FA700FCDD2F /* Assets.xcassets in Resources */,
+				9EDC2FBE29EA3898004E792A /* book.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +566,7 @@
 				9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */,
 				9E0434A629E19C48009A2161 /* FavoriteBookCellView.swift in Sources */,
 				9E0C0A7329D28C0300F1F5F6 /* AladinAPI.swift in Sources */,
+				9EDC2FBC29EA3811004E792A /* LottieView.swift in Sources */,
 				9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */,
 				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,
 				9E0C0A6929D281BF00F1F5F6 /* Haptics.swift in Sources */,
@@ -859,6 +879,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		9EDC2FB829EA3808004E792A /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -891,6 +919,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9ECA326229D11AFF004D6D5B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
 			productName = Shimmer;
+		};
+		9EDC2FB929EA3808004E792A /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EDC2FB829EA3808004E792A /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
