@@ -14,8 +14,9 @@ struct BookAddView: View {
     
     let bookInfoItem: BookInfo.Item
     
-    @State private var selectedDate: Date = Date()
+    @State private var selectedDate: Date = Date() + 7.days
     
+    @State private var isPresentingDateDescSheet = false
     @State private var isPresentingDatePickerSheet = false
     
     var body: some View {
@@ -46,23 +47,43 @@ struct BookAddView: View {
                 
                 Spacer()
                 
-                LottieView()
+                LottieBookView()
                     .frame(width: 200, height: 200)
                 
-                Text("완독 목표일을 설정해주세요.")
-                    .font(.title3)
-                    .foregroundColor(.secondary)
-                    .padding(2)
+                HStack {
+                    Text("완독 목표일을 설정해주세요.")
+                        .font(.title3)
+                    
+                    Button {
+                        isPresentingDateDescSheet = true
+                    } label: {
+                        Image(systemName: "questionmark.circle")
+                    }
+
+                }
+                .foregroundColor(.secondary)
+                .padding(2)
                 
                 Text("\(selectedDate.toFormat("yyyy년 MM월 dd일 (E)", locale: Locale(identifier: "ko")))")
                     .font(.title)
                     .fontWeight(.bold)
+                    .padding(2)
+                
+                Text("\(0)일 동안 평균 \(0)페이지를 읽어야 해요.")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
                 
                 Menu {
                     Button {
                         selectedDate = Date() + 1.days
                     } label: {
                         Label("내일까지", systemImage: "timer")
+                    }
+                    
+                    Button {
+                        selectedDate = Date() + 7.days
+                    } label: {
+                        Label("일주일 이내", systemImage: "timer")
                     }
 
                 } label: {
@@ -76,6 +97,7 @@ struct BookAddView: View {
                 } primaryAction: {
                     isPresentingDatePickerSheet = true
                 }
+                .padding(.top, 20)
                 
                 Spacer()
                 
@@ -111,6 +133,12 @@ struct BookAddView: View {
         }
         .sheet(isPresented: $isPresentingDatePickerSheet) {
             DatePickerSheetView(selectedDate: $selectedDate, bookInfo: bookInfoItem)
+        }
+        .sheet(isPresented: $isPresentingDateDescSheet) {
+            Text("Hello, World!")
+                .presentationBackground(.ultraThinMaterial)
+                .presentationCornerRadius(30)
+                .presentationDetents([.height(500)])
         }
         .toolbar(.hidden, for: .navigationBar)
     }

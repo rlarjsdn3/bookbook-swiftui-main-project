@@ -8,11 +8,11 @@
 import SwiftUI
 import Lottie
 
-struct LottieView: UIViewRepresentable {
+struct LottieBookView: UIViewRepresentable {
     func makeUIView(context: Context) -> LottieAnimationView {
         let animationView = LottieAnimationView(name: "book")
         animationView.play()
-        animationView.loopMode = .repeat(3)
+        animationView.loopMode = .repeat(5)
         animationView.contentMode = .scaleAspectFit
         return animationView
     }
@@ -24,6 +24,6 @@ struct LottieView: UIViewRepresentable {
 
 struct LottieView_Previews: PreviewProvider {
     static var previews: some View {
-        LottieView()
+        LottieBookView()
     }
 }
