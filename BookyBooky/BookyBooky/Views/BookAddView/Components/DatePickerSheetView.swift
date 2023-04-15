@@ -9,40 +9,52 @@ import SwiftUI
 import SwiftDate
 
 struct DatePickerSheetView: View {
+    
+    @Binding var selectedDate: Date
+    let bookInfo: BookInfo.Item
+    
     @Environment(\.dismiss) var dismiss
     
-    @State private var selectedDate: Date = Date()
+    @State private var selected: Date = Date()
     
     var body: some View {
         VStack {
-            DatePicker("DatePicker", selection: $selectedDate, in: Date()...(Date() + 128.days), displayedComponents: [.date]).datePickerStyle(.graphical)
+            DatePicker(
+                    "DatePicker",
+                    selection: $selected,
+                    in: Date()...(Date() + 128.days),
+                    displayedComponents: [.date]).datePickerStyle(.graphical
+                )
                 .labelsHidden()
                 .environment(\.locale, Locale(identifier: "ko"))
-                .padding()
+                .tint(bookInfo.categoryName.refinedCategory.accentColor)
+                .padding(.horizontal)
             
             Button {
+                selectedDate = selected
+                
                 dismiss()
             } label: {
                 Text("설정하기")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .foregroundColor(bookInfo.categoryName.refinedCategory.foregroundColor)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(.black)
+                    .background(bookInfo.categoryName.refinedCategory.accentColor)
                     .cornerRadius(15)
                     .padding(.horizontal)
             }
         }
         .presentationCornerRadius(30)
         .presentationBackground(.ultraThinMaterial)
-        .presentationDetents([.height(480)])
+        .presentationDetents([.height(460)])
         
     }
 }
 
 struct DatePickerSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        DatePickerSheetView()
+        DatePickerSheetView(selectedDate: .constant(Date()), bookInfo: BookInfo.Item.preview[0])
     }
 }

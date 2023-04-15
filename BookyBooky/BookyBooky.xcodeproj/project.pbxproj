@@ -72,6 +72,7 @@
 		9EDC2FAF29E6DDEF004E792A /* FavoriteBookCellViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FAE29E6DDEF004E792A /* FavoriteBookCellViewType.swift */; };
 		9EDC2FB129E6E48C004E792A /* UINavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FB029E6E48C004E792A /* UINavigationControllerExtension.swift */; };
 		9EDC2FB429E6F108004E792A /* BookAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FB329E6F108004E792A /* BookAddView.swift */; };
+		9EDC2FB729E92E90004E792A /* DatePickerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FB629E92E90004E792A /* DatePickerSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +137,7 @@
 		9EDC2FAE29E6DDEF004E792A /* FavoriteBookCellViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBookCellViewType.swift; sourceTree = "<group>"; };
 		9EDC2FB029E6E48C004E792A /* UINavigationControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationControllerExtension.swift; sourceTree = "<group>"; };
 		9EDC2FB329E6F108004E792A /* BookAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAddView.swift; sourceTree = "<group>"; };
+		9EDC2FB629E92E90004E792A /* DatePickerSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -434,8 +436,17 @@
 			isa = PBXGroup;
 			children = (
 				9EDC2FB329E6F108004E792A /* BookAddView.swift */,
+				9EDC2FB529E92E80004E792A /* Components */,
 			);
 			path = BookAddView;
+			sourceTree = "<group>";
+		};
+		9EDC2FB529E92E80004E792A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9EDC2FB629E92E90004E792A /* DatePickerSheetView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -566,6 +577,7 @@
 				9E7A794529DA6AFF00A51856 /* SearchInfoCoverView.swift in Sources */,
 				9E06070E29DD516D000D542D /* RealmManager.swift in Sources */,
 				9E7A794B29DA8EBD00A51856 /* SearchInfoDescView.swift in Sources */,
+				9EDC2FB729E92E90004E792A /* DatePickerSheetView.swift in Sources */,
 				9E7A794329DA5B8F00A51856 /* SearchInfoView.swift in Sources */,
 				9E54AA0829D7C9B500FE080C /* SearchSheetCellView.swift in Sources */,
 				9E54A9FA29D5D44000FE080C /* SearchSheetCategoryView.swift in Sources */,
