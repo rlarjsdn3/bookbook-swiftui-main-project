@@ -64,6 +64,9 @@
 		9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD921229BF1FA600FCDD2F /* ContentView.swift */; };
 		9ECD921529BF1FA700FCDD2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ECD921429BF1FA700FCDD2F /* Assets.xcassets */; };
 		9ECD921829BF1FA700FCDD2F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ECD921729BF1FA700FCDD2F /* Preview Assets.xcassets */; };
+		9ED116BD29ED01610072BA41 /* BookAddHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED116BC29ED01610072BA41 /* BookAddHeaderView.swift */; };
+		9ED116BF29ED034D0072BA41 /* BookAddCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED116BE29ED034D0072BA41 /* BookAddCenterView.swift */; };
+		9ED116C129ED04330072BA41 /* BookAddButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED116C029ED04330072BA41 /* BookAddButtonsView.swift */; };
 		9ED4CB6129D3E0AA00CA493D /* SearchListTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6029D3E0AA00CA493D /* SearchListTypeView.swift */; };
 		9ED4CB6429D3E21C00CA493D /* ListTypeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6329D3E21C00CA493D /* ListTypeButtonView.swift */; };
 		9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6629D4046400CA493D /* SearchSheetView.swift */; };
@@ -132,6 +135,9 @@
 		9ECD921229BF1FA600FCDD2F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9ECD921429BF1FA700FCDD2F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9ECD921729BF1FA700FCDD2F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9ED116BC29ED01610072BA41 /* BookAddHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAddHeaderView.swift; sourceTree = "<group>"; };
+		9ED116BE29ED034D0072BA41 /* BookAddCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAddCenterView.swift; sourceTree = "<group>"; };
+		9ED116C029ED04330072BA41 /* BookAddButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAddButtonsView.swift; sourceTree = "<group>"; };
 		9ED4CB6029D3E0AA00CA493D /* SearchListTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListTypeView.swift; sourceTree = "<group>"; };
 		9ED4CB6329D3E21C00CA493D /* ListTypeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTypeButtonView.swift; sourceTree = "<group>"; };
 		9ED4CB6629D4046400CA493D /* SearchSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetView.swift; sourceTree = "<group>"; };
@@ -443,6 +449,9 @@
 			isa = PBXGroup;
 			children = (
 				9EDC2FB329E6F108004E792A /* BookAddView.swift */,
+				9ED116BC29ED01610072BA41 /* BookAddHeaderView.swift */,
+				9ED116BE29ED034D0072BA41 /* BookAddCenterView.swift */,
+				9ED116C029ED04330072BA41 /* BookAddButtonsView.swift */,
 				9EDC2FB529E92E80004E792A /* Components */,
 			);
 			path = BookAddView;
@@ -576,7 +585,9 @@
 				9E7A794729DA854D00A51856 /* SearchInfoTitleView.swift in Sources */,
 				9E0C0A7129D2866100F1F5F6 /* BookList.swift in Sources */,
 				9EDC2FAF29E6DDEF004E792A /* FavoriteBookCellViewType.swift in Sources */,
+				9ED116BD29ED01610072BA41 /* BookAddHeaderView.swift in Sources */,
 				9E0434A029E164CA009A2161 /* BookShelfScrollView.swift in Sources */,
+				9ED116BF29ED034D0072BA41 /* BookAddCenterView.swift in Sources */,
 				9ED4CB6429D3E21C00CA493D /* ListTypeButtonView.swift in Sources */,
 				9E54AA0029D6704900FE080C /* SearchSheetScrollView.swift in Sources */,
 				9E524DF829D1CF3500FD7B98 /* TabButtonView.swift in Sources */,
@@ -585,6 +596,7 @@
 				9E54A9FC29D5DC9800FE080C /* CategoryButtonView.swift in Sources */,
 				9EB749FA29D5C43200610D97 /* Category.swift in Sources */,
 				9E0434AB29E28097009A2161 /* BookSort.swift in Sources */,
+				9ED116C129ED04330072BA41 /* BookAddButtonsView.swift in Sources */,
 				9E0434B029E2AEFF009A2161 /* NavigationTitleStyle.swift in Sources */,
 				9E524DFB29D1D14C00FD7B98 /* TabShape.swift in Sources */,
 				9E7A794929DA8D7500A51856 /* SearchInfoBoxView.swift in Sources */,
