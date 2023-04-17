@@ -14,43 +14,61 @@ struct BookAddButtonsView: View {
     
     var body: some View {
         VStack {
-            Button {
-                
-            } label: {
-                Text("제목이 마음에 안 드시나요?")
-                    .font(.subheadline)
-            }
-            .padding(.top, 10)
+            modifyBookTitleButton
             
-            HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    Text("돌아가기")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(.gray.opacity(0.2))
-                        .cornerRadius(15)
-                }
-                
-                Button {
-                    
-                } label: {
-                    Text("추가하기")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(bookInfoItem.categoryName.refinedCategory.accentColor)
-                        .cornerRadius(15)
-                }
-            }
-            .padding([.horizontal, .bottom])
+            bottomButtons
         }
+    }
+}
+
+extension BookAddButtonsView {
+    var modifyBookTitleButton: some View {
+        Button {
+            // do something...
+        } label: {
+            Text("제목이 마음에 안 드시나요?")
+                .font(.subheadline)
+        }
+        .padding(.top, 10)
+    }
+    
+    var bottomButtons: some View {
+        HStack {
+            Button {
+                dismiss()
+            } label: {
+                backLabel
+            }
+            
+            Button {
+                // do something...
+            } label: {
+                addLabel
+            }
+        }
+        .padding([.horizontal, .bottom])
+    }
+    
+    var backLabel: some View {
+        Text("돌아가기")
+            .font(.title3)
+            .fontWeight(.bold)
+            .foregroundColor(.black)
+            .frame(height: 55)
+            .frame(maxWidth: .infinity)
+            .background(.gray.opacity(0.2))
+            .cornerRadius(15)
+    }
+    
+    var addLabel: some View {
+        Text("추가하기")
+            .font(.title3)
+            .fontWeight(.bold)
+            .foregroundColor(.white)
+            .frame(height: 55)
+            .frame(maxWidth: .infinity)
+            .background(bookInfoItem.categoryName.refinedCategory.accentColor)
+            .cornerRadius(15)
     }
 }
 

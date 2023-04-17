@@ -25,6 +25,8 @@ struct BookAddView: View {
     @State private var isPresentingDatePickerSheet = false
     @State private var isPresentingModifyTitleSheet = false
     
+    // MARK: - BODY
+    
     var body: some View {
         ZStack {
             LinearGradient(
@@ -52,6 +54,8 @@ struct BookAddView: View {
         .toolbar(.hidden, for: .navigationBar)
     }
 }
+
+// MARK: - PREVIEW
 
 struct BookAddView_Previews: PreviewProvider {
     static var previews: some View {
