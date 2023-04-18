@@ -40,13 +40,7 @@ struct BookAddCenterView: View {
             DatePickerSheetView(selectedDate: $selectedDate, bookInfo: bookInfoItem)
         }
         .sheet(isPresented: $isPresentingDateDescSheet) {
-            // do something...
-            
-            
-            Text("Hello, World!")
-                .presentationBackground(.ultraThinMaterial)
-                .presentationCornerRadius(30)
-                .presentationDetents([.height(500)])
+            DateDescSheetView(bookInfo: bookInfoItem)
         }
         .padding(.bottom, 40)
     }

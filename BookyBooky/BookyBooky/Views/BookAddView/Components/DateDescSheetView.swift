@@ -12,10 +12,10 @@ struct DateDescSheetView: View {
     // MARK: - CONSTANT PROPERTIES
     
     let descriptions = [
-        "판매 포인트는 판매량과 판매기간에 근거하여 해당 상품의 판매도를 산출한 알라딘만의 판매지수법입니다.",
-        "최근 판매분에 가중치를 준 판매점수이며, 팔릴수록 올라가고 덜 팔리면 내려갑니다.",
-        "그래서 최근 베스트셀러는 높은 점수이며, 꾸준히 팔리는 스테디셀러들도 어느 정도 포인트를 유지합니다.",
-        "'판매 포인트'는 매일매일 업데이트됩니다."
+        "(설명)",
+        "(설명)",
+        "(설명)",
+        "(설명)"
     ]
     
     // MARK: - PROPERTIES
@@ -42,7 +42,7 @@ struct DateDescSheetView: View {
         .padding(safeAreaInsets.bottom == 0 ? 18 : 0)
         // 베젤이 없는 아이폰(iPhone 14 등)은 시트 높이를 380으로 설정
         // 베젤이 있는 아이폰(iPhone SE 등)은 시트 높이를 420으로 설정
-        .presentationDetents([.height(safeAreaInsets.bottom == 0 ? 420 : 380)])
+        .presentationDetents([.height(safeAreaInsets.bottom == 0 ? 450 : 410)])
         // 시트(Sheet)의 굴곡 정도를 30으로 설정
         .presentationCornerRadius(30)
     }
