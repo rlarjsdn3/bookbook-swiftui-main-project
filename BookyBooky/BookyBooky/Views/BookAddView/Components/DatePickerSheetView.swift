@@ -15,7 +15,7 @@ struct DatePickerSheetView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var selected: Date = Date()
+    @State private var selected: Date = Date() // 전에 클릭한 날짜가 선택되게 하기
     
     var body: some View {
         VStack {

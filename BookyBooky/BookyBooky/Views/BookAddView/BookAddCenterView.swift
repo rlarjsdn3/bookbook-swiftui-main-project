@@ -10,6 +10,12 @@ import SwiftDate
 
 struct BookAddCenterView: View {
     
+    // MARK: - COMPUTED PROPERTIES
+    
+    var dayInterval: Int {
+        return Int(round(selectedDate.timeIntervalSince(Date()) / 86_400.0))
+    }
+    
     // MARK: - PROPERTIES
     
     let bookInfoItem: BookInfo.Item
@@ -28,11 +34,7 @@ struct BookAddCenterView: View {
             
             targetSelectedDateLabel
             
-            // 0으로 나누어지는 문제 해결하기
-//            Text("\(Int(selectedDate.timeIntervalSince(Date()) / 86400))일 동안 하루 평균 \(bookInfoItem.subInfo.itemPage / Int(selectedDate.timeIntervalSince(Date()) / 86400))페이지를 읽어야 해요.")
-//                .font(.subheadline)
-//                .foregroundColor(.secondary)
-            // 오늘까지 읽는다고 하면, 예외 - 텍스트 설정하기
+            averageDailyReadingPageLabel
             
             selectDateMenu
         }
@@ -70,7 +72,17 @@ extension BookAddCenterView {
             .fontWeight(.bold)
     }
     
-    
+    var averageDailyReadingPageLabel: some View {
+        Group {
+            if dayInterval != 0 {
+                Text("\(dayInterval)일 동안 하루 평균 \(bookInfoItem.subInfo.itemPage / dayInterval)페이지를 읽어야 해요.")
+            } else {
+                Text("오늘까지 \(bookInfoItem.subInfo.itemPage)페이지를 읽어야 해요.")
+            }
+        }
+        .font(.subheadline)
+        .foregroundColor(.secondary)
+    }
     
     
     var selectDateMenu: some View {
