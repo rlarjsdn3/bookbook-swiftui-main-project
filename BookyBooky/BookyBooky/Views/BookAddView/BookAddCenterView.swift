@@ -75,7 +75,7 @@ extension BookAddCenterView {
     var averageDailyReadingPageLabel: some View {
         Group {
             if dayInterval != 0 {
-                Text("\(dayInterval)일 동안 하루 평균 \(bookInfoItem.subInfo.itemPage / dayInterval)페이지를 읽어야 해요.")
+                Text("\(dayInterval)일 동안 하루 평균 \(String(format: "%.1g",  Double(bookInfoItem.subInfo.itemPage) / Double(dayInterval)))페이지를 읽어야 해요.")
             } else {
                 Text("오늘까지 \(bookInfoItem.subInfo.itemPage)페이지를 읽어야 해요.")
             }

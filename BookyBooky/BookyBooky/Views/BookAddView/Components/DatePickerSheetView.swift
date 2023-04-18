@@ -10,12 +10,18 @@ import SwiftDate
 
 struct DatePickerSheetView: View {
     
+    // MARK: - PROPERTIES
+    
     @Binding var selectedDate: Date
     let bookInfo: BookInfo.Item
+    
+    // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
     
     @State private var selected: Date = Date()
+    
+    // MARK: - BODY
     
     var body: some View {
         VStack {
@@ -55,6 +61,12 @@ struct DatePickerSheetView: View {
         
     }
 }
+
+// MARK: - EXTENSIONS
+
+
+
+// MARK: - PREVIEW
 
 struct DatePickerSheetView_Previews: PreviewProvider {
     static var previews: some View {
