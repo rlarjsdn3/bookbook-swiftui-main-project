@@ -12,21 +12,26 @@ struct BookAddButtonsView: View {
     let bookInfoItem: BookInfo.Item
     @Environment(\.dismiss) var dismiss
     
+    @State private var isPresentingDateDescSheet = false
+    
     var body: some View {
         VStack {
-            modifyBookTitleButton
+            howToCalculateTimeButton
             
             bottomButtons
+        }
+        .sheet(isPresented: $isPresentingDateDescSheet) {
+            DateDescSheetView(bookInfo: bookInfoItem)
         }
     }
 }
 
 extension BookAddButtonsView {
-    var modifyBookTitleButton: some View {
+    var howToCalculateTimeButton: some View {
         Button {
-            // do something...
+            isPresentingDateDescSheet = true
         } label: {
-            Text("제목이 마음에 안 드시나요?")
+            Text("날짜 계산은 어떻게 하나요?")
                 .font(.subheadline)
         }
         .padding(.top, 10)

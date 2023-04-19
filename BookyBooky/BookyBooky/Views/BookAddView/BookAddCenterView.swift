@@ -41,9 +41,6 @@ struct BookAddCenterView: View {
         .sheet(isPresented: $isPresentingDatePickerSheet) {
             DatePickerSheetView(selectedDate: $selectedDate, bookInfo: bookInfoItem)
         }
-        .sheet(isPresented: $isPresentingDateDescSheet) {
-            DateDescSheetView(bookInfo: bookInfoItem)
-        }
         .padding(.bottom, 40)
     }
 }
@@ -55,15 +52,8 @@ extension BookAddCenterView {
         HStack {
             Text("완독 목표일을 설정해주세요.")
                 .font(.title3)
-            
-            Button {
-                isPresentingDateDescSheet = true
-            } label: {
-                Image(systemName: "questionmark.circle")
-            }
-            
+                .foregroundColor(.secondary)
         }
-        .foregroundColor(.secondary)
     }
     
     var targetSelectedDateLabel: some View {
@@ -75,7 +65,7 @@ extension BookAddCenterView {
     var averageDailyReadingPageLabel: some View {
         Group {
             if dayInterval != 0 {
-                Text("\(dayInterval)일 동안 하루 평균 \(String(format: "%.1g",  Double(bookInfoItem.subInfo.itemPage) / Double(dayInterval)))페이지를 읽어야 해요.")
+                Text("\(dayInterval)일 동안 하루 평균 \(String(format: "%d",  Double(bookInfoItem.subInfo.itemPage) / Double(dayInterval)))페이지를 읽어야 해요.")
             } else {
                 Text("오늘까지 \(bookInfoItem.subInfo.itemPage)페이지를 읽어야 해요.")
             }
