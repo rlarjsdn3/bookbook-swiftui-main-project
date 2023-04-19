@@ -44,7 +44,7 @@ struct DatePickerSheetView: View {
                 Text("설정하기")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(bookInfo.categoryName.refinedCategory.foregroundColor)
+                    .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(bookInfo.categoryName.refinedCategory.accentColor)

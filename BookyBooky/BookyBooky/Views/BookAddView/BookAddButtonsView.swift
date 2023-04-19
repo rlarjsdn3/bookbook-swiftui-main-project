@@ -27,7 +27,7 @@ struct BookAddButtonsView: View {
             }
             
             Button("취소", role: .destructive) {
-                dismiss()
+                // nothing to do...
             }
         }
         .sheet(isPresented: $isPresentingDateDescSheet) {
@@ -42,7 +42,7 @@ extension BookAddButtonsView {
             isPresentingDateDescSheet = true
         } label: {
             Text("날짜 계산은 어떻게 하나요?")
-                .font(.subheadline)
+                .font(.caption)
         }
         .padding(.top, 10)
     }
