@@ -13,12 +13,22 @@ struct BookAddButtonsView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var isPresentingDateDescSheet = false
+    @State private var isPresentingConfirmDialog = false
     
     var body: some View {
         VStack {
             howToCalculateTimeButton
             
             bottomButtons
+        }
+        .confirmationDialog("목표 도서에 추가하시겠습니까?", isPresented: $isPresentingConfirmDialog, titleVisibility: .visible) {
+            Button("확인") {
+                // do something...
+            }
+            
+            Button("취소", role: .destructive) {
+                dismiss()
+            }
         }
         .sheet(isPresented: $isPresentingDateDescSheet) {
             DateDescSheetView(bookInfo: bookInfoItem)
@@ -46,12 +56,12 @@ extension BookAddButtonsView {
             }
             
             Button {
-                // do something...
+                isPresentingConfirmDialog = true
             } label: {
                 addLabel
             }
         }
-        .padding([.horizontal, .bottom])
+        .padding(.horizontal)
     }
     
     var backLabel: some View {

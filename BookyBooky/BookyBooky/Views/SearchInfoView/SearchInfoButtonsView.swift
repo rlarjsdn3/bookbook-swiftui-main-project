@@ -28,7 +28,7 @@ struct SearchInfoButtonsView: View {
                 backButton
                 addButton
             }
-            .padding([.horizontal, .bottom])
+            .padding(.horizontal)
         }
     }
 }
