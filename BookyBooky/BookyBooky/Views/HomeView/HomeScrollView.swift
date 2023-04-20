@@ -16,7 +16,9 @@ struct HomeScrollView: View {
         ScrollView {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
                 VStack(alignment: .leading) {
-                    Text(Date().toFormat("yyyy년 MM월 dd일"))
+                    Text(Date().toFormat("M월 dd일 EEEE", locale: Locale(identifier: "ko")))
+                        .fontWeight(.bold)
+                        .foregroundColor(.secondary)
                         .opacity(scrollYOffset > 10 ? 0 : 1)
                     
                     Text("홈")
@@ -27,13 +29,32 @@ struct HomeScrollView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 15)
                 
-                Text("독서")
-                    .font(.title3)
+                Text("활동")
+                    .font(.title)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 15)
                     .padding(.bottom, -5)
                     .padding(.top, 1)
+                
+                ScrollView {
+                    Text("UI 미완성")
+                        .font(.title3)
+                        .padding()
+                        .background(.gray.opacity(0.3))
+                        .cornerRadius(15)
+                        .shimmering()
+                        .padding(.vertical, 25)
+                }
+                
+                Text("독서")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 15)
+                    .padding(.bottom, -5)
+                    .padding(.top, 1)
+                
                 
                 Section {
                     ForEach(1..<100) { index in
@@ -46,15 +67,35 @@ struct HomeScrollView: View {
                             .padding(.vertical, 25)
                     }
                 } header: {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(0..<10) { index in
-                                Text("카테고리 - \(index)")
+                    HStack {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                ForEach(0..<10) { index in
+                                    Text("카테고리 - \(index)")
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .overlay(alignment: .bottomLeading) {
+                                            Rectangle()
+                                                .frame(width: 40, height: 1)
+                                                .offset(y: 9)
+                                        }
+                                        .padding(.horizontal)
+                                }
                             }
+                            .padding(.vertical, 9)
+                            .background(.white)
                         }
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 15)
-                        .background(.white)
+                        
+                        Menu {
+                            Button("최근 읽은 순") {
+                                
+                            }
+                        } label: {
+                            Image(systemName: "line.3.horizontal.decrease.circle")
+                                .font(.title2)
+                                .foregroundColor(.black)
+                                .padding(.horizontal)
+                        }
                     }
                 }
                 .overlay(alignment: .bottom) {
