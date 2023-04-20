@@ -26,6 +26,7 @@ struct SearchInfoButtonsView: View {
             
             HStack {
                 backButton
+                
                 addButton
             }
             .padding(.horizontal)

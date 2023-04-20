@@ -28,7 +28,7 @@ struct BookShelfScrollView: View {
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
-                bookShelfTitle
+//                bookShelfTitle
                 
                 bookShelfSummary
                 

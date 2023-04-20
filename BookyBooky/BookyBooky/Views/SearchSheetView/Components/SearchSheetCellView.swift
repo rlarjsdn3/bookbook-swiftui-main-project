@@ -38,7 +38,6 @@ struct SearchSheetCellView: View {
                 rightBookSearchShape(geometryProxy: proxy)
             }
         }
-        .frame(height: COVER_HEIGHT)
         .onTapGesture {
             isPresentingSearchInfoView = true
         }
@@ -46,6 +45,7 @@ struct SearchSheetCellView: View {
             SearchInfoView(isbn13: bookItem.isbn13, isPresentingBackButton: true)
             
         }
+        .frame(height: COVER_HEIGHT)
         .padding(.top, 18)
     }
     

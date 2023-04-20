@@ -36,7 +36,7 @@ extension BookShelfHeaderView {
     var bookShelfTitle: some View {
         Text("책장")
             .navigationTitleStyle()
-            .opacity(scrollYOffset > 30.0 ? 1 : 0)
+//            .opacity(scrollYOffset > 30.0 ? 1 : 0)
     }
     
     var bookmarkButton: some View {
