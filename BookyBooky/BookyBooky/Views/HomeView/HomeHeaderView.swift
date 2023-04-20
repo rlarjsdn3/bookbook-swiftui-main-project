@@ -11,6 +11,8 @@ struct HomeHeaderView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @Binding var scrollYOffset: Double
+    
     @State private var showSearchSheetView = false
     
     // MARK: - BODY
@@ -18,8 +20,11 @@ struct HomeHeaderView: View {
     var body: some View {
         HStack {
             Spacer()
+            
             Text("홈")
                 .navigationTitleStyle()
+                .opacity(scrollYOffset > 30 ? 1 : 0)
+            
             Spacer()
         }
         .overlay {
@@ -75,6 +80,6 @@ extension HomeHeaderView {
 
 struct HomeHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeHeaderView()
+        HomeHeaderView(scrollYOffset: .constant(0.0))
     }
 }

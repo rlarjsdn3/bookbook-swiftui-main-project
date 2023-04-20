@@ -46,7 +46,7 @@ extension ContentView {
             BookShelfView()
                 .tag(ContentsTabItem.bookShelf)
             
-            Text("Analysis View")
+            AnalysisView()
                 .tag(ContentsTabItem.analysis)
         }
     }

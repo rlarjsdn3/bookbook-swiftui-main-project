@@ -9,13 +9,15 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @State private var scrollYOffset = 0.0
+    
     // MARK: - BODY
     
     var body: some View {
         VStack {
-            HomeHeaderView()
+            HomeHeaderView(scrollYOffset: $scrollYOffset)
             
-            Spacer()
+            HomeScrollView(scrollYOffset: $scrollYOffset)
         }
     }
 }
