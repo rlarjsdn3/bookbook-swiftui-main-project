@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct HomeScrollView: View {
     @State private var startOffset = 0.0
@@ -14,17 +15,51 @@ struct HomeScrollView: View {
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
-                Text("홈")
-                    .font(.system(size: 34 + getFontSizeOffset()))
+                VStack(alignment: .leading) {
+                    Text(Date().toFormat("yyyy년 MM월 dd일"))
+                        .opacity(scrollYOffset > 10 ? 0 : 1)
+                    
+                    Text("홈")
+                        .font(.system(size: 34 + getFontSizeOffset()))
+                        .fontWeight(.bold)
+                        .minimumScaleFactor(0.001)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 15)
+                
+                Text("독서")
+                    .font(.title3)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .minimumScaleFactor(0.001)
-                    .padding(.horizontal)
+                    .padding(.horizontal, 15)
+                    .padding(.bottom, -5)
+                    .padding(.top, 1)
                 
                 Section {
-                    
+                    ForEach(1..<100) { index in
+                        Text("UI 미완성")
+                            .font(.title3)
+                            .padding()
+                            .background(.gray.opacity(0.3))
+                            .cornerRadius(15)
+                            .shimmering()
+                            .padding(.vertical, 25)
+                    }
                 } header: {
-                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(0..<10) { index in
+                                Text("카테고리 - \(index)")
+                            }
+                        }
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 15)
+                        .background(.white)
+                    }
+                }
+                .overlay(alignment: .bottom) {
+                    Divider()
+                        .opacity(scrollYOffset > 30 ? 1 : 0)
                 }
             }
             .overlay(alignment: .top) {
