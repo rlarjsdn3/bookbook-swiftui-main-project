@@ -10,22 +10,24 @@ import SwiftUI
 struct HomeCategoryButtonsView: View {
     let category: Category
     @Binding var selectedCategory: Category
+    @Binding var selectedAnimation: Category
     let scrollProxy: ScrollViewProxy
     let underlineAnimation: Namespace.ID
     
     var body: some View {
         Button {
             withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-                selectedCategory = category
+                selectedAnimation = category
                 scrollProxy.scrollTo("\(category.rawValue)")
             }
+            selectedCategory = category
         } label: {
             Text(category.rawValue)
                 .font(.headline)
                 .fontWeight(.bold)
-                .foregroundColor(selectedCategory == category ? .black : .gray)
+                .foregroundColor(selectedAnimation == category ? .black : .gray)
                 .overlay(alignment: .bottomLeading) {
-                    if selectedCategory == category {
+                    if selectedAnimation == category {
                         Rectangle()
                             .offset(y: 9)
                             .fill(.black)
@@ -44,7 +46,7 @@ struct HomeCategoryButtonsView_Previews: PreviewProvider {
     
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            HomeCategoryButtonsView(category: .all, selectedCategory: .constant(.all), scrollProxy: scrollProxy, underlineAnimation: underlineAnimation)
+            HomeCategoryButtonsView(category: .all, selectedCategory: .constant(.all), selectedAnimation: .constant(.all), scrollProxy: scrollProxy, underlineAnimation: underlineAnimation)
         }
     }
 }

@@ -14,6 +14,7 @@ struct HomeScrollView: View {
     
     // 애니메이션 / 애니메이션 없는 변수 구분하기
     @State private var selectedCategory: Category = .all
+    @State private var selectedAnimation: Category = .all
     
     @State private var startOffset = 0.0
     @Binding var scrollYOffset: Double
@@ -113,7 +114,7 @@ struct HomeScrollView: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
                                     ForEach(categories, id: \.self) { category in
-                                        HomeCategoryButtonsView(category: category, selectedCategory: $selectedCategory, scrollProxy: scrollProxy, underlineAnimation: underlineAnimation)
+                                        HomeCategoryButtonsView(category: category, selectedCategory: $selectedCategory, selectedAnimation: $selectedAnimation, scrollProxy: scrollProxy, underlineAnimation: underlineAnimation)
                                     }
                                 }
                                 .padding(.vertical, 9)
