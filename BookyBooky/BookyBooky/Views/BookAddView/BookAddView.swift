@@ -48,7 +48,7 @@ struct BookAddView: View {
             
                 Spacer(minLength: 0)
                 
-                BookAddButtonsView(bookInfoItem: bookInfoItem)
+                BookAddButtonsView(bookInfoItem: bookInfoItem, selectedDate: $selectedDate)
             }
         }
         .toolbar(.hidden, for: .navigationBar)

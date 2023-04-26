@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct BookAddButtonsView: View {
     
     let bookInfoItem: BookInfo.Item
+    @Binding var selectedDate: Date
+    
     @Environment(\.dismiss) var dismiss
+    
+    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
     @State private var isPresentingDateDescSheet = false
     @State private var isPresentingConfirmDialog = false
@@ -23,11 +28,27 @@ struct BookAddButtonsView: View {
         }
         .confirmationDialog("목표 도서에 추가하시겠습니까?", isPresented: $isPresentingConfirmDialog, titleVisibility: .visible) {
             Button("확인") {
-                // do something...
+                let completeTargetBook = CompleteTargetBook(
+                    value: [
+                        "title": "\(bookInfoItem.title.refinedTitle)",
+                        "author": "\(bookInfoItem.author.refinedAuthor)",
+                        "pubDate": bookInfoItem.pubDate.refinedPublishDate,
+                        "cover": "\(bookInfoItem.cover)",
+                        "itemPage": bookInfoItem.subInfo.itemPage,
+                        "category": "\(bookInfoItem.categoryName.refinedCategory.rawValue)",
+                        "link": "\(bookInfoItem.link)",
+                        "isbn13": "\(bookInfoItem.isbn13)",
+                        "startDate": Date(),
+                        "targetDate": selectedDate,
+                        "isCompleted": false
+                    ])
+                RealmManager.shared.addCompleteTargetBook(completeTargetBook)
+                
+                dismiss()
             }
             
-            Button("취소", role: .destructive) {
-                // nothing to do...
+            Button("취소", role: .cancel) {
+                
             }
         }
         .sheet(isPresented: $isPresentingDateDescSheet) {
@@ -89,6 +110,6 @@ extension BookAddButtonsView {
 
 struct BookAddButtonsView_Previews: PreviewProvider {
     static var previews: some View {
-        BookAddButtonsView(bookInfoItem: BookInfo.Item.preview[0])
+        BookAddButtonsView(bookInfoItem: BookInfo.Item.preview[0], selectedDate: .constant(Date()))
     }
 }

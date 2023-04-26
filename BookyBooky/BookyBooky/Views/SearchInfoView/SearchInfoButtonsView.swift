@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct SearchInfoButtonsView: View {
     
@@ -15,6 +16,8 @@ struct SearchInfoButtonsView: View {
     @Binding var isLoading: Bool
     
     // MARK: - WRAPPER PROPERTIES
+    
+    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
     @Environment(\.dismiss) var dismiss
     
@@ -31,6 +34,13 @@ struct SearchInfoButtonsView: View {
             }
             .padding(.horizontal)
         }
+    }
+    
+    func isExist() -> Bool {
+        for book in completeTargetBooks where book.isbn13 == bookInfo.isbn13 {
+            return false
+        }
+        return true
     }
 }
 
@@ -70,12 +80,16 @@ extension SearchInfoButtonsView {
     
     var addButton: some View {
         // 이미 목표 도서에 추가되어 있는 경우, 버튼 잠그기 (안 보이게 하기)
-        NavigationLink {
-            BookAddView(bookInfoItem: bookInfo)
-        } label: {
-            addLabel
+        Group {
+            if isExist() {
+                NavigationLink {
+                    BookAddView(bookInfoItem: bookInfo)
+                } label: {
+                    addLabel
+                }
+                .disabled(isLoading)
+            }
         }
-        .disabled(isLoading)
     }
     
     var addLabel: some View {

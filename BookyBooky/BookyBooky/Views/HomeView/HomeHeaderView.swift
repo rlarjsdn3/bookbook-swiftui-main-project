@@ -65,7 +65,7 @@ struct HomeHeaderView: View {
                             .font(.title2)
                             .foregroundColor(.black)
                     }
-                    .offset(y: scrollYOffset > 270 ? 0 : 15)
+                    .offset(y: scrollYOffset > 270 ? 0 : 5)
                     .opacity(scrollYOffset > 270 ? 1 : 0)
                     .navigationBarItemStyle()
                 }

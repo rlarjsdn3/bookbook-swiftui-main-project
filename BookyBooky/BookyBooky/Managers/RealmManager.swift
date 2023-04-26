@@ -10,6 +10,7 @@ import RealmSwift
 
 class RealmManager {
     @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
     let realm = openLocalRealm()
     
@@ -42,5 +43,9 @@ class RealmManager {
         } catch let error as NSError {
             print("error - \(error.localizedDescription)")
         }
+    }
+    
+    func addCompleteTargetBook(_ object: CompleteTargetBook) {
+        $completeTargetBooks.append(object)
     }
 }
