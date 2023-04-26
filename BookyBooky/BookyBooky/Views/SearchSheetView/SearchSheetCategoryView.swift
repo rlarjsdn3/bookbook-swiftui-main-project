@@ -65,7 +65,7 @@ extension SearchSheetCategoryView {
     func categoryButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack(spacing: -20) {
             ForEach(aladinAPIManager.categories, id: \.self) { category in
-                CategoryButtonView(
+                SearchCategoryButtonView(
                     selectedCategory: $selectedCategory,
                     category: category,
                     categoryAnimation: $categoryAnimation,

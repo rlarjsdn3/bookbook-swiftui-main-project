@@ -75,11 +75,6 @@ struct HomeHeaderView: View {
             SearchSheetView()
         }
         .padding(.vertical)
-        .background(scrollYOffset > 1 ? Color("Background") : .white)
-        .overlay(alignment: .bottom) {
-            Divider()
-                .opacity(scrollYOffset > 1 ? 1 : 0)
-        }
     }
 }
 

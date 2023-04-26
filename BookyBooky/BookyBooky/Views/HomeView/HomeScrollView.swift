@@ -12,8 +12,13 @@ import RealmSwift
 struct HomeScrollView: View {
     @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
+    // 애니메이션 / 애니메이션 없는 변수 구분하기
+    @State private var selectedCategory: Category = .all
+    
     @State private var startOffset = 0.0
     @Binding var scrollYOffset: Double
+    
+    @Namespace var underlineAnimation
     
     var categories: [Category] {
         var categories: [Category] = [.all]
@@ -23,6 +28,21 @@ struct HomeScrollView: View {
         }
         
         return categories
+    }
+    
+    var filteredCompleteTargetBooks: [CompleteTargetBook] {
+        var filteredBooks: [CompleteTargetBook] = []
+        
+        // 애니메이션이 없는 변수로 코드 수정하기
+        if selectedCategory == .all {
+            return Array(completeTargetBooks)
+        } else {
+            for book in completeTargetBooks where selectedCategory == book.category {
+                filteredBooks.append(book)
+            }
+            
+            return filteredBooks
+        }
     }
     
     var body: some View {
@@ -84,33 +104,21 @@ struct HomeScrollView: View {
                 
                 
                 Section {
-                    ForEach(completeTargetBooks) { targetBook in
+                    ForEach(filteredCompleteTargetBooks) { targetBook in
                         Text("\(targetBook.title)")
                     }
                 } header: {
                     HStack {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(categories, id: \.self) { category in
-                                    Button {
-                                        
-                                    } label: {
-                                        Text(category.rawValue)
-                                            .font(.headline)
-                                            .fontWeight(.bold)
-                                            .overlay(alignment: .bottomLeading) {
-                                                Rectangle()
-                                                    .frame(width: 40, height: 1)
-                                                    .offset(y: 9)
-                                            }
-                                            .padding(.horizontal)
+                        ScrollViewReader { scrollProxy in
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(categories, id: \.self) { category in
+                                        HomeCategoryButtonsView(category: category, selectedCategory: $selectedCategory, scrollProxy: scrollProxy, underlineAnimation: underlineAnimation)
                                     }
-                                    .foregroundColor(.black)
-
                                 }
+                                .padding(.vertical, 9)
+                                .background(.white)
                             }
-                            .padding(.vertical, 9)
-                            .background(.white)
                         }
                     }
                     .background(.white)
