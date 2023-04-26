@@ -107,6 +107,7 @@ struct HomeScrollView: View {
                 Section {
                     ForEach(filteredCompleteTargetBooks) { targetBook in
                         Text("\(targetBook.title)")
+                            .padding(50)
                     }
                 } header: {
                     HStack {
@@ -117,16 +118,17 @@ struct HomeScrollView: View {
                                         HomeCategoryButtonsView(category: category, selectedCategory: $selectedCategory, selectedAnimation: $selectedAnimation, scrollProxy: scrollProxy, underlineAnimation: underlineAnimation)
                                     }
                                 }
+                                .padding(.horizontal, 7)
                                 .padding(.vertical, 9)
                                 .background(.white)
                             }
                         }
                     }
                     .background(.white)
-                }
-                .overlay(alignment: .bottom) {
-                    Divider()
-                        .opacity(scrollYOffset > 30 ? 1 : 0)
+                    .overlay(alignment: .bottom) {
+                        Divider()
+                            .opacity(scrollYOffset > 30 ? 1 : 0)
+                    }
                 }
             }
             .overlay(alignment: .top) {

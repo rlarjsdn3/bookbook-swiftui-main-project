@@ -35,7 +35,7 @@ struct HomeCategoryButtonsView: View {
                             .matchedGeometryEffect(id: "underline", in: underlineAnimation)
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 10)
         }
         .id("\(category.rawValue)")
     }
