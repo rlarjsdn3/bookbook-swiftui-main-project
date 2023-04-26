@@ -48,10 +48,26 @@ struct HomeHeaderView: View {
                 Spacer()
                 
                 // 추후 프로필 이미지 기능 구현 시 코드 수정 예정
-                Button {
+                ZStack {
+                    Button {
+                        
+                    } label: {
+                        settingImage
+                    }
+                    .opacity(scrollYOffset > 268 ? 0 : 1)
                     
-                } label: {
-                    profileImage
+                    Menu {
+                        Button("최근 읽은 순") {
+                            
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.black)
+                    }
+                    .offset(y: scrollYOffset > 270 ? 0 : 15)
+                    .opacity(scrollYOffset > 270 ? 1 : 0)
+                    .navigationBarItemStyle()
                 }
             }
         }
@@ -70,8 +86,8 @@ extension HomeHeaderView {
             .navigationBarItemStyle()
     }
     
-    var profileImage: some View {
-        Image(systemName: "person.crop.circle")
+    var settingImage: some View {
+        Image(systemName: "gearshape.fill")
             .navigationBarItemStyle()
     }
 }

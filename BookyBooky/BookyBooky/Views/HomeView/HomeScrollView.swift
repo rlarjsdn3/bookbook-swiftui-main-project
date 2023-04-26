@@ -47,13 +47,26 @@ struct HomeScrollView: View {
                         .padding(.vertical, 25)
                 }
                 
-                Text("독서")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 15)
-                    .padding(.bottom, -5)
-                    .padding(.top, 1)
+                HStack {
+                    Text("독서")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 15)
+                        .padding(.bottom, -5)
+                        .padding(.top, 1)
+                    
+                    Menu {
+                        Button("최근 읽은 순") {
+                            
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.black)
+                    }
+                    .navigationBarItemStyle()
+                }
                 
                 
                 Section {
@@ -84,17 +97,6 @@ struct HomeScrollView: View {
                             }
                             .padding(.vertical, 9)
                             .background(.white)
-                        }
-                        
-                        Menu {
-                            Button("최근 읽은 순") {
-                                
-                            }
-                        } label: {
-                            Image(systemName: "line.3.horizontal.decrease.circle")
-                                .font(.title2)
-                                .foregroundColor(.black)
-                                .padding(.horizontal)
                         }
                     }
                 }

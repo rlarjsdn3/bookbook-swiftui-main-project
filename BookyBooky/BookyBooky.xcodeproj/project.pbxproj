@@ -196,8 +196,8 @@
 		9E0434AC29E2A374009A2161 /* Modifier */ = {
 			isa = PBXGroup;
 			children = (
-				9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */,
 				9E0434AF29E2AEFF009A2161 /* NavigationTitleStyle.swift */,
+				9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */,
 			);
 			path = Modifier;
 			sourceTree = "<group>";
