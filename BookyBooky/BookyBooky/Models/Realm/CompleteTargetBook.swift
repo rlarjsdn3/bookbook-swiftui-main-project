@@ -12,6 +12,7 @@ class CompleteTargetBook: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var _id: ObjectId  // 주요 키
     @Persisted var title: String                    // 제목
     @Persisted var author: String                   // 저자
+    @Persisted var publisher: String                // 출판사
     @Persisted var pubDate: Date                    // 출판일
     @Persisted var cover: String                    // 표지(링크)
     @Persisted var itemPage: Int                    // 페이지 쪽 수

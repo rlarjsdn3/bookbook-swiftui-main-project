@@ -10,11 +10,17 @@ import SwiftDate
 import RealmSwift
 
 struct HomeScrollView: View {
+    
+    let COVER_HEGHT_RATIO = 0.18        // 화면 사이즈 대비 표지(커버) 이미지 높이 비율
+    let BACKGROUND_HEIGHT_RATIO = 0.3   // 화면 사이즈 대비 바탕 색상 높이 비율
+    
     @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
     // 애니메이션 / 애니메이션 없는 변수 구분하기
     @State private var selectedCategory: Category = .all
     @State private var selectedAnimation: Category = .all
+    
+    @State private var isLoading = true
     
     @State private var startOffset = 0.0
     @Binding var scrollYOffset: Double
@@ -65,7 +71,7 @@ struct HomeScrollView: View {
                 .padding(.vertical, 5)
                 
                 Text("활동")
-                    .font(.title)
+                    .font(.title2)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 15)
@@ -84,7 +90,7 @@ struct HomeScrollView: View {
                 
                 HStack {
                     Text("독서")
-                        .font(.title)
+                        .font(.title2)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 15)
@@ -105,9 +111,62 @@ struct HomeScrollView: View {
                 
                 
                 Section {
-                    ForEach(filteredCompleteTargetBooks) { targetBook in
-                        Text("\(targetBook.title)")
-                            .padding(50)
+                    if completeTargetBooks.isEmpty {
+                        VStack(spacing: 5) {
+                            Text("읽고 있는 도서가 없어요 :)")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                            
+                            Text("우측 상단 버튼을 클릭해 독서를 시작해보세요!")
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.top, 50)
+                    } else {
+                            // 목표 도서 셀 UI 코드
+                        VStack {
+                            ForEach(filteredCompleteTargetBooks) { targetBook in
+                                HStack {
+                                    asyncImage(url: targetBook.cover)
+                                    
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        Text("\(targetBook.title)")
+                                            .font(.title3)
+                                            .fontWeight(.bold)
+                                            .lineLimit(1)
+                                        
+                                        HStack(spacing: 0) {
+                                            Text("\(targetBook.author)")
+                                            Text("・ ")
+                                            Text("\(targetBook.publisher)")
+                                        }
+                                        .font(.callout)
+                                        .foregroundColor(.secondary)
+                                        
+                                        Spacer()
+                                        
+                                        Text("\(targetBook.startDate.toFormat("yyyy년 MM월 dd일")) ~ \(targetBook.targetDate.toFormat("yyyy년 MM월 dd일"))")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                        
+                                        
+                                        Gauge(value: 0.5) {
+                                            Text("독서량")
+                                        }
+                                        .gaugeStyle(.accessoryLinear)
+                                        .tint(Color.black.gradient)
+                                    }
+                                    .padding(5)
+                                    
+                                    Spacer()
+                                }
+                                .padding(5)
+                                .background(Color("Background"))
+                                .cornerRadius(10)
+                                .padding(.horizontal)
+                                .padding(.top, 5)
+                            }
+                        }
+                        .padding(.bottom, 30)
                     }
                 } header: {
                     HStack {
@@ -173,7 +232,40 @@ struct HomeScrollView: View {
 }
 
 extension HomeScrollView {
+    func asyncImage(url: String) -> some View {
+        AsyncImage(url: URL(string: url),
+                   transaction: Transaction(animation: .default)) { phase in
+            switch phase {
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 80, height: 120)
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 6,
+                            style: .continuous
+                        )
+                    )
+                    .onAppear {
+                        isLoading = false
+                    }
+            case .empty:
+                loadingCover
+            case .failure(_):
+                loadingCover
+            @unknown default:
+                loadingCover
+            }
+        }
+    }
     
+    var loadingCover: some View {
+        Rectangle()
+            .fill(.gray.opacity(0.2))
+            .frame(width: 80, height: 120)
+            .shimmering()
+    }
 }
 
 struct HomeScrollView_Previews: PreviewProvider {

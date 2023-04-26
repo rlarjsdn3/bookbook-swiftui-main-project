@@ -32,6 +32,7 @@ struct BookAddButtonsView: View {
                     value: [
                         "title": "\(bookInfoItem.title.refinedTitle)",
                         "author": "\(bookInfoItem.author.refinedAuthor)",
+                        "publisher": "\(bookInfoItem.publisher)",
                         "pubDate": bookInfoItem.pubDate.refinedPublishDate,
                         "cover": "\(bookInfoItem.cover)",
                         "itemPage": bookInfoItem.subInfo.itemPage,
