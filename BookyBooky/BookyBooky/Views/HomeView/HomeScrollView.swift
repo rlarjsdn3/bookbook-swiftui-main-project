@@ -7,10 +7,23 @@
 
 import SwiftUI
 import SwiftDate
+import RealmSwift
 
 struct HomeScrollView: View {
+    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
+    
     @State private var startOffset = 0.0
     @Binding var scrollYOffset: Double
+    
+    var categories: [Category] {
+        var categories: [Category] = [.all]
+        
+        for book in completeTargetBooks where !categories.contains(book.category) {
+            categories.append(book.category)
+        }
+        
+        return categories
+    }
     
     var body: some View {
         ScrollView {
@@ -28,6 +41,7 @@ struct HomeScrollView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 15)
+                .padding(.vertical, 5)
                 
                 Text("활동")
                     .font(.title)
@@ -70,35 +84,36 @@ struct HomeScrollView: View {
                 
                 
                 Section {
-                    ForEach(1..<100) { index in
-                        Text("UI 미완성")
-                            .font(.title3)
-                            .padding()
-                            .background(.gray.opacity(0.3))
-                            .cornerRadius(15)
-                            .shimmering()
-                            .padding(.vertical, 25)
+                    ForEach(completeTargetBooks) { targetBook in
+                        Text("\(targetBook.title)")
                     }
                 } header: {
                     HStack {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                ForEach(0..<10) { index in
-                                    Text("카테고리 - \(index)")
-                                        .font(.headline)
-                                        .fontWeight(.bold)
-                                        .overlay(alignment: .bottomLeading) {
-                                            Rectangle()
-                                                .frame(width: 40, height: 1)
-                                                .offset(y: 9)
-                                        }
-                                        .padding(.horizontal)
+                                ForEach(categories, id: \.self) { category in
+                                    Button {
+                                        
+                                    } label: {
+                                        Text(category.rawValue)
+                                            .font(.headline)
+                                            .fontWeight(.bold)
+                                            .overlay(alignment: .bottomLeading) {
+                                                Rectangle()
+                                                    .frame(width: 40, height: 1)
+                                                    .offset(y: 9)
+                                            }
+                                            .padding(.horizontal)
+                                    }
+                                    .foregroundColor(.black)
+
                                 }
                             }
                             .padding(.vertical, 9)
                             .background(.white)
                         }
                     }
+                    .background(.white)
                 }
                 .overlay(alignment: .bottom) {
                     Divider()
@@ -112,9 +127,10 @@ struct HomeScrollView: View {
                         if startOffset == 0 {
                             self.startOffset = offset
                         }
-                        withAnimation(.easeInOut(duration: 0.2)) {
+                        withAnimation(.easeInOut(duration: 0.1)) {
                             scrollYOffset = startOffset - offset
                         }
+                        
                         print(scrollYOffset)
                     }
                     return Color.clear

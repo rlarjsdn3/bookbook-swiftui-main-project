@@ -35,13 +35,13 @@ struct BookAddButtonsView: View {
                         "pubDate": bookInfoItem.pubDate.refinedPublishDate,
                         "cover": "\(bookInfoItem.cover)",
                         "itemPage": bookInfoItem.subInfo.itemPage,
-                        "category": "\(bookInfoItem.categoryName.refinedCategory.rawValue)",
+                        "category": bookInfoItem.categoryName.refinedCategory,
                         "link": "\(bookInfoItem.link)",
                         "isbn13": "\(bookInfoItem.isbn13)",
                         "startDate": Date(),
                         "targetDate": selectedDate,
                         "isCompleted": false
-                    ])
+                    ] as [String : Any])
                 RealmManager.shared.addCompleteTargetBook(completeTargetBook)
                 
                 dismiss()

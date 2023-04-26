@@ -23,7 +23,7 @@ struct HomeHeaderView: View {
             
             Text("홈")
                 .navigationTitleStyle()
-                .opacity(scrollYOffset > 30 ? 1 : 0)
+                .opacity(scrollYOffset > 10 ? 1 : 0)
             
             Spacer()
         }
@@ -75,6 +75,11 @@ struct HomeHeaderView: View {
             SearchSheetView()
         }
         .padding(.vertical)
+        .background(scrollYOffset > 1 ? Color("Background") : .white)
+        .overlay(alignment: .bottom) {
+            Divider()
+                .opacity(scrollYOffset > 1 ? 1 : 0)
+        }
     }
 }
 
