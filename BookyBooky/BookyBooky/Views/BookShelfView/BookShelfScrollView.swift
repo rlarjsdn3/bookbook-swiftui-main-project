@@ -28,8 +28,6 @@ struct BookShelfScrollView: View {
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
-//                bookShelfTitle
-                
                 bookShelfSummary
                 
                 favoriteBookSection
@@ -60,9 +58,26 @@ struct BookShelfScrollView: View {
                     .background(.white)
                     .overlay(alignment: .bottom) {
                         Divider()
-                            .opacity(!favoriteBooks.isEmpty ? scrollYOffset > 560.0 ? 1 : 0 : scrollYOffset > 369.0 ? 1 : 0)
+                            .opacity(!favoriteBooks.isEmpty ? scrollYOffset > 480.0 ? 1 : 0 : scrollYOffset > 290.0 ? 1 : 0)
                     }
                 }
+            }
+            .overlay(alignment: .top) {
+                GeometryReader { proxy -> Color in
+                    DispatchQueue.main.async {
+                        let offset = proxy.frame(in: .global).minY
+                        if startOffset == 0 {
+                            self.startOffset = offset
+                        }
+                        withAnimation(.easeInOut(duration: 0.1)) {
+                            scrollYOffset = startOffset - offset
+                        }
+                        
+                        print(scrollYOffset)
+                    }
+                    return Color.clear
+                }
+                .frame(width: 0, height: 0)
             }
             .sheet(isPresented: $isPresentingFavoriteBooksView) {
                 FavoriteBooksView()
@@ -178,7 +193,7 @@ extension BookShelfScrollView {
         .background(.white)
         .overlay(alignment: .bottom) {
             Divider()
-                .opacity(scrollYOffset > 219.0 ? 1 : 0)
+                .opacity(scrollYOffset > 150.0 ? 1 : 0)
         }
     }
 }
