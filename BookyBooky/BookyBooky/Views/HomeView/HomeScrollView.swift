@@ -128,23 +128,29 @@ struct HomeScrollView: View {
                                 HStack {
                                     asyncImage(url: targetBook.cover)
                                     
-                                    VStack(alignment: .leading, spacing: 5) {
+                                    VStack(alignment: .leading, spacing: 3) {
                                         Text("\(targetBook.title)")
                                             .font(.title3)
                                             .fontWeight(.bold)
                                             .lineLimit(1)
                                         
-                                        HStack(spacing: 0) {
+                                        VStack(alignment: .leading, spacing: 0) {
                                             Text("\(targetBook.author)")
-                                            Text("・ ")
-                                            Text("\(targetBook.publisher)")
+                                                .fontWeight(.semibold)
+                                            
+                                            HStack(spacing: 0) {
+                                                Text("\(targetBook.publisher)")
+                                                Text("・")
+                                                Text("\(targetBook.category.rawValue)")
+                                            }
+                                            .font(.callout)
+                                            .foregroundColor(.secondary)
                                         }
-                                        .font(.callout)
-                                        .foregroundColor(.secondary)
                                         
                                         Spacer()
                                         
-                                        Text("\(targetBook.startDate.toFormat("yyyy년 MM월 dd일")) ~ \(targetBook.targetDate.toFormat("yyyy년 MM월 dd일"))")
+                                        // 기한이 오늘까지인 경우, 내일까지인 경우 예외 처리 코드 작성하기
+                                        Text("\(targetBook.targetDate.toFormat("yyyy년 MM월 dd일"))까지 (\(Int(targetBook.targetDate.timeIntervalSince(targetBook.startDate) / 86400.0))일 남음)")
                                             .font(.caption)
                                             .foregroundColor(.secondary)
                                         
