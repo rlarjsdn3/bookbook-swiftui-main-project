@@ -80,7 +80,6 @@ extension SalesPointDescSheetView {
         } label: {
             backLabel
         }
-        .padding(.bottom)
     }
     
     var backLabel: some View {

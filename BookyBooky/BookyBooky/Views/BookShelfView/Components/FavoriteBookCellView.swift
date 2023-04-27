@@ -52,7 +52,8 @@ struct FavoriteBookCellView: View {
                 SearchInfoView(isbn13: favoriteBook.isbn13, isPresentingBackButton: true)
                 
             }
-            .padding(.vertical, 10)
+            .padding(.top, 2)
+            .padding(.bottom, 10)
         }
     }
 }
@@ -75,7 +76,7 @@ extension FavoriteBookCellView {
                         height: COVER_HEIGHT
                     )
                     .cornerRadius(10)
-                    .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
+                    .shadow(color: .black.opacity(0.2), radius: 5, x: -5, y: 5)
                     .onAppear {
                         isLoading = false
                     }

@@ -48,13 +48,12 @@ struct BookShelfScrollView: View {
                         Text("읽은 도서")
                             .font(.headline)
                             .fontWeight(.bold)
-                            .padding(.vertical, 10)
-                            .padding([.horizontal, .bottom], 5)
                         
                         Spacer()
                     }
-                    .padding(.vertical, 6)
-                    .padding([.horizontal, .bottom], 5)
+                    .padding(.top, -8)
+                    .padding(.vertical, 10)
+                    .padding(.bottom, 5)
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(.white)
@@ -86,8 +85,6 @@ struct BookShelfScrollView: View {
             }
         }
     }
-    
-    // 이제 사용 안하는 함수 -> HomeView로 이동
 }
 
 // MARK: - EXTENSIONS
@@ -158,7 +155,6 @@ extension BookShelfScrollView {
                 // 최근에 추가된 상위 10게 힝목만 보여줌
                 ForEach(favoriteBooks.reversed().prefix(min(10, favoriteBooks.count))) { favoriteBook in
                     FavoriteBookCellView(favoriteBook: favoriteBook, viewType: .sheet)
-                  
                 }
             }
         }
@@ -189,7 +185,7 @@ extension BookShelfScrollView {
             .disabled(favoriteBooks.isEmpty)
 
         }
-        .padding(.top, -7)
+        .padding(.top, -8)
         .padding(.vertical, 10)
         .padding(.bottom, 5)
         .padding(.horizontal)

@@ -142,6 +142,7 @@ struct HomeScrollView: View {
                                             }
                                             .font(.callout)
                                             .foregroundColor(.secondary)
+                                            .lineLimit(1)
                                         }
                                         
                                         Spacer()
