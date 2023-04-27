@@ -13,7 +13,8 @@ struct HomeHeaderView: View {
     
     @Binding var scrollYOffset: Double
     
-    @State private var showSearchSheetView = false
+    @State private var isPresentingSettingsView = false
+    @State private var isPresentingSearchSheetView = false
     
     // MARK: - BODY
     
@@ -37,7 +38,7 @@ struct HomeHeaderView: View {
                     }
                     
                     Button {
-                        showSearchSheetView = true
+                        isPresentingSearchSheetView = true
                     } label: {
                         Label("검색 추가", systemImage: "magnifyingglass")
                     }
@@ -50,7 +51,7 @@ struct HomeHeaderView: View {
                 // 추후 프로필 이미지 기능 구현 시 코드 수정 예정
                 ZStack {
                     Button {
-                        
+                        isPresentingSettingsView = true
                     } label: {
                         settingImage
                     }
@@ -71,7 +72,10 @@ struct HomeHeaderView: View {
                 }
             }
         }
-        .sheet(isPresented: $showSearchSheetView) {
+        .sheet(isPresented: $isPresentingSettingsView) {
+            SettingsView()
+        }
+        .sheet(isPresented: $isPresentingSearchSheetView) {
             SearchSheetView()
         }
         .padding(.vertical)
