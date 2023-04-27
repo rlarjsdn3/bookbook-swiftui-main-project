@@ -48,6 +48,8 @@ struct BookShelfScrollView: View {
                         Text("읽은 도서")
                             .font(.headline)
                             .fontWeight(.bold)
+                            .padding(.vertical, 10)
+                            .padding([.horizontal, .bottom], 5)
                         
                         Spacer()
                     }
@@ -176,18 +178,20 @@ extension BookShelfScrollView {
             Text("찜한 도서")
                 .font(.headline)
                 .fontWeight(.bold)
+            
             Spacer()
             
             Button {
                 isPresentingFavoriteBooksView = true
             } label: {
-                Text("자세히 보기")
+                Text("더 보기")
             }
             .disabled(favoriteBooks.isEmpty)
 
         }
-        .padding(.vertical, 6)
-        .padding([.horizontal, .bottom], 5)
+        .padding(.top, -7)
+        .padding(.vertical, 10)
+        .padding(.bottom, 5)
         .padding(.horizontal)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.white)

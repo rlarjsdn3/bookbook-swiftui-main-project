@@ -29,7 +29,7 @@ struct HomeCategoryButtonsView: View {
                 .overlay(alignment: .bottomLeading) {
                     if selectedAnimation == category {
                         Rectangle()
-                            .offset(y: 9)
+                            .offset(y: 15)
                             .fill(.black)
                             .frame(width: 40, height: 1)
                             .matchedGeometryEffect(id: "underline", in: underlineAnimation)

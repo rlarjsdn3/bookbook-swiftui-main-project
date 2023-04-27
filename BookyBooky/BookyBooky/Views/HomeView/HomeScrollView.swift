@@ -74,9 +74,7 @@ struct HomeScrollView: View {
                     .font(.title2)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 15)
-                    .padding(.bottom, -5)
-                    .padding(.top, 1)
+                    .padding(.leading, 15)
                 
                 ScrollView {
                     Text("UI 미완성")
@@ -93,9 +91,7 @@ struct HomeScrollView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 15)
-                        .padding(.bottom, -5)
-                        .padding(.top, 1)
+                        .padding(.leading, 15)
                     
                     Menu {
                         Button("최근 읽은 순") {
@@ -108,6 +104,7 @@ struct HomeScrollView: View {
                     }
                     .navigationBarItemStyle()
                 }
+                .padding(.bottom, -10)
                 
                 
                 Section {
@@ -138,7 +135,7 @@ struct HomeScrollView: View {
                                             Text("\(targetBook.author)")
                                                 .fontWeight(.semibold)
                                             
-                                            HStack(spacing: 0) {
+                                            HStack(spacing: 3) {
                                                 Text("\(targetBook.publisher)")
                                                 Text("・")
                                                 Text("\(targetBook.category.rawValue)")
@@ -149,17 +146,25 @@ struct HomeScrollView: View {
                                         
                                         Spacer()
                                         
-                                        // 기한이 오늘까지인 경우, 내일까지인 경우 예외 처리 코드 작성하기
-                                        Text("\(targetBook.targetDate.toFormat("yyyy년 MM월 dd일"))까지 (\(Int(targetBook.targetDate.timeIntervalSince(targetBook.startDate) / 86400.0))일 남음)")
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
+                                        HStack(alignment: .center) {
+                                            // 기한이 오늘까지인 경우, 내일까지인 경우 예외 처리 코드 작성하기
+                                            Text("\(targetBook.targetDate.toFormat("yyyy년 MM월 dd일"))까지 (\(Int(targetBook.targetDate.timeIntervalSince(targetBook.startDate) / 86400.0))일 남음)")
+                                            
+                                            Spacer(minLength: 0)
+                                            
+                                            // 디자인 다시 고민해보기
+                                            Text("50%")
+                                                .font(.body)
+                                        }
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
                                         
                                         
                                         Gauge(value: 0.5) {
                                             Text("독서량")
                                         }
                                         .gaugeStyle(.accessoryLinear)
-                                        .tint(Color.black.gradient)
+                                        .tint(Gradient(colors: [.gray, .black]))
                                     }
                                     .padding(5)
                                     
@@ -173,6 +178,7 @@ struct HomeScrollView: View {
                             }
                         }
                         .padding(.bottom, 30)
+                        // 목표 도서 셀 끝
                     }
                 } header: {
                     HStack {
@@ -183,12 +189,14 @@ struct HomeScrollView: View {
                                         HomeCategoryButtonsView(category: category, selectedCategory: $selectedCategory, selectedAnimation: $selectedAnimation, scrollProxy: scrollProxy, underlineAnimation: underlineAnimation)
                                     }
                                 }
-                                .padding(.horizontal, 7)
-                                .padding(.vertical, 9)
-                                .background(.white)
+                                .padding(.vertical, 10)
+                                .padding([.horizontal, .bottom], 5)
+//                                .padding(.horizontal, 7)
+//                                .padding(.vertical, 9)
                             }
                         }
                     }
+//                    .padding(.top, 2)
                     .background(.white)
                     .overlay(alignment: .bottom) {
                         Divider()
