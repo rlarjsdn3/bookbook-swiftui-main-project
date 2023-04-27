@@ -14,10 +14,12 @@ struct HomeView: View {
     // MARK: - BODY
     
     var body: some View {
-        VStack(spacing: 0) {
-            HomeHeaderView(scrollYOffset: $scrollYOffset)
-            
-            HomeScrollView(scrollYOffset: $scrollYOffset)
+        NavigationStack {
+            VStack(spacing: 0) {
+                HomeHeaderView(scrollYOffset: $scrollYOffset)
+                
+                HomeScrollView(scrollYOffset: $scrollYOffset)
+            }
         }
     }
 }

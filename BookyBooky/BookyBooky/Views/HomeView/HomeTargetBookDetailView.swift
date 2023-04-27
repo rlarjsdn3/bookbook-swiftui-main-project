@@ -6,15 +6,20 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct HomeTargetBookDetailView: View {
+    @ObservedRealmObject var targetBook: CompleteTargetBook
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("\(targetBook.title)")
     }
 }
 
 struct HomeTargetBookDetailView_Previews: PreviewProvider {
+    @ObservedResults(CompleteTargetBook.self) static var completeTargetBooks
+    
     static var previews: some View {
-        HomeTargetBookDetailView()
+        HomeTargetBookDetailView(targetBook: completeTargetBooks[0])
     }
 }

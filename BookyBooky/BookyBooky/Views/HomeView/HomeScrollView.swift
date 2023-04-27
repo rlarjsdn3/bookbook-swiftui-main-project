@@ -14,6 +14,8 @@ struct HomeScrollView: View {
     let COVER_HEGHT_RATIO = 0.18        // 화면 사이즈 대비 표지(커버) 이미지 높이 비율
     let BACKGROUND_HEIGHT_RATIO = 0.3   // 화면 사이즈 대비 바탕 색상 높이 비율
     
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    
     @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
     // 애니메이션 / 애니메이션 없는 변수 구분하기
@@ -35,6 +37,21 @@ struct HomeScrollView: View {
         }
         
         return categories
+    }
+    
+    var filteredCompleteTargetBooks: [CompleteTargetBook] {
+        var filteredBooks: [CompleteTargetBook] = []
+        
+        // 애니메이션이 없는 변수로 코드 수정하기
+        if selectedCategory == .all {
+            return Array(completeTargetBooks)
+        } else {
+            for book in completeTargetBooks where selectedCategory == book.category {
+                filteredBooks.append(book)
+            }
+            
+            return filteredBooks
+        }
     }
     
     var body: some View {
@@ -104,9 +121,13 @@ struct HomeScrollView: View {
                         }
                         .padding(.top, 50)
                     } else {
-                            // 목표 도서 셀 UI 코드
-                        TargetBookCellView(selectedCategory: $selectedCategory)
-                        // 목표 도서 셀 끝
+                        LazyVGrid(columns: columns, spacing: 25) {
+                            ForEach(filteredCompleteTargetBooks) { book in
+                                TargetBookCellView(targetBook: book, selectedCategory: $selectedCategory)
+                            }
+                        }
+                        .padding([.top, .horizontal])
+                        .padding(.bottom, 50)
                     }
                 } header: {
                     HStack {
