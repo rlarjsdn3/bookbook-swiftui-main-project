@@ -18,8 +18,10 @@ struct HomeCategoryButtonsView: View {
         Button {
             withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
                 selectedAnimation = category
+                scrollProxy.scrollTo("Scroll_To_Category", anchor: .top)
                 scrollProxy.scrollTo("\(category.rawValue)")
             }
+//            scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
             selectedCategory = category
         } label: {
             Text(category.rawValue)
@@ -37,7 +39,6 @@ struct HomeCategoryButtonsView: View {
                 }
                 .padding(.horizontal, 10)
         }
-        .id("\(category.rawValue)")
     }
 }
 

@@ -57,123 +57,131 @@ struct HomeScrollView: View {
     }
     
     var body: some View {
-        ScrollView {
-            LazyVStack(pinnedViews: [.sectionHeaders]) {
-                VStack(alignment: .leading) {
-                    Text(Date().toFormat("M월 dd일 EEEE", locale: Locale(identifier: "ko")))
-                        .fontWeight(.bold)
-                        .foregroundColor(.secondary)
-                        .opacity(scrollYOffset > 10 ? 0 : 1)
-                    
-                    Text("홈")
-                        .font(.system(size: 34 + getFontSizeOffset()))
-                        .fontWeight(.bold)
-                        .minimumScaleFactor(0.001)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 15)
-                .padding(.vertical, 5)
-                
-                Text("활동")
-                    .font(.title2)
-                    .fontWeight(.bold)
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                LazyVStack(pinnedViews: [.sectionHeaders]) {
+                    VStack(alignment: .leading) {
+                        Text(Date().toFormat("M월 dd일 EEEE", locale: Locale(identifier: "ko")))
+                            .fontWeight(.bold)
+                            .foregroundColor(.secondary)
+                            .opacity(scrollYOffset > 10 ? 0 : 1)
+                        
+                        Text("홈")
+                            .font(.system(size: 34 + getFontSizeOffset()))
+                            .fontWeight(.bold)
+                            .minimumScaleFactor(0.001)
+                    }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 15)
-                
-                ScrollView {
-                    Text("UI 미완성")
-                        .font(.title3)
-                        .padding()
-                        .background(.gray.opacity(0.3))
-                        .cornerRadius(15)
-                        .shimmering()
-                        .padding(.vertical, 25)
-                }
-                
-                HStack {
-                    Text("독서")
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 5)
+                    
+                    Text("활동")
                         .font(.title2)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 15)
                     
-                    Menu {
-                        Section {
-                            sortButtons
-                        } header: {
-                            Text("도서 정렬")
-                        }
-
-                    } label: {
-                        Image(systemName: "ellipsis.circle.fill")
-                            .font(.title2)
-                            .foregroundColor(.black)
+                    ScrollView {
+                        Text("UI 미완성")
+                            .font(.title3)
+                            .padding()
+                            .background(.gray.opacity(0.3))
+                            .cornerRadius(15)
+                            .shimmering()
+                            .padding(.vertical, 25)
                     }
-                    .navigationBarItemStyle()
-                }
-                .padding(.bottom, -10)
-                
-                
-                Section {
-                    if completeTargetBooks.isEmpty {
-                        VStack(spacing: 5) {
-                            Text("읽고 있는 도서가 없어요 :)")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                            
-                            Text("우측 상단 버튼을 클릭해 독서를 시작해보세요!")
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(.top, 50)
-                    } else {
-                        LazyVGrid(columns: columns, spacing: 25) {
-                            ForEach(filteredCompleteTargetBooks) { book in
-                                TargetBookCellView(targetBook: book, selectedCategory: $selectedCategory)
-                            }
-                        }
-                        .padding([.top, .horizontal])
-                        .padding(.bottom, 50)
-                    }
-                } header: {
+                    
                     HStack {
-                        ScrollViewReader { scrollProxy in
+                        Text("독서")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 15)
+                        
+                        Menu {
+                            Section {
+                                sortButtons
+                            } header: {
+                                Text("도서 정렬")
+                            }
+                            
+                        } label: {
+                            Image(systemName: "ellipsis.circle.fill")
+                                .font(.title2)
+                                .foregroundColor(.black)
+                        }
+                        .navigationBarItemStyle()
+                    }
+                    .padding(.bottom, -10)
+                    
+                    
+                    Section {
+                        if completeTargetBooks.isEmpty {
+                            VStack(spacing: 5) {
+                                Text("읽고 있는 도서가 없어요 :)")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                
+                                Text("우측 상단 버튼을 클릭해 독서를 시작해보세요!")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.top, 50)
+                        } else {
+                            LazyVGrid(columns: columns, spacing: 25) {
+                                ForEach(filteredCompleteTargetBooks) { book in
+                                    TargetBookCellView(targetBook: book, selectedCategory: $selectedCategory)
+                                }
+                                
+//                                if filteredCompleteTargetBooks.count <= 2 {
+//                                    ForEach(0..<2) { _ in
+//                                        Rectangle()
+//                                            .fill(.gray)
+//                                            .frame(width: 150, height: 265)
+//                                    }
+//                                }
+                            }
+                            .padding([.horizontal, .top])
+                            .padding(.bottom, 30)
+                            .id("Scroll_To_Top")
+                        }
+                    } header: {
+                        HStack {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
                                     ForEach(categories, id: \.self) { category in
                                         HomeCategoryButtonsView(category: category, selectedCategory: $selectedCategory, selectedAnimation: $selectedAnimation, scrollProxy: scrollProxy, underlineAnimation: underlineAnimation)
+                                            .id("\(category.rawValue)")
                                     }
                                 }
                                 .padding(.vertical, 10)
                                 .padding([.horizontal, .bottom], 5)
-//                                .padding(.horizontal, 7)
-//                                .padding(.vertical, 9)
                             }
+                            .id("Scroll_To_Category")
                         }
-                    }
-//                    .padding(.top, 2)
-                    .background(.white)
-                    .overlay(alignment: .bottom) {
-                        Divider()
-                            .opacity(scrollYOffset > 30 ? 1 : 0)
+                        .background(.white)
+                        .overlay(alignment: .bottom) {
+                            Divider()
+                                .opacity(scrollYOffset > 30 ? 1 : 0)
+                        }
                     }
                 }
-            }
-            .overlay(alignment: .top) {
-                GeometryReader { proxy -> Color in
-                    DispatchQueue.main.async {
-                        let offset = proxy.frame(in: .global).minY
-                        if startOffset == 0 {
-                            self.startOffset = offset
+                .overlay(alignment: .top) {
+                    GeometryReader { proxy -> Color in
+                        DispatchQueue.main.async {
+                            let offset = proxy.frame(in: .global).minY
+                            if startOffset == 0 {
+                                self.startOffset = offset
+                            }
+                            withAnimation(.easeInOut(duration: 0.1)) {
+                                scrollYOffset = startOffset - offset
+                            }
+                            
+                            print(scrollYOffset)
                         }
-                        withAnimation(.easeInOut(duration: 0.1)) {
-                            scrollYOffset = startOffset - offset
-                        }
-                        
-                        print(scrollYOffset)
+                        return Color.clear
                     }
-                    return Color.clear
+                    .frame(width: 0, height: 0)
                 }
-                .frame(width: 0, height: 0)
             }
         }
     }
