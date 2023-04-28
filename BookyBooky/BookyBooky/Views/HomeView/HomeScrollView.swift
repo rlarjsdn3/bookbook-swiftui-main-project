@@ -127,22 +127,16 @@ struct HomeScrollView: View {
                             }
                             .padding(.top, 50)
                         } else {
+                            // 각 아이폰 디바이스마다 적절하게 스크롤 투 탑이 되지 않는 문제 수정하기 
                             LazyVGrid(columns: columns, spacing: 25) {
                                 ForEach(filteredCompleteTargetBooks) { book in
                                     TargetBookCellView(targetBook: book, selectedCategory: $selectedCategory)
                                 }
-                                
-//                                if filteredCompleteTargetBooks.count <= 2 {
-//                                    ForEach(0..<2) { _ in
-//                                        Rectangle()
-//                                            .fill(.gray)
-//                                            .frame(width: 150, height: 265)
-//                                    }
-//                                }
                             }
                             .padding([.horizontal, .top])
-                            .padding(.bottom, 30)
-                            .id("Scroll_To_Top")
+                            .padding(.top, 6)
+                            // 각 가테고리 별로 도서 개수가 2개 이하인 경우, 하단 간격을 320으로 설정 / 3개 이상이고, iPhone Max인 경우 하단 간격 100으로 설정, 나머지 30으로 설정하기
+                            .padding(.bottom, filteredCompleteTargetBooks.count <= 2 ? 320 : (mainScreen.height > 900 ? 100 : 30))
                         }
                     } header: {
                         HStack {
@@ -182,6 +176,7 @@ struct HomeScrollView: View {
                     }
                     .frame(width: 0, height: 0)
                 }
+                .id("Scroll_To_Top")
             }
         }
     }
