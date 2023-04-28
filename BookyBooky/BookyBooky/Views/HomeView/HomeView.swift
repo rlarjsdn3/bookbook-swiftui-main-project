@@ -10,15 +10,16 @@ import SwiftUI
 struct HomeView: View {
     
     @State private var scrollYOffset = 0.0
+    @State private var selectedSort: BookSort = .latestOrder
     
     // MARK: - BODY
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                HomeHeaderView(scrollYOffset: $scrollYOffset)
+                HomeHeaderView(selectedSort: $selectedSort, scrollYOffset: $scrollYOffset)
                 
-                HomeScrollView(scrollYOffset: $scrollYOffset)
+                HomeScrollView(selectedSort: $selectedSort, scrollYOffset: $scrollYOffset)
             }
         }
     }

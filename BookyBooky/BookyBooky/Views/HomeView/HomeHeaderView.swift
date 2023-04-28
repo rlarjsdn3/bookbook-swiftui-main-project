@@ -11,6 +11,7 @@ struct HomeHeaderView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @Binding var selectedSort: BookSort
     @Binding var scrollYOffset: Double
     
     @State private var isPresentingSettingsView = false
@@ -58,8 +59,10 @@ struct HomeHeaderView: View {
                     .opacity(scrollYOffset > 268 ? 0 : 1)
                     
                     Menu {
-                        Button("최근 읽은 순") {
-                            
+                        Section {
+                            sortButtons
+                        } header: {
+                            Text("도서 정렬")
                         }
                     } label: {
                         Image(systemName: "ellipsis.circle.fill")
@@ -85,6 +88,39 @@ struct HomeHeaderView: View {
 // MARK: - EXTENSIONS
 
 extension HomeHeaderView {
+    var sortButtons: some View {
+        ForEach(BookSort.allCases, id: \.self) { sort in
+            Button {
+                // 버튼을 클릭하면
+                withAnimation(.spring()) {
+                    // 곧바로 스크롤을 제일 위로 올리고
+//                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
+                    // 0.3초 대기 후, 정렬 애니메이션 수행
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
+                            selectedSort = sort
+                        }
+                        Haptics.shared.play(.rigid)
+                    }
+                }
+            } label: {
+                HStack {
+                    Text(sort.rawValue)
+                    
+                    // 현재 선택한 정렬 타입에 체크마크 표시
+                    if selectedSort == sort {
+                        checkmark
+                    }
+                }
+            }
+        }
+    }
+    
+    var checkmark: some View {
+        Image(systemName: "checkmark")
+            .font(.title3)
+    }
+    
     var searchImage: some View {
         Image(systemName: "plus")
             .navigationBarItemStyle()
@@ -100,6 +136,6 @@ extension HomeHeaderView {
 
 struct HomeHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeHeaderView(scrollYOffset: .constant(0.0))
+        HomeHeaderView(selectedSort: .constant(.latestOrder), scrollYOffset: .constant(0.0))
     }
 }

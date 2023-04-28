@@ -20,7 +20,6 @@ struct HomeCategoryButtonsView: View {
                 selectedAnimation = category
                 scrollProxy.scrollTo("Scroll_To_Category", anchor: .top)
                 scrollProxy.scrollTo("\(category.rawValue)")
-//                scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
             }
             selectedCategory = category
         } label: {

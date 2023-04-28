@@ -22,11 +22,13 @@ struct HomeScrollView: View {
     @State private var selectedCategory: Category = .all
     @State private var selectedAnimation: Category = .all
     
-    @State private var selectedSort: BookSort = .latestOrder
     
     @State private var isLoading = true
     
     @State private var startOffset = 0.0
+    
+    
+    @Binding var selectedSort: BookSort
     @Binding var scrollYOffset: Double
     
     @Namespace var underlineAnimation
@@ -41,14 +43,28 @@ struct HomeScrollView: View {
         return categories
     }
     
+    var sortedFavoritesBooks: [CompleteTargetBook] {
+        switch selectedSort {
+        // 최근 추가된 순으로 정렬
+        case .latestOrder:
+            return completeTargetBooks.reversed()
+        // 제목 오름차순으로 정렬
+        case .titleOrder:
+            return completeTargetBooks.sorted { $0.title < $1.title }
+        // 판매 포인트 내림차순으로 정렬
+        case .authorOrder:
+            return completeTargetBooks.sorted { $0.author > $1.author }
+        }
+    }
+    
     var filteredCompleteTargetBooks: [CompleteTargetBook] {
         var filteredBooks: [CompleteTargetBook] = []
         
         // 애니메이션이 없는 변수로 코드 수정하기
         if selectedCategory == .all {
-            return Array(completeTargetBooks)
+            return Array(sortedFavoritesBooks)
         } else {
-            for book in completeTargetBooks where selectedCategory == book.category {
+            for book in sortedFavoritesBooks where selectedCategory == book.category {
                 filteredBooks.append(book)
             }
             
@@ -176,7 +192,6 @@ struct HomeScrollView: View {
                     }
                     .frame(width: 0, height: 0)
                 }
-                .id("Scroll_To_Top")
             }
         }
     }
@@ -239,6 +254,6 @@ extension HomeScrollView {
 
 struct HomeScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeScrollView(scrollYOffset: .constant(0.0))
+        HomeScrollView(selectedSort: .constant(.latestOrder), scrollYOffset: .constant(0.0))
     }
 }
