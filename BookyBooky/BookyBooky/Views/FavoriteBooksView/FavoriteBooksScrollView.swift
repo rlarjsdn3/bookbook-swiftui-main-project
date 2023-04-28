@@ -28,8 +28,8 @@ struct FavoriteBooksScrollView: View {
         case .titleOrder:
             return favoriteBooks.sorted { $0.title < $1.title }
         // 판매 포인트 내림차순으로 정렬
-        case .sellingPointOrder:
-            return favoriteBooks.sorted { $0.salesPoint.toInteger > $1.salesPoint.toInteger }
+        case .authorOrder:
+            return favoriteBooks.sorted { $0.author > $1.author }
         }
     }
     

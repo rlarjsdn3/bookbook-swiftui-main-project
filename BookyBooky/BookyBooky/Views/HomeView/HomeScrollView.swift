@@ -22,6 +22,8 @@ struct HomeScrollView: View {
     @State private var selectedCategory: Category = .all
     @State private var selectedAnimation: Category = .all
     
+    @State private var selectedSort: BookSort = .latestOrder
+    
     @State private var isLoading = true
     
     @State private var startOffset = 0.0
@@ -96,9 +98,12 @@ struct HomeScrollView: View {
                         .padding(.leading, 15)
                     
                     Menu {
-                        Button("최근 읽은 순") {
-                            
+                        Section {
+                            sortButtons
+                        } header: {
+                            Text("도서 정렬")
                         }
+
                     } label: {
                         Image(systemName: "ellipsis.circle.fill")
                             .font(.title2)
@@ -195,7 +200,38 @@ struct HomeScrollView: View {
 }
 
 extension HomeScrollView {
+    var sortButtons: some View {
+        ForEach(BookSort.allCases, id: \.self) { sort in
+            Button {
+                // 버튼을 클릭하면
+                withAnimation(.spring()) {
+                    // 곧바로 스크롤을 제일 위로 올리고
+//                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
+                    // 0.3초 대기 후, 정렬 애니메이션 수행
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
+                            selectedSort = sort
+                        }
+                        Haptics.shared.play(.rigid)
+                    }
+                }
+            } label: {
+                HStack {
+                    Text(sort.rawValue)
+                    
+                    // 현재 선택한 정렬 타입에 체크마크 표시
+                    if selectedSort == sort {
+                        checkmark
+                    }
+                }
+            }
+        }
+    }
     
+    var checkmark: some View {
+        Image(systemName: "checkmark")
+            .font(.title3)
+    }
 }
 
 struct HomeScrollView_Previews: PreviewProvider {
