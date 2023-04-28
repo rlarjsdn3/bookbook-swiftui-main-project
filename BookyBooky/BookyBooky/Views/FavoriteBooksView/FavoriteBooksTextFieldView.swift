@@ -48,7 +48,7 @@ extension FavoriteBooksTextFieldView {
                 Text("도서 정렬")
             }
         } label: {
-            line3HorizontalDecreaseCircle
+            ellipsis
         }
     }
     
@@ -80,8 +80,8 @@ extension FavoriteBooksTextFieldView {
         }
     }
     
-    var line3HorizontalDecreaseCircle: some View {
-        Image(systemName: "line.3.horizontal.decrease.circle")
+    var ellipsis: some View {
+        Image(systemName: "ellipsis.circle")
             .font(.title2)
             .foregroundColor(.primary)
             .frame(width: 45, height: 45)
