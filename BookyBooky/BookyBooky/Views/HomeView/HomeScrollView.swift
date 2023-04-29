@@ -76,26 +76,11 @@ struct HomeScrollView: View {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
-                    VStack(alignment: .leading) {
-                        Text(Date().toFormat("M월 dd일 EEEE", locale: Locale(identifier: "ko")))
-                            .fontWeight(.bold)
-                            .foregroundColor(.secondary)
-                            .opacity(scrollYOffset > 10 ? 0 : 1)
-                        
-                        Text("홈")
-                            .font(.system(size: 34 + getFontSizeOffset()))
-                            .fontWeight(.bold)
-                            .minimumScaleFactor(0.001)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 5)
+                    navigationTitle
                     
-                    Text("활동")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 15)
+                    // 미완성 코드
+                    
+                    activityHeadlineLabel
                     
                     ScrollView {
                         Text("UI 미완성")
@@ -107,72 +92,20 @@ struct HomeScrollView: View {
                             .padding(.vertical, 25)
                     }
                     
+                    //
+                    
                     HStack {
-                        Text("독서")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, 15)
+                        targetBookHeadlineLabel
                         
-                        Menu {
-                            Section {
-                                sortButtons
-                            } header: {
-                                Text("도서 정렬")
-                            }
-                            
-                        } label: {
-                            Image(systemName: "ellipsis.circle.fill")
-                                .font(.title2)
-                                .foregroundColor(.black)
-                        }
-                        .navigationBarItemStyle()
+                        targetBookSortMenu
                     }
                     .padding(.bottom, -10)
                     
                     
                     Section {
-                        if completeTargetBooks.isEmpty {
-                            VStack(spacing: 5) {
-                                Text("읽고 있는 도서가 없어요 :)")
-                                    .font(.title3)
-                                    .fontWeight(.bold)
-                                
-                                Text("우측 상단 버튼을 클릭해 독서를 시작해보세요!")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.top, 50)
-                        } else {
-                            // 각 아이폰 디바이스마다 적절하게 스크롤 투 탑이 되지 않는 문제 수정하기 
-                            LazyVGrid(columns: columns, spacing: 25) {
-                                ForEach(filteredCompleteTargetBooks) { book in
-                                    TargetBookCellView(targetBook: book, selectedCategory: $selectedCategory)
-                                }
-                            }
-                            .padding([.horizontal, .top])
-                            .padding(.top, 6)
-                            // 각 가테고리 별로 도서 개수가 2개 이하인 경우, 하단 간격을 320으로 설정 / 3개 이상이고, iPhone Max인 경우 하단 간격 100으로 설정, 나머지 30으로 설정하기
-                            .padding(.bottom, filteredCompleteTargetBooks.count <= 2 ? 320 : (mainScreen.height > 900 ? 100 : 30))
-                        }
+                        targetBookLazyGrid
                     } header: {
-                        HStack {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(categories, id: \.self) { category in
-                                        HomeCategoryButtonsView(category: category, selectedCategory: $selectedCategory, selectedAnimation: $selectedAnimation, scrollProxy: scrollProxy, underlineAnimation: underlineAnimation)
-                                            .id("\(category.rawValue)")
-                                    }
-                                }
-                                .padding(.vertical, 10)
-                                .padding([.horizontal, .bottom], 5)
-                            }
-                            .id("Scroll_To_Category")
-                        }
-                        .background(.white)
-                        .overlay(alignment: .bottom) {
-                            Divider()
-                                .opacity(scrollYOffset > 30 ? 1 : 0)
-                        }
+                        targetBookPinnedLabel(scrollProxy: scrollProxy)
                     }
                 }
                 .overlay(alignment: .top) {
@@ -218,6 +151,62 @@ struct HomeScrollView: View {
 }
 
 extension HomeScrollView {
+    var navigationTitle: some View {
+        VStack(alignment: .leading) {
+            navigationDateSubTitle
+            
+            navigationHomeMainTitle
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 15)
+        .padding(.vertical, 5)
+    }
+    
+    var navigationDateSubTitle: some View {
+        Text(Date().toFormat("M월 dd일 EEEE", locale: Locale(identifier: "ko")))
+            .fontWeight(.bold)
+            .foregroundColor(.secondary)
+            .opacity(scrollYOffset > 10 ? 0 : 1)
+    }
+    
+    var navigationHomeMainTitle: some View {
+        Text("홈")
+            .font(.system(size: 34 + getFontSizeOffset()))
+            .fontWeight(.bold)
+            .minimumScaleFactor(0.001)
+    }
+    
+    var activityHeadlineLabel: some View {
+        Text("활동")
+            .font(.title2)
+            .fontWeight(.bold)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 15)
+    }
+    
+    var targetBookHeadlineLabel: some View {
+        Text("독서")
+            .font(.title2)
+            .fontWeight(.bold)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 15)
+    }
+    
+    var targetBookSortMenu: some View {
+        Menu {
+            Section {
+                sortButtons
+            } header: {
+                Text("도서 정렬")
+            }
+        } label: {
+            Image(systemName: "ellipsis.circle.fill")
+                .font(.title2)
+                .foregroundColor(.black)
+        }
+        .navigationBarItemStyle()
+    }
+    
     var sortButtons: some View {
         ForEach(BookSort.allCases, id: \.self) { sort in
             Button {
@@ -249,6 +238,57 @@ extension HomeScrollView {
     var checkmark: some View {
         Image(systemName: "checkmark")
             .font(.title3)
+    }
+    
+    var targetBookLazyGrid: some View {
+        Group {
+            if completeTargetBooks.isEmpty {
+                VStack(spacing: 5) {
+                    Text("읽고 있는 도서가 없음")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                    
+                    Text("우측 상단 버튼을 클릭해 독서를 시작해보세요!")
+                        .foregroundColor(.secondary)
+                }
+                .padding(.top, 50)
+            } else {
+                LazyVGrid(columns: columns, spacing: 25) {
+                    ForEach(filteredCompleteTargetBooks) { book in
+                        TargetBookCellView(targetBook: book, selectedCategory: $selectedCategory)
+                    }
+                }
+                .padding([.horizontal, .top])
+                .padding(.bottom, filteredCompleteTargetBooks.count <= 2 ? (mainScreen.height > 900 ? 410 : 320) : (mainScreen.height > 900 ? 100 : 30))
+            }
+        }
+    }
+    
+    func targetBookPinnedLabel(scrollProxy proxy: ScrollViewProxy) -> some View {
+        HStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(categories, id: \.self) { category in
+                        HomeCategoryButtonsView(
+                            category: category,
+                            selectedCategory: $selectedCategory,
+                            selectedAnimation: $selectedAnimation,
+                            scrollProxy: proxy,
+                            underlineAnimation: underlineAnimation
+                        )
+                        .id("\(category.rawValue)")
+                    }
+                }
+                .padding(.vertical, 10)
+                .padding([.horizontal, .bottom], 5)
+            }
+            .id("Scroll_To_Category")
+        }
+        .background(.white)
+        .overlay(alignment: .bottom) {
+            Divider()
+                .opacity(scrollYOffset > 30 ? 1 : 0)
+        }
     }
 }
 
