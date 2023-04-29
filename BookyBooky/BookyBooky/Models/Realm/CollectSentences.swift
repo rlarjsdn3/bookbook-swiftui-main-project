@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class CollectSentences: Object {
+class CollectSentences: EmbeddedObject {
     @Persisted var date: String         // 수집 날짜
     @Persisted var sentence: String     // 수집된 문장
 }

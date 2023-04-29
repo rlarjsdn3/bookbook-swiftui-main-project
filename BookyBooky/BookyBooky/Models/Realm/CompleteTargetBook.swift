@@ -20,8 +20,8 @@ class CompleteTargetBook: Object, ObjectKeyIdentifiable {
     @Persisted var link: String                     // 상품 페이지 링크
     @Persisted var isbn13: String                   // ISBN-13
     
-    @Persisted var readingRecords = List<ReadingRecords>()      // 독서 기록
-    @Persisted var collectSentences = List<CollectSentences>()  // 문장 수집
+    @Persisted var readingRecords: List<ReadingRecords>     // 독서 기록
+    @Persisted var collectSentences: List<CollectSentences> // 문장 수집
     
     @Persisted var startDate: Date                  // 시작 날짜
     @Persisted var targetDate: Date                 // 목표 날짜

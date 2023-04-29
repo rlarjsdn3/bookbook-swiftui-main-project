@@ -17,40 +17,35 @@ struct TargetBookCellView: View {
     @State private var isPresentingTargetBookDetailView = false
     @State private var isLoading = true
     
+    // MARK: - COMPUTED PROPERTIES
+    
+    var targetBookProgressValue: Double {
+        if let readingRecord = targetBook.readingRecords.last {
+            return Double(readingRecord.totalPagesRead) / Double(targetBook.itemPage) * 100.0
+        } else {
+            return 99.0
+        }
+    }
+    
+    // MARK: - BODY
+    
     var body: some View {
         VStack {
             asyncImage(url: targetBook.cover)
+
+            progressBar
             
-            HStack {
-                ProgressView(value: 0.5)
-                    .tint(Color.black.gradient)
-                    .frame(width: 100, alignment: .leading)
-                
-                Text("50%")
-                    .font(.subheadline)
-            }
+            targetBookTitle
             
-            Text("\(targetBook.title)")
-                .font(.headline)
-                .fontWeight(.bold)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-                .frame(width: 150, height: 25)
-                .padding(.horizontal)
-                .padding([.top ,.bottom], -5)
-            
-            Text("\(targetBook.author)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .lineLimit(1)
+            targetBookAuthor
         }
         .frame(width: 150)
         .padding(.horizontal, 10)
-        .onTapGesture {
-            isPresentingTargetBookDetailView = true
-        }
         .navigationDestination(isPresented: $isPresentingTargetBookDetailView) {
             HomeTargetBookDetailView(targetBook: targetBook)
+        }
+        .onTapGesture {
+            isPresentingTargetBookDetailView = true
         }
     }
 }
@@ -88,6 +83,36 @@ extension TargetBookCellView {
             .fill(.gray.opacity(0.2))
             .frame(width: 150, height: 200)
             .shimmering()
+    }
+    
+    var progressBar: some View {
+        HStack {
+            ProgressView(value: targetBookProgressValue, total: 100.0)
+                .tint(Color.black.gradient)
+                .frame(width: 100, alignment: .leading)
+            
+            Text("\(Int(targetBookProgressValue))%")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+    }
+    
+    var targetBookTitle: some View {
+        Text("\(targetBook.title)")
+            .font(.headline)
+            .fontWeight(.bold)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .frame(width: 150, height: 25)
+            .padding(.horizontal)
+            .padding([.top, .bottom], -5)
+    }
+    
+    var targetBookAuthor: some View {
+        Text("\(targetBook.author)")
+            .font(.subheadline)
+            .foregroundColor(.secondary)
+            .lineLimit(1)
     }
 }
 

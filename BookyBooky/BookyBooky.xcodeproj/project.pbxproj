@@ -253,8 +253,8 @@
 		9E061D5829F8E96D0042E3B1 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				9E061D5929F8EB9C0042E3B1 /* HomeCategoryButtonsView.swift */,
 				9E061D5B29FA90660042E3B1 /* TargetBookCellView.swift */,
+				9E061D5929F8EB9C0042E3B1 /* HomeCategoryButtonsView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";

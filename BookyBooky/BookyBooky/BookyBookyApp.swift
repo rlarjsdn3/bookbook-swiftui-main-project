@@ -26,6 +26,7 @@ struct BookyBookyApp: App {
                         aladinAPIManager.requestBookListAPI(type: type)
                     }
                 }
+                .environment(\.realm, realmManager)
                 .environmentObject(aladinAPIManager)
         }
     }
