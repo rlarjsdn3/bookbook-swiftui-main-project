@@ -90,19 +90,17 @@ extension ListTypeCellView {
             switch phase {
             case .success(let image):
                 cover(image)
-            case .empty:
-                loadingCover
-            case .failure(_):
-                loadingCover
+            case .failure(_), .empty:
+                loadingImage
             @unknown default:
-                loadingCover
+                loadingImage
                 
             }
         }
     }
     
-    var loadingCover: some View {
-        RoundedRectangle(cornerRadius: 10)
+    var loadingImage: some View {
+        RoundedRectangle(cornerRadius: 15)
             .fill(.gray.opacity(0.1))
             .frame(
                 width: COVER_WIDTH,
@@ -140,7 +138,7 @@ extension ListTypeCellView {
                 width: COVER_WIDTH,
                 height: COVER_HEIGHT
             )
-            .cornerRadius(10)
+            .cornerRadius(15)
             .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
             .onAppear {
                 isLoading = false

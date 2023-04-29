@@ -23,57 +23,12 @@ struct HomeHeaderView: View {
         HStack {
             Spacer()
             
-            Text("홈")
-                .navigationTitleStyle()
-                .opacity(scrollYOffset > 10 ? 1 : 0)
+            navigationTitle
             
             Spacer()
         }
         .overlay {
-            HStack {
-                Menu {
-                    Button {
-                        // do somethings...
-                    } label: {
-                        Label("직접 추가", systemImage: "pencil.line")
-                    }
-                    
-                    Button {
-                        isPresentingSearchSheetView = true
-                    } label: {
-                        Label("검색 추가", systemImage: "magnifyingglass")
-                    }
-                } label: {
-                    searchImage
-                }
-                
-                Spacer()
-                
-                // 추후 프로필 이미지 기능 구현 시 코드 수정 예정
-                ZStack {
-                    Button {
-                        isPresentingSettingsView = true
-                    } label: {
-                        settingImage
-                    }
-                    .opacity(scrollYOffset > 268 ? 0 : 1)
-                    
-                    Menu {
-                        Section {
-                            sortButtons
-                        } header: {
-                            Text("도서 정렬")
-                        }
-                    } label: {
-                        Image(systemName: "ellipsis.circle.fill")
-                            .font(.title2)
-                            .foregroundColor(.black)
-                    }
-                    .offset(y: scrollYOffset > 270 ? 0 : 5)
-                    .opacity(scrollYOffset > 270 ? 1 : 0)
-                    .navigationBarItemStyle()
-                }
-            }
+            navigationBarButtons
         }
         .sheet(isPresented: $isPresentingSettingsView) {
             SettingsView()
@@ -88,20 +43,85 @@ struct HomeHeaderView: View {
 // MARK: - EXTENSIONS
 
 extension HomeHeaderView {
+    var navigationTitle: some View {
+        Text("홈")
+            .navigationTitleStyle()
+            .opacity(scrollYOffset > 10 ? 1 : 0)
+    }
+    
+    var navigationBarButtons: some View {
+        HStack {
+            addTargetBookMenu
+
+            Spacer()
+            
+            // 추후 프로필 이미지 기능 구현 시 코드 수정 예정
+            ZStack {
+                settingsButton
+                
+                bookSortMenu
+            }
+        }
+    }
+    
+    var addTargetBookMenu: some View {
+        Menu {
+            Section {
+                Button {
+                    // do somethings...
+                } label: {
+                    Label("직접 추가", systemImage: "pencil.line")
+                }
+                
+                Button {
+                    isPresentingSearchSheetView = true
+                } label: {
+                    Label("검색 추가", systemImage: "magnifyingglass")
+                }
+            } header: {
+                Text("도서 추가")
+            }
+        } label: {
+            searchImage
+        } primaryAction: {
+            isPresentingSearchSheetView = true
+        }
+    }
+    
+    var settingsButton: some View {
+        Button {
+            isPresentingSettingsView = true
+        } label: {
+            settingImage
+        }
+        .opacity(scrollYOffset > 268 ? 0 : 1)
+    }
+    
+    var bookSortMenu: some View {
+        Menu {
+            Section {
+                sortButtons
+            } header: {
+                Text("도서 정렬")
+            }
+        } label: {
+            Image(systemName: "ellipsis.circle.fill")
+                .font(.title2)
+                .foregroundColor(.black)
+        }
+        .offset(y: scrollYOffset > 270 ? 0 : 5)
+        .opacity(scrollYOffset > 270 ? 1 : 0)
+        .navigationBarItemStyle()
+    }
+    
     var sortButtons: some View {
         ForEach(BookSort.allCases, id: \.self) { sort in
             Button {
-                // 버튼을 클릭하면
-                withAnimation(.spring()) {
-                    // 곧바로 스크롤을 제일 위로 올리고
-//                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
-                    // 0.3초 대기 후, 정렬 애니메이션 수행
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedSort = sort
-                        }
-                        Haptics.shared.play(.rigid)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
+                        selectedSort = sort
                     }
+                    Haptics.shared.play(.rigid)
                 }
             } label: {
                 HStack {

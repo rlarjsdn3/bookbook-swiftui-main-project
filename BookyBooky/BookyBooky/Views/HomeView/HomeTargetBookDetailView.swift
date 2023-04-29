@@ -13,6 +13,7 @@ struct HomeTargetBookDetailView: View {
     
     var body: some View {
         Text("\(targetBook.title)")
+            .toolbar(.hidden, for: .navigationBar)
     }
 }
 

@@ -52,66 +52,6 @@ struct TargetBookCellView: View {
         .navigationDestination(isPresented: $isPresentingTargetBookDetailView) {
             HomeTargetBookDetailView(targetBook: targetBook)
         }
-        
-//        VStack {
-//            ForEach(filteredCompleteTargetBooks) { targetBook in
-//                HStack {
-//                    asyncImage(url: targetBook.cover)
-//
-//                    VStack(alignment: .leading, spacing: 3) {
-//                        Text("\(targetBook.title)")
-//                            .font(.title3)
-//                            .fontWeight(.bold)
-//                            .lineLimit(1)
-//
-//                        VStack(alignment: .leading, spacing: 0) {
-//                            Text("\(targetBook.author)")
-//                                .fontWeight(.semibold)
-//
-//                            HStack(spacing: 3) {
-//                                Text("\(targetBook.publisher)")
-//                                Text("・")
-//                                Text("\(targetBook.category.rawValue)")
-//                            }
-//                            .font(.callout)
-//                            .foregroundColor(.secondary)
-//                            .lineLimit(1)
-//                        }
-//
-//                        Spacer()
-//
-//                        HStack(alignment: .center) {
-//                            // 기한이 오늘까지인 경우, 내일까지인 경우 예외 처리 코드 작성하기
-//                            Text("\(targetBook.targetDate.toFormat("yyyy년 MM월 dd일"))까지 (\(Int(targetBook.targetDate.timeIntervalSince(targetBook.startDate) / 86400.0))일 남음)")
-//
-//                            Spacer(minLength: 0)
-//
-//                            // 디자인 다시 고민해보기
-//                            Text("50%")
-//                                .font(.body)
-//                        }
-//                        .font(.caption)
-//                        .foregroundColor(.secondary)
-//
-//
-//                        Gauge(value: 0.5) {
-//                            Text("독서량")
-//                        }
-//                        .gaugeStyle(.accessoryLinear)
-//                        .tint(Gradient(colors: [.gray, .black]))
-//                    }
-//                    .padding(5)
-//
-//                    Spacer()
-//                }
-//                .padding(5)
-//                .background(Color("Background"))
-//                .cornerRadius(10)
-//                .padding(.horizontal)
-//                .padding(.top, 5)
-//            }
-//        }
-//        .padding(.bottom, 30)
     }
 }
 
@@ -135,18 +75,16 @@ extension TargetBookCellView {
                     .onAppear {
                         isLoading = false
                     }
-            case .empty:
-                loadingCover
-            case .failure(_):
-                loadingCover
+            case .failure(_), .empty:
+                loadingImage
             @unknown default:
-                loadingCover
+                loadingImage
             }
         }
     }
     
-    var loadingCover: some View {
-        Rectangle()
+    var loadingImage: some View {
+        RoundedRectangle(cornerRadius: 15)
             .fill(.gray.opacity(0.2))
             .frame(width: 150, height: 200)
             .shimmering()
