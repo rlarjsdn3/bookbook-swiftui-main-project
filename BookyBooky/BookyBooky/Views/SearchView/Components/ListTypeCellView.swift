@@ -41,7 +41,7 @@ struct ListTypeCellView: View {
                     // 현재 읽고 있는 중이면 아이콘 출력하기 (미완성)
                     if isTargetBook() {
                         Image(systemName: "book.closed.fill")
-                            .font(.title3)
+                            .font(.system(size: 18))
                             .foregroundColor(Color(uiColor: .darkGray))
                             .padding(.leading)
                     } else {

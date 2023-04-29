@@ -150,7 +150,7 @@ extension SearchSheetCellView {
                     HStack {
                         if isTargetBook() {
                             Image(systemName: "book.closed.fill")
-                                .font(.title2)
+                                .font(.system(size: 21))
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }
                         
