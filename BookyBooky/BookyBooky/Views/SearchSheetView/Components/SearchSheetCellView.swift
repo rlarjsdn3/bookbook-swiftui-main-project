@@ -24,6 +24,7 @@ struct SearchSheetCellView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
     @State private var isLoading = true
     @State private var isPresentingSearchInfoView = false
@@ -47,6 +48,13 @@ struct SearchSheetCellView: View {
         }
         .frame(height: COVER_HEIGHT)
         .padding(.top, 18)
+    }
+    
+    func isTargetBook() -> Bool {
+        for targetBook in completeTargetBooks where bookItem.isbn13 == targetBook.isbn13 {
+            return true
+        }
+        return false
     }
     
     func isFavoriteBook() -> Bool {
@@ -139,10 +147,18 @@ extension SearchSheetCellView {
                 .font(.subheadline)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .overlay(alignment: .bottomTrailing) {
-                    if isFavoriteBook() {
-                        Image(systemName: "heart.fill")
-                            .font(.title2)
-                            .foregroundColor(bookItem.categoryName.refinedCategory.accentColor)
+                    HStack {
+                        if isTargetBook() {
+                            Image(systemName: "book.closed.fill")
+                                .font(.title2)
+                                .foregroundColor(Color(uiColor: .darkGray))
+                        }
+                        
+                        if isFavoriteBook() {
+                            Image(systemName: "heart.fill")
+                                .font(.title2)
+                                .foregroundColor(.pink)
+                        }
                     }
                 }
                 .redacted(reason: isLoading ? .placeholder : [])

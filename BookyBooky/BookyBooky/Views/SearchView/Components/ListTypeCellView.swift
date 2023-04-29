@@ -23,6 +23,7 @@ struct ListTypeCellView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
     @State private var isLoading = true
     @State private var isPresentingBookInfoView = false
@@ -38,10 +39,17 @@ struct ListTypeCellView: View {
                 
                 HStack {
                     // 현재 읽고 있는 중이면 아이콘 출력하기 (미완성)
-                    Image(systemName: "heart.fill")
-                        .font(.title3)
-                        .padding(.leading)
-                        .hidden()
+                    if isTargetBook() {
+                        Image(systemName: "book.closed.fill")
+                            .font(.title3)
+                            .foregroundColor(Color(uiColor: .darkGray))
+                            .padding(.leading)
+                    } else {
+                        Image(systemName: "book.closed.fill")
+                            .font(.title3)
+                            .padding(.leading)
+                            .hidden()
+                    }
                     
                     Spacer(minLength: 0)
                     
@@ -75,6 +83,13 @@ struct ListTypeCellView: View {
     
     func isFavoriteBook() -> Bool {
         for favoriteBook in favoriteBooks where bookItem.isbn13 == favoriteBook.isbn13 {
+            return true
+        }
+        return false
+    }
+    
+    func isTargetBook() -> Bool {
+        for targetBook in completeTargetBooks where bookItem.isbn13 == targetBook.isbn13 {
             return true
         }
         return false
