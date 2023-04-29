@@ -26,6 +26,9 @@ struct SearchView: View {
 
             SearchLazyGridView(listTypeSelected: $listTypeSelected, scrollYOffset: $scrollYOffset)
         }
+        .toast(isPresenting: $aladinAPIManager.isPresentingInfoErrorUI, duration: 2.0, offsetY: -5) {
+            aladinAPIManager.infoErrorUI
+        }
     }
 }
 
