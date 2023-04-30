@@ -74,7 +74,7 @@ struct HomeScrollView: View {
     
     var body: some View {
         ScrollViewReader { scrollProxy in
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
                     navigationTitle
                     
@@ -248,7 +248,7 @@ extension HomeScrollView {
                         .font(.title3)
                         .fontWeight(.bold)
                     
-                    Text("우측 상단 버튼을 클릭해 독서를 시작해보세요!")
+                    Text("도서를 추가하십시오.")
                         .foregroundColor(.secondary)
                 }
                 .padding(.top, 50)
@@ -259,7 +259,7 @@ extension HomeScrollView {
                     }
                 }
                 .padding([.horizontal, .top])
-                .padding(.bottom, filteredCompleteTargetBooks.count <= 2 ? (mainScreen.height > 900 ? 410 : 320) : (mainScreen.height > 900 ? 100 : 30))
+                .padding(.bottom, filteredCompleteTargetBooks.count <= 2 ? (mainScreen.height > 900 ? 410 : 325) : (mainScreen.height > 900 ? 100 : 30))
             }
         }
     }
