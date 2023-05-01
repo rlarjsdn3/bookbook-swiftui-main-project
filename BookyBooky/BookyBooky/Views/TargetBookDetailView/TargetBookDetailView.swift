@@ -9,42 +9,11 @@ import SwiftUI
 import RealmSwift
 
 struct TargetBookDetailView: View {
-    @Environment(\.dismiss) var dismiss
-    
     @ObservedRealmObject var targetBook: CompleteTargetBook
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
-                Spacer()
-                
-                Text(targetBook.title)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-                    .navigationTitleStyle()
-                
-                Spacer()
-            }
-            .overlay {
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .navigationBarItemStyle()
-                    }
-                    
-                    Spacer()
-                    
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "ellipsis")
-                            .navigationBarItemStyle()
-                    }
-                }
-            }
-            .padding(.vertical)
+            TargetBookDetailHeaderView(targetBook: targetBook)
             
             ScrollView {
                 HStack {

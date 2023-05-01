@@ -86,6 +86,7 @@
 		9EDC2FBA29EA3808004E792A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9EDC2FB929EA3808004E792A /* Lottie */; };
 		9EDC2FBC29EA3811004E792A /* LottieBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBB29EA3811004E792A /* LottieBookView.swift */; };
 		9EDC2FBE29EA3898004E792A /* book.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBD29EA3898004E792A /* book.json */; };
+		9EFBE7CB29FF9CD100308BAE /* TargetBookDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CA29FF9CD100308BAE /* TargetBookDetailHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -163,6 +164,7 @@
 		9EDC2FB629E92E90004E792A /* DatePickerSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerSheetView.swift; sourceTree = "<group>"; };
 		9EDC2FBB29EA3811004E792A /* LottieBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieBookView.swift; sourceTree = "<group>"; };
 		9EDC2FBD29EA3898004E792A /* book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = book.json; sourceTree = "<group>"; };
+		9EFBE7CA29FF9CD100308BAE /* TargetBookDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBookDetailHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				9E90893129FE383700656824 /* TargetBookDetailView.swift */,
+				9EFBE7CA29FF9CD100308BAE /* TargetBookDetailHeaderView.swift */,
 			);
 			path = TargetBookDetailView;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				9ED4CB6129D3E0AA00CA493D /* SearchListTypeView.swift in Sources */,
 				9E0434B229E3940E009A2161 /* FavoriteBooksTextFieldView.swift in Sources */,
 				9E0C0A7D29D3D0F900F1F5F6 /* BookListTabItem.swift in Sources */,
+				9EFBE7CB29FF9CD100308BAE /* TargetBookDetailHeaderView.swift in Sources */,
 				9E7A794729DA854D00A51856 /* SearchInfoTitleView.swift in Sources */,
 				9E0C0A7129D2866100F1F5F6 /* BookList.swift in Sources */,
 				9EDC2FAF29E6DDEF004E792A /* FavoriteBookCellViewType.swift in Sources */,
