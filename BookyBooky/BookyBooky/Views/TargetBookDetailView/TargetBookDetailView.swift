@@ -42,7 +42,7 @@ struct TargetBookDetailView: View {
                         }
                         
                         // 코드 미완성
-                        Text("목표 기한: \(targetBook.targetDate.toFormat("yyyy년 M월 d일")) (7일 남음)")
+                        Text("\(Text("목표 기한: ").fontWeight(.bold)) \(targetBook.targetDate.toFormat("yyyy년 M월 d일")) (7일 남음)")
                             .font(.caption.weight(.light))
                             .padding(.horizontal)
                         
