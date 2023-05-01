@@ -19,7 +19,7 @@ struct BookShelfView: View {
     // MARK: - BODY
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             BookShelfHeaderView()
             
             BookShelfScrollView(scrollYOffset: $scrollYOffset)
