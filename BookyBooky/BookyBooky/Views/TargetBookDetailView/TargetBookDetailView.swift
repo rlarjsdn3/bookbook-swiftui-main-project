@@ -117,23 +117,6 @@ struct TargetBookDetailView: View {
                     .frame(width: 0, height: 0)
                 }
             }
-            
-            
-            
-            
-//            Text("\(targetBook.title)")
-//                .toolbar(.hidden, for: .navigationBar)
-//
-//            // 테스트 코드
-//            Button("10페이지 읽었음!") {
-//                let readingRecord = ReadingRecords(
-//                    value: ["date": Date(),
-//                            "totalPagesRead": 10,
-//                            "numOfPagesRead": 10] as [String : Any]
-//                )
-//
-//                $targetBook.readingRecords.append(readingRecord)
-//            }
         }
         .navigationBarBackButtonHidden()
     }
