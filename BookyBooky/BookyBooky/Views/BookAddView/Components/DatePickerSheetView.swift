@@ -25,6 +25,8 @@ struct DatePickerSheetView: View {
     
     var body: some View {
         VStack {
+            Spacer()
+            
             DatePicker(
                     "DatePicker",
                     selection: $selected,
@@ -57,7 +59,7 @@ struct DatePickerSheetView: View {
         }
         .presentationCornerRadius(30)
         .presentationBackground(.ultraThinMaterial)
-        .presentationDetents([.height(460)])
+        .presentationDetents([.height(420)])
         
     }
 }
