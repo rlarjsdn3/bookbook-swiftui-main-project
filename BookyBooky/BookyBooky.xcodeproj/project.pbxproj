@@ -87,6 +87,7 @@
 		9EDC2FBC29EA3811004E792A /* LottieBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBB29EA3811004E792A /* LottieBookView.swift */; };
 		9EDC2FBE29EA3898004E792A /* book.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBD29EA3898004E792A /* book.json */; };
 		9EFBE7CB29FF9CD100308BAE /* TargetBookDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CA29FF9CD100308BAE /* TargetBookDetailHeaderView.swift */; };
+		9EFBE7CD29FFA12D00308BAE /* TargetBookDetailCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CC29FFA12D00308BAE /* TargetBookDetailCoverView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -165,6 +166,7 @@
 		9EDC2FBB29EA3811004E792A /* LottieBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieBookView.swift; sourceTree = "<group>"; };
 		9EDC2FBD29EA3898004E792A /* book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = book.json; sourceTree = "<group>"; };
 		9EFBE7CA29FF9CD100308BAE /* TargetBookDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBookDetailHeaderView.swift; sourceTree = "<group>"; };
+		9EFBE7CC29FFA12D00308BAE /* TargetBookDetailCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBookDetailCoverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +276,7 @@
 			children = (
 				9E90893129FE383700656824 /* TargetBookDetailView.swift */,
 				9EFBE7CA29FF9CD100308BAE /* TargetBookDetailHeaderView.swift */,
+				9EFBE7CC29FFA12D00308BAE /* TargetBookDetailCoverView.swift */,
 			);
 			path = TargetBookDetailView;
 			sourceTree = "<group>";
@@ -627,6 +630,7 @@
 				9E0434BC29E53CD8009A2161 /* CollectSentences.swift in Sources */,
 				9E54AA0E29D7D84100FE080C /* StringExtension.swift in Sources */,
 				9EDC2FB129E6E48C004E792A /* UINavigationControllerExtension.swift in Sources */,
+				9EFBE7CD29FFA12D00308BAE /* TargetBookDetailCoverView.swift in Sources */,
 				9E0434BA29E53CA0009A2161 /* ReadingRecords.swift in Sources */,
 				9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */,
 				9E90893229FE383700656824 /* TargetBookDetailView.swift in Sources */,
