@@ -88,6 +88,7 @@
 		9EDC2FBE29EA3898004E792A /* book.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBD29EA3898004E792A /* book.json */; };
 		9EFBE7CB29FF9CD100308BAE /* TargetBookDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CA29FF9CD100308BAE /* TargetBookDetailHeaderView.swift */; };
 		9EFBE7CD29FFA12D00308BAE /* TargetBookDetailCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CC29FFA12D00308BAE /* TargetBookDetailCoverView.swift */; };
+		9EFBE7CF29FFA90800308BAE /* TargetBookDetailTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* TargetBookDetailTabItems.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -167,6 +168,7 @@
 		9EDC2FBD29EA3898004E792A /* book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = book.json; sourceTree = "<group>"; };
 		9EFBE7CA29FF9CD100308BAE /* TargetBookDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBookDetailHeaderView.swift; sourceTree = "<group>"; };
 		9EFBE7CC29FFA12D00308BAE /* TargetBookDetailCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBookDetailCoverView.swift; sourceTree = "<group>"; };
+		9EFBE7CE29FFA90800308BAE /* TargetBookDetailTabItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBookDetailTabItems.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -408,6 +410,7 @@
 				9EDC2FAE29E6DDEF004E792A /* FavoriteBookCellViewType.swift */,
 				9EB749F629D5C3A500610D97 /* Category.swift */,
 				9E0434AA29E28097009A2161 /* BookSort.swift */,
+				9EFBE7CE29FFA90800308BAE /* TargetBookDetailTabItems.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -669,6 +672,7 @@
 				9E7A794929DA8D7500A51856 /* SearchInfoBoxView.swift in Sources */,
 				9E54AA0629D706F500FE080C /* SearchLazyGridView.swift in Sources */,
 				9EDC2FB429E6F108004E792A /* BookAddView.swift in Sources */,
+				9EFBE7CF29FFA90800308BAE /* TargetBookDetailTabItems.swift in Sources */,
 				9E852F1729E1283C00A78EC2 /* BookShelfHeaderView.swift in Sources */,
 				9E0C0A6229D1DB4700F1F5F6 /* HomeView.swift in Sources */,
 				9E0434B429E39920009A2161 /* FavoriteBooksScrollView.swift in Sources */,
