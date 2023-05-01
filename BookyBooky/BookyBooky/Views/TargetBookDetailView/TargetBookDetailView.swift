@@ -20,8 +20,10 @@ struct TargetBookDetailView: View {
     @Namespace var underlineAnimation
     
     var body: some View {
+        //  도서 삭제 시, 책 제목/저자 등 정보가 사라지지 않게 하기 (추후 수정 예정)
+        
         VStack(spacing: 0) {
-            TargetBookDetailHeaderView(targetBook: targetBook)
+            TargetBookDetailHeaderView(targetBook: targetBook, scrollYOffset: $scrollYOffset)
             
             ScrollView {
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
@@ -39,9 +41,12 @@ struct TargetBookDetailView: View {
                                 .clipShape(Capsule())
                         }
                         
-                        Text("오늘 히루 10페이지를 읽었어요!")
+                        // 코드 미완성
+                        Text("목표 기한: \(targetBook.targetDate.toFormat("yyyy년 M월 d일")) (7일 남음)")
                             .font(.caption.weight(.light))
                             .padding(.horizontal)
+                        
+    
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding([.horizontal, .bottom])

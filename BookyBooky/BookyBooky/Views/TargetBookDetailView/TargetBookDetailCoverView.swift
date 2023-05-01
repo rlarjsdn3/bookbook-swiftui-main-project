@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftDate
 import RealmSwift
 
 struct TargetBookDetailCoverView: View {
@@ -41,19 +42,25 @@ struct TargetBookDetailCoverView: View {
                 Spacer()
                 
                 HStack {
-                    HStack {
-                        Text("50")
-                            .font(.largeTitle)
-                        Text("/")
-                            .font(.title2.weight(.light))
-                            .foregroundColor(.secondary)
-                        VStack(alignment: .leading) {
-                            Text("\(targetBook.itemPage)")
-                                .font(.callout).foregroundColor(.secondary)
-                                .minimumScaleFactor(0.5)
-                            Text("페이지")
-                                .font(.system(size: 11)).foregroundColor(.secondary)
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("50")
+                                .font(.largeTitle)
+                            Text("/")
+                                .font(.title2.weight(.light))
+                                .foregroundColor(.secondary)
+                            VStack(alignment: .leading) {
+                                Text("\(targetBook.itemPage)")
+                                    .font(.callout).foregroundColor(.secondary)
+                                    .minimumScaleFactor(0.5)
+                                Text("페이지")
+                                    .font(.system(size: 11)).foregroundColor(.secondary)
+                            }
                         }
+                        
+                        Text("오늘 10페이지 읽음")
+                            .font(.caption2.weight(.light))
+                            .foregroundColor(.secondary)
                     }
                     
                     Spacer()

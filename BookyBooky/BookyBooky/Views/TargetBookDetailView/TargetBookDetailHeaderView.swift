@@ -14,16 +14,25 @@ struct TargetBookDetailHeaderView: View {
     @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
     let targetBook: CompleteTargetBook
+    @Binding var scrollYOffset: Double
+    
+    @State var title: String = ""
     
     var body: some View {
         HStack {
             Spacer()
-            
-            Text(targetBook.title)
-                .frame(width: mainScreen.width * 0.65)
-                .lineLimit(1)
-                .truncationMode(.middle)
-                .navigationTitleStyle()
+            ZStack {
+                Text("도서 정보")
+                    .navigationTitleStyle()
+                    .opacity(scrollYOffset > 29 ? 0 : 1)
+                
+                Text(title)
+                    .frame(width: mainScreen.width * 0.65)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .navigationTitleStyle()
+                    .opacity(scrollYOffset > 30 ? 1 : 0)
+            }
             
             Spacer()
         }
@@ -48,15 +57,14 @@ struct TargetBookDetailHeaderView: View {
 
                         Button(role: .destructive) {
                             // 리팩토링 필요
+                            dismiss()
                             do {
                                 if let object = completeTargetBooks.filter("isbn13 == %@", targetBook.isbn13).first {
-                                    
                                     $completeTargetBooks.remove(object)
                                 }
                             } catch let error as NSError {
                                 print("error - \(error.localizedDescription)")
                             }
-                            dismiss()
                         } label: {
                             Label("삭제", systemImage: "trash")
                         }
@@ -70,6 +78,9 @@ struct TargetBookDetailHeaderView: View {
                 }
             }
         }
+        .onAppear {
+            title = targetBook.title
+        }
         .padding(.vertical)
     }
 }
@@ -78,6 +89,6 @@ struct TargetBookDetailHeaderView_Previews: PreviewProvider {
     @ObservedResults(CompleteTargetBook.self) static var completeTargetBooks
     
     static var previews: some View {
-        TargetBookDetailHeaderView(targetBook: completeTargetBooks[0])
+        TargetBookDetailHeaderView(targetBook: completeTargetBooks[0], scrollYOffset: .constant(0.0))
     }
 }
