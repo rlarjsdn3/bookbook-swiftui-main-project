@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 
 struct TargetBookDetailView: View {
-    @ObservedRealmObject var targetBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     
     @State private var startOffset = 0.0
     @State private var scrollYOffset = 0.0
@@ -23,11 +23,11 @@ struct TargetBookDetailView: View {
         //  도서 삭제 시, 책 제목/저자 등 정보가 사라지지 않게 하기 (추후 수정 예정)
         
         VStack(spacing: 0) {
-            TargetBookDetailHeaderView(targetBook: targetBook, scrollYOffset: $scrollYOffset)
+            TargetBookDetailHeaderView(targetBook: readingBook, scrollYOffset: $scrollYOffset)
             
             ScrollView {
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
-                    TargetBookDetailCoverView(targetBook: targetBook)
+                    TargetBookDetailCoverView(readingBook: readingBook)
                     
                     HStack {
                         Button {
@@ -42,7 +42,7 @@ struct TargetBookDetailView: View {
                         }
                         
                         // 코드 미완성
-                        Text("\(Text("목표 기한: ").fontWeight(.bold)) \(targetBook.targetDate.toFormat("yyyy년 M월 d일")) (7일 남음)")
+                        Text("\(Text("목표 기한: ").fontWeight(.bold)) \(readingBook.targetDate.toFormat("yyyy년 M월 d일")) (7일 남음)")
                             .font(.caption.weight(.light))
                             .padding(.horizontal)
                         
@@ -136,6 +136,6 @@ struct HomeTargetBookDetailView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
-        TargetBookDetailView(targetBook: completeTargetBooks[0])
+        TargetBookDetailView(readingBook: completeTargetBooks[0])
     }
 }
