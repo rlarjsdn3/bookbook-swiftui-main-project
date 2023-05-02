@@ -15,7 +15,7 @@ struct BookAddButtonsView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
+    @ObservedResults(ReadingBook.self) var completeTargetBooks
     
     @State private var isPresentingDateDescSheet = false
     @State private var isPresentingConfirmDialog = false
@@ -28,7 +28,7 @@ struct BookAddButtonsView: View {
         }
         .confirmationDialog("목표 도서에 추가하시겠습니까?", isPresented: $isPresentingConfirmDialog, titleVisibility: .visible) {
             Button("확인") {
-                let completeTargetBook = CompleteTargetBook(
+                let completeTargetBook = ReadingBook(
                     value: [
                         "title": "\(bookInfoItem.title.refinedTitle)",
                         "author": "\(bookInfoItem.author.refinedAuthor)",
@@ -43,7 +43,7 @@ struct BookAddButtonsView: View {
                         "targetDate": selectedDate,
                         "isCompleted": false
                     ] as [String : Any])
-                RealmManager.shared.addCompleteTargetBook(completeTargetBook)
+                RealmManager.shared.addReadingBook(completeTargetBook)
                 
                 dismiss()
             }

@@ -10,7 +10,7 @@ import RealmSwift
 
 struct TargetBookCellView: View {
     
-    @ObservedRealmObject var targetBook: CompleteTargetBook
+    @ObservedRealmObject var targetBook: ReadingBook
     
     @Binding var selectedCategory: Category
     
@@ -117,7 +117,7 @@ extension TargetBookCellView {
 }
 
 struct TargetBookCellView_Previews: PreviewProvider {
-    @ObservedResults(CompleteTargetBook.self) static var completeTargetBooks
+    @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
         TargetBookCellView(targetBook: completeTargetBooks[0], selectedCategory: .constant(.all))

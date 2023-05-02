@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class CompleteTargetBook: Object, ObjectKeyIdentifiable {
+class ReadingBook: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var _id: ObjectId  // 주요 키
     @Persisted var title: String                    // 제목
     @Persisted var author: String                   // 저자

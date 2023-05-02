@@ -10,7 +10,7 @@ import SwiftDate
 import RealmSwift
 
 struct TargetBookDetailCoverView: View {
-    let targetBook: CompleteTargetBook
+    let targetBook: ReadingBook
     
     var body: some View {
         HStack {
@@ -117,7 +117,7 @@ extension TargetBookDetailCoverView {
 }
 
 struct TargetBookDetailCoverView_Previews: PreviewProvider {
-    @ObservedResults(CompleteTargetBook.self) static var completeTargetBooks
+    @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
         TargetBookDetailCoverView(targetBook: completeTargetBooks[0])

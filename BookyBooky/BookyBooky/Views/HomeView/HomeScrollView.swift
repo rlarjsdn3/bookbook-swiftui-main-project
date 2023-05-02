@@ -16,7 +16,7 @@ struct HomeScrollView: View {
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
-    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
+    @ObservedResults(ReadingBook.self) var completeTargetBooks
     
     // 애니메이션 / 애니메이션 없는 변수 구분하기
     @State private var selectedCategory: Category = .all
@@ -43,7 +43,7 @@ struct HomeScrollView: View {
         return categories
     }
     
-    var sortedFavoritesBooks: [CompleteTargetBook] {
+    var sortedFavoritesBooks: [ReadingBook] {
         switch selectedSort {
         // 최근 추가된 순으로 정렬
         case .latestOrder:
@@ -57,8 +57,8 @@ struct HomeScrollView: View {
         }
     }
     
-    var filteredCompleteTargetBooks: [CompleteTargetBook] {
-        var filteredBooks: [CompleteTargetBook] = []
+    var filteredCompleteTargetBooks: [ReadingBook] {
+        var filteredBooks: [ReadingBook] = []
         
         // 애니메이션이 없는 변수로 코드 수정하기
         if selectedCategory == .all {

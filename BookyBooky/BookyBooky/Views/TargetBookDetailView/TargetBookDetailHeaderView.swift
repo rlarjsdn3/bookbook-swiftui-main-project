@@ -11,9 +11,9 @@ import RealmSwift
 struct TargetBookDetailHeaderView: View {
     @Environment(\.dismiss) var dismiss
     
-    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
+    @ObservedResults(ReadingBook.self) var completeTargetBooks
     
-    let targetBook: CompleteTargetBook
+    let targetBook: ReadingBook
     @Binding var scrollYOffset: Double
     
     @State var title: String = ""
@@ -86,7 +86,7 @@ struct TargetBookDetailHeaderView: View {
 }
 
 struct TargetBookDetailHeaderView_Previews: PreviewProvider {
-    @ObservedResults(CompleteTargetBook.self) static var completeTargetBooks
+    @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
         TargetBookDetailHeaderView(targetBook: completeTargetBooks[0], scrollYOffset: .constant(0.0))

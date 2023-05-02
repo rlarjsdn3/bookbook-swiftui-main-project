@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 
 struct TargetBookDetailView: View {
-    @ObservedRealmObject var targetBook: CompleteTargetBook
+    @ObservedRealmObject var targetBook: ReadingBook
     
     @State private var startOffset = 0.0
     @State private var scrollYOffset = 0.0
@@ -133,7 +133,7 @@ extension TargetBookDetailView {
 
 struct HomeTargetBookDetailView_Previews: PreviewProvider {
     static let realmManager = RealmManager.openLocalRealm()
-    @ObservedResults(CompleteTargetBook.self) static var completeTargetBooks
+    @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
         TargetBookDetailView(targetBook: completeTargetBooks[0])

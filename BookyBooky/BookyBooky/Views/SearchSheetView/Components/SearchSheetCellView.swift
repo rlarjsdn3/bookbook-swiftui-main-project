@@ -24,7 +24,7 @@ struct SearchSheetCellView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @ObservedResults(FavoriteBook.self) var favoriteBooks
-    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
+    @ObservedResults(ReadingBook.self) var completeTargetBooks
     
     @State private var isLoading = true
     @State private var isPresentingSearchInfoView = false

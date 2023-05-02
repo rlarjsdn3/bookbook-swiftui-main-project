@@ -17,7 +17,7 @@ struct SearchInfoButtonsView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
+    @ObservedResults(ReadingBook.self) var completeTargetBooks
     
     @Environment(\.dismiss) var dismiss
     

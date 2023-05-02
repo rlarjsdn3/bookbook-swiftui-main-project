@@ -9,12 +9,13 @@ import Foundation
 import RealmSwift
 
 class RealmManager {
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
-    @ObservedResults(CompleteTargetBook.self) var completeTargetBooks
     
     let realm = openLocalRealm()
     
     static let shared = RealmManager()
+    
+    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     private init() { }
     
@@ -31,21 +32,27 @@ class RealmManager {
         $favoriteBooks.append(object)
     }
     
+    func deleteFavoriteBook(_ object: FavoriteBook) {
+        $favoriteBooks.remove(object)
+    }
+    
     func deleteFavoriteBook(_ isbn13: String) {
-        do {
-            let object = realm.objects(FavoriteBook.self).filter("isbn13 == %@", isbn13).first
-
-            try realm.write {
-                if let obj = object {
-                    realm.delete(obj)
-                }
-            }
-        } catch let error as NSError {
-            print("error - \(error.localizedDescription)")
+        if let object = favoriteBooks.filter("isbn13 == %@", isbn13).first {
+            deleteFavoriteBook(object)
         }
     }
     
-    func addCompleteTargetBook(_ object: CompleteTargetBook) {
-        $completeTargetBooks.append(object)
+    func addReadingBook(_ object: ReadingBook) {
+        $readingBooks.append(object)
+    }
+    
+    func deleteReadingBook(_ isbn13: String) {
+        if let object = readingBooks.filter("isbn13 == %@", isbn13).first {
+            deleteReadingBook(object)
+        }
+    }
+    
+    func deleteReadingBook(_ object: ReadingBook) {
+        $readingBooks.remove(object)
     }
 }
