@@ -42,7 +42,7 @@ struct TargetBookCellView: View {
         .frame(width: 150)
         .padding(.horizontal, 10)
         .navigationDestination(isPresented: $isPresentingTargetBookDetailView) {
-            ReadingBookDetailView(readingBook: targetBook)
+            ReadingBookView(readingBook: targetBook)
         }
         .onTapGesture {
             isPresentingTargetBookDetailView = true

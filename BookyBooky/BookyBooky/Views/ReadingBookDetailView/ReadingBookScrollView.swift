@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookDetailScrollView: View {
+struct ReadingBookScrollView: View {
     @State private var startOffset = 0.0
     
     @Binding var scrollYOffset: Double
@@ -22,29 +22,9 @@ struct ReadingBookDetailScrollView: View {
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
-                ReadingBookDetailCoverView(readingBook: readingBook)
+                ReadingBookCoverView(readingBook: readingBook)
                 
-                HStack {
-                    Button {
-                        // do something...
-                    } label: {
-                        Text("읽었어요!")
-                            .font(.headline)
-                            .foregroundColor(.black)
-                            .frame(width: 112, height: 30)
-                            .background(.gray.opacity(0.3))
-                            .clipShape(Capsule())
-                    }
-                    
-                    // 코드 미완성
-                    Text("\(Text("목표 기한: ").fontWeight(.bold)) \(readingBook.targetDate.toFormat("yyyy년 M월 d일")) (7일 남음)")
-                        .font(.caption.weight(.light))
-                        .padding(.horizontal)
-                    
-
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.horizontal, .bottom])
+                ReadingBookRenewalButtonView(readingBook: readingBook)
                 
                 Section {
                     ForEach(0..<10) { index in
@@ -124,6 +104,6 @@ struct ReadingBookDetailScrollView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var readingBooks
     
     static var previews: some View {
-        ReadingBookDetailScrollView(scrollYOffset: .constant(0.0), selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), readingBook: readingBooks[0])
+        ReadingBookScrollView(scrollYOffset: .constant(0.0), selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), readingBook: readingBooks[0])
     }
 }
