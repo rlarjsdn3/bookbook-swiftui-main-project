@@ -90,7 +90,8 @@
 		9EDC2FBE29EA3898004E792A /* book.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBD29EA3898004E792A /* book.json */; };
 		9EE01FEA2A01F2D900584F39 /* ReadingBookScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FE92A01F2D900584F39 /* ReadingBookScrollView.swift */; };
 		9EE01FEC2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */; };
-		9EFBE7CF29FFA90800308BAE /* ReadingBookDetailTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* ReadingBookDetailTabItems.swift */; };
+		9EE01FEE2A01FAF800584F39 /* ReadingBookTabSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */; };
+		9EFBE7CF29FFA90800308BAE /* ReadingBookTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* ReadingBookTabItems.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -172,7 +173,8 @@
 		9EDC2FBD29EA3898004E792A /* book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = book.json; sourceTree = "<group>"; };
 		9EE01FE92A01F2D900584F39 /* ReadingBookScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookScrollView.swift; sourceTree = "<group>"; };
 		9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookRenewalButtonView.swift; sourceTree = "<group>"; };
-		9EFBE7CE29FFA90800308BAE /* ReadingBookDetailTabItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookDetailTabItems.swift; sourceTree = "<group>"; };
+		9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookTabSectionView.swift; sourceTree = "<group>"; };
+		9EFBE7CE29FFA90800308BAE /* ReadingBookTabItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookTabItems.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -401,8 +403,9 @@
 				9EA1983B2A01F18300D385CD /* ReadingBookView.swift */,
 				9EA1983C2A01F18300D385CD /* ReadingBookHeaderView.swift */,
 				9EE01FE92A01F2D900584F39 /* ReadingBookScrollView.swift */,
-				9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */,
 				9EA1983A2A01F18300D385CD /* ReadingBookCoverView.swift */,
+				9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */,
+				9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */,
 			);
 			path = ReadingBookDetailView;
 			sourceTree = "<group>";
@@ -413,7 +416,7 @@
 				9ECA326A29D12044004D6D5B /* ContentsTabItems.swift */,
 				9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItems.swift */,
 				9EDC2FA729E6867D004E792A /* BookShelfSummaryItems.swift */,
-				9EFBE7CE29FFA90800308BAE /* ReadingBookDetailTabItems.swift */,
+				9EFBE7CE29FFA90800308BAE /* ReadingBookTabItems.swift */,
 				9EDC2FAE29E6DDEF004E792A /* FavoriteBookCellViewType.swift */,
 				9EB749F629D5C3A500610D97 /* Category.swift */,
 				9E0434AA29E28097009A2161 /* BookSort.swift */,
@@ -679,13 +682,14 @@
 				9EA1983D2A01F18300D385CD /* ReadingBookCoverView.swift in Sources */,
 				9E54AA0629D706F500FE080C /* SearchLazyGridView.swift in Sources */,
 				9EDC2FB429E6F108004E792A /* BookAddView.swift in Sources */,
-				9EFBE7CF29FFA90800308BAE /* ReadingBookDetailTabItems.swift in Sources */,
+				9EFBE7CF29FFA90800308BAE /* ReadingBookTabItems.swift in Sources */,
 				9E852F1729E1283C00A78EC2 /* BookShelfHeaderView.swift in Sources */,
 				9E0C0A6229D1DB4700F1F5F6 /* HomeView.swift in Sources */,
 				9E0434B429E39920009A2161 /* FavoriteBooksScrollView.swift in Sources */,
 				9ECA326B29D12044004D6D5B /* ContentsTabItems.swift in Sources */,
 				9E7A794529DA6AFF00A51856 /* SearchInfoCoverView.swift in Sources */,
 				9E06070E29DD516D000D542D /* RealmManager.swift in Sources */,
+				9EE01FEE2A01FAF800584F39 /* ReadingBookTabSectionView.swift in Sources */,
 				9E7A794B29DA8EBD00A51856 /* SearchInfoDescView.swift in Sources */,
 				9EDC2FB729E92E90004E792A /* DatePickerSheetView.swift in Sources */,
 				9E7A794329DA5B8F00A51856 /* SearchInfoView.swift in Sources */,

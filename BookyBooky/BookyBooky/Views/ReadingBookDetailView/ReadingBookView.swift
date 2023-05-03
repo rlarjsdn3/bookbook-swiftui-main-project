@@ -15,8 +15,8 @@ struct ReadingBookView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     
     @State private var scrollYOffset = 0.0
-    @State private var selectedTab: ReadingBookDetailTabItems = .overview
-    @State private var selectedAnimation: ReadingBookDetailTabItems = .overview
+    @State private var selectedTab: ReadingBookTabItems = .overview
+    @State private var selectedAnimation: ReadingBookTabItems = .overview
     
     // MARK: - BODY
     

@@ -7,11 +7,10 @@
 
 import Foundation
 
-enum ReadingBookDetailTabItems: CaseIterable {
+enum ReadingBookTabItems: CaseIterable {
     case overview
     case analysis
     case collectSentences
-    case recordReadings
     
     var name: String {
         switch self {
@@ -21,8 +20,6 @@ enum ReadingBookDetailTabItems: CaseIterable {
             return "분석"
         case .collectSentences:
             return "문장 수집"
-        case .recordReadings:
-            return "독서 기록"
         }
     }
 }
