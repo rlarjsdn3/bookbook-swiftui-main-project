@@ -9,12 +9,25 @@ import SwiftUI
 import RealmSwift
 
 struct ReadingBookRenewalButtonView: View {
-    let readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     
     var body: some View {
         HStack {
+//            @Persisted var date: Date           // 읽은 날짜
+//            @Persisted var totalPagesRead: Int  // 지금까지 읽은 페이지 쪽 수
+//            @Persisted var numOfPagesRead: Int  // 그 날에 읽은 페이지 쪽 수
+            
             Button {
-                // do something...
+                let record = ReadingRecords(
+                    value: ["date": Date(),
+                            "totalPagesRead": 100,
+                            "numOfPagesRead": 0
+                           ] as [String : Any]
+                )
+                
+                withAnimation {
+                    $readingBook.readingRecords.append(record)
+                }
             } label: {
                 Text("읽었어요!")
                     .font(.headline)
@@ -24,8 +37,8 @@ struct ReadingBookRenewalButtonView: View {
                     .clipShape(Capsule())
             }
             
-            // 코드 미완성
-            Text("\(Text("기한: ").fontWeight(.semibold))\(readingBook.targetDate.toFormat("yyyy년 M월 d일")) (7일 남음)")
+            // 코드 미완성 (오늘 상태 메시지 출력하기)
+            Text("오늘 10페이지나 읽었어요!")
                 .font(.caption.weight(.light))
                 .padding(.horizontal)
             

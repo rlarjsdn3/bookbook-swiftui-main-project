@@ -16,7 +16,7 @@ struct ReadingBookCoverView: View {
     
     var readingBookProgressRate: Double {
         if let readingRecord = readingBook.readingRecords.last {
-            return Double(readingRecord.totalPagesRead) / Double(readingBook.itemPage)
+            return (Double(readingRecord.totalPagesRead) / Double(readingBook.itemPage)) * 100.0
         } else {
             return 0.0
         }
@@ -113,11 +113,7 @@ extension ReadingBookCoverView {
     
     var bookProgressView: some View {
         HStack {
-            VStack(alignment: .leading) {
-                progressLabel
-                
-                readingTodayLabel
-            }
+            progressLabel
             
             Spacer()
         
@@ -144,19 +140,12 @@ extension ReadingBookCoverView {
             }
         }
     }
-
-    // 아직 미완성
-    var readingTodayLabel: some View {
-        Text("오늘 10페이지 읽음")
-            .font(.caption2.weight(.light))
-            .foregroundColor(.secondary)
-    }
     
     var progressGuage: some View {
-        Gauge(value: readingBookProgressRate) {
+        Gauge(value: readingBookProgressRate, in: 0...100) {
             Text("Label")
         } currentValueLabel: {
-            Text("\(readingBookProgressRate.formatted(.number.precision(.fractionLength(0))))%")
+            Text("\(readingBookProgressRate.formatted(.number.precision(.fractionLength(1))))%")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }

@@ -16,11 +16,19 @@ struct ReadingBookCellView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var readingBookProgressValue: Double {
+    var readingBookProgressRate: Double {
         if let readingRecord = readingBook.readingRecords.last {
-            return Double(readingRecord.totalPagesRead) / Double(readingBook.itemPage)
+            return (Double(readingRecord.totalPagesRead) / Double(readingBook.itemPage)) * 100.0
         } else {
-            return 0.0
+            return 0
+        }
+    }
+    
+    var readingBookProgressPage: Int {
+        if let readingRecord = readingBook.readingRecords.last {
+            return readingRecord.totalPagesRead
+        } else {
+            return 0
         }
     }
     
@@ -81,11 +89,11 @@ extension ReadingBookCellView {
     
     var progressBar: some View {
         HStack {
-            ProgressView(value: readingBookProgressValue, total: 100.0)
+            ProgressView(value: readingBookProgressRate, total: 100.0)
                 .tint(Color.black.gradient)
                 .frame(width: 100, alignment: .leading)
             
-            Text("\(Int(readingBookProgressValue))%")
+            Text("\(readingBookProgressRate.formatted(.number.precision(.fractionLength(1))))%")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
