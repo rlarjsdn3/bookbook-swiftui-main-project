@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct TargetBookDetailView: View {
+struct ReadingBookDetailView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     
     @State private var startOffset = 0.0
@@ -23,11 +23,11 @@ struct TargetBookDetailView: View {
         //  도서 삭제 시, 책 제목/저자 등 정보가 사라지지 않게 하기 (추후 수정 예정)
         
         VStack(spacing: 0) {
-            TargetBookDetailHeaderView(targetBook: readingBook, scrollYOffset: $scrollYOffset)
+            ReadingBookDetailHeaderView(targetBook: readingBook, scrollYOffset: $scrollYOffset)
             
             ScrollView {
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
-                    TargetBookDetailCoverView(readingBook: readingBook)
+                    ReadingBookDetailCoverView(readingBook: readingBook)
                     
                     HStack {
                         Button {
@@ -127,7 +127,7 @@ struct TargetBookDetailView: View {
     }
 }
 
-extension TargetBookDetailView {
+extension ReadingBookDetailView {
     
 }
 
@@ -136,6 +136,6 @@ struct HomeTargetBookDetailView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
-        TargetBookDetailView(readingBook: completeTargetBooks[0])
+        ReadingBookDetailView(readingBook: completeTargetBooks[0])
     }
 }

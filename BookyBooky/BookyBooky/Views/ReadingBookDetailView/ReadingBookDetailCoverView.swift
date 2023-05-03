@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftDate
 import RealmSwift
 
-struct TargetBookDetailCoverView: View {
+struct ReadingBookDetailCoverView: View {
     let readingBook: ReadingBook
     
     var body: some View {
@@ -25,7 +25,7 @@ struct TargetBookDetailCoverView: View {
     }
 }
 
-extension TargetBookDetailCoverView {
+extension ReadingBookDetailCoverView {
     func bookCoverImage(url: String) -> some View {
         AsyncImage(url: URL(string: url),
                    transaction: Transaction(animation: .default)) { phase in
@@ -55,7 +55,7 @@ extension TargetBookDetailCoverView {
     }
 }
 
-extension TargetBookDetailCoverView {
+extension ReadingBookDetailCoverView {
     var bookKeyInformation: some View {
         VStack(alignment: .leading, spacing: 3) {
             bookTitle
@@ -147,6 +147,6 @@ struct TargetBookDetailCoverView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
-        TargetBookDetailCoverView(readingBook: completeTargetBooks[0])
+        ReadingBookDetailCoverView(readingBook: completeTargetBooks[0])
     }
 }

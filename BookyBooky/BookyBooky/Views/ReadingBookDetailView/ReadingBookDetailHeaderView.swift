@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct TargetBookDetailHeaderView: View {
+struct ReadingBookDetailHeaderView: View {
     @Environment(\.dismiss) var dismiss
     
     @ObservedResults(ReadingBook.self) var completeTargetBooks
@@ -36,7 +36,7 @@ struct TargetBookDetailHeaderView: View {
     }
 }
 
-extension TargetBookDetailHeaderView {
+extension ReadingBookDetailHeaderView {
     var navigationTitle: some View {
         Group {
             if scrollYOffset > 30 {
@@ -92,6 +92,6 @@ struct TargetBookDetailHeaderView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
-        TargetBookDetailHeaderView(targetBook: completeTargetBooks[0], scrollYOffset: .constant(0.0))
+        ReadingBookDetailHeaderView(targetBook: completeTargetBooks[0], scrollYOffset: .constant(0.0))
     }
 }
