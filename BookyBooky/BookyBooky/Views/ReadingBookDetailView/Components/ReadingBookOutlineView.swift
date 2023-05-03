@@ -120,6 +120,14 @@ struct ReadingBookOutlineView: View {
                 Text(readingBook.explanation)
                     .padding(.horizontal)
             }
+            .padding(.bottom, 20)
+            
+            HStack(spacing: 0) {
+                Text("도서 DB 제공 : ")
+                
+                Link("알라딘 인터넷 서점", destination: URL(string: "https://www.aladin.co.kr")!)
+            }
+            .font(.caption)
         }
         .padding(.bottom, 40)
     }

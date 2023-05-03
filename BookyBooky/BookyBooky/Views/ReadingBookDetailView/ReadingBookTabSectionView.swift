@@ -23,7 +23,7 @@ struct ReadingBookTabSectionView: View {
             case .analysis:
                 ReadingBookAnalysisView(readingBook: readingBook)
             case .collectSentences:
-                Text("문장 수집")
+                ReadingBookCollectSentencesView()
             }
         } header: {
             HStack {

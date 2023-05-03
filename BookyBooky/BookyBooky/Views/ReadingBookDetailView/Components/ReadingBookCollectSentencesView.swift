@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import Shimmer
 
 struct ReadingBookCollectSentencesView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("UI 미완성")
+            .font(.title3)
+            .padding()
+            .background(.gray.opacity(0.3))
+            .cornerRadius(15)
+            .shimmering()
+            .padding(.vertical, 25)
     }
 }
 
