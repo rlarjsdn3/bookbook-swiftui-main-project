@@ -35,53 +35,44 @@ struct ReadingBookAnalysisView: View {
     @State private var selectedDateRange: AnalysisDateRangeTabItems = .oneWeek
     
     var body: some View {
-        ZStack {
-            Color("Background")
-                .ignoresSafeArea()
+        VStack {
+            VStack {
+                Picker(selection: $selectedDateRange) {
+                    ForEach(AnalysisDateRangeTabItems.allCases, id: \.self) { item in
+                        Text(item.name)
+                    }
+                } label: {
+                    Text("Label")
+                }
+                .pickerStyle(.segmented)
+                .padding(.vertical, 10)
+                .padding(.horizontal)
+                
+                // 차트 미완성
+                Text("Charts Area")
+                    .font(.title.weight(.light))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 300)
+                    .padding()
+                    .background(Color("Background"))
+                    .cornerRadius(20)
+                    .padding([.horizontal, .bottom])
+            }
+            .background(Color.white)
             
             VStack {
-                VStack {
-                    Picker(selection: $selectedDateRange) {
-                        ForEach(AnalysisDateRangeTabItems.allCases, id: \.self) { item in
-                            Text(item.name)
-                        }
-                    } label: {
-                        Text("Label")
-                    }
-                    .pickerStyle(.segmented)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal)
-                    
-                    // 차트 미완성
-                    Text("Charts Area")
-                        .font(.title.weight(.light))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 300)
-                        .padding()
-                        .background(Color("Background"))
-                        .cornerRadius(20)
-                        .padding([.horizontal, .bottom])
-                }
-                .background(Color.white)
-                
                 Button {
                     
                 } label: {
-                    HStack {
-                        Text("모든 데이터 보기")
-                            .foregroundColor(.primary)
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.right")
-                            .fontWeight(.semibold)
-                            .foregroundColor(.gray)
-                    }
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(15)
+                    Text("모든 데이터 보기")
+                        .font(.headline.weight(.bold))
+                        .foregroundColor(.primary)
+                        .frame(height: 45)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
+                        .background(Color("Background"))
+                        .clipShape(Capsule(style: .continuous))
                 }
-                .padding(.top, 6)
                 .padding([.horizontal, .bottom])
             }
             .padding(.bottom, 20)
