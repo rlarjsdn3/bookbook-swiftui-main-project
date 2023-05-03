@@ -72,7 +72,9 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Link("자세히 보기", destination: URL(string: readingBook.link)!)
+                    if let url = URL(string: readingBook.link) {
+                        Link("자세히 보기", destination: url)
+                    }
                 }
                 .padding([.top, .bottom], 3)
                 .padding(.horizontal)
