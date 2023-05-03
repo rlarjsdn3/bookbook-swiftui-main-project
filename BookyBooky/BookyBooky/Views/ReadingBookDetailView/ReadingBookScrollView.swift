@@ -20,15 +20,13 @@ struct ReadingBookScrollView: View {
     let readingBook: ReadingBook
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
                 ReadingBookCoverView(readingBook: readingBook)
                 
                 ReadingBookRenewalButtonView(readingBook: readingBook)
                 
                 ReadingBookTabSectionView(readingBook: readingBook, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, scrollYOffset: $scrollYOffset, underlineAnimation: underlineAnimation)
-                
-                Spacer()
             }
             .overlay(alignment: .top) {
                 GeometryReader { proxy -> Color in

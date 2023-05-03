@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 
 struct ReadingBookTabSectionView: View {
-    let readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     @Binding var selectedTab: ReadingBookTabItems
     @Binding var selectedAnimation: ReadingBookTabItems
     @Binding var scrollYOffset: Double
@@ -21,7 +21,7 @@ struct ReadingBookTabSectionView: View {
             case .overview:
                 ReadingBookOutlineView(readingBook: readingBook)
             case .analysis:
-                Text("분석 화면")
+                ReadingBookAnalysisView(readingBook: readingBook)
             case .collectSentences:
                 Text("문장 수집")
             }

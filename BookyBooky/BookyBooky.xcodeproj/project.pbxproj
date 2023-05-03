@@ -92,6 +92,7 @@
 		9EE01FEC2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */; };
 		9EE01FEE2A01FAF800584F39 /* ReadingBookTabSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */; };
 		9EE01FF12A020FAA00584F39 /* ReadingBookOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */; };
+		9EE01FF32A022D4100584F39 /* ReadingBookAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FF22A022D4100584F39 /* ReadingBookAnalysisView.swift */; };
 		9EFBE7CF29FFA90800308BAE /* ReadingBookTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* ReadingBookTabItems.swift */; };
 /* End PBXBuildFile section */
 
@@ -176,6 +177,7 @@
 		9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookRenewalButtonView.swift; sourceTree = "<group>"; };
 		9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookTabSectionView.swift; sourceTree = "<group>"; };
 		9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookOutlineView.swift; sourceTree = "<group>"; };
+		9EE01FF22A022D4100584F39 /* ReadingBookAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookAnalysisView.swift; sourceTree = "<group>"; };
 		9EFBE7CE29FFA90800308BAE /* ReadingBookTabItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookTabItems.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -552,6 +554,7 @@
 			isa = PBXGroup;
 			children = (
 				9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */,
+				9EE01FF22A022D4100584F39 /* ReadingBookAnalysisView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				9E7BFC7929F0F24F00D72648 /* AnalysisView.swift in Sources */,
 				9EDC2FBC29EA3811004E792A /* LottieBookView.swift in Sources */,
 				9E7BFC7B29F0F3CF00D72648 /* HomeScrollView.swift in Sources */,
+				9EE01FF32A022D4100584F39 /* ReadingBookAnalysisView.swift in Sources */,
 				9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */,
 				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,
 				9E0C0A6929D281BF00F1F5F6 /* Haptics.swift in Sources */,

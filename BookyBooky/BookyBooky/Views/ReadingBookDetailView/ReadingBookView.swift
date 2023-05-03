@@ -34,8 +34,7 @@ struct ReadingBookView: View {
 
 // MARK: - PREVIEW
 
-struct HomeTargetBookDetailView_Previews: PreviewProvider {
-    static let realmManager = RealmManager.openLocalRealm()
+struct ReadingBookView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {

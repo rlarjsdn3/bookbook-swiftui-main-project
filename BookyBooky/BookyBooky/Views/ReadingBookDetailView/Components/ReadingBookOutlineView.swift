@@ -81,7 +81,7 @@ struct ReadingBookOutlineView: View {
                     .padding(.horizontal)
             }
         }
-//        .padding(.bottom, 40)
+        .padding(.bottom, 40)
     }
 }
 
