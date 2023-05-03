@@ -88,6 +88,7 @@
 		9EDC2FBA29EA3808004E792A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9EDC2FB929EA3808004E792A /* Lottie */; };
 		9EDC2FBC29EA3811004E792A /* LottieBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBB29EA3811004E792A /* LottieBookView.swift */; };
 		9EDC2FBE29EA3898004E792A /* book.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBD29EA3898004E792A /* book.json */; };
+		9EE01FEA2A01F2D900584F39 /* ReadingBookDetailScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FE92A01F2D900584F39 /* ReadingBookDetailScrollView.swift */; };
 		9EFBE7CF29FFA90800308BAE /* TargetBookDetailTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* TargetBookDetailTabItems.swift */; };
 /* End PBXBuildFile section */
 
@@ -168,6 +169,7 @@
 		9EDC2FB629E92E90004E792A /* DatePickerSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerSheetView.swift; sourceTree = "<group>"; };
 		9EDC2FBB29EA3811004E792A /* LottieBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieBookView.swift; sourceTree = "<group>"; };
 		9EDC2FBD29EA3898004E792A /* book.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = book.json; sourceTree = "<group>"; };
+		9EE01FE92A01F2D900584F39 /* ReadingBookDetailScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookDetailScrollView.swift; sourceTree = "<group>"; };
 		9EFBE7CE29FFA90800308BAE /* TargetBookDetailTabItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBookDetailTabItems.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -396,6 +398,7 @@
 			children = (
 				9EA1983B2A01F18300D385CD /* ReadingBookDetailView.swift */,
 				9EA1983A2A01F18300D385CD /* ReadingBookDetailCoverView.swift */,
+				9EE01FE92A01F2D900584F39 /* ReadingBookDetailScrollView.swift */,
 				9EA1983C2A01F18300D385CD /* ReadingBookDetailHeaderView.swift */,
 			);
 			path = ReadingBookDetailView;
@@ -630,6 +633,7 @@
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
 				9E7A795029DAABA000A51856 /* SearchInfoButtonsView.swift in Sources */,
 				9E7A794D29DA998F00A51856 /* SalesPointDescSheetView.swift in Sources */,
+				9EE01FEA2A01F2D900584F39 /* ReadingBookDetailScrollView.swift in Sources */,
 				9E0434BC29E53CD8009A2161 /* CollectSentences.swift in Sources */,
 				9E54AA0E29D7D84100FE080C /* StringExtension.swift in Sources */,
 				9EDC2FB129E6E48C004E792A /* UINavigationControllerExtension.swift in Sources */,
