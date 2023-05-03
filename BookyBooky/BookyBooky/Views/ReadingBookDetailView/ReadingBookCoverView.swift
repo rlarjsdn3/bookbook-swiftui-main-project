@@ -12,6 +12,26 @@ import RealmSwift
 struct ReadingBookCoverView: View {
     let readingBook: ReadingBook
     
+    // MARK: - COMPUTED PROPERTIES
+    
+    var readingBookProgressRate: Double {
+        if let readingRecord = readingBook.readingRecords.last {
+            return Double(readingRecord.totalPagesRead) / Double(readingBook.itemPage)
+        } else {
+            return 0.0
+        }
+    }
+    
+    var readingBookProgressPage: Int {
+        if let readingRecord = readingBook.readingRecords.last {
+            return readingRecord.totalPagesRead
+        } else {
+            return 0
+        }
+    }
+    
+    // MARK: - BODY
+    
     var body: some View {
         HStack {
             bookCoverImage(url: readingBook.cover)
@@ -24,6 +44,8 @@ struct ReadingBookCoverView: View {
         
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension ReadingBookCoverView {
     func bookCoverImage(url: String) -> some View {
@@ -105,7 +127,7 @@ extension ReadingBookCoverView {
     
     var progressLabel: some View {
         HStack {
-            Text("50")
+            Text("\(readingBookProgressPage)")
                 .font(.largeTitle)
             
             Text("/")
@@ -122,7 +144,8 @@ extension ReadingBookCoverView {
             }
         }
     }
-    
+
+    // 아직 미완성
     var readingTodayLabel: some View {
         Text("오늘 10페이지 읽음")
             .font(.caption2.weight(.light))
@@ -130,10 +153,10 @@ extension ReadingBookCoverView {
     }
     
     var progressGuage: some View {
-        Gauge(value: 0.5) {
+        Gauge(value: readingBookProgressRate) {
             Text("Label")
         } currentValueLabel: {
-            Text("50%")
+            Text("\(readingBookProgressRate.formatted(.number.precision(.fractionLength(0))))%")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }

@@ -8,22 +8,19 @@
 import SwiftUI
 import RealmSwift
 
-struct TargetBookCellView: View {
+struct ReadingBookCellView: View {
     
-    @ObservedRealmObject var targetBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     
-    @Binding var selectedCategory: Category
-    
-    @State private var isPresentingTargetBookDetailView = false
-    @State private var isLoading = true
+    @State private var isPresentingReadingBookView = false
     
     // MARK: - COMPUTED PROPERTIES
     
-    var targetBookProgressValue: Double {
-        if let readingRecord = targetBook.readingRecords.last {
-            return Double(readingRecord.totalPagesRead) / Double(targetBook.itemPage) * 100.0
+    var readingBookProgressValue: Double {
+        if let readingRecord = readingBook.readingRecords.last {
+            return Double(readingRecord.totalPagesRead) / Double(readingBook.itemPage)
         } else {
-            return 99.0
+            return 0.0
         }
     }
     
@@ -31,7 +28,7 @@ struct TargetBookCellView: View {
     
     var body: some View {
         VStack {
-            asyncImage(url: targetBook.cover)
+            asyncImage(url: readingBook.cover)
 
             progressBar
             
@@ -41,16 +38,16 @@ struct TargetBookCellView: View {
         }
         .frame(width: 150)
         .padding(.horizontal, 10)
-        .navigationDestination(isPresented: $isPresentingTargetBookDetailView) {
-            ReadingBookView(readingBook: targetBook)
+        .navigationDestination(isPresented: $isPresentingReadingBookView) {
+            ReadingBookView(readingBook: readingBook)
         }
         .onTapGesture {
-            isPresentingTargetBookDetailView = true
+            isPresentingReadingBookView = true
         }
     }
 }
 
-extension TargetBookCellView {
+extension ReadingBookCellView {
     func asyncImage(url: String) -> some View {
         AsyncImage(url: URL(string: url),
                    transaction: Transaction(animation: .default)) { phase in
@@ -67,9 +64,6 @@ extension TargetBookCellView {
                         )
                     )
                     .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
-                    .onAppear {
-                        isLoading = false
-                    }
             case .failure(_), .empty:
                 loadingImage
             @unknown default:
@@ -87,18 +81,18 @@ extension TargetBookCellView {
     
     var progressBar: some View {
         HStack {
-            ProgressView(value: targetBookProgressValue, total: 100.0)
+            ProgressView(value: readingBookProgressValue, total: 100.0)
                 .tint(Color.black.gradient)
                 .frame(width: 100, alignment: .leading)
             
-            Text("\(Int(targetBookProgressValue))%")
+            Text("\(Int(readingBookProgressValue))%")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
     }
     
     var targetBookTitle: some View {
-        Text("\(targetBook.title)")
+        Text("\(readingBook.title)")
             .font(.headline)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -109,17 +103,17 @@ extension TargetBookCellView {
     }
     
     var targetBookAuthor: some View {
-        Text("\(targetBook.author)")
+        Text("\(readingBook.author)")
             .font(.subheadline)
             .foregroundColor(.secondary)
             .lineLimit(1)
     }
 }
 
-struct TargetBookCellView_Previews: PreviewProvider {
+struct ReadingBookCellView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
-        TargetBookCellView(targetBook: completeTargetBooks[0], selectedCategory: .constant(.all))
+        ReadingBookCellView(readingBook: completeTargetBooks[0])
     }
 }

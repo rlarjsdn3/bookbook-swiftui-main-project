@@ -163,8 +163,8 @@ extension HomeScrollView {
     }
     
     var navigationDateSubTitle: some View {
-        Text(Date().toFormat("M월 dd일 EEEE", locale: Locale(identifier: "ko")))
-            .fontWeight(.bold)
+        Text(Date().toFormat("M월 d일 EEEE", locale: Locale(identifier: "ko")))
+            .fontWeight(.semibold)
             .foregroundColor(.secondary)
             .opacity(scrollYOffset > 10 ? 0 : 1)
     }
@@ -255,7 +255,7 @@ extension HomeScrollView {
             } else {
                 LazyVGrid(columns: columns, spacing: 25) {
                     ForEach(filteredCompleteTargetBooks) { book in
-                        TargetBookCellView(targetBook: book, selectedCategory: $selectedCategory)
+                        ReadingBookCellView(readingBook: book)
                     }
                 }
                 .padding([.horizontal, .top])
