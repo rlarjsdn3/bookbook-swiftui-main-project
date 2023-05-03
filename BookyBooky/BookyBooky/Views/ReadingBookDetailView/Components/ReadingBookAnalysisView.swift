@@ -73,6 +73,7 @@ struct ReadingBookAnalysisView: View {
                         .background(Color("Background"))
                         .clipShape(Capsule(style: .continuous))
                 }
+                .disabled(readingBook.readingRecords.isEmpty)
                 .padding([.horizontal, .bottom])
             }
             .padding(.bottom, 20)
