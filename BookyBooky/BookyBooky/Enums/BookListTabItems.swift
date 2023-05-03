@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum BookListTabItem: String, CaseIterable {
+enum BookListTabItems: String, CaseIterable {
     case bestSeller = "Bestseller"              // 베스트셀러
     case itemNewAll = "ItemNewAll"              // 시간 도서
     case itemNewSpecial = "ItemNewSpecial"      // 신간 베스트

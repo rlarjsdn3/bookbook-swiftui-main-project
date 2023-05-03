@@ -9,12 +9,16 @@ import SwiftUI
 import RealmSwift
 
 struct ReadingBookDetailView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @ObservedRealmObject var readingBook: ReadingBook
     
     @State private var scrollYOffset = 0.0
+    @State private var selectedTab: ReadingBookDetailTabItems = .overview
+    @State private var selectedAnimation: ReadingBookDetailTabItems = .overview
     
-    @State private var selectedTab: TargetBookDetailTabItems = .overview
-    @State private var selectedAnimation: TargetBookDetailTabItems = .overview
+    // MARK: - BODY
     
     var body: some View {
         //  도서 삭제 시, 책 제목/저자 등 정보가 사라지지 않게 하기 (추후 수정 예정)
@@ -28,9 +32,7 @@ struct ReadingBookDetailView: View {
     }
 }
 
-extension ReadingBookDetailView {
-    
-}
+// MARK: - PREVIEW
 
 struct HomeTargetBookDetailView_Previews: PreviewProvider {
     static let realmManager = RealmManager.openLocalRealm()

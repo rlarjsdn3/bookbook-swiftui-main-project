@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
     @State private var scrollYOffset = 0.0
     @State private var selectedSort: BookSort = .latestOrder
     

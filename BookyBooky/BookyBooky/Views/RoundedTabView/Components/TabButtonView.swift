@@ -11,8 +11,8 @@ struct TabButtonView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selected: ContentsTabItem
-    var item: ContentsTabItem
+    @Binding var selected: ContentsTabItems
+    var item: ContentsTabItems
     var namespace: Namespace.ID
     
     // MARK: - BODY

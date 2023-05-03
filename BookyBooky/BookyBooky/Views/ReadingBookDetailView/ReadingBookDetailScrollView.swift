@@ -12,8 +12,8 @@ struct ReadingBookDetailScrollView: View {
     @State private var startOffset = 0.0
     
     @Binding var scrollYOffset: Double
-    @Binding var selectedTab: TargetBookDetailTabItems
-    @Binding var selectedAnimation: TargetBookDetailTabItems
+    @Binding var selectedTab: ReadingBookDetailTabItems
+    @Binding var selectedAnimation: ReadingBookDetailTabItems
     
     @Namespace var underlineAnimation
     
@@ -58,7 +58,7 @@ struct ReadingBookDetailScrollView: View {
                     }
                 } header: {
                     HStack {
-                        ForEach(TargetBookDetailTabItems.allCases, id: \.self) { item in
+                        ForEach(ReadingBookDetailTabItems.allCases, id: \.self) { item in
                             Button {
                                 withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
                                     selectedAnimation = item

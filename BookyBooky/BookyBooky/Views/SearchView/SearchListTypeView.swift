@@ -11,9 +11,9 @@ struct SearchListTypeView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedAnimation = BookListTabItem.bestSeller
+    @State private var selectedAnimation = BookListTabItems.bestSeller
     
-    @Binding var listTypeSelected: BookListTabItem
+    @Binding var listTypeSelected: BookListTabItems
     @Binding var scrollYOffset: CGFloat
     @Namespace var namespace: Namespace.ID
     
@@ -39,7 +39,7 @@ extension SearchListTypeView {
     @ViewBuilder
     func listTypeButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack {
-            ForEach(BookListTabItem.allCases, id: \.self) { type in
+            ForEach(BookListTabItems.allCases, id: \.self) { type in
                 ListTypeButtonView(
                     listTypeSelected: $listTypeSelected,
                     type: type,

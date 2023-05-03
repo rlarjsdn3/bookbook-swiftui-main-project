@@ -12,7 +12,7 @@ struct SearchLazyGridView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var listTypeSelected: BookListTabItem
+    @Binding var listTypeSelected: BookListTabItems
     @Binding var scrollYOffset: CGFloat
     
     @State private var startOffset: CGFloat = 0.0
@@ -108,7 +108,7 @@ extension SearchLazyGridView {
     
     var refreshButton: some View {
         Button("다시 불러오기") {
-            for type in BookListTabItem.allCases {
+            for type in BookListTabItems.allCases {
                 bookViewModel.requestBookListAPI(type: type)
             }
             Haptics.shared.play(.rigid)
