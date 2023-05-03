@@ -17,6 +17,7 @@ class ReadingBook: Object, ObjectKeyIdentifiable {
     @Persisted var cover: String                    // 표지(링크)
     @Persisted var itemPage: Int                    // 페이지 쪽 수
     @Persisted var category: Category               // 카테고리
+    @Persisted var explanation: String              // 상품 설명
     @Persisted var link: String                     // 상품 페이지 링크
     @Persisted var isbn13: String                   // ISBN-13
     

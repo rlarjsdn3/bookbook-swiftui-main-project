@@ -37,6 +37,7 @@ struct BookAddButtonsView: View {
                         "cover": "\(bookInfoItem.cover)",
                         "itemPage": bookInfoItem.subInfo.itemPage,
                         "category": bookInfoItem.categoryName.refinedCategory,
+                        "explanation": bookInfoItem.description,
                         "link": "\(bookInfoItem.link)",
                         "isbn13": "\(bookInfoItem.isbn13)",
                         "startDate": Date(),

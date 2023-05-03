@@ -91,6 +91,7 @@
 		9EE01FEA2A01F2D900584F39 /* ReadingBookScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FE92A01F2D900584F39 /* ReadingBookScrollView.swift */; };
 		9EE01FEC2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */; };
 		9EE01FEE2A01FAF800584F39 /* ReadingBookTabSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */; };
+		9EE01FF12A020FAA00584F39 /* ReadingBookOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */; };
 		9EFBE7CF29FFA90800308BAE /* ReadingBookTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* ReadingBookTabItems.swift */; };
 /* End PBXBuildFile section */
 
@@ -174,6 +175,7 @@
 		9EE01FE92A01F2D900584F39 /* ReadingBookScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookScrollView.swift; sourceTree = "<group>"; };
 		9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookRenewalButtonView.swift; sourceTree = "<group>"; };
 		9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookTabSectionView.swift; sourceTree = "<group>"; };
+		9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookOutlineView.swift; sourceTree = "<group>"; };
 		9EFBE7CE29FFA90800308BAE /* ReadingBookTabItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookTabItems.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -406,6 +408,7 @@
 				9EA1983A2A01F18300D385CD /* ReadingBookCoverView.swift */,
 				9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */,
 				9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */,
+				9EE01FEF2A020F8000584F39 /* Components */,
 			);
 			path = ReadingBookDetailView;
 			sourceTree = "<group>";
@@ -545,6 +548,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		9EE01FEF2A020F8000584F39 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -673,6 +684,7 @@
 				9E54A9FC29D5DC9800FE080C /* SearchCategoryButtonView.swift in Sources */,
 				9EB749FA29D5C43200610D97 /* Category.swift in Sources */,
 				9E0434AB29E28097009A2161 /* BookSort.swift in Sources */,
+				9EE01FF12A020FAA00584F39 /* ReadingBookOutlineView.swift in Sources */,
 				9ED116C129ED04330072BA41 /* BookAddButtonsView.swift in Sources */,
 				9EA1983E2A01F18300D385CD /* ReadingBookView.swift in Sources */,
 				9E061D5C29FA90660042E3B1 /* TargetBookCellView.swift in Sources */,

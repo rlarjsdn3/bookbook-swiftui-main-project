@@ -26,7 +26,7 @@ struct ReadingBookScrollView: View {
                 
                 ReadingBookRenewalButtonView(readingBook: readingBook)
                 
-                ReadingBookTabSectionView(selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, scrollYOffset: $scrollYOffset, underlineAnimation: underlineAnimation)
+                ReadingBookTabSectionView(readingBook: readingBook, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, scrollYOffset: $scrollYOffset, underlineAnimation: underlineAnimation)
                 
                 Spacer()
             }

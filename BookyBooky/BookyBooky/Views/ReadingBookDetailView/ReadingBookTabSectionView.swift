@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct ReadingBookTabSectionView: View {
+    let readingBook: ReadingBook
     @Binding var selectedTab: ReadingBookTabItems
     @Binding var selectedAnimation: ReadingBookTabItems
     @Binding var scrollYOffset: Double
@@ -15,14 +17,13 @@ struct ReadingBookTabSectionView: View {
     
     var body: some View {
         Section {
-            ForEach(0..<10) { index in
-                Text("UI 미완성")
-                    .font(.title3)
-                    .padding()
-                    .background(.gray.opacity(0.3))
-                    .cornerRadius(15)
-                    .shimmering()
-                    .padding(.vertical, 25)
+            switch selectedTab {
+            case .overview:
+                ReadingBookOutlineView(readingBook: readingBook)
+            case .analysis:
+                Text("분석 화면")
+            case .collectSentences:
+                Text("문장 수집")
             }
         } header: {
             HStack {
@@ -69,9 +70,10 @@ struct ReadingBookTabSectionView: View {
 }
 
 struct ReadingBookTabSectionView_Previews: PreviewProvider {
+    @ObservedResults(ReadingBook.self) static var readingBooks
     @Namespace static var underlineAnimation
     
     static var previews: some View {
-        ReadingBookTabSectionView(selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), scrollYOffset: .constant(0.0), underlineAnimation: underlineAnimation)
+        ReadingBookTabSectionView(readingBook: readingBooks[0], selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), scrollYOffset: .constant(0.0), underlineAnimation: underlineAnimation)
     }
 }
