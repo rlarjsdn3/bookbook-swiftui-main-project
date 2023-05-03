@@ -20,12 +20,50 @@ struct ReadingBookOutlineView: View {
                 Divider()
                 
                 HStack {
-                    Text("출판일")
-                        .font(.subheadline.weight(.bold))
+                    Text("시작 날짜")
+                        .font(.subheadline.weight(.medium))
                     
                     Spacer()
                     
-                    Text("\(readingBook.pubDate.toFormat("yyyy년 M월 d일 (E요일)", locale: Locale(identifier: "ko_kr")))")
+                    Text("\(readingBook.startDate.toFormat("yyyy년 M월 d일 (E)", locale: Locale(identifier: "ko_kr")))")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.vertical, 1)
+                
+                HStack {
+                    Text("완독 날짜")
+                        .font(.subheadline.weight(.medium))
+                    
+                    Spacer()
+                    
+                    Text("-")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.vertical, 1)
+                
+                HStack {
+                    Text("목표 날짜")
+                        .font(.subheadline.weight(.medium))
+                    
+                    Spacer()
+                    
+                    Text("\(readingBook.targetDate.toFormat("yyyy년 M월 d일 (E)", locale: Locale(identifier: "ko_kr")))")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.vertical, 1)
+                
+                Divider()
+                
+                HStack {
+                    Text("출판일")
+                        .font(.subheadline.weight(.medium))
+                    
+                    Spacer()
+                    
+                    Text("\(readingBook.pubDate.toFormat("yyyy년 M월 d일 (E)", locale: Locale(identifier: "ko_kr")))")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -33,7 +71,7 @@ struct ReadingBookOutlineView: View {
                 
                 HStack {
                     Text("쪽수")
-                        .font(.subheadline.weight(.bold))
+                        .font(.subheadline.weight(.medium))
                     
                     Spacer()
                     
@@ -45,7 +83,7 @@ struct ReadingBookOutlineView: View {
                 
                 HStack {
                     Text("ISBN-13")
-                        .font(.subheadline.weight(.bold))
+                        .font(.subheadline.weight(.medium))
                     
                     Spacer()
                     
