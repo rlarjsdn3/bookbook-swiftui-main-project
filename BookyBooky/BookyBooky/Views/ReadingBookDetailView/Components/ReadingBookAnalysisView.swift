@@ -34,6 +34,8 @@ struct ReadingBookAnalysisView: View {
     
     @State private var selectedDateRange: AnalysisDateRangeTabItems = .oneWeek
     
+    @State private var isPresentingAllReadingDataSheet = false
+    
     var body: some View {
         VStack {
             VStack {
@@ -62,7 +64,7 @@ struct ReadingBookAnalysisView: View {
             
             VStack {
                 Button {
-                    
+                    isPresentingAllReadingDataSheet = true
                 } label: {
                     Text("모든 데이터 보기")
                         .font(.headline.weight(.bold))
@@ -78,6 +80,9 @@ struct ReadingBookAnalysisView: View {
                 .padding([.horizontal, .bottom])
             }
             .padding(.bottom, 20)
+        }
+        .sheet(isPresented: $isPresentingAllReadingDataSheet) {
+            AllReadingDatailView(readingBook: readingBook)
         }
     }
 }
