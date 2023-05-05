@@ -16,4 +16,10 @@ class Haptics {
     func play(_ feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle) {
         UIImpactFeedbackGenerator(style: feedbackStyle).impactOccurred()
     }
+    
+    func notification(type: UINotificationFeedbackGenerator.FeedbackType) {
+            
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(type)
+        }
 }

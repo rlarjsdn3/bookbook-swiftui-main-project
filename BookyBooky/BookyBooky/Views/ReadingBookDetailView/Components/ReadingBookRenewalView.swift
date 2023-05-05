@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 import RealmSwift
 
 struct ReadingBookRenewalView: View {
@@ -13,7 +14,11 @@ struct ReadingBookRenewalView: View {
     
     @ObservedRealmObject var readingBook: ReadingBook
     
-    @State private var page: Int = 0
+    @State private var page = 0
+    
+    @State private var shake = false
+    
+    @State private var attempt: CGFloat = 0.0
     
     var themeColor: Color {
         readingBook.category.accentColor
@@ -23,52 +28,53 @@ struct ReadingBookRenewalView: View {
         VStack {
             Text("어디까지 읽으셨나요?")
                 .font(.title.weight(.bold))
-                .offset(y: 50)
+                .offset(y: 45)
             
             Spacer()
-            
-            HStack {
-                Spacer()
+        
+            VStack {
+                Text("\(page)")
+                    .font(.system(size: 60, weight: .bold, design: .rounded))
+                    .padding(.vertical, 2)
+                    .modifier(Shake(animatableData: attempt))
                 
-                Button {
-                    // do something...
-                } label: {
-                    Image(systemName: "minus")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .padding(.vertical, 23)
-                        .padding(.horizontal)
-                        .background(themeColor)
-                        .clipShape(Circle())
-                }
-                
-                Spacer()
-                
-                VStack {
-                    Text("\(page)")
-                        .font(.system(size: 60, weight: .bold, design: .rounded))
-                        .padding(.vertical, 2)
+                Text("페이지")
+                    .font(.title3.weight(.semibold))
+            }
+            .frame(maxWidth: .infinity)
+            .overlay {
+                HStack {
+                    Button {
+                        page -= 1
+                    } label: {
+                        Image(systemName: "minus")
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                            .padding(.vertical, 23)
+                            .padding(.horizontal)
+                            .background(themeColor)
+                            .clipShape(Circle())
+                    }
                     
-                    Text("페이지")
-                        .font(.title3.weight(.semibold))
+                    Spacer()
+                    
+                    Button {
+                        withAnimation {
+                            attempt += 1.0
+                        }
+                        Haptics.shared.notification(type: .error)
+//                        page += 1
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(themeColor)
+                            .clipShape(Circle())
+                    }
                 }
-                .offset(y: 17)
+                .offset(y: -17)
                 .padding()
-                
-                Spacer()
-                
-                Button {
-                    // do something...
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(themeColor)
-                        .clipShape(Circle())
-                }
-                
-                Spacer()
             }
             .padding()
             
@@ -99,6 +105,18 @@ struct ReadingBookRenewalView: View {
         }
         .presentationCornerRadius(30)
         .presentationDetents([.height(400)])
+    }
+}
+
+struct Shake: GeometryEffect {
+    var amount: CGFloat = 5
+    var shakesPerUnit = 3
+    var animatableData: CGFloat
+
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        ProjectionTransform(CGAffineTransform(translationX:
+            amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
+            y: 0))
     }
 }
 
