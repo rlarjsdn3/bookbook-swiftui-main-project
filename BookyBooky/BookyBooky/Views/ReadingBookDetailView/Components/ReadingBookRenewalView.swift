@@ -84,7 +84,67 @@ struct ReadingBookRenewalView: View {
             Spacer()
             
             Button {
-                // 아직 미완성
+                let calendar = Calendar.current
+                
+//                @Persisted var date: Date           // 읽은 날짜
+//                @Persisted var totalPagesRead: Int  // 지금까지 읽은 페이지 쪽 수
+//                @Persisted var numOfPagesRead: Int  // 그 날에 읽은 페이지 쪽 수
+                
+                
+                if let lastRecord = readingBook.readingRecords.last {
+
+                    let components1 = calendar.dateComponents([.year, .month, .day], from: lastRecord.date)
+                    let components2 = calendar.dateComponents([.year, .month, .day], from: Date.now)
+                    
+                    if (components1.year == components2.year) &&
+                       (components1.month == components2.month) &&
+                       (components1.day == components2.day) {
+                        
+                        $readingBook.readingRecords.remove(at: readingBook.readingRecords.endIndex - 1)
+                        
+                        var records: ReadingRecords
+                        
+                        if let last = readingBook.readingRecords.last {
+                            records = ReadingRecords(
+                                value: ["date": Date.now,
+                                        "totalPagesRead": page,
+                                        "numOfPagesRead": page - last.totalPagesRead
+                                       ] as [String: Any]
+                            )
+                        } else {
+                            records = ReadingRecords(
+                                value: ["date": Date.now,
+                                        "totalPagesRead": page,
+                                        "numOfPagesRead": page
+                                       ] as [String: Any]
+                            )
+                        }
+                        
+                        $readingBook.readingRecords.append(records)
+                        
+                    } else {
+                        
+                        let records = ReadingRecords(
+                            value: ["date": Date.now,
+                                    "totalPagesRead": page,
+                                    "numOfPagesRead": page - lastRecord.totalPagesRead
+                                   ] as [String: Any]
+                        )
+                        $readingBook.readingRecords.append(records)
+                    }
+                    
+                } else {
+                    
+                    let records = ReadingRecords(
+                        value: ["date": Date.now,
+                                "totalPagesRead": page,
+                                "numOfPagesRead": page
+                               ] as [String: Any]
+                    )
+                    
+                    $readingBook.readingRecords.append(records)
+                }
+                
                 dismiss()
             } label: {
                 Text("갱신하기")

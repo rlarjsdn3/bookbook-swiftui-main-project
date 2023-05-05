@@ -28,6 +28,8 @@ class RealmManager {
         return try! Realm(configuration: config)
     }
     
+    // MARK: - FAVORITE BOOK
+    
     func addFavoriteBook(_ object: FavoriteBook) {
         $favoriteBooks.append(object)
     }
@@ -42,6 +44,8 @@ class RealmManager {
         }
     }
     
+    // MARK: - READING BOOK
+    
     func addReadingBook(_ object: ReadingBook) {
         $readingBooks.append(object)
     }
@@ -55,4 +59,7 @@ class RealmManager {
     func deleteReadingBook(_ object: ReadingBook) {
         $readingBooks.remove(object)
     }
+    
+    // MARK: - READING RECORDS
+    
 }
