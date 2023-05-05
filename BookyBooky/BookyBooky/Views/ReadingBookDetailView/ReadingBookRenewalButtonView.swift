@@ -11,23 +11,23 @@ import RealmSwift
 struct ReadingBookRenewalButtonView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     
+    @State private var isPresentingRenewalSheet = false
+    
     var body: some View {
         HStack {
-//            @Persisted var date: Date           // 읽은 날짜
-//            @Persisted var totalPagesRead: Int  // 지금까지 읽은 페이지 쪽 수
-//            @Persisted var numOfPagesRead: Int  // 그 날에 읽은 페이지 쪽 수
-            
             Button {
-                let record = ReadingRecords(
-                    value: ["date": Date(),
-                            "totalPagesRead": 100,
-                            "numOfPagesRead": 0
-                           ] as [String : Any]
-                )
+//                let record = ReadingRecords(
+//                    value: ["date": Date(),
+//                            "totalPagesRead": 100,
+//                            "numOfPagesRead": 0
+//                           ] as [String : Any]
+//                )
+//
+//                withAnimation {
+//                    $readingBook.readingRecords.append(record)
+//                }
                 
-                withAnimation {
-                    $readingBook.readingRecords.append(record)
-                }
+                isPresentingRenewalSheet = true
             } label: {
                 Text("읽었어요!")
                     .font(.headline)
@@ -43,6 +43,9 @@ struct ReadingBookRenewalButtonView: View {
                 .padding(.horizontal)
             
 
+        }
+        .sheet(isPresented: $isPresentingRenewalSheet) {
+            ReadingBookRenewalView(readingBook: readingBook)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding([.horizontal, .bottom])

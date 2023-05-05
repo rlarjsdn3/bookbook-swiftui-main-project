@@ -36,6 +36,7 @@
 		9E0C0A7729D2B5BC00F1F5F6 /* BookInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7629D2B5BC00F1F5F6 /* BookInfo.swift */; };
 		9E0C0A7D29D3D0F900F1F5F6 /* BookListTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItems.swift */; };
 		9E0C0A7F29D3D56A00F1F5F6 /* SearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7E29D3D56A00F1F5F6 /* SearchHeaderView.swift */; };
+		9E2BA9062A04CBF600FD2E93 /* ReadingBookRenewalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2BA9052A04CBF600FD2E93 /* ReadingBookRenewalView.swift */; };
 		9E524DF829D1CF3500FD7B98 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E524DF729D1CF3500FD7B98 /* TabButtonView.swift */; };
 		9E524DFB29D1D14C00FD7B98 /* TabShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E524DFA29D1D14C00FD7B98 /* TabShape.swift */; };
 		9E54A9FA29D5D44000FE080C /* SearchSheetCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E54A9F929D5D44000FE080C /* SearchSheetCategoryView.swift */; };
@@ -127,6 +128,7 @@
 		9E0C0A7629D2B5BC00F1F5F6 /* BookInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookInfo.swift; sourceTree = "<group>"; };
 		9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListTabItems.swift; sourceTree = "<group>"; };
 		9E0C0A7E29D3D56A00F1F5F6 /* SearchHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeaderView.swift; sourceTree = "<group>"; };
+		9E2BA9052A04CBF600FD2E93 /* ReadingBookRenewalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookRenewalView.swift; sourceTree = "<group>"; };
 		9E524DF729D1CF3500FD7B98 /* TabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		9E524DFA29D1D14C00FD7B98 /* TabShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabShape.swift; sourceTree = "<group>"; };
 		9E54A9F929D5D44000FE080C /* SearchSheetCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetCategoryView.swift; sourceTree = "<group>"; };
@@ -558,6 +560,7 @@
 				9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */,
 				9EE01FF22A022D4100584F39 /* ReadingBookAnalysisView.swift */,
 				9EDEEF842A02963D0036FB1A /* ReadingBookCollectSentencesView.swift */,
+				9E2BA9052A04CBF600FD2E93 /* ReadingBookRenewalView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -711,6 +714,7 @@
 				9E06070E29DD516D000D542D /* RealmManager.swift in Sources */,
 				9EE01FEE2A01FAF800584F39 /* ReadingBookTabSectionView.swift in Sources */,
 				9E7A794B29DA8EBD00A51856 /* SearchInfoDescView.swift in Sources */,
+				9E2BA9062A04CBF600FD2E93 /* ReadingBookRenewalView.swift in Sources */,
 				9EDC2FB729E92E90004E792A /* DatePickerSheetView.swift in Sources */,
 				9E7A794329DA5B8F00A51856 /* SearchInfoView.swift in Sources */,
 				9E54AA0829D7C9B500FE080C /* SearchSheetCellView.swift in Sources */,
