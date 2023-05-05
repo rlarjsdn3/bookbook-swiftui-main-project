@@ -16,9 +16,13 @@ struct ReadingBookRenewalView: View {
     
     @State private var page = 0
     
-    @State private var shake = false
-    
-    @State private var attempt: CGFloat = 0.0
+    var lastReadingPage: Int {
+        if let record = readingBook.readingRecords.last {
+            return record.totalPagesRead
+        } else {
+            return 0
+        }
+    }
     
     var themeColor: Color {
         readingBook.category.accentColor
@@ -36,7 +40,6 @@ struct ReadingBookRenewalView: View {
                 Text("\(page)")
                     .font(.system(size: 60, weight: .bold, design: .rounded))
                     .padding(.vertical, 2)
-                    .modifier(Shake(animatableData: attempt))
                 
                 Text("페이지")
                     .font(.title3.weight(.semibold))
@@ -55,15 +58,13 @@ struct ReadingBookRenewalView: View {
                             .background(themeColor)
                             .clipShape(Circle())
                     }
+                    .opacity(lastReadingPage >= page ? 0.5 : 1)
+                    .disabled(lastReadingPage >= page ? true : false)
                     
                     Spacer()
                     
                     Button {
-                        withAnimation {
-                            attempt += 1.0
-                        }
-                        Haptics.shared.notification(type: .error)
-//                        page += 1
+                        page += 1
                     } label: {
                         Image(systemName: "plus")
                             .font(.largeTitle)
@@ -72,6 +73,8 @@ struct ReadingBookRenewalView: View {
                             .background(themeColor)
                             .clipShape(Circle())
                     }
+                    .opacity(readingBook.itemPage <= page ? 0.5 : 1)
+                    .disabled(readingBook.itemPage <= page ? true : false)
                 }
                 .offset(y: -17)
                 .padding()
@@ -105,18 +108,6 @@ struct ReadingBookRenewalView: View {
         }
         .presentationCornerRadius(30)
         .presentationDetents([.height(400)])
-    }
-}
-
-struct Shake: GeometryEffect {
-    var amount: CGFloat = 5
-    var shakesPerUnit = 3
-    var animatableData: CGFloat
-
-    func effectValue(size: CGSize) -> ProjectionTransform {
-        ProjectionTransform(CGAffineTransform(translationX:
-            amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
-            y: 0))
     }
 }
 
