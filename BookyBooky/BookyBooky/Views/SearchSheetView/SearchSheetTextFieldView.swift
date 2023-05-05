@@ -124,7 +124,7 @@ extension SearchSheetTextFieldView {
             categoryAnimation = .all
         }
         selectedCategory = .all
-        Haptics.shared.play(.rigid)
+        HapticManager.shared.impact(.rigid)
     }
 }
 

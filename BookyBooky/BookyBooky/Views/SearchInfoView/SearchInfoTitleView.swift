@@ -95,7 +95,7 @@ extension SearchInfoTitleView {
                 }
             }
             
-            Haptics.shared.play(.rigid)
+            HapticManager.shared.impact(.rigid)
         } label: {
             if isFavorite {
                 Image(systemName: "heart.fill")

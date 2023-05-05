@@ -121,7 +121,7 @@ extension HomeHeaderView {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                         selectedSort = sort
                     }
-                    Haptics.shared.play(.rigid)
+                    HapticManager.shared.impact(.rigid)
                 }
             } label: {
                 HStack {

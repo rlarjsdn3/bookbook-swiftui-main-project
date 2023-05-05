@@ -111,7 +111,7 @@ extension SearchLazyGridView {
             for type in BookListTabItems.allCases {
                 bookViewModel.requestBookListAPI(type: type)
             }
-            Haptics.shared.play(.rigid)
+            HapticManager.shared.impact(.rigid)
         }
         .buttonStyle(.borderedProminent)
         .padding()
