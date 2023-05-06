@@ -54,8 +54,8 @@ struct ReadingBookAnalysisView: View {
                     .pickerStyle(.segmented)
                     .padding(.trailing)
                 }
-                .padding(.vertical, 10)
-                .padding(.bottom, 50)
+                .padding(.top, 10)
+                .padding(.bottom, 60)
                 
                 // 차트 미완성
 //                Text("Charts Area")
@@ -66,6 +66,8 @@ struct ReadingBookAnalysisView: View {
 //                    .background(Color("Background"))
 //                    .cornerRadius(20)
 //                    .padding([.horizontal, .bottom])
+            
+            
                 Chart {
                     ForEach(readingBook.readingRecords, id: \.self) { record in
                         BarMark(
@@ -76,7 +78,7 @@ struct ReadingBookAnalysisView: View {
                     }
                 }
                 .chartXAxis {
-                    AxisMarks(preset: .extended, values: .stride(by: .day)) { value in
+                    AxisMarks(values: .stride(by: .day)) { value in
                         let date = value.as(Date.self)!
                         let components1 = Calendar.current.dateComponents([.year, .month, .day], from: date)
                         let components2 = Calendar.current.dateComponents([.year, .month, .day], from: readingBook.readingRecords.first?.date ?? Date().addingTimeInterval(86400 * 1000))
@@ -113,9 +115,9 @@ struct ReadingBookAnalysisView: View {
                                         }
                                     }
                             )
+                            .foregroundStyle(readingBook.category.accentColor.gradient)
                     }
                 }
-                .frame(maxWidth: .infinity)
                 .frame(height: 300)
                 .padding()
                 
