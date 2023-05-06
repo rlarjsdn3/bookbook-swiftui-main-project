@@ -39,7 +39,7 @@ struct ReadingBookAnalysisView: View {
     var body: some View {
         VStack {
             VStack {
-                Picker(selection: $selectedDateRange) {
+                Picker(selection: $selectedDateRange.animation(.easeInOut)) {
                     ForEach(AnalysisDateRangeTabItems.allCases, id: \.self) { item in
                         Text(item.name)
                     }
@@ -51,14 +51,46 @@ struct ReadingBookAnalysisView: View {
                 .padding(.horizontal)
                 
                 // 차트 미완성
-                Text("Charts Area")
-                    .font(.title.weight(.light))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 300)
-                    .padding()
-                    .background(Color("Background"))
-                    .cornerRadius(20)
-                    .padding([.horizontal, .bottom])
+//                Text("Charts Area")
+//                    .font(.title.weight(.light))
+//                    .frame(maxWidth: .infinity)
+//                    .frame(height: 300)
+//                    .padding()
+//                    .background(Color("Background"))
+//                    .cornerRadius(20)
+//                    .padding([.horizontal, .bottom])
+                Chart {
+                    ForEach(readingBook.readingRecords, id: \.self) { record in
+                        BarMark(
+                            x: .value("날짜", record.date.formatted(date: .abbreviated, time: .omitted)),
+                            y: .value("페이지", record.numOfPagesRead)
+                        )
+                        .foregroundStyle(readingBook.category.accentColor)
+                    }
+                }
+                .frame(height: 300)
+                .padding()
+                
+                HStack {
+                    Text("Highlight")
+                        .font(.title.weight(.light))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .padding()
+                        .background(Color("Background"))
+                        .cornerRadius(20)
+                        .padding([.bottom])
+                    
+                    Text("Highlight")
+                        .font(.title.weight(.light))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .padding()
+                        .background(Color("Background"))
+                        .cornerRadius(20)
+                        .padding([.bottom])
+                }
+                .padding(.horizontal)
             }
             .background(Color.white)
             
@@ -82,7 +114,7 @@ struct ReadingBookAnalysisView: View {
             .padding(.bottom, 20)
         }
         .sheet(isPresented: $isPresentingAllReadingDataSheet) {
-            AllReadingDatailView(readingBook: readingBook)
+            AllReadingDataView(readingBook: readingBook)
         }
     }
 }

@@ -38,11 +38,26 @@ struct ReadingBookRenewalButtonView: View {
             }
             
             // 코드 미완성 (오늘 상태 메시지 출력하기)
-            Text("오늘 10페이지나 읽었어요!")
-                .font(.caption.weight(.light))
-                .padding(.horizontal)
-            
-
+            if let lastRecord = readingBook.readingRecords.last {
+                let calendar = Calendar.current
+                
+                let components1 = calendar.dateComponents([.year, .month, .day], from: lastRecord.date)
+                let components2 = calendar.dateComponents([.year, .month, .day], from: Date.now)
+                
+                if components1.year == components2.year && components1.month == components2.month && components1.day == components2.day {
+                    Text("오늘 \(lastRecord.numOfPagesRead)페이지나 읽었어요!")
+                        .font(.caption.weight(.light))
+                        .padding(.horizontal)
+                } else {
+                    Text("독서를 시작해보세요!")
+                        .font(.caption.weight(.light))
+                        .padding(.horizontal)
+                }
+            } else {
+                Text("독서를 시작해보세요!")
+                    .font(.caption.weight(.light))
+                    .padding(.horizontal)
+            }
         }
         .sheet(isPresented: $isPresentingRenewalSheet) {
             ReadingBookRenewalView(readingBook: readingBook)
