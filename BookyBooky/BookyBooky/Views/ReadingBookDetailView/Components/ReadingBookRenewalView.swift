@@ -86,9 +86,13 @@ struct ReadingBookRenewalView: View {
             Button {
                 let calendar = Calendar.current
                 
-//                @Persisted var date: Date           // 읽은 날짜
-//                @Persisted var totalPagesRead: Int  // 지금까지 읽은 페이지 쪽 수
-//                @Persisted var numOfPagesRead: Int  // 그 날에 읽은 페이지 쪽 수
+//                let records = ReadingRecords(
+//                    value: ["date": Date.now.addingTimeInterval(86400 * 5),
+//                            "totalPagesRead": page,
+//                            "numOfPagesRead": 10
+//                           ] as [String: Any]
+//                )
+//                $readingBook.readingRecords.append(records)
                 
                 
                 if let lastRecord = readingBook.readingRecords.last {
@@ -132,7 +136,7 @@ struct ReadingBookRenewalView: View {
                         )
                         $readingBook.readingRecords.append(records)
                     }
-                    
+                 
                 } else {
                     
                     let records = ReadingRecords(
@@ -146,6 +150,7 @@ struct ReadingBookRenewalView: View {
                 }
                 
                 dismiss()
+
             } label: {
                 Text("갱신하기")
                     .font(.title3)

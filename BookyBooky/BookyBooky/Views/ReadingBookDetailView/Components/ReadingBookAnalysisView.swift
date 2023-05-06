@@ -39,16 +39,23 @@ struct ReadingBookAnalysisView: View {
     var body: some View {
         VStack {
             VStack {
-                Picker(selection: $selectedDateRange.animation(.easeInOut)) {
-                    ForEach(AnalysisDateRangeTabItems.allCases, id: \.self) { item in
-                        Text(item.name)
+                HStack {
+                    Text("일일 독서 차트")
+                        .font(.title3.weight(.semibold))
+                        .padding(.horizontal)
+                    
+                    Picker(selection: $selectedDateRange.animation(.easeInOut)) {
+                        ForEach(AnalysisDateRangeTabItems.allCases, id: \.self) { item in
+                            Text(item.name)
+                        }
+                    } label: {
+                        Text("Label")
                     }
-                } label: {
-                    Text("Label")
+                    .pickerStyle(.segmented)
+                    .padding(.trailing)
                 }
-                .pickerStyle(.segmented)
                 .padding(.vertical, 10)
-                .padding(.horizontal)
+                .padding(.bottom, 50)
                 
                 // 차트 미완성
 //                Text("Charts Area")
@@ -62,12 +69,53 @@ struct ReadingBookAnalysisView: View {
                 Chart {
                     ForEach(readingBook.readingRecords, id: \.self) { record in
                         BarMark(
-                            x: .value("날짜", record.date.formatted(date: .abbreviated, time: .omitted)),
-                            y: .value("페이지", record.numOfPagesRead)
+                            x: .value("Date", record.date, unit: .day),
+                            y: .value("Page", record.numOfPagesRead)
                         )
-                        .foregroundStyle(readingBook.category.accentColor)
+                        .foregroundStyle(readingBook.category.accentColor.gradient)
                     }
                 }
+                .chartXAxis {
+                    AxisMarks(preset: .extended, values: .stride(by: .day)) { value in
+                        let date = value.as(Date.self)!
+                        let components1 = Calendar.current.dateComponents([.year, .month, .day], from: date)
+                        let components2 = Calendar.current.dateComponents([.year, .month, .day], from: readingBook.readingRecords.first?.date ?? Date().addingTimeInterval(86400 * 1000))
+                        
+                        if components1.year == components2.year && components1.month == components2.month && components1.day == components2.day {
+                            AxisGridLine()
+                                .foregroundStyle(Color.black.opacity(0.5))
+                            let label = "\(components1.day!)일\n\(value.as(Date.self)!.formatted(.dateTime.month().locale(Locale(identifier: "ko_kr"))))"
+                            AxisValueLabel(label, centered: true)
+                                .foregroundStyle(.black)
+                        } else if value.as(Date.self)!.isFirstMonth() {
+                            AxisGridLine()
+                                .foregroundStyle(Color.black.opacity(0.5))
+                            let label = "1\n\(value.as(Date.self)!.formatted(.dateTime.month().locale(Locale(identifier: "ko_kr"))))"
+                            AxisValueLabel(label, centered: true)
+                                .foregroundStyle(.black)
+                        } else {
+                            AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")), centered: true)
+                        }
+                    }
+                }
+                .chartOverlay { outerProxy in
+                    GeometryReader { innerProxy in
+                        Rectangle()
+                            .fill(Color.clear)
+                            .contentShape(Rectangle())
+                            .gesture(
+                                DragGesture()
+                                    .onChanged { newValue in
+                                        let location = newValue.location
+                                        
+                                        if let day: Date = outerProxy.value(atX: location.x) {
+                                            print(day)
+                                        }
+                                    }
+                            )
+                    }
+                }
+                .frame(maxWidth: .infinity)
                 .frame(height: 300)
                 .padding()
                 
