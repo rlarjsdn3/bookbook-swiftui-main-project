@@ -10,21 +10,15 @@ import Charts
 import RealmSwift
 
 enum AnalysisDateRangeTabItems: CaseIterable {
-    case oneWeek
     case oneMonth
-    case sixMonth
     case oneYear
     
     var name: String {
         switch self {
-        case .oneWeek:
-            return "1주일"
         case .oneMonth:
-            return "1개월"
-        case .sixMonth:
-            return "6개월"
+            return "지난 30일"
         case .oneYear:
-            return "1년"
+            return "지난 1년"
         }
     }
 }
@@ -32,9 +26,36 @@ enum AnalysisDateRangeTabItems: CaseIterable {
 struct ReadingBookAnalysisView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     
-    @State private var selectedDateRange: AnalysisDateRangeTabItems = .oneWeek
+    @State private var selectedDateRange: AnalysisDateRangeTabItems = .oneMonth
     
     @State private var isPresentingAllReadingDataSheet = false
+    
+    var filteredChartsData: [ReadingRecords] {
+        var filter: [ReadingRecords] = []
+        
+        switch selectedDateRange {
+        case .oneMonth:
+            if let lastRecords = readingBook.readingRecords.last {
+                let timeInterval = DateInterval(start: lastRecords.date.addingTimeInterval(-86400 * 30), end: lastRecords.date)
+                for record in readingBook.readingRecords {
+                    if timeInterval.contains(record.date) {
+                        filter.append(record)
+                    }
+                }
+            }
+            return filter
+        case .oneYear:
+            if let lastRecords = readingBook.readingRecords.last {
+                let timeInterval = DateInterval(start: lastRecords.date.addingTimeInterval(-86400 * 365), end: lastRecords.date)
+                for record in readingBook.readingRecords {
+                    if timeInterval.contains(record.date) {
+                        filter.append(record)
+                    }
+                }
+            }
+            return filter
+        }
+    }
     
     var body: some View {
         VStack {
@@ -69,34 +90,48 @@ struct ReadingBookAnalysisView: View {
             
             
                 Chart {
-                    ForEach(readingBook.readingRecords, id: \.self) { record in
-                        BarMark(
-                            x: .value("Date", record.date, unit: .day),
-                            y: .value("Page", record.numOfPagesRead)
-                        )
-                        .foregroundStyle(readingBook.category.accentColor.gradient)
+                    ForEach(filteredChartsData, id: \.self) { record in
+                        if selectedDateRange == .oneMonth {
+                            BarMark(
+                                x: .value("Date", record.date, unit: .day),
+                                y: .value("Page", record.numOfPagesRead),
+                                width: .ratio(0.6)
+                            )
+//                            .position(by: .value("Date", record.date))
+                            .foregroundStyle(readingBook.category.accentColor.gradient)
+                        } else {
+                            BarMark(
+                                x: .value("Date", record.date, unit: .month),
+                                y: .value("Page", record.numOfPagesRead),
+                                width: .ratio(0.6)
+                            )
+                            .foregroundStyle(readingBook.category.accentColor.gradient)
+                        }
                     }
                 }
+                .chartXScale(range: 0...(mainScreen.width * 0.83))
+//                .chartXScale(domain: Date().addTimeInterval(86400 * -7)...Date())
                 .chartXAxis {
                     AxisMarks(values: .stride(by: .day)) { value in
-                        let date = value.as(Date.self)!
-                        let components1 = Calendar.current.dateComponents([.year, .month, .day], from: date)
-                        let components2 = Calendar.current.dateComponents([.year, .month, .day], from: readingBook.readingRecords.first?.date ?? Date().addingTimeInterval(86400 * 1000))
-                        
-                        if components1.year == components2.year && components1.month == components2.month && components1.day == components2.day {
-                            AxisGridLine()
-                                .foregroundStyle(Color.black.opacity(0.5))
-                            let label = "\(components1.day!)일\n\(value.as(Date.self)!.formatted(.dateTime.month().locale(Locale(identifier: "ko_kr"))))"
-                            AxisValueLabel(label, centered: true)
-                                .foregroundStyle(.black)
-                        } else if value.as(Date.self)!.isFirstMonth() {
-                            AxisGridLine()
-                                .foregroundStyle(Color.black.opacity(0.5))
-                            let label = "1\n\(value.as(Date.self)!.formatted(.dateTime.month().locale(Locale(identifier: "ko_kr"))))"
-                            AxisValueLabel(label, centered: true)
-                                .foregroundStyle(.black)
-                        } else {
-                            AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")), centered: true)
+                        if selectedDateRange == .oneMonth {
+                            
+                            let date = value.as(Date.self)!
+                            let components1 = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date)
+
+                            
+                            if value.as(Date.self)!.isFirstMonth() {
+                                AxisGridLine()
+                                    .foregroundStyle(Color.black.opacity(0.5))
+                                AxisTick()
+                                let label = "\(value.as(Date.self)!.formatted(.dateTime.month().locale(Locale(identifier: "ko_kr"))))"
+                                AxisValueLabel(label)
+                                    .foregroundStyle(.black)
+                            } else if components1.weekday == 1 {
+                                AxisGridLine()
+                                AxisTick()
+                                AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")))
+                            }
+                            
                         }
                     }
                 }
