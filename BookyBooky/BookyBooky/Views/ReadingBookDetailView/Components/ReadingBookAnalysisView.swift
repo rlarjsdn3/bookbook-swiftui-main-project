@@ -118,144 +118,160 @@ struct ReadingBookAnalysisView: View {
             // - 전체 코드 이해하기 (주석으로 다 달기)
             // - 분석 탭 UI 수정하기 (평균 독서 페이지 보기 버튼)
             
-            Chart {
-                ForEach(filteredChartsData, id: \.self) { record in
-                    if selectedDateRange == .oneMonth {
-                        BarMark(
-                            x: .value("Date", record.date, unit: .day),
-                            y: .value("Page", record.pagesRead),
-                            width: .ratio(0.6)
-                        )
-                        .foregroundStyle(readingBook.category.accentColor.gradient)
-                        .opacity(isOnAverageValue ? 0.3 : 1)
-                        
-                        if isOnAverageValue {
-                            let average = filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData)
-                            
-                            RuleMark(
-                                y: .value("Average", average)
+            if !filteredChartsData.isEmpty {
+                Chart {
+                    ForEach(filteredChartsData, id: \.self) { record in
+                        if selectedDateRange == .oneMonth {
+                            BarMark(
+                                x: .value("Date", record.date, unit: .day),
+                                y: .value("Page", record.pagesRead),
+                                width: .ratio(0.6)
                             )
-                            .foregroundStyle(Color.black)
-                            .annotation(position: .top, alignment: .leading) {
-                                Text("일 평균 독서 페이지: \(average)")
+                            .foregroundStyle(readingBook.category.accentColor.gradient)
+                            .opacity(isOnAverageValue ? 0.3 : 1)
+                            
+                            if isOnAverageValue {
+                                let average = filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData)
+                                
+                                RuleMark(
+                                    y: .value("Average", average)
+                                )
+                                .foregroundStyle(Color.black)
+                                .annotation(position: .top, alignment: .leading) {
+                                    Text("일 평균 독서 페이지: \(average)")
+                                }
                             }
+                        } else {
+                            BarMark(
+                                x: .value("Date", record.date, unit: .month),
+                                y: .value("Page", record.pagesRead),
+                                width: .ratio(0.6)
+                            )
+                            .foregroundStyle(readingBook.category.accentColor.gradient)
+                            .opacity(isOnAverageValue ? 0.3 : 1)
+                            
+                            if isOnAverageValue {
+                                let average = filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData)
+                                
+                                RuleMark(
+                                    y: .value("Average", average)
+                                )
+                                .foregroundStyle(Color.black)
+                                .annotation(position: .top, alignment: .leading) {
+                                    Text("월 평균 독서 페이지: \(average)")
+                                }
+                            }
+                        }
+                        
+                        
+                    }
+                }
+                .chartXAxis {
+                    if selectedDateRange == .oneMonth {
+                        AxisMarks(values: .stride(by: .day)) { value in
+                            
+                            let date = value.as(Date.self)!
+                            let components1 = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date)
+                            
+                            if components1.weekday == 1 {
+                                AxisGridLine()
+                                AxisTick()
+                                AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")))
+                            }
+                            
                         }
                     } else {
-                        BarMark(
-                            x: .value("Date", record.date, unit: .month),
-                            y: .value("Page", record.pagesRead),
-                            width: .ratio(0.6)
-                        )
-                        .foregroundStyle(readingBook.category.accentColor.gradient)
-                        .opacity(isOnAverageValue ? 0.3 : 1)
-                        
-                        if isOnAverageValue {
-                            let average = filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData)
-                            
-                            RuleMark(
-                                y: .value("Average", average)
-                            )
-                            .foregroundStyle(Color.black)
-                            .annotation(position: .top, alignment: .leading) {
-                                Text("월 평균 독서 페이지: \(average)")
-                            }
-                        }
-                    }
-                
-                    
-                }
-            }
-            .chartXAxis {
-                if selectedDateRange == .oneMonth {
-                    AxisMarks(values: .stride(by: .day)) { value in
-
-                        let date = value.as(Date.self)!
-                        let components1 = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date)
-
-                        if components1.weekday == 1 {
-                            AxisGridLine()
-                            AxisTick()
-                            AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")))
-                        }
-
-                    }
-                } else {
-                    AxisMarks(values: .stride(by: .month)) { value in
+                        AxisMarks(values: .stride(by: .month)) { value in
                             AxisGridLine()
                             AxisTick()
                             AxisValueLabel(format: .dateTime.month().locale(Locale(identifier: "ko_kr")))
-                    }
-                }
-            }
-            .chartXScale(range: 0...mainScreen.width * 0.83)
-            .chartOverlay { proxy in
-                GeometryReader { geo in
-                    Rectangle().fill(.clear).contentShape(Rectangle())
-                        .gesture(
-                            SpatialTapGesture()
-                                .onEnded { value in
-                                    let element = findElement(location: value.location, proxy: proxy, geometry: geo)
-                                    if selectedElement?.date == element?.date {
-                                        // If tapping the same element, clear the selection.
-                                        selectedElement = nil
-                                    } else {
-                                        selectedElement = element
-                                    }
-                                }
-                                .exclusively(
-                                    before: DragGesture()
-                                        .onChanged { value in
-                                            selectedElement = findElement(location: value.location, proxy: proxy, geometry: geo)
-                                        }
-                                        .onEnded { _ in
-                                            selectedElement = nil
-                                        }
-                                )
-                        )
-                }
-            }
-            .chartBackground { proxy in
-                ZStack(alignment: .topLeading) {
-                    GeometryReader { geo in
-                        if let selectedElement = selectedElement {
-                            let dateInterval = Calendar.current.dateInterval(of: .day, for: selectedElement.date)!
-                            let startPositionX = proxy.position(forX: dateInterval.start) ?? 0
-                            let midStartPositionX = startPositionX + geo[proxy.plotAreaFrame].origin.x + 5
-                            let lineHeight = geo[proxy.plotAreaFrame].maxY
-                            let boxWidth: CGFloat = 120
-                            let boxOffset = max(0, min(geo.size.width - boxWidth, midStartPositionX - boxWidth / 2))
-
-                          Rectangle()
-                              .fill(.quaternary)
-                              .frame(width: 2, height: lineHeight)
-                              .position(x: midStartPositionX, y: lineHeight / 2)
-
-                            VStack(alignment: .leading) {
-                                Text(selectedElement.date.formatted(.dateTime.year().month().day().locale(Locale(identifier: "ko_kr"))))
-                                    .font(.callout)
-                                    .foregroundStyle(.secondary)
-                                Text("\(selectedElement.pagesRead, format: .number) 페이지")
-                                    .font(.title2.bold())
-                                    .foregroundColor(.primary)
-                            }
-                            .frame(width: boxWidth, alignment: .leading)
-                            .background {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .fill(.background)
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .fill(.quaternary.opacity(0.7))
-                                }
-                                .padding([.leading, .trailing], -8)
-                                .padding([.top, .bottom], -4)
-                            }
-                            .offset(x: boxOffset, y: -58)
                         }
                     }
                 }
+                .chartXScale(range: 0...mainScreen.width * 0.83)
+                .chartOverlay { proxy in
+                    GeometryReader { geo in
+                        Rectangle().fill(.clear).contentShape(Rectangle())
+                            .gesture(
+                                SpatialTapGesture()
+                                    .onEnded { value in
+                                        let element = findElement(location: value.location, proxy: proxy, geometry: geo)
+                                        if selectedElement?.date == element?.date {
+                                            // If tapping the same element, clear the selection.
+                                            selectedElement = nil
+                                        } else {
+                                            selectedElement = element
+                                        }
+                                    }
+                                    .exclusively(
+                                        before: DragGesture()
+                                            .onChanged { value in
+                                                selectedElement = findElement(location: value.location, proxy: proxy, geometry: geo)
+                                            }
+                                            .onEnded { _ in
+                                                selectedElement = nil
+                                            }
+                                    )
+                            )
+                    }
+                }
+                .chartBackground { proxy in
+                    ZStack(alignment: .topLeading) {
+                        GeometryReader { geo in
+                            if let selectedElement = selectedElement {
+                                let dateInterval = Calendar.current.dateInterval(of: .day, for: selectedElement.date)!
+                                let startPositionX = proxy.position(forX: dateInterval.start) ?? 0
+                                let midStartPositionX = startPositionX + geo[proxy.plotAreaFrame].origin.x + 5
+                                let lineHeight = geo[proxy.plotAreaFrame].maxY
+                                let boxWidth: CGFloat = 120
+                                let boxOffset = max(0, min(geo.size.width - boxWidth, midStartPositionX - boxWidth / 2))
+                                
+                                Rectangle()
+                                    .fill(.quaternary)
+                                    .frame(width: 2, height: lineHeight)
+                                    .position(x: midStartPositionX, y: lineHeight / 2)
+                                
+                                VStack(alignment: .leading) {
+                                    Text(selectedElement.date.formatted(.dateTime.year().month().day().locale(Locale(identifier: "ko_kr"))))
+                                        .font(.callout)
+                                        .foregroundStyle(.secondary)
+                                    Text("\(selectedElement.pagesRead, format: .number) 페이지")
+                                        .font(.title2.bold())
+                                        .foregroundColor(.primary)
+                                }
+                                .frame(width: boxWidth, alignment: .leading)
+                                .background {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.background)
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.quaternary.opacity(0.7))
+                                    }
+                                    .padding([.leading, .trailing], -8)
+                                    .padding([.top, .bottom], -4)
+                                }
+                                .offset(x: boxOffset, y: -58)
+                            }
+                        }
+                    }
+                }
+                .frame(height: 250)
+                .padding()
+            } else {
+                VStack(spacing: 5) {
+                    Text("그래프를 그릴 수 없음")
+                        .font(.title.weight(.bold))
+                    
+                    Text("그래프를 보려면 독서 데이터를 추가하십시오.")
+                        .fontWeight(.light)
+                        .minimumScaleFactor(0.5)
+                }
+                .frame(height: 250)
+                .frame(maxWidth: .infinity)
+                .background(Color("Background"))
+                .cornerRadius(20)
+                .padding(.horizontal)
             }
-            .frame(height: 250)
-            .padding()
                 
             // 도서 데이터가 아무것도 없는 경우 발생하는 오류 해결 + 코드 리팩토링하기
             
@@ -267,7 +283,11 @@ struct ReadingBookAnalysisView: View {
                         Text("일 평균 독서 페이지")
                             .fontWeight(.bold)
                         Spacer()
-                        Text("\(filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData))")
+                        if !filteredChartsData.isEmpty {
+                            Text("\(filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData))")
+                        } else {
+                            Text("-")
+                        }
                     }
                     .padding()
                     .foregroundColor(isOnAverageValue ? Color.white : Color.black)
@@ -276,10 +296,14 @@ struct ReadingBookAnalysisView: View {
                     .padding()
                 } else {
                     HStack {
-                        Text("월 평균 독서 페이지")
+                        Text("일 평균 독서 페이지")
                             .fontWeight(.bold)
                         Spacer()
-                        Text("\(filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData))")
+                        if !filteredChartsData.isEmpty {
+                            Text("\(filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData))")
+                        } else {
+                            Text("-")
+                        }
                     }
                     .padding()
                     .foregroundColor(isOnAverageValue ? Color.white : Color.black)
@@ -288,6 +312,7 @@ struct ReadingBookAnalysisView: View {
                     .padding()
                 }
             }
+            .disabled(filteredChartsData.isEmpty)
             
             HStack {
                 Text("Highlight")
