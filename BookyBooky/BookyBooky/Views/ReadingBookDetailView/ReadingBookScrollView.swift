@@ -28,23 +28,23 @@ struct ReadingBookScrollView: View {
                 
                 ReadingBookTabSectionView(readingBook: readingBook, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, scrollYOffset: $scrollYOffset, underlineAnimation: underlineAnimation)
             }
-            .overlay(alignment: .top) {
-                GeometryReader { proxy -> Color in
-                    DispatchQueue.main.async {
-                        let offset = proxy.frame(in: .global).minY
-                        if startOffset == 0 {
-                            self.startOffset = offset
-                        }
-                        withAnimation(.easeInOut(duration: 0.1)) {
-                            scrollYOffset = startOffset - offset
-                        }
-                        
-                        print(scrollYOffset)
-                    }
-                    return Color.clear
-                }
-                .frame(width: 0, height: 0)
-            }
+//            .overlay(alignment: .top) {
+//                GeometryReader { proxy -> Color in
+//                    DispatchQueue.main.async {
+//                        let offset = proxy.frame(in: .global).minY
+//                        if startOffset == 0 {
+//                            self.startOffset = offset
+//                        }
+//                        withAnimation(.easeInOut(duration: 0.1)) {
+//                            scrollYOffset = startOffset - offset
+//                        }
+//
+//                        print(scrollYOffset)
+//                    }
+//                    return Color.clear
+//                }
+//                .frame(width: 0, height: 0)
+//            }
         }
     }
 }

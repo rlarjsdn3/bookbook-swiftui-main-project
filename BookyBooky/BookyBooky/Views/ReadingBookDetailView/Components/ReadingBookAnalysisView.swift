@@ -28,36 +28,70 @@ struct ReadingBookAnalysisView: View {
     
     @State private var selectedDateRange: AnalysisDateRangeTabItems = .oneMonth
     
-    @State var selectedElement: ReadingRecords?
+    @State private var selectedElement: DailyReading?
     
     @State private var isOnAverageValue = false
     @State private var isPresentingAllReadingDataSheet = false
     
-    var filteredChartsData: [ReadingRecords] {
-        var filter: [ReadingRecords] = []
+    private struct DailyReading: Hashable {
+        var date: Date
+        var pagesRead: Int
+    }
+    
+    private struct MonthlyReading {
+        var date: Date
+        var pagesRead: Int
+    }
+    
+    private var filteredChartsData: [DailyReading] {
+        var filter: [DailyReading] = []
         
         switch selectedDateRange {
         case .oneMonth:
-            if let lastRecords = readingBook.readingRecords.last {
-                let timeInterval = DateInterval(start: lastRecords.date.addingTimeInterval(-86400 * 30), end: lastRecords.date)
+            if let lastRecord = readingBook.readingRecords.last {
+                for i in 0..<31 {
+                    filter.append(DailyReading(date: Date(timeInterval: Double(86400 * -i), since: lastRecord.date), pagesRead: 0))
+                }
+                
                 for record in readingBook.readingRecords {
-                    if timeInterval.contains(record.date) {
-                        filter.append(record)
+                    let component2 = Calendar.current.dateComponents([.year, .month, .day], from: record.date)
+                    
+                    if let index = filter.firstIndex(where: { item in
+                        let comp = Calendar.current.dateComponents([.year, .month, .day], from: item.date)
+                        
+                        return component2.year == comp.year && component2.month == comp.month && component2.day == comp.day
+                    }) {
+                        filter[index].pagesRead = record.numOfPagesRead
                     }
                 }
+                return filter
             }
-            return filter
         case .oneYear:
-            if let lastRecords = readingBook.readingRecords.last {
-                let timeInterval = DateInterval(start: lastRecords.date.addingTimeInterval(-86400 * 365), end: lastRecords.date)
+            // 12개월 전체 보도록 만들기
+            
+            if let lastRecord = readingBook.readingRecords.last {
+                
+                for i in 0..<12 {
+                    filter.append(DailyReading(date: Date(timeInterval: Double(86400 * 30 * -i), since: lastRecord.date), pagesRead: 0))
+                }
+                
                 for record in readingBook.readingRecords {
-                    if timeInterval.contains(record.date) {
-                        filter.append(record)
+                    let comp = Calendar.current.dateComponents([.year, .month], from: record.date)
+                    
+                    if let index = filter.firstIndex(where: { item in
+                        let comp2 = Calendar.current.dateComponents([.year, .month], from: item.date)
+                        
+                        return comp.year == comp2.year && comp.month == comp2.month
+                    }) {
+                        filter[index].pagesRead += record.numOfPagesRead
+                    } else {
+                        filter.append(DailyReading(date: record.date, pagesRead: record.numOfPagesRead))
                     }
                 }
             }
             return filter
         }
+        return filter
     }
     
     var body: some View {
@@ -66,7 +100,7 @@ struct ReadingBookAnalysisView: View {
                 Text("일일 독서 그래프")
                     .font(.title3.weight(.semibold))
                 
-                Picker(selection: $selectedDateRange.animation(.easeInOut)) {
+                Picker(selection: $selectedDateRange) {
                     ForEach(AnalysisDateRangeTabItems.allCases, id: \.self) { item in
                         Text(item.name)
                     }
@@ -82,62 +116,74 @@ struct ReadingBookAnalysisView: View {
         
             // 내일 할 일
             // - 전체 코드 이해하기 (주석으로 다 달기)
-            // - 차트 디자인 다듬기
-            // - Y축 범위 설정하기
             // - 분석 탭 UI 수정하기 (평균 독서 페이지 보기 버튼)
-            // - 지난 30일 / 지난 1년 차트 데이터 처리 방식 변경하기
             
             Chart {
                 ForEach(filteredChartsData, id: \.self) { record in
                     if selectedDateRange == .oneMonth {
                         BarMark(
                             x: .value("Date", record.date, unit: .day),
-                            y: .value("Page", record.numOfPagesRead),
+                            y: .value("Page", record.pagesRead),
                             width: .ratio(0.6)
                         )
                         .foregroundStyle(readingBook.category.accentColor.gradient)
                         .opacity(isOnAverageValue ? 0.3 : 1)
                         
                         if isOnAverageValue {
+                            let average = filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData)
+                            
                             RuleMark(
-                                y: .value("Average", readingBook.readingRecords.reduce(0, { $0 + $1.numOfPagesRead }) / readingBook.readingRecords.count)
+                                y: .value("Average", average)
                             )
                             .foregroundStyle(Color.black)
                             .annotation(position: .top, alignment: .leading) {
-                                Text("평균 독서 페이지: \(readingBook.readingRecords.reduce(0, { $0 + $1.numOfPagesRead }) / readingBook.readingRecords.count)")
+                                Text("일 평균 독서 페이지: \(average)")
                             }
                         }
                     } else {
                         BarMark(
                             x: .value("Date", record.date, unit: .month),
-                            y: .value("Page", record.numOfPagesRead),
+                            y: .value("Page", record.pagesRead),
                             width: .ratio(0.6)
                         )
                         .foregroundStyle(readingBook.category.accentColor.gradient)
+                        .opacity(isOnAverageValue ? 0.3 : 1)
+                        
+                        if isOnAverageValue {
+                            let average = filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData)
+                            
+                            RuleMark(
+                                y: .value("Average", average)
+                            )
+                            .foregroundStyle(Color.black)
+                            .annotation(position: .top, alignment: .leading) {
+                                Text("월 평균 독서 페이지: \(average)")
+                            }
+                        }
                     }
+                
+                    
                 }
             }
             .chartXAxis {
-                AxisMarks(values: .stride(by: .day)) { value in
-                    if selectedDateRange == .oneMonth {
-                        
+                if selectedDateRange == .oneMonth {
+                    AxisMarks(values: .stride(by: .day)) { value in
+
                         let date = value.as(Date.self)!
                         let components1 = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date)
-                        
-                        
-                        if value.as(Date.self)!.isFirstMonth() {
-                            AxisGridLine()
-                                .foregroundStyle(Color.black.opacity(0.5))
-                            AxisTick()
-                            let label = "\(value.as(Date.self)!.formatted(.dateTime.month().locale(Locale(identifier: "ko_kr"))))"
-                            AxisValueLabel(label)
-                                .foregroundStyle(.black)
-                        } else if components1.weekday == 1 {
+
+                        if components1.weekday == 1 {
                             AxisGridLine()
                             AxisTick()
                             AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")))
                         }
-                        
+
+                    }
+                } else {
+                    AxisMarks(values: .stride(by: .month)) { value in
+                            AxisGridLine()
+                            AxisTick()
+                            AxisValueLabel(format: .dateTime.month().locale(Locale(identifier: "ko_kr")))
                     }
                 }
             }
@@ -161,6 +207,9 @@ struct ReadingBookAnalysisView: View {
                                         .onChanged { value in
                                             selectedElement = findElement(location: value.location, proxy: proxy, geometry: geo)
                                         }
+                                        .onEnded { _ in
+                                            selectedElement = nil
+                                        }
                                 )
                         )
                 }
@@ -173,7 +222,7 @@ struct ReadingBookAnalysisView: View {
                             let startPositionX = proxy.position(forX: dateInterval.start) ?? 0
                             let midStartPositionX = startPositionX + geo[proxy.plotAreaFrame].origin.x + 5
                             let lineHeight = geo[proxy.plotAreaFrame].maxY
-                            let boxWidth: CGFloat = 150
+                            let boxWidth: CGFloat = 120
                             let boxOffset = max(0, min(geo.size.width - boxWidth, midStartPositionX - boxWidth / 2))
 
                           Rectangle()
@@ -182,10 +231,10 @@ struct ReadingBookAnalysisView: View {
                               .position(x: midStartPositionX, y: lineHeight / 2)
 
                             VStack(alignment: .leading) {
-                              Text("\(selectedElement.date, format: .dateTime.year().month().day())")
+                                Text(selectedElement.date.formatted(.dateTime.year().month().day().locale(Locale(identifier: "ko_kr"))))
                                     .font(.callout)
                                     .foregroundStyle(.secondary)
-                                Text("\(selectedElement.numOfPagesRead , format: .number) calories")
+                                Text("\(selectedElement.pagesRead, format: .number) 페이지")
                                     .font(.title2.bold())
                                     .foregroundColor(.primary)
                             }
@@ -207,55 +256,38 @@ struct ReadingBookAnalysisView: View {
             }
             .frame(height: 250)
             .padding()
-        
-            
-            
-            
-            
-            
-            /*
-            
-                .chartXScale(range: 0...(mainScreen.width * 0.82))
-                .chartYScale(domain: 0...20)
-                .chartXAxis {
-                    AxisMarks(values: .stride(by: .day)) { value in
-                        if selectedDateRange == .oneMonth {
-                            
-                            let date = value.as(Date.self)!
-                            let components1 = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date)
-                            
-                            
-                            if value.as(Date.self)!.isFirstMonth() {
-                                AxisGridLine()
-                                    .foregroundStyle(Color.black.opacity(0.5))
-                                AxisTick()
-                                let label = "\(value.as(Date.self)!.formatted(.dateTime.month().locale(Locale(identifier: "ko_kr"))))"
-                                AxisValueLabel(label)
-                                    .foregroundStyle(.black)
-                            } else if components1.weekday == 1 {
-                                AxisGridLine()
-                                AxisTick()
-                                AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")))
-                            }
-                            
-                        }
-                    }
-                }
-                .frame(height: 300)
-                .padding(.horizontal)
-             */
                 
-                VStack {
-                    Divider()
-                    
-                    Toggle(isOn: $isOnAverageValue) {
-                        Text("평균 독서 페이지 보기")
+            // 도서 데이터가 아무것도 없는 경우 발생하는 오류 해결 + 코드 리팩토링하기
+            
+            Button {
+                isOnAverageValue.toggle()
+            } label: {
+                if selectedDateRange == .oneMonth {
+                    HStack {
+                        Text("일 평균 독서 페이지")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData))")
                     }
-                    .tint(readingBook.category.accentColor)
-                    
-                    Divider()
+                    .padding()
+                    .foregroundColor(isOnAverageValue ? Color.white : Color.black)
+                    .background(isOnAverageValue ? readingBook.category.accentColor : Color("Background"))
+                    .cornerRadius(20)
+                    .padding()
+                } else {
+                    HStack {
+                        Text("월 평균 독서 페이지")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData))")
+                    }
+                    .padding()
+                    .foregroundColor(isOnAverageValue ? Color.white : Color.black)
+                    .background(isOnAverageValue ? readingBook.category.accentColor : Color("Background"))
+                    .cornerRadius(20)
+                    .padding()
                 }
-                .padding()
+            }
             
             HStack {
                 Text("Highlight")
@@ -300,28 +332,38 @@ struct ReadingBookAnalysisView: View {
         .sheet(isPresented: $isPresentingAllReadingDataSheet) {
             AllReadingDataView(readingBook: readingBook)
         }
+        .onChange(of: selectedDateRange) { _ in
+            selectedElement = nil
+        }
     }
 
-    func findElement(location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) -> ReadingRecords? {
-        print("location.x - \(location.x)")
-        print("geometry[proxy.plotAreaFrame].origin.x - \(geometry[proxy.plotAreaFrame].origin.x)")
+    private func findElement(location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) -> DailyReading? {
         let relativeXPosition = location.x - geometry[proxy.plotAreaFrame].origin.x
         if let date = proxy.value(atX: relativeXPosition) as Date? {
             // Find the closest date element.
             var minDistance: TimeInterval = .infinity
             var index: Int? = nil
-            for dataIndex in readingBook.readingRecords.indices {
-                let nthDataDistance = readingBook.readingRecords[dataIndex].date.distance(to: date)
+            for dataIndex in filteredChartsData.indices {
+                let nthDataDistance = filteredChartsData[dataIndex].date.distance(to: date)
                 if abs(nthDataDistance) < minDistance {
                     minDistance = abs(nthDataDistance)
                     index = dataIndex
                 }
             }
             if let index = index {
-                return readingBook.readingRecords[index]
+                return filteredChartsData[index]
             }
         }
         return nil
+    }
+    
+    private func countChartsData(_ datas: [DailyReading]) -> Int {
+        var count = 0
+        
+        for data in datas where data.pagesRead > 0 {
+            count += 1
+        }
+        return count
     }
 }
 

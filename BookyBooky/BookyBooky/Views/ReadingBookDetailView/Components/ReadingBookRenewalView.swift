@@ -86,16 +86,6 @@ struct ReadingBookRenewalView: View {
             Button {
                 let calendar = Calendar.current
                 
-                let records = ReadingRecords(
-                    value: ["date": Date.now.addingTimeInterval(86400 * 26),
-                            "totalPagesRead": page,
-                            "numOfPagesRead": 10
-                           ] as [String: Any]
-                )
-                $readingBook.readingRecords.append(records)
-                
-                /*
-                
                 if let lastRecord = readingBook.readingRecords.last {
 
                     let components1 = calendar.dateComponents([.year, .month, .day], from: lastRecord.date)
@@ -150,7 +140,6 @@ struct ReadingBookRenewalView: View {
                     $readingBook.readingRecords.append(records)
                 }
                 
-                 */
                 dismiss()
 
             } label: {
