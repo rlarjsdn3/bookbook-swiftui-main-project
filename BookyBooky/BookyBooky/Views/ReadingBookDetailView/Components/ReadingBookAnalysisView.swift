@@ -184,11 +184,10 @@ struct ReadingBookAnalysisView: View {
                         AxisMarks(values: .stride(by: .month)) { value in
                             AxisGridLine()
                             AxisTick()
-                            AxisValueLabel(format: .dateTime.month().locale(Locale(identifier: "ko_kr")))
+                            AxisValueLabel(format: .dateTime.month(.defaultDigits))
                         }
                     }
                 }
-                .chartXScale(range: 0...mainScreen.width * 0.83)
                 .chartOverlay { proxy in
                     GeometryReader { geo in
                         Rectangle().fill(.clear).contentShape(Rectangle())
@@ -232,9 +231,15 @@ struct ReadingBookAnalysisView: View {
                                     .position(x: midStartPositionX, y: lineHeight / 2)
                                 
                                 VStack(alignment: .leading) {
-                                    Text(selectedElement.date.formatted(.dateTime.year().month().day().locale(Locale(identifier: "ko_kr"))))
-                                        .font(.callout)
-                                        .foregroundStyle(.secondary)
+                                    if selectedDateRange == .oneMonth {
+                                        Text(selectedElement.date.formatted(.dateTime.year().month().day().locale(Locale(identifier: "ko_kr"))))
+                                            .font(.callout)
+                                            .foregroundStyle(.secondary)
+                                    } else {
+                                        Text(selectedElement.date.formatted(.dateTime.year().month().locale(Locale(identifier: "ko_kr"))))
+                                            .font(.callout)
+                                            .foregroundStyle(.secondary)
+                                    }
                                     Text("\(selectedElement.pagesRead, format: .number) 페이지")
                                         .font(.title2.bold())
                                         .foregroundColor(.primary)
@@ -276,7 +281,9 @@ struct ReadingBookAnalysisView: View {
             // 도서 데이터가 아무것도 없는 경우 발생하는 오류 해결 + 코드 리팩토링하기
             
             Button {
-                isOnAverageValue.toggle()
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isOnAverageValue.toggle()
+                }
             } label: {
                 if selectedDateRange == .oneMonth {
                     HStack {
@@ -296,7 +303,7 @@ struct ReadingBookAnalysisView: View {
                     .padding()
                 } else {
                     HStack {
-                        Text("일 평균 독서 페이지")
+                        Text("월 평균 독서 페이지")
                             .fontWeight(.bold)
                         Spacer()
                         if !filteredChartsData.isEmpty {
