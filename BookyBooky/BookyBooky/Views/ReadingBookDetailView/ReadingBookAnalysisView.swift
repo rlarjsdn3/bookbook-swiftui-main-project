@@ -24,33 +24,35 @@ enum AnalysisDateRangeTabItems: CaseIterable {
 }
 
 struct ReadingBookAnalysisView: View {
+    
+    // MARK: - INNER STRUCT
+    
+    private struct ReadingData: Hashable {
+        var date: Date
+        var pagesRead: Int
+    }
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @ObservedRealmObject var readingBook: ReadingBook
     
-    @State private var selectedDateRange: AnalysisDateRangeTabItems = .oneMonth
+    @State private var selectedTapElement: ReadingData?
+    @State private var selectedDatePicker: AnalysisDateRangeTabItems = .oneMonth
     
-    @State private var selectedElement: DailyReading?
-    
-    @State private var isOnAverageValue = false
+    @State private var isShowingAverageRuleMark = false
     @State private var isPresentingAllReadingDataSheet = false
     
-    private struct DailyReading: Hashable {
-        var date: Date
-        var pagesRead: Int
-    }
     
-    private struct MonthlyReading {
-        var date: Date
-        var pagesRead: Int
-    }
+    // MARK: - COMPUTED PROPERTIES
     
-    private var filteredChartsData: [DailyReading] {
-        var filter: [DailyReading] = []
+    private var filteredChartsData: [ReadingData] {
+        var filter: [ReadingData] = []
         
-        switch selectedDateRange {
+        switch selectedDatePicker {
         case .oneMonth:
             if let lastRecord = readingBook.readingRecords.last {
                 for i in 0..<31 {
-                    filter.append(DailyReading(date: Date(timeInterval: Double(86400 * -i), since: lastRecord.date), pagesRead: 0))
+                    filter.append(ReadingData(date: Date(timeInterval: Double(86400 * -i), since: lastRecord.date), pagesRead: 0))
                 }
                 
                 for record in readingBook.readingRecords {
@@ -72,7 +74,7 @@ struct ReadingBookAnalysisView: View {
             if let lastRecord = readingBook.readingRecords.last {
                 
                 for i in 0..<12 {
-                    filter.append(DailyReading(date: Date(timeInterval: Double(86400 * 30 * -i), since: lastRecord.date), pagesRead: 0))
+                    filter.append(ReadingData(date: Date(timeInterval: Double(86400 * 30 * -i), since: lastRecord.date), pagesRead: 0))
                 }
                 
                 for record in readingBook.readingRecords {
@@ -85,7 +87,7 @@ struct ReadingBookAnalysisView: View {
                     }) {
                         filter[index].pagesRead += record.numOfPagesRead
                     } else {
-                        filter.append(DailyReading(date: record.date, pagesRead: record.numOfPagesRead))
+                        filter.append(ReadingData(date: record.date, pagesRead: record.numOfPagesRead))
                     }
                 }
             }
@@ -94,13 +96,15 @@ struct ReadingBookAnalysisView: View {
         return filter
     }
     
+    // MARK: - BODY
+    
     var body: some View {
         VStack {
             HStack {
                 Text("일일 독서 그래프")
                     .font(.title3.weight(.semibold))
                 
-                Picker(selection: $selectedDateRange) {
+                Picker(selection: $selectedDatePicker) {
                     ForEach(AnalysisDateRangeTabItems.allCases, id: \.self) { item in
                         Text(item.name)
                     }
@@ -114,178 +118,14 @@ struct ReadingBookAnalysisView: View {
             .padding(.top, 10)
             .padding(.bottom, 50)
         
-            // 내일 할 일
-            // - 전체 코드 이해하기 (주석으로 다 달기)
-            // - 분석 탭 UI 수정하기 (평균 독서 페이지 보기 버튼)
-            
-            if !filteredChartsData.isEmpty {
-                Chart {
-                    ForEach(filteredChartsData, id: \.self) { record in
-                        if selectedDateRange == .oneMonth {
-                            BarMark(
-                                x: .value("Date", record.date, unit: .day),
-                                y: .value("Page", record.pagesRead),
-                                width: .ratio(0.6)
-                            )
-                            .foregroundStyle(readingBook.category.accentColor.gradient)
-                            .opacity(isOnAverageValue ? 0.3 : 1)
-                            
-                            if isOnAverageValue {
-                                let average = filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData)
-                                
-                                RuleMark(
-                                    y: .value("Average", average)
-                                )
-                                .foregroundStyle(Color.black)
-                                .annotation(position: .top, alignment: .leading) {
-                                    Text("일 평균 독서 페이지: \(average)")
-                                }
-                            }
-                        } else {
-                            BarMark(
-                                x: .value("Date", record.date, unit: .month),
-                                y: .value("Page", record.pagesRead),
-                                width: .ratio(0.6)
-                            )
-                            .foregroundStyle(readingBook.category.accentColor.gradient)
-                            .opacity(isOnAverageValue ? 0.3 : 1)
-                            
-                            if isOnAverageValue {
-                                let average = filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData)
-                                
-                                RuleMark(
-                                    y: .value("Average", average)
-                                )
-                                .foregroundStyle(Color.black)
-                                .annotation(position: .top, alignment: .leading) {
-                                    Text("월 평균 독서 페이지: \(average)")
-                                }
-                            }
-                        }
-                        
-                        
-                    }
-                }
-                .chartXAxis {
-                    if selectedDateRange == .oneMonth {
-                        AxisMarks(values: .stride(by: .day)) { value in
-                            
-                            let date = value.as(Date.self)!
-                            let components1 = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date)
-                            
-                            if components1.weekday == 1 {
-                                AxisGridLine()
-                                AxisTick()
-                                AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")))
-                            }
-                            
-                        }
-                    } else {
-                        AxisMarks(values: .stride(by: .month)) { value in
-                            AxisGridLine()
-                            AxisTick()
-                            AxisValueLabel(format: .dateTime.month(.defaultDigits))
-                        }
-                    }
-                }
-                .chartOverlay { proxy in
-                    GeometryReader { geo in
-                        Rectangle().fill(.clear).contentShape(Rectangle())
-                            .gesture(
-                                SpatialTapGesture()
-                                    .onEnded { value in
-                                        let element = findElement(location: value.location, proxy: proxy, geometry: geo)
-                                        if selectedElement?.date == element?.date {
-                                            // If tapping the same element, clear the selection.
-                                            selectedElement = nil
-                                        } else {
-                                            selectedElement = element
-                                        }
-                                    }
-                                    .exclusively(
-                                        before: DragGesture()
-                                            .onChanged { value in
-                                                selectedElement = findElement(location: value.location, proxy: proxy, geometry: geo)
-                                            }
-                                            .onEnded { _ in
-                                                selectedElement = nil
-                                            }
-                                    )
-                            )
-                    }
-                }
-                .chartBackground { proxy in
-                    ZStack(alignment: .topLeading) {
-                        GeometryReader { geo in
-                            if let selectedElement = selectedElement {
-                                let dateInterval = Calendar.current.dateInterval(of: .day, for: selectedElement.date)!
-                                let startPositionX = proxy.position(forX: dateInterval.start) ?? 0
-                                let midStartPositionX = startPositionX + geo[proxy.plotAreaFrame].origin.x + 5
-                                let lineHeight = geo[proxy.plotAreaFrame].maxY
-                                let boxWidth: CGFloat = 120
-                                let boxOffset = max(0, min(geo.size.width - boxWidth, midStartPositionX - boxWidth / 2))
-                                
-                                Rectangle()
-                                    .fill(.quaternary)
-                                    .frame(width: 2, height: lineHeight)
-                                    .position(x: midStartPositionX, y: lineHeight / 2)
-                                
-                                VStack(alignment: .leading) {
-                                    if selectedDateRange == .oneMonth {
-                                        Text(selectedElement.date.formatted(.dateTime.year().month().day().locale(Locale(identifier: "ko_kr"))))
-                                            .font(.callout)
-                                            .foregroundStyle(.secondary)
-                                    } else {
-                                        Text(selectedElement.date.formatted(.dateTime.year().month().locale(Locale(identifier: "ko_kr"))))
-                                            .font(.callout)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                    Text("\(selectedElement.pagesRead, format: .number) 페이지")
-                                        .font(.title2.bold())
-                                        .foregroundColor(.primary)
-                                }
-                                .frame(width: boxWidth, alignment: .leading)
-                                .background {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(.background)
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(.quaternary.opacity(0.7))
-                                    }
-                                    .padding([.leading, .trailing], -8)
-                                    .padding([.top, .bottom], -4)
-                                }
-                                .offset(x: boxOffset, y: -58)
-                            }
-                        }
-                    }
-                }
-                .frame(height: 250)
-                .padding()
-            } else {
-                VStack(spacing: 5) {
-                    Text("그래프를 그릴 수 없음")
-                        .font(.title.weight(.bold))
-                    
-                    Text("그래프를 보려면 독서 데이터를 추가하십시오.")
-                        .fontWeight(.light)
-                        .minimumScaleFactor(0.5)
-                }
-                .frame(height: 250)
-                .frame(maxWidth: .infinity)
-                .background(Color("Background"))
-                .cornerRadius(20)
-                .padding(.horizontal)
-            }
-                
-            // 도서 데이터가 아무것도 없는 경우 발생하는 오류 해결 + 코드 리팩토링하기
+            barChart
             
             Button {
                 withAnimation(.easeInOut(duration: 0.2)) {
-                    isOnAverageValue.toggle()
+                    isShowingAverageRuleMark.toggle()
                 }
             } label: {
-                if selectedDateRange == .oneMonth {
+                if selectedDatePicker == .oneMonth {
                     HStack {
                         Text("일 평균 독서 페이지")
                             .fontWeight(.bold)
@@ -297,8 +137,8 @@ struct ReadingBookAnalysisView: View {
                         }
                     }
                     .padding()
-                    .foregroundColor(isOnAverageValue ? Color.white : Color.black)
-                    .background(isOnAverageValue ? readingBook.category.accentColor : Color("Background"))
+                    .foregroundColor(isShowingAverageRuleMark ? Color.white : Color.black)
+                    .background(isShowingAverageRuleMark ? readingBook.category.accentColor : Color("Background"))
                     .cornerRadius(20)
                     .padding()
                 } else {
@@ -313,8 +153,8 @@ struct ReadingBookAnalysisView: View {
                         }
                     }
                     .padding()
-                    .foregroundColor(isOnAverageValue ? Color.white : Color.black)
-                    .background(isOnAverageValue ? readingBook.category.accentColor : Color("Background"))
+                    .foregroundColor(isShowingAverageRuleMark ? Color.white : Color.black)
+                    .background(isShowingAverageRuleMark ? readingBook.category.accentColor : Color("Background"))
                     .cornerRadius(20)
                     .padding()
                 }
@@ -364,12 +204,12 @@ struct ReadingBookAnalysisView: View {
         .sheet(isPresented: $isPresentingAllReadingDataSheet) {
             AllReadingDataView(readingBook: readingBook)
         }
-        .onChange(of: selectedDateRange) { _ in
-            selectedElement = nil
+        .onChange(of: selectedDatePicker) { _ in
+            selectedTapElement = nil
         }
     }
 
-    private func findElement(location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) -> DailyReading? {
+    private func findElement(location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) -> ReadingData? {
         let relativeXPosition = location.x - geometry[proxy.plotAreaFrame].origin.x
         if let date = proxy.value(atX: relativeXPosition) as Date? {
             // Find the closest date element.
@@ -389,7 +229,7 @@ struct ReadingBookAnalysisView: View {
         return nil
     }
     
-    private func countChartsData(_ datas: [DailyReading]) -> Int {
+    private func countChartsData(_ datas: [ReadingData]) -> Int {
         var count = 0
         
         for data in datas where data.pagesRead > 0 {
@@ -398,6 +238,169 @@ struct ReadingBookAnalysisView: View {
         return count
     }
 }
+
+// MARK: - EXTENSIONS
+
+extension ReadingBookAnalysisView {
+    var barChart: some View {
+        Group {
+            if !filteredChartsData.isEmpty {
+                Chart {
+                    ForEach(filteredChartsData, id: \.self) { record in
+                        if selectedDatePicker == .oneMonth {
+                            BarMark(
+                                x: .value("Date", record.date, unit: .day),
+                                y: .value("Page", record.pagesRead),
+                                width: .ratio(0.6)
+                            )
+                            .foregroundStyle(readingBook.category.accentColor.gradient)
+                            .opacity(isShowingAverageRuleMark ? 0.3 : 1)
+                        } else {
+                            BarMark(
+                                x: .value("Date", record.date, unit: .month),
+                                y: .value("Page", record.pagesRead),
+                                width: .ratio(0.6)
+                            )
+                            .foregroundStyle(readingBook.category.accentColor.gradient)
+                            .opacity(isShowingAverageRuleMark ? 0.3 : 1)
+                        }
+                        
+                        if isShowingAverageRuleMark {
+                            let average = filteredChartsData.reduce(0, { $0 + $1.pagesRead }) / countChartsData(filteredChartsData)
+                            
+                            RuleMark(
+                                y: .value("Average", average)
+                            )
+                            .foregroundStyle(Color.black)
+                            .annotation(position: .top, alignment: .leading) {
+                                if selectedDatePicker == .oneMonth {
+                                    Text("일 평균 독서 페이지: \(average)")
+                                } else {
+                                    Text("월 평균 독서 페이지: \(average)")
+                                }
+                            }
+                        }
+                        
+                        
+                    }
+                }
+                .chartXAxis {
+                    if selectedDatePicker == .oneMonth {
+                        AxisMarks(values: .stride(by: .day)) { value in
+                            
+                            let date = value.as(Date.self)!
+                            let components1 = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date)
+                            
+                            if components1.weekday == 1 {
+                                AxisGridLine()
+                                AxisTick()
+                                AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")))
+                            }
+                            
+                        }
+                    } else {
+                        AxisMarks(values: .stride(by: .month)) { value in
+                            AxisGridLine()
+                            AxisTick()
+                            AxisValueLabel(format: .dateTime.month(.defaultDigits))
+                        }
+                    }
+                }
+                .chartOverlay { proxy in
+                    GeometryReader { geo in
+                        Rectangle().fill(.clear).contentShape(Rectangle())
+                            .gesture(
+                                SpatialTapGesture()
+                                    .onEnded { value in
+                                        let element = findElement(location: value.location, proxy: proxy, geometry: geo)
+                                        if selectedTapElement?.date == element?.date {
+                                            // If tapping the same element, clear the selection.
+                                            selectedTapElement = nil
+                                        } else {
+                                            selectedTapElement = element
+                                        }
+                                    }
+                                    .exclusively(
+                                        before: DragGesture()
+                                            .onChanged { value in
+                                                selectedTapElement = findElement(location: value.location, proxy: proxy, geometry: geo)
+                                            }
+                                            .onEnded { _ in
+                                                selectedTapElement = nil
+                                            }
+                                    )
+                            )
+                    }
+                }
+                .chartBackground { proxy in
+                    ZStack(alignment: .topLeading) {
+                        GeometryReader { geo in
+                            if let selectedElement = selectedTapElement {
+                                let dateInterval = Calendar.current.dateInterval(of: .day, for: selectedElement.date)!
+                                let startPositionX = proxy.position(forX: dateInterval.start) ?? 0
+                                let midStartPositionX = startPositionX + geo[proxy.plotAreaFrame].origin.x + 5
+                                let lineHeight = geo[proxy.plotAreaFrame].maxY
+                                let boxWidth: CGFloat = 120
+                                let boxOffset = max(0, min(geo.size.width - boxWidth, midStartPositionX - boxWidth / 2))
+                                
+                                Rectangle()
+                                    .fill(.quaternary)
+                                    .frame(width: 2, height: lineHeight)
+                                    .position(x: midStartPositionX, y: lineHeight / 2)
+                                
+                                VStack(alignment: .leading) {
+                                    Group {
+                                        if selectedDatePicker == .oneMonth {
+                                            Text(selectedElement.date.formatted(.dateTime.year().month().day().locale(Locale(identifier: "ko_kr"))))
+                                        } else {
+                                            Text(selectedElement.date.formatted(.dateTime.year().month().locale(Locale(identifier: "ko_kr"))))
+                                        }
+                                    }
+                                    .font(.callout)
+                                    .foregroundStyle(.secondary)
+                                                                                
+                                    Text("\(selectedElement.pagesRead, format: .number) 페이지")
+                                        .font(.title2.bold())
+                                        .foregroundColor(.primary)
+                                }
+                                .frame(width: boxWidth, alignment: .leading)
+                                .background {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.background)
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.quaternary.opacity(0.7))
+                                    }
+                                    .padding([.leading, .trailing], -8)
+                                    .padding([.top, .bottom], -4)
+                                }
+                                .offset(x: boxOffset, y: -58)
+                            }
+                        }
+                    }
+                }
+                .frame(height: 250)
+                .padding()
+            } else {
+                VStack(spacing: 5) {
+                    Text("그래프를 그릴 수 없음")
+                        .font(.title.weight(.bold))
+                    
+                    Text("그래프를 보려면 독서 데이터를 추가하십시오.")
+                        .fontWeight(.light)
+                        .minimumScaleFactor(0.5)
+                }
+                .frame(height: 250)
+                .frame(maxWidth: .infinity)
+                .background(Color("Background"))
+                .cornerRadius(20)
+                .padding(.horizontal)
+            }
+        }
+    }
+}
+
+// MARK: - PREVIEW
 
 struct ReadingBookAnalysisView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var readingBooks
