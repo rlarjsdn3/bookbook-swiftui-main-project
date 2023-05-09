@@ -412,6 +412,9 @@
 				9EA1983A2A01F18300D385CD /* ReadingBookCoverView.swift */,
 				9EE01FEB2A01F76A00584F39 /* ReadingBookRenewalButtonView.swift */,
 				9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */,
+				9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */,
+				9EE01FF22A022D4100584F39 /* ReadingBookAnalysisView.swift */,
+				9EDEEF842A02963D0036FB1A /* ReadingBookCollectSentencesView.swift */,
 				9EE01FEF2A020F8000584F39 /* Components */,
 			);
 			path = ReadingBookDetailView;
@@ -554,9 +557,6 @@
 		9EE01FEF2A020F8000584F39 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */,
-				9EE01FF22A022D4100584F39 /* ReadingBookAnalysisView.swift */,
-				9EDEEF842A02963D0036FB1A /* ReadingBookCollectSentencesView.swift */,
 				9E2BA9052A04CBF600FD2E93 /* ReadingBookRenewalView.swift */,
 				9E2BA90B2A051C9100FD2E93 /* AllReadingDataView.swift */,
 			);
