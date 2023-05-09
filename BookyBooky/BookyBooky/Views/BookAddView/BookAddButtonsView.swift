@@ -88,7 +88,6 @@ extension BookAddButtonsView {
                 addLabel
             }
         }
-        .padding(.horizontal)
     }
     
     var backLabel: some View {
