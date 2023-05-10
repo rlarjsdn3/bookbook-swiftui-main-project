@@ -11,7 +11,7 @@ import RealmSwift
 struct ReadingBookHeaderView: View {
     @Environment(\.dismiss) var dismiss
     
-    let readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     @Binding var scrollYOffset: Double
     
     @State private var isPresentingDeleteConfirmationDialog = false

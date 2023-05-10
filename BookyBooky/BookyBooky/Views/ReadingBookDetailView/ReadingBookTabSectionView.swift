@@ -32,8 +32,6 @@ struct ReadingBookTabSectionView: View {
                     Button {
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
                             selectedAnimation = item
-//                                                scrollProxy.scrollTo("Scroll_To_Category", anchor: .top)
-//                                                scrollProxy.scrollTo("\(category.rawValue)")
                         }
                         selectedTab = item
                     } label: {
@@ -63,7 +61,6 @@ struct ReadingBookTabSectionView: View {
             .frame(maxWidth: .infinity)
             .overlay(alignment: .bottom) {
                 Divider()
-                    .opacity(scrollYOffset > 30 ? 1 : 0)
             }
         }
     }
