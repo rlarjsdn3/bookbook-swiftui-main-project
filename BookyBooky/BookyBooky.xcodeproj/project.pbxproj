@@ -557,8 +557,8 @@
 		9EE01FEF2A020F8000584F39 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				9E2BA9052A04CBF600FD2E93 /* ReadingBookRenewalView.swift */,
 				9E2BA90B2A051C9100FD2E93 /* AllReadingDataView.swift */,
+				9E2BA9052A04CBF600FD2E93 /* ReadingBookRenewalView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";

@@ -45,19 +45,24 @@ struct AllReadingDataView: View {
                     Text("페이지")
                 }
                 
-                Section {
-                    Button("마지막 데이터 삭제하기", role: .destructive) {
-                        isPresentingDeleteLastDataConfirmationDialog = true
+                Group {
+                    Section {
+                        Button("마지막 데이터 삭제하기") {
+                            isPresentingDeleteLastDataConfirmationDialog = true
+                        }
+                    } footer: {
+                        Text("독서 데이터의 일관성과 정확성을 유지하기 위해 개별 독서 데이터의 수정은 불가능합니다. 더불어, 마지막 독서 데이터의 삭제만 가능합니다. 이 작업은 취소할 수 없습니다.")
                     }
-                    .disabled(readingBook.readingRecords.isEmpty)
                     
-                    Button("모든 데이터 삭제하기", role: .destructive) {
-                        isPresentingDeleteallDataConfirmationDialog = true
+                    Section {
+                        Button("모든 데이터 삭제하기", role: .destructive) {
+                            isPresentingDeleteallDataConfirmationDialog = true
+                        }
+                    } footer: {
+                        Text("모든 독서 데이터를 삭제합니다. 이 작업은 취소할 수 없습니다.")
                     }
-                    .disabled(readingBook.readingRecords.isEmpty)
-                } footer: {
-                    Text("독서 데이터의 일관성과 정확성을 유지하기 위해 개별 독서 데이터의 수정은 불가능합니다. 더불어, 마지막 독서 데이터의 삭제만 가능합니다.")
                 }
+                .disabled(readingBook.readingRecords.isEmpty)
 
             }
             .confirmationDialog("마지막으로 추가된 독서 데이터를 삭제하시겠습니까?", isPresented: $isPresentingDeleteLastDataConfirmationDialog, titleVisibility: .visible) {

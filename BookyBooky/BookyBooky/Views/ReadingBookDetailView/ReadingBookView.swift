@@ -21,10 +21,8 @@ struct ReadingBookView: View {
     // MARK: - BODY
     
     var body: some View {
-        //  도서 삭제 시, 책 제목/저자 등 정보가 사라지지 않게 하기 (추후 수정 예정)
-        
         VStack(spacing: 0) {
-            ReadingBookHeaderView(targetBook: readingBook, scrollYOffset: $scrollYOffset)
+            ReadingBookHeaderView(readingBook: readingBook, scrollYOffset: $scrollYOffset)
             
             ReadingBookScrollView(scrollYOffset: $scrollYOffset, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, readingBook: readingBook)
         }

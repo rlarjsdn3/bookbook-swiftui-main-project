@@ -11,12 +11,10 @@ import RealmSwift
 struct ReadingBookHeaderView: View {
     @Environment(\.dismiss) var dismiss
     
-    @ObservedResults(ReadingBook.self) var completeTargetBooks
-    
-    let targetBook: ReadingBook
+    let readingBook: ReadingBook
     @Binding var scrollYOffset: Double
     
-    @State var title: String = ""
+    @State private var isPresentingDeleteConfirmationDialog = false
     
     var body: some View {
         HStack {
@@ -29,9 +27,12 @@ struct ReadingBookHeaderView: View {
         .overlay {
             navigationBarItems
         }
-        .onAppear {
-            title = targetBook.title
-        }
+        .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible, actions: {
+            Button("삭제", role: .destructive) {
+                RealmManager.shared.deleteReadingBook(readingBook.isbn13)
+                dismiss()
+            }
+        })
         .padding(.vertical)
     }
 }
@@ -40,7 +41,7 @@ extension ReadingBookHeaderView {
     var navigationTitle: some View {
         Group {
             if scrollYOffset > 30 {
-                Text(title)
+                Text(readingBook.title)
                     .frame(width: mainScreen.width * 0.65)
                     .lineLimit(1)
                     .truncationMode(.middle)
@@ -72,8 +73,7 @@ extension ReadingBookHeaderView {
                     }
 
                     Button(role: .destructive) {
-                        RealmManager.shared.deleteReadingBook(targetBook.isbn13)
-                        dismiss()
+                        isPresentingDeleteConfirmationDialog = true
                     } label: {
                         Label("삭제", systemImage: "trash")
                     }
@@ -92,6 +92,6 @@ struct TargetBookDetailHeaderView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
-        ReadingBookHeaderView(targetBook: completeTargetBooks[0], scrollYOffset: .constant(0.0))
+        ReadingBookHeaderView(readingBook: completeTargetBooks[0], scrollYOffset: .constant(0.0))
     }
 }
