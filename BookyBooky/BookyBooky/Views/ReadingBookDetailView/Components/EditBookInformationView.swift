@@ -119,6 +119,8 @@ struct EditBookInformationView: View {
                     .cornerRadius(15)
             }
             .padding(.horizontal)
+            // 베젤이 있는 아이폰은 하단 간격 주기
+            .padding(safeAreaInsets.bottom == 0 ? .bottom : [])
         }
         .onAppear {
             titleTextField = readingBook.title
