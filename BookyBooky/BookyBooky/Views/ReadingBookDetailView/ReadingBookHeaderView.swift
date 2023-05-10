@@ -14,6 +14,7 @@ struct ReadingBookHeaderView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     @Binding var scrollYOffset: Double
     
+    @State private var isPresentingEditBookInformationSheet = false
     @State private var isPresentingDeleteConfirmationDialog = false
     
     var body: some View {
@@ -27,12 +28,16 @@ struct ReadingBookHeaderView: View {
         .overlay {
             navigationBarItems
         }
-        .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible, actions: {
+        .sheet(isPresented: $isPresentingEditBookInformationSheet) {
+            Text("BookInfoEditSheet")
+                .presentationCornerRadius(30)
+        }
+        .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
             Button("삭제", role: .destructive) {
                 RealmManager.shared.deleteReadingBook(readingBook.isbn13)
                 dismiss()
             }
-        })
+        }
         .padding(.vertical)
     }
 }
@@ -67,7 +72,7 @@ extension ReadingBookHeaderView {
             Menu {
                 Section {
                     Button {
-                        // do something...
+                        isPresentingEditBookInformationSheet = true
                     } label: {
                         Label("편집", systemImage: "square.and.pencil")
                     }

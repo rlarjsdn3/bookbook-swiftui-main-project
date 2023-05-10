@@ -38,7 +38,7 @@ struct ReadingBookRenewalButtonView: View {
                         Text("읽었어요!")
                     } else {
                         Text("갱신 불가")
-                            .opacity(0.5)
+                            .opacity(0.75)
                     }
                 }
                 .font(.headline)
