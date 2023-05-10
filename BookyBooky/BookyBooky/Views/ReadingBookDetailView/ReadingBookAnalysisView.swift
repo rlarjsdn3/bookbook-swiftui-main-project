@@ -171,12 +171,12 @@ struct ReadingBookAnalysisView: View {
             }
         }
         
-        var max = 4
-        for index in count.indices where count[index] > count[max] {
-            max = index
+        var maxIndex = 4
+        for index in count.indices where count[index] > count[maxIndex] {
+            maxIndex = index
         }
         
-        switch max {
+        switch maxIndex {
         case 0:
             return .dawn
         case 1:
@@ -195,9 +195,8 @@ struct ReadingBookAnalysisView: View {
             return 0
         }
         
-        let calendar = Calendar.current
-        var maxConsecutiveDays = 0
-        var currentConsecutiveDays = 0
+        var maxConsecutiveDays = 1
+        var currentConsecutiveDays = 1
         
         for i in 1..<readingBook.readingRecords.count {
             let previousDate = Calendar.current.date(byAdding: .day, value: -1, to: readingBook.readingRecords[i].date)!
@@ -205,8 +204,8 @@ struct ReadingBookAnalysisView: View {
             if previousDate.formatted(date: .abbreviated, time: .omitted) == readingBook.readingRecords[i-1].date.formatted(date: .abbreviated, time: .omitted) {
                 currentConsecutiveDays += 1
             } else {
-                currentConsecutiveDays += 1
                 maxConsecutiveDays = max(currentConsecutiveDays, maxConsecutiveDays)
+                currentConsecutiveDays = 1
             }
         }
         
