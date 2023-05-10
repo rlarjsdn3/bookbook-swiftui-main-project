@@ -29,8 +29,7 @@ struct ReadingBookHeaderView: View {
             navigationBarItems
         }
         .sheet(isPresented: $isPresentingEditBookInformationSheet) {
-            Text("BookInfoEditSheet")
-                .presentationCornerRadius(30)
+            EditBookInformationView(readingBook: readingBook)
         }
         .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
             Button("삭제", role: .destructive) {
