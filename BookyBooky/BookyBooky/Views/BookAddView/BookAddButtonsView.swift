@@ -13,6 +13,7 @@ struct BookAddButtonsView: View {
     let bookInfoItem: BookInfo.Item
     @Binding var selectedDate: Date
     
+    @EnvironmentObject var realmManager: RealmManager
     @Environment(\.dismiss) var dismiss
     
     @ObservedResults(ReadingBook.self) var completeTargetBooks
@@ -44,7 +45,7 @@ struct BookAddButtonsView: View {
                         "targetDate": selectedDate,
                         "isCompleted": false
                     ] as [String : Any])
-                RealmManager.shared.addReadingBook(completeTargetBook)
+                realmManager.addReadingBook(completeTargetBook)
                 
                 dismiss()
             }
@@ -116,5 +117,6 @@ extension BookAddButtonsView {
 struct BookAddButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         BookAddButtonsView(bookInfoItem: BookInfo.Item.preview[0], selectedDate: .constant(Date()))
+            .environmentObject(RealmManager())
     }
 }

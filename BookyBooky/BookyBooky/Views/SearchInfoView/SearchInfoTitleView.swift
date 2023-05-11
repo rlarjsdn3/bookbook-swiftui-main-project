@@ -14,10 +14,11 @@ struct SearchInfoTitleView: View {
     
     let bookInfo: BookInfo.Item
     @Binding var isLoading: Bool
-    @Binding var isPresentingFavoriteAlert: Bool
     
     
     // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var realmManager: RealmManager
     
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
@@ -86,12 +87,11 @@ extension SearchInfoTitleView {
                         "isbn13": "\(bookInfo.isbn13)"
                     ]
                 )
-                RealmManager.shared.addFavoriteBook(favorite)
-                
-                isPresentingFavoriteAlert = true
+                realmManager.addFavoriteBook(favorite)
+                realmManager.isPresentingFavoriteBookAddCompleteToastAlert = true
             } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    RealmManager.shared.deleteFavoriteBook(bookInfo.isbn13)
+                    realmManager.deleteFavoriteBook(bookInfo.isbn13)
                 }
             }
             
@@ -123,8 +123,8 @@ struct SearchInfoTitleView_Previews: PreviewProvider {
     static var previews: some View {
         SearchInfoTitleView(
             bookInfo: BookInfo.Item.preview[0],
-            isLoading: .constant(false),
-            isPresentingFavoriteAlert: .constant(false)
+            isLoading: .constant(false)
         )
+        .environmentObject(RealmManager())
     }
 }

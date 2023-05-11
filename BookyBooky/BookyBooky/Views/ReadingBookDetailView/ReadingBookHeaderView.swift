@@ -11,6 +11,8 @@ import RealmSwift
 struct ReadingBookHeaderView: View {
     @Environment(\.dismiss) var dismiss
     
+    @EnvironmentObject var realmManager: RealmManager
+    
     @ObservedRealmObject var readingBook: ReadingBook
     @Binding var scrollYOffset: Double
     
@@ -33,7 +35,7 @@ struct ReadingBookHeaderView: View {
         }
         .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
             Button("삭제", role: .destructive) {
-                RealmManager.shared.deleteReadingBook(readingBook.isbn13)
+                realmManager.deleteReadingBook(readingBook.isbn13)
                 dismiss()
             }
         }
@@ -97,5 +99,6 @@ struct TargetBookDetailHeaderView_Previews: PreviewProvider {
     
     static var previews: some View {
         ReadingBookHeaderView(readingBook: completeTargetBooks[0], scrollYOffset: .constant(0.0))
+            .environmentObject(RealmManager())
     }
 }

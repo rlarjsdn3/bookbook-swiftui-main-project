@@ -33,7 +33,13 @@ struct AllReadingDataView: View {
                                 Spacer()
                                 
                                 // 사용자 format으로 Date 확장하기
-                                Text("\(record.date.formatted(.dateTime.locale(Locale(identifier: "ko")).year().month().day().weekday(.short)))")
+                                VStack(alignment: HorizontalAlignment.trailing) {
+                                    Text("\(record.date.formatted(date: .abbreviated, time: .omitted))")
+                                    
+                                    Text("\(record.date.formatted(date: .omitted, time: .shortened))")
+                                        .font(.footnote)
+                                        .foregroundColor(Color.secondary)
+                                }
                             }
                             .padding(.vertical, 1)
                         }
@@ -43,6 +49,8 @@ struct AllReadingDataView: View {
                     }
                 } header: {
                     Text("페이지")
+                } footer: {
+                    Text("동일한 일자에 여러 번 독서 데이터를 추가하는 경우, 가장 마지막으로 추가된 시간을 기준으로 독서 데이터가 기록됩니다.")
                 }
                 
                 Group {

@@ -5,21 +5,39 @@
 //  Created by 김건우 on 2023/04/05.
 //
 
-import Foundation
+import SwiftUI
 import RealmSwift
+import AlertToast
 
-class RealmManager {
+class RealmManager: ObservableObject {
     
-    let realm = openLocalRealm()
+    // MARK: - ALERT PROPERTIES
     
-    static let shared = RealmManager()
+    @Published var isPresentingFavoriteBookAddCompleteToastAlert = false
+    @Published var isPresentingTargetBookAddCompleteToastAlert = false
+    @Published var isPresentingTargetBookEditComleteToastAlert = false
+    
+    // MARK: - ALERT FUNCTIONS
+    
+    let targetBookAddCompleteToastAlert = AlertToast(displayMode: .alert, type: .complete(Color.green), title: "도서 추가 완료")
+    let targetBookEditCompleteToastAlert = AlertToast(displayMode: .alert, type: .complete(Color.green), title: "도서 편집 완료")
+    
+    func favoriteBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
+        AlertToast(displayMode: .alert, type: .complete(color), title: "찜하기 완료")
+    }
+        
+    // MARK: - PROPERTIES
+    
+    lazy var realm = openLocalRealm()
+    
+    // MARK: - WRAPPER PROPERTIES
     
     @ObservedResults(ReadingBook.self) var readingBooks
     @ObservedResults(FavoriteBook.self) var favoriteBooks
+
+    // MARK: - 
     
-    private init() { }
-    
-    static func openLocalRealm() -> Realm {
+    func openLocalRealm() -> Realm {
         let config = Realm.Configuration(
             schemaVersion: 0,
             deleteRealmIfMigrationNeeded: true)

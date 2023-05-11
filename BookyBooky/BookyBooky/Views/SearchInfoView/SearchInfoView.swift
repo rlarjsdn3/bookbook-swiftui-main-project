@@ -19,6 +19,14 @@ struct SearchInfoView: View {
         return aladinAPIManager.BookInfoItem[0]
     }
     
+    var categoryThemeColor: Color {
+        if let book = bookInfo {
+            return book.categoryName.refinedCategory.accentColor
+        } else {
+            return Color.gray
+        }
+    }
+    
     // MARK: - PROPERTIES
     
     let isbn13: String
@@ -26,12 +34,12 @@ struct SearchInfoView: View {
     
     // MARK: - WRAPPER PROPERTIES]
     
+    @EnvironmentObject var realmManager: RealmManager
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @Environment(\.dismiss) var dismiss
     
     @State private var isLoading = true
-    @State private var isPresentingFavoriteAlert = false
     
     // MARK: - BODY
     
@@ -65,12 +73,8 @@ struct SearchInfoView: View {
                 }
             }
         }
-        .toast(isPresenting: $isPresentingFavoriteAlert, duration: 1.0) {
-            AlertToast(
-                displayMode: .alert,
-                type: .complete(!aladinAPIManager.BookInfoItem.isEmpty ? aladinAPIManager.BookInfoItem[0].categoryName.refinedCategory.accentColor : .gray),
-                title: "찜하기"
-            )
+        .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddCompleteToastAlert, duration: 1.0) {
+                realmManager.favoriteBookAddCompleteToastAlert(categoryThemeColor)
         }
         .onAppear {
             aladinAPIManager.requestBookDetailAPI(isbn13: isbn13)
@@ -96,8 +100,7 @@ extension SearchInfoView {
             
             SearchInfoTitleView(
                 bookInfo: item,
-                isLoading: $isLoading,
-                isPresentingFavoriteAlert: $isPresentingFavoriteAlert
+                isLoading: $isLoading
             )
             
             SearchInfoBoxView(
@@ -127,6 +130,7 @@ extension SearchInfoView {
 struct SearchInfoView_Previews: PreviewProvider {
     static var previews: some View {
         SearchInfoView(isbn13: "9788994492049", isPresentingBackButton: true)
+            .environmentObject(RealmManager())
             .environmentObject(AladinAPIManager())
     }
 }

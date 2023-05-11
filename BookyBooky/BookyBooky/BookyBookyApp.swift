@@ -10,10 +10,9 @@ import SwiftUI
 @main
 struct BookyBookyApp: App {
     
-    let realmManager = RealmManager.openLocalRealm()
-    
     // MARK: - WRAPPER PROPERTIES
     
+    @StateObject var realmManager = RealmManager()
     @StateObject var aladinAPIManager = AladinAPIManager()
     
     // MARK: - BODY
@@ -26,7 +25,8 @@ struct BookyBookyApp: App {
                         aladinAPIManager.requestBookListAPI(type: type)
                     }
                 }
-                .environment(\.realm, realmManager)
+                .environment(\.realm, realmManager.realm)
+                .environmentObject(realmManager)
                 .environmentObject(aladinAPIManager)
         }
     }
