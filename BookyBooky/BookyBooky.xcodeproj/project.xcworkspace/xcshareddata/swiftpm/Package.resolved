@@ -46,30 +46,12 @@
       }
     },
     {
-      "identity" : "swiftdate",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/malcommac/SwiftDate",
-      "state" : {
-        "revision" : "5d943224c3bb173e6ecf27295611615eba90c80e",
-        "version" : "7.0.0"
-      }
-    },
-    {
       "identity" : "swiftui-shimmer",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/markiv/SwiftUI-Shimmer",
       "state" : {
         "revision" : "17b66b0e7d94d2d3f220bbcb021b5026436f06c7",
         "version" : "1.3.0"
-      }
-    },
-    {
-      "identity" : "toastui",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/quanshousio/ToastUI.git",
-      "state" : {
-        "revision" : "1828801ea49e2ab900ca5e6bb18245312fda66a2",
-        "version" : "3.0.1"
       }
     }
   ],

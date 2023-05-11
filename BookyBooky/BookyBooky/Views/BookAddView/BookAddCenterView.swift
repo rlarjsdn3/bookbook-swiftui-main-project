@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftDate
 
 struct BookAddCenterView: View {
     
@@ -57,7 +56,7 @@ extension BookAddCenterView {
     }
     
     var targetSelectedDateLabel: some View {
-        Text("\(selectedDate.toFormat("yyyy년 MM월 dd일 (E)", locale: Locale(identifier: "ko")))")
+        Text("\(selectedDate.formatted(date: .abbreviated, time: .omitted)))")
             .font(.title)
             .fontWeight(.bold)
     }

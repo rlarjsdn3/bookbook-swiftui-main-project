@@ -25,7 +25,7 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Text("\(readingBook.startDate.toFormat("yyyy년 M월 d일 (E)", locale: Locale(identifier: "ko_kr")))")
+                    Text("\(readingBook.startDate.formatted(date: .abbreviated, time: .omitted)))")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -49,7 +49,7 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Text("\(readingBook.targetDate.toFormat("yyyy년 M월 d일 (E)", locale: Locale(identifier: "ko_kr")))")
+                    Text("\(readingBook.targetDate.formatted(date: .abbreviated, time: .omitted)))")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -63,7 +63,7 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Text("\(readingBook.pubDate.toFormat("yyyy년 M월 d일 (E)", locale: Locale(identifier: "ko_kr")))")
+                    Text("\(readingBook.pubDate.formatted(date: .abbreviated, time: .omitted)))")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }

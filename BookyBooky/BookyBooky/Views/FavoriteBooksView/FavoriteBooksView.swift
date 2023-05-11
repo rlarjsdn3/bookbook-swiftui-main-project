@@ -9,6 +9,7 @@ import SwiftUI
 import AlertToast
 import RealmSwift
 
+// 이름 바꿀 필요 있음
 struct FavoriteBooksView: View {
     
     // MARK: - WRAPPER PROPERTIES

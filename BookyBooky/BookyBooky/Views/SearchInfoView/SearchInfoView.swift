@@ -73,6 +73,7 @@ struct SearchInfoView: View {
                 }
             }
         }
+        .toolbar(.hidden, for: .navigationBar)
         .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddCompleteToastAlert, duration: 1.0) {
                 realmManager.showFavoriteBookAddCompleteToastAlert(categoryThemeColor)
         }
@@ -86,7 +87,6 @@ struct SearchInfoView: View {
         .onDisappear {
             aladinAPIManager.BookInfoItem.removeAll()
         }
-        .toolbar(.hidden, for: .navigationBar)
         .presentationCornerRadius(30)
     }
 }

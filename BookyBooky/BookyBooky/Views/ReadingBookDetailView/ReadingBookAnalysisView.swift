@@ -95,58 +95,45 @@ struct ReadingBookAnalysisView: View {
     @State private var isShowingAverageRuleMark = false
     @State private var isPresentingAllReadingDataSheet = false
     
-    
     // MARK: - COMPUTED PROPERTIES
     
-    private var filteredChartDatas: [ReadingData] {
-        var filter: [ReadingData] = []
+    private var filteredChartDataArray: [ReadingData] {
+        var filterChartDataArray: [ReadingData] = []
         
         switch selectedChartDateRange {
         case .oneMonth:
             if let lastRecord = readingBook.readingRecords.last {
                 for i in 0..<31 {
-                    filter.append(ReadingData(date: Date(timeInterval: Double(86400 * -i), since: lastRecord.date), pagesRead: 0))
+                    filterChartDataArray.append(ReadingData(date: Date(timeInterval: Double(86400 * -i), since: lastRecord.date), pagesRead: 0))
                 }
                 
                 for record in readingBook.readingRecords {
-                    let component2 = Calendar.current.dateComponents([.year, .month, .day], from: record.date)
-                    
-                    if let index = filter.firstIndex(where: { item in
-                        let comp = Calendar.current.dateComponents([.year, .month, .day], from: item.date)
-                        
-                        return component2.year == comp.year && component2.month == comp.month && component2.day == comp.day
+                    if let index = filterChartDataArray.firstIndex(where: { element in
+                        return record.date.isEqual([.year, .month, .day], date: element.date)
                     }) {
-                        filter[index].pagesRead = record.numOfPagesRead
+                        filterChartDataArray[index].pagesRead = record.numOfPagesRead
                     }
                 }
-                return filter
             }
+            return filterChartDataArray
         case .oneYear:
-            // 12개월 전체 보도록 만들기
-            
             if let lastRecord = readingBook.readingRecords.last {
-                
                 for i in 0..<12 {
-                    filter.append(ReadingData(date: Date(timeInterval: Double(86400 * 30 * -i), since: lastRecord.date), pagesRead: 0))
+                    filterChartDataArray.append(ReadingData(date: Date(timeInterval: Double(86400 * 30 * -i), since: lastRecord.date), pagesRead: 0))
                 }
                 
                 for record in readingBook.readingRecords {
-                    let comp = Calendar.current.dateComponents([.year, .month], from: record.date)
-                    
-                    if let index = filter.firstIndex(where: { item in
-                        let comp2 = Calendar.current.dateComponents([.year, .month], from: item.date)
-                        
-                        return comp.year == comp2.year && comp.month == comp2.month
+                    if let index = filterChartDataArray.firstIndex(where: { element in
+                        return record.date.isEqual([.year, .month], date: element.date)
                     }) {
-                        filter[index].pagesRead += record.numOfPagesRead
+                        filterChartDataArray[index].pagesRead += record.numOfPagesRead
                     } else {
-                        filter.append(ReadingData(date: record.date, pagesRead: record.numOfPagesRead))
+                        filterChartDataArray.append(ReadingData(date: record.date, pagesRead: record.numOfPagesRead))
                     }
                 }
             }
-            return filter
+            return filterChartDataArray
         }
-        return filter
     }
     
     var highlightMajorReadingPeriod: HighlightMajorReadingPeriodItems {
@@ -190,7 +177,7 @@ struct ReadingBookAnalysisView: View {
         }
     }
     
-    var continuousReadingDay: Int {
+    var consecutiveReadingDays: Int {
         guard !readingBook.readingRecords.isEmpty else {
             return 0
         }
@@ -255,7 +242,7 @@ struct ReadingBookAnalysisView: View {
                     
                     Spacer()
                     
-                    if !filteredChartDatas.isEmpty {
+                    if !filteredChartDataArray.isEmpty {
                         Text("\(getAverageValue())")
                     } else {
                         Text("-")
@@ -268,7 +255,7 @@ struct ReadingBookAnalysisView: View {
                 .padding(.horizontal)
                 .padding(.vertical, 5)
             }
-            .disabled(filteredChartDatas.isEmpty)
+            .disabled(filteredChartDataArray.isEmpty)
             
             Section {
                 HStack {
@@ -298,7 +285,7 @@ struct ReadingBookAnalysisView: View {
                     // ... 연속 스트릭
                     
                     HStack {
-                        if continuousReadingDay != 0 {
+                        if consecutiveReadingDays != 0 {
                             Image(systemName: "calendar.circle.fill")
                                 .font(.largeTitle)
                         } else {
@@ -311,8 +298,8 @@ struct ReadingBookAnalysisView: View {
                             Text("연속 스트릭")
                                 .font(.caption)
                                 .foregroundColor(Color.gray)
-                            if continuousReadingDay != 0 {
-                                Text("\(continuousReadingDay)일")
+                            if consecutiveReadingDays != 0 {
+                                Text("\(consecutiveReadingDays)일")
                                     .font(.title2.weight(.bold))
                             } else {
                                 Text("-")
@@ -370,28 +357,28 @@ struct ReadingBookAnalysisView: View {
             // Find the closest date element.
             var minDistance: TimeInterval = .infinity
             var index: Int? = nil
-            for dataIndex in filteredChartDatas.indices {
-                let nthDataDistance = filteredChartDatas[dataIndex].date.distance(to: date)
+            for dataIndex in filteredChartDataArray.indices {
+                let nthDataDistance = filteredChartDataArray[dataIndex].date.distance(to: date)
                 if abs(nthDataDistance) < minDistance {
                     minDistance = abs(nthDataDistance)
                     index = dataIndex
                 }
             }
             if let index = index {
-                return filteredChartDatas[index]
+                return filteredChartDataArray[index]
             }
         }
         return nil
     }
     
     private func getAverageValue() -> Int {
-        return filteredChartDatas.reduce(0, { $0 + $1.pagesRead }) / countChartData()
+        return filteredChartDataArray.reduce(0, { $0 + $1.pagesRead }) / countChartData()
     }
     
     private func countChartData() -> Int {
         var count = 0
         
-        for data in filteredChartDatas where data.pagesRead > 0 {
+        for data in filteredChartDataArray where data.pagesRead > 0 {
             count += 1
         }
         return count
@@ -403,9 +390,9 @@ struct ReadingBookAnalysisView: View {
 extension ReadingBookAnalysisView {
     var barChart: some View {
         Group {
-            if !filteredChartDatas.isEmpty {
+            if !filteredChartDataArray.isEmpty {
                 Chart {
-                    ForEach(filteredChartDatas, id: \.self) { record in
+                    ForEach(filteredChartDataArray, id: \.self) { record in
                         if selectedChartDateRange == .oneMonth {
                             BarMark(
                                 x: .value("Date", record.date, unit: .day),

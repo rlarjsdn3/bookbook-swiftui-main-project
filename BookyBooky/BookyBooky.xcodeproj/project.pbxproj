@@ -68,7 +68,6 @@
 		9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325829D119FE004D6D5B /* Alamofire */; };
 		9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325B29D11A6B004D6D5B /* Realm */; };
 		9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325D29D11A6B004D6D5B /* RealmSwift */; };
-		9ECA326129D11ADA004D6D5B /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA326029D11ADA004D6D5B /* SwiftDate */; };
 		9ECA326429D11AFF004D6D5B /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA326329D11AFF004D6D5B /* Shimmer */; };
 		9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECA326829D11C02004D6D5B /* RoundedTabView.swift */; };
 		9ECA326B29D12044004D6D5B /* ContentsTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECA326A29D12044004D6D5B /* ContentsTabItems.swift */; };
@@ -196,7 +195,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ECA326129D11ADA004D6D5B /* SwiftDate in Frameworks */,
 				9EDC2FBA29EA3808004E792A /* Lottie in Frameworks */,
 				9ECA326429D11AFF004D6D5B /* Shimmer in Frameworks */,
 				9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */,
@@ -586,7 +584,6 @@
 				9ECA325829D119FE004D6D5B /* Alamofire */,
 				9ECA325B29D11A6B004D6D5B /* Realm */,
 				9ECA325D29D11A6B004D6D5B /* RealmSwift */,
-				9ECA326029D11ADA004D6D5B /* SwiftDate */,
 				9ECA326329D11AFF004D6D5B /* Shimmer */,
 				9E06070A29DD10D8000D542D /* AlertToast */,
 				9EDC2FB929EA3808004E792A /* Lottie */,
@@ -622,9 +619,7 @@
 			packageReferences = (
 				9ECA325729D119FE004D6D5B /* XCRemoteSwiftPackageReference "Alamofire" */,
 				9ECA325A29D11A6B004D6D5B /* XCRemoteSwiftPackageReference "realm-swift" */,
-				9ECA325F29D11ADA004D6D5B /* XCRemoteSwiftPackageReference "SwiftDate" */,
 				9ECA326229D11AFF004D6D5B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
-				9E06070629DC61C9000D542D /* XCRemoteSwiftPackageReference "ToastUI" */,
 				9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */,
 				9EDC2FB829EA3808004E792A /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
@@ -955,14 +950,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9E06070629DC61C9000D542D /* XCRemoteSwiftPackageReference "ToastUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/quanshousio/ToastUI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast.git";
@@ -985,14 +972,6 @@
 			requirement = {
 				branch = master;
 				kind = branch;
-			};
-		};
-		9ECA325F29D11ADA004D6D5B /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/malcommac/SwiftDate";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
 			};
 		};
 		9ECA326229D11AFF004D6D5B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
@@ -1033,11 +1012,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9ECA325A29D11A6B004D6D5B /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
-		};
-		9ECA326029D11ADA004D6D5B /* SwiftDate */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9ECA325F29D11ADA004D6D5B /* XCRemoteSwiftPackageReference "SwiftDate" */;
-			productName = SwiftDate;
 		};
 		9ECA326329D11AFF004D6D5B /* Shimmer */ = {
 			isa = XCSwiftPackageProductDependency;

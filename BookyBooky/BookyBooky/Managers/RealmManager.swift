@@ -40,7 +40,7 @@ class RealmManager: ObservableObject {
     @ObservedResults(ReadingBook.self) var readingBooks
     @ObservedResults(FavoriteBook.self) var favoriteBooks
 
-    // MARK: - 
+    // MARK: - FUNCTION
     
     func openLocalRealm() -> Realm {
         let config = Realm.Configuration(

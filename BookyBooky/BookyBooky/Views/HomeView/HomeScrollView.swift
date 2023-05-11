@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftDate
 import RealmSwift
 
 struct HomeScrollView: View {
@@ -163,7 +162,7 @@ extension HomeScrollView {
     }
     
     var navigationDateSubTitle: some View {
-        Text(Date().toFormat("M월 d일 EEEE", locale: Locale(identifier: "ko")))
+        Text(Date().toFormat("M월 d일 E요일"))
             .fontWeight(.semibold)
             .foregroundColor(.secondary)
             .opacity(scrollYOffset > 10 ? 0 : 1)
@@ -259,7 +258,8 @@ extension HomeScrollView {
                     }
                 }
                 .padding([.horizontal, .top])
-                .padding(.bottom, filteredCompleteTargetBooks.count <= 2 ? (mainScreen.height > 900 ? 410 : 325) : (mainScreen.height > 900 ? 100 : 30))
+                // 코드 수정할 필요가 있음(직관적으로 수정하기 혹은 주석 설명 달기)
+                .padding(.bottom, filteredCompleteTargetBooks.count <= 2 ? (mainScreen.height > 900 ? 400 : mainScreen.height < 700 ? 190 : 325) : (mainScreen.height > 900 ? 100 : 30))
             }
         }
     }

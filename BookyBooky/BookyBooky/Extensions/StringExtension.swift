@@ -9,8 +9,10 @@ import Foundation
 
 extension String {
     /// 문자열을 정수로 변환 후 반환하는 프로퍼티입니다. 형 변환 불가 시, 정수 0을 반환합니다.
-    var toInteger: Int {
-        return Int(self) ?? 0
+    func toDate(_ format: String = "yyyy-MM-dd") -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.date(from: self) ?? Date.now
     }
     
     /// 도서 제목을 반환하는 프로퍼티입니다.
@@ -51,11 +53,7 @@ extension String {
     
     /// 발간일 정보를 반환하는 프로퍼티입니다.
     var refinedPublishDate: Date {
-        if let date = self.toDate() {
-            return date.date
-        } else {
-            return Date()
-        }
+        return self.toDate()
     }
     
     /// 1차 카테고리 분류 정보를 반환하는 프로퍼티입니다.

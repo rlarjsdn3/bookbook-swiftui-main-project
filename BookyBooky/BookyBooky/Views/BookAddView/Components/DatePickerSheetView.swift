@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftDate
 
 struct DatePickerSheetView: View {
     
@@ -30,7 +29,7 @@ struct DatePickerSheetView: View {
             DatePicker(
                     "DatePicker",
                     selection: $selected,
-                    in: Date()...(Date() + 365.days),
+                    in: Date()...(Calendar.current.date(byAdding: .day, value: 365, to: Date.now)!),
                     displayedComponents: [.date]).datePickerStyle(.graphical
                 )
                 .labelsHidden()

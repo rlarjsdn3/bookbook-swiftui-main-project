@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftDate
 import RealmSwift
 
 struct ReadingBookCoverView: View {
