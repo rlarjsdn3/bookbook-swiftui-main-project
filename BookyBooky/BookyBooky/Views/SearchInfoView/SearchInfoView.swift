@@ -74,7 +74,10 @@ struct SearchInfoView: View {
             }
         }
         .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddCompleteToastAlert, duration: 1.0) {
-                realmManager.favoriteBookAddCompleteToastAlert(categoryThemeColor)
+                realmManager.showFavoriteBookAddCompleteToastAlert(categoryThemeColor)
+        }
+        .toast(isPresenting: $realmManager.isPresentingTargetBookAddCompleteToastAlert, duration: 1.0) {
+            realmManager.showTargetBookAddCompleteToastAlert(categoryThemeColor)
         }
         .onAppear {
             aladinAPIManager.requestBookDetailAPI(isbn13: isbn13)

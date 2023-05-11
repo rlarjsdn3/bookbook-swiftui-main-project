@@ -7,10 +7,13 @@
 
 import SwiftUI
 import RealmSwift
+import AlertToast
 
 struct ReadingBookView: View {
     
     // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var realmManager: RealmManager
     
     @ObservedRealmObject var readingBook: ReadingBook
     
@@ -26,6 +29,9 @@ struct ReadingBookView: View {
             
             ReadingBookScrollView(scrollYOffset: $scrollYOffset, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, readingBook: readingBook)
         }
+        .toast(isPresenting: $realmManager.isPresentingTargetBookEditComleteToastAlert, duration: 1.0) {
+            realmManager.showTargetBookEditCompleteToastAlert(readingBook.category.accentColor)
+        }
         .navigationBarBackButtonHidden()
     }
 }
@@ -37,5 +43,6 @@ struct ReadingBookView_Previews: PreviewProvider {
     
     static var previews: some View {
         ReadingBookView(readingBook: completeTargetBooks[0])
+            .environmentObject(RealmManager())
     }
 }

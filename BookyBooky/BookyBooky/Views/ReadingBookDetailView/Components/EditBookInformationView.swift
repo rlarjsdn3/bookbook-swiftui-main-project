@@ -9,6 +9,8 @@ import SwiftUI
 import RealmSwift
 
 struct EditBookInformationView: View {
+    @EnvironmentObject var realmManager: RealmManager
+    
     @Environment(\.dismiss) var dismiss
     @Environment(\.realm) var realm
     
@@ -103,6 +105,7 @@ struct EditBookInformationView: View {
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        realmManager.isPresentingTargetBookEditComleteToastAlert = true
                         dismiss()
                     }
                 } label: {
@@ -147,5 +150,6 @@ struct EditBookInformationView_Previews: PreviewProvider {
     static var previews: some View {
         EditBookInformationView(readingBook: readingBooks[0])
             .environment(\.realm, RealmManager().realm)
+            .environmentObject(RealmManager())
     }
 }

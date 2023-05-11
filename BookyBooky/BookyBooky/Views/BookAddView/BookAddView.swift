@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftDate
+import AlertToast
 
 struct BookAddView: View {
     
@@ -14,13 +14,11 @@ struct BookAddView: View {
     
     let bookInfoItem: BookInfo.Item
     
-    let currentDate = DateInRegion()
-    
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var selectedDate: Date = Date() + 7.days
+    @State private var selectedDate: Date = Calendar.current.date(byAdding: .day, value: 7, to: Date.now) ?? Date.now
     @State private var isPresentingDateDescSheet = false
     @State private var isPresentingDatePickerSheet = false
     @State private var isPresentingModifyTitleSheet = false

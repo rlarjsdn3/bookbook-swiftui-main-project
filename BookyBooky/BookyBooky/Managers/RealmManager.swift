@@ -18,11 +18,16 @@ class RealmManager: ObservableObject {
     @Published var isPresentingTargetBookEditComleteToastAlert = false
     
     // MARK: - ALERT FUNCTIONS
+
+    func showTargetBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
+        AlertToast(displayMode: .alert, type: .complete(color), title: "도서 추가 완료")
+    }
     
-    let targetBookAddCompleteToastAlert = AlertToast(displayMode: .alert, type: .complete(Color.green), title: "도서 추가 완료")
-    let targetBookEditCompleteToastAlert = AlertToast(displayMode: .alert, type: .complete(Color.green), title: "도서 편집 완료")
+    func showTargetBookEditCompleteToastAlert(_ color: Color) -> AlertToast {
+        AlertToast(displayMode: .alert, type: .complete(color), title: "도서 편집 완료")
+    }
     
-    func favoriteBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
+    func showFavoriteBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
         AlertToast(displayMode: .alert, type: .complete(color), title: "찜하기 완료")
     }
         

@@ -45,8 +45,10 @@ struct BookAddButtonsView: View {
                         "targetDate": selectedDate,
                         "isCompleted": false
                     ] as [String : Any])
+                
                 realmManager.addReadingBook(completeTargetBook)
                 
+                realmManager.isPresentingTargetBookAddCompleteToastAlert = true
                 dismiss()
             }
             
