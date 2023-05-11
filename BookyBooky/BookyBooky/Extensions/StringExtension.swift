@@ -8,10 +8,10 @@
 import Foundation
 
 extension String {
-    /// 문자열을 정수로 변환 후 반환하는 프로퍼티입니다. 형 변환 불가 시, 정수 0을 반환합니다.
+    /// 문자열로 되어있는 날짜 데이터를 Date 타입으로 형 변환한 결과값을 반환하는 함수입니다. 형 변환에 실패하면 오늘 날짜를 반환합니다.
     func toDate(_ format: String = "yyyy-MM-dd") -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = format
         return dateFormatter.date(from: self) ?? Date.now
     }
     

@@ -15,61 +15,88 @@ struct HomeScrollView: View {
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
-    @ObservedResults(ReadingBook.self) var completeTargetBooks
+    @ObservedResults(ReadingBook.self) var readingBooks
     
     // 애니메이션 / 애니메이션 없는 변수 구분하기
     @State private var selectedCategory: Category = .all
     @State private var selectedAnimation: Category = .all
     
-    
     @State private var isLoading = true
     
     @State private var startOffset = 0.0
-    
     
     @Binding var selectedSort: BookSort
     @Binding var scrollYOffset: Double
     
     @Namespace var underlineAnimation
     
+    // MARK: - COMPUTED PROPERTIES
+    
     var categories: [Category] {
         var categories: [Category] = [.all]
         
-        for book in completeTargetBooks where !categories.contains(book.category) {
+        for book in readingBooks where !categories.contains(book.category) {
             categories.append(book.category)
         }
         
         return categories
     }
     
-    var sortedFavoritesBooks: [ReadingBook] {
+    var sortedReadingBooks: [ReadingBook] {
         switch selectedSort {
         // 최근 추가된 순으로 정렬
         case .latestOrder:
-            return completeTargetBooks.reversed()
+            return readingBooks.reversed()
         // 제목 오름차순으로 정렬
         case .titleOrder:
-            return completeTargetBooks.sorted { $0.title < $1.title }
+            return readingBooks.sorted { $0.title < $1.title }
         // 판매 포인트 내림차순으로 정렬
         case .authorOrder:
-            return completeTargetBooks.sorted { $0.author > $1.author }
+            return readingBooks.sorted { $0.author > $1.author }
         }
     }
     
-    var filteredCompleteTargetBooks: [ReadingBook] {
+    var filteredReadingBooks: [ReadingBook] {
         var filteredBooks: [ReadingBook] = []
         
         // 애니메이션이 없는 변수로 코드 수정하기
         if selectedCategory == .all {
-            return Array(sortedFavoritesBooks)
+            return Array(sortedReadingBooks)
         } else {
-            for book in sortedFavoritesBooks where selectedCategory == book.category {
+            for book in sortedReadingBooks where selectedCategory == book.category {
                 filteredBooks.append(book)
             }
             
             return filteredBooks
         }
     }
+    
+    struct ActivityData: Hashable {
+        var date: Date
+        var title: String
+        var author: String
+        var category: Category
+        var itemPage: Int
+        
+        var numOfPagesRead: Int
+        var totalPagesRead: Int
+    }
+    
+    var prefix3Activity: [ActivityData] {
+        var activity: [ActivityData] = []
+        
+        readingBooks.forEach { readingBook in
+            readingBook.readingRecords.forEach { record in
+                activity.append(ActivityData(date: record.date, title: readingBook.title, author: readingBook.author, category: readingBook.category, itemPage: readingBook.itemPage, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead))
+            }
+        }
+        
+        activity.sort { $0.date > $1.date }
+        
+        return Array(activity.prefix(min(3, activity.count)))
+    }
+    
+    // MARK: - BODY
     
     var body: some View {
         ScrollViewReader { scrollProxy in
@@ -79,16 +106,39 @@ struct HomeScrollView: View {
                     
                     // 미완성 코드
                     
-                    activityHeadlineLabel
+                    HStack {
+                        activityHeadlineLabel
+                        
+                        Spacer()
+                        
+                        Button("더 보기") {
+                            // do something...
+                        }
+                        .padding(.trailing, 25)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     
+                    // 활동 스크롤 코드
                     ScrollView {
-                        Text("UI 미완성")
-                            .font(.title3)
+                        ForEach(prefix3Activity, id: \.self) { activity in
+                            HStack {
+                                
+                                Image(systemName: "book.circle.fill")
+                                    .font(.largeTitle)
+                                    .foregroundColor(activity.category.accentColor)
+                                
+                                VStack(alignment: HorizontalAlignment.leading) {
+                                    Text(activity.title)
+                                    Text("\(activity.numOfPagesRead)페이지 읽음")
+                                }
+                                
+                                Spacer()
+                            }
                             .padding()
-                            .background(.gray.opacity(0.3))
+                            .background(Color("Background"))
                             .cornerRadius(15)
-                            .shimmering()
-                            .padding(.vertical, 25)
+                            .padding(.horizontal)
+                        }
                     }
                     
                     //
@@ -179,7 +229,6 @@ extension HomeScrollView {
         Text("활동")
             .font(.title2)
             .fontWeight(.bold)
-            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 15)
     }
     
@@ -241,7 +290,7 @@ extension HomeScrollView {
     
     var targetBookLazyGrid: some View {
         Group {
-            if completeTargetBooks.isEmpty {
+            if readingBooks.isEmpty {
                 VStack(spacing: 5) {
                     Text("읽고 있는 도서가 없음")
                         .font(.title3)
@@ -253,13 +302,13 @@ extension HomeScrollView {
                 .padding(.top, 50)
             } else {
                 LazyVGrid(columns: columns, spacing: 25) {
-                    ForEach(filteredCompleteTargetBooks) { book in
+                    ForEach(filteredReadingBooks) { book in
                         ReadingBookCellView(readingBook: book)
                     }
                 }
                 .padding([.horizontal, .top])
                 // 코드 수정할 필요가 있음(직관적으로 수정하기 혹은 주석 설명 달기)
-                .padding(.bottom, filteredCompleteTargetBooks.count <= 2 ? (mainScreen.height > 900 ? 400 : mainScreen.height < 700 ? 190 : 325) : (mainScreen.height > 900 ? 100 : 30))
+                .padding(.bottom, filteredReadingBooks.count <= 2 ? (mainScreen.height > 900 ? 400 : mainScreen.height < 700 ? 190 : 325) : (mainScreen.height > 900 ? 100 : 30))
             }
         }
     }
