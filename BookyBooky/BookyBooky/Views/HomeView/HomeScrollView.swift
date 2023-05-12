@@ -23,6 +23,8 @@ struct HomeScrollView: View {
     
     @State private var isLoading = true
     
+    @State private var isPresentingReadingBookView = false
+    
     @State private var startOffset = 0.0
     
     @Binding var selectedSort: BookSort
@@ -71,23 +73,15 @@ struct HomeScrollView: View {
         }
     }
     
-    struct ActivityData: Hashable {
-        var date: Date
-        var title: String
-        var author: String
-        var category: Category
-        var itemPage: Int
-        
-        var numOfPagesRead: Int
-        var totalPagesRead: Int
-    }
-    
-    var prefix3Activity: [ActivityData] {
-        var activity: [ActivityData] = []
+    var prefix3Activity: [Activity] {
+        var activity: [Activity] = []
         
         readingBooks.forEach { readingBook in
             readingBook.readingRecords.forEach { record in
-                activity.append(ActivityData(date: record.date, title: readingBook.title, author: readingBook.author, category: readingBook.category, itemPage: readingBook.itemPage, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead))
+                activity.append(
+                    Activity(date: record.date, title: readingBook.title, author: readingBook.author, category: readingBook.category, itemPage: readingBook.itemPage, isbn13: readingBook.isbn13,  numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead)
+                )
+                
             }
         }
         
@@ -99,80 +93,66 @@ struct HomeScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        ScrollViewReader { scrollProxy in
-            ScrollView(showsIndicators: false) {
-                LazyVStack(pinnedViews: [.sectionHeaders]) {
-                    navigationTitle
-                    
-                    // 미완성 코드
-                    
-                    HStack {
-                        activityHeadlineLabel
+        NavigationStack {
+            ScrollViewReader { scrollProxy in
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(pinnedViews: [.sectionHeaders]) {
+                        navigationTitle
                         
-                        Spacer()
+                        // 미완성 코드
                         
-                        Button("더 보기") {
-                            // do something...
+                        HStack {
+                            activityHeadlineLabel
+                            
+                            Spacer()
+                            
+                            NavigationLink("더 보기") {
+                                HomeActivityView()
+                            }
+                            .padding(.trailing, 25)
                         }
-                        .padding(.trailing, 25)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        // 활동 스크롤 코드
+                        ScrollView {
+                            ForEach(prefix3Activity, id: \.self) { activity in
+                                ActivityCellView(activity: activity)
+                            }
+                        }
+                        
+                        //
+                        
+                        HStack {
+                            targetBookHeadlineLabel
+                            
+                            targetBookSortMenu
+                        }
+                        .padding(.bottom, -10)
+                        
+                        
+                        Section {
+                            targetBookLazyGrid
+                        } header: {
+                            targetBookPinnedLabel(scrollProxy: scrollProxy)
+                        }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    // 활동 스크롤 코드
-                    ScrollView {
-                        ForEach(prefix3Activity, id: \.self) { activity in
-                            HStack {
-                                
-                                Image(systemName: "book.circle.fill")
-                                    .font(.largeTitle)
-                                    .foregroundColor(activity.category.accentColor)
-                                
-                                VStack(alignment: HorizontalAlignment.leading) {
-                                    Text(activity.title)
-                                    Text("\(activity.numOfPagesRead)페이지 읽음")
+                    .overlay(alignment: .top) {
+                        GeometryReader { proxy -> Color in
+                            DispatchQueue.main.async {
+                                let offset = proxy.frame(in: .global).minY
+                                if startOffset == 0 {
+                                    self.startOffset = offset
+                                }
+                                withAnimation(.easeInOut(duration: 0.1)) {
+                                    scrollYOffset = startOffset - offset
                                 }
                                 
-                                Spacer()
+                                print(scrollYOffset)
                             }
-                            .padding()
-                            .background(Color("Background"))
-                            .cornerRadius(15)
-                            .padding(.horizontal)
+                            return Color.clear
                         }
+                        .frame(width: 0, height: 0)
                     }
-                    
-                    //
-                    
-                    HStack {
-                        targetBookHeadlineLabel
-                        
-                        targetBookSortMenu
-                    }
-                    .padding(.bottom, -10)
-                    
-                    
-                    Section {
-                        targetBookLazyGrid
-                    } header: {
-                        targetBookPinnedLabel(scrollProxy: scrollProxy)
-                    }
-                }
-                .overlay(alignment: .top) {
-                    GeometryReader { proxy -> Color in
-                        DispatchQueue.main.async {
-                            let offset = proxy.frame(in: .global).minY
-                            if startOffset == 0 {
-                                self.startOffset = offset
-                            }
-                            withAnimation(.easeInOut(duration: 0.1)) {
-                                scrollYOffset = startOffset - offset
-                            }
-                            
-                            print(scrollYOffset)
-                        }
-                        return Color.clear
-                    }
-                    .frame(width: 0, height: 0)
                 }
             }
         }
