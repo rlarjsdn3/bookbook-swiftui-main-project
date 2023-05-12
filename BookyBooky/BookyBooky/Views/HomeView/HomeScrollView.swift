@@ -109,16 +109,32 @@ struct HomeScrollView: View {
                             NavigationLink("더 보기") {
                                 ActivityView()
                             }
+                            .disabled(prefix3Activity.isEmpty)
                             .padding(.trailing, 25)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         
                         // 활동 스크롤 코드
-                        ScrollView {
-                            ForEach(prefix3Activity, id: \.self) { activity in
-                                ActivityCellView(activity: activity)
+                        VStack {
+                            let activities = prefix3Activity
+                            
+                            if !activities.isEmpty {
+                                ForEach(activities, id: \.self) { activity in
+                                    ActivityCellView(activity: activity)
+                                }
+                            } else {
+                                VStack(spacing: 5) {
+                                    Text("독서 데이터가 없음")
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                    
+                                    Text("독서 데이터를 추가하십시오.")
+                                        .foregroundColor(.secondary)
+                                }
+                                .padding(.vertical, 30)
                             }
                         }
+                        .padding(.bottom, 10)
                         
                         //
                         

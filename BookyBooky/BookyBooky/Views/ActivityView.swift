@@ -41,7 +41,6 @@ struct ActivityView: View {
                 }
             }
         }
-        print(monthlyActivity)
         
         monthlyActivity.sort { $0.month > $1.month }
         
