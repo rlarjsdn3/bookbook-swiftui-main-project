@@ -9,9 +9,10 @@ import Foundation
 
 extension Date {
     /// 사용자가 원하는 형식의 날짜 문자열을 만들어 반환하는 함수입니다.
-    func toFormat(_ format: String) -> String {
+    func toFormat(_ format: String, locale: Locale = Locale(identifier: "ko_kr")) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
+        dateFormatter.locale = locale
         return dateFormatter.string(from: self)
     }
     
