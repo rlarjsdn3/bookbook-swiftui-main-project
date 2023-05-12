@@ -107,7 +107,7 @@ struct HomeScrollView: View {
                             Spacer()
                             
                             NavigationLink("더 보기") {
-                                HomeActivityView()
+                                ActivityView()
                             }
                             .padding(.trailing, 25)
                         }
