@@ -300,7 +300,7 @@ extension HomeScrollView {
             } else {
                 LazyVGrid(columns: columns, spacing: 25) {
                     ForEach(filteredReadingBooks) { book in
-                        ReadingBookCellView(readingBook: book)
+                        ReadingBookCellView(readingBook: book, cellType: .home)
                     }
                 }
                 .padding([.horizontal, .top])

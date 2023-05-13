@@ -12,13 +12,20 @@ struct BookShelfScrollView: View {
     
     // MARK: - PROPERTIES
     
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    
     @Binding var scrollYOffset: CGFloat
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @EnvironmentObject var realmManager: RealmManager
     
-    @State private var isPresentingFavoriteBooksView = false
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @ObservedResults(ReadingBook.self) var readingBooks
+    
+    @State private var isPresentingFavoriteBookListView = false
+    @State private var isPresentingCompleteBookListView = false
+    
     @State private var tapISBN13 = ""
     @State private var showFavoriteBookInfo = false
     @State private var startOffset: CGFloat = 0.0
@@ -34,15 +41,12 @@ struct BookShelfScrollView: View {
                 
                 // 읽은 도서 섹션 (미완성)
                 Section {
-                    ForEach(1..<100) { index in
-                        Text("UI 미완성")
-                            .font(.title3)
-                            .padding()
-                            .background(.gray.opacity(0.3))
-                            .cornerRadius(15)
-                            .shimmering()
-                            .padding(.vertical, 25)
+                    LazyVGrid(columns: columns) {
+                        ForEach(realmManager.completeBookArray, id: \.self) { book in
+                            ReadingBookCellView(readingBook: book, cellType: .shelf)
+                        }
                     }
+                    .padding(.bottom, 40)
                 } header: {
                     HStack {
                         Text("읽은 도서")
@@ -50,6 +54,13 @@ struct BookShelfScrollView: View {
                             .fontWeight(.bold)
                         
                         Spacer()
+                        
+                        Button {
+                            isPresentingCompleteBookListView = true
+                        } label: {
+                            Text("더 보기")
+                        }
+                        .disabled(readingBooks.isEmpty)
                     }
                     .padding(.top, -8)
                     .padding(.vertical, 10)
@@ -80,14 +91,50 @@ struct BookShelfScrollView: View {
                 }
                 .frame(width: 0, height: 0)
             }
-            .sheet(isPresented: $isPresentingFavoriteBooksView) {
-                FavoriteBooksView()
+            .sheet(isPresented: $isPresentingFavoriteBookListView) {
+                FavoriteBooksView(listType: .favorite)
+            }
+            .sheet(isPresented: $isPresentingCompleteBookListView) {
+                FavoriteBooksView(listType: .complete)
             }
         }
     }
 }
 
 // MARK: - EXTENSIONS
+
+extension BookShelfScrollView {
+    func asyncImage(url: String) -> some View {
+        AsyncImage(url: URL(string: url),
+                   transaction: Transaction(animation: .default)) { phase in
+            switch phase {
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 150, height: 200)
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 15,
+                            style: .continuous
+                        )
+                    )
+                    .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
+            case .failure(_), .empty:
+                loadingImage
+            @unknown default:
+                loadingImage
+            }
+        }
+    }
+    
+    var loadingImage: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(.gray.opacity(0.2))
+            .frame(width: 150, height: 200)
+            .shimmering()
+    }
+}
 
 extension BookShelfScrollView {
     var bookShelfSummary: some View {
@@ -129,7 +176,7 @@ extension BookShelfScrollView {
     func summaryCount(_ item: BookShelfSummaryItems) -> some View {
         switch item {
         case .completeBooksCount:
-            return Text("0").font(.title2)
+            return Text("\(readingBooks.filter { realmManager.isCompleteBook($0) }.count)").font(.title2)
         case .favoriteBooksCount:
             return Text("\(favoriteBooks.count)").font(.title2)
         case .collectSentencesCount:
@@ -178,7 +225,7 @@ extension BookShelfScrollView {
             Spacer()
             
             Button {
-                isPresentingFavoriteBooksView = true
+                isPresentingFavoriteBookListView = true
             } label: {
                 Text("더 보기")
             }
@@ -203,5 +250,6 @@ extension BookShelfScrollView {
 struct BookShelfScrollView_Previews: PreviewProvider {
     static var previews: some View {
         BookShelfScrollView(scrollYOffset: .constant(0.0))
+            .environmentObject(RealmManager())
     }
 }

@@ -9,8 +9,15 @@ import SwiftUI
 import AlertToast
 import RealmSwift
 
+enum BookShelfListViewType {
+    case favorite
+    case complete
+}
+
 // 이름 바꿀 필요 있음
 struct FavoriteBooksView: View {
+    
+    let listType: BookShelfListViewType
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -37,7 +44,8 @@ struct FavoriteBooksView: View {
                     
                     FavoriteBooksScrollView(
                         selectedSort: $selectedSort,
-                        searchQuery: $searchQuery
+                        searchQuery: $searchQuery,
+                        listType: listType
                     )
                 }
                 .overlay(alignment: .bottom) {
@@ -63,7 +71,7 @@ extension FavoriteBooksView {
         } label: {
             seeAllLabel
         }
-        .offset(y: isPresentingShowAll ? -20 : 100)
+        .offset(y: isPresentingShowAll ? -20 : 200)
     }
     
     var seeAllLabel: some View {
@@ -82,6 +90,6 @@ extension FavoriteBooksView {
 
 struct FavoriteBooksView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteBooksView()
+        FavoriteBooksView(listType: .favorite)
     }
 }

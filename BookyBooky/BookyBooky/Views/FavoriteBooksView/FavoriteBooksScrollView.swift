@@ -10,6 +10,8 @@ import RealmSwift
 
 struct FavoriteBooksScrollView: View {
     
+    
+    
     // MARK: - CONSTANT PROPERTIES
     
     let coulmns = [
@@ -44,19 +46,50 @@ struct FavoriteBooksScrollView: View {
         }
     }
     
+    // ....
+    
+    var sortedCompleteBooks: [ReadingBook] {
+        switch selectedSort {
+        // 최근 추가된 순으로 정렬
+        case .latestOrder:
+            return realmMananger.completeBookArray.reversed()
+        // 제목 오름차순으로 정렬
+        case .titleOrder:
+            return realmMananger.completeBookArray.sorted { $0.title < $1.title }
+        // 판매 포인트 내림차순으로 정렬
+        case .authorOrder:
+            return realmMananger.completeBookArray.sorted { $0.author > $1.author }
+        }
+    }
+    
+    var filteredReadingBooks: [ReadingBook] {
+        if !searchQuery.isEmpty {
+            let filteredReadingBooks = sortedCompleteBooks.filter {
+                $0.title.contains(searchQuery) || $0.author.contains(searchQuery)
+            }
+            return filteredReadingBooks
+        } else {
+            return sortedCompleteBooks
+        }
+    }
+    
     // MARK: - WRAPPER PROPERTIES
     
+    @EnvironmentObject var realmMananger: RealmManager
+    
     @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @ObservedResults(ReadingBook.self) var readingBooks
     
     // MARK: - PROPERTIES
     
     @Binding var selectedSort: BookSort
     @Binding var searchQuery: String
+    let listType: BookShelfListViewType
     
     // MARK: - BODY
     
     var body: some View {
-        if !filteredFavroriteBooks.isEmpty {
+        if !filteredFavroriteBooks.isEmpty || !filteredReadingBooks.isEmpty {
             scrollFavoriteBooks
         } else {
             noResultLabel
@@ -69,9 +102,15 @@ struct FavoriteBooksScrollView: View {
 extension FavoriteBooksScrollView {
     var scrollFavoriteBooks: some View {
         ScrollView {
-            LazyVGrid(columns: coulmns) {
-                ForEach(filteredFavroriteBooks) { favoriteBook in
-                    FavoriteBookCellView(favoriteBook: favoriteBook, viewType: .navigationStack)
+            LazyVGrid(columns: coulmns, spacing: 15) {
+                if listType == .favorite {
+                    ForEach(filteredFavroriteBooks) { favoriteBook in
+                        FavoriteBookCellView(favoriteBook: favoriteBook, viewType: .navigationStack)
+                    }
+                } else {
+                    ForEach(filteredReadingBooks, id: \.self) { completeBook in
+                        ReadingBookCellView(readingBook: completeBook, cellType: .shelf)
+                    }
                 }
             }
             .id("Scroll_To_Top")
@@ -105,7 +144,9 @@ struct FavoriteBooksScrollView_Previews: PreviewProvider {
     static var previews: some View {
         FavoriteBooksScrollView(
             selectedSort: .constant(.latestOrder),
-            searchQuery: .constant("")
+            searchQuery: .constant(""),
+            listType: .favorite
         )
+        .environmentObject(RealmManager())
     }
 }

@@ -39,6 +39,12 @@ class RealmManager: ObservableObject {
     
     @ObservedResults(ReadingBook.self) var readingBooks
     @ObservedResults(FavoriteBook.self) var favoriteBooks
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    var completeBookArray: [ReadingBook] {
+        readingBooks.filter { isCompleteBook($0) }
+    }
 
     // MARK: - FUNCTION
     

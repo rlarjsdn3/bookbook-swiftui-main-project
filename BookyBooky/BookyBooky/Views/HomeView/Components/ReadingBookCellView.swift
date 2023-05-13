@@ -8,9 +8,15 @@
 import SwiftUI
 import RealmSwift
 
+enum ReadingBookCellViewType {
+    case home
+    case shelf
+}
+
 struct ReadingBookCellView: View {
     
     @ObservedRealmObject var readingBook: ReadingBook
+    let cellType: ReadingBookCellViewType
     
     @State private var isPresentingPopover = false
     @State private var isPresentingReadingBookView = false
@@ -66,7 +72,9 @@ struct ReadingBookCellView: View {
                 }
             }
 
-            progressBar
+            if cellType == .home {
+                progressBar
+            }
             
             targetBookTitle
             
@@ -134,7 +142,7 @@ extension ReadingBookCellView {
             .minimumScaleFactor(0.8)
             .frame(width: 150, height: 25)
             .padding(.horizontal)
-            .padding([.top, .bottom], -5)
+            .padding([cellType == .home ? .top : [], .bottom], -5)
     }
     
     var targetBookAuthor: some View {
@@ -149,6 +157,6 @@ struct ReadingBookCellView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var completeTargetBooks
     
     static var previews: some View {
-        ReadingBookCellView(readingBook: completeTargetBooks[0])
+        ReadingBookCellView(readingBook: completeTargetBooks[0], cellType: .home)
     }
 }
