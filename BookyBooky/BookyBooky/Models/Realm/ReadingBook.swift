@@ -25,6 +25,7 @@ class ReadingBook: Object, ObjectKeyIdentifiable {
     @Persisted var collectSentences: List<CollectSentences> // 문장 수집
     
     @Persisted var startDate: Date                  // 시작 날짜
+    @Persisted var completeDate: Date?              // 완독 날짜
     @Persisted var targetDate: Date                 // 목표 날짜
     
     @Persisted var isCompleted: Bool                // 완독 여부

@@ -25,7 +25,7 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Text("\(readingBook.startDate.formatted(date: .abbreviated, time: .omitted)))")
+                    Text("\(readingBook.startDate.formatted(date: .abbreviated, time: .omitted))")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -37,7 +37,7 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Text("-")
+                    Text("\(readingBook.completeDate?.formatted(date: .abbreviated, time: .omitted) ?? "-")")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }

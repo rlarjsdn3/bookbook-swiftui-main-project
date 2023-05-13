@@ -11,6 +11,9 @@ import RealmSwift
 struct ReadingBookRenewalView: View {
     @Environment(\.dismiss) var dismiss
     
+    @Environment(\.realm) var realm: Realm
+    @EnvironmentObject var realmManager: RealmManager
+    
     @ObservedRealmObject var readingBook: ReadingBook
     
     @State private var page = 0
@@ -126,6 +129,14 @@ struct ReadingBookRenewalView: View {
                         )
                         $readingBook.readingRecords.append(records)
                     }
+                    if lastRecord.totalPagesRead == readingBook.itemPage {
+                        if let object = realm.objects(ReadingBook.self).filter { $0.isbn13 == readingBook.isbn13 }.first {
+                            
+                            try! realm.write {
+                                object.completeDate = Date.now
+                            }
+                        }
+                    }
                  
                 } else {
                     
@@ -137,7 +148,17 @@ struct ReadingBookRenewalView: View {
                     )
                     
                     $readingBook.readingRecords.append(records)
+                    
+                    if readingBook.readingRecords.last!.totalPagesRead == readingBook.itemPage {
+                        if let object = realm.objects(ReadingBook.self).filter { $0.isbn13 == readingBook.isbn13 }.first {
+                            
+                            try! realm.write {
+                                object.completeDate = Date.now
+                            }
+                        }
+                    }
                 }
+            
                 
                 dismiss()
 
@@ -171,5 +192,7 @@ struct ReadingBookRenewalView_Previews: PreviewProvider {
     
     static var previews: some View {
         ReadingBookRenewalView(readingBook: readingBooks[0])
+            .environment(\.realm, RealmManager().realm)
+            .environmentObject(RealmManager())
     }
 }
