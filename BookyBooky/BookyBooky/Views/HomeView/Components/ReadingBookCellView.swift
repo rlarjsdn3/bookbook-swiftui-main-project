@@ -12,6 +12,7 @@ struct ReadingBookCellView: View {
     
     @ObservedRealmObject var readingBook: ReadingBook
     
+    @State private var isPresentingPopover = false
     @State private var isPresentingReadingBookView = false
     
     // MARK: - COMPUTED PROPERTIES
@@ -32,11 +33,38 @@ struct ReadingBookCellView: View {
         }
     }
     
+    var isAscendingTargetDate: Bool {
+        let result = Date.now.compare(readingBook.targetDate)
+        
+        switch result {
+        case .orderedAscending, .orderedSame:
+            return true
+        case .orderedDescending:
+            return false
+        }
+    }
+    
     // MARK: - BODY
     
     var body: some View {
         VStack {
-            asyncImage(url: readingBook.cover)
+            ZStack {
+                asyncImage(url: readingBook.cover)
+                
+                if !isAscendingTargetDate {
+                    Image(systemName: "exclamationmark.circle.fill")
+                        .font(.system(size: 50))
+                        .foregroundColor(Color.red)
+                        .frame(width: 150, height: 200)
+                        .background(Color.gray.opacity(0.15))
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 15,
+                                style: .continuous
+                            )
+                        )
+                }
+            }
 
             progressBar
             
@@ -44,14 +72,13 @@ struct ReadingBookCellView: View {
             
             targetBookAuthor
         }
-        .frame(width: 150)
-        .padding(.horizontal, 10)
         .navigationDestination(isPresented: $isPresentingReadingBookView) {
             ReadingBookView(readingBook: readingBook)
         }
         .onTapGesture {
             isPresentingReadingBookView = true
         }
+        .padding(.horizontal, 10)
     }
 }
 
@@ -93,7 +120,7 @@ extension ReadingBookCellView {
                 .tint(Color.black.gradient)
                 .frame(width: 100, alignment: .leading)
             
-            Text("\(readingBookProgressRate.formatted(.number.precision(.fractionLength(1))))%")
+            Text("\(readingBookProgressRate.formatted(.number.precision(.fractionLength(0))))%")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }

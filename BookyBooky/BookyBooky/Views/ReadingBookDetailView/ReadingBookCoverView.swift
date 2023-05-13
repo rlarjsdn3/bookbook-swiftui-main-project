@@ -29,11 +29,33 @@ struct ReadingBookCoverView: View {
         }
     }
     
+    var isAscendingTargetDate: Bool {
+        let result = Date.now.compare(readingBook.targetDate)
+        
+        switch result {
+        case .orderedAscending, .orderedSame:
+            return true
+        case .orderedDescending:
+            return false
+        }
+    }
+    
     // MARK: - BODY
     
     var body: some View {
         HStack {
-            bookCoverImage(url: readingBook.cover)
+            ZStack {
+                bookCoverImage(url: readingBook.cover)
+                
+                if !isAscendingTargetDate {
+                    Image(systemName: "exclamationmark.circle.fill")
+                        .font(.system(size: 50))
+                        .foregroundColor(Color.red)
+                        .frame(width: 130, height: 180)
+                        .background(Color.gray.opacity(0.15))
+                        .clipShape(CoverShape())
+                }
+            }
             
             bookKeyInformation
             
@@ -144,7 +166,7 @@ extension ReadingBookCoverView {
         Gauge(value: readingBookProgressRate, in: 0...100) {
             Text("Label")
         } currentValueLabel: {
-            Text("\(readingBookProgressRate.formatted(.number.precision(.fractionLength(1))))%")
+            Text("\(readingBookProgressRate.formatted(.number.precision(.fractionLength(0))))%")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
