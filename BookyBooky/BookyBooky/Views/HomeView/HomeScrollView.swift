@@ -15,6 +15,8 @@ struct HomeScrollView: View {
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
+    @EnvironmentObject var realmManager: RealmManager
+    
     @ObservedResults(ReadingBook.self) var readingBooks
     
     // 애니메이션 / 애니메이션 없는 변수 구분하기
@@ -37,7 +39,7 @@ struct HomeScrollView: View {
     var categories: [Category] {
         var categories: [Category] = [.all]
         
-        for book in readingBooks where !categories.contains(book.category) {
+        for book in readingBooks where !categories.contains(book.category) && !realmManager.isCompleteBook(book) {
             categories.append(book.category)
         }
         
@@ -63,14 +65,13 @@ struct HomeScrollView: View {
         
         // 애니메이션이 없는 변수로 코드 수정하기
         if selectedCategory == .all {
-            return Array(sortedReadingBooks)
+            return Array(sortedReadingBooks).filter { !realmManager.isCompleteBook($0) }
         } else {
-            for book in sortedReadingBooks where selectedCategory == book.category {
+            for book in sortedReadingBooks where (selectedCategory == book.category && !realmManager.isCompleteBook(book)) {
                 filteredBooks.append(book)
             }
-            
-            return filteredBooks
         }
+        return filteredBooks
     }
     
     var prefix3Activity: [Activity] {
@@ -340,5 +341,6 @@ extension HomeScrollView {
 struct HomeScrollView_Previews: PreviewProvider {
     static var previews: some View {
         HomeScrollView(selectedSort: .constant(.latestOrder), scrollYOffset: .constant(0.0))
+            .environmentObject(RealmManager())
     }
 }

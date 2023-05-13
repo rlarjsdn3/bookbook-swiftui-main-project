@@ -51,6 +51,17 @@ class RealmManager: ObservableObject {
         return try! Realm(configuration: config)
     }
     
+    
+    func isCompleteBook(_ book: ReadingBook) -> Bool {
+        guard let lastRecord = book.readingRecords.last else {
+            return false
+        }
+        
+        return lastRecord.totalPagesRead == book.itemPage
+    }
+    
+    
+    
     // MARK: - FAVORITE BOOK
     
     func addFavoriteBook(_ object: FavoriteBook) {
