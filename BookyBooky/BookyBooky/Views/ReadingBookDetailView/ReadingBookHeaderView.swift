@@ -73,6 +73,15 @@ extension ReadingBookHeaderView {
             Menu {
                 Section {
                     Button {
+                        
+                    } label: {
+                        Label("문장 추가", systemImage: "bookmark.fill")
+                    }
+
+                    
+                    Divider()
+                    
+                    Button {
                         isPresentingEditBookInformationSheet = true
                     } label: {
                         Label("편집", systemImage: "square.and.pencil")
