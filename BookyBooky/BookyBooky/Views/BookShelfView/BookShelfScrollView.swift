@@ -41,12 +41,25 @@ struct BookShelfScrollView: View {
                 
                 // 읽은 도서 섹션 (미완성)
                 Section {
-                    LazyVGrid(columns: columns) {
-                        ForEach(realmManager.completeBookArray, id: \.self) { book in
-                            ReadingBookCellView(readingBook: book, cellType: .shelf)
+                    if realmManager.completeBookArray.isEmpty {
+                        VStack(spacing: 5) {
+                            Text("읽은 있는 도서가 없음")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                            
+                            Text("독서를 시작해보세요.")
+                                .foregroundColor(.secondary)
                         }
+                        .padding(.vertical, 30)
+                        .padding(.bottom, 100) // 임시
+                    } else {
+                        LazyVGrid(columns: columns) {
+                            ForEach(realmManager.completeBookArray, id: \.self) { book in
+                                ReadingBookCellView(readingBook: book, cellType: .shelf)
+                            }
+                        }
+                        .padding(.bottom, 40)
                     }
-                    .padding(.bottom, 40)
                 } header: {
                     HStack {
                         Text("읽은 도서")
@@ -62,7 +75,7 @@ struct BookShelfScrollView: View {
                         }
                         .disabled(readingBooks.isEmpty)
                     }
-                    .padding(.top, -8)
+//                    .padding(.top, -8)
                     .padding(.vertical, 10)
                     .padding(.bottom, 5)
                     .padding(.horizontal)
@@ -209,11 +222,15 @@ extension BookShelfScrollView {
     }
     
     var noFavoriteBooksLabel: some View {
-        Text("찜한 도서가 없음")
-            .font(.title3)
-            .fontWeight(.bold)
-            .foregroundColor(.secondary)
-            .padding(.vertical, 30)
+        VStack(spacing: 5) {
+            Text("찜한 도서가 없음")
+                .font(.title3)
+                .fontWeight(.bold)
+            
+            Text("도서를 찜해보세요.")
+                .foregroundColor(.secondary)
+        }
+        .padding(.vertical, 30)
     }
     
     var favoriteBooksHeaderLabel: some View {
@@ -232,7 +249,7 @@ extension BookShelfScrollView {
             .disabled(favoriteBooks.isEmpty)
 
         }
-        .padding(.top, -8)
+//        .padding(.top, -3)
         .padding(.vertical, 10)
         .padding(.bottom, 5)
         .padding(.horizontal)
