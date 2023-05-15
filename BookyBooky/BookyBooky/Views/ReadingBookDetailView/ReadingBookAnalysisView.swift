@@ -535,7 +535,7 @@ extension ReadingBookAnalysisView {
                         .foregroundColor(.secondary)
                         .minimumScaleFactor(0.5)
                 }
-                .frame(height: 250)
+                .frame(height: 280)
                 .frame(maxWidth: .infinity)
                 .background(Color("Background"))
                 .cornerRadius(20)
