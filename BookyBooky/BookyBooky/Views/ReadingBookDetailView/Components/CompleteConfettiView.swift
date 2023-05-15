@@ -16,14 +16,40 @@ struct CompleteConfettiView: View {
     
     @State private var counter = 0
     
+    // MARK: - COMPUTED PROPERTIES
+    
+    var elapsedReadingDay: Int {
+        let calendar = Calendar.current
+        let component = calendar.dateComponents(
+            [.day],
+            from: readingBook.startDate,
+            to: readingBook.completeDate ?? Date()
+        )
+        return component.day!
+    }
+    
+    // MARK: - BODY
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 5) {
+            Spacer()
+            
             Text("축하합니다!")
-                .font(.title.weight(.bold))
+                .font(.largeTitle.weight(.bold))
             
             Text("\(readingBook.title) 도서를 완독했어요!")
-                .font(.headline)
+                .font(.title2.weight(.semibold))
                 .foregroundColor(Color.secondary)
+                .padding(.bottom, 40)
+            
+            asyncImage(url: readingBook.cover)
+            
+            // 아직 미완성 코드
+            Text("완독까지 \(elapsedReadingDay)일이 걸렸어요.")
+                .font(.headline)
+                .padding(.top, 30)
+            
+            Spacer()
             
             Button {
                 dismiss()
@@ -37,13 +63,14 @@ struct CompleteConfettiView: View {
                     .background(readingBook.category.accentColor)
                     .cornerRadius(15)
             }
+            .padding(.horizontal)
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 counter += 1
             }
         }
-        .confettiCannon(counter: $counter)
+        .confettiCannon(counter: $counter, num: 80, openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: 200, repetitions: 2, repetitionInterval: 0.5)
     }
 }
 
