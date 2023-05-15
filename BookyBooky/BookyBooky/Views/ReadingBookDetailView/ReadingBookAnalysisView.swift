@@ -547,10 +547,8 @@ extension ReadingBookAnalysisView {
 
 // MARK: - PREVIEW
 
-struct ReadingBookAnalysisView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var readingBooks
-    
+struct ReadingBookAnalysisView_Previews: PreviewProvider {    
     static var previews: some View {
-        ReadingBookAnalysisView(readingBook: readingBooks[0])
+        ReadingBookAnalysisView(readingBook: ReadingBook.preview)
     }
 }

@@ -177,9 +177,7 @@ extension ReadingBookCoverView {
 }
 
 struct TargetBookDetailCoverView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var completeTargetBooks
-    
     static var previews: some View {
-        ReadingBookCoverView(readingBook: completeTargetBooks[0])
+        ReadingBookCoverView(readingBook: ReadingBook.preview)
     }
 }

@@ -69,6 +69,7 @@
 		9EA1983F2A01F18300D385CD /* ReadingBookHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1983C2A01F18300D385CD /* ReadingBookHeaderView.swift */; };
 		9EB749FA29D5C43200610D97 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB749F629D5C3A500610D97 /* Category.swift */; };
 		9EC88D622A11F76400C2701F /* CompleteConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC88D612A11F76400C2701F /* CompleteConfettiView.swift */; };
+		9EC88D652A11F7B500C2701F /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9EC88D642A11F7B500C2701F /* ConfettiSwiftUI */; };
 		9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325829D119FE004D6D5B /* Alamofire */; };
 		9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325B29D11A6B004D6D5B /* Realm */; };
 		9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325D29D11A6B004D6D5B /* RealmSwift */; };
@@ -209,6 +210,7 @@
 				9E06070B29DD10D8000D542D /* AlertToast in Frameworks */,
 				9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */,
 				9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */,
+				9EC88D652A11F7B500C2701F /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,6 +625,7 @@
 				9ECA326329D11AFF004D6D5B /* Shimmer */,
 				9E06070A29DD10D8000D542D /* AlertToast */,
 				9EDC2FB929EA3808004E792A /* Lottie */,
+				9EC88D642A11F7B500C2701F /* ConfettiSwiftUI */,
 			);
 			productName = BookyBooky;
 			productReference = 9ECD920D29BF1FA600FCDD2F /* BookyBooky.app */;
@@ -658,6 +661,7 @@
 				9ECA326229D11AFF004D6D5B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 				9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */,
 				9EDC2FB829EA3808004E792A /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				9EC88D632A11F7B500C2701F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = 9ECD920E29BF1FA600FCDD2F /* Products */;
 			projectDirPath = "";
@@ -998,6 +1002,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		9EC88D632A11F7B500C2701F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		9ECA325729D119FE004D6D5B /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -1037,6 +1049,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
+		};
+		9EC88D642A11F7B500C2701F /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EC88D632A11F7B500C2701F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
 		};
 		9ECA325829D119FE004D6D5B /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

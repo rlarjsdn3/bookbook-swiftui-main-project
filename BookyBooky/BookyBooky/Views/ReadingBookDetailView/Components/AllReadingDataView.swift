@@ -97,9 +97,7 @@ struct AllReadingDataView: View {
 }
 
 struct AllReadingDataView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var readingBooks
-    
     static var previews: some View {
-        AllReadingDataView(readingBook: readingBooks[0])
+        AllReadingDataView(readingBook: ReadingBook.preview)
     }
 }

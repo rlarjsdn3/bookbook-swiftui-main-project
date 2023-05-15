@@ -15,6 +15,7 @@ struct ReadingBookRenewalView: View {
     @EnvironmentObject var realmManager: RealmManager
     
     @ObservedRealmObject var readingBook: ReadingBook
+    @Binding var isPresentingConfettiView: Bool
     
     @State private var page = 0
     
@@ -129,6 +130,7 @@ struct ReadingBookRenewalView: View {
                         )
                         $readingBook.readingRecords.append(records)
                     }
+                    
                     if lastRecord.totalPagesRead == readingBook.itemPage {
                         if let object = realm.objects(ReadingBook.self).filter { $0.isbn13 == readingBook.isbn13 }.first {
                             
@@ -158,10 +160,12 @@ struct ReadingBookRenewalView: View {
                         }
                     }
                 }
+                
+                
             
                 
                 dismiss()
-
+             
             } label: {
                 Text("갱신하기")
                     .font(.title3)
@@ -182,16 +186,19 @@ struct ReadingBookRenewalView: View {
                 page = 0
             }
         }
+        .onDisappear {
+            if realmManager.isCompleteBook(readingBook) {
+                isPresentingConfettiView = true
+            }
+        }
         .presentationCornerRadius(30)
         .presentationDetents([.height(400)])
     }
 }
 
 struct ReadingBookRenewalView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var readingBooks
-    
     static var previews: some View {
-        ReadingBookRenewalView(readingBook: readingBooks[0])
+        ReadingBookRenewalView(readingBook: ReadingBook.preview, isPresentingConfettiView: .constant(false))
             .environment(\.realm, RealmManager().realm)
             .environmentObject(RealmManager())
     }

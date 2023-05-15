@@ -134,9 +134,7 @@ struct ReadingBookOutlineView: View {
 }
 
 struct ReadingBookOutlineView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var readingBooks
-    
     static var previews: some View {
-        ReadingBookOutlineView(readingBook: readingBooks[0])
+        ReadingBookOutlineView(readingBook: ReadingBook.preview)
     }
 }

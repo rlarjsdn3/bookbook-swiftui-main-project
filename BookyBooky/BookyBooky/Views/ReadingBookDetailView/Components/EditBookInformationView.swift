@@ -145,10 +145,8 @@ struct EditBookInformationView: View {
 }
 
 struct EditBookInformationView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var readingBooks
-    
     static var previews: some View {
-        EditBookInformationView(readingBook: readingBooks[0])
+        EditBookInformationView(readingBook: ReadingBook.preview)
             .environment(\.realm, RealmManager().realm)
             .environmentObject(RealmManager())
     }

@@ -287,7 +287,7 @@ extension HomeScrollView {
     
     var targetBookLazyGrid: some View {
         Group {
-            if readingBooks.isEmpty {
+            if filteredReadingBooks.isEmpty {
                 VStack(spacing: 5) {
                     Text("읽고 있는 도서가 없음")
                         .font(.title3)

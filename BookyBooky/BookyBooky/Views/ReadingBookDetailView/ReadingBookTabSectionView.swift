@@ -67,10 +67,9 @@ struct ReadingBookTabSectionView: View {
 }
 
 struct ReadingBookTabSectionView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var readingBooks
     @Namespace static var underlineAnimation
     
     static var previews: some View {
-        ReadingBookTabSectionView(readingBook: readingBooks[0], selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), scrollYOffset: .constant(0.0), underlineAnimation: underlineAnimation)
+        ReadingBookTabSectionView(readingBook: ReadingBook.preview, selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), scrollYOffset: .constant(0.0), underlineAnimation: underlineAnimation)
     }
 }

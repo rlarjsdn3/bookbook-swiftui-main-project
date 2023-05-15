@@ -12,6 +12,7 @@ struct ReadingBookRenewalButtonView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     
     @State private var isPresentingRenewalSheet = false
+    @State private var isPresentingCompleteConfettiView = false
     
     var isAscendingTargetDate: Bool {
         let result = Date.now.compare(readingBook.targetDate)
@@ -93,7 +94,10 @@ struct ReadingBookRenewalButtonView: View {
             }
         }
         .sheet(isPresented: $isPresentingRenewalSheet) {
-            ReadingBookRenewalView(readingBook: readingBook)
+            ReadingBookRenewalView(readingBook: readingBook, isPresentingConfettiView: $isPresentingCompleteConfettiView)
+        }
+        .fullScreenCover(isPresented: $isPresentingCompleteConfettiView) {
+            CompleteConfettiView(readingBook: readingBook)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding([.horizontal, .bottom])
@@ -101,9 +105,7 @@ struct ReadingBookRenewalButtonView: View {
 }
 
 struct ReadingBookRenewalButtonView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var readingBooks
-    
     static var previews: some View {
-        ReadingBookRenewalButtonView(readingBook: readingBooks[0])
+        ReadingBookRenewalButtonView(readingBook: ReadingBook.preview)
     }
 }

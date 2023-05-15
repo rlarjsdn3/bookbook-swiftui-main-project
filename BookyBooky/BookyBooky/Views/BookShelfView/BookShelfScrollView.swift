@@ -41,7 +41,7 @@ struct BookShelfScrollView: View {
                 
                 // 읽은 도서 섹션 (미완성)
                 Section {
-                    if realmManager.completeBookArray.isEmpty {
+                    if readingBooks.filter({ realmManager.isCompleteBook($0) }).isEmpty {
                         VStack(spacing: 5) {
                             Text("읽은 도서가 없음")
                                 .font(.title3)
@@ -54,7 +54,13 @@ struct BookShelfScrollView: View {
                         .padding(.bottom, 100) // 임시
                     } else {
                         LazyVGrid(columns: columns) {
-                            ForEach(realmManager.completeBookArray, id: \.self) { book in
+                            
+                            // 모두 읽은 도서를 삭제 할때, 에러가 나는 이유는 삭제된 오브젝트에 접근해서 리스트를 만드렫고 했기 때문!
+                            // 이걸 수정하기 위해, 오브젝트가 변경될 때마다 UI를 새로 그리는 readingBooks 프로퍼티 래퍼 변수에다가
+                            // 별도 필터링을 해주어 리스트로 출력하게 해야함! -> 
+                            
+                            // 수정
+                            ForEach(readingBooks.filter({ realmManager.isCompleteBook($0) }), id: \.self) { book in
                                 ReadingBookCellView(readingBook: book, cellType: .shelf)
                             }
                         }

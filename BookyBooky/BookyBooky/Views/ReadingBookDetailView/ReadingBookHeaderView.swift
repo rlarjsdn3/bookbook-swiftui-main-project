@@ -35,8 +35,8 @@ struct ReadingBookHeaderView: View {
         }
         .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
             Button("삭제", role: .destructive) {
-                realmManager.deleteReadingBook(readingBook.isbn13)
                 dismiss()
+                realmManager.deleteReadingBook(readingBook.isbn13)
             }
         }
         .padding(.vertical)
@@ -104,10 +104,8 @@ extension ReadingBookHeaderView {
 }
 
 struct TargetBookDetailHeaderView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var completeTargetBooks
-    
     static var previews: some View {
-        ReadingBookHeaderView(readingBook: completeTargetBooks[0], scrollYOffset: .constant(0.0))
+        ReadingBookHeaderView(readingBook: ReadingBook.preview, scrollYOffset: .constant(0.0))
             .environmentObject(RealmManager())
     }
 }

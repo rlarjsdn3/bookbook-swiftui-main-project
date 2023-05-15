@@ -30,3 +30,26 @@ class ReadingBook: Object, ObjectKeyIdentifiable {
     
     @Persisted var isCompleted: Bool                // 완독 여부
 }
+
+extension ReadingBook {
+    var isComplete: Bool {
+        return true
+    }
+}
+
+extension ReadingBook {
+    static var preview: ReadingBook = ReadingBook(
+        value: ["title": "Java의 정석",
+                "author": "남궁성",
+                "publisher": "도우출판",
+                "pubDate": Date(timeIntervalSinceNow: -7 * 86400),
+                "cover": "https://image.aladin.co.kr/product/7608/30/cover/8994492038_1.jpg",
+                "itemPage": 1000,
+                "category": Category.computer,
+                "explanation": "설명",
+                "link": "http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=76083001&amp;partner=openAPI&amp;start=api",
+                "isbn13": "9788994492032",
+                "startDate": Date(),
+                "targetDate": Date(timeIntervalSinceNow: 7 * 86400)] as [String : Any]
+    )
+}

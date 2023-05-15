@@ -21,6 +21,8 @@ struct ReadingBookView: View {
     @State private var selectedTab: ReadingBookTabItems = .overview
     @State private var selectedAnimation: ReadingBookTabItems = .overview
     
+    @State private var isP = false
+    
     // MARK: - BODY
     
     var body: some View {
@@ -39,10 +41,8 @@ struct ReadingBookView: View {
 // MARK: - PREVIEW
 
 struct ReadingBookView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var completeTargetBooks
-    
     static var previews: some View {
-        ReadingBookView(readingBook: completeTargetBooks[0])
+        ReadingBookView(readingBook: ReadingBook.preview)
             .environmentObject(RealmManager())
     }
 }

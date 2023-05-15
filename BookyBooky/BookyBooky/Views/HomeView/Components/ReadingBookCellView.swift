@@ -15,10 +15,9 @@ enum ReadingBookCellViewType {
 
 struct ReadingBookCellView: View {
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    var readingBook: ReadingBook
     let cellType: ReadingBookCellViewType
     
-    @State private var isPresentingPopover = false
     @State private var isPresentingReadingBookView = false
     
     // MARK: - COMPUTED PROPERTIES
@@ -53,40 +52,39 @@ struct ReadingBookCellView: View {
     // MARK: - BODY
     
     var body: some View {
-        VStack {
-            ZStack {
-                asyncImage(url: readingBook.cover)
-                
-                if !isAscendingTargetDate {
-                    Image(systemName: "exclamationmark.circle.fill")
-                        .font(.system(size: 50))
-                        .foregroundColor(Color.red)
-                        .frame(width: 150, height: 200)
-                        .background(Color.gray.opacity(0.15))
-                        .clipShape(
-                            RoundedRectangle(
-                                cornerRadius: 15,
-                                style: .continuous
-                            )
-                        )
-                }
-            }
-
-            if cellType == .home {
-                progressBar
-            }
-            
-            targetBookTitle
-            
-            targetBookAuthor
-        }
-        .navigationDestination(isPresented: $isPresentingReadingBookView) {
+        NavigationLink {
             ReadingBookView(readingBook: readingBook)
+        } label: {
+            VStack {
+                ZStack {
+                    asyncImage(url: readingBook.cover)
+                    
+                    if !isAscendingTargetDate {
+                        Image(systemName: "exclamationmark.circle.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(Color.red)
+                            .frame(width: 150, height: 200)
+                            .background(Color.gray.opacity(0.15))
+                            .clipShape(
+                                RoundedRectangle(
+                                    cornerRadius: 15,
+                                    style: .continuous
+                                )
+                            )
+                    }
+                }
+                
+                if cellType == .home {
+                    progressBar
+                }
+                
+                targetBookTitle
+                
+                targetBookAuthor
+            }
+            .padding(.horizontal, 10)
         }
-        .onTapGesture {
-            isPresentingReadingBookView = true
-        }
-        .padding(.horizontal, 10)
+        .buttonStyle(.plain)
     }
 }
 
@@ -154,9 +152,7 @@ extension ReadingBookCellView {
 }
 
 struct ReadingBookCellView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var completeTargetBooks
-    
     static var previews: some View {
-        ReadingBookCellView(readingBook: completeTargetBooks[0], cellType: .home)
+        ReadingBookCellView(readingBook: ReadingBook.preview, cellType: .home)
     }
 }

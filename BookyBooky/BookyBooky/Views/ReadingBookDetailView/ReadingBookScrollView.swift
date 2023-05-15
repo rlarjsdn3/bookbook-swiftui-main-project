@@ -24,7 +24,8 @@ struct ReadingBookScrollView: View {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
                 ReadingBookCoverView(readingBook: readingBook)
                 
-                ReadingBookRenewalButtonView(readingBook: readingBook)
+                ReadingBookRenewalButtonView(
+                    readingBook: readingBook)
                 
                 ReadingBookTabSectionView(readingBook: readingBook, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, scrollYOffset: $scrollYOffset, underlineAnimation: underlineAnimation)
             }
@@ -53,6 +54,6 @@ struct ReadingBookDetailScrollView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var readingBooks
     
     static var previews: some View {
-        ReadingBookScrollView(scrollYOffset: .constant(0.0), selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), readingBook: readingBooks[0])
+        ReadingBookScrollView(scrollYOffset: .constant(0.0), selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), readingBook: ReadingBook.preview)
     }
 }
