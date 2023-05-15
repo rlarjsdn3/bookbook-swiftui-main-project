@@ -43,7 +43,7 @@ struct BookShelfScrollView: View {
                 Section {
                     if realmManager.completeBookArray.isEmpty {
                         VStack(spacing: 5) {
-                            Text("읽은 있는 도서가 없음")
+                            Text("읽은 도서가 없음")
                                 .font(.title3)
                                 .fontWeight(.bold)
                             
@@ -230,7 +230,8 @@ extension BookShelfScrollView {
             Text("도서를 찜해보세요.")
                 .foregroundColor(.secondary)
         }
-        .padding(.vertical, 30)
+        .padding(.top, 30)
+        .padding(.bottom, 40)
     }
     
     var favoriteBooksHeaderLabel: some View {
