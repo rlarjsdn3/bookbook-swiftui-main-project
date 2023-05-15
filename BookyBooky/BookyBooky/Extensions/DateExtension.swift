@@ -9,9 +9,15 @@ import Foundation
 
 extension Date {
     /// 앱에서 사용되는 가장 일반적인 형식의 날짜 문자열을 만들어 반환하는 함수입니다.
-    var standardFormat: String {
+    var standardDateFormat: String {
         self.formatted(
             .dateTime.year().month().day().weekday().locale(Locale(identifier: "ko_kr"))
+        )
+    }
+    
+    var standardTimeFormat: String {
+        self.formatted(
+            .dateTime.hour().minute().locale(Locale(identifier: "ko_kr"))
         )
     }
     

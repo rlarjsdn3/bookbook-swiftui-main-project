@@ -34,9 +34,9 @@ struct AllReadingDataView: View {
                                 
                                 // 사용자 format으로 Date 확장하기
                                 VStack(alignment: HorizontalAlignment.trailing) {
-                                    Text("\(record.date.formatted(date: .abbreviated, time: .omitted))")
+                                    Text("\(record.date.standardDateFormat)")
                                     
-                                    Text("\(record.date.formatted(date: .omitted, time: .shortened))")
+                                    Text("\(record.date.standardTimeFormat)")
                                         .font(.footnote)
                                         .foregroundColor(Color.secondary)
                                 }

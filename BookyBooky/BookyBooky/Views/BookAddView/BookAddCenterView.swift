@@ -56,7 +56,7 @@ extension BookAddCenterView {
     }
     
     var targetSelectedDateLabel: some View {
-        Text("\(selectedDate.standardFormat)")
+        Text("\(selectedDate.standardDateFormat)")
             .font(.title)
             .fontWeight(.bold)
     }
