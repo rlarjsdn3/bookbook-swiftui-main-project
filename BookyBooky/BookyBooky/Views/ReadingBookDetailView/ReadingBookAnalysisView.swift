@@ -495,9 +495,9 @@ extension ReadingBookAnalysisView {
                                 VStack(alignment: .leading) {
                                     Group {
                                         if selectedChartDateRange == .oneMonth {
-                                            Text(selectedElement.date.formatted(.dateTime.year().month().day().locale(Locale(identifier: "ko_kr"))))
+                                            Text(selectedElement.date.toFormat("yyyy년 M월 d일"))
                                         } else {
-                                            Text(selectedElement.date.formatted(.dateTime.year().month().locale(Locale(identifier: "ko_kr"))))
+                                            Text(selectedElement.date.toFormat("yyyy년 M월 d일"))
                                         }
                                     }
                                     .font(.callout)

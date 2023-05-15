@@ -48,7 +48,7 @@ struct ActivityCellView: View {
                         Spacer()
                         
                         Group {
-                            Text("\(activity.date.formatted(date: .abbreviated , time: .omitted))")
+                            Text(activity.date.toFormat("yyyy. M. d."))
                             
                             Image(systemName: "chevron.right")
                         }

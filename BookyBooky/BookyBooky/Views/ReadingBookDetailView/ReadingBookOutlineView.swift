@@ -25,7 +25,7 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Text("\(readingBook.startDate.formatted(date: .abbreviated, time: .omitted))")
+                    Text("\(readingBook.startDate.standardFormat)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -37,7 +37,7 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Text("\(readingBook.completeDate?.formatted(date: .abbreviated, time: .omitted) ?? "-")")
+                    Text("\(readingBook.completeDate?.standardFormat ?? "-")")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -49,7 +49,7 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Text("\(readingBook.targetDate.formatted(date: .abbreviated, time: .omitted)))")
+                    Text("\(readingBook.targetDate.standardFormat)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -63,7 +63,7 @@ struct ReadingBookOutlineView: View {
                     
                     Spacer()
                     
-                    Text("\(readingBook.pubDate.formatted(date: .abbreviated, time: .omitted)))")
+                    Text("\(readingBook.pubDate.standardFormat)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }

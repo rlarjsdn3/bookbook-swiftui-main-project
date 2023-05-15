@@ -108,7 +108,7 @@ extension SearchSheetCellView {
     }
     
     var pubDate: some View {
-        Text(bookItem.pubDate.refinedPublishDate, style: .date)
+        Text("\(bookItem.pubDate.refinedPublishDate.toFormat("yyyy년 M월 d일"))")
     }
 }
 
