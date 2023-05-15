@@ -45,7 +45,7 @@ struct CompleteConfettiView: View {
             asyncImage(url: readingBook.cover)
             
             // 아직 미완성 코드
-            Text("완독까지 \(elapsedReadingDay)일이 걸렸어요.")
+            Text("완독하는 데 \(elapsedReadingDay)일이 걸렸어요.")
                 .font(.headline)
                 .padding(.top, 30)
             
@@ -67,10 +67,11 @@ struct CompleteConfettiView: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                HapticManager.shared.notification(type: .success)
                 counter += 1
             }
         }
-        .confettiCannon(counter: $counter, num: 80, openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: 200, repetitions: 2, repetitionInterval: 0.5)
+        .confettiCannon(counter: $counter, num: 80, openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: 200, repetitions: 2, repetitionInterval: 0.2)
     }
 }
 
