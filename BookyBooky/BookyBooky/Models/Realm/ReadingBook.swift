@@ -32,8 +32,16 @@ class ReadingBook: Object, ObjectKeyIdentifiable {
 }
 
 extension ReadingBook {
+    /// 도서의 완독 여부에 따라 불린(Bool) 형을 반환합니다.
     var isComplete: Bool {
-        return true
+        // 독서 데이터가 하나라도 존재하는 경우
+        if let lastRecord = self.readingRecords.last {
+            // 마지막으로 읽은 도서 페이지와 도서 페이지가 동일한 경우
+            return lastRecord.totalPagesRead == self.itemPage // True 반환
+        // 독서 데이터가 존재하지 않는 경우
+        } else {
+            return false // False 반환
+        }
     }
 }
 

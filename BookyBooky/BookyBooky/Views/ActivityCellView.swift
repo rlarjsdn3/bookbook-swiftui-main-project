@@ -35,9 +35,15 @@ struct ActivityCellView: View {
                         .minimumScaleFactor(0.8)
                     
                     HStack(alignment: VerticalAlignment.firstTextBaseline) {
-                        Text("\(activity.numOfPagesRead)페이지 읽음")
-                            .font(.title3.weight(.semibold))
-                            .foregroundColor(activity.category.accentColor)
+                        Group {
+                            if activity.isComplete {
+                                Text("완독함")
+                            } else {
+                                Text("\(activity.numOfPagesRead)페이지 읽음")
+                            }
+                        }
+                        .font(.title3.weight(.semibold))
+                        .foregroundColor(activity.category.accentColor)
                         
                         Spacer()
                         

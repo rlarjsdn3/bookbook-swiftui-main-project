@@ -47,6 +47,19 @@ struct ActivityView: View {
         return monthlyActivity
     }
     
+    func activitiesCount(_ activity: MonthlyActivity) -> Int {
+        var dates: [Date] = []
+        
+        activity.activity.forEach { act in
+            if !dates.contains(where: { $0.isEqual([.year, .month, .day], date: act.date) }) {
+                dates.append(act.date)
+            }
+        }
+        
+        print(dates.count)
+        return dates.count
+    }
+    
     // MARK: - BODY
     
     var body: some View {
@@ -85,7 +98,7 @@ struct ActivityView: View {
                                         
                                         Spacer()
                                         
-                                        Text("\(activity.activity.count)일")
+                                        Text("\(activitiesCount(activity))일")
                                     }
                                     
                                     HStack {
@@ -108,7 +121,8 @@ struct ActivityView: View {
                                             Text("\(activity.activity.reduce(0, { $0 + $1.numOfPagesRead }))페이지")
                                                 .foregroundColor(Color.pink)
                                             
-                                            Text("하루 평균 \( activity.activity.reduce(0, { $0 + $1.numOfPagesRead }) / activity.activity.count )페이지")
+                                            // 실질적인 일자 개수를 세아려 평균 구하기 (수정 필요)
+                                            Text("하루 평균 \( activity.activity.reduce(0, { $0 + $1.numOfPagesRead }) / activitiesCount(activity) )페이지")
                                                 .font(.footnote)
                                                 .foregroundColor(Color.secondary)
                                         }
