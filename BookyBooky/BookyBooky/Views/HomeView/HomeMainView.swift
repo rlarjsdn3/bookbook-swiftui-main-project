@@ -8,31 +8,34 @@
 import SwiftUI
 import RealmSwift
 
-struct HomeScrollView: View {
+struct HomeMainView: View {
     
-    let COVER_HEGHT_RATIO = 0.18        // 화면 사이즈 대비 표지(커버) 이미지 높이 비율
-    let BACKGROUND_HEIGHT_RATIO = 0.3   // 화면 사이즈 대비 바탕 색상 높이 비율
-    
-    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmManager: RealmManager
     
     @ObservedResults(ReadingBook.self) var readingBooks
     
-    // 애니메이션 / 애니메이션 없는 변수 구분하기
+    // MARK: - WRAPPER PROPERTIES
+    
     @State private var selectedCategory: Category = .all
     @State private var selectedAnimation: Category = .all
     
     @State private var isLoading = true
-    
     @State private var isPresentingReadingBookView = false
-    
     @State private var startOffset = 0.0
     
-    @Binding var selectedSort: BookSort
-    @Binding var scrollYOffset: Double
-    
     @Namespace var underlineAnimation
+    
+    // MARK: - PROPERTIES
+    
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    @Binding var selectedSort: BookSortCriteriaType
+    @Binding var scrollYOffset: Double
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -98,7 +101,7 @@ struct HomeScrollView: View {
             ScrollViewReader { scrollProxy in
                 ScrollView(showsIndicators: false) {
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
-                        navigationTitle
+                        navigationBarTitle
                         
                         // 미완성 코드
                         
@@ -121,7 +124,7 @@ struct HomeScrollView: View {
                             
                             if !activities.isEmpty {
                                 ForEach(activities, id: \.self) { activity in
-                                    ActivityCellButton(activity: activity)
+                                    ActivityCellButton(activity)
                                 }
                             } else {
                                 VStack(spacing: 5) {
@@ -196,26 +199,26 @@ struct HomeScrollView: View {
     }
 }
 
-extension HomeScrollView {
-    var navigationTitle: some View {
+extension HomeMainView {
+    var navigationBarTitle: some View {
         VStack(alignment: .leading) {
-            navigationDateSubTitle
+            navigationSubTitle
             
-            navigationHomeMainTitle
+            navigationMainTitle
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 15)
         .padding(.vertical, 5)
     }
     
-    var navigationDateSubTitle: some View {
+    var navigationSubTitle: some View {
         Text(Date().toFormat("M월 d일 E요일"))
             .fontWeight(.semibold)
             .foregroundColor(.secondary)
             .opacity(scrollYOffset > 10 ? 0 : 1)
     }
     
-    var navigationHomeMainTitle: some View {
+    var navigationMainTitle: some View {
         Text("홈")
             .font(.system(size: 34 + getFontSizeOffset()))
             .fontWeight(.bold)
@@ -253,7 +256,7 @@ extension HomeScrollView {
     }
     
     var sortButtons: some View {
-        ForEach(BookSort.allCases, id: \.self) { sort in
+        ForEach(BookSortCriteriaType.allCases, id: \.self) { sort in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {
@@ -300,7 +303,7 @@ extension HomeScrollView {
             } else {
                 LazyVGrid(columns: columns, spacing: 25) {
                     ForEach(filteredReadingBooks) { book in
-                        ReadingBookCellView(readingBook: book, cellType: .home)
+                        ReadingBookCellButton(readingBook: book, cellType: .home)
                     }
                 }
                 .padding([.horizontal, .top])
@@ -338,9 +341,9 @@ extension HomeScrollView {
     }
 }
 
-struct HomeScrollView_Previews: PreviewProvider {
+struct HomeMainView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeScrollView(selectedSort: .constant(.latestOrder), scrollYOffset: .constant(0.0))
+        HomeMainView(selectedSort: .constant(.latestOrder), scrollYOffset: .constant(0.0))
             .environmentObject(RealmManager())
     }
 }

@@ -8,15 +8,15 @@
 import SwiftUI
 import RealmSwift
 
-enum ReadingBookCellViewType {
+enum ReadingBookCellButtonType {
     case home
     case shelf
 }
 
-struct ReadingBookCellView: View {
+struct ReadingBookCellButton: View {
     
     var readingBook: ReadingBook
-    let cellType: ReadingBookCellViewType
+    let cellType: ReadingBookCellButtonType
     
     @State private var isPresentingReadingBookView = false
     
@@ -49,6 +49,8 @@ struct ReadingBookCellView: View {
         }
     }
     
+    let roundedRectangle = RoundedRectangle(cornerRadius: 15)
+    
     // MARK: - BODY
     
     var body: some View {
@@ -57,7 +59,7 @@ struct ReadingBookCellView: View {
         } label: {
             VStack {
                 ZStack {
-                    asyncImage(url: readingBook.cover)
+                    asyncImage(readingBook.cover, width: 150, height: 200, coverShape: roundedRectangle)
                     
                     if !isAscendingTargetDate {
                         Image(systemName: "exclamationmark.circle.fill")
@@ -88,7 +90,7 @@ struct ReadingBookCellView: View {
     }
 }
 
-extension ReadingBookCellView {
+extension ReadingBookCellButton {
     func asyncImage(url: String) -> some View {
         AsyncImage(url: URL(string: url),
                    transaction: Transaction(animation: .default)) { phase in
@@ -151,8 +153,8 @@ extension ReadingBookCellView {
     }
 }
 
-struct ReadingBookCellView_Previews: PreviewProvider {
+struct ReadingBookCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookCellView(readingBook: ReadingBook.preview, cellType: .home)
+        ReadingBookCellButton(readingBook: ReadingBook.preview, cellType: .home)
     }
 }

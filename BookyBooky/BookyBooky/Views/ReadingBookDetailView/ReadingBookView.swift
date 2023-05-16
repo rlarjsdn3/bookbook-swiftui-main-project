@@ -21,15 +21,21 @@ struct ReadingBookView: View {
     @State private var selectedTab: ReadingBookTabItems = .overview
     @State private var selectedAnimation: ReadingBookTabItems = .overview
     
-    @State private var isP = false
-    
     // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
-            ReadingBookHeaderView(readingBook: readingBook, scrollYOffset: $scrollYOffset)
+            ReadingBookHeaderView(
+                readingBook: readingBook,
+                scrollYOffset: $scrollYOffset
+            )
             
-            ReadingBookScrollView(scrollYOffset: $scrollYOffset, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, readingBook: readingBook)
+            ReadingBookScrollView(
+                scrollYOffset: $scrollYOffset,
+                selectedTab: $selectedTab,
+                selectedAnimation: $selectedAnimation,
+                readingBook: readingBook
+            )
         }
         .toast(isPresenting: $realmManager.isPresentingTargetBookEditComleteToastAlert, duration: 1.0) {
             realmManager.showTargetBookEditCompleteToastAlert(readingBook.category.accentColor)

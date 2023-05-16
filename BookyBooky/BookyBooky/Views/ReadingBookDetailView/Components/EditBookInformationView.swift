@@ -14,7 +14,7 @@ struct EditBookInformationView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.realm) var realm
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    var readingBook: ReadingBook
     
     @State private var titleTextField = ""
     @State private var publisherTextField = ""

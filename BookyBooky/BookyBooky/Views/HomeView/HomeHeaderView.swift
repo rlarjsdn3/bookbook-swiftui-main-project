@@ -11,19 +11,29 @@ struct HomeHeaderView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @Binding var selectedSort: BookSort
-    @Binding var scrollYOffset: Double
-    
     @State private var isPresentingSettingsView = false
     @State private var isPresentingSearchSheetView = false
+    
+    // MARK: - PROPERTIES
+    
+    @Binding var scrollYOffset: Double
+    @Binding var selectedSortType: BookSortCriteriaType
     
     // MARK: - BODY
     
     var body: some View {
+        navigationBar
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension HomeHeaderView {
+    var navigationBar: some View {
         HStack {
             Spacer()
             
-            navigationTitle
+            navigationBarTitle
             
             Spacer()
         }
@@ -38,12 +48,8 @@ struct HomeHeaderView: View {
         }
         .padding(.vertical)
     }
-}
-
-// MARK: - EXTENSIONS
-
-extension HomeHeaderView {
-    var navigationTitle: some View {
+    
+    var navigationBarTitle: some View {
         Text("홈")
             .navigationTitleStyle()
             .opacity(scrollYOffset > 10 ? 1 : 0)
@@ -51,7 +57,7 @@ extension HomeHeaderView {
     
     var navigationBarButtons: some View {
         HStack {
-            addTargetBookMenu
+            addReadingBookMenu
 
             Spacer()
             
@@ -59,12 +65,12 @@ extension HomeHeaderView {
             ZStack {
                 settingsButton
                 
-                bookSortMenu
+                bookSortCriteriaMenu
             }
         }
     }
     
-    var addTargetBookMenu: some View {
+    var addReadingBookMenu: some View {
         Menu {
             Section {
                 Button {
@@ -82,25 +88,35 @@ extension HomeHeaderView {
                 Text("도서 추가")
             }
         } label: {
-            searchImage
+            plusSFSymbolImage
         } primaryAction: {
             isPresentingSearchSheetView = true
         }
+    }
+    
+    var plusSFSymbolImage: some View {
+        Image(systemName: "plus")
+            .navigationBarItemStyle()
     }
     
     var settingsButton: some View {
         Button {
             isPresentingSettingsView = true
         } label: {
-            settingImage
+            gearShapeSFSymbolImage
         }
         .opacity(scrollYOffset > 268 ? 0 : 1)
     }
     
-    var bookSortMenu: some View {
+    var gearShapeSFSymbolImage: some View {
+        Image(systemName: "gearshape.fill")
+            .navigationBarItemStyle()
+    }
+    
+    var bookSortCriteriaMenu: some View {
         Menu {
             Section {
-                sortButtons
+                bookSortMenuButtons
             } header: {
                 Text("도서 정렬")
             }
@@ -114,12 +130,12 @@ extension HomeHeaderView {
         .navigationBarItemStyle()
     }
     
-    var sortButtons: some View {
-        ForEach(BookSort.allCases, id: \.self) { sort in
+    var bookSortMenuButtons: some View {
+        ForEach(BookSortCriteriaType.allCases, id: \.self) { sort in
             Button {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                        selectedSort = sort
+                        selectedSortType = sort
                     }
                     HapticManager.shared.impact(.rigid)
                 }
@@ -128,27 +144,17 @@ extension HomeHeaderView {
                     Text(sort.rawValue)
                     
                     // 현재 선택한 정렬 타입에 체크마크 표시
-                    if selectedSort == sort {
-                        checkmark
+                    if selectedSortType == sort {
+                        checkMarkSFSymbolImage
                     }
                 }
             }
         }
     }
     
-    var checkmark: some View {
+    var checkMarkSFSymbolImage: some View {
         Image(systemName: "checkmark")
             .font(.title3)
-    }
-    
-    var searchImage: some View {
-        Image(systemName: "plus")
-            .navigationBarItemStyle()
-    }
-    
-    var settingImage: some View {
-        Image(systemName: "gearshape.fill")
-            .navigationBarItemStyle()
     }
 }
 
@@ -156,6 +162,9 @@ extension HomeHeaderView {
 
 struct HomeHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeHeaderView(selectedSort: .constant(.latestOrder), scrollYOffset: .constant(0.0))
+        HomeHeaderView(
+            scrollYOffset: .constant(0.0),
+            selectedSortType: .constant(.latestOrder)
+        )
     }
 }

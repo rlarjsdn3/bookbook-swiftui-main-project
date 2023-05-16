@@ -13,7 +13,7 @@ struct ReadingBookHeaderView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    var readingBook: ReadingBook
     @Binding var scrollYOffset: Double
     
     @State private var isPresentingEditBookInformationSheet = false

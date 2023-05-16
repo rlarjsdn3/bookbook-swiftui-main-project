@@ -82,7 +82,7 @@ struct FavoriteBooksScrollView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedSort: BookSort
+    @Binding var selectedSort: BookSortCriteriaType
     @Binding var searchQuery: String
     let listType: BookShelfListViewType
     
@@ -109,7 +109,7 @@ extension FavoriteBooksScrollView {
                     }
                 } else {
                     ForEach(filteredReadingBooks, id: \.self) { completeBook in
-                        ReadingBookCellView(readingBook: completeBook, cellType: .shelf)
+                        ReadingBookCellButton(readingBook: completeBook, cellType: .shelf)
                     }
                 }
             }

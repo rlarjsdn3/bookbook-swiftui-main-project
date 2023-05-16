@@ -9,6 +9,8 @@ import Foundation
 import RealmSwift
 
 protocol Book {
+    var title: String { get set }
+    var author: String { get set }
     var isbn13: String { get set }
 }
 
@@ -21,7 +23,7 @@ class ReadingBook: Object, ObjectKeyIdentifiable, Book {
     @Persisted var cover: String                    // 표지(링크)
     @Persisted var itemPage: Int                    // 페이지 쪽 수
     @Persisted var category: Category               // 카테고리
-    @Persisted var explanation: String              // 상품 설명
+    @Persisted var introduction: String              // 상품 설명
     @Persisted var link: String                     // 상품 페이지 링크
     @Persisted var isbn13: String                   // ISBN-13
     

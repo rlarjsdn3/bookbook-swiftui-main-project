@@ -61,7 +61,7 @@ struct BookShelfScrollView: View {
                             
                             // 수정
                             ForEach(readingBooks.filter({ realmManager.isCompleteBook($0) }), id: \.self) { book in
-                                ReadingBookCellView(readingBook: book, cellType: .shelf)
+                                ReadingBookCellButton(readingBook: book, cellType: .shelf)
                             }
                         }
                         .padding(.bottom, 40)
