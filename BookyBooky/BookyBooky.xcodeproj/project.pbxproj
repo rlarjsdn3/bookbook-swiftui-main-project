@@ -36,7 +36,7 @@
 		9E0C0A7729D2B5BC00F1F5F6 /* BookInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7629D2B5BC00F1F5F6 /* BookInfo.swift */; };
 		9E0C0A7D29D3D0F900F1F5F6 /* BookListTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItems.swift */; };
 		9E0C0A7F29D3D56A00F1F5F6 /* SearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7E29D3D56A00F1F5F6 /* SearchHeaderView.swift */; };
-		9E0EF6F02A0DF4F600747847 /* ActivityCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0EF6EF2A0DF4F600747847 /* ActivityCellView.swift */; };
+		9E0EF6F02A0DF4F600747847 /* ActivityCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0EF6EF2A0DF4F600747847 /* ActivityCellButton.swift */; };
 		9E0EF6F32A0DF56500747847 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0EF6F22A0DF56500747847 /* Activity.swift */; };
 		9E0EF6F62A0DF78000747847 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0EF6F52A0DF78000747847 /* ActivityView.swift */; };
 		9E187E072A06853100930388 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E187E062A06853100930388 /* DateExtension.swift */; };
@@ -102,6 +102,7 @@
 		9EE01FEE2A01FAF800584F39 /* ReadingBookTabSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */; };
 		9EE01FF12A020FAA00584F39 /* ReadingBookOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */; };
 		9EE01FF32A022D4100584F39 /* ReadingBookAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FF22A022D4100584F39 /* ReadingBookAnalysisView.swift */; };
+		9EEA7EEA2A135E5100F22255 /* RealmSwiftExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA7EE92A135E5100F22255 /* RealmSwiftExtension.swift */; };
 		9EFBE7CF29FFA90800308BAE /* ReadingBookTabItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* ReadingBookTabItems.swift */; };
 /* End PBXBuildFile section */
 
@@ -135,7 +136,7 @@
 		9E0C0A7629D2B5BC00F1F5F6 /* BookInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookInfo.swift; sourceTree = "<group>"; };
 		9E0C0A7C29D3D0F900F1F5F6 /* BookListTabItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListTabItems.swift; sourceTree = "<group>"; };
 		9E0C0A7E29D3D56A00F1F5F6 /* SearchHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeaderView.swift; sourceTree = "<group>"; };
-		9E0EF6EF2A0DF4F600747847 /* ActivityCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCellView.swift; sourceTree = "<group>"; };
+		9E0EF6EF2A0DF4F600747847 /* ActivityCellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCellButton.swift; sourceTree = "<group>"; };
 		9E0EF6F22A0DF56500747847 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		9E0EF6F52A0DF78000747847 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		9E187E062A06853100930388 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
@@ -196,6 +197,7 @@
 		9EE01FED2A01FAF800584F39 /* ReadingBookTabSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookTabSectionView.swift; sourceTree = "<group>"; };
 		9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookOutlineView.swift; sourceTree = "<group>"; };
 		9EE01FF22A022D4100584F39 /* ReadingBookAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookAnalysisView.swift; sourceTree = "<group>"; };
+		9EEA7EE92A135E5100F22255 /* RealmSwiftExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSwiftExtension.swift; sourceTree = "<group>"; };
 		9EFBE7CE29FFA90800308BAE /* ReadingBookTabItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBookTabItems.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -308,6 +310,7 @@
 				9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */,
 				9E187E062A06853100930388 /* DateExtension.swift */,
 				9E54AA0D29D7D84100FE080C /* StringExtension.swift */,
+				9EEA7EE92A135E5100F22255 /* RealmSwiftExtension.swift */,
 				9EDC2FB029E6E48C004E792A /* UINavigationControllerExtension.swift */,
 			);
 			path = Extensions;
@@ -372,7 +375,7 @@
 		9E0EF6F72A0DF78500747847 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				9E0EF6EF2A0DF4F600747847 /* ActivityCellView.swift */,
+				9E0EF6EF2A0DF4F600747847 /* ActivityCellButton.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -732,6 +735,7 @@
 				9E54A9FC29D5DC9800FE080C /* SearchCategoryButtonView.swift in Sources */,
 				9EB749FA29D5C43200610D97 /* Category.swift in Sources */,
 				9E0434AB29E28097009A2161 /* BookSort.swift in Sources */,
+				9EEA7EEA2A135E5100F22255 /* RealmSwiftExtension.swift in Sources */,
 				9EE01FF12A020FAA00584F39 /* ReadingBookOutlineView.swift in Sources */,
 				9ED116C129ED04330072BA41 /* BookAddButtonsView.swift in Sources */,
 				9EA1983E2A01F18300D385CD /* ReadingBookView.swift in Sources */,
@@ -748,7 +752,7 @@
 				9E0C0A6229D1DB4700F1F5F6 /* HomeView.swift in Sources */,
 				9E0434B429E39920009A2161 /* FavoriteBooksScrollView.swift in Sources */,
 				9ECA326B29D12044004D6D5B /* ContentsTabItems.swift in Sources */,
-				9E0EF6F02A0DF4F600747847 /* ActivityCellView.swift in Sources */,
+				9E0EF6F02A0DF4F600747847 /* ActivityCellButton.swift in Sources */,
 				9E7A794529DA6AFF00A51856 /* SearchInfoCoverView.swift in Sources */,
 				9E06070E29DD516D000D542D /* RealmManager.swift in Sources */,
 				9EE01FEE2A01FAF800584F39 /* ReadingBookTabSectionView.swift in Sources */,

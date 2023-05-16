@@ -134,10 +134,10 @@ struct ActivityView: View {
                             }
                             
                             ForEach(activity.activity.sorted { $0.date < $1.date }, id: \.self) { data in
-                                ActivityCellView(activity: data)
+                                ActivityCellButton(data)
                             }
                         } header: {
-                            Text(activity.month.formatted(.dateTime.year().month()))
+                            Text(activity.month.toFormat("yyyy년 M월"))
                                 .font(.headline.weight(.bold))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.vertical, 10)

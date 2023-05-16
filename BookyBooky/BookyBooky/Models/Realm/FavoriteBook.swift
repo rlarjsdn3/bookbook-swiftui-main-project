@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class FavoriteBook: Object, ObjectKeyIdentifiable {
+class FavoriteBook: Object, ObjectKeyIdentifiable, Book {
     @Persisted(primaryKey: true) var _id: ObjectId  // 주요 키
     @Persisted var title: String        // 제목
     @Persisted var author: String       // 저자

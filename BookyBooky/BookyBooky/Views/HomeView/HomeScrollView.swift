@@ -121,7 +121,7 @@ struct HomeScrollView: View {
                             
                             if !activities.isEmpty {
                                 ForEach(activities, id: \.self) { activity in
-                                    ActivityCellView(activity: activity)
+                                    ActivityCellButton(activity: activity)
                                 }
                             } else {
                                 VStack(spacing: 5) {

@@ -8,7 +8,11 @@
 import Foundation
 import RealmSwift
 
-class ReadingBook: Object, ObjectKeyIdentifiable {
+protocol Book {
+    var isbn13: String { get set }
+}
+
+class ReadingBook: Object, ObjectKeyIdentifiable, Book {
     @Persisted(primaryKey: true) var _id: ObjectId  // 주요 키
     @Persisted var title: String                    // 제목
     @Persisted var author: String                   // 저자
