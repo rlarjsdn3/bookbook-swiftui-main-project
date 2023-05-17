@@ -117,7 +117,8 @@ struct ReadingBookOutlineView: View {
                 .padding([.top, .bottom], 3)
                 .padding(.horizontal)
                 
-                Text(readingBook.description)
+                Text(readingBook.introduction)
+                    .multilineTextAlignment(.leading)
                     .padding(.horizontal)
             }
             .padding(.bottom, 20)

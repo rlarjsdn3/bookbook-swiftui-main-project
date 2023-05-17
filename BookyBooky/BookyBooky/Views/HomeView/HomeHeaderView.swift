@@ -112,6 +112,7 @@ extension HomeHeaderView {
         } label: {
             gearShapeSFSymbolImage
         }
+        // 이거 수저해야 함!
         .opacity(scrollYOffset > 268 ? 0 : 1)
     }
     

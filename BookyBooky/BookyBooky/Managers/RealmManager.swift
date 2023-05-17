@@ -31,11 +31,9 @@ class RealmManager: ObservableObject {
         AlertToast(displayMode: .alert, type: .complete(color), title: "찜하기 완료")
     }
         
-    // MARK: - PROPERTIES
+    // MARK: - REALM PROPERTIES
     
     lazy var realm = openLocalRealm()
-    
-    // MARK: - WRAPPER PROPERTIES
     
     @ObservedResults(ReadingBook.self) var readingBooks
     @ObservedResults(FavoriteBook.self) var favoriteBooks

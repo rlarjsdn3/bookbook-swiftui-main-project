@@ -49,42 +49,9 @@ struct HomeMainView: View {
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
                         navigationBarTitle
                         
-                        // 미완성 코드
-                        
-                        HStack {
-                            activityHeadlineText
-                            
-                            Spacer()
-                            
-                            NavigationLink("더 보기") {
-                                ActivityView()
-                            }
-                            .disabled(realmManager.getRecentReadingActivity().isEmpty)
-                            .padding(.trailing, 25)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        HomeActivitySectionView()
                         
                         // 활동 섹션 뷰 - 파일 분리
-                        VStack {
-                            let activities = realmManager.getRecentReadingActivity()
-                            
-                            if !activities.isEmpty {
-                                ForEach(activities, id: \.self) { activity in
-                                    ActivityCellButton(activity)
-                                }
-                            } else {
-                                VStack(spacing: 5) {
-                                    Text("독서 데이터가 없음")
-                                        .font(.title3)
-                                        .fontWeight(.bold)
-                                    
-                                    Text("독서 데이터를 추가하십시오.")
-                                        .foregroundColor(.secondary)
-                                }
-                                .padding(.vertical, 30)
-                            }
-                        }
-                        .padding(.bottom, 10)
                         
                         // 읽은 도서 섹션 뷰 - 파일 분리
                         
@@ -151,13 +118,6 @@ extension HomeMainView {
             .font(.system(size: 34 + getNavigationTitleFontSizeOffset(scrollYOffset)))
             .fontWeight(.bold)
             .minimumScaleFactor(0.001)
-    }
-    
-    var activityHeadlineText: some View {
-        Text("활동")
-            .font(.title2)
-            .fontWeight(.bold)
-            .padding(.leading, 15)
     }
     
     var targetBookHeadlineText: some View {
