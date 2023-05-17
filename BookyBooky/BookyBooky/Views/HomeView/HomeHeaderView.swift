@@ -17,7 +17,14 @@ struct HomeHeaderView: View {
     // MARK: - PROPERTIES
     
     @Binding var scrollYOffset: Double
-    @Binding var selectedSortType: BookSortCriteriaType
+    @Binding var selectedBookSortType: BookSortCriteriaType
+    
+    // MARK: - INITALIZER
+    
+    init(_ scrollYOffset: Binding<Double>, selectedBookSortType: Binding<BookSortCriteriaType>) {
+        self._scrollYOffset = scrollYOffset
+        self._selectedBookSortType = selectedBookSortType
+    }
     
     // MARK: - BODY
     
@@ -131,20 +138,20 @@ extension HomeHeaderView {
     }
     
     var bookSortMenuButtons: some View {
-        ForEach(BookSortCriteriaType.allCases, id: \.self) { sort in
+        ForEach(BookSortCriteriaType.allCases, id: \.self) { type in
             Button {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                        selectedSortType = sort
+                        selectedBookSortType = type
                     }
                     HapticManager.shared.impact(.rigid)
                 }
             } label: {
                 HStack {
-                    Text(sort.rawValue)
+                    Text(type.rawValue)
                     
                     // 현재 선택한 정렬 타입에 체크마크 표시
-                    if selectedSortType == sort {
+                    if selectedBookSortType == type {
                         checkMarkSFSymbolImage
                     }
                 }
@@ -163,8 +170,8 @@ extension HomeHeaderView {
 struct HomeHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         HomeHeaderView(
-            scrollYOffset: .constant(0.0),
-            selectedSortType: .constant(.latestOrder)
+            .constant(0.0),
+            selectedBookSortType: .constant(.latestOrder)
         )
     }
 }

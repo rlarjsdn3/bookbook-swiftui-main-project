@@ -12,22 +12,16 @@ struct HomeView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @State private var scrollYOffset = 0.0
-    @State private var selectedSortType: BookSortCriteriaType = .latestOrder
+    @State private var selectedBookSortType: BookSortCriteriaType = .latestOrder
     
     // MARK: - BODY
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                HomeHeaderView(
-                    scrollYOffset: $scrollYOffset,
-                    selectedSortType: $selectedSortType
-                )
+                HomeHeaderView($scrollYOffset, selectedBookSortType: $selectedBookSortType)
                 
-                HomeMainView(
-                    selectedSort: $selectedSortType,
-                    scrollYOffset: $scrollYOffset
-                )
+                HomeMainView($scrollYOffset, selectedBookSortType: $selectedBookSortType)
             }
         }
     }

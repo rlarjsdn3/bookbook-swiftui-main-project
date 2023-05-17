@@ -13,7 +13,6 @@ struct HomeMainView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmManager: RealmManager
-    
     @ObservedResults(ReadingBook.self) var readingBooks
     
     // MARK: - WRAPPER PROPERTIES
@@ -25,7 +24,7 @@ struct HomeMainView: View {
     @State private var isPresentingReadingBookView = false
     @State private var startOffset = 0.0
     
-    @Namespace var underlineAnimation
+    @Namespace var namespace
     
     // MARK: - PROPERTIES
     
@@ -34,8 +33,15 @@ struct HomeMainView: View {
         GridItem(.flexible())
     ]
     
-    @Binding var selectedSort: BookSortCriteriaType
     @Binding var scrollYOffset: Double
+    @Binding var selectedBookSortType: BookSortCriteriaType
+    
+    // MARK: - INTIALIZER
+    
+    init(_ scrollYOffset: Binding<Double>, selectedBookSortType: Binding<BookSortCriteriaType>) {
+        self._scrollYOffset = scrollYOffset
+        self._selectedBookSortType = selectedBookSortType
+    }
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -50,7 +56,7 @@ struct HomeMainView: View {
     }
     
     var sortedReadingBooks: [ReadingBook] {
-        switch selectedSort {
+        switch selectedBookSortType {
         // 최근 추가된 순으로 정렬
         case .latestOrder:
             return readingBooks.reversed()
@@ -265,7 +271,7 @@ extension HomeMainView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedSort = sort
+                            selectedBookSortType = sort
                         }
                         HapticManager.shared.impact(.rigid)
                     }
@@ -275,7 +281,7 @@ extension HomeMainView {
                     Text(sort.rawValue)
                     
                     // 현재 선택한 정렬 타입에 체크마크 표시
-                    if selectedSort == sort {
+                    if selectedBookSortType == sort {
                         checkmark
                     }
                 }
@@ -323,7 +329,7 @@ extension HomeMainView {
                             selectedCategory: $selectedCategory,
                             selectedAnimation: $selectedAnimation,
                             scrollProxy: proxy,
-                            underlineAnimation: underlineAnimation
+                            underlineAnimation: namespace
                         )
                         .id("\(category.rawValue)")
                     }
@@ -343,7 +349,7 @@ extension HomeMainView {
 
 struct HomeMainView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeMainView(selectedSort: .constant(.latestOrder), scrollYOffset: .constant(0.0))
+        HomeMainView(.constant(0.0), selectedBookSortType: .constant(.latestOrder))
             .environmentObject(RealmManager())
     }
 }
