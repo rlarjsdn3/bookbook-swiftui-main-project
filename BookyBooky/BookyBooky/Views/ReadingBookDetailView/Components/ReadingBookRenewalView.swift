@@ -187,7 +187,7 @@ struct ReadingBookRenewalView: View {
             }
         }
         .onDisappear {
-            if realmManager.isCompleteBook(readingBook) {
+            if readingBook.isComplete {
                 isPresentingConfettiView = true
             }
         }

@@ -10,8 +10,7 @@ import Foundation
 struct Activity: Hashable {
     var date: Date
     var title: String
-    var author: String
-    var category: Category
+    var category: CategoryTypes
     var itemPage: Int
     var isbn13: String
     
@@ -28,7 +27,13 @@ extension Activity {
 }
 
 extension Activity {
-    static var preview: Activity {
-        Activity(date: Date.now, title: "Java의 정석", author: "남궁성", category: Category.computer, itemPage: 300, isbn13: "123456789012", numOfPagesRead: 3, totalPagesRead: 3)
-    }
+    static var preview: Activity = Activity(
+                                        date: Date.now,
+                                        title: "Java의 정석",
+                                        category: CategoryTypes.computer,
+                                        itemPage: 300,
+                                        isbn13: "123456789012",
+                                        numOfPagesRead: 3,
+                                        totalPagesRead: 3
+                                    )
 }

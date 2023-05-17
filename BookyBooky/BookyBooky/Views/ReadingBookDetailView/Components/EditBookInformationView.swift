@@ -18,7 +18,7 @@ struct EditBookInformationView: View {
     
     @State private var titleTextField = ""
     @State private var publisherTextField = ""
-    @State private var selectedCategory: Category = .all
+    @State private var selectedCategory: CategoryTypes = .all
     @State private var selectedTargetDate = Date.now
     
     var body: some View {
@@ -57,7 +57,7 @@ struct EditBookInformationView: View {
                     Spacer()
                     
                     Picker("Category Picker", selection: $selectedCategory) {
-                        ForEach(Category.allCases, id: \.self) { category in
+                        ForEach(CategoryTypes.allCases, id: \.self) { category in
                             Text(category.rawValue)
                         }
                     }

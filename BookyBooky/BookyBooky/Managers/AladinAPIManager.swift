@@ -33,7 +33,7 @@ class AladinAPIManager: ObservableObject {
     @Published var bookSearchItems: [BookList.Item] = [] // 검색 결과 리스트를 저장하는 변수
     @Published var BookInfoItem: [BookInfo.Item] = []  // 상세 도서 결과값을 저장하는 변수
     
-    @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
+    @Published var categories: [CategoryTypes] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
     
     // MARK: - FUNCTIONS
     
@@ -41,7 +41,7 @@ class AladinAPIManager: ObservableObject {
     /// 카테고리는 오름차순 정렬되며, '전체'는 제일 앞에, '기타'는 제일 뒤에 배치됩니다.
     /// - Parameter list: 도서 리스트 배열
     func getCategory(bookItems: [BookList.Item]) {
-        var categories: [Category] = []
+        var categories: [CategoryTypes] = []
         
         // 중복되지 않게 카테고리 항목 저장하기
         for item in bookItems where !categories.contains(item.categoryName.refinedCategory) {

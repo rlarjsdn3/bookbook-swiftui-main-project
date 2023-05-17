@@ -41,7 +41,9 @@ struct BookShelfScrollView: View {
                 
                 // 읽은 도서 섹션 (미완성)
                 Section {
-                    if readingBooks.filter({ realmManager.isCompleteBook($0) }).isEmpty {
+                    let readingBook = realmManager.getReadingBooks(isComplete: true)
+                    
+                    if readingBook.isEmpty {
                         VStack(spacing: 5) {
                             Text("읽은 도서가 없음")
                                 .font(.title3)
@@ -60,7 +62,7 @@ struct BookShelfScrollView: View {
                             // 별도 필터링을 해주어 리스트로 출력하게 해야함! -> 
                             
                             // 수정
-                            ForEach(readingBooks.filter({ realmManager.isCompleteBook($0) }), id: \.self) { book in
+                            ForEach(readingBooks.filter({ $0.isComplete }), id: \.self) { book in
                                 ReadingBookCellButton(readingBook: book, cellType: .shelf)
                             }
                         }
@@ -195,7 +197,7 @@ extension BookShelfScrollView {
     func summaryCount(_ item: BookShelfSummaryItems) -> some View {
         switch item {
         case .completeBooksCount:
-            return Text("\(readingBooks.filter { realmManager.isCompleteBook($0) }.count)").font(.title2)
+            return Text("\(readingBooks.filter { $0.isComplete }.count)").font(.title2)
         case .favoriteBooksCount:
             return Text("\(favoriteBooks.count)").font(.title2)
         case .collectSentencesCount:

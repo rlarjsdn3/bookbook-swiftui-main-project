@@ -42,8 +42,8 @@ class RealmManager: ObservableObject {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var completeBookArray: [ReadingBook] {
-        readingBooks.filter { isCompleteBook($0) }
+    var completeBooks: [ReadingBook] {
+        readingBooks.filter { $0.isComplete }
     }
 
     // MARK: - FUNCTION
@@ -57,16 +57,93 @@ class RealmManager: ObservableObject {
         return try! Realm(configuration: config)
     }
     
-    
-    func isCompleteBook(_ book: ReadingBook) -> Bool {
-        guard let lastRecord = book.readingRecords.last else {
-            return false
+    /// 읽고 있거나 읽은 도서 배열을 반환하는 함수입니다.
+    ///
+    ///  isComplete 매개변수의 기본 값은 false이며, 완독하지 않은 도서 배열을 반환합니다. isComplete 매개변수를 true로 주어지면 완독한 도서 배열을 반환합니다.
+    ///  isComplete: true → 완독한 도서 배열 반환
+    ///  isComplete: false → 완독하지 않은 도서 배열 반환
+    ///
+    /// - Parameter isComplete: 완독 유무에 따른 반환할 ReadingBook 형의 배열을 결정하는 불(Bool) 형 값
+    /// - Returns: ReadingBook 형의 배열
+    func getReadingBooks(isComplete: Bool) -> [ReadingBook] {
+        if isComplete {
+            return readingBooks.filter { $0.isComplete }
+        } else {
+            return readingBooks.filter { !$0.isComplete }
         }
-        
-        return lastRecord.totalPagesRead == book.itemPage
     }
     
+    func getReadingBookCategoryType() -> [CategoryTypes] {
+        var categoryTypes: [CategoryTypes] = [.all]
+        
+        for book in readingBooks where !categoryTypes.contains(book.category) && !book.isComplete {
+            categoryTypes.append(book.category)
+        }
+        
+        return categoryTypes
+    }
     
+    /// 매개변수로 주어진 도서의 ISBN13과 동일한 값을 가지는 객체를 반환하는 함수입니다. 해당하는 객체가 존재하지 않는다면 nil을 반환합니다.
+    /// - Parameter isbn13: 찾고자 하는 도서의 ISBN13
+    /// - Returns: Book 프로토콜을 준수하는 Obect 객체
+    func findReadingBookFirst(with isbn13: String) -> ReadingBook? {
+        if let book = readingBooks.first(where: { $0.isbn13 == isbn13 }) {
+            return book
+        }
+        return nil
+    }
+    
+    ///  첫번째 매개변수로 주어진 ReadingBooks 도서 배열을 sortType 매개변수로 주어진 기준에 맞추어 정렬된 배열을 반환하는 함수입니다.
+    /// - Parameters:
+    ///   - sortType: 정렬 기준
+    /// - Returns: 정렬된 Book 프로토콜을 준수하는 도서 배열
+    private func sortReadingBookArray(sortType: BookSortCriteriaType) -> [ReadingBook] {
+        switch sortType {
+        case .latestOrder:
+            return readingBooks.reversed()
+        case .titleOrder:
+            return readingBooks.sorted { $0.title > $1.title }
+        case .authorOrder:
+            return readingBooks.sorted { $0.author > $1.author }
+        }
+    }
+    
+    ///  ReadingBook 형의 배열을 bookSort 매개변수로 주어진 기준으로 정렬하고, 정렬한 배열을 categoryType 매개변수로 주어진 기준으로 필터링한 배열을 반환하는 함수입니다.
+    /// - Parameters:
+    ///   - bookSortType: 도서 정렬 기준
+    ///   - categoryType: 도서 필터 기준 (카테고리 별)
+    /// - Returns: 정렬 및 필터링된 ReadingBook 형의 배열
+    func filterReadingBookArray(bookSortType: BookSortCriteriaType, categoryType: CategoryTypes) -> [ReadingBook] {
+        let sortedBookArray = sortReadingBookArray(sortType: bookSortType)
+        
+        if categoryType == .all {
+            return sortedBookArray.filter { !$0.isComplete }
+        } else {
+            return sortedBookArray.filter { categoryType == $0.category && !$0.isComplete }
+        }
+    }
+    
+    func getRecentReadingActivity() -> [Activity] {
+        var activities: [Activity] = []
+        
+        for readingBook in readingBooks {
+            for record in readingBook.readingRecords {
+                activities.append(
+                    Activity(
+                        date: record.date,
+                        title: readingBook.title,
+                        category: readingBook.category,
+                        itemPage: readingBook.itemPage,
+                        isbn13: readingBook.isbn13,
+                        numOfPagesRead: record.numOfPagesRead,
+                        totalPagesRead: record.totalPagesRead
+                    )
+                )
+            }
+        }
+        
+        return Array(activities.sorted { $0.date > $1.date }.prefix(min(activities.count, 3)))
+    }
     
     // MARK: - FAVORITE BOOK
     

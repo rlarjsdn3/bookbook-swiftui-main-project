@@ -27,14 +27,14 @@ struct ActivityView: View {
                     $0.month.isEqual([.year, .month], date: record.date)
                 }) {
                     monthlyActivity[index].activity.append(
-                        Activity(date: record.date, title: readingBook.title, author: readingBook.author, category: readingBook.category, itemPage: readingBook.itemPage, isbn13: readingBook.isbn13, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead)
+                        Activity(date: record.date, title: readingBook.title, category: readingBook.category, itemPage: readingBook.itemPage, isbn13: readingBook.isbn13, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead)
                     )
                 } else {
                     monthlyActivity.append(
                         MonthlyActivity(
                             month: record.date,
                             activity: [
-                                Activity(date: record.date, title: readingBook.title, author: readingBook.author, category: readingBook.category, itemPage: readingBook.itemPage, isbn13: readingBook.isbn13, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead)
+                                Activity(date: record.date, title: readingBook.title, category: readingBook.category, itemPage: readingBook.itemPage, isbn13: readingBook.isbn13, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead)
                             ]
                         )
                     )

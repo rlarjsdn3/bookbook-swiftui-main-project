@@ -52,13 +52,13 @@ struct FavoriteBooksScrollView: View {
         switch selectedSort {
         // 최근 추가된 순으로 정렬
         case .latestOrder:
-            return realmMananger.completeBookArray.reversed()
+            return realmMananger.completeBooks.reversed()
         // 제목 오름차순으로 정렬
         case .titleOrder:
-            return realmMananger.completeBookArray.sorted { $0.title < $1.title }
+            return realmMananger.completeBooks.sorted { $0.title < $1.title }
         // 판매 포인트 내림차순으로 정렬
         case .authorOrder:
-            return realmMananger.completeBookArray.sorted { $0.author > $1.author }
+            return realmMananger.completeBooks.sorted { $0.author > $1.author }
         }
     }
     
