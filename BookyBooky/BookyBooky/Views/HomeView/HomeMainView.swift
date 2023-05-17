@@ -42,9 +42,9 @@ struct HomeMainView: View {
                         HomeActivityTabView()
                         
                         HomeReadingBookTabView(
-                            scrollYOffset: $scrollYOffset,
-                            scrollProxy: scrollProxy,
-                            selectedBookSortType: $selectedBookSortType
+                            $scrollYOffset,
+                            selectedBookSortType: $selectedBookSortType,
+                            scrollProxy: scrollProxy
                         )
                     }
                     .overlay(alignment: .top) {

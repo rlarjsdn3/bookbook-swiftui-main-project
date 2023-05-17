@@ -20,14 +20,23 @@ struct HomeReadingBookTabView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var scrollYOffset: Double
-    let scrollProxy: ScrollViewProxy
-    @Binding var selectedBookSortType: BookSortCriteriaType
-    
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    
+    @Binding var scrollYOffset: Double
+    @Binding var selectedBookSortType: BookSortCriteriaType
+    let scrollProxy: ScrollViewProxy
+    
+    // MARK: - INTIALIZER
+    
+    init(_ scrollYOffset: Binding<Double>,
+         selectedBookSortType: Binding<BookSortCriteriaType>, scrollProxy: ScrollViewProxy) {
+        self._scrollYOffset = scrollYOffset
+        self._selectedBookSortType = selectedBookSortType
+        self.scrollProxy = scrollProxy
+    }
     
     // MARK: - BODY
     
@@ -155,7 +164,7 @@ extension HomeReadingBookTabView {
             
             LazyVGrid(columns: columns, spacing: 25) {
                 ForEach(filterReadingBookArray) { book in
-                    ReadingBookCellButton(readingBook: book, cellType: .home)
+                    ReadingBookCellButton(readingBook: book, buttonType: .home)
                 }
             }
             .padding([.horizontal, .top])
@@ -199,7 +208,9 @@ extension HomeReadingBookTabView {
 struct HomeReadingBookTabView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            HomeReadingBookTabView(scrollYOffset: .constant(0.0), scrollProxy: scrollProxy, selectedBookSortType: .constant(.latestOrder))
+            HomeReadingBookTabView(.constant(0.0),
+                                   selectedBookSortType: .constant(.latestOrder),
+                                   scrollProxy: scrollProxy)
                 .environmentObject(RealmManager())
         }
     }

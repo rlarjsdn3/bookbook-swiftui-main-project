@@ -63,7 +63,7 @@ struct BookShelfScrollView: View {
                             
                             // 수정
                             ForEach(readingBooks.filter({ $0.isComplete }), id: \.self) { book in
-                                ReadingBookCellButton(readingBook: book, cellType: .shelf)
+                                ReadingBookCellButton(readingBook: book, buttonType: .shelf)
                             }
                         }
                         .padding(.bottom, 40)

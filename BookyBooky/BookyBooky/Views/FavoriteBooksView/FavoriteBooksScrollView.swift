@@ -109,7 +109,7 @@ extension FavoriteBooksScrollView {
                     }
                 } else {
                     ForEach(filteredReadingBooks, id: \.self) { completeBook in
-                        ReadingBookCellButton(readingBook: completeBook, cellType: .shelf)
+                        ReadingBookCellButton(readingBook: completeBook, buttonType: .shelf)
                     }
                 }
             }

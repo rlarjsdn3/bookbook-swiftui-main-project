@@ -30,7 +30,8 @@ class ReadingBook: Object, ObjectKeyIdentifiable {
 }
 
 extension ReadingBook {
-    /// 도서의 완독 여부에 따라 불린(Bool) 형을 반환합니다.
+    /// 도서의 완독 여부에 따라 불린(Bool) 형을 반환하는 계산 프로퍼티입니다.
+    /// 완독한 경우, 참(True)을 반환합니다.
     var isComplete: Bool {
         // 독서 데이터가 하나라도 존재하는 경우
         if let lastRecord = self.readingRecords.last {
@@ -39,6 +40,46 @@ extension ReadingBook {
         // 독서 데이터가 존재하지 않는 경우
         } else {
             return false // False 반환
+        }
+    }
+    
+    /// 도서의 제일 마지막 독서 기록을 반환하는 계산 프로퍼티입니다.
+    /// 독서 기록이 없는 경우 nil을 반환합니다.
+    var lastRecord: ReadingRecords? {
+        if let lastRecord = self.readingRecords.last {
+            return lastRecord
+        }
+        return nil
+    }
+    
+    /// 전체 페이지 중 얼마나 읽었는지 진척도 비율(%)을 반환하는 계산 프로퍼티입니다.
+    var readingProgressRate: Double {
+        if let lastRecord = self.lastRecord {
+            return (Double(lastRecord.totalPagesRead) / Double(self.itemPage)) * 100.0
+        } else {
+            return 0.0
+        }
+    }
+    
+    /// 전체 페이지 중 얼마나 읽었는지 도서 페이지를 반환하는 계산 프로퍼티입니다.
+    var readingProgressPage: Int {
+        if let readingRecord = self.lastRecord {
+            return readingRecord.totalPagesRead
+        } else {
+            return 0
+        }
+    }
+    
+    /// 도서의 완독 목표 일자를 초과했는지 확인하여 불린(Bool) 형을 반환하는 계산 프로퍼티입니다.
+    /// 오늘 일자가 도서의 완독 목표 일자보다 같거나 더 빠르면 거짓(False)을, 초과하면 참(True)를 반환합니다.
+    var isBehindTargetDate: Bool {
+        switch Date().compare(self.targetDate) {
+        // 오늘 일자가 도서의 완독 목표 일자보다 같거나 더 빠르면
+        case .orderedAscending, .orderedSame:
+            return false // False 반환
+        // 오늘 일자가 도서의 완독 목표 일자보다 초과하면
+        case .orderedDescending:
+            return true // True 반환
         }
     }
 }

@@ -323,8 +323,8 @@
 			children = (
 				9E0C0A6129D1DB4700F1F5F6 /* HomeView.swift */,
 				9E0C0A6529D1DF4800F1F5F6 /* HomeHeaderView.swift */,
-				9E24DD2D2A14F8B300366640 /* HomeActivityTabView.swift */,
 				9E24DD2E2A14F8B400366640 /* HomeMainView.swift */,
+				9E24DD2D2A14F8B300366640 /* HomeActivityTabView.swift */,
 				9E24DD2F2A14F8B400366640 /* HomeReadingBookTabView.swift */,
 				9E061D5829F8E96D0042E3B1 /* Components */,
 			);
