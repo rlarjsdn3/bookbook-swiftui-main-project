@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookTabSectionView: View {
+struct ReadingBookTabView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     @Binding var selectedTab: ReadingBookTabItems
     @Binding var selectedAnimation: ReadingBookTabItems
@@ -70,6 +70,6 @@ struct ReadingBookTabSectionView_Previews: PreviewProvider {
     @Namespace static var underlineAnimation
     
     static var previews: some View {
-        ReadingBookTabSectionView(readingBook: ReadingBook.preview, selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), scrollYOffset: .constant(0.0), underlineAnimation: underlineAnimation)
+        ReadingBookTabView(readingBook: ReadingBook.preview, selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), scrollYOffset: .constant(0.0), underlineAnimation: underlineAnimation)
     }
 }

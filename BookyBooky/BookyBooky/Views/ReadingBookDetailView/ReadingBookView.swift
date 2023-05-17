@@ -30,7 +30,7 @@ struct ReadingBookView: View {
                 scrollYOffset: $scrollYOffset
             )
             
-            ReadingBookScrollView(
+            ReadingBookMainView(
                 scrollYOffset: $scrollYOffset,
                 selectedTab: $selectedTab,
                 selectedAnimation: $selectedAnimation,

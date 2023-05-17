@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookScrollView: View {
+struct ReadingBookMainView: View {
     @State private var startOffset = 0.0
     
     @Binding var scrollYOffset: Double
@@ -24,10 +24,7 @@ struct ReadingBookScrollView: View {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
                 ReadingBookCoverView(readingBook: readingBook)
                 
-                ReadingBookRenewalButtonView(
-                    readingBook: readingBook)
-                
-                ReadingBookTabSectionView(readingBook: readingBook, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, scrollYOffset: $scrollYOffset, underlineAnimation: underlineAnimation)
+                ReadingBookTabView(readingBook: readingBook, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, scrollYOffset: $scrollYOffset, underlineAnimation: underlineAnimation)
             }
             .overlay(alignment: .top) {
                 GeometryReader { proxy -> Color in
@@ -54,6 +51,6 @@ struct ReadingBookDetailScrollView_Previews: PreviewProvider {
     @ObservedResults(ReadingBook.self) static var readingBooks
     
     static var previews: some View {
-        ReadingBookScrollView(scrollYOffset: .constant(0.0), selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), readingBook: ReadingBook.preview)
+        ReadingBookMainView(scrollYOffset: .constant(0.0), selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), readingBook: ReadingBook.preview)
     }
 }

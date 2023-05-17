@@ -11,6 +11,9 @@ import RealmSwift
 struct ReadingBookCoverView: View {
     let readingBook: ReadingBook
     
+    @State private var isPresentingRenewalSheet = false
+    @State private var isPresentingCompleteConfettiView = false
+    
     // MARK: - COMPUTED PROPERTIES
     
     var readingBookProgressRate: Double {
@@ -43,25 +46,95 @@ struct ReadingBookCoverView: View {
     // MARK: - BODY
     
     var body: some View {
-        HStack {
-            ZStack {
-                bookCoverImage(url: readingBook.cover)
+        VStack {
+            HStack {
+                ZStack {
+                    bookCoverImage(url: readingBook.cover)
+                    
+                    if !isAscendingTargetDate {
+                        Image(systemName: "exclamationmark.circle.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(Color.red)
+                            .frame(width: 130, height: 180)
+                            .background(Color.gray.opacity(0.15))
+                            .clipShape(CoverShape())
+                    }
+                }
                 
-                if !isAscendingTargetDate {
-                    Image(systemName: "exclamationmark.circle.fill")
-                        .font(.system(size: 50))
-                        .foregroundColor(Color.red)
-                        .frame(width: 130, height: 180)
-                        .background(Color.gray.opacity(0.15))
-                        .clipShape(CoverShape())
+                bookKeyInformation
+                
+                Spacer()
+            }
+            .frame(height: 200)
+            
+            HStack {
+                Button {
+                    isPresentingRenewalSheet = true
+                } label: {
+                    Group {
+                        if readingBook.isComplete {
+                            Text("완독 도서")
+                        } else {
+                            if isAscendingTargetDate {
+                                Text("읽었어요!")
+                            } else {
+                                Text("갱신 불가")
+                                    .opacity(0.75)
+                            }
+                        }
+                    }
+                    .font(.headline)
+                    .foregroundColor(.black)
+                    .frame(width: 112, height: 30)
+                    .background(.gray.opacity(0.3))
+                    .clipShape(Capsule())
+                }
+                .disabled(!isAscendingTargetDate)
+                .disabled(readingBook.isComplete)
+                
+                // 코드 미완성 (오늘 상태 메시지 출력하기)
+                if readingBook.isComplete {
+                    Text("도서를 완독했어요!")
+                        .font(.caption.weight(.light))
+                        .padding(.horizontal)
+                } else {
+                    if isAscendingTargetDate {
+                        if let lastRecord = readingBook.readingRecords.last {
+                            let calendar = Calendar.current
+                            
+                            let components1 = calendar.dateComponents([.year, .month, .day], from: lastRecord.date)
+                            let components2 = calendar.dateComponents([.year, .month, .day], from: Date.now)
+                            
+                            if components1.year == components2.year && components1.month == components2.month && components1.day == components2.day {
+                                Text("오늘 \(lastRecord.numOfPagesRead)페이지나 읽었어요!")
+                                    .font(.caption.weight(.light))
+                                    .padding(.horizontal)
+                            } else {
+                                Text("독서를 시작해보세요!")
+                                    .font(.caption.weight(.light))
+                                    .padding(.horizontal)
+                            }
+                        } else {
+                            Text("독서를 시작해보세요!")
+                                .font(.caption.weight(.light))
+                                .padding(.horizontal)
+                        }
+                    } else {
+                        Text("목표를 다시 설정해주세요!")
+                            .font(.caption.weight(.light))
+                            .padding(.horizontal)
+                    }
                 }
             }
-            
-            bookKeyInformation
-            
-            Spacer()
+            .sheet(isPresented: $isPresentingRenewalSheet) {
+                ReadingBookRenewalView(readingBook: readingBook, isPresentingConfettiView: $isPresentingCompleteConfettiView)
+            }
+            .fullScreenCover(isPresented: $isPresentingCompleteConfettiView) {
+                CompleteConfettiView(readingBook: readingBook)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding([.horizontal, .bottom])
         }
-        .frame(height: 200)
         
     }
 }
