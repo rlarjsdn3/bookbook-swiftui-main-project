@@ -11,21 +11,21 @@ struct RoundedTabView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selected: ContentsTabItems
+    @Binding var selectedTabBarItem: RoundedTabTypes
     
     // MARK: - WRAPPER PROPERTIES
     
-    @Namespace var shapeNamespace: Namespace.ID
+    @Namespace var namespace
     
     // MARK: - BODY
     
     var body: some View {
         HStack {
-            ForEach(ContentsTabItems.allCases, id: \.self) { item in
-                TabButtonView(
-                    selected: $selected,
-                    item: item,
-                    namespace: shapeNamespace
+            ForEach(RoundedTabTypes.allCases, id: \.self) { type in
+                TabButton(
+                    type,
+                    selectedTabBarItem: $selectedTabBarItem,
+                    namespace: namespace
                 )
             }
         }
@@ -50,6 +50,6 @@ struct RoundedTabView: View {
 
 struct RoundedTabView_Previews: PreviewProvider {
     static var previews: some View {
-        RoundedTabView(selected: .constant(.home))
+        RoundedTabView(selectedTabBarItem: .constant(.home))
     }
 }

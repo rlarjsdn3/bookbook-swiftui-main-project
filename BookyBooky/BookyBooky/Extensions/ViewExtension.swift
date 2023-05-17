@@ -44,7 +44,7 @@ extension View {
                 image
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 150, height: 200)
+                    .frame(width: width, height: height)
                     .clipShape(coverShape)
                     .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
             case .failure(_), .empty:

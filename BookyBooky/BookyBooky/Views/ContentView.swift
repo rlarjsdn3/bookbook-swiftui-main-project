@@ -11,7 +11,7 @@ struct ContentView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var tabSelected: ContentsTabItems = .home
+    @State private var tabSelected: RoundedTabTypes = .home
     
     // MARK: - INTIALIZER
     
@@ -23,9 +23,9 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            tabView
+            defaultTabView
             
-            RoundedTabView(selected: $tabSelected)
+            RoundedTabView(selectedTabBarItem: $tabSelected)
         }
         // 키보드가 나타나더라도 탭 뷰도 함께 올라가지 않도록 합니다.
         .ignoresSafeArea(.keyboard)
@@ -35,19 +35,19 @@ struct ContentView: View {
 // MARK: - EXTENSIONS
 
 extension ContentView {
-    var tabView: some View {
+    var defaultTabView: some View {
         TabView(selection: $tabSelected) {
             HomeView()
-                .tag(ContentsTabItems.home)
+                .tag(RoundedTabTypes.home)
             
             SearchView()
-                .tag(ContentsTabItems.search)
+                .tag(RoundedTabTypes.search)
             
             BookShelfView()
-                .tag(ContentsTabItems.bookShelf)
+                .tag(RoundedTabTypes.bookShelf)
             
             AnalysisView()
-                .tag(ContentsTabItems.analysis)
+                .tag(RoundedTabTypes.analysis)
         }
     }
 }
