@@ -21,76 +21,92 @@ struct ReadingBookCellButton: View {
     
     // MARK: - PROPERTIES
     
-    let readingBook: ReadingBook
+    let book: ReadingBook
     let buttonType: ReadingBookCellButtonType
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook, buttonType: ReadingBookCellButtonType) {
-        self.readingBook = readingBook
+    init(_ book: ReadingBook, buttonType: ReadingBookCellButtonType) {
+        self.book = book
         self.buttonType = buttonType
     }
     
     // MARK: - BODY
     
     var body: some View {
-        NavigationLink {
-            ReadingBookView(readingBook: readingBook)
-        } label: {
-            VStack {
-                ZStack {
-                    asyncImage(
-                        readingBook.cover,
-                        width: 150, height: 200,
-                        coverShape: RoundedRectangle(cornerRadius: 15)
-                    )
-                    
-                    if readingBook.isBehindTargetDate {
-                        Image(systemName: "exclamationmark.circle.fill")
-                            .font(.system(size: 50))
-                            .foregroundColor(Color.red)
-                            .frame(width: 150, height: 200)
-                            .background(Color.gray.opacity(0.15))
-                            .clipShape(
-                                RoundedRectangle(
-                                    cornerRadius: 15,
-                                    style: .continuous
-                                )
-                            )
-                    }
-                }
-                
-                if buttonType == .home {
-                    progressBar
-                }
-                
-                targetBookTitle
-                
-                targetBookAuthor
-            }
-            .padding(.horizontal, 10)
-        }
-        .buttonStyle(.plain)
+        navigationCellButton
     }
 }
 
 extension ReadingBookCellButton {
-    var progressBar: some View {
-        HStack {
-            let readingProgressRate = readingBook.readingProgressRate
+    var navigationCellButton: some View {
+        NavigationLink {
+            ReadingBookView(readingBook: book)
+        } label: {
+            readingBookCellLabel
+        }
+        .buttonStyle(.plain)
+    }
+    
+    var readingBookCellLabel: some View {
+        VStack {
+            ZStack {
+                asyncImage(
+                    book.cover,
+                    width: 150, height: 200,
+                    coverShape: RoundedRectangle(cornerRadius: 15)
+                )
+                
+                exclamationMarkSFSymbolImage
+            }
             
-            ProgressView(value: readingProgressRate, total: 100.0)
-                .tint(Color.black.gradient)
-                .frame(width: 100, alignment: .leading)
+            progressBar
             
-            Text("\(readingProgressRate.formatted(.number.precision(.fractionLength(0))))%")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+            readingBookTitleText
+            
+            readingBookAuthorText
+        }
+        .padding(.horizontal, 10)
+    }
+    
+    var exclamationMarkSFSymbolImage: some View {
+        Group {
+            if book.isBehindTargetDate {
+                Image(systemName: "exclamationmark.circle.fill")
+                    .font(.system(size: 50))
+                    .foregroundColor(Color.red)
+                    .frame(width: 150, height: 200)
+                    .background(Color.gray.opacity(0.15))
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 15,
+                            style: .continuous
+                        )
+                    )
+            }
         }
     }
     
-    var targetBookTitle: some View {
-        Text("\(readingBook.title)")
+    var progressBar: some View {
+        Group {
+            if buttonType == .home {
+                HStack {
+                    let readingProgressRate = readingBook.readingProgressRate
+                    
+                    ProgressView(value: readingProgressRate, total: 100.0)
+                        .tint(Color.black.gradient)
+                        .frame(width: 100, alignment: .leading)
+                    
+                    Text("\(readingProgressRate.formatted(.number.precision(.fractionLength(0))))%")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+    }
+    
+    var readingBookTitleText: some View {
+        Text("\(book.title)")
             .font(.headline)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -100,8 +116,8 @@ extension ReadingBookCellButton {
             .padding([buttonType == .home ? .top : [], .bottom], -5)
     }
     
-    var targetBookAuthor: some View {
-        Text("\(readingBook.author)")
+    var readingBookAuthorText: some View {
+        Text("\(book.author)")
             .font(.subheadline)
             .foregroundColor(.secondary)
             .lineLimit(1)

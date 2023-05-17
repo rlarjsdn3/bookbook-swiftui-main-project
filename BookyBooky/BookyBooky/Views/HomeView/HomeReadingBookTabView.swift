@@ -164,7 +164,7 @@ extension HomeReadingBookTabView {
             
             LazyVGrid(columns: columns, spacing: 25) {
                 ForEach(filterReadingBookArray) { book in
-                    ReadingBookCellButton(readingBook: book, buttonType: .home)
+                    ReadingBookCellButton(book, buttonType: .home)
                 }
             }
             .padding([.horizontal, .top])

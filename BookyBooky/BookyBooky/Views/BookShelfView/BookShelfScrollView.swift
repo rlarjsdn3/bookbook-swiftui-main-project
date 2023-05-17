@@ -10,12 +10,6 @@ import RealmSwift
 
 struct BookShelfScrollView: View {
     
-    // MARK: - PROPERTIES
-    
-    let columns = [GridItem(.flexible()), GridItem(.flexible())]
-    
-    @Binding var scrollYOffset: CGFloat
-    
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmManager: RealmManager
@@ -23,12 +17,23 @@ struct BookShelfScrollView: View {
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     @ObservedResults(ReadingBook.self) var readingBooks
     
+    @State private var startOffset: CGFloat = 0.0
+    
     @State private var isPresentingFavoriteBookListView = false
     @State private var isPresentingCompleteBookListView = false
     
-    @State private var tapISBN13 = ""
-    @State private var showFavoriteBookInfo = false
-    @State private var startOffset: CGFloat = 0.0
+    // MARK: - PROPERTIES
+    
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    @Binding var scrollYOffset: Double
+    
+    init(_ scrollOffset: Binding<Double>) {
+        self._scrollYOffset = scrollOffset
+    }
     
     // MARK: - BODY
     
@@ -39,34 +44,28 @@ struct BookShelfScrollView: View {
                 
                 favoriteBookSection
                 
-                // 읽은 도서 섹션 (미완성)
+                let completeBooks = realmManager.getReadingBooks(isComplete: true)
+                
                 Section {
-                    let readingBook = realmManager.getReadingBooks(isComplete: true)
                     
-                    if readingBook.isEmpty {
+                    if !completeBooks.isEmpty {
+                        LazyVGrid(columns: columns) {
+                            ForEach(completeBooks, id: \.self) { book in
+                                ReadingBookCellButton(book, buttonType: .shelf)
+                            }
+                        }
+                        .padding(.bottom, 40)
+                    } else {
                         VStack(spacing: 5) {
                             Text("읽은 도서가 없음")
                                 .font(.title3)
                                 .fontWeight(.bold)
-                            
+
                             Text("독서를 시작해보세요.")
                                 .foregroundColor(.secondary)
                         }
                         .padding(.vertical, 30)
                         .padding(.bottom, 100) // 임시
-                    } else {
-                        LazyVGrid(columns: columns) {
-                            
-                            // 모두 읽은 도서를 삭제 할때, 에러가 나는 이유는 삭제된 오브젝트에 접근해서 리스트를 만드렫고 했기 때문!
-                            // 이걸 수정하기 위해, 오브젝트가 변경될 때마다 UI를 새로 그리는 readingBooks 프로퍼티 래퍼 변수에다가
-                            // 별도 필터링을 해주어 리스트로 출력하게 해야함! -> 
-                            
-                            // 수정
-                            ForEach(readingBooks.filter({ $0.isComplete }), id: \.self) { book in
-                                ReadingBookCellButton(readingBook: book, buttonType: .shelf)
-                            }
-                        }
-                        .padding(.bottom, 40)
                     }
                 } header: {
                     HStack {
@@ -81,14 +80,14 @@ struct BookShelfScrollView: View {
                         } label: {
                             Text("더 보기")
                         }
-                        .disabled(readingBooks.isEmpty)
+                        .disabled(completeBooks.isEmpty)
                     }
-//                    .padding(.top, -8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.vertical, 10)
                     .padding(.bottom, 5)
                     .padding(.horizontal)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .background(.white)
+                    
                     .overlay(alignment: .bottom) {
                         Divider()
                             .opacity(!favoriteBooks.isEmpty ? scrollYOffset > 480.0 ? 1 : 0 : scrollYOffset > 290.0 ? 1 : 0)
@@ -275,7 +274,7 @@ extension BookShelfScrollView {
 
 struct BookShelfScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        BookShelfScrollView(scrollYOffset: .constant(0.0))
+        BookShelfScrollView(.constant(0.0))
             .environmentObject(RealmManager())
     }
 }
