@@ -14,8 +14,6 @@ struct ActivityScrollView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    
-    
     // MARK: - BODY
     
     var body: some View {
@@ -31,7 +29,7 @@ struct ActivityScrollView: View {
                                     
                                     Spacer()
                                     
-                                    Text("\(realmManager.activitiesCount(activity))일")
+                                    Text("\(realmManager.getMonthlyReadingDayCount(activity))일")
                                 }
                                 
                                 HStack {
@@ -40,7 +38,7 @@ struct ActivityScrollView: View {
                                     
                                     Spacer()
                                     
-                                    Text("\(activity.activity.reduce(0, { $1.itemPage == $1.totalPagesRead ? $0 + 1 : $0 }))권")
+                                    Text("\(activity.activities.reduce(0, { $1.itemPage == $1.totalPagesRead ? $0 + 1 : $0 }))권")
                                         .foregroundColor(Color.purple)
                                 }
                                 
@@ -51,11 +49,11 @@ struct ActivityScrollView: View {
                                     Spacer()
                                     
                                     VStack(alignment: .trailing) {
-                                        Text("\(activity.activity.reduce(0, { $0 + $1.numOfPagesRead }))페이지")
+                                        Text("\(activity.activities.reduce(0, { $0 + $1.numOfPagesRead }))페이지")
                                             .foregroundColor(Color.pink)
                                         
                                         // 실질적인 일자 개수를 세아려 평균 구하기 (수정 필요)
-                                        Text("하루 평균 \( activity.activity.reduce(0, { $0 + $1.numOfPagesRead }) / realmManager.activitiesCount(activity) )페이지")
+                                        Text("하루 평균 \( activity.activities.reduce(0, { $0 + $1.numOfPagesRead }) / realmManager.getMonthlyReadingDayCount(activity) )페이지")
                                             .font(.footnote)
                                             .foregroundColor(Color.secondary)
                                     }
@@ -66,11 +64,11 @@ struct ActivityScrollView: View {
                             Spacer()
                         }
                         
-                        ForEach(activity.activity.sorted { $0.date < $1.date }, id: \.self) { data in
+                        ForEach(activity.activities.sorted { $0.date < $1.date }, id: \.self) { data in
                             ActivityCellButton(data)
                         }
                     } header: {
-                        Text(activity.month.toFormat("yyyy년 M월"))
+                        Text(activity.date.toFormat("yyyy년 M월"))
                             .font(.headline.weight(.bold))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical, 10)
@@ -85,6 +83,10 @@ struct ActivityScrollView: View {
         
     }
 }
+
+// MARK: - EXTENSIONS
+
+// MARK: - PREVIEW
 
 struct ActivityScrollView_Previews: PreviewProvider {
     static var previews: some View {

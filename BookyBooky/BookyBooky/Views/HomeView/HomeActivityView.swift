@@ -69,7 +69,7 @@ extension HomeActivityView {
         .padding(.bottom, 10)
     }
     
-    func activityCellButtons(_ activities: [Activity]) -> some View {
+    func activityCellButtons(_ activities: [ReadingActivity]) -> some View {
         ForEach(activities, id: \.self) { activity in
             ActivityCellButton(activity)
         }

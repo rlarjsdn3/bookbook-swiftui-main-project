@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Activity: Hashable {
+struct ReadingActivity: Hashable {
     var date: Date
     var title: String
     var category: CategoryTypes
@@ -18,7 +18,7 @@ struct Activity: Hashable {
     var totalPagesRead: Int
 }
 
-extension Activity {
+extension ReadingActivity {
     /// 도서의 완독 여부에 따라 불린(Bool) 형을 반환합니다.
     var isComplete: Bool {
         // 마지막으로 읽은 도서 페이지와 도서 페이지가 동일한 경우
@@ -26,8 +26,8 @@ extension Activity {
     }
 }
 
-extension Activity {
-    static var preview: Activity = Activity(
+extension ReadingActivity {
+    static var preview: ReadingActivity = ReadingActivity(
                                         date: Date.now,
                                         title: "Java의 정석",
                                         category: CategoryTypes.computer,

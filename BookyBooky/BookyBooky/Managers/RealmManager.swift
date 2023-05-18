@@ -135,13 +135,13 @@ class RealmManager: ObservableObject {
     
     /// 최근 3개의 활동 데이터를 반환하는 함수입니다.
     /// - Returns: Activity 형의 배열
-    func getRecentReadingActivity() -> [Activity] {
-        var activities: [Activity] = []
+    func getRecentReadingActivity() -> [ReadingActivity] {
+        var activities: [ReadingActivity] = []
         
         for readingBook in readingBooks {
             for record in readingBook.readingRecords {
                 activities.append(
-                    Activity(
+                    ReadingActivity(
                         date: record.date,
                         title: readingBook.title,
                         category: readingBook.category,
@@ -157,47 +157,53 @@ class RealmManager: ObservableObject {
         return Array(activities.sorted { $0.date > $1.date }.prefix(min(activities.count, 3)))
     }
     
-    struct MonthlyActivity: Hashable {
-        var month: Date
-        var activity: [Activity]
-    }
-    
-    func getMonthlyReadingActivity() -> [MonthlyActivity] {
-        var monthlyActivity: [MonthlyActivity] = []
+    func getMonthlyReadingActivity() -> [MonthlyReadingActivity] {
         let readingBooks = getReadingBooks(.all)
+        var monthlyActivities: [MonthlyReadingActivity] = []
         
-        readingBooks.forEach { readingBook in
-            readingBook.readingRecords.forEach { record in
-                if let index = monthlyActivity.firstIndex(where: {
-                    $0.month.isEqual([.year, .month], date: record.date)
+        for readingBook in readingBooks {
+            for record in readingBook.readingRecords {
+                let activity = ReadingActivity(
+                                    date: record.date,
+                                    title: readingBook.title,
+                                    category: readingBook.category,
+                                    itemPage: readingBook.itemPage,
+                                    isbn13: readingBook.isbn13,
+                                    numOfPagesRead: record.numOfPagesRead,
+                                    totalPagesRead: record.totalPagesRead
+                                )
+                
+                if let index = monthlyActivities.firstIndex(where: {
+                    $0.date.isEqual([.year, .month], date: record.date)
                 }) {
-                    monthlyActivity[index].activity.append(
-                        Activity(date: record.date, title: readingBook.title, category: readingBook.category, itemPage: readingBook.itemPage, isbn13: readingBook.isbn13, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead)
-                    )
+                    monthlyActivities[index].activities.append(activity)
                 } else {
-                    monthlyActivity.append(
-                        MonthlyActivity(
-                            month: record.date,
-                            activity: [
-                                Activity(date: record.date, title: readingBook.title, category: readingBook.category, itemPage: readingBook.itemPage, isbn13: readingBook.isbn13, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead)
-                            ]
+                    monthlyActivities.append(
+                        MonthlyReadingActivity(
+                            date: record.date,
+                            activities: [activity]
                         )
                     )
                 }
             }
         }
         
-        monthlyActivity.sort { $0.month > $1.month }
+        for index in monthlyActivities.indices {
+            monthlyActivities[index].activities.sort { $0.date < $1.date }
+        }
+        monthlyActivities.sort { $0.date > $1.date }
         
-        return monthlyActivity
+        return monthlyActivities
     }
     
-    func activitiesCount(_ activity: MonthlyActivity) -> Int {
+    func getMonthlyReadingDayCount(_ activity: MonthlyReadingActivity) -> Int {
         var dates: [Date] = []
         
-        activity.activity.forEach { act in
-            if !dates.contains(where: { $0.isEqual([.year, .month, .day], date: act.date) }) {
-                dates.append(act.date)
+        for activity in activity.activities {
+            let date = activity.date
+            
+            if !dates.contains(where: { $0.isEqual([.year, .month, .day], date: date) }) {
+                dates.append(date)
             }
         }
         return dates.count

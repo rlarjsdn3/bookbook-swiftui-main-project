@@ -17,11 +17,11 @@ struct ActivityCellButton: View {
     
     // MARK: - PROPERTIES
     
-    let activity: Activity
+    let activity: ReadingActivity
     
     // MARK: - INITALIZER
     
-    init(_ activity: Activity) {
+    init(_ activity: ReadingActivity) {
         self.activity = activity
     }
     
@@ -120,7 +120,7 @@ extension ActivityCellButton {
 
 struct ActivityCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityCellButton(Activity.preview)
+        ActivityCellButton(ReadingActivity.preview)
             .environmentObject(RealmManager())
     }
 }
