@@ -21,7 +21,7 @@ struct HomeView: View {
             VStack(spacing: 0) {
                 HomeHeaderView($scrollYOffset, selectedBookSortType: $selectedBookSortType)
                 
-                HomeMainView($scrollYOffset, selectedBookSortType: $selectedBookSortType)
+                HomeScrollView($scrollYOffset, selectedBookSortType: $selectedBookSortType)
             }
         }
     }

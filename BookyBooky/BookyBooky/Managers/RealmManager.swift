@@ -55,6 +55,12 @@ class RealmManager: ObservableObject {
         return try! Realm(configuration: config)
     }
     
+    enum readingBookType {
+        case all
+        case complete
+        case unfinished
+    }
+    
     /// 읽고 있거나 읽은 도서 배열을 반환하는 함수입니다.
     ///
     ///  isComplete 매개변수의 기본 값은 false이며, 완독하지 않은 도서 배열을 반환합니다. isComplete 매개변수를 true로 주어지면 완독한 도서 배열을 반환합니다.
@@ -63,10 +69,15 @@ class RealmManager: ObservableObject {
     ///
     /// - Parameter isComplete: 완독 유무에 따른 반환할 ReadingBook 형의 배열을 결정하는 불(Bool) 형 값
     /// - Returns: ReadingBook 형의 배열
-    func getReadingBooks(isComplete: Bool) -> [ReadingBook] {
-        if isComplete {
+    func getReadingBooks(_ type: readingBookType) -> [ReadingBook] {
+        let readingBooks = realm.objects(ReadingBook.self)
+        
+        switch type {
+        case .all:
+            return Array(readingBooks)
+        case .complete:
             return readingBooks.filter { $0.isComplete }
-        } else {
+        case .unfinished:
             return readingBooks.filter { !$0.isComplete }
         }
     }
@@ -121,6 +132,9 @@ class RealmManager: ObservableObject {
         }
     }
     
+    
+    /// 최근 3개의 활동 데이터를 반환하는 함수입니다.
+    /// - Returns: Activity 형의 배열
     func getRecentReadingActivity() -> [Activity] {
         var activities: [Activity] = []
         
@@ -141,6 +155,52 @@ class RealmManager: ObservableObject {
         }
         
         return Array(activities.sorted { $0.date > $1.date }.prefix(min(activities.count, 3)))
+    }
+    
+    struct MonthlyActivity: Hashable {
+        var month: Date
+        var activity: [Activity]
+    }
+    
+    func getMonthlyReadingActivity() -> [MonthlyActivity] {
+        var monthlyActivity: [MonthlyActivity] = []
+        let readingBooks = getReadingBooks(.all)
+        
+        readingBooks.forEach { readingBook in
+            readingBook.readingRecords.forEach { record in
+                if let index = monthlyActivity.firstIndex(where: {
+                    $0.month.isEqual([.year, .month], date: record.date)
+                }) {
+                    monthlyActivity[index].activity.append(
+                        Activity(date: record.date, title: readingBook.title, category: readingBook.category, itemPage: readingBook.itemPage, isbn13: readingBook.isbn13, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead)
+                    )
+                } else {
+                    monthlyActivity.append(
+                        MonthlyActivity(
+                            month: record.date,
+                            activity: [
+                                Activity(date: record.date, title: readingBook.title, category: readingBook.category, itemPage: readingBook.itemPage, isbn13: readingBook.isbn13, numOfPagesRead: record.numOfPagesRead, totalPagesRead: record.totalPagesRead)
+                            ]
+                        )
+                    )
+                }
+            }
+        }
+        
+        monthlyActivity.sort { $0.month > $1.month }
+        
+        return monthlyActivity
+    }
+    
+    func activitiesCount(_ activity: MonthlyActivity) -> Int {
+        var dates: [Date] = []
+        
+        activity.activity.forEach { act in
+            if !dates.contains(where: { $0.isEqual([.year, .month, .day], date: act.date) }) {
+                dates.append(act.date)
+            }
+        }
+        return dates.count
     }
     
     // MARK: - FAVORITE BOOK

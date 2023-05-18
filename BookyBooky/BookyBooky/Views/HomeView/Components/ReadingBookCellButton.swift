@@ -91,7 +91,7 @@ extension ReadingBookCellButton {
         Group {
             if buttonType == .home {
                 HStack {
-                    let readingProgressRate = readingBook.readingProgressRate
+                    let readingProgressRate = book.readingProgressRate
                     
                     ProgressView(value: readingProgressRate, total: 100.0)
                         .tint(Color.black.gradient)

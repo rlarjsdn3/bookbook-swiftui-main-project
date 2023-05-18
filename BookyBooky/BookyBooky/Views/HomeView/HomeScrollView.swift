@@ -10,7 +10,7 @@ import RealmSwift
 
 // 리팩토링 필요
 
-struct HomeMainView: View {
+struct HomeScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -39,9 +39,9 @@ struct HomeMainView: View {
                     VStack {
                         navigationBarTitle
                         
-                        HomeActivityTabView()
+                        HomeActivityView()
                         
-                        HomeReadingBookTabView(
+                        HomeReadingBookView(
                             $scrollYOffset,
                             selectedBookSortType: $selectedBookSortType,
                             scrollProxy: scrollProxy
@@ -72,7 +72,7 @@ struct HomeMainView: View {
 
 // MARK: - EXTENSION
 
-extension HomeMainView {
+extension HomeScrollView {
     var navigationBarTitle: some View {
         VStack(alignment: .leading) {
             navigationSubTitle
@@ -103,7 +103,7 @@ extension HomeMainView {
 
 struct HomeMainView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeMainView(.constant(0.0), selectedBookSortType: .constant(.latestOrder))
+        HomeScrollView(.constant(0.0), selectedBookSortType: .constant(.latestOrder))
             .environmentObject(RealmManager())
     }
 }

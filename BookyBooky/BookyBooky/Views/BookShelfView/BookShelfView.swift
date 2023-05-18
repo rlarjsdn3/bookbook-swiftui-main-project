@@ -14,7 +14,7 @@ struct BookShelfView: View {
     
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
-    @State private var scrollYOffset: CGFloat = 0.0
+    @State private var scrollYOffset: Double = 0.0
     
     // MARK: - BODY
     
@@ -23,7 +23,7 @@ struct BookShelfView: View {
             VStack(spacing: 0) {
                 BookShelfHeaderView()
                 
-                BookShelfScrollView(scrollYOffset: $scrollYOffset)
+                BookShelfScrollView($scrollYOffset)
             }
         }
     }

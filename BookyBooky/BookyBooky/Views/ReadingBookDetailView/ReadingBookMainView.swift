@@ -21,7 +21,7 @@ struct ReadingBookMainView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            LazyVStack(pinnedViews: [.sectionHeaders]) {
+            LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 ReadingBookCoverView(readingBook: readingBook)
                 
                 ReadingBookTabView(readingBook: readingBook, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, scrollYOffset: $scrollYOffset, underlineAnimation: underlineAnimation)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeReadingBookTabView: View {
+struct HomeReadingBookView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -47,7 +47,7 @@ struct HomeReadingBookTabView: View {
 
 // MARK: - EXTENSIONS
 
-extension HomeReadingBookTabView {
+extension HomeReadingBookView {
     var readingBookTab: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             readingBookTabTitle
@@ -133,7 +133,7 @@ extension HomeReadingBookTabView {
     
     var readingBookTabMain: some View {
         Group {
-            let readingBook = realmManager.getReadingBooks(isComplete: false)
+            let readingBook = realmManager.getReadingBooks(.unfinished)
             
             if readingBook.isEmpty {
                 noBookIsBeingReadLabel
@@ -208,7 +208,7 @@ extension HomeReadingBookTabView {
 struct HomeReadingBookTabView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            HomeReadingBookTabView(.constant(0.0),
+            HomeReadingBookView(.constant(0.0),
                                    selectedBookSortType: .constant(.latestOrder),
                                    scrollProxy: scrollProxy)
                 .environmentObject(RealmManager())
