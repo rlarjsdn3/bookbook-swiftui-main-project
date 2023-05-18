@@ -11,13 +11,13 @@ import AlertToast
 
 class RealmManager: ObservableObject {
     
-    // MARK: - ALERT PROPERTIES
+    // MARK: - TOAST ALERT PROPERTIES
     
     @Published var isPresentingFavoriteBookAddCompleteToastAlert = false
     @Published var isPresentingTargetBookAddCompleteToastAlert = false
     @Published var isPresentingTargetBookEditComleteToastAlert = false
     
-    // MARK: - ALERT FUNCTIONS
+    // MARK: - TOAST ALERT FUNCTIONS
 
     func showTargetBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
         AlertToast(displayMode: .alert, type: .complete(color), title: "도서 추가 완료")
@@ -37,12 +37,6 @@ class RealmManager: ObservableObject {
     
     @ObservedResults(ReadingBook.self) var readingBooks
     @ObservedResults(FavoriteBook.self) var favoriteBooks
-    
-    // MARK: - COMPUTED PROPERTIES
-    
-    var completeBooks: [ReadingBook] {
-        readingBooks.filter { $0.isComplete }
-    }
 
     // MARK: - FUNCTION
     
@@ -54,20 +48,55 @@ class RealmManager: ObservableObject {
         
         return try! Realm(configuration: config)
     }
+
+    // MARK: - FAVORITE BOOK
     
+    func addFavoriteBook(_ object: FavoriteBook) {
+        $favoriteBooks.append(object)
+    }
+    
+    func deleteFavoriteBook(_ object: FavoriteBook) {
+        $favoriteBooks.remove(object)
+    }
+    
+    func deleteFavoriteBook(_ isbn13: String) {
+        if let object = favoriteBooks.filter("isbn13 == %@", isbn13).first {
+            deleteFavoriteBook(object)
+        }
+    }
+    
+    // MARK: - READING BOOK
+    
+    func addReadingBook(_ object: ReadingBook) {
+        $readingBooks.append(object)
+    }
+    
+    func deleteReadingBook(_ isbn13: String) {
+        if let object = readingBooks.filter("isbn13 == %@", isbn13).first {
+            deleteReadingBook(object)
+        }
+    }
+    
+    func deleteReadingBook(_ object: ReadingBook) {
+        $readingBooks.remove(object)
+    }
+    
+    // MARK: - READING RECORDS
+    
+}
+
+extension RealmManager {
+    
+    /// 도서 배열의 유형을 정의한 열거형입니다.
     enum readingBookType {
         case all
         case complete
         case unfinished
     }
     
-    /// 읽고 있거나 읽은 도서 배열을 반환하는 함수입니다.
-    ///
-    ///  isComplete 매개변수의 기본 값은 false이며, 완독하지 않은 도서 배열을 반환합니다. isComplete 매개변수를 true로 주어지면 완독한 도서 배열을 반환합니다.
-    ///  isComplete: true → 완독한 도서 배열 반환
-    ///  isComplete: false → 완독하지 않은 도서 배열 반환
-    ///
-    /// - Parameter isComplete: 완독 유무에 따른 반환할 ReadingBook 형의 배열을 결정하는 불(Bool) 형 값
+    /// 도서 배열을 반환하는 함수입니다.
+    /// 모든 도서(.all)를 반환하거나, 읽고 있는 도서(.unfinished) 혹은 읽은 도서(.complete)를 반환합니다.
+    /// - Parameter type: 도서 유형(.all, .complete, .unfinished)
     /// - Returns: ReadingBook 형의 배열
     func getReadingBooks(_ type: readingBookType) -> [ReadingBook] {
         let readingBooks = realm.objects(ReadingBook.self)
@@ -131,8 +160,9 @@ class RealmManager: ObservableObject {
             return sortedBookArray.filter { categoryType == $0.category && !$0.isComplete }
         }
     }
-    
-    
+}
+
+extension RealmManager {
     /// 최근 3개의 활동 데이터를 반환하는 함수입니다.
     /// - Returns: Activity 형의 배열
     func getRecentReadingActivity() -> [ReadingActivity] {
@@ -157,6 +187,8 @@ class RealmManager: ObservableObject {
         return Array(activities.sorted { $0.date > $1.date }.prefix(min(activities.count, 3)))
     }
     
+    /// <#Description#>
+    /// - Returns: <#description#>
     func getMonthlyReadingActivity() -> [MonthlyReadingActivity] {
         let readingBooks = getReadingBooks(.all)
         var monthlyActivities: [MonthlyReadingActivity] = []
@@ -196,6 +228,9 @@ class RealmManager: ObservableObject {
         return monthlyActivities
     }
     
+    /// <#Description#>
+    /// - Parameter activity: <#activity description#>
+    /// - Returns: <#description#>
     func getMonthlyReadingDayCount(_ activity: MonthlyReadingActivity) -> Int {
         var dates: [Date] = []
         
@@ -208,39 +243,5 @@ class RealmManager: ObservableObject {
         }
         return dates.count
     }
-    
-    // MARK: - FAVORITE BOOK
-    
-    func addFavoriteBook(_ object: FavoriteBook) {
-        $favoriteBooks.append(object)
-    }
-    
-    func deleteFavoriteBook(_ object: FavoriteBook) {
-        $favoriteBooks.remove(object)
-    }
-    
-    func deleteFavoriteBook(_ isbn13: String) {
-        if let object = favoriteBooks.filter("isbn13 == %@", isbn13).first {
-            deleteFavoriteBook(object)
-        }
-    }
-    
-    // MARK: - READING BOOK
-    
-    func addReadingBook(_ object: ReadingBook) {
-        $readingBooks.append(object)
-    }
-    
-    func deleteReadingBook(_ isbn13: String) {
-        if let object = readingBooks.filter("isbn13 == %@", isbn13).first {
-            deleteReadingBook(object)
-        }
-    }
-    
-    func deleteReadingBook(_ object: ReadingBook) {
-        $readingBooks.remove(object)
-    }
-    
-    // MARK: - READING RECORDS
     
 }

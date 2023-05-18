@@ -28,14 +28,14 @@ struct ActivityCellButton: View {
     // MARK: - BODY
     
     var body: some View {
-        navigationButton
+        navigationCellButton
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension ActivityCellButton {
-    var navigationButton: some View {
+    var navigationCellButton: some View {
         NavigationLink {
             if let book = realmManager.findReadingBookFirst(with: activity.isbn13) {
                 ReadingBookView(readingBook: book)
@@ -48,7 +48,7 @@ extension ActivityCellButton {
     
     var cellLabel: some View {
         HStack {
-            statusImage
+            statusSFSymbolImage
             
             statusLabel
         }
@@ -59,7 +59,7 @@ extension ActivityCellButton {
         .padding(.horizontal, 13)
     }
     
-    var statusImage: some View {
+    var statusSFSymbolImage: some View {
         Group {
             // 도서를 완독한 경우
             if activity.isComplete {

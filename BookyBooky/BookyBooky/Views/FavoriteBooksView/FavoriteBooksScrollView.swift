@@ -49,16 +49,18 @@ struct FavoriteBooksScrollView: View {
     // ....
     
     var sortedCompleteBooks: [ReadingBook] {
+        let readingBooks = realmMananger.getReadingBooks(.complete)
+        
         switch selectedSort {
         // 최근 추가된 순으로 정렬
         case .latestOrder:
-            return realmMananger.completeBooks.reversed()
+            return readingBooks.reversed()
         // 제목 오름차순으로 정렬
         case .titleOrder:
-            return realmMananger.completeBooks.sorted { $0.title < $1.title }
+            return readingBooks.sorted { $0.title < $1.title }
         // 판매 포인트 내림차순으로 정렬
         case .authorOrder:
-            return realmMananger.completeBooks.sorted { $0.author > $1.author }
+            return readingBooks.sorted { $0.author > $1.author }
         }
     }
     
