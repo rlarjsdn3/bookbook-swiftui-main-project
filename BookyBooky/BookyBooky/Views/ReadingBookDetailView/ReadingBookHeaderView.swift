@@ -9,42 +9,61 @@ import SwiftUI
 import RealmSwift
 
 struct ReadingBookHeaderView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @Environment(\.dismiss) var dismiss
-    
     @EnvironmentObject var realmManager: RealmManager
-    
-    var readingBook: ReadingBook
-    @Binding var scrollYOffset: Double
     
     @State private var isPresentingEditBookInformationSheet = false
     @State private var isPresentingDeleteConfirmationDialog = false
     
+    // MARK: - PROPERTIES
+    
+    var readingBook: ReadingBook
+    @Binding var scrollYOffset: Double
+    
+    // MARK: - INTIALIZER
+    
+    init(_ readingBook: ReadingBook, scrollYOffset: Binding<Double>) {
+        self.readingBook = readingBook
+        self._scrollYOffset = scrollYOffset
+    }
+    
+    // MARK: - BODY
+    
     var body: some View {
+        navigationBar
+            .sheet(isPresented: $isPresentingEditBookInformationSheet) {
+                EditBookInformationView(readingBook: readingBook)
+            }
+            .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
+                Button("삭제", role: .destructive) {
+                    dismiss()
+                    realmManager.deleteReadingBook(readingBook.isbn13)
+                }
+            }
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension ReadingBookHeaderView {
+    var navigationBar: some View {
         HStack {
             Spacer()
             
-            navigationTitle
+            navigationBarTitle
             
             Spacer()
         }
         .overlay {
-            navigationBarItems
-        }
-        .sheet(isPresented: $isPresentingEditBookInformationSheet) {
-            EditBookInformationView(readingBook: readingBook)
-        }
-        .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
-            Button("삭제", role: .destructive) {
-                dismiss()
-                realmManager.deleteReadingBook(readingBook.isbn13)
-            }
+            navigationBarButtons
         }
         .padding(.vertical)
     }
-}
-
-extension ReadingBookHeaderView {
-    var navigationTitle: some View {
+    
+    var navigationBarTitle: some View {
         Group {
             if scrollYOffset > 30 {
                 Text(readingBook.title)
@@ -59,53 +78,74 @@ extension ReadingBookHeaderView {
         }
     }
     
-    var navigationBarItems: some View {
+    var navigationBarButtons: some View {
         HStack {
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .navigationBarItemStyle()
-            }
+            navigationBackButton
             
             Spacer()
             
             Menu {
                 Section {
-                    Button {
-                        
-                    } label: {
-                        Label("문장 추가", systemImage: "bookmark.fill")
-                    }
-
+                    addBookSentenceButton
                     
                     Divider()
                     
-                    Button {
-                        isPresentingEditBookInformationSheet = true
-                    } label: {
-                        Label("편집", systemImage: "square.and.pencil")
-                    }
+                    editReadingBookButton
 
-                    Button(role: .destructive) {
-                        isPresentingDeleteConfirmationDialog = true
-                    } label: {
-                        Label("삭제", systemImage: "trash")
-                    }
+                    deleteReadingBoolButton
                 } header: {
                     Text("도서 편집")
                 }
             } label: {
-                Image(systemName: "ellipsis")
-                    .navigationBarItemStyle()
+                ellipsisSFSymbolsImage
             }
         }
     }
+    
+    var navigationBackButton: some View {
+        Button {
+            dismiss()
+        } label: {
+            Image(systemName: "chevron.left")
+                .navigationBarItemStyle()
+        }
+    }
+    
+    var editReadingBookButton: some View {
+        Button {
+            isPresentingEditBookInformationSheet = true
+        } label: {
+            Label("편집", systemImage: "square.and.pencil")
+        }
+    }
+    
+    var deleteReadingBoolButton: some View {
+        Button(role: .destructive) {
+            isPresentingDeleteConfirmationDialog = true
+        } label: {
+            Label("삭제", systemImage: "trash")
+        }
+    }
+    
+    var addBookSentenceButton: some View {
+        Button {
+            // ...
+        } label: {
+            Label("문장 추가", systemImage: "bookmark.fill")
+        }
+    }
+    
+    var ellipsisSFSymbolsImage: some View {
+        Image(systemName: "ellipsis")
+            .navigationBarItemStyle()
+    }
 }
+
+// MARK: - PREVIEW
 
 struct TargetBookDetailHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookHeaderView(readingBook: ReadingBook.preview, scrollYOffset: .constant(0.0))
+        ReadingBookHeaderView(ReadingBook.preview, scrollYOffset: .constant(0.0))
             .environmentObject(RealmManager())
     }
 }

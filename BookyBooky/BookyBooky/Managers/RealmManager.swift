@@ -14,8 +14,8 @@ class RealmManager: ObservableObject {
     // MARK: - TOAST ALERT PROPERTIES
     
     @Published var isPresentingFavoriteBookAddCompleteToastAlert = false
-    @Published var isPresentingTargetBookAddCompleteToastAlert = false
-    @Published var isPresentingTargetBookEditComleteToastAlert = false
+    @Published var isPresentingReadingBookAddCompleteToastAlert = false
+    @Published var isPresentingReadingBookEditComleteToastAlert = false
     
     // MARK: - TOAST ALERT FUNCTIONS
 

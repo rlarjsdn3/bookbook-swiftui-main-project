@@ -48,7 +48,7 @@ struct BookAddButtonsView: View {
                 
                 realmManager.addReadingBook(completeTargetBook)
                 
-                realmManager.isPresentingTargetBookAddCompleteToastAlert = true
+                realmManager.isPresentingReadingBookAddCompleteToastAlert = true
                 dismiss()
             }
             

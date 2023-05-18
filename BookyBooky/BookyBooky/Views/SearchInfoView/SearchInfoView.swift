@@ -77,7 +77,7 @@ struct SearchInfoView: View {
         .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddCompleteToastAlert, duration: 1.0) {
                 realmManager.showFavoriteBookAddCompleteToastAlert(categoryThemeColor)
         }
-        .toast(isPresenting: $realmManager.isPresentingTargetBookAddCompleteToastAlert, duration: 1.0) {
+        .toast(isPresenting: $realmManager.isPresentingReadingBookAddCompleteToastAlert, duration: 1.0) {
             realmManager.showTargetBookAddCompleteToastAlert(categoryThemeColor)
         }
         .onAppear {

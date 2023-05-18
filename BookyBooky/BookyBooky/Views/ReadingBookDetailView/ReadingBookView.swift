@@ -26,7 +26,7 @@ struct ReadingBookView: View {
     var body: some View {
         VStack(spacing: 0) {
             ReadingBookHeaderView(
-                readingBook: readingBook,
+                readingBook,
                 scrollYOffset: $scrollYOffset
             )
             
@@ -37,7 +37,9 @@ struct ReadingBookView: View {
                 readingBook: readingBook
             )
         }
-        .toast(isPresenting: $realmManager.isPresentingTargetBookEditComleteToastAlert, duration: 1.0) {
+        .toast(
+            isPresenting: $realmManager.isPresentingReadingBookEditComleteToastAlert,
+            duration: 1.0) {
             realmManager.showTargetBookEditCompleteToastAlert(readingBook.category.accentColor)
         }
         .navigationBarBackButtonHidden()
