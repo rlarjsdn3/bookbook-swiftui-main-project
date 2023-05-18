@@ -33,7 +33,7 @@ struct ReadingBookScrollView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                ReadingBookCoverView(readingBook)
+                ReadingBookInfoView(readingBook)
                 
                 ReadingBookTabView(
                     readingBook,

@@ -51,7 +51,7 @@ extension ReadingBookCellButton {
     var readingBookCellLabel: some View {
         VStack {
             ZStack {
-                asyncImage(
+                asyncCovoerImage(
                     readingBook.cover,
                     width: 150, height: 200,
                     coverShape: RoundedRectangle(cornerRadius: 15)

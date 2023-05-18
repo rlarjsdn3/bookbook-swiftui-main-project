@@ -11,6 +11,7 @@ import SwiftUI
 extension View {
     /// 실행 중인 기기의 SafeArea 영역의 크기를 반환합니다.
     var safeAreaInsets: UIEdgeInsets {
+        // 코드 수정 필요
         UIApplication.shared.windows.first?.safeAreaInsets ?? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
@@ -39,9 +40,9 @@ extension View {
     ///   - height: 이미지 높이
     ///   - coverShape: 이미지 모양
     /// - Returns: 이미지(Image)
-    func asyncImage(_ url: String,
+    func asyncCovoerImage(_ url: String,
                     width: CGFloat = 150, height: CGFloat = 200,
-                    coverShape: some Shape) -> some View {
+                    coverShape: some Shape = Rectangle()) -> some View {
         AsyncImage(url: URL(string: url),
                    transaction: Transaction(animation: .default)
         ) { phase in
