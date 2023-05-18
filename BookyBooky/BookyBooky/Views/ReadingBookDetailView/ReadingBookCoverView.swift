@@ -9,10 +9,23 @@ import SwiftUI
 import RealmSwift
 
 struct ReadingBookCoverView: View {
-    let readingBook: ReadingBook
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var realmManager: RealmManager
     
     @State private var isPresentingRenewalSheet = false
     @State private var isPresentingCompleteConfettiView = false
+   
+    // MARK: - PROPERTIES
+    
+    let readingBook: ReadingBook
+    
+    // MARK: - INITIALIZER
+    
+    init(_ readingBook: ReadingBook) {
+        self.readingBook = readingBook
+    }
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -51,7 +64,7 @@ struct ReadingBookCoverView: View {
                 ZStack {
                     bookCoverImage(url: readingBook.cover)
                     
-                    if !isAscendingTargetDate {
+                    if readingBook.isBehindTargetDate {
                         Image(systemName: "exclamationmark.circle.fill")
                             .font(.system(size: 50))
                             .foregroundColor(Color.red)
@@ -75,11 +88,11 @@ struct ReadingBookCoverView: View {
                         if readingBook.isComplete {
                             Text("완독 도서")
                         } else {
-                            if isAscendingTargetDate {
-                                Text("읽었어요!")
-                            } else {
+                            if readingBook.isBehindTargetDate {
                                 Text("갱신 불가")
                                     .opacity(0.75)
+                            } else {
+                                Text("읽었어요!")
                             }
                         }
                     }
@@ -89,8 +102,8 @@ struct ReadingBookCoverView: View {
                     .background(.gray.opacity(0.3))
                     .clipShape(Capsule())
                 }
-                .disabled(!isAscendingTargetDate)
                 .disabled(readingBook.isComplete)
+                .disabled(readingBook.isBehindTargetDate)
                 
                 // 코드 미완성 (오늘 상태 메시지 출력하기)
                 if readingBook.isComplete {
@@ -249,8 +262,11 @@ extension ReadingBookCoverView {
     }
 }
 
+// MARK: - PREVIEW
+
 struct TargetBookDetailCoverView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookCoverView(readingBook: ReadingBook.preview)
+        ReadingBookCoverView(ReadingBook.preview)
+            .environmentObject(RealmManager())
     }
 }

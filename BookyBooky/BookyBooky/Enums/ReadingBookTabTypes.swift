@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ReadingBookTabItems: CaseIterable {
+enum ReadingBookTabTypes: CaseIterable {
     case overview
     case analysis
     case collectSentences

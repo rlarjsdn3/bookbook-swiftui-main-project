@@ -21,13 +21,13 @@ struct ReadingBookCellButton: View {
     
     // MARK: - PROPERTIES
     
-    let book: ReadingBook
+    let readingBook: ReadingBook
     let buttonType: ReadingBookCellButtonType
     
     // MARK: - INTIALIZER
     
-    init(_ book: ReadingBook, buttonType: ReadingBookCellButtonType) {
-        self.book = book
+    init(_ readingBook: ReadingBook, buttonType: ReadingBookCellButtonType) {
+        self.readingBook = readingBook
         self.buttonType = buttonType
     }
     
@@ -41,7 +41,7 @@ struct ReadingBookCellButton: View {
 extension ReadingBookCellButton {
     var navigationCellButton: some View {
         NavigationLink {
-            ReadingBookView(readingBook: book)
+            ReadingBookView(readingBook: readingBook)
         } label: {
             readingBookCellLabel
         }
@@ -52,7 +52,7 @@ extension ReadingBookCellButton {
         VStack {
             ZStack {
                 asyncImage(
-                    book.cover,
+                    readingBook.cover,
                     width: 150, height: 200,
                     coverShape: RoundedRectangle(cornerRadius: 15)
                 )
@@ -71,7 +71,7 @@ extension ReadingBookCellButton {
     
     var exclamationMarkSFSymbolImage: some View {
         Group {
-            if book.isBehindTargetDate {
+            if readingBook.isBehindTargetDate {
                 Image(systemName: "exclamationmark.circle.fill")
                     .font(.system(size: 50))
                     .foregroundColor(Color.red)
@@ -91,7 +91,7 @@ extension ReadingBookCellButton {
         Group {
             if buttonType == .home {
                 HStack {
-                    let readingProgressRate = book.readingProgressRate
+                    let readingProgressRate = readingBook.readingProgressRate
                     
                     ProgressView(value: readingProgressRate, total: 100.0)
                         .tint(Color.black.gradient)
@@ -106,7 +106,7 @@ extension ReadingBookCellButton {
     }
     
     var readingBookTitleText: some View {
-        Text("\(book.title)")
+        Text("\(readingBook.title)")
             .font(.headline)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -117,7 +117,7 @@ extension ReadingBookCellButton {
     }
     
     var readingBookAuthorText: some View {
-        Text("\(book.author)")
+        Text("\(readingBook.author)")
             .font(.subheadline)
             .foregroundColor(.secondary)
             .lineLimit(1)

@@ -11,7 +11,7 @@ struct FavoriteBooksTextFieldView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedSort: BookSortCriteriaType
+    @Binding var selectedSort: BookSortCriteriaTypes
     @Binding var searchWord: String
     @Binding var searchQuery: String
     @Binding var isPresentingShowAll: Bool
@@ -53,7 +53,7 @@ extension FavoriteBooksTextFieldView {
     }
     
     var sortButtons: some View {
-        ForEach(BookSortCriteriaType.allCases, id: \.self) { sort in
+        ForEach(BookSortCriteriaTypes.allCases, id: \.self) { sort in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {

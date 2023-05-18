@@ -26,13 +26,13 @@ struct HomeReadingBookView: View {
     ]
     
     @Binding var scrollYOffset: Double
-    @Binding var selectedBookSortType: BookSortCriteriaType
+    @Binding var selectedBookSortType: BookSortCriteriaTypes
     let scrollProxy: ScrollViewProxy
     
     // MARK: - INTIALIZER
     
     init(_ scrollYOffset: Binding<Double>,
-         selectedBookSortType: Binding<BookSortCriteriaType>, scrollProxy: ScrollViewProxy) {
+         selectedBookSortType: Binding<BookSortCriteriaTypes>, scrollProxy: ScrollViewProxy) {
         self._scrollYOffset = scrollYOffset
         self._selectedBookSortType = selectedBookSortType
         self.scrollProxy = scrollProxy
@@ -53,7 +53,7 @@ extension HomeReadingBookView {
             readingBookTabTitle
             
             Section {
-                readingBookTabMain
+                readingBookTabContent
             } header: {
                 readingBookCategoryButtons(scrollProxy: scrollProxy)
             }
@@ -97,7 +97,7 @@ extension HomeReadingBookView {
     }
     
     var bookSortMenuButtons: some View {
-        ForEach(BookSortCriteriaType.allCases, id: \.self) { type in
+        ForEach(BookSortCriteriaTypes.allCases, id: \.self) { type in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {
@@ -115,7 +115,7 @@ extension HomeReadingBookView {
         }
     }
     
-    func bookSortMenuButtonLabel(_ type: BookSortCriteriaType) -> some View {
+    func bookSortMenuButtonLabel(_ type: BookSortCriteriaTypes) -> some View {
         HStack {
             Text(type.rawValue)
             
@@ -131,7 +131,7 @@ extension HomeReadingBookView {
             .font(.title3)
     }
     
-    var readingBookTabMain: some View {
+    var readingBookTabContent: some View {
         Group {
             let readingBook = realmManager.getReadingBooks(.unfinished)
             

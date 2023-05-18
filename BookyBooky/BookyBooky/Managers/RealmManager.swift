@@ -135,7 +135,7 @@ extension RealmManager {
     /// - Parameters:
     ///   - sortType: 정렬 기준
     /// - Returns: 정렬된 Book 프로토콜을 준수하는 도서 배열
-    private func sortReadingBookArray(sortType: BookSortCriteriaType) -> [ReadingBook] {
+    private func sortReadingBookArray(sortType: BookSortCriteriaTypes) -> [ReadingBook] {
         switch sortType {
         case .latestOrder:
             return readingBooks.reversed()
@@ -151,7 +151,7 @@ extension RealmManager {
     ///   - bookSortType: 도서 정렬 기준
     ///   - categoryType: 도서 필터 기준 (카테고리 별)
     /// - Returns: 정렬 및 필터링된 ReadingBook 형의 배열
-    func filterReadingBookArray(bookSortType: BookSortCriteriaType, categoryType: CategoryTypes) -> [ReadingBook] {
+    func filterReadingBookArray(bookSortType: BookSortCriteriaTypes, categoryType: CategoryTypes) -> [ReadingBook] {
         let sortedBookArray = sortReadingBookArray(sortType: bookSortType)
         
         if categoryType == .all {

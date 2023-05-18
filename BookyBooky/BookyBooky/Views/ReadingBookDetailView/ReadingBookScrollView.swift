@@ -8,23 +8,38 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookMainView: View {
+struct ReadingBookScrollView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
     @State private var startOffset = 0.0
     
-    @Binding var scrollYOffset: Double
-    @Binding var selectedTab: ReadingBookTabItems
-    @Binding var selectedAnimation: ReadingBookTabItems
+    @Namespace var namespace
     
-    @Namespace var underlineAnimation
+    // MARK: - PROPERTIES
     
     let readingBook: ReadingBook
+    @Binding var scrollYOffset: Double
+    
+    // MARK: - INTIALIZER
+    
+    init(_ readingBook: ReadingBook, scrollYOffset: Binding<Double>) {
+        self.readingBook = readingBook
+        self._scrollYOffset = scrollYOffset
+    }
+    
+    // MARK: - BODY
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                ReadingBookCoverView(readingBook: readingBook)
+                ReadingBookCoverView(readingBook)
                 
-                ReadingBookTabView(readingBook: readingBook, selectedTab: $selectedTab, selectedAnimation: $selectedAnimation, scrollYOffset: $scrollYOffset, underlineAnimation: underlineAnimation)
+                ReadingBookTabView(
+                    readingBook,
+                    scrollYOffset: $scrollYOffset,
+                    namespace: namespace
+                )
             }
             .overlay(alignment: .top) {
                 GeometryReader { proxy -> Color in
@@ -48,9 +63,7 @@ struct ReadingBookMainView: View {
 }
 
 struct ReadingBookDetailScrollView_Previews: PreviewProvider {
-    @ObservedResults(ReadingBook.self) static var readingBooks
-    
     static var previews: some View {
-        ReadingBookMainView(scrollYOffset: .constant(0.0), selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), readingBook: ReadingBook.preview)
+        ReadingBookScrollView(ReadingBook.preview, scrollYOffset: .constant(0.0))
     }
 }

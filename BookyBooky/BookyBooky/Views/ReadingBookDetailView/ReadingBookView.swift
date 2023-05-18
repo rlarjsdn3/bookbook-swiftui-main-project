@@ -18,24 +18,14 @@ struct ReadingBookView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     
     @State private var scrollYOffset = 0.0
-    @State private var selectedTab: ReadingBookTabItems = .overview
-    @State private var selectedAnimation: ReadingBookTabItems = .overview
     
     // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
-            ReadingBookHeaderView(
-                readingBook,
-                scrollYOffset: $scrollYOffset
-            )
+            ReadingBookHeaderView(readingBook, scrollYOffset: $scrollYOffset)
             
-            ReadingBookMainView(
-                scrollYOffset: $scrollYOffset,
-                selectedTab: $selectedTab,
-                selectedAnimation: $selectedAnimation,
-                readingBook: readingBook
-            )
+            ReadingBookScrollView(readingBook, scrollYOffset: $scrollYOffset)
         }
         .toast(
             isPresenting: $realmManager.isPresentingReadingBookEditComleteToastAlert,

@@ -9,15 +9,43 @@ import SwiftUI
 import RealmSwift
 
 struct ReadingBookTabView: View {
-    @ObservedRealmObject var readingBook: ReadingBook
-    @Binding var selectedTab: ReadingBookTabItems
-    @Binding var selectedAnimation: ReadingBookTabItems
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @State private var selectedTabType: ReadingBookTabTypes = .overview
+    @State private var selectedTabTypeForAnimation: ReadingBookTabTypes = .overview
+    
+    // MARK: - PROPERTIES
+    
+    let readingBook: ReadingBook
     @Binding var scrollYOffset: Double
-    let underlineAnimation: Namespace.ID
+    let namespace: Namespace.ID
+    
+    // MARK: - INTIALIZER
+    
+    init(_ readingBook: ReadingBook, scrollYOffset: Binding<Double>, namespace: Namespace.ID) {
+        self.readingBook = readingBook
+        self._scrollYOffset = scrollYOffset
+        self.namespace = namespace
+    }
+    
+    // MARK: - BODY
     
     var body: some View {
         Section {
-            switch selectedTab {
+            viewThatChangesAccordingToTab(selectedTabType)
+        } header: {
+            readingBooktTabButtons
+        }
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension ReadingBookTabView {
+    func viewThatChangesAccordingToTab(_ selectedTabType: ReadingBookTabTypes) -> some View {
+        Group {
+            switch selectedTabType {
             case .overview:
                 ReadingBookOutlineView(readingBook: readingBook)
             case .analysis:
@@ -25,51 +53,63 @@ struct ReadingBookTabView: View {
             case .collectSentences:
                 ReadingBookCollectSentencesView()
             }
-        } header: {
-            HStack {
-                ForEach(ReadingBookTabItems.allCases, id: \.self) { item in
-                    Spacer()
-                    Button {
-                        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-                            selectedAnimation = item
-                        }
-                        selectedTab = item
-                    } label: {
-                        Text(item.name)
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(selectedAnimation == item ? .black : .gray)
-                            .overlay(alignment: .bottomLeading) {
-                                if selectedAnimation == item {
-                                    Rectangle()
-                                        .offset(y: 15)
-                                        .fill(.black)
-                                        .frame(width: 40, height: 1)
-                                        .matchedGeometryEffect(id: "underline", in: underlineAnimation)
-                                }
-                            }
-                            .padding(.horizontal, 10)
+        }
+    }
+    
+    var readingBooktTabButtons: some View {
+        HStack {
+            ForEach(ReadingBookTabTypes.allCases, id: \.self) { item in
+                Spacer()
+                
+                // ReadingBookTabButton 파일로 Extract하기
+                
+                Button {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                        selectedTabTypeForAnimation = item
                     }
-                    .padding(.vertical, 10)
-                    .padding([.horizontal, .bottom], 5)
-                    .id("\(item.name)")
-                    Spacer()
+                    selectedTabType = item
+                } label: {
+                    Text(item.name)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(selectedTabTypeForAnimation == item ? .black : .gray)
+                        .overlay(alignment: .bottomLeading) {
+                            if selectedTabTypeForAnimation == item {
+                                Rectangle()
+                                    .offset(y: 15)
+                                    .fill(.black)
+                                    .frame(width: 40, height: 1)
+                                    .matchedGeometryEffect(id: "underline", in: namespace)
+                            }
+                        }
+                        .padding(.horizontal, 10)
                 }
-                .id("Scroll_To_Category")
+                .padding(.vertical, 10)
+                .padding([.horizontal, .bottom], 5)
+                .id("\(item.name)")
+                
+                Spacer()
             }
-            .background(.white)
-            .frame(maxWidth: .infinity)
-            .overlay(alignment: .bottom) {
-                Divider()
-            }
+            .id("Scroll_To_Category")
+        }
+        .background(.white)
+        .frame(maxWidth: .infinity)
+        .overlay(alignment: .bottom) {
+            Divider()
         }
     }
 }
 
+// MARK: - PREVIEW
+
 struct ReadingBookTabSectionView_Previews: PreviewProvider {
-    @Namespace static var underlineAnimation
+    @Namespace static var namespace
     
     static var previews: some View {
-        ReadingBookTabView(readingBook: ReadingBook.preview, selectedTab: .constant(.overview), selectedAnimation: .constant(.overview), scrollYOffset: .constant(0.0), underlineAnimation: underlineAnimation)
+        ReadingBookTabView(
+            ReadingBook.preview,
+            scrollYOffset: .constant(0.0),
+            namespace: namespace
+        )
     }
 }
