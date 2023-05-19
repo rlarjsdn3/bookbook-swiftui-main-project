@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct EditBookInformationView: View {
+struct ReadingBookEditView: View {
     @EnvironmentObject var realmManager: RealmManager
     
     @Environment(\.dismiss) var dismiss
@@ -146,7 +146,7 @@ struct EditBookInformationView: View {
 
 struct EditBookInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        EditBookInformationView(readingBook: ReadingBook.preview)
+        ReadingBookEditView(readingBook: ReadingBook.preview)
             .environment(\.realm, RealmManager().realm)
             .environmentObject(RealmManager())
     }

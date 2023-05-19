@@ -344,7 +344,7 @@ struct ReadingBookAnalysisView: View {
             .padding(.bottom, 20)
         }
         .sheet(isPresented: $isPresentingAllReadingDataSheet) {
-            AllReadingDataView(readingBook: readingBook)
+            ReadingDataSheetView(readingBook)
         }
         .onChange(of: selectedChartDateRange) { _ in
             selectedChartElement = nil

@@ -49,7 +49,7 @@ class RealmManager: ObservableObject {
         return try! Realm(configuration: config)
     }
 
-    // MARK: - FAVORITE BOOK
+    // MARK: - FAVORITE BOOK CRUD
     
     func addFavoriteBook(_ object: FavoriteBook) {
         $favoriteBooks.append(object)
@@ -65,7 +65,7 @@ class RealmManager: ObservableObject {
         }
     }
     
-    // MARK: - READING BOOK
+    // MARK: - READING BOOK CRUD
     
     func addReadingBook(_ object: ReadingBook) {
         $readingBooks.append(object)
@@ -81,8 +81,85 @@ class RealmManager: ObservableObject {
         $readingBooks.remove(object)
     }
     
-    // MARK: - READING RECORDS
+    // MARK: - READING RECORDS CRUD
     
+    func addReadingBookRecord(_ readingBook: ReadingBook, totalPagesRead: Int) {
+        guard let object = realm.objects(ReadingBook.self)
+            .filter({ $0.isbn13 == readingBook.isbn13 }).first else {
+            return
+        }
+        
+        var readingRecord: ReadingRecord
+        
+        // 독서 데이터가 하나 이상 존재하는 경우
+        if let lastRecord = readingBook.lastRecord {
+            // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일한 경우
+            if Date().isEqual([.year, .month, .day], date: lastRecord.date) {
+                // 마지막 데이터 삭제하기
+                try! realm.write {
+                    object.readingRecords.removeLast()
+                }
+                
+                // 독서 데이터가 하나 이상 존재하는 경우
+                if let lastRecord = readingBook.readingRecords.last {
+                    readingRecord = ReadingRecord(
+                        value: ["date": Date(),
+                                "totalPagesRead": totalPagesRead,
+                                "numOfPagesRead": totalPagesRead - lastRecord.totalPagesRead
+                               ] as [String : Any]
+                    )
+                // 독서 데이터가 존재하지 않는 경우
+                } else {
+                    readingRecord = ReadingRecord(
+                        value: ["date": Date(),
+                                "totalPagesRead": totalPagesRead,
+                                "numOfPagesRead": totalPagesRead
+                               ] as [String : Any]
+                    )
+                }
+            // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일하지 않은 경우
+            } else {
+                readingRecord = ReadingRecord(
+                    value: ["date": Date(),
+                            "totalPagesRead": totalPagesRead,
+                            "numOfPagesRead": totalPagesRead - lastRecord.totalPagesRead
+                           ] as [String : Any]
+                )
+            }
+        // 독서 데이터가 존재하지 않는 경우
+        } else {
+            readingRecord = ReadingRecord(
+                value: ["date": Date(),
+                        "totalPagesRead": totalPagesRead,
+                        "numOfPagesRead": totalPagesRead
+                       ] as [String : Any]
+            )
+            
+        }
+        
+        // 데이터 추가하기
+        try! realm.write {
+            object.readingRecords.append(readingRecord)
+        }
+    }
+    
+    func deleteLastRecord(_ book: ReadingBook) {
+        if let object = realm.objects(ReadingBook.self)
+            .filter({ $0.isbn13 == book.isbn13 }).first {
+            try! realm.write {
+                object.readingRecords.remove(at: object.readingRecords.endIndex - 1)
+            }
+        }
+    }
+    
+    func deleteAllRecord(_ book: ReadingBook) {
+        if let object = realm.objects(ReadingBook.self)
+            .filter({ $0.isbn13 == book.isbn13 }).first {
+            try! realm.write {
+                object.readingRecords.removeAll()
+            }
+        }
+    }
 }
 
 extension RealmManager {

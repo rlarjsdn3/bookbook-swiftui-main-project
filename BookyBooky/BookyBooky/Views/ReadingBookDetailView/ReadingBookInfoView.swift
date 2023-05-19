@@ -15,7 +15,7 @@ struct ReadingBookInfoView: View {
     @EnvironmentObject var realmManager: RealmManager
     
     @State private var isPresentingRenewalSheet = false
-    @State private var isPresentingCompleteConfettiView = false
+    @State private var isPresentingReadingBookConfettiView = false
    
     // MARK: - PROPERTIES
     
@@ -32,10 +32,13 @@ struct ReadingBookInfoView: View {
     var body: some View {
         readingBookInfo
             .sheet(isPresented: $isPresentingRenewalSheet) {
-                ReadingBookRenewalView(readingBook: readingBook, isPresentingConfettiView: $isPresentingCompleteConfettiView)
+                ReadingBookRenewalSheetView(
+                    readingBook,
+                    isPresentingReadingBookConfettiView: $isPresentingReadingBookConfettiView
+                )
             }
-            .fullScreenCover(isPresented: $isPresentingCompleteConfettiView) {
-                CompleteConfettiView(readingBook: readingBook)
+            .fullScreenCover(isPresented: $isPresentingReadingBookConfettiView) {
+                ReadingBookConfettiView(readingBook)
             }
     }
 }
@@ -204,8 +207,6 @@ extension ReadingBookInfoView {
         Group {
             if readingBook.isComplete {
                 Text("도서를 완독했어요!")
-                    .font(.caption.weight(.light))
-                    .padding(.horizontal)
             } else {
                 Group {
                     // 오늘 일자가 목표 일자를 초과하는 경우

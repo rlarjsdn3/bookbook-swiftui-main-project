@@ -35,7 +35,7 @@ struct ReadingBookHeaderView: View {
     var body: some View {
         navigationBar
             .sheet(isPresented: $isPresentingEditBookInformationSheet) {
-                EditBookInformationView(readingBook: readingBook)
+                ReadingBookEditView(readingBook: readingBook)
             }
             .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {

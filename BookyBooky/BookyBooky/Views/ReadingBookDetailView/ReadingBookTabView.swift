@@ -58,35 +58,15 @@ extension ReadingBookTabView {
     
     var readingBooktTabButtons: some View {
         HStack {
-            ForEach(ReadingBookTabTypes.allCases, id: \.self) { item in
+            ForEach(ReadingBookTabTypes.allCases, id: \.self) { type in
                 Spacer()
                 
-                // ReadingBookTabButton 파일로 Extract하기
-                
-                Button {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-                        selectedTabTypeForAnimation = item
-                    }
-                    selectedTabType = item
-                } label: {
-                    Text(item.name)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(selectedTabTypeForAnimation == item ? .black : .gray)
-                        .overlay(alignment: .bottomLeading) {
-                            if selectedTabTypeForAnimation == item {
-                                Rectangle()
-                                    .offset(y: 15)
-                                    .fill(.black)
-                                    .frame(width: 40, height: 1)
-                                    .matchedGeometryEffect(id: "underline", in: namespace)
-                            }
-                        }
-                        .padding(.horizontal, 10)
-                }
-                .padding(.vertical, 10)
-                .padding([.horizontal, .bottom], 5)
-                .id("\(item.name)")
+                ReadingBookTabButton(
+                    type,
+                    selectedTabType: $selectedTabType,
+                    selectedTabTypeForAnimation: $selectedTabTypeForAnimation,
+                    namespace: namespace
+                )
                 
                 Spacer()
             }

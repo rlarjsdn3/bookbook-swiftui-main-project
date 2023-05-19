@@ -9,10 +9,10 @@ import SwiftUI
 import RealmSwift
 import ConfettiSwiftUI
 
-struct CompleteConfettiView: View {
+struct ReadingBookConfettiView: View {
     @Environment(\.dismiss) var dismiss
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    let readingBook: ReadingBook
     
     @State private var counter = 0
     
@@ -26,6 +26,12 @@ struct CompleteConfettiView: View {
             to: readingBook.completeDate ?? Date()
         )
         return component.day!
+    }
+    
+    // MARK: - INTIALIZER
+    
+    init(_ readingBook: ReadingBook) {
+        self.readingBook = readingBook
     }
     
     // MARK: - BODY
@@ -75,7 +81,7 @@ struct CompleteConfettiView: View {
     }
 }
 
-extension CompleteConfettiView {
+extension ReadingBookConfettiView {
     func asyncImage(url: String) -> some View {
         AsyncImage(url: URL(string: url),
                    transaction: Transaction(animation: .default)) { phase in
@@ -110,6 +116,6 @@ extension CompleteConfettiView {
 
 struct CompleteConfettiView_Previews: PreviewProvider {
     static var previews: some View {
-        CompleteConfettiView(readingBook: ReadingBook.preview)
+        ReadingBookConfettiView(ReadingBook.preview)
     }
 }
