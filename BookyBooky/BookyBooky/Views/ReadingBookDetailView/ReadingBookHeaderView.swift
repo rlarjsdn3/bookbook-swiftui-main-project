@@ -39,8 +39,8 @@ struct ReadingBookHeaderView: View {
             }
             .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
+                    realmManager.deleteReadingBook(readingBook)
                     dismiss()
-                    realmManager.deleteReadingBook(readingBook.isbn13)
                 }
             }
     }

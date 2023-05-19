@@ -49,7 +49,7 @@ struct FavoriteBooksScrollView: View {
     // ....
     
     var sortedCompleteBooks: [ReadingBook] {
-        let readingBooks = realmMananger.getReadingBooks(.complete)
+        let readingBooks = readingBooks.get(.complete)
         
         switch selectedSort {
         // 최근 추가된 순으로 정렬

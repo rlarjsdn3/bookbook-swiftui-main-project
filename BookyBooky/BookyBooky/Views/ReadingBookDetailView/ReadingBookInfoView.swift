@@ -19,7 +19,7 @@ struct ReadingBookInfoView: View {
    
     // MARK: - PROPERTIES
     
-    let readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     
     // MARK: - INITIALIZER
     
@@ -57,7 +57,7 @@ extension ReadingBookInfoView {
     var readingBookCover: some View {
         HStack {
             ZStack {
-                asyncCovoerImage(
+                asyncCoverImage(
                     readingBook.cover,
                     width: 130, height: 180,
                     coverShape: CoverShape()

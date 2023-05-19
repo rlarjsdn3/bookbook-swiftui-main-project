@@ -44,7 +44,7 @@ struct BookShelfScrollView: View {
                 
                 favoriteBookSection
                 
-                let completeBooks = realmManager.getReadingBooks(.complete)
+                let completeBooks = readingBooks.get(.complete)
                 
                 Section {
                     

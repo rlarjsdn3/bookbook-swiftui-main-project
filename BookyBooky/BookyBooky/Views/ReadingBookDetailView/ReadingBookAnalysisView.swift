@@ -344,7 +344,7 @@ struct ReadingBookAnalysisView: View {
             .padding(.bottom, 20)
         }
         .sheet(isPresented: $isPresentingAllReadingDataSheet) {
-            ReadingDataSheetView(readingBook)
+            ReadingBookDataSheetView(readingBook)
         }
         .onChange(of: selectedChartDateRange) { _ in
             selectedChartElement = nil
@@ -376,7 +376,7 @@ struct ReadingBookAnalysisView: View {
     }
     
     private func countChartData() -> Int {
-        var count = 0
+        var count = 1
         
         for data in filteredChartDataArray where data.pagesRead > 0 {
             count += 1

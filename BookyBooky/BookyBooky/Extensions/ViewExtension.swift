@@ -40,9 +40,9 @@ extension View {
     ///   - height: 이미지 높이
     ///   - coverShape: 이미지 모양
     /// - Returns: 이미지(Image)
-    func asyncCovoerImage(_ url: String,
+    func asyncCoverImage(_ url: String,
                     width: CGFloat = 150, height: CGFloat = 200,
-                    coverShape: some Shape = Rectangle()) -> some View {
+                    coverShape: some Shape = RoundedRectangle(cornerRadius: 20)) -> some View {
         AsyncImage(url: URL(string: url),
                    transaction: Transaction(animation: .default)
         ) { phase in

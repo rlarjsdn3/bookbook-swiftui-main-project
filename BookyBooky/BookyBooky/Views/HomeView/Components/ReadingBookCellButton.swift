@@ -21,7 +21,7 @@ struct ReadingBookCellButton: View {
     
     // MARK: - PROPERTIES
     
-    let readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     let buttonType: ReadingBookCellButtonType
     
     // MARK: - INTIALIZER
@@ -41,7 +41,7 @@ struct ReadingBookCellButton: View {
 extension ReadingBookCellButton {
     var navigationCellButton: some View {
         NavigationLink {
-            ReadingBookView(readingBook: readingBook)
+            ReadingBookView(readingBook)
         } label: {
             readingBookCellLabel
         }
@@ -51,7 +51,7 @@ extension ReadingBookCellButton {
     var readingBookCellLabel: some View {
         VStack {
             ZStack {
-                asyncCovoerImage(
+                asyncCoverImage(
                     readingBook.cover,
                     width: 150, height: 200,
                     coverShape: RoundedRectangle(cornerRadius: 15)

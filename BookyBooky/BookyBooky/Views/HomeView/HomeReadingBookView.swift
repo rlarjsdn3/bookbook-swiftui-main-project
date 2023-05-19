@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct HomeReadingBookView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmManager: RealmManager
+    
+    @ObservedResults(ReadingBook.self) var readingBooks
     
     @State private var selectedCategoryType: CategoryTypes = .all
     @State private var selectedCategoryTypeForAnimation: CategoryTypes = .all
@@ -133,7 +136,7 @@ extension HomeReadingBookView {
     
     var readingBookTabContent: some View {
         Group {
-            let readingBook = realmManager.getReadingBooks(.unfinished)
+            let readingBook = readingBooks.get(.unfinished)
             
             if readingBook.isEmpty {
                 noBookIsBeingReadLabel
@@ -157,20 +160,21 @@ extension HomeReadingBookView {
     
     var readingBookGrid: some View {
         Group {
-            let filterReadingBookArray = realmManager.filterReadingBookArray(
+            // 이렇게 해서 DB 내 데이터가 바뀌거나 추가될 때마다 뷰를 새로 그려지게 해야 한다! <- 이거 중요
+            let filterReadingBooks = readingBooks.getfilteredReadingBooks(
                 bookSortType: selectedBookSortType,
                 categoryType: selectedCategoryType
             )
             
             LazyVGrid(columns: columns, spacing: 25) {
-                ForEach(filterReadingBookArray) { book in
+                ForEach(filterReadingBooks) { book in
                     ReadingBookCellButton(book, buttonType: .home)
                 }
             }
             .padding([.horizontal, .top])
             // 코드 수정할 필요가 있음(직관적으로 수정하기 혹은 주석 설명 달기)
             .padding(.bottom,
-                     filterReadingBookArray.count <= 2 ?
+                     filterReadingBooks.count <= 2 ?
                      (mainScreen.height > 900 ? 400 : mainScreen.height < 700 ? 190 : 325) : (mainScreen.height > 900 ? 100 : 30))
         }
     }
@@ -179,7 +183,12 @@ extension HomeReadingBookView {
         HStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(realmManager.getReadingBookCategoryType(), id: \.self) { type in
+                    let filterReadingBooks = readingBooks.getfilteredReadingBooks(
+                        bookSortType: selectedBookSortType,
+                        categoryType: selectedCategoryType
+                    )
+                    
+                    ForEach(filterReadingBooks.getReadingBookCategoryType(), id: \.self) { type in
                         HomeCategoryButton(
                             type,
                             selectedCategoryType: $selectedCategoryType,

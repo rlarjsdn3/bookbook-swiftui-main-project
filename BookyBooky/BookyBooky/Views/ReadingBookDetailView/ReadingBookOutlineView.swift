@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 
 struct ReadingBookOutlineView: View {
-    let readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     
     var body: some View {
         VStack {

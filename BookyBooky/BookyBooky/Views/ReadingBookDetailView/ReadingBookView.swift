@@ -13,11 +13,24 @@ struct ReadingBookView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @Environment(\.dismiss) var dismiss
+    
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedRealmObject var readingBook: ReadingBook
-    
     @State private var scrollYOffset = 0.0
+    
+    @ObservedResults(ReadingBook.self) var readingBooks
+    
+    // MARK: - PROPERTIES
+    
+    let isbn13: String = ""
+    @ObservedRealmObject var readingBook: ReadingBook = .preview
+    
+    // MARK: - INTIALIZER
+    
+    init(_ readingBook: ReadingBook) {
+        self.readingBook = readingBook
+    }
     
     // MARK: - BODY
     
@@ -40,7 +53,7 @@ struct ReadingBookView: View {
 
 struct ReadingBookView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookView(readingBook: ReadingBook.preview)
+        ReadingBookView(ReadingBook.preview)
             .environmentObject(RealmManager())
     }
 }

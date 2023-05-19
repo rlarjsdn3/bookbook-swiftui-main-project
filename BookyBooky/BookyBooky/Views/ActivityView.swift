@@ -11,8 +11,6 @@ import RealmSwift
 struct ActivityView: View {
     @Environment(\.dismiss) var dismiss
     
-    @ObservedResults(ReadingBook.self) var readingBooks
-    
     // MARK: - BODY
     
     var body: some View {

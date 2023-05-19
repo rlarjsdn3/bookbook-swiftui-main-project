@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct HomeActivityView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmManager: RealmManager
+    
+    @ObservedResults(ReadingBook.self) var readingBooks
     
     // MARK: - BODY
     
@@ -53,12 +56,12 @@ extension HomeActivityView {
         NavigationLink("더 보기") {
             ActivityView()
         }
-        .disabled(realmManager.getRecentReadingActivity().isEmpty)
+        .disabled(readingBooks.isEmpty)
     }
     
     var activityTabMain: some View {
         VStack {
-            let activities = realmManager.getRecentReadingActivity()
+            let activities = readingBooks.getRecentReadingActivity()
             
             if !activities.isEmpty {
                 activityCellButtons(activities)

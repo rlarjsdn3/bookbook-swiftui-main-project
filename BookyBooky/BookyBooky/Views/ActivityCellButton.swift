@@ -12,12 +12,18 @@ struct ActivityCellButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var realmManager: RealmManager
     @ObservedResults(ReadingBook.self) var readingBooks
     
     // MARK: - PROPERTIES
     
     let activity: ReadingActivity
+    
+    var readingBook: ReadingBook? {
+        if let readingBook = readingBooks.findReadingBookFirst(with: activity.isbn13) {
+            return readingBook
+        }
+        return nil
+    }
     
     // MARK: - INITALIZER
     
@@ -37,8 +43,8 @@ struct ActivityCellButton: View {
 extension ActivityCellButton {
     var navigationCellButton: some View {
         NavigationLink {
-            if let book = realmManager.findReadingBookFirst(with: activity.isbn13) {
-                ReadingBookView(readingBook: book)
+            if let readingBook = readingBook {
+                ReadingBookView(readingBook)
             }
         } label: {
             cellLabel
@@ -121,6 +127,5 @@ extension ActivityCellButton {
 struct ActivityCellButton_Previews: PreviewProvider {
     static var previews: some View {
         ActivityCellButton(ReadingActivity.preview)
-            .environmentObject(RealmManager())
     }
 }

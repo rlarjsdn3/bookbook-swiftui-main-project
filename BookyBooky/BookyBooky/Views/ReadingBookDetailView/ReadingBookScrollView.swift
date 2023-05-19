@@ -18,7 +18,7 @@ struct ReadingBookScrollView: View {
     
     // MARK: - PROPERTIES
     
-    let readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     @Binding var scrollYOffset: Double
     
     // MARK: - INTIALIZER

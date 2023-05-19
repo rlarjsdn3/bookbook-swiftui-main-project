@@ -14,10 +14,28 @@ struct ActivityScrollView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
+    @ObservedResults(ReadingBook.self) var readingBooks
+    
     // MARK: - BODY
     
     var body: some View {
         activityPinnedScroll
+    }
+    
+    /// <#Description#>
+    /// - Parameter activity: <#activity description#>
+    /// - Returns: <#description#>
+    func getMonthlyReadingDayCount(_ activity: MonthlyReadingActivity) -> Int {
+        var dates: [Date] = []
+        
+        for activity in activity.activities {
+            let date = activity.date
+            
+            if !dates.contains(where: { $0.isEqual([.year, .month, .day], date: date) }) {
+                dates.append(date)
+            }
+        }
+        return dates.count
     }
 }
 
@@ -34,7 +52,7 @@ extension ActivityScrollView {
     }
     
     var monthlyReadingActivitySection: some View {
-        ForEach(realmManager.getMonthlyReadingActivity(), id: \.self) { monthlyActivity in
+        ForEach(readingBooks.getMonthlyReadingActivity(), id: \.self) { monthlyActivity in
             Section {
                 monthlySummaryLabel(monthlyActivity)
                 
@@ -63,7 +81,7 @@ extension ActivityScrollView {
             
             Spacer()
             
-            Text("\(realmManager.getMonthlyReadingDayCount(monthlyActivity))일")
+            Text("\(getMonthlyReadingDayCount(monthlyActivity))일")
         }
     }
     
@@ -90,7 +108,7 @@ extension ActivityScrollView {
                 Text("\(monthlyActivity.activities.reduce(0, { $0 + $1.numOfPagesRead }))페이지")
                     .foregroundColor(Color.pink)
                 
-                Text("하루 평균 \( monthlyActivity.activities.reduce(0, { $0 + $1.numOfPagesRead }) / realmManager.getMonthlyReadingDayCount(monthlyActivity) )페이지")
+                Text("하루 평균 \( monthlyActivity.activities.reduce(0, { $0 + $1.numOfPagesRead }) / getMonthlyReadingDayCount(monthlyActivity) )페이지")
                     .font(.footnote)
                     .foregroundColor(Color.secondary)
             }

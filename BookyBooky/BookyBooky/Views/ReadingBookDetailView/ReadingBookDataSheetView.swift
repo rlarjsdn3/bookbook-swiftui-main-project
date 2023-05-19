@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingDataSheetView: View {
+struct ReadingBookDataSheetView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -49,7 +49,7 @@ struct ReadingDataSheetView: View {
     }
 }
 
-extension ReadingDataSheetView {
+extension ReadingBookDataSheetView {
     var readingBookrecordsNavigationStack: some View {
         NavigationStack {
             readingBookRecordsList
@@ -143,7 +143,7 @@ extension ReadingDataSheetView {
 
 struct ReadingDataSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingDataSheetView(ReadingBook.preview)
+        ReadingBookDataSheetView(ReadingBook.preview)
             .environmentObject(RealmManager())
     }
 }

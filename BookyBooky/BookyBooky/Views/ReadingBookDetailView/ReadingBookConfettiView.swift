@@ -10,23 +10,36 @@ import RealmSwift
 import ConfettiSwiftUI
 
 struct ReadingBookConfettiView: View {
-    @Environment(\.dismiss) var dismiss
     
-    let readingBook: ReadingBook
+    // MARK: - WRAPPER PROPERTIES
+    
+    @Environment(\.dismiss) var dismiss
     
     @State private var counter = 0
     
     // MARK: - COMPUTED PROPERTIES
     
-    var elapsedReadingDay: Int {
-        let calendar = Calendar.current
-        let component = calendar.dateComponents(
+    var dayToCompleteTheBook: Int {
+        let component = Calendar.current.dateComponents(
             [.day],
             from: readingBook.startDate,
             to: readingBook.completeDate ?? Date()
         )
         return component.day!
     }
+    
+    var dayRemainingUntilTheTargetDate: Int {
+        let component = Calendar.current.dateComponents(
+            [.day],
+            from: readingBook.startDate,
+            to: readingBook.completeDate ?? Date()
+        )
+        return component.day!
+    }
+    
+    // MARK: - PROPERTIES
+    
+    let readingBook: ReadingBook
     
     // MARK: - INTIALIZER
     
@@ -37,80 +50,83 @@ struct ReadingBookConfettiView: View {
     // MARK: - BODY
     
     var body: some View {
-        VStack(spacing: 5) {
+        completeBookCover
+            .confettiCannon(
+                counter: $counter, num: 80,
+                openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360),
+                radius: 200, repetitions: 2, repetitionInterval: 0.2
+            )
+            .onTapGesture {
+                counter += 1
+            }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    HapticManager.shared.notification(type: .success)
+                    counter += 1
+                }
+            }
+    }
+}
+
+extension ReadingBookConfettiView {
+    var completeBookCover: some View {
+        VStack {
             Spacer()
             
+            congratuationLabel
+            
+            asyncCoverImage(
+                readingBook.cover,
+                coverShape: RoundedCoverShape()
+            )
+            
+            timeToCompleteBookText
+            
+            Spacer()
+            
+            dismissButton
+        }
+    }
+    
+    var congratuationLabel: some View {
+        VStack(spacing:5 ) {
             Text("축하합니다!")
                 .font(.largeTitle.weight(.bold))
             
             Text("\(readingBook.title) 도서를 완독했어요!")
                 .font(.title2.weight(.semibold))
                 .foregroundColor(Color.secondary)
-                .padding(.bottom, 40)
-            
-            asyncImage(url: readingBook.cover)
-            
-            // 아직 미완성 코드
-            Text("완독하는 데 \(elapsedReadingDay)일이 걸렸어요.")
-                .font(.headline)
-                .padding(.top, 30)
-            
-            Spacer()
-            
-            Button {
-                dismiss()
-            } label: {
-                 Text("확인")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .background(readingBook.category.accentColor)
-                    .cornerRadius(15)
-            }
-            .padding(.horizontal)
         }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                HapticManager.shared.notification(type: .success)
-                counter += 1
-            }
-        }
-        .confettiCannon(counter: $counter, num: 80, openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: 200, repetitions: 2, repetitionInterval: 0.2)
-    }
-}
-
-extension ReadingBookConfettiView {
-    func asyncImage(url: String) -> some View {
-        AsyncImage(url: URL(string: url),
-                   transaction: Transaction(animation: .default)) { phase in
-            switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 150, height: 200)
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 15,
-                            style: .continuous
-                        )
-                    )
-                    .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
-            case .failure(_), .empty:
-                loadingImage
-            @unknown default:
-                loadingImage
-            }
-        }
+        .padding(.bottom, 40)
     }
     
-    var loadingImage: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(.gray.opacity(0.2))
-            .frame(width: 150, height: 200)
-            .shimmering()
+    var timeToCompleteBookText: some View {
+        Group {
+            let dayToCompleteTheReading = dayToCompleteTheBook
+            let dayRemainingUntilTheTargetDate = dayRemainingUntilTheTargetDate
+            
+            if dayToCompleteTheReading == 0 {
+                Text("와우! 하루 만에 독서를 끝냈어요!")
+            } else {
+                HStack(spacing: 10) {
+                    Text("완독하는 데 \(dayRemainingUntilTheTargetDate)일이 걸렸어요.")
+                    
+                    Text("목표보다 \(dayRemainingUntilTheTargetDate)일 더 빠르게 읽었어요!")
+                }
+            }
+        }
+        .font(.headline)
+        .foregroundColor(Color.secondary)
+        .padding(.top, 30)
+    }
+    
+    var dismissButton: some View {
+        Button {
+            dismiss()
+        } label: {
+             Text("확인")
+        }
+        .buttonStyle(BottomButtonStyle(theme: readingBook.category.accentColor))
     }
 }
 
