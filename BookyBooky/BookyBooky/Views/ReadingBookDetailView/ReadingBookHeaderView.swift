@@ -20,7 +20,7 @@ struct ReadingBookHeaderView: View {
     
     // MARK: - PROPERTIES
     
-    var readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     @Binding var scrollYOffset: Double
     
     // MARK: - INTIALIZER

@@ -16,6 +16,10 @@ struct ActivityScrollView: View {
     
     @ObservedResults(ReadingBook.self) var readingBooks
     
+    var monthlyReadingActivity: [MonthlyReadingActivity] {
+        return readingBooks.getMonthlyReadingActivity()
+    }
+    
     // MARK: - BODY
     
     var body: some View {
@@ -43,12 +47,36 @@ struct ActivityScrollView: View {
 
 extension ActivityScrollView {
     var activityPinnedScroll: some View {
-        ScrollView {
-            LazyVStack(pinnedViews: [.sectionHeaders]) {
-                monthlyReadingActivitySection
+        Group {
+            let monthlyReadingActivity = monthlyReadingActivity
+            
+            if monthlyReadingActivity.isEmpty {
+                noReadingDataLabel
+            } else {
+                ScrollView {
+                    LazyVStack(pinnedViews: [.sectionHeaders]) {
+                        monthlyReadingActivitySection
+                    }
+                }
+                .padding(.bottom, 40)
             }
         }
-        .padding(.bottom, 40)
+    }
+    
+    var noReadingDataLabel: some View {
+        VStack(spacing: 5) {
+            Spacer()
+            
+            Text("독서 데이터가 없음")
+                .font(.title3)
+                .fontWeight(.bold)
+            
+            Text("독서 데이터를 추가하십시오.")
+                .foregroundColor(.secondary)
+            
+            Spacer()
+        }
+        .padding(.vertical, 30)
     }
     
     var monthlyReadingActivitySection: some View {
