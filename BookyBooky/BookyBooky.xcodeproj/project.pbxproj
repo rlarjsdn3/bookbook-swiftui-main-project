@@ -326,9 +326,9 @@
 				9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */,
 				9E187E062A06853100930388 /* DateExtension.swift */,
 				9E54AA0D29D7D84100FE080C /* StringExtension.swift */,
+				9EC71F992A1782B70056C11C /* ArrayExtension.swift */,
 				9EC71F972A177D930056C11C /* ResultsExtension.swift */,
 				9EDC2FB029E6E48C004E792A /* UINavigationControllerExtension.swift */,
-				9EC71F992A1782B70056C11C /* ArrayExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";

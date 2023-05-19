@@ -19,7 +19,7 @@ struct ReadingBookInfoView: View {
    
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    let readingBook: ReadingBook
     
     // MARK: - INITIALIZER
     

@@ -18,13 +18,6 @@ struct ActivityCellButton: View {
     
     let activity: ReadingActivity
     
-    var readingBook: ReadingBook? {
-        if let readingBook = readingBooks.findReadingBookFirst(with: activity.isbn13) {
-            return readingBook
-        }
-        return nil
-    }
-    
     // MARK: - INITALIZER
     
     init(_ activity: ReadingActivity) {
@@ -43,7 +36,7 @@ struct ActivityCellButton: View {
 extension ActivityCellButton {
     var navigationCellButton: some View {
         NavigationLink {
-            if let readingBook = readingBook {
+            if let readingBook = readingBooks.findReadingBookFirst(with: activity.isbn13) {
                 ReadingBookView(readingBook)
             }
         } label: {

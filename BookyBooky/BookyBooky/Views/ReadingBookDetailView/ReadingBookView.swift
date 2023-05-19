@@ -23,8 +23,7 @@ struct ReadingBookView: View {
     
     // MARK: - PROPERTIES
     
-    let isbn13: String = ""
-    @ObservedRealmObject var readingBook: ReadingBook = .preview
+    @ObservedRealmObject var readingBook: ReadingBook
     
     // MARK: - INTIALIZER
     

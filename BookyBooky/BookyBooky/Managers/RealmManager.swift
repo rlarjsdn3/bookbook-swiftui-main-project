@@ -106,7 +106,7 @@ class RealmManager: ObservableObject {
     
     func addReadingBookRecord(_ readingBook: ReadingBook, totalPagesRead: Int) {
         guard let object = realm.objects(ReadingBook.self)
-            .filter({ $0.isbn13 == readingBook.isbn13 }).first else {
+            .findReadingBookFirst(with: readingBook.isbn13) else {
             return
         }
         
@@ -116,19 +116,31 @@ class RealmManager: ObservableObject {
         if let lastRecord = object.lastRecord {
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일한 경우
             if Date().isEqual([.year, .month, .day], date: lastRecord.date) {
-                if object.readingRecords.count <= 1 {
-                // 마지막 데이터 수정하기
-                    try! realm.write {
-                        object.readingRecords.last?.date = Date()
-                        object.readingRecords.last?.totalPagesRead = totalPagesRead
-                        object.readingRecords.last?.numOfPagesRead = totalPagesRead
-                    }
+                // 독서 데이터 삭제하기
+                try! realm.write {
+                    let localObject = object
+                    localObject.readingRecords.remove(at: object.readingRecords.endIndex - 1)
+                }
+                
+                if object.readingRecords.isEmpty {
+                    readingRecord = ReadingRecord(
+                        value: ["date": Date(),
+                                "totalPagesRead": totalPagesRead,
+                                "numOfPagesRead": totalPagesRead
+                               ] as [String : Any]
+                    )
                 } else {
-                    try! realm.write {
-                        object.readingRecords.last?.date = Date()
-                        object.readingRecords.last?.totalPagesRead = totalPagesRead
-                        object.readingRecords.last?.numOfPagesRead = totalPagesRead - lastRecord.totalPagesRead
-                    }
+                    readingRecord = ReadingRecord(
+                        value: ["date": Date(),
+                                "totalPagesRead": totalPagesRead,
+                                "numOfPagesRead": totalPagesRead - lastRecord.totalPagesRead
+                               ] as [String : Any]
+                    )
+                }
+                
+                // 독서 데이터 추가하기
+                try! realm.write {
+                    object.readingRecords.append(readingRecord)
                 }
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일하지 않은 경우
             } else {
@@ -138,7 +150,7 @@ class RealmManager: ObservableObject {
                             "numOfPagesRead": totalPagesRead - lastRecord.totalPagesRead
                            ] as [String : Any]
                 )
-                // 데이터 추가하기
+                // 독서 데이터 추가하기
                 try! realm.write {
                     object.readingRecords.append(readingRecord)
                 }
@@ -150,13 +162,13 @@ class RealmManager: ObservableObject {
                         "numOfPagesRead": totalPagesRead
                        ] as [String : Any]
             )
-            // 데이터 추가하기
+            // 독서 데이터 추가하기
             try! realm.write {
                 object.readingRecords.append(readingRecord)
             }
         }
         
-        checkReadingBookComplete(readingBook)
+        checkReadingBookComplete(object)
     }
     
     func deleteLastRecord(_ book: ReadingBook) {
