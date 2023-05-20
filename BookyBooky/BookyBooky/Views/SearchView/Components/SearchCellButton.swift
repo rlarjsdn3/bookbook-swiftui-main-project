@@ -69,7 +69,7 @@ extension SearchCellButton {
         }
     }
     
-    var bookInfoLabel: some view {
+    var bookInfoLabel: some View {
         VStack {
             bookTitleText
                 

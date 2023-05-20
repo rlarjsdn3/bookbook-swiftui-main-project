@@ -51,15 +51,19 @@ class RealmManager: ObservableObject {
     }
 }
 
-// MARK: - EXTENSIONS
-
-extension  RealmManager {
+extension RealmManager {
+    
+    /// 완독 목표 도서를 추가합니다.
+    /// - Parameter object: 추가할 완독 목표 도서 객체
     func addReadingBook(_ object: ReadingBook) {
         try! realm.write {
             realm.add(object)
         }
     }
     
+    
+    /// 완독 목표 도서를 삭제합니다.
+    /// - Parameter object: 삭제할 완독 목표 도서 객체
     func deleteReadingBook(_ object: ReadingBook) {
         guard let object = realm.objects(ReadingBook.self)
             .findReadingBookFirst(with: object.isbn13) else {
@@ -71,8 +75,12 @@ extension  RealmManager {
         }
     }
     
-    // ...
-    
+    /// 읽고 있는 도서의 독서 기록을 추가합니다.
+    /// 동일 일자에 여러 번 추가하는 경우, 가장 마지막으로 추가된 독서 기록 데이터로 덮어씌워집니다.
+    /// 도서를 완독한 경우, 완독 일자(completeDate)에 오늘 날짜가 추가됩니다.
+    /// - Parameters:
+    ///   - readingBook: 독서 기록을 추가할 읽고 있는 도서 객체
+    ///   - totalPagesRead: 읽은 총 페이지 수
     func addReadingBookRecord(_ readingBook: ReadingBook, totalPagesRead: Int) {
         guard let object = realm.objects(ReadingBook.self)
             .findReadingBookFirst(with: readingBook.isbn13) else {
@@ -148,8 +156,7 @@ extension  RealmManager {
     }
     
     /// 도서를 완독했는지 검사하는 함수입니다.
-    /// 도서를 완독하면 completeDate에 날짜 정보를 추가합니다.
-    /// - Parameter readingBook: 읽고 있는 도서 데이터
+    /// - Parameter readingBook: 읽고 있는 도서 객체
     private func checkReadingBookComplete(_ readingBook: ReadingBook) {
         guard let object = realm.objects(ReadingBook.self)
             .filter({ $0.isbn13 == readingBook.isbn13 }).first else {
@@ -163,15 +170,20 @@ extension  RealmManager {
         }
     }
     
-    func deleteLastRecord(_ book: ReadingBook) {
+    /// 읽고 있는 도서의 마지막 독서 기록을 삭제합니다.
+    /// - Parameter book: 읽고 있는 도서 객체
+    func deleteLastRecord(_ readingBook: ReadingBook) {
         if let object = realm.objects(ReadingBook.self)
-            .filter({ $0.isbn13 == book.isbn13 }).first {
+            .filter({ $0.isbn13 == readingBook.isbn13 }).first {
             try! realm.write {
                 object.readingRecords.remove(at: object.readingRecords.endIndex - 1)
             }
         }
     }
     
+    
+    /// 읽고 있는 도서의 전체 독서 기록을 삭제합니다.
+    /// - Parameter book: 읽고 있는 도서 객체
     func deleteAllRecord(_ book: ReadingBook) {
         if let object = realm.objects(ReadingBook.self)
             .filter({ $0.isbn13 == book.isbn13 }).first {
@@ -183,6 +195,9 @@ extension  RealmManager {
 }
 
 extension RealmManager {
+    
+    /// 찜한 도서를 추가합니다.
+    /// - Parameter object: 찜한 도서 객체
     func addFavoriteBook(_ object: FavoriteBook) {
         try! realm.write {
             realm.add(object)
@@ -191,6 +206,8 @@ extension RealmManager {
         isPresentingFavoriteBookAddCompleteToastAlert = true
     }
     
+    /// 찜한 도서를 삭제합니다.
+    /// - Parameter isbn13: 찜한 도서의 ISBN13값
     func deleteFavoriteBook(_ isbn13: String) {
         guard let object = realm.objects(FavoriteBook.self)
             .filter( { $0.isbn13 == isbn13 } ).first else {
@@ -200,15 +217,11 @@ extension RealmManager {
         deleteFavoriteBook(object)
     }
     
+    /// 찜한 도서를 삭제합니다.
+    /// - Parameter object: 찜한 도서 객체
     func deleteFavoriteBook(_ object: FavoriteBook) {
         try! realm.write {
             realm.delete(object)
         }
     }
-    
-}
-
-extension RealmManager {
-    
-    
 }

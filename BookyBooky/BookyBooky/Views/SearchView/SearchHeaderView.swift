@@ -52,6 +52,8 @@ extension SearchHeaderView {
             } label: {
                 searchSFSymbolsImage
             }
+            
+            Spacer()
         }
     }
     
