@@ -88,9 +88,8 @@ extension SearchInfoTitleView {
                     ]
                 )
                 realmManager.addFavoriteBook(favorite)
-                realmManager.isPresentingFavoriteBookAddCompleteToastAlert = true
             } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     realmManager.deleteFavoriteBook(bookInfo.isbn13)
                 }
             }

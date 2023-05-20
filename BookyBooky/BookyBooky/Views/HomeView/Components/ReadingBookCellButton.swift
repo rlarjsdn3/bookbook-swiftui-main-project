@@ -54,7 +54,7 @@ extension ReadingBookCellButton {
                 asyncCoverImage(
                     readingBook.cover,
                     width: 150, height: 200,
-                    coverShape: RoundedRectangle(cornerRadius: 15)
+                    coverShape: RoundedCoverShape()
                 )
                 
                 exclamationMarkSFSymbolImage

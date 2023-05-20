@@ -10,6 +10,25 @@ import RealmSwift
 import AlertToast
 
 class RealmManager: ObservableObject {
+        
+    // MARK: - PROPERTIES
+    
+    lazy var realm = openLocalRealm()
+    
+    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    
+    // MARK: - FUNCTIONS
+    
+    func openLocalRealm() -> Realm {
+        let config = Realm.Configuration(
+            schemaVersion: 0,
+            deleteRealmIfMigrationNeeded: true
+        )
+        print("Realm DB 저장소의 위치: \(config.fileURL!)")
+        
+        return try! Realm(configuration: config)
+    }
     
     // MARK: - TOAST ALERT PROPERTIES
     
@@ -30,25 +49,6 @@ class RealmManager: ObservableObject {
     func showFavoriteBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
         AlertToast(displayMode: .alert, type: .complete(color), title: "찜하기 완료")
     }
-    
-    // MARK: - REALM PROPERTIES
-    
-    lazy var realm = openLocalRealm()
-    
-    @ObservedResults(ReadingBook.self) var readingBooks
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
-    
-    // MARK: - FUNCTION
-    
-    func openLocalRealm() -> Realm {
-        let config = Realm.Configuration(
-            schemaVersion: 0,
-            deleteRealmIfMigrationNeeded: true
-        )
-        print("Realm DB 저장소의 위치: \(config.fileURL!)")
-        
-        return try! Realm(configuration: config)
-    }
 }
 
 // MARK: - EXTENSIONS
@@ -68,22 +68,6 @@ extension  RealmManager {
         
         try! realm.write {
             realm.delete(object)
-        }
-    }
-    
-    /// 도서를 완독했는지 검사하는 함수입니다.
-    /// 도서를 완독하면 completeDate에 날짜 정보를 추가합니다.
-    /// - Parameter readingBook: 읽고 있는 도서 데이터
-    func checkReadingBookComplete(_ readingBook: ReadingBook) {
-        guard let object = realm.objects(ReadingBook.self)
-            .filter({ $0.isbn13 == readingBook.isbn13 }).first else {
-            return
-        }
-        
-        if object.lastRecord?.totalPagesRead == object.itemPage {
-            try! realm.write {
-                object.completeDate = Date()
-            }
         }
     }
     
@@ -163,6 +147,22 @@ extension  RealmManager {
         checkReadingBookComplete(object)
     }
     
+    /// 도서를 완독했는지 검사하는 함수입니다.
+    /// 도서를 완독하면 completeDate에 날짜 정보를 추가합니다.
+    /// - Parameter readingBook: 읽고 있는 도서 데이터
+    private func checkReadingBookComplete(_ readingBook: ReadingBook) {
+        guard let object = realm.objects(ReadingBook.self)
+            .filter({ $0.isbn13 == readingBook.isbn13 }).first else {
+            return
+        }
+        
+        if object.lastRecord?.totalPagesRead == object.itemPage {
+            try! realm.write {
+                object.completeDate = Date()
+            }
+        }
+    }
+    
     func deleteLastRecord(_ book: ReadingBook) {
         if let object = realm.objects(ReadingBook.self)
             .filter({ $0.isbn13 == book.isbn13 }).first {
@@ -187,6 +187,17 @@ extension RealmManager {
         try! realm.write {
             realm.add(object)
         }
+        
+        isPresentingFavoriteBookAddCompleteToastAlert = true
+    }
+    
+    func deleteFavoriteBook(_ isbn13: String) {
+        guard let object = realm.objects(FavoriteBook.self)
+            .filter( { $0.isbn13 == isbn13 } ).first else {
+            return
+        }
+        
+        deleteFavoriteBook(object)
     }
     
     func deleteFavoriteBook(_ object: FavoriteBook) {
@@ -195,11 +206,6 @@ extension RealmManager {
         }
     }
     
-    func deleteFavoriteBook(_ isbn13: String) {
-        if let object = favoriteBooks.filter("isbn13 == %@", isbn13).first {
-            deleteFavoriteBook(object)
-        }
-    }
 }
 
 extension RealmManager {

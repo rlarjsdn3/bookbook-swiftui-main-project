@@ -11,41 +11,51 @@ struct SearchHeaderView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var showSearchSheetView = false
+    @State private var isPresentingSearchSheetView = false
     
     // MARK: - BODY
     
     var body: some View {
-        HStack {
-            Spacer()
-            
-            title
-            
-            Spacer()
-        }
-        .sheet(isPresented: $showSearchSheetView) {
-            SearchSheetView()
-        }
-        .overlay(alignment: .trailing) {
-            Button {
-                showSearchSheetView = true
-            } label: {
-                searchImage
+        navigationBar
+            .sheet(isPresented: $isPresentingSearchSheetView) {
+                SearchSheetView()
             }
-        }
-        .padding(.vertical)
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchHeaderView {
-    var title: some View {
+    var navigationBar: some View {
+        HStack {
+            Spacer()
+            
+            navigationBarTitle
+            
+            Spacer()
+        }
+        .overlay {
+            navigationBarButtons
+        }
+        .padding(.vertical)
+    }
+    
+    var navigationBarTitle: some View {
         Text("검색")
             .navigationTitleStyle()
     }
     
-    var searchImage: some View {
+    var navigationBarButtons: some View {
+        HStack {
+            Button {
+                isPresentingSearchSheetView = true
+            } label: {
+                searchSFSymbolsImage
+            }
+        }
+    }
+    
+    var searchSFSymbolsImage: some View {
         Image(systemName: "magnifyingglass")
             .navigationBarItemStyle()
     }

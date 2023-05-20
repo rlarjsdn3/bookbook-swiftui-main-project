@@ -7,54 +7,45 @@
 
 import SwiftUI
 
-struct ListTypeButtonView: View {
+struct SearchTabButton: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var listTypeSelected: BookListTabItems
-    let type: BookListTabItems
+    @Binding var listTypeSelected: BookListTabTypes
+    let type: BookListTabTypes
     let scrollProxy: ScrollViewProxy
-    @Binding var selectedAnimation: BookListTabItems
+    @Binding var selectedAnimation: BookListTabTypes
     let selectedNamespace: Namespace.ID
     
     // MARK: - BODY
     
     var body: some View {
-        Button {
-            selectType()
-        } label: {
-            typeLabel
-        }
-        .padding(.vertical, 10)
-        .padding([.horizontal, .bottom], 5)
-        .overlay(alignment: .bottom) {
-            if selectedAnimation == type {
-                underline
-            }
-        }
+        searchTabButton
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension ListTypeButtonView {
-    var typeLabel: some View {
-        Text(type.name)
-            .font(.headline)
-            .fontWeight(.bold)
-            .foregroundColor(listTypeSelected == type ? .black : .gray)
+extension SearchTabButton {
+    var searchTabButton: some View {
+        Button {
+            selectListType()
+        } label: {
+            listTypeLabel
+        }
+        .padding(.vertical, 10)
+        .padding([.horizontal, .bottom], 5)
+        .overlay(alignment: .bottom) {
+            if selectedAnimation == type {
+                RoundedRectangle(cornerRadius: 5)
+                    .frame(height: 1)
+                    .frame(maxWidth: .infinity)
+                    .matchedGeometryEffect(id: "rectangle", in: selectedNamespace)
+            }
+        }
     }
     
-    var underline: some View {
-        RoundedRectangle(cornerRadius: 5)
-            .frame(height: 1)
-            .frame(maxWidth: .infinity)
-            .matchedGeometryEffect(id: "rectangle", in: selectedNamespace)
-    }
-}
-
-extension ListTypeButtonView {
-    func selectType() {
+    func selectListType() {
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
             selectedAnimation = type
             scrollProxy.scrollTo(type.rawValue)
@@ -62,16 +53,23 @@ extension ListTypeButtonView {
         }
         listTypeSelected = type
     }
+    
+    var listTypeLabel: some View {
+        Text(type.name)
+            .font(.headline)
+            .fontWeight(.bold)
+            .foregroundColor(listTypeSelected == type ? .black : .gray)
+    }
 }
 
 // MARK: - PREVIEW
 
-struct ListTypeButtonView_Previews: PreviewProvider {
+struct SearchTabButton_Previews: PreviewProvider {
     @Namespace static var namespace: Namespace.ID
     
     static var previews: some View {
         ScrollViewReader { proxy in
-            ListTypeButtonView(
+            SearchTabButton(
                 listTypeSelected: .constant(.bestSeller),
                 type: .bestSeller,
                 scrollProxy: proxy,

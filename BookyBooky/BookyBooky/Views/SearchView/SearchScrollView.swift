@@ -8,36 +8,46 @@
 import SwiftUI
 import AlertToast
 
-struct SearchLazyGridView: View {
+struct SearchScrollView: View {
     
-    // MARK: - PROPERTIES
+    // MARK: - WRAPPER PROPERTIES
     
-    @Binding var listTypeSelected: BookListTabItems
-    @Binding var scrollYOffset: CGFloat
+    @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var startOffset: CGFloat = 0.0
     
-    var bookListItems: [BookList.Item] {
-        switch listTypeSelected {
-        case .bestSeller:
-            return bookViewModel.bestSeller
-        case .itemNewAll:
-            return bookViewModel.itemNewAll
-        case .itemNewSpecial:
-            return bookViewModel.itemNewSpecial
-        case .blogBest:
-            return bookViewModel.blogBest
-        }
-    }
+    // MARK: - PROPERTIES
     
-    var columns = [
+    let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
     
-    // MARK: - WRAPPER PROPERTIES
+    @Binding var scrollYOffset: CGFloat
+    @Binding var selectedListType: BookListTabTypes
     
-    @EnvironmentObject var bookViewModel: AladinAPIManager
+    // MARK: - INTALIZER
+    
+    init(_ scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTabTypes>) {
+        self._scrollYOffset = scrollYOffset
+        self._selectedListType = selectedListType
+    }
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    var listOfBooksAccordingToSelectedType: [BookList.Item] {
+        switch selectedListType {
+        case .bestSeller:
+            return aladinAPIManager.bestSeller
+        case .itemNewAll:
+            return aladinAPIManager.itemNewAll
+        case .itemNewSpecial:
+            return aladinAPIManager.itemNewSpecial
+        case .blogBest:
+            return aladinAPIManager.blogBest
+        }
+    }
+    
     
     // MARK: - BODY
     
@@ -45,16 +55,10 @@ struct SearchLazyGridView: View {
         ZStack {
             Color("Background")
             
-            if !bookListItems.isEmpty {
-                ScrollViewReader { proxy in
-                    scrollLazyGridCells(scrollProxy: proxy)
-                }
+            if listOfBooksAccordingToSelectedType.isEmpty {
+                networkErrorLabel
             } else {
-                VStack {
-                    noResultsLabel
-                    
-                    refreshButton
-                }
+                scrollLazyGridCells
             }
         }
     }
@@ -62,11 +66,25 @@ struct SearchLazyGridView: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchLazyGridView {
-    var lazyGridCells: some View {
+extension SearchScrollView {
+    var scrollLazyGridCells: some View {
+        ScrollViewReader { scrollProxy in
+            ScrollView(showsIndicators: false) {
+                searchCellButtons
+            }
+            // 도서 리스트 타입이 변경될 때마다 리스트의 스크롤을 맨 위로 올림
+            .onChange(of: selectedListType) { _ in
+                withAnimation {
+                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
+                }
+            }
+        }
+    }
+    
+    var searchCellButtons: some View {
         LazyVGrid(columns: columns, spacing: 25) {
-            ForEach(bookListItems, id: \.self) { item in
-                ListTypeCellView(bookItem: item)
+            ForEach(listOfBooksAccordingToSelectedType, id: \.self) { item in
+                SearchCellButton(item)
             }
 
         }
@@ -93,7 +111,15 @@ extension SearchLazyGridView {
         .id("Scroll_To_Top")
     }
     
-    var noResultsLabel: some View {
+    var networkErrorLabel: some View {
+        VStack {
+            noListOfBooksLabel
+            
+            refreshButton
+        }
+    }
+    
+    var noListOfBooksLabel: some View {
         VStack(spacing: 5) {
             Text("도서 정보 불러오기 실패")
                 .font(.title2)
@@ -108,8 +134,8 @@ extension SearchLazyGridView {
     
     var refreshButton: some View {
         Button("다시 불러오기") {
-            for type in BookListTabItems.allCases {
-                bookViewModel.requestBookListAPI(type: type)
+            for type in BookListTabTypes.allCases {
+                aladinAPIManager.requestBookListAPI(type: type)
             }
             HapticManager.shared.impact(.rigid)
         }
@@ -118,26 +144,11 @@ extension SearchLazyGridView {
     }
 }
 
-extension SearchLazyGridView {
-    @ViewBuilder
-    func scrollLazyGridCells(scrollProxy proxy: ScrollViewProxy) -> some View {
-        ScrollView(showsIndicators: false) {
-            lazyGridCells
-        }
-        // 도서 리스트 타입이 변경될 때마다 리스트의 스크롤을 맨 위로 올림
-        .onChange(of: listTypeSelected) { _ in
-            withAnimation {
-                proxy.scrollTo("Scroll_To_Top", anchor: .top)
-            }
-        }
-    }
-}
-
 // MARK: - PREVIEW
 
 struct SearchLazyGridView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchLazyGridView(listTypeSelected: .constant(.bestSeller), scrollYOffset: .constant(0.0))
+        SearchScrollView(.constant(0.0), selectedListType: .constant(.bestSeller))
             .environmentObject(AladinAPIManager())
     }
 }
