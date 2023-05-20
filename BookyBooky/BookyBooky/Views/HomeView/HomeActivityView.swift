@@ -60,7 +60,7 @@ extension HomeActivityView {
     }
     
     var activityTabMain: some View {
-        VStack {
+        VStack(spacing: 5) {
             let activities = readingBooks.getRecentReadingActivity()
             
             if !activities.isEmpty {

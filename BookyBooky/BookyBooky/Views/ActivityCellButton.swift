@@ -51,7 +51,7 @@ extension ActivityCellButton {
             
             statusLabel
         }
-        .padding(.vertical, 13)
+        .padding(.vertical, 10)
         .padding(.horizontal)
         .background(Color("Background"))
         .clipShape(RoundedRectangle(cornerRadius: 20))
