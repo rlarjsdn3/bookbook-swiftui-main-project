@@ -141,7 +141,7 @@ extension HomeReadingBookView {
             if readingBook.isEmpty {
                 noBookIsBeingReadLabel
             } else {
-                readingBookGrid
+                readingBookCellButtons
             }
         }
     }
@@ -158,7 +158,7 @@ extension HomeReadingBookView {
         .padding(.top, 50)
     }
     
-    var readingBookGrid: some View {
+    var readingBookCellButtons: some View {
         Group {
             // 이렇게 해서 DB 내 데이터가 바뀌거나 추가될 때마다 뷰를 새로 그려지게 해야 한다! <- 이거 중요
             let filterReadingBooks = readingBooks.getfilteredReadingBooks(
@@ -183,12 +183,9 @@ extension HomeReadingBookView {
         HStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    let filterReadingBooks = readingBooks.getfilteredReadingBooks(
-                        bookSortType: selectedBookSortType,
-                        categoryType: selectedCategoryType
-                    )
+                    let readingBooks = readingBooks.get(.unfinished)
                     
-                    ForEach(filterReadingBooks.getReadingBookCategoryType(), id: \.self) { type in
+                    ForEach(readingBooks.getReadingBookCategoryType(), id: \.self) { type in
                         HomeCategoryButton(
                             type,
                             selectedCategoryType: $selectedCategoryType,
