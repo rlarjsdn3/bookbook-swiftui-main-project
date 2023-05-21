@@ -40,6 +40,7 @@ struct SearchSheetCellView: View {
             }
         }
         .onTapGesture {
+            hideKeyboard()
             isPresentingSearchInfoView = true
         }
         .navigationDestination(isPresented: $isPresentingSearchInfoView) {
