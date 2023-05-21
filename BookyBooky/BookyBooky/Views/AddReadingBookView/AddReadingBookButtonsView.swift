@@ -40,30 +40,9 @@ struct AddReadingBookButtonsView: View {
         .confirmationDialog("목표 도서에 추가하시겠습니까?",
                             isPresented: $isPresentingAddReadingBookConfirmDialog,
                             titleVisibility: .visible) {
-            Button("확인") {
-                let readingBook = ReadingBook(
-                    value: [
-                        "title": "\(searchBookInfo.title.refinedTitle)",
-                        "author": "\(searchBookInfo.author.refinedAuthor)",
-                        "publisher": "\(searchBookInfo.publisher)",
-                        "pubDate": searchBookInfo.pubDate.refinedPublishDate,
-                        "cover": "\(searchBookInfo.cover)",
-                        "itemPage": searchBookInfo.subInfo.itemPage,
-                        "category": searchBookInfo.categoryName.refinedCategory,
-                        "introduction": searchBookInfo.description,
-                        "link": "\(searchBookInfo.link)",
-                        "isbn13": "\(searchBookInfo.isbn13)",
-                        "startDate": Date(),
-                        "targetDate": selectedDate,
-                        "isCompleted": false
-                    ] as [String : Any])
-                realmManager.addReadingBook(readingBook)
-                dismiss()
-            }
+            okButton
             
-            Button("취소", role: .cancel) {
-                
-            }
+            cancelButton
         }
         // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
         // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 20으로 설정
@@ -105,6 +84,35 @@ extension AddReadingBookButtonsView {
             Text("추가하기")
         }
         .buttonStyle(RightBottomButtonStyle(searchBookInfo.category.accentColor))
+    }
+    
+    var okButton: some View {
+        Button("확인") {
+            let readingBook = ReadingBook(
+                value: [
+                    "title": "\(searchBookInfo.title.refinedTitle)",
+                    "author": "\(searchBookInfo.author.refinedAuthor)",
+                    "publisher": "\(searchBookInfo.publisher)",
+                    "pubDate": searchBookInfo.pubDate.refinedPublishDate,
+                    "cover": "\(searchBookInfo.cover)",
+                    "itemPage": searchBookInfo.subInfo.itemPage,
+                    "category": searchBookInfo.categoryName.refinedCategory,
+                    "introduction": searchBookInfo.description,
+                    "link": "\(searchBookInfo.link)",
+                    "isbn13": "\(searchBookInfo.isbn13)",
+                    "startDate": Date(),
+                    "targetDate": selectedDate,
+                    "isCompleted": false
+                ] as [String : Any])
+            realmManager.addReadingBook(readingBook)
+            dismiss()
+        }
+    }
+    
+    var cancelButton: some View {
+        Button("취소", role: .cancel) {
+            
+        }
     }
 }
 

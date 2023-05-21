@@ -31,11 +31,11 @@ struct SearchBookButtonsView: View {
             }
     }
     
-    func checkReadingBook() -> Bool {
+    func isExistingReadingBook() -> Bool {
         for book in readingBooks where book.isbn13 == bookSearchInfo.isbn13 {
-            return false
+            return true
         }
-        return true
+        return false
     }
 }
 
@@ -74,18 +74,29 @@ extension SearchBookButtonsView {
     }
     
     var backButton: some View {
-        Button {
-            dismiss()
-        } label: {
-            Text("돌아가기")
+        Group {
+            if isExistingReadingBook() {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("돌아가기")
+                }
+                .buttonStyle(BottomButtonStyle())
+            } else {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("돌아가기")
+                }
+                .buttonStyle(LeftBottomButtonStyle())
+            }
         }
-        .buttonStyle(.leftBottomButtonStyle)
     }
     
     var readingBookAddButton: some View {
         // 이미 목표 도서에 추가되어 있는 경우, 버튼 잠그기 (안 보이게 하기)
         Group {
-            if checkReadingBook() {
+            if !isExistingReadingBook() {
                 NavigationLink {
                     AddReadingBookView(bookSearchInfo)
                 } label: {
