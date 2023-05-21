@@ -7,7 +7,12 @@
 
 import SwiftUI
 
-struct BookAddCenterView: View {
+struct AddReadingBookTitleView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @State private var isPresentingDateDescSheet = false
+    @State private var isPresentingDatePickerSheet = false
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -17,13 +22,15 @@ struct BookAddCenterView: View {
     
     // MARK: - PROPERTIES
     
-    let bookInfoItem: detailBookInfo.Item
+    let searchBookInfo: detailBookInfo.Item
     @Binding var selectedDate: Date
     
-    // MARK: - WRAPPER PROPERTIES
+    // MARK: - INTIALIZER
     
-    @State private var isPresentingDateDescSheet = false
-    @State private var isPresentingDatePickerSheet = false
+    init(_ searchBookInfo: detailBookInfo.Item, selectedDate: Binding<Date>) {
+        self.searchBookInfo = searchBookInfo
+        self._selectedDate = selectedDate
+    }
     
     // MARK: - BODY
     
@@ -38,7 +45,7 @@ struct BookAddCenterView: View {
             selectDateMenu
         }
         .sheet(isPresented: $isPresentingDatePickerSheet) {
-            DatePickerSheetView(selectedDate: $selectedDate, bookInfo: bookInfoItem)
+            DatePickerSheetView(selectedDate: $selectedDate, bookInfo: searchBookInfo)
         }
         .padding(.bottom, 40)
     }
@@ -46,7 +53,7 @@ struct BookAddCenterView: View {
 
 // MARK: - EXTENSIONS
 
-extension BookAddCenterView {
+extension AddReadingBookTitleView {
     var targetDateLabel: some View {
         HStack {
             Text("완독 목표일을 설정해주세요.")
@@ -64,9 +71,9 @@ extension BookAddCenterView {
     var averageDailyReadingPageLabel: some View {
         Group {
             if dayInterval != 0 {
-                Text("\(dayInterval)일 동안 하루 평균 \(String(format: "%.0f",  Double(bookInfoItem.subInfo.itemPage) / Double(dayInterval)))페이지를 읽어야 해요.")
+                Text("\(dayInterval)일 동안 하루 평균 \(String(format: "%.0f",  Double(searchBookInfo.subInfo.itemPage) / Double(dayInterval)))페이지를 읽어야 해요.")
             } else {
-                Text("오늘까지 \(bookInfoItem.subInfo.itemPage)페이지를 읽어야 해요.")
+                Text("오늘까지 \(searchBookInfo.subInfo.itemPage)페이지를 읽어야 해요.")
             }
         }
         .font(.subheadline)
@@ -96,6 +103,9 @@ extension BookAddCenterView {
 
 struct BookAddCenterView_Previews: PreviewProvider {
     static var previews: some View {
-        BookAddCenterView(bookInfoItem: detailBookInfo.Item.preview[0], selectedDate: .constant(Date()))
+        AddReadingBookTitleView(
+            detailBookInfo.Item.preview[0],
+            selectedDate: .constant(Date())
+        )
     }
 }

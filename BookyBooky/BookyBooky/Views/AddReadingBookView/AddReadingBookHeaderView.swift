@@ -7,17 +7,33 @@
 
 import SwiftUI
 
-struct BookAddHeaderView: View {
-    
-    // MARK: - PROPERTIES
-    
-    let bookInfoItem: detailBookInfo.Item
+struct AddReadingBookHeaderView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
     
+    // MARK: - PROPERTIES
+    
+    let bookTitle: String
+    
+    // MARK: - INTIALIZER
+    
+    init(bookTitle: String) {
+        self.bookTitle = bookTitle
+    }
+    
+    // MARK: - BODY
+    
     var body: some View {
+        navigationBar
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension AddReadingBookHeaderView {
+    var navigationBar: some View {
         HStack {
             backButton
             
@@ -27,27 +43,14 @@ struct BookAddHeaderView: View {
         // 베젤이 있는 아이폰(iPhone SE 등)은 수평 간격 10으로 설정
         .padding(.horizontal, safeAreaInsets.bottom != 0 ? 0 : 10)
     }
-}
-
-// MARK: - EXTENSIONS
-
-extension BookAddHeaderView {
+    
     var backButton: some View {
         Button {
             dismiss()
         } label: {
-            backLabel
+            Label(bookTitle, systemImage: "chevron.left")
         }
-    }
-    
-    var backLabel: some View {
-        Label("\(bookInfoItem.title.refinedTitle)", systemImage: "chevron.left")
-            .font(.title2)
-            .fontWeight(.bold)
-            .foregroundColor(.black)
-            .frame(maxWidth: mainScreen.width * 0.66, alignment: .leading)
-            .lineLimit(1)
-            .padding()
+        .navigationBarItemStyle()
     }
 }
 
@@ -55,6 +58,6 @@ extension BookAddHeaderView {
 
 struct BookAddHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        BookAddHeaderView(bookInfoItem: detailBookInfo.Item.preview[0])
+        AddReadingBookHeaderView(bookTitle: "자바의 정석")
     }
 }

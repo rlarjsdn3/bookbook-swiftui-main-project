@@ -15,8 +15,9 @@ class RealmManager: ObservableObject {
     
     lazy var realm = openLocalRealm()
     
-    @ObservedResults(ReadingBook.self) var readingBooks
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @Published var isPresentingFavoriteBookAddCompleteToastAlert = false
+    @Published var isPresentingReadingBookAddCompleteToastAlert = false
+    @Published var isPresentingReadingBookEditComleteToastAlert = false
     
     // MARK: - FUNCTIONS
     
@@ -29,26 +30,6 @@ class RealmManager: ObservableObject {
         
         return try! Realm(configuration: config)
     }
-    
-    // MARK: - TOAST ALERT PROPERTIES
-    
-    @Published var isPresentingFavoriteBookAddCompleteToastAlert = false
-    @Published var isPresentingReadingBookAddCompleteToastAlert = false
-    @Published var isPresentingReadingBookEditComleteToastAlert = false
-    
-    // MARK: - TOAST ALERT FUNCTIONS
-    
-    func showTargetBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
-        AlertToast(displayMode: .alert, type: .complete(color), title: "도서 추가 완료")
-    }
-    
-    func showTargetBookEditCompleteToastAlert(_ color: Color) -> AlertToast {
-        AlertToast(displayMode: .alert, type: .complete(color), title: "도서 편집 완료")
-    }
-    
-    func showFavoriteBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
-        AlertToast(displayMode: .alert, type: .complete(color), title: "찜하기 완료")
-    }
 }
 
 extension RealmManager {
@@ -59,6 +40,7 @@ extension RealmManager {
         try! realm.write {
             realm.add(object)
         }
+        self.isPresentingReadingBookAddCompleteToastAlert = true
     }
     
     
@@ -223,5 +205,19 @@ extension RealmManager {
         try! realm.write {
             realm.delete(object)
         }
+    }
+}
+
+extension RealmManager {
+    func showTargetBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
+        AlertToast(displayMode: .alert, type: .complete(color), title: "도서 추가 완료")
+    }
+    
+    func showTargetBookEditCompleteToastAlert(_ color: Color) -> AlertToast {
+        AlertToast(displayMode: .alert, type: .complete(color), title: "도서 편집 완료")
+    }
+    
+    func showFavoriteBookAddCompleteToastAlert(_ color: Color) -> AlertToast {
+        AlertToast(displayMode: .alert, type: .complete(color), title: "찜하기 완료")
     }
 }

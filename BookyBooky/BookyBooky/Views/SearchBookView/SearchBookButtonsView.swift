@@ -25,21 +25,10 @@ struct SearchBookButtonsView: View {
     // MARK: - BODY
     
     var body: some View {
-        VStack {
-            provideBookAPIText
-            
-            HStack {
-                backButton
-                
-                readingBookAddButton
+        bottomButtons
+            .navigationDestination(isPresented: $isPresentingAddReadingBookView) {
+                AddReadingBookView(bookSearchInfo)
             }
-            // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
-            // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 20으로 설정
-            .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
-        }
-        .navigationDestination(isPresented: $isPresentingAddReadingBookView) {
-            BookAddView(bookInfoItem: bookSearchInfo)
-        }
     }
     
     func checkReadingBook() -> Bool {
@@ -53,7 +42,15 @@ struct SearchBookButtonsView: View {
 // MARK: - EXTENSIONS
 
 extension SearchBookButtonsView {
-    var provideBookAPIText: some View {
+    var bottomButtons: some View {
+        VStack {
+            bookAPIProviderText
+            
+            buttons
+        }
+    }
+    
+    var bookAPIProviderText: some View {
         HStack(spacing: 0) {
             Text("도서 DB 제공 : ")
             
@@ -63,6 +60,17 @@ extension SearchBookButtonsView {
         .font(.caption)
         .redacted(reason: isLoadingCoverImage ? .placeholder : [])
         .shimmering(active: isLoadingCoverImage)
+    }
+    
+    var buttons: some View {
+        HStack {
+            backButton
+            
+            readingBookAddButton
+        }
+        // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
+        // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 20으로 설정
+        .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
     }
     
     var backButton: some View {
