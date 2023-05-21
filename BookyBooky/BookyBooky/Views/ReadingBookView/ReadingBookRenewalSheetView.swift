@@ -143,7 +143,9 @@ extension ReadingBookRenewalSheetView {
                 readingBook,
                 totalPagesRead: totalPagesRead
             )
-            dismiss()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                dismiss()
+            }
         } label: {
             Text("갱신하기")
         }

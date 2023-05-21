@@ -85,13 +85,13 @@ struct SearchBookView: View {
                 dismiss()
             }
         }
-        .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddCompleteToastAlert,
+        .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddSuccessToastAlert,
                duration: 1.0) {
-            realmManager.showFavoriteBookAddCompleteToastAlert(categoryAccentColor)
+            realmManager.showFavoriteBookAddSuccessToastAlert(categoryAccentColor)
         }
-       .toast(isPresenting: $realmManager.isPresentingReadingBookAddCompleteToastAlert,
+       .toast(isPresenting: $realmManager.isPresentingReadingBookAddSuccessToastAlert,
               duration: 1.0) {
-           realmManager.showTargetBookAddCompleteToastAlert(categoryAccentColor)
+           realmManager.showReadingBookAddSuccessToastAlert(categoryAccentColor)
        }
         .presentationCornerRadius(30)
     }

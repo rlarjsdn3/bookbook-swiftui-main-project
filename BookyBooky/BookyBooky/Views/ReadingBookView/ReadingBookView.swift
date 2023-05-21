@@ -40,9 +40,14 @@ struct ReadingBookView: View {
             ReadingBookScrollView(readingBook, scrollYOffset: $scrollYOffset)
         }
         .toast(
-            isPresenting: $realmManager.isPresentingReadingBookEditComleteToastAlert,
+            isPresenting: $realmManager.isPresentingReadingBookEditSuccessToastAlert,
             duration: 1.0) {
-            realmManager.showTargetBookEditCompleteToastAlert(readingBook.category.accentColor)
+            realmManager.showReadingBookEditSuccessToastAlert(readingBook.category.accentColor)
+        }
+        .toast(
+            isPresenting: $realmManager.isPresentingReadingBookRenewalSuccessToastAlert,
+            duration: 1.0) {
+            realmManager.showReadingBookRenewalSuccessToastAlert(readingBook.category.accentColor)
         }
         .navigationBarBackButtonHidden()
     }

@@ -50,7 +50,7 @@ extension ReadingBookInfoView {
         VStack {
             readingBookCover
             
-            readingStatusButton
+            readingRenewalStatus
         }
     }
     
@@ -68,18 +68,18 @@ extension ReadingBookInfoView {
             
             readingBookInfoLabel
         }
-        .frame(height: 180)
+        .frame(height: 200)
     }
     
-    var readingStatusButton: some View {
+    var readingRenewalStatus: some View {
         HStack {
-            readingButton
+            renewalButton
             
             readingStatusText
             
             Spacer()
         }
-        .padding(.vertical, 10)
+        .padding(.vertical, 5)
         .padding(.horizontal)
     }
     
@@ -177,7 +177,7 @@ extension ReadingBookInfoView {
 }
 
 extension ReadingBookInfoView {
-    var readingButton: some View {
+    var renewalButton: some View {
         Button {
             isPresentingRenewalSheet = true
         } label: {

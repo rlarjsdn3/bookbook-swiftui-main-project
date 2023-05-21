@@ -105,7 +105,7 @@ struct ReadingBookEditView: View {
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        realmManager.isPresentingReadingBookEditComleteToastAlert = true
+                        realmManager.isPresentingReadingBookEditSuccessToastAlert = true
                         dismiss()
                     }
                 } label: {
