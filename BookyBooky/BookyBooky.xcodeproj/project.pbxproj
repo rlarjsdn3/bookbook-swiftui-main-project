@@ -434,7 +434,7 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		9E7A794129DA5B7C00A51856 /* SearchInfoView */ = {
+		9E7A794129DA5B7C00A51856 /* SearchBookView */ = {
 			isa = PBXGroup;
 			children = (
 				9E7A794229DA5B8F00A51856 /* SearchInfoView.swift */,
@@ -445,7 +445,7 @@
 				9E7A794F29DAABA000A51856 /* SearchInfoButtonsView.swift */,
 				9E7A794E29DA999200A51856 /* Components */,
 			);
-			path = SearchInfoView;
+			path = SearchBookView;
 			sourceTree = "<group>";
 		};
 		9E7A794E29DA999200A51856 /* Components */ = {
@@ -464,7 +464,7 @@
 			path = AnalysisView;
 			sourceTree = "<group>";
 		};
-		9EA198392A01F18300D385CD /* ReadingBookDetailView */ = {
+		9EA198392A01F18300D385CD /* ReadingBookView */ = {
 			isa = PBXGroup;
 			children = (
 				9EA1983B2A01F18300D385CD /* ReadingBookView.swift */,
@@ -481,7 +481,7 @@
 				9EC88D612A11F76400C2701F /* ReadingBookConfettiView.swift */,
 				9EE01FEF2A020F8000584F39 /* Components */,
 			);
-			path = ReadingBookDetailView;
+			path = ReadingBookView;
 			sourceTree = "<group>";
 		};
 		9EB749F329D5C26100610D97 /* Enums */ = {
@@ -512,10 +512,10 @@
 				9ECD921229BF1FA600FCDD2F /* ContentView.swift */,
 				9E0C0A6329D1DB4B00F1F5F6 /* HomeView */,
 				9E0EF6F42A0DF74100747847 /* ActivityView  */,
-				9EA198392A01F18300D385CD /* ReadingBookDetailView */,
+				9EA198392A01F18300D385CD /* ReadingBookView */,
 				9E0C0A6A29D284ED00F1F5F6 /* SearchView */,
 				9E54A9FD29D66BD100FE080C /* SearchSheetView */,
-				9E7A794129DA5B7C00A51856 /* SearchInfoView */,
+				9E7A794129DA5B7C00A51856 /* SearchBookView */,
 				9EDC2FB229E6F0F8004E792A /* BookAddView */,
 				9E06071529DFDC05000D542D /* BookShelfView */,
 				9E0434A729E24B90009A2161 /* FavoriteBooksView */,
