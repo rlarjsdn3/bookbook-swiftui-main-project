@@ -10,7 +10,7 @@ import RealmSwift
 
 struct BookAddButtonsView: View {
     
-    let bookInfoItem: BookInfo.Item
+    let bookInfoItem: detailBookInfo.Item
     @Binding var selectedDate: Date
     
     @EnvironmentObject var realmManager: RealmManager
@@ -118,7 +118,7 @@ extension BookAddButtonsView {
 
 struct BookAddButtonsView_Previews: PreviewProvider {
     static var previews: some View {
-        BookAddButtonsView(bookInfoItem: BookInfo.Item.preview[0], selectedDate: .constant(Date()))
+        BookAddButtonsView(bookInfoItem: detailBookInfo.Item.preview[0], selectedDate: .constant(Date()))
             .environmentObject(RealmManager())
     }
 }

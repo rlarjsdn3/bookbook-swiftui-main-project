@@ -11,7 +11,7 @@ struct BookAddHeaderView: View {
     
     // MARK: - PROPERTIES
     
-    let bookInfoItem: BookInfo.Item
+    let bookInfoItem: detailBookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -55,6 +55,6 @@ extension BookAddHeaderView {
 
 struct BookAddHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        BookAddHeaderView(bookInfoItem: BookInfo.Item.preview[0])
+        BookAddHeaderView(bookInfoItem: detailBookInfo.Item.preview[0])
     }
 }

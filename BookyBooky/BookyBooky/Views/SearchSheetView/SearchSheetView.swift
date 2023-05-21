@@ -43,19 +43,21 @@ struct SearchSheetView: View {
                     startIndex: $startIndex
                 )
             }
-            .toast(isPresenting: $aladinAPIManager.isPresentingSearchLoadingUI)  {
-                aladinAPIManager.searchLoadingUI
+            .toast(isPresenting: $aladinAPIManager.isPresentingSearchLoadingToastAlert)  {
+                aladinAPIManager.showSearchLoadingToastAlert
             }
-            .toast(isPresenting: $aladinAPIManager.isPresentingSearchErrorUI, duration: 2.0)  {
-                aladinAPIManager.searchErrorUI
+            .toast(isPresenting: $aladinAPIManager.isPresentingSearchErrorToastAlert,
+                   duration: 2.0)  {
+                aladinAPIManager.showSearchErrorToastAlert
             }
-            .toast(isPresenting: $aladinAPIManager.isPresentingInfoErrorUI, duration: 2.0) {
-                aladinAPIManager.infoErrorUI
+            .toast(isPresenting: $aladinAPIManager.isPresentingDetailBookErrorToastAlert,
+                   duration: 2.0) {
+                aladinAPIManager.showDetailBookErrorToastAlert
             }
         }
         .onDisappear {
-            aladinAPIManager.bookSearchItems.removeAll()
-            aladinAPIManager.BookInfoItem.removeAll()
+            aladinAPIManager.searchBookInfo = nil
+            aladinAPIManager.searchResults.removeAll()
         }
         .presentationCornerRadius(30)
     }

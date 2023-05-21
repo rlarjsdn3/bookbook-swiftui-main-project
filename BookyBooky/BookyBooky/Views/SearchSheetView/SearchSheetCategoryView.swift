@@ -25,7 +25,7 @@ struct SearchSheetCategoryView: View {
     
     var body: some View {
         // 검색 결과가 존재하는 경우
-        if !aladinAPIManager.bookSearchItems.isEmpty {
+        if !aladinAPIManager.searchResults.isEmpty {
             scrollCategoryButtons // 도서 카테고리 버튼 뷰 출력
         // 검색 결과가 존재하지 않는 경우
         } else {

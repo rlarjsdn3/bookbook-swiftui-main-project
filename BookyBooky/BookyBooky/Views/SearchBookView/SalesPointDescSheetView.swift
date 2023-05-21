@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-struct SalesPointDescSheetView: View {
+struct SalesPointIntroSheetView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @Environment(\.dismiss) var dismiss
     
     // MARK: - CONSTANT PROPERTIES
     
-    let descriptions = [
+    let introductions = [
         "판매 포인트는 판매량과 판매기간에 근거하여 해당 상품의 판매도를 산출한 알라딘만의 판매지수법입니다.",
         "최근 판매분에 가중치를 준 판매점수이며, 팔릴수록 올라가고 덜 팔리면 내려갑니다.",
         "그래서 최근 베스트셀러는 높은 점수이며, 꾸준히 팔리는 스테디셀러들도 어느 정도 포인트를 유지합니다.",
@@ -20,23 +24,29 @@ struct SalesPointDescSheetView: View {
     
     // MARK: - PROPERTIES
 
-    let bookInfo: BookInfo.Item
+    let theme: Color
     
-    // MARK: - WRAPPER PROPERTIES
+    // MARK: - INTIALIZER
     
-    @Environment(\.dismiss) var dismiss
+    init(theme: Color) {
+        self.theme = theme
+    }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            aboutSalesPointLabel
+        VStack {
+            VStack(alignment: .leading) {
+                aboutSalesPointText
+                
+                salesPointIntroLabel
+            }
+            // 베젤이 없는 아이폰(iPhone 14 등)은 수평 간격 25으로 설정
+            // 베젤이 있는 아이폰(iPhone SE 등)은 수평 간격 15으로 설정
+            .padding(.horizontal, safeAreaInsets.bottom == 0 ? 15 : 25)
             
-            scrollDescriptions
+            Spacer()
             
             backButton
         }
-        // 베젤이 없는 아이폰(iPhone 14 등)은 수평 간격 25으로 설정
-        // 베젤이 있는 아이폰(iPhone SE 등)은 수평 간격 15으로 설정
-        .padding(.horizontal, safeAreaInsets.bottom == 0 ? 15 : 25)
         // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
         // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 18으로 설정
         .padding(safeAreaInsets.bottom == 0 ? 18 : 0)
@@ -50,25 +60,24 @@ struct SalesPointDescSheetView: View {
 
 // MARK: - EXTENSIONS
 
-extension SalesPointDescSheetView {
-    var aboutSalesPointLabel: some View {
+extension SalesPointIntroSheetView {
+    var aboutSalesPointText: some View {
         Text("판매 포인트란?")
             .font(.title2)
             .fontWeight(.bold)
             .padding(.top, 25)
+            .padding(.bottom, 15)
     }
     
-    var scrollDescriptions: some View {
-        ScrollView(showsIndicators: false) {
-            VStack {
-                ForEach(descriptions, id: \.self) { description in
-                    HStack {
-                        Text("▪︎")
-                            .frame(maxHeight: .infinity, alignment: .top)
-                        Text(description)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+    var salesPointIntroLabel: some View {
+        VStack(spacing: 20) {
+            ForEach(introductions, id: \.self) { introduction in
+                HStack(alignment: .firstTextBaseline) {
+                    Text("▪︎")
+                        .frame(alignment: .top)
+                    Text(introduction)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .foregroundColor(.secondary)
@@ -78,19 +87,9 @@ extension SalesPointDescSheetView {
         Button {
             dismiss()
         } label: {
-            backLabel
+            Text("돌아가기")
         }
-    }
-    
-    var backLabel: some View {
-        Text("나가기")
-            .font(.title3)
-            .fontWeight(.bold)
-            .foregroundColor(.white)
-            .frame(height: 55)
-            .frame(maxWidth: .infinity)
-            .background(bookInfo.categoryName.refinedCategory.accentColor)
-            .cornerRadius(15)
+        .buttonStyle(BottomButtonStyle(theme))
     }
 }
 
@@ -98,6 +97,6 @@ extension SalesPointDescSheetView {
 
 struct SalesPointDescriptionSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        SalesPointDescSheetView(bookInfo: BookInfo.Item.preview[0])
+        SalesPointIntroSheetView(theme: Color.black)
     }
 }

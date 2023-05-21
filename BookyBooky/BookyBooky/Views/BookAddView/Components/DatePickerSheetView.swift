@@ -12,7 +12,7 @@ struct DatePickerSheetView: View {
     // MARK: - PROPERTIES
     
     @Binding var selectedDate: Date
-    let bookInfo: BookInfo.Item
+    let bookInfo: detailBookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -71,6 +71,6 @@ struct DatePickerSheetView: View {
 
 struct DatePickerSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        DatePickerSheetView(selectedDate: .constant(Date()), bookInfo: BookInfo.Item.preview[0])
+        DatePickerSheetView(selectedDate: .constant(Date()), bookInfo: detailBookInfo.Item.preview[0])
     }
 }

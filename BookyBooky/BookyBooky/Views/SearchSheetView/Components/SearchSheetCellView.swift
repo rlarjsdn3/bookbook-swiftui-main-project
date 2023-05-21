@@ -19,7 +19,7 @@ struct SearchSheetCellView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: BookList.Item
+    let bookItem: briefBookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -43,7 +43,7 @@ struct SearchSheetCellView: View {
             isPresentingSearchInfoView = true
         }
         .navigationDestination(isPresented: $isPresentingSearchInfoView) {
-            SearchInfoView(isbn13: bookItem.isbn13, isPresentingBackButton: true)
+            SearchBookView(bookItem.isbn13, viewType: .navigationStack)
             
         }
         .frame(height: COVER_HEIGHT)
@@ -223,6 +223,6 @@ extension SearchSheetCellView {
 
 struct SearchSheetCellView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetCellView(bookItem: BookList.Item.preview[0])
+        SearchSheetCellView(bookItem: briefBookInfo.Item.preview[0])
     }
 }

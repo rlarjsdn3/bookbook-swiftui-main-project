@@ -7,13 +7,7 @@
 
 import SwiftUI
 
-// 카테고리 정보를 더 쉽게 가져올 수 있도록 확장하기
-
-
-
-// MARK: - STRUCT
-
-struct BookList: Codable {
+struct briefBookInfo: Codable {
     var totalResults: Int           // 검색 결과의 총 개수
     var startIndex: Int             // 현재 페이지 수
     
@@ -31,8 +25,14 @@ struct BookList: Codable {
 
 // MARK: - EXTENSIONS
 
-extension BookList.Item {
-    static var preview: [BookList.Item] {
+extension briefBookInfo.Item {
+    var category: CategoryTypes {
+        return categoryName.refinedCategory
+    }
+}
+
+extension briefBookInfo.Item {
+    static var preview: [briefBookInfo.Item] {
         [
             .init(
                 title: "Java의 정석 - 3rd Edition",
@@ -45,8 +45,4 @@ extension BookList.Item {
             )
         ]
     }
-}
-
-extension BookList.Item {
-
 }

@@ -20,7 +20,7 @@ struct DateDescSheetView: View {
     
     // MARK: - PROPERTIES
 
-    let bookInfo: BookInfo.Item
+    let bookInfo: detailBookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -98,6 +98,6 @@ extension DateDescSheetView {
 
 struct DateDescSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        DateDescSheetView(bookInfo: BookInfo.Item.preview[0])
+        DateDescSheetView(bookInfo: detailBookInfo.Item.preview[0])
     }
 }

@@ -1,13 +1,13 @@
 //
-//  BottomButtonStyle.swift
+//  LeftBottomButtonStyle.swift
 //  BookyBooky
 //
-//  Created by 김건우 on 2023/05/19.
+//  Created by 김건우 on 2023/05/21.
 //
 
 import SwiftUI
 
-struct BottomButtonStyle: ButtonStyle {
+struct LeftBottomButtonStyle: ButtonStyle {
     let theme: Color
     
     init(_ theme: Color = Color.gray.opacity(0.2)) {
@@ -24,12 +24,12 @@ struct BottomButtonStyle: ButtonStyle {
             .background(theme)
             .cornerRadius(15)
             .opacity(configuration.isPressed ? 0.5 : 1)
-            .padding(.horizontal)
+            .padding(.leading)
     }
 }
 
-extension ButtonStyle where Self == BottomButtonStyle {
-    static var bottomButtonStyle: Self {
+extension ButtonStyle where Self == LeftBottomButtonStyle {
+    static var leftBottomButtonStyle: Self {
         return Self()
     }
 }

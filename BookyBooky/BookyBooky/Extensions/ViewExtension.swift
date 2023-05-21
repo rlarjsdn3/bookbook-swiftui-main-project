@@ -42,7 +42,7 @@ extension View {
     /// - Returns: 이미지(Image)
     func asyncCoverImage(_ url: String,
                     width: CGFloat = 150, height: CGFloat = 200,
-                    coverShape: some Shape = RoundedRectangle(cornerRadius: 20)) -> some View {
+                    coverShape: some Shape = RoundedCoverShape()) -> some View {
         AsyncImage(url: URL(string: url),
                    transaction: Transaction(animation: .default)
         ) { phase in
@@ -61,7 +61,6 @@ extension View {
             }
         }
     }
-    
     
     /// 이미지 URL의 이미지를 불러오는 중이거나 불러오는 데 실패하면, 매개변수로 주어진 크기와 모양의 회색 로딩 이미지를 반환합니다.
     /// - Parameters:

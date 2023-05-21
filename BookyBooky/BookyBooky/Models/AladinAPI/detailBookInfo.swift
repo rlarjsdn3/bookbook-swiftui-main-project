@@ -11,7 +11,7 @@ import Foundation
 
 // MARK: - STRUCT
 
-struct BookInfo: Codable {
+struct detailBookInfo: Codable {
     var totalResults: Int           // 검색 결과의 총 개수
     
     var item: [Item]
@@ -36,8 +36,14 @@ struct BookInfo: Codable {
 
 // MARK: - EXTENSIONS
 
-extension BookInfo.Item {
-    static var preview: [BookInfo.Item] {
+extension detailBookInfo.Item {
+    var category: CategoryTypes {
+        return categoryName.refinedCategory
+    }
+}
+
+extension detailBookInfo.Item {
+    static var preview: [detailBookInfo.Item] {
         [
             .init(
                 title: "Java의 정석 - 3rd Edition",

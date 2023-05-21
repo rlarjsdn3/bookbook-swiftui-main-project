@@ -26,9 +26,9 @@ struct SearchView: View {
 
             SearchScrollView($scrollYOffset, selectedListType: $listTypeSelected)
         }
-        .toast(isPresenting: $aladinAPIManager.isPresentingInfoErrorUI,
+        .toast(isPresenting: $aladinAPIManager.isPresentingDetailBookErrorToastAlert,
                duration: 2.0, offsetY: -5) {
-            aladinAPIManager.infoErrorUI
+            aladinAPIManager.showDetailBookErrorToastAlert
         }
     }
 }

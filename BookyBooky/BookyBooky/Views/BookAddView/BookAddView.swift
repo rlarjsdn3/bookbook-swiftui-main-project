@@ -12,7 +12,7 @@ struct BookAddView: View {
     
     // MARK: - PROPERTIES
     
-    let bookInfoItem: BookInfo.Item
+    let bookInfoItem: detailBookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -57,6 +57,6 @@ struct BookAddView: View {
 
 struct BookAddView_Previews: PreviewProvider {
     static var previews: some View {
-        BookAddView(bookInfoItem: BookInfo.Item.preview[0])
+        BookAddView(bookInfoItem: detailBookInfo.Item.preview[0])
     }
 }

@@ -22,7 +22,7 @@ struct BookyBookyApp: App {
             ContentView()
                 .onAppear {
                     for type in BookListTabTypes.allCases {
-                        aladinAPIManager.requestBookListAPI(type: type)
+                        aladinAPIManager.requestBookListAPI(of: type)
                     }
                 }
                 .environmentObject(realmManager)

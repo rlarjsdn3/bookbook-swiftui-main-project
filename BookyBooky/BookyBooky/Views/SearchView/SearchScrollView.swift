@@ -35,7 +35,7 @@ struct SearchScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var listOfBooksAccordingToSelectedType: [BookList.Item] {
+    var listOfBooksAccordingToSelectedType: [briefBookInfo.Item] {
         switch selectedListType {
         case .bestSeller:
             return aladinAPIManager.bestSeller
@@ -135,7 +135,7 @@ extension SearchScrollView {
     var refreshButton: some View {
         Button("다시 불러오기") {
             for type in BookListTabTypes.allCases {
-                aladinAPIManager.requestBookListAPI(type: type)
+                aladinAPIManager.requestBookListAPI(of: type)
             }
             HapticManager.shared.impact(.rigid)
         }

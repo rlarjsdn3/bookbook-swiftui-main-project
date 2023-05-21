@@ -12,7 +12,7 @@ struct SearchCellButton: View {
     
     // MARK: - PROPERTIES
     
-    let listOfBookItem: BookList.Item
+    let listOfBookItem: briefBookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -23,7 +23,7 @@ struct SearchCellButton: View {
     
     // MARK: - INTIALIZER
     
-    init(_ listOfBookItem: BookList.Item) {
+    init(_ listOfBookItem: briefBookInfo.Item) {
         self.listOfBookItem = listOfBookItem
     }
     
@@ -35,7 +35,7 @@ struct SearchCellButton: View {
                 isPresentingBookInfoView = true
             }
             .sheet(isPresented: $isPresentingBookInfoView) {
-                SearchInfoView(isbn13: listOfBookItem.isbn13, isPresentingBackButton: false)
+                SearchBookView(listOfBookItem.isbn13, viewType: .sheet)
             }
     }
     
@@ -122,6 +122,6 @@ extension SearchCellButton {
 
 struct SearchCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        SearchCellButton(BookList.Item.preview[0])
+        SearchCellButton(briefBookInfo.Item.preview[0])
     }
 }

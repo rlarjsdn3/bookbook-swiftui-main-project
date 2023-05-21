@@ -17,7 +17,7 @@ struct BookAddCenterView: View {
     
     // MARK: - PROPERTIES
     
-    let bookInfoItem: BookInfo.Item
+    let bookInfoItem: detailBookInfo.Item
     @Binding var selectedDate: Date
     
     // MARK: - WRAPPER PROPERTIES
@@ -96,6 +96,6 @@ extension BookAddCenterView {
 
 struct BookAddCenterView_Previews: PreviewProvider {
     static var previews: some View {
-        BookAddCenterView(bookInfoItem: BookInfo.Item.preview[0], selectedDate: .constant(Date()))
+        BookAddCenterView(bookInfoItem: detailBookInfo.Item.preview[0], selectedDate: .constant(Date()))
     }
 }
