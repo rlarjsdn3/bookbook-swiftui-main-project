@@ -37,7 +37,9 @@ struct AddReadingBookButtonsView: View {
             
             buttons
         }
-        .confirmationDialog("목표 도서에 추가하시겠습니까?", isPresented: $isPresentingAddReadingBookConfirmDialog, titleVisibility: .visible) {
+        .confirmationDialog("목표 도서에 추가하시겠습니까?",
+                            isPresented: $isPresentingAddReadingBookConfirmDialog,
+                            titleVisibility: .visible) {
             Button("확인") {
                 let readingBook = ReadingBook(
                     value: [
@@ -115,5 +117,6 @@ struct BookAddButtonsView_Previews: PreviewProvider {
             selectedDate: .constant(Date())
         )
         .environmentObject(RealmManager())
+        .previewLayout(.sizeThatFits)
     }
 }

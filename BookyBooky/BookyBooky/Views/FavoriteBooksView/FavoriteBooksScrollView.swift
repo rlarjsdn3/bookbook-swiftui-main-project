@@ -92,7 +92,7 @@ struct FavoriteBooksScrollView: View {
     
     var body: some View {
         if !filteredFavroriteBooks.isEmpty || !filteredReadingBooks.isEmpty {
-            scrollFavoriteBooks
+                scrollFavoriteBooks
         } else {
             noResultLabel
         }

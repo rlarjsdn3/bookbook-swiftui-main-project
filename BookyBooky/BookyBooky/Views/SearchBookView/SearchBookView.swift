@@ -62,11 +62,10 @@ struct SearchBookView: View {
                                 dismiss()
                             } label: {
                                 Image(systemName: "chevron.left")
-                                    .font(.title2)
-                                    .fontWeight(.bold)
                                     .foregroundColor(bookDetail.category.foregroundColor)
-                                    .padding()
                             }
+                            .navigationBarItemStyle()
+                            .padding(.vertical, 5)
                         }
                     }
                 }

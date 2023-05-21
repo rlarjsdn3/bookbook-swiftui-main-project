@@ -10,11 +10,11 @@ import Lottie
 
 struct LottieBookView: UIViewRepresentable {
     func makeUIView(context: Context) -> LottieAnimationView {
-        let animationView = LottieAnimationView(name: "book")
-        animationView.play()
-        animationView.loopMode = .repeat(5)
-        animationView.contentMode = .scaleAspectFit
-        return animationView
+        let bookAnimation = LottieAnimationView(name: "book")
+        bookAnimation.play()
+        bookAnimation.loopMode = .repeat(10)
+        bookAnimation.contentMode = .scaleAspectFit
+        return bookAnimation
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {

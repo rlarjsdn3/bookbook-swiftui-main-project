@@ -24,7 +24,7 @@ struct FavoriteBookCellView: View {
     
     @State private var isLoading = true
     @State private var isPresentingFavoriteBookInfoSheet = false
-    @State private var isPresentingFavoriteBookInfoStack = false
+    @State private var isPresentingFavoriteBookInfoNavigation = false
     
     // MARK: - BODY
     
@@ -42,17 +42,17 @@ struct FavoriteBookCellView: View {
                 case .sheet:
                     isPresentingFavoriteBookInfoSheet = true
                 case .navigationStack:
-                    isPresentingFavoriteBookInfoStack = true
+                    isPresentingFavoriteBookInfoNavigation = true
                 }
-            }
-            .sheet(isPresented: $isPresentingFavoriteBookInfoSheet) {
-                SearchBookView(favoriteBook.isbn13, viewType: .sheet)
-            }
-            .navigationDestination(isPresented: $isPresentingFavoriteBookInfoStack) {
-                SearchBookView(favoriteBook.isbn13, viewType: .navigationStack)
             }
             .padding(.top, 2)
             .padding(.bottom, 10)
+        }
+        .sheet(isPresented: $isPresentingFavoriteBookInfoSheet) {
+            SearchBookView(favoriteBook.isbn13, viewType: .sheet)
+        }
+        .navigationDestination(isPresented: $isPresentingFavoriteBookInfoNavigation) {
+            SearchBookView(favoriteBook.isbn13, viewType: .navigationStack)
         }
     }
 }
