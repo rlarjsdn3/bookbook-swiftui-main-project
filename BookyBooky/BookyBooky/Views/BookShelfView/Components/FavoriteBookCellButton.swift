@@ -32,41 +32,43 @@ struct FavoriteBookCellButton: View {
     // MARK: - BODY
     
     var body: some View {
-        HStack {
-            VStack {
-                asyncCoverImage(
-                    favoriteBook.cover,
-                    width: 150, height: 200
-                )
-                .onAppear {
-                    isLoadingCoverImage = false
-                }
-                
-                favoriteBookInfoLabel
+        favoriteBookCellButton
+            .sheet(isPresented: $isPresentingSearchBookViewFromSheet) {
+                SearchBookView(favoriteBook.isbn13, viewType: .sheet)
             }
-            .onTapGesture {
-                switch buttonType {
-                case .sheet:
-                    isPresentingSearchBookViewFromSheet = true
-                case .navigation:
-                    isPresentingSearchBookViewFromNavigation = true
-                }
+            .navigationDestination(isPresented: $isPresentingSearchBookViewFromNavigation) {
+                SearchBookView(favoriteBook.isbn13, viewType: .navigationStack)
             }
-            .padding(.top, 2)
-            .padding(.bottom, 10)
-        }
-        .sheet(isPresented: $isPresentingSearchBookViewFromSheet) {
-            SearchBookView(favoriteBook.isbn13, viewType: .sheet)
-        }
-        .navigationDestination(isPresented: $isPresentingSearchBookViewFromNavigation) {
-            SearchBookView(favoriteBook.isbn13, viewType: .navigationStack)
-        }
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension FavoriteBookCellButton {
+    var favoriteBookCellButton: some View {
+        VStack {
+            asyncCoverImage(
+                favoriteBook.cover,
+                width: 150, height: 200
+            )
+            .onAppear {
+                isLoadingCoverImage = false
+            }
+            
+            favoriteBookInfoLabel
+        }
+        .onTapGesture {
+            switch buttonType {
+            case .sheet:
+                isPresentingSearchBookViewFromSheet = true
+            case .navigation:
+                isPresentingSearchBookViewFromNavigation = true
+            }
+        }
+        .padding(.top, 2)
+        .padding(.bottom, 10)
+    }
+    
     var favoriteBookInfoLabel: some View {
         VStack {
             favoriteBookTitleText

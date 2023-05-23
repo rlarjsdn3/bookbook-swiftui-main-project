@@ -86,7 +86,7 @@ struct FavoriteBooksScrollView: View {
     
     @Binding var selectedSort: BookSortCriteriaType
     @Binding var searchQuery: String
-    let listType: BookShelfListViewType
+    let listType: BookShelfBookListViewType
     
     // MARK: - BODY
     

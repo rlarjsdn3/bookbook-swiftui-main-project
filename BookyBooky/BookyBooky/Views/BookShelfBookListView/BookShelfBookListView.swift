@@ -9,24 +9,34 @@ import SwiftUI
 import AlertToast
 import RealmSwift
 
-enum BookShelfListViewType {
+enum BookShelfBookListViewType {
     case favorite
     case complete
 }
 
 // 이름 바꿀 필요 있음
-struct FavoriteBooksView: View {
-    
-    let listType: BookShelfListViewType
+struct BookShelfBookListView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
     @State private var selectedSort = BookSortCriteriaType.latestOrder
-    @State private var searchWord = ""
+    @State private var inputQuery = ""
     @State private var searchQuery = ""
-    @State var isPresentingShowAll = false
+    
+    
+    @State var isPresentingShowAllButton = false
     
     @FocusState var focusedField: Bool
+    
+    // MARK: - PROPERTIES
+    
+    let viewType: BookShelfBookListViewType
+    
+    // MARK: - INTAILIZER
+    
+    init(viewType: BookShelfBookListViewType) {
+        self.viewType = viewType
+    }
     
     // MARK: - BODY
     
@@ -35,23 +45,22 @@ struct FavoriteBooksView: View {
             ScrollViewReader { scrollProxy in
                 VStack {
                     FavoriteBooksTextFieldView(
-                        selectedSort: $selectedSort,
-                        searchWord: $searchWord,
+                        inputQuery: $inputQuery,
                         searchQuery: $searchQuery,
-                        isPresentingShowAll: $isPresentingShowAll,
+                        selectedSortType: $selectedSort,
+                        isPresentingShowAllButton: $isPresentingShowAllButton,
                         scrollProxy: scrollProxy
                     )
                     
                     FavoriteBooksScrollView(
                         selectedSort: $selectedSort,
                         searchQuery: $searchQuery,
-                        listType: listType
+                        listType: viewType
                     )
                 }
                 .overlay(alignment: .bottom) {
                     seeAllButton
                 }
-                .presentationCornerRadius(30)
             }
         }
         .presentationCornerRadius(30)
@@ -60,18 +69,18 @@ struct FavoriteBooksView: View {
 
 // MARK: - EXTENSIONS
 
-extension FavoriteBooksView {
+extension BookShelfBookListView {
     var seeAllButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                searchWord.removeAll()
+                inputQuery.removeAll()
                 searchQuery.removeAll()
-                isPresentingShowAll = false
+                isPresentingShowAllButton = false
             }
         } label: {
             seeAllLabel
         }
-        .offset(y: isPresentingShowAll ? -20 : 200)
+        .offset(y: isPresentingShowAllButton ? -20 : 200)
     }
     
     var seeAllLabel: some View {
@@ -90,6 +99,6 @@ extension FavoriteBooksView {
 
 struct FavoriteBooksView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteBooksView(listType: .favorite)
+        BookShelfBookListView(viewType: .favorite)
     }
 }

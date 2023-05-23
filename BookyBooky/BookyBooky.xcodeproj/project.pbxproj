@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9E0434A029E164CA009A2161 /* BookShelfScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */; };
 		9E0434A629E19C48009A2161 /* FavoriteBookCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A529E19C48009A2161 /* FavoriteBookCellButton.swift */; };
-		9E0434A929E24BA5009A2161 /* FavoriteBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */; };
+		9E0434A929E24BA5009A2161 /* BookShelfBookListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434A829E24BA5009A2161 /* BookShelfBookListView.swift */; };
 		9E0434AB29E28097009A2161 /* BookSortCriteriaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434AA29E28097009A2161 /* BookSortCriteriaType.swift */; };
 		9E0434AE29E2A38D009A2161 /* NavigationBarItemStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */; };
 		9E0434B029E2AEFF009A2161 /* NavigationTitleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434AF29E2AEFF009A2161 /* NavigationTitleStyle.swift */; };
@@ -117,7 +117,7 @@
 /* Begin PBXFileReference section */
 		9E04349F29E164CA009A2161 /* BookShelfScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfScrollView.swift; sourceTree = "<group>"; };
 		9E0434A529E19C48009A2161 /* FavoriteBookCellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBookCellButton.swift; sourceTree = "<group>"; };
-		9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBooksView.swift; sourceTree = "<group>"; };
+		9E0434A829E24BA5009A2161 /* BookShelfBookListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfBookListView.swift; sourceTree = "<group>"; };
 		9E0434AA29E28097009A2161 /* BookSortCriteriaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSortCriteriaType.swift; sourceTree = "<group>"; };
 		9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarItemStyle.swift; sourceTree = "<group>"; };
 		9E0434AF29E2AEFF009A2161 /* NavigationTitleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitleStyle.swift; sourceTree = "<group>"; };
@@ -243,14 +243,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		9E0434A729E24B90009A2161 /* FavoriteBooksView */ = {
+		9E0434A729E24B90009A2161 /* BookShelfBookListView */ = {
 			isa = PBXGroup;
 			children = (
-				9E0434A829E24BA5009A2161 /* FavoriteBooksView.swift */,
+				9E0434A829E24BA5009A2161 /* BookShelfBookListView.swift */,
 				9E0434B129E3940E009A2161 /* FavoriteBooksTextFieldView.swift */,
 				9E0434B329E39920009A2161 /* FavoriteBooksScrollView.swift */,
 			);
-			path = FavoriteBooksView;
+			path = BookShelfBookListView;
 			sourceTree = "<group>";
 		};
 		9E0434AC29E2A374009A2161 /* Modifier */ = {
@@ -511,7 +511,7 @@
 				9E7A794129DA5B7C00A51856 /* SearchBookView */,
 				9EDC2FB229E6F0F8004E792A /* AddReadingBookView */,
 				9E06071529DFDC05000D542D /* BookShelfView */,
-				9E0434A729E24B90009A2161 /* FavoriteBooksView */,
+				9E0434A729E24B90009A2161 /* BookShelfBookListView */,
 				9E7BFC7729F0F23D00D72648 /* AnalysisView */,
 				9E061D5F29FAA87C0042E3B1 /* SettingsView */,
 				9ECA326629D11BB4004D6D5B /* RoundedTabView */,
@@ -710,7 +710,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E0EF6F32A0DF56500747847 /* Activity.swift in Sources */,
-				9E0434A929E24BA5009A2161 /* FavoriteBooksView.swift in Sources */,
+				9E0434A929E24BA5009A2161 /* BookShelfBookListView.swift in Sources */,
 				9E06071729DFDC1D000D542D /* BookShelfView.swift in Sources */,
 				9E459B0B2A19DA7300DB248F /* LeftBottomButtonStyle.swift in Sources */,
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,

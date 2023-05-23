@@ -9,38 +9,54 @@ import SwiftUI
 
 struct FavoriteBooksTextFieldView: View {
     
-    // MARK: - PROPERTIES
-    
-    @Binding var selectedSort: BookSortCriteriaType
-    @Binding var searchWord: String
-    @Binding var searchQuery: String
-    @Binding var isPresentingShowAll: Bool
-    let scrollProxy: ScrollViewProxy
-    
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
     
     @FocusState var focusedField: Bool
     
+    // MARK: - PROPERTIES
+    
+    @Binding var inputQuery: String
+    @Binding var searchQuery: String
+    @Binding var selectedSortType: BookSortCriteriaType
+    @Binding var isPresentingShowAllButton: Bool
+    let scrollProxy: ScrollViewProxy
+    
+    // MARK: - INTALIZER
+    
+    init(inputQuery: Binding<String>, searchQuery: Binding<String>,
+         selectedSortType: Binding<BookSortCriteriaType>, isPresentingShowAllButton: Binding<Bool>,
+         scrollProxy: ScrollViewProxy) {
+        self._inputQuery = inputQuery
+        self._searchQuery = searchQuery
+        self._selectedSortType = selectedSortType
+        self._isPresentingShowAllButton = isPresentingShowAllButton
+        self.scrollProxy = scrollProxy
+    }
+    
     // MARK: - BODY
     
     var body: some View {
-        HStack {
-            sortMenu
-            
-            textField
-            
-            dismissButton
-        }
-        .padding()
+        bookTextField
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension FavoriteBooksTextFieldView {
-    var sortMenu: some View {
+    var bookTextField: some View {
+        HStack {
+            bookSortMenu
+            
+            searchTextField
+            
+            dismissButton
+        }
+        .padding()
+    }
+    
+    var bookSortMenu: some View {
         Menu {
             Section {
                 sortButtons
@@ -48,7 +64,7 @@ extension FavoriteBooksTextFieldView {
                 Text("도서 정렬")
             }
         } label: {
-            ellipsis
+            ellipsisSFSymbolImage
         }
     }
     
@@ -62,7 +78,7 @@ extension FavoriteBooksTextFieldView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedSort = sort
+                            selectedSortType = sort
                         }
                         HapticManager.shared.impact(.rigid)
                     }
@@ -72,15 +88,15 @@ extension FavoriteBooksTextFieldView {
                     Text(sort.rawValue)
                     
                     // 현재 선택한 정렬 타입에 체크마크 표시
-                    if selectedSort == sort {
-                        checkmark
+                    if selectedSortType == sort {
+                        checkMarkSFSymbolImage
                     }
                 }
             }
         }
     }
     
-    var ellipsis: some View {
+    var ellipsisSFSymbolImage: some View {
         Image(systemName: "ellipsis.circle")
             .font(.title2)
             .foregroundColor(.primary)
@@ -89,21 +105,21 @@ extension FavoriteBooksTextFieldView {
             .cornerRadius(15)
     }
     
-    var checkmark: some View {
+    var checkMarkSFSymbolImage: some View {
         Image(systemName: "checkmark")
             .font(.title3)
     }
 }
 
 extension FavoriteBooksTextFieldView {
-    var textField: some View {
+    var searchTextField: some View {
         HStack {
-            magnifyingglass
+            magnifyingGlassSFSymbolImage
             
-            searchField
+            searchInputField
             
-            if !searchWord.isEmpty {
-                xmarkButton
+            if !inputQuery.isEmpty {
+                inputEraseButton
             }
         }
         .padding(.horizontal, 10)
@@ -111,13 +127,13 @@ extension FavoriteBooksTextFieldView {
         .cornerRadius(15)
     }
     
-    var magnifyingglass: some View {
+    var magnifyingGlassSFSymbolImage: some View {
         Image(systemName: "magnifyingglass")
             .foregroundColor(.gray)
     }
     
-    var searchField: some View {
-        TextField("제목 / 저자 검색", text: $searchWord)
+    var searchInputField: some View {
+        TextField("제목 / 저자 검색", text: $inputQuery)
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
@@ -128,11 +144,11 @@ extension FavoriteBooksTextFieldView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
-                            searchQuery = searchWord
-                            if !searchWord.isEmpty {
-                                isPresentingShowAll = true
+                            searchQuery = inputQuery
+                            if !inputQuery.isEmpty {
+                                isPresentingShowAllButton = true
                             } else {
-                                isPresentingShowAll = false
+                                isPresentingShowAllButton = false
                             }
                         }
                         HapticManager.shared.impact(.rigid)
@@ -142,20 +158,20 @@ extension FavoriteBooksTextFieldView {
             .focused($focusedField)
     }
     
-    var xmarkButton: some View {
+    var inputEraseButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                searchWord.removeAll()
+                inputQuery.removeAll()
                 searchQuery.removeAll()
                 focusedField = true
-                isPresentingShowAll = false
+                isPresentingShowAllButton = false
             }
         } label: {
-            xmarkCircleFill
+            xmarkCircleSFSymbolsImage
         }
     }
     
-    var xmarkCircleFill: some View {
+    var xmarkCircleSFSymbolsImage: some View {
         Image(systemName: "xmark.circle.fill")
             .foregroundColor(.gray)
     }
@@ -166,11 +182,11 @@ extension FavoriteBooksTextFieldView {
         Button {
             dismiss()
         } label: {
-            xmark
+            xmarkSFSymbolsImage
         }
     }
     
-    var xmark: some View {
+    var xmarkSFSymbolsImage: some View {
         Image(systemName: "xmark")
             .font(.title2)
             .foregroundColor(.primary)
@@ -186,10 +202,10 @@ struct FavoriteBooksTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
             FavoriteBooksTextFieldView(
-                selectedSort: .constant(.latestOrder),
-                searchWord: .constant(""),
+                inputQuery: .constant(""),
                 searchQuery: .constant(""),
-                isPresentingShowAll: .constant(false),
+                selectedSortType: .constant(.latestOrder),
+                isPresentingShowAllButton: .constant(false),
                 scrollProxy: scrollProxy
             )
         }
