@@ -44,7 +44,7 @@ struct BookShelfTextFieldView: View {
 
 // MARK: - EXTENSIONS
 
-extension FavoriteBooksTextFieldView {
+extension BookShelfTextFieldView {
     var bookTextField: some View {
         HStack {
             bookSortMenu
@@ -111,7 +111,7 @@ extension FavoriteBooksTextFieldView {
     }
 }
 
-extension FavoriteBooksTextFieldView {
+extension BookShelfTextFieldView {
     var searchTextField: some View {
         HStack {
             magnifyingGlassSFSymbolImage
@@ -177,7 +177,7 @@ extension FavoriteBooksTextFieldView {
     }
 }
 
-extension FavoriteBooksTextFieldView {
+extension BookShelfTextFieldView {
     var dismissButton: some View {
         Button {
             dismiss()

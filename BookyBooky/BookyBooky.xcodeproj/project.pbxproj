@@ -13,7 +13,7 @@
 		9E0434AB29E28097009A2161 /* BookSortCriteriaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434AA29E28097009A2161 /* BookSortCriteriaType.swift */; };
 		9E0434AE29E2A38D009A2161 /* NavigationBarItemStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */; };
 		9E0434B029E2AEFF009A2161 /* NavigationTitleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434AF29E2AEFF009A2161 /* NavigationTitleStyle.swift */; };
-		9E0434B229E3940E009A2161 /* FavoriteBooksTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B129E3940E009A2161 /* FavoriteBooksTextFieldView.swift */; };
+		9E0434B229E3940E009A2161 /* BookShelfTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B129E3940E009A2161 /* BookShelfTextFieldView.swift */; };
 		9E0434B429E39920009A2161 /* FavoriteBooksScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B329E39920009A2161 /* FavoriteBooksScrollView.swift */; };
 		9E0434B629E537BE009A2161 /* ReadingBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B529E537BE009A2161 /* ReadingBook.swift */; };
 		9E0434BA29E53CA0009A2161 /* ReadingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B929E53CA0009A2161 /* ReadingRecord.swift */; };
@@ -121,7 +121,7 @@
 		9E0434AA29E28097009A2161 /* BookSortCriteriaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSortCriteriaType.swift; sourceTree = "<group>"; };
 		9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarItemStyle.swift; sourceTree = "<group>"; };
 		9E0434AF29E2AEFF009A2161 /* NavigationTitleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitleStyle.swift; sourceTree = "<group>"; };
-		9E0434B129E3940E009A2161 /* FavoriteBooksTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBooksTextFieldView.swift; sourceTree = "<group>"; };
+		9E0434B129E3940E009A2161 /* BookShelfTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfTextFieldView.swift; sourceTree = "<group>"; };
 		9E0434B329E39920009A2161 /* FavoriteBooksScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBooksScrollView.swift; sourceTree = "<group>"; };
 		9E0434B529E537BE009A2161 /* ReadingBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingBook.swift; sourceTree = "<group>"; };
 		9E0434B929E53CA0009A2161 /* ReadingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingRecord.swift; sourceTree = "<group>"; };
@@ -247,7 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				9E0434A829E24BA5009A2161 /* BookShelfBookListView.swift */,
-				9E0434B129E3940E009A2161 /* FavoriteBooksTextFieldView.swift */,
+				9E0434B129E3940E009A2161 /* BookShelfTextFieldView.swift */,
 				9E0434B329E39920009A2161 /* FavoriteBooksScrollView.swift */,
 			);
 			path = BookShelfListView;
@@ -735,7 +735,7 @@
 				9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */,
 				9E0C0A6929D281BF00F1F5F6 /* HapticManager.swift in Sources */,
 				9ED4CB6129D3E0AA00CA493D /* SearchTabView.swift in Sources */,
-				9E0434B229E3940E009A2161 /* FavoriteBooksTextFieldView.swift in Sources */,
+				9E0434B229E3940E009A2161 /* BookShelfTextFieldView.swift in Sources */,
 				9E0C0A7D29D3D0F900F1F5F6 /* BookListTabType.swift in Sources */,
 				9E7A794729DA854D00A51856 /* SearchBookTitleView.swift in Sources */,
 				9E0C0A7129D2866100F1F5F6 /* briefBookInfo.swift in Sources */,

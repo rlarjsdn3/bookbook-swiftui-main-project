@@ -8,9 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct FavoriteBooksScrollView: View {
-    
-    
+struct BookShelfListScrollView: View {
     
     // MARK: - CONSTANT PROPERTIES
     
@@ -22,7 +20,7 @@ struct FavoriteBooksScrollView: View {
     // MARK: - COMPUTED PROPERTIES
     
     var sortedFavoritesBooks: [FavoriteBook] {
-        switch selectedSort {
+        switch selectedSortType {
         // 최근 추가된 순으로 정렬
         case .latestOrder:
             return favoriteBooks.reversed()
@@ -51,7 +49,7 @@ struct FavoriteBooksScrollView: View {
     var sortedCompleteBooks: [ReadingBook] {
         let readingBooks = readingBooks.get(.complete)
         
-        switch selectedSort {
+        switch selectedSortType {
         // 최근 추가된 순으로 정렬
         case .latestOrder:
             return readingBooks.reversed()
@@ -84,9 +82,18 @@ struct FavoriteBooksScrollView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedSort: BookSortCriteriaType
     @Binding var searchQuery: String
-    let listType: BookShelfBookListViewType
+    @Binding var selectedSortType: BookSortCriteriaType
+    let viewType: BookShelfListViewType
+    
+    // MARK: - INITIALIZER
+    
+    init(searchQuery: Binding<String>, selectedSortType: Binding<BookSortCriteriaType>,
+         viewType: BookShelfListViewType) {
+        self._searchQuery = searchQuery
+        self._selectedSortType = selectedSortType
+        self.viewType = viewType
+    }
     
     // MARK: - BODY
     
@@ -101,11 +108,11 @@ struct FavoriteBooksScrollView: View {
 
 // MARK: - EXTENSIONS
 
-extension FavoriteBooksScrollView {
+extension BookShelfListScrollView {
     var scrollFavoriteBooks: some View {
         ScrollView {
             LazyVGrid(columns: coulmns, spacing: 15) {
-                if listType == .favorite {
+                if viewType == .favorite {
                     ForEach(filteredFavroriteBooks) { favoriteBook in
                         FavoriteBookCellButton(favoriteBook, buttonType: .navigation)
                     }
@@ -121,7 +128,7 @@ extension FavoriteBooksScrollView {
     }
 }
 
-extension FavoriteBooksScrollView {
+extension BookShelfListScrollView {
     var noResultLabel: some View {
         VStack {
             VStack {
@@ -144,10 +151,10 @@ extension FavoriteBooksScrollView {
 
 struct FavoriteBooksScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteBooksScrollView(
-            selectedSort: .constant(.latestOrder),
+        BookShelfListScrollView(
             searchQuery: .constant(""),
-            listType: .favorite
+            selectedSortType: .constant(.latestOrder),
+            viewType: .favorite
         )
         .environmentObject(RealmManager())
     }

@@ -128,10 +128,10 @@ extension BookShelfScrollView {
                 .frame(width: 0, height: 0)
             }
             .sheet(isPresented: $isPresentingFavoriteBookListView) {
-                BookShelfBookListView(viewType: .favorite)
+                BookShelfListView(viewType: .favorite)
             }
             .sheet(isPresented: $isPresentingCompleteBookListView) {
-                BookShelfBookListView(viewType: .complete)
+                BookShelfListView(viewType: .complete)
             }
         }
     }

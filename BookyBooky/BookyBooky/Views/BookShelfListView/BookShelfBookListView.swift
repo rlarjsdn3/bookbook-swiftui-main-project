@@ -9,13 +9,13 @@ import SwiftUI
 import AlertToast
 import RealmSwift
 
-enum BookShelfBookListViewType {
+enum BookShelfListViewType {
     case favorite
     case complete
 }
 
 // 이름 바꿀 필요 있음
-struct BookShelfBookListView: View {
+struct BookShelfListView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -30,11 +30,11 @@ struct BookShelfBookListView: View {
     
     // MARK: - PROPERTIES
     
-    let viewType: BookShelfBookListViewType
+    let viewType: BookShelfListViewType
     
     // MARK: - INTAILIZER
     
-    init(viewType: BookShelfBookListViewType) {
+    init(viewType: BookShelfListViewType) {
         self.viewType = viewType
     }
     
@@ -44,7 +44,7 @@ struct BookShelfBookListView: View {
         NavigationStack {
             ScrollViewReader { scrollProxy in
                 VStack {
-                    FavoriteBooksTextFieldView(
+                    BookShelfTextFieldView(
                         inputQuery: $inputQuery,
                         searchQuery: $searchQuery,
                         selectedSortType: $selectedSort,
@@ -52,10 +52,10 @@ struct BookShelfBookListView: View {
                         scrollProxy: scrollProxy
                     )
                     
-                    FavoriteBooksScrollView(
-                        selectedSort: $selectedSort,
+                    BookShelfListScrollView(
                         searchQuery: $searchQuery,
-                        listType: viewType
+                        selectedSortType: $selectedSort,
+                        viewType: viewType
                     )
                 }
                 .overlay(alignment: .bottom) {
@@ -69,7 +69,7 @@ struct BookShelfBookListView: View {
 
 // MARK: - EXTENSIONS
 
-extension BookShelfBookListView {
+extension BookShelfListView {
     var seeAllButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
@@ -99,6 +99,6 @@ extension BookShelfBookListView {
 
 struct FavoriteBooksView_Previews: PreviewProvider {
     static var previews: some View {
-        BookShelfBookListView(viewType: .favorite)
+        BookShelfListView(viewType: .favorite)
     }
 }
