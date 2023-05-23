@@ -31,8 +31,8 @@ struct ReadingBookConfettiView: View {
     var dayRemainingUntilTheTargetDate: Int {
         let component = Calendar.current.dateComponents(
             [.day],
-            from: readingBook.startDate,
-            to: readingBook.completeDate ?? Date()
+            from: readingBook.completeDate ?? Date(),
+            to: readingBook.targetDate
         )
         return component.day!
     }

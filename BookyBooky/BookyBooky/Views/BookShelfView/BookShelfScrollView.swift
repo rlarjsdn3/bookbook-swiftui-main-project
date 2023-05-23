@@ -22,6 +22,20 @@ struct BookShelfScrollView: View {
     @State private var isPresentingFavoriteBookListView = false
     @State private var isPresentingCompleteBookListView = false
     
+    // MARK: - COMPUTED PROPERTIES
+    
+    var completeBookCount: Int {
+        return readingBooks.filter { $0.isComplete }.count
+    }
+    
+    var favoriteBookCount: Int {
+        return favoriteBooks.count
+    }
+    
+    var collectedSentenceCount: Int {
+        return 0 // 코드 미완성
+    }
+    
     // MARK: - PROPERTIES
     
     let columns = [
@@ -30,6 +44,8 @@ struct BookShelfScrollView: View {
     ]
     
     @Binding var scrollYOffset: Double
+    
+    // MARK: - INTIALIZER
     
     init(_ scrollOffset: Binding<Double>) {
         self._scrollYOffset = scrollOffset
@@ -40,59 +56,11 @@ struct BookShelfScrollView: View {
     var body: some View {
         ScrollView {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
-                bookShelfSummary
+                topSummaryTab
                 
                 favoriteBookSection
                 
-                let completeBooks = readingBooks.get(.complete)
-                
-                Section {
-                    
-                    if !completeBooks.isEmpty {
-                        LazyVGrid(columns: columns) {
-                            ForEach(completeBooks, id: \.self) { book in
-                                ReadingBookCellButton(book, buttonType: .shelf)
-                            }
-                        }
-                        .padding(.bottom, 40)
-                    } else {
-                        VStack(spacing: 5) {
-                            Text("읽은 도서가 없음")
-                                .font(.title3)
-                                .fontWeight(.bold)
-
-                            Text("독서를 시작해보세요.")
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(.vertical, 30)
-                        .padding(.bottom, 100) // 임시
-                    }
-                } header: {
-                    HStack {
-                        Text("읽은 도서")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                        
-                        Spacer()
-                        
-                        Button {
-                            isPresentingCompleteBookListView = true
-                        } label: {
-                            Text("더 보기")
-                        }
-                        .disabled(completeBooks.isEmpty)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.vertical, 10)
-                    .padding(.bottom, 5)
-                    .padding(.horizontal)
-                    .background(.white)
-                    
-                    .overlay(alignment: .bottom) {
-                        Divider()
-                            .opacity(!favoriteBooks.isEmpty ? scrollYOffset > 480.0 ? 1 : 0 : scrollYOffset > 290.0 ? 1 : 0)
-                    }
-                }
+                completeBookSection
             }
             .overlay(alignment: .top) {
                 GeometryReader { proxy -> Color in
@@ -124,40 +92,7 @@ struct BookShelfScrollView: View {
 // MARK: - EXTENSIONS
 
 extension BookShelfScrollView {
-    func asyncImage(url: String) -> some View {
-        AsyncImage(url: URL(string: url),
-                   transaction: Transaction(animation: .default)) { phase in
-            switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 150, height: 200)
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 15,
-                            style: .continuous
-                        )
-                    )
-                    .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
-            case .failure(_), .empty:
-                loadingImage
-            @unknown default:
-                loadingImage
-            }
-        }
-    }
-    
-    var loadingImage: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(.gray.opacity(0.2))
-            .frame(width: 150, height: 200)
-            .shimmering()
-    }
-}
-
-extension BookShelfScrollView {
-    var bookShelfSummary: some View {
+    var topSummaryTab: some View {
         HStack {
             ForEach(BookShelfSummaryItems.allCases, id: \.self) { item in
                 Spacer()
@@ -196,31 +131,34 @@ extension BookShelfScrollView {
     func summaryCount(_ item: BookShelfSummaryItems) -> some View {
         switch item {
         case .completeBooksCount:
-            return Text("\(readingBooks.filter { $0.isComplete }.count)").font(.title2)
+            return Text("\(completeBookCount)").font(.title2)
         case .favoriteBooksCount:
-            return Text("\(favoriteBooks.count)").font(.title2)
+            return Text("\(favoriteBookCount)").font(.title2)
         case .collectSentencesCount:
-            return Text("0").font(.title2)
+            return Text("\(collectedSentenceCount)").font(.title2)
         }
     }
-    
+}
+
+extension BookShelfScrollView {
     var favoriteBookSection: some View {
         Section {
-            if !favoriteBooks.isEmpty {
-                scrollFavoriteBooks
-            } else {
+            if favoriteBooks.isEmpty {
                 noFavoriteBooksLabel
+            } else {
+                scrollFavoriteBooks
             }
         } header: {
-            favoriteBooksHeaderLabel
+            favoriteBooksHeader
         }
     }
     
     var scrollFavoriteBooks: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
-                // 최근에 추가된 상위 10게 힝목만 보여줌
-                ForEach(favoriteBooks.reversed().prefix(min(10, favoriteBooks.count))) { favoriteBook in
+                let prefix10FavoriteBooks = favoriteBooks.reversed().prefix(min(10, favoriteBooks.count))
+                
+                ForEach(prefix10FavoriteBooks) { favoriteBook in
                     FavoriteBookCellView(favoriteBook: favoriteBook, viewType: .sheet)
                 }
             }
@@ -241,7 +179,7 @@ extension BookShelfScrollView {
         .padding(.bottom, 40)
     }
     
-    var favoriteBooksHeaderLabel: some View {
+    var favoriteBooksHeader: some View {
         HStack {
             Text("찜한 도서")
                 .font(.headline)
@@ -257,15 +195,81 @@ extension BookShelfScrollView {
             .disabled(favoriteBooks.isEmpty)
 
         }
-//        .padding(.top, -3)
         .padding(.vertical, 10)
         .padding(.bottom, 5)
         .padding(.horizontal)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity)
         .background(.white)
         .overlay(alignment: .bottom) {
             Divider()
                 .opacity(scrollYOffset > 150.0 ? 1 : 0)
+        }
+    }
+}
+
+extension BookShelfScrollView {
+    var completeBookSection: some View {
+        Group {
+            let completeBooks = readingBooks.get(.complete)
+            
+            Section {
+                if completeBooks.isEmpty {
+                    noFavoriteBooksLabel
+                } else {
+                    scrollCompleteBooks(completeBooks)
+                }
+            } header: {
+                completeBooksHeader(completeBooks)
+            }
+        }
+    }
+    
+    func scrollCompleteBooks(_ completeBooks: [ReadingBook]) -> some View {
+        LazyVGrid(columns: columns) {
+            ForEach(completeBooks, id: \.self) { book in
+                ReadingBookCellButton(book, buttonType: .shelf)
+            }
+        }
+        .padding(.bottom, 40)
+    }
+    
+    var noCompleteBooksLabel: some View {
+        VStack(spacing: 5) {
+            Text("읽은 도서가 없음")
+                .font(.title3)
+                .fontWeight(.bold)
+            
+            Text("독서를 시작해보세요.")
+                .foregroundColor(.secondary)
+        }
+        .padding(.vertical, 30)
+        .padding(.bottom, 100) // 임시
+    }
+    
+    func completeBooksHeader(_ completeBooks: [ReadingBook]) -> some View {
+        HStack {
+            Text("읽은 도서")
+                .font(.headline)
+                .fontWeight(.bold)
+            
+            Spacer()
+            
+            Button {
+                isPresentingCompleteBookListView = true
+            } label: {
+                Text("더 보기")
+            }
+            .disabled(completeBooks.isEmpty)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 10)
+        .padding(.bottom, 5)
+        .padding(.horizontal)
+        .background(.white)
+        
+        .overlay(alignment: .bottom) {
+            Divider()
+                .opacity(!favoriteBooks.isEmpty ? scrollYOffset > 480.0 ? 1 : 0 : scrollYOffset > 290.0 ? 1 : 0)
         }
     }
 }

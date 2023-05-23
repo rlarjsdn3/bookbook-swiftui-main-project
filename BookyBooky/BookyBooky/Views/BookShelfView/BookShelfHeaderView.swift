@@ -12,29 +12,33 @@ struct BookShelfHeaderView: View {
     // MARK: - BODY
     
     var body: some View {
-        HStack {
-            Spacer()
-            
-            bookShelfTitle
-            
-            Spacer()
-        }
-        .overlay(alignment: .trailing) {
-            bookmarkButton
-        }
-        .padding(.vertical)
+        navigationBar
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookShelfHeaderView {
-    var bookShelfTitle: some View {
+    var navigationBar: some View {
+        HStack {
+            Spacer()
+            
+            navigationBarTitle
+            
+            Spacer()
+        }
+        .overlay(alignment: .trailing) {
+            navigationBarButtons
+        }
+        .padding(.vertical)
+    }
+    
+    var navigationBarTitle: some View {
         Text("책장")
             .navigationTitleStyle()
     }
     
-    var bookmarkButton: some View {
+    var navigationBarButtons: some View {
         Button {
             // do something...
         } label: {

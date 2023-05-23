@@ -10,9 +10,7 @@ import RealmSwift
 
 struct BookShelfView: View {
     
-    //  MARK: - WRAPPER PROPERTIES
-    
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    // MARK: - WRAPPER PROPERTIES
     
     @State private var scrollYOffset: Double = 0.0
     
