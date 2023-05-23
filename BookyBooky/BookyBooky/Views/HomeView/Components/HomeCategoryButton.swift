@@ -11,16 +11,16 @@ struct HomeCategoryButton: View {
     
     // MARK: - PROPERTIES
     
-    let type: CategoryTypes
-    @Binding var selectedCategoryType: CategoryTypes
-    @Binding var selectedCategoryTypeForAnimation: CategoryTypes
+    let type: CategoryType
+    @Binding var selectedCategoryType: CategoryType
+    @Binding var selectedCategoryTypeForAnimation: CategoryType
     let scrollProxy: ScrollViewProxy
     let namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
-    init(_ type: CategoryTypes,
-         selectedCategoryType: Binding<CategoryTypes>, selectedCategoryTypeForAnimation: Binding<CategoryTypes>,
+    init(_ type: CategoryType,
+         selectedCategoryType: Binding<CategoryType>, selectedCategoryTypeForAnimation: Binding<CategoryType>,
          scrollProxy: ScrollViewProxy, namespace: Namespace.ID) {
         self.type = type
         self._selectedCategoryType = selectedCategoryType

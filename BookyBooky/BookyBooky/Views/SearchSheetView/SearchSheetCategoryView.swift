@@ -12,8 +12,8 @@ struct SearchSheetCategoryView: View {
     // MARK: - PROPERTIES
     
     @Binding var startIndex: Int                // 검색 결과 시작페이지를 저장하는 변수, 새로운 검색을 시도하는지 안하는지 판별하는 변수
-    @Binding var selectedCategory: CategoryTypes     // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
-    @Binding var categoryAnimation: CategoryTypes    // 카테고리 애니메이션 효과를 위한 변수
+    @Binding var selectedCategory: CategoryType     // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
+    @Binding var categoryAnimation: CategoryType    // 카테고리 애니메이션 효과를 위한 변수
     
     // MARK: - WRAPPER PROPERTIES
     

@@ -21,7 +21,7 @@ struct FavoriteBooksView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedSort = BookSortCriteriaTypes.latestOrder
+    @State private var selectedSort = BookSortCriteriaType.latestOrder
     @State private var searchWord = ""
     @State private var searchQuery = ""
     @State var isPresentingShowAll = false

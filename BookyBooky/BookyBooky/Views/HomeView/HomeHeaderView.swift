@@ -17,11 +17,11 @@ struct HomeHeaderView: View {
     // MARK: - PROPERTIES
     
     @Binding var scrollYOffset: Double
-    @Binding var selectedBookSortType: BookSortCriteriaTypes
+    @Binding var selectedBookSortType: BookSortCriteriaType
     
     // MARK: - INITALIZER
     
-    init(_ scrollYOffset: Binding<Double>, selectedBookSortType: Binding<BookSortCriteriaTypes>) {
+    init(_ scrollYOffset: Binding<Double>, selectedBookSortType: Binding<BookSortCriteriaType>) {
         self._scrollYOffset = scrollYOffset
         self._selectedBookSortType = selectedBookSortType
     }
@@ -139,7 +139,7 @@ extension HomeHeaderView {
     }
     
     var bookSortMenuButtons: some View {
-        ForEach(BookSortCriteriaTypes.allCases, id: \.self) { type in
+        ForEach(BookSortCriteriaType.allCases, id: \.self) { type in
             Button {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {

@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 
 /// 실제 앱 내부에 보여지는 카테고리입니다. 원시값(rawValue)으로 카테고리 명을 출력하세요.
-enum CategoryTypes: String, PersistableEnum {
+enum CategoryType: String, PersistableEnum {
     case all = "전체"
     case action = "액션/어드벤처"
     case autobiography = "전기/자서전"

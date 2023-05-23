@@ -24,11 +24,11 @@ struct SearchScrollView: View {
     ]
     
     @Binding var scrollYOffset: CGFloat
-    @Binding var selectedListType: BookListTabTypes
+    @Binding var selectedListType: BookListTabType
     
     // MARK: - INTALIZER
     
-    init(_ scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTabTypes>) {
+    init(_ scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTabType>) {
         self._scrollYOffset = scrollYOffset
         self._selectedListType = selectedListType
     }
@@ -134,7 +134,7 @@ extension SearchScrollView {
     
     var refreshButton: some View {
         Button("다시 불러오기") {
-            for type in BookListTabTypes.allCases {
+            for type in BookListTabType.allCases {
                 aladinAPIManager.requestBookListAPI(of: type)
             }
             HapticManager.shared.impact(.rigid)

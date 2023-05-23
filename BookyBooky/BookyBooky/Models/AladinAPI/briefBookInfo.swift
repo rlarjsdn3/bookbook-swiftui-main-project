@@ -26,7 +26,7 @@ struct briefBookInfo: Codable {
 // MARK: - EXTENSIONS
 
 extension briefBookInfo.Item {
-    var category: CategoryTypes {
+    var category: CategoryType {
         return categoryName.refinedCategory
     }
 }

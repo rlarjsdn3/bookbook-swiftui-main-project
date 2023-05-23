@@ -84,7 +84,7 @@ struct FavoriteBooksScrollView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedSort: BookSortCriteriaTypes
+    @Binding var selectedSort: BookSortCriteriaType
     @Binding var searchQuery: String
     let listType: BookShelfListViewType
     
@@ -107,7 +107,7 @@ extension FavoriteBooksScrollView {
             LazyVGrid(columns: coulmns, spacing: 15) {
                 if listType == .favorite {
                     ForEach(filteredFavroriteBooks) { favoriteBook in
-                        FavoriteBookCellView(favoriteBook: favoriteBook, viewType: .navigationStack)
+                        FavoriteBookCellButton(favoriteBook, buttonType: .navigation)
                     }
                 } else {
                     ForEach(filteredReadingBooks, id: \.self) { completeBook in

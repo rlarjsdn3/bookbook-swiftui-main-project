@@ -16,8 +16,8 @@ struct HomeReadingBookView: View {
     
     @ObservedResults(ReadingBook.self) var readingBooks
     
-    @State private var selectedCategoryType: CategoryTypes = .all
-    @State private var selectedCategoryTypeForAnimation: CategoryTypes = .all
+    @State private var selectedCategoryType: CategoryType = .all
+    @State private var selectedCategoryTypeForAnimation: CategoryType = .all
     
     @Namespace var namespace
     
@@ -29,13 +29,13 @@ struct HomeReadingBookView: View {
     ]
     
     @Binding var scrollYOffset: Double
-    @Binding var selectedBookSortType: BookSortCriteriaTypes
+    @Binding var selectedBookSortType: BookSortCriteriaType
     let scrollProxy: ScrollViewProxy
     
     // MARK: - INTIALIZER
     
     init(_ scrollYOffset: Binding<Double>,
-         selectedBookSortType: Binding<BookSortCriteriaTypes>, scrollProxy: ScrollViewProxy) {
+         selectedBookSortType: Binding<BookSortCriteriaType>, scrollProxy: ScrollViewProxy) {
         self._scrollYOffset = scrollYOffset
         self._selectedBookSortType = selectedBookSortType
         self.scrollProxy = scrollProxy
@@ -100,7 +100,7 @@ extension HomeReadingBookView {
     }
     
     var bookSortMenuButtons: some View {
-        ForEach(BookSortCriteriaTypes.allCases, id: \.self) { type in
+        ForEach(BookSortCriteriaType.allCases, id: \.self) { type in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {
@@ -118,7 +118,7 @@ extension HomeReadingBookView {
         }
     }
     
-    func bookSortMenuButtonLabel(_ type: BookSortCriteriaTypes) -> some View {
+    func bookSortMenuButtonLabel(_ type: BookSortCriteriaType) -> some View {
         HStack {
             Text(type.rawValue)
             

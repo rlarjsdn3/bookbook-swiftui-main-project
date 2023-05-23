@@ -21,11 +21,11 @@ struct HomeScrollView: View {
     // MARK: - PROPERTIES
     
     @Binding var scrollYOffset: Double
-    @Binding var selectedBookSortType: BookSortCriteriaTypes
+    @Binding var selectedBookSortType: BookSortCriteriaType
     
     // MARK: - INTIALIZER
     
-    init(_ scrollYOffset: Binding<Double>, selectedBookSortType: Binding<BookSortCriteriaTypes>) {
+    init(_ scrollYOffset: Binding<Double>, selectedBookSortType: Binding<BookSortCriteriaType>) {
         self._scrollYOffset = scrollYOffset
         self._selectedBookSortType = selectedBookSortType
     }

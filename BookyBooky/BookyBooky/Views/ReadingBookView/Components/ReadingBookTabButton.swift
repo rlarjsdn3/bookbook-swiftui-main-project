@@ -11,16 +11,16 @@ struct ReadingBookTabButton: View {
     
     // MARK: - PROPERTIES
     
-    let type: ReadingBookTabTypes
-    @Binding var selectedTabType: ReadingBookTabTypes
-    @Binding var selectedTabTypeForAnimation: ReadingBookTabTypes
+    let type: ReadingBookTabType
+    @Binding var selectedTabType: ReadingBookTabType
+    @Binding var selectedTabTypeForAnimation: ReadingBookTabType
     let namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
-    init(_ type: ReadingBookTabTypes,
-         selectedTabType: Binding<ReadingBookTabTypes>,
-         selectedTabTypeForAnimation: Binding<ReadingBookTabTypes>,
+    init(_ type: ReadingBookTabType,
+         selectedTabType: Binding<ReadingBookTabType>,
+         selectedTabTypeForAnimation: Binding<ReadingBookTabType>,
          namespace: Namespace.ID) {
         self.type = type
         self._selectedTabType = selectedTabType

@@ -45,7 +45,7 @@ extension Results<ReadingBook> {
     /// - Parameters:
     ///   - sortType: 정렬 기준
     /// - Returns: 정렬된 Book 프로토콜을 준수하는 도서 배열
-    private func getSortReadingBooks(sortType: BookSortCriteriaTypes) -> [ReadingBook] {
+    private func getSortReadingBooks(sortType: BookSortCriteriaType) -> [ReadingBook] {
         switch sortType {
         case .latestOrder:
             return self.reversed()
@@ -61,7 +61,7 @@ extension Results<ReadingBook> {
     ///   - bookSortType: 도서 정렬 기준
     ///   - categoryType: 도서 필터 기준 (카테고리 별)
     /// - Returns: 정렬 및 필터링된 ReadingBook 형의 배열
-    func getfilteredReadingBooks(bookSortType: BookSortCriteriaTypes, categoryType: CategoryTypes) -> [ReadingBook] {
+    func getfilteredReadingBooks(bookSortType: BookSortCriteriaType, categoryType: CategoryType) -> [ReadingBook] {
         let sortedBookArray = getSortReadingBooks(sortType: bookSortType)
         
         if categoryType == .all {

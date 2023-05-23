@@ -11,9 +11,9 @@ struct SearchCategoryButtonView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedCategory: CategoryTypes
-    let category: CategoryTypes
-    @Binding var categoryAnimation: CategoryTypes
+    @Binding var selectedCategory: CategoryType
+    let category: CategoryType
+    @Binding var categoryAnimation: CategoryType
     let categoryNamespace: Namespace.ID
     let scrollProxy: ScrollViewProxy
     

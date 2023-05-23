@@ -16,8 +16,8 @@ struct SearchSheetView: View {
     
     @State private var searchQuery = "" // 검색어를 저장하는 변수
     @State private var startIndex = 1   // 검색 결과 시작페이지를 저장하는 변수, 새로운 검색을 시도하는지 안하는지 판별하는 변수
-    @State private var selectedCategory: CategoryTypes = .all    // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
-    @State private var categoryAnimation: CategoryTypes = .all   // 카테고리 애니메이션 효과를 위한 변수
+    @State private var selectedCategory: CategoryType = .all    // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
+    @State private var categoryAnimation: CategoryType = .all   // 카테고리 애니메이션 효과를 위한 변수
     
     // MARK: - BODY
     

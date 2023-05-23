@@ -11,13 +11,13 @@ struct TabButton: View {
     
     // MARK: - PROPERTIES
     
-    var type: RoundedTabTypes
-    @Binding var selectedTabBarType: RoundedTabTypes
+    var type: RoundedTabType
+    @Binding var selectedTabBarType: RoundedTabType
     var namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
-    init(_ type: RoundedTabTypes, selectedTabBarItem: Binding<RoundedTabTypes>, namespace: Namespace.ID) {
+    init(_ type: RoundedTabType, selectedTabBarItem: Binding<RoundedTabType>, namespace: Namespace.ID) {
         self.type = type
         self._selectedTabBarType = selectedTabBarItem
         self.namespace = namespace

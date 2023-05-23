@@ -11,13 +11,13 @@ struct SearchTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedAnimation = BookListTabTypes.bestSeller
+    @State private var selectedAnimation = BookListTabType.bestSeller
     
     @Binding var scrollYOffset: CGFloat
-    @Binding var selectedListType: BookListTabTypes
+    @Binding var selectedListType: BookListTabType
     @Namespace var namespace: Namespace.ID
     
-    init(_ scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTabTypes>) {
+    init(_ scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTabType>) {
         self._scrollYOffset = scrollYOffset
         self._selectedListType = selectedListType
     }
@@ -36,7 +36,7 @@ extension SearchTabView {
         ScrollViewReader { scrollProxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(BookListTabTypes.allCases, id: \.self) { type in
+                    ForEach(BookListTabType.allCases, id: \.self) { type in
                         SearchTabButton(
                             listTypeSelected: $selectedListType,
                             type: type,

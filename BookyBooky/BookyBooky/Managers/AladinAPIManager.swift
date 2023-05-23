@@ -34,7 +34,7 @@ class AladinAPIManager: ObservableObject {
     
     // 아래 코드 리팩토링 예정
     
-    @Published var categories: [CategoryTypes] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
+    @Published var categories: [CategoryType] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
     
     // MARK: - FUNCTIONS
     
@@ -42,7 +42,7 @@ class AladinAPIManager: ObservableObject {
     /// 카테고리는 오름차순 정렬되며, '전체'는 제일 앞에, '기타'는 제일 뒤에 배치됩니다.
     /// - Parameter list: 도서 리스트 배열
     func getCategory(bookItems: [briefBookInfo.Item]) {
-        var categories: [CategoryTypes] = []
+        var categories: [CategoryType] = []
         
         // 중복되지 않게 카테고리 항목 저장하기
         for item in bookItems where !categories.contains(item.categoryName.refinedCategory) {
@@ -71,7 +71,7 @@ class AladinAPIManager: ObservableObject {
     
     /// 알라딘 리스트 API를 호출하여 도서 리스트(베스트셀러 등) 결과를 반환하는 함수입니다,
     /// - Parameter query: 도서 리스트 출력 타입
-    func requestBookListAPI(of queryType: BookListTabTypes) {
+    func requestBookListAPI(of queryType: BookListTabType) {
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?"
         
         let parameters = [

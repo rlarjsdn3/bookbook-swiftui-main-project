@@ -21,7 +21,7 @@ struct BookyBookyApp: App {
         WindowGroup {
             ContentView()
                 .onAppear {
-                    for type in BookListTabTypes.allCases {
+                    for type in BookListTabType.allCases {
                         aladinAPIManager.requestBookListAPI(of: type)
                     }
                 }

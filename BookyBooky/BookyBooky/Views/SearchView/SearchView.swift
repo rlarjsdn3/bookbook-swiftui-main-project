@@ -14,7 +14,7 @@ struct SearchView: View {
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var scrollYOffset: CGFloat = 0.0
-    @State private var listTypeSelected = BookListTabTypes.bestSeller
+    @State private var listTypeSelected = BookListTabType.bestSeller
     
     // MARK: - BODY
     

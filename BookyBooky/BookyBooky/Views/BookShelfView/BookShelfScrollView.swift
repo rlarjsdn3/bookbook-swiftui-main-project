@@ -8,6 +8,45 @@
 import SwiftUI
 import RealmSwift
 
+enum BookShelfSummaryType: CaseIterable {
+    case completeBooksCount
+    case favoriteBooksCount
+    case collectedSentenceCount
+    
+    var name: String {
+        switch self {
+        case .completeBooksCount:
+            return "읽은 도서 수"
+        case .favoriteBooksCount:
+            return "찜한 도서 수"
+        case .collectedSentenceCount:
+            return "수집 문장 수"
+        }
+    }
+    
+    var systemImage: String {
+        switch self {
+        case .completeBooksCount:
+            return "book"
+        case .favoriteBooksCount:
+            return "heart.fill"
+        case .collectedSentenceCount:
+            return "bookmark.fill"
+        }
+    }
+    
+    var color: AnyGradient {
+        switch self {
+        case .completeBooksCount:
+            return Color.blue.gradient
+        case .favoriteBooksCount:
+            return Color.pink.gradient
+        case .collectedSentenceCount:
+            return Color.green.gradient
+        }
+    }
+}
+
 struct BookShelfScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -54,6 +93,14 @@ struct BookShelfScrollView: View {
     // MARK: - BODY
     
     var body: some View {
+        bookShelfScroll
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension BookShelfScrollView {
+    var bookShelfScroll: some View {
         ScrollView {
             LazyVStack(pinnedViews: [.sectionHeaders]) {
                 topSummaryTab
@@ -62,6 +109,7 @@ struct BookShelfScrollView: View {
                 
                 completeBookSection
             }
+            // 컨테이너의 상단 Y축의 위치 좌표값을 반환
             .overlay(alignment: .top) {
                 GeometryReader { proxy -> Color in
                     DispatchQueue.main.async {
@@ -89,12 +137,10 @@ struct BookShelfScrollView: View {
     }
 }
 
-// MARK: - EXTENSIONS
-
 extension BookShelfScrollView {
     var topSummaryTab: some View {
         HStack {
-            ForEach(BookShelfSummaryItems.allCases, id: \.self) { item in
+            ForEach(BookShelfSummaryType.allCases, id: \.self) { item in
                 Spacer()
                 
                 VStack(spacing: 5) {
@@ -111,7 +157,7 @@ extension BookShelfScrollView {
         .padding(.horizontal, 15)
     }
     
-    func summaryImage(_ item: BookShelfSummaryItems) -> some View {
+    func summaryImage(_ item: BookShelfSummaryType) -> some View {
         Image(systemName: item.systemImage)
             .font(.largeTitle)
             .foregroundColor(.white)
@@ -123,18 +169,18 @@ extension BookShelfScrollView {
             .frame(width: 80, height: 80)
     }
     
-    func summaryLabel(_ item: BookShelfSummaryItems) -> some View {
+    func summaryLabel(_ item: BookShelfSummaryType) -> some View {
         Text(item.name)
             .fontWeight(.bold)
     }
     
-    func summaryCount(_ item: BookShelfSummaryItems) -> some View {
+    func summaryCount(_ item: BookShelfSummaryType) -> some View {
         switch item {
         case .completeBooksCount:
             return Text("\(completeBookCount)").font(.title2)
         case .favoriteBooksCount:
             return Text("\(favoriteBookCount)").font(.title2)
-        case .collectSentencesCount:
+        case .collectedSentenceCount:
             return Text("\(collectedSentenceCount)").font(.title2)
         }
     }
@@ -159,7 +205,7 @@ extension BookShelfScrollView {
                 let prefix10FavoriteBooks = favoriteBooks.reversed().prefix(min(10, favoriteBooks.count))
                 
                 ForEach(prefix10FavoriteBooks) { favoriteBook in
-                    FavoriteBookCellView(favoriteBook: favoriteBook, viewType: .sheet)
+                    FavoriteBookCellButton(favoriteBook, buttonType: .sheet)
                 }
             }
         }

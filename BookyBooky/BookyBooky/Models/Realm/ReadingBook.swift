@@ -16,7 +16,7 @@ class ReadingBook: Object, ObjectKeyIdentifiable {
     @Persisted var pubDate: Date                    // 출판일
     @Persisted var cover: String                    // 표지(링크)
     @Persisted var itemPage: Int                    // 페이지 쪽 수
-    @Persisted var category: CategoryTypes               // 카테고리
+    @Persisted var category: CategoryType               // 카테고리
     @Persisted var introduction: String              // 상품 설명
     @Persisted var link: String                     // 상품 페이지 링크
     @Persisted var isbn13: String                   // ISBN-13
@@ -92,7 +92,7 @@ extension ReadingBook {
                 "pubDate": Date(timeIntervalSinceNow: -7 * 86400),
                 "cover": "https://image.aladin.co.kr/product/7608/30/cover/8994492038_1.jpg",
                 "itemPage": 1000,
-                "category": CategoryTypes.computer,
+                "category": CategoryType.computer,
                 "explanation": "설명",
                 "link": "http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=76083001&amp;partner=openAPI&amp;start=api",
                 "isbn13": "9788994492032",

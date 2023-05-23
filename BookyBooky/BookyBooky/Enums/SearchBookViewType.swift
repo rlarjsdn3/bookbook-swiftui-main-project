@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FavoriteBookCellViewType {
+enum SearchBookViewType {
     case sheet
-    case navigationStack
+    case navigation
 }

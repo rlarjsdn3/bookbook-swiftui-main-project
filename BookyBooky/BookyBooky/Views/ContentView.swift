@@ -11,7 +11,7 @@ struct ContentView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedTabBarType: RoundedTabTypes = .home
+    @State private var selectedTabBarType: RoundedTabType = .home
     
     // MARK: - INTIALIZER
     
@@ -38,16 +38,16 @@ extension ContentView {
     var defaultTabView: some View {
         TabView(selection: $selectedTabBarType) {
             HomeView()
-                .tag(RoundedTabTypes.home)
+                .tag(RoundedTabType.home)
             
             SearchView()
-                .tag(RoundedTabTypes.search)
+                .tag(RoundedTabType.search)
             
             BookShelfView()
-                .tag(RoundedTabTypes.bookShelf)
+                .tag(RoundedTabType.bookShelf)
             
             AnalysisView()
-                .tag(RoundedTabTypes.analysis)
+                .tag(RoundedTabType.analysis)
         }
     }
 }

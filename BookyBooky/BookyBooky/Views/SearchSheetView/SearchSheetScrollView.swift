@@ -13,7 +13,7 @@ struct SearchSheetScrollView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedCategory: CategoryTypes
+    @Binding var selectedCategory: CategoryType
     @Binding var searchQuery: String
     @Binding var startIndex: Int
     

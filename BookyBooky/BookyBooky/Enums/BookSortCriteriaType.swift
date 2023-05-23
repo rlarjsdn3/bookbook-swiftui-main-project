@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum BookSortCriteriaTypes: String, CaseIterable {
+enum BookSortCriteriaType: String, CaseIterable {
     case latestOrder = "최신순"
     case titleOrder = "제목순"
     case authorOrder = "저자순"
