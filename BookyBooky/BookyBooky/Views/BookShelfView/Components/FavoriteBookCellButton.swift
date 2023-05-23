@@ -19,13 +19,13 @@ struct FavoriteBookCellButton: View {
     // MARK: - PROPERTIES
     
     let favoriteBook: FavoriteBook
-    let buttonType: SearchBookViewType
+    let viewType: SearchBookViewType
     
     // MARK: - INTIALIZER
     
-    init(_ favoriteBook: FavoriteBook, buttonType: SearchBookViewType) {
+    init(_ favoriteBook: FavoriteBook, viewType: SearchBookViewType) {
         self.favoriteBook = favoriteBook
-        self.buttonType = buttonType
+        self.viewType = viewType
     }
     
     
@@ -58,7 +58,7 @@ extension FavoriteBookCellButton {
             favoriteBookInfoLabel
         }
         .onTapGesture {
-            switch buttonType {
+            switch viewType {
             case .sheet:
                 isPresentingSearchBookViewFromSheet = true
             case .navigation:
@@ -105,6 +105,6 @@ extension FavoriteBookCellButton {
 
 struct FavoriteBookCellView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteBookCellButton(FavoriteBook.preview, buttonType: .sheet)
+        FavoriteBookCellButton(FavoriteBook.preview, viewType: .sheet)
     }
 }

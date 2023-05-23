@@ -202,10 +202,10 @@ extension BookShelfScrollView {
     var scrollFavoriteBooks: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
-                let prefix10FavoriteBooks = favoriteBooks.reversed().prefix(min(10, favoriteBooks.count))
+                let recent10FavoriteBooks = favoriteBooks.reversed().prefix(min(10, favoriteBooks.count))
                 
-                ForEach(prefix10FavoriteBooks) { favoriteBook in
-                    FavoriteBookCellButton(favoriteBook, buttonType: .sheet)
+                ForEach(recent10FavoriteBooks) { favoriteBook in
+                    FavoriteBookCellButton(favoriteBook, viewType: .sheet)
                 }
             }
         }

@@ -160,8 +160,8 @@ extension HomeReadingBookView {
     
     var readingBookCellButtons: some View {
         Group {
-            // 이렇게 해서 DB 내 데이터가 바뀌거나 추가될 때마다 뷰를 새로 그려지게 해야 한다! <- 이거 중요
-            let filterReadingBooks = readingBooks.getfilteredReadingBooks(
+            let filterReadingBooks = readingBooks.getFilteredReadingBooks(
+                .unfinished,
                 bookSortType: selectedBookSortType,
                 categoryType: selectedCategoryType
             )
