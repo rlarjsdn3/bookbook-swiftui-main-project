@@ -243,14 +243,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		9E0434A729E24B90009A2161 /* BookShelfBookListView */ = {
+		9E0434A729E24B90009A2161 /* BookShelfListView */ = {
 			isa = PBXGroup;
 			children = (
 				9E0434A829E24BA5009A2161 /* BookShelfBookListView.swift */,
 				9E0434B129E3940E009A2161 /* FavoriteBooksTextFieldView.swift */,
 				9E0434B329E39920009A2161 /* FavoriteBooksScrollView.swift */,
 			);
-			path = BookShelfBookListView;
+			path = BookShelfListView;
 			sourceTree = "<group>";
 		};
 		9E0434AC29E2A374009A2161 /* Modifier */ = {
@@ -511,7 +511,7 @@
 				9E7A794129DA5B7C00A51856 /* SearchBookView */,
 				9EDC2FB229E6F0F8004E792A /* AddReadingBookView */,
 				9E06071529DFDC05000D542D /* BookShelfView */,
-				9E0434A729E24B90009A2161 /* BookShelfBookListView */,
+				9E0434A729E24B90009A2161 /* BookShelfListView */,
 				9E7BFC7729F0F23D00D72648 /* AnalysisView */,
 				9E061D5F29FAA87C0042E3B1 /* SettingsView */,
 				9ECA326629D11BB4004D6D5B /* RoundedTabView */,

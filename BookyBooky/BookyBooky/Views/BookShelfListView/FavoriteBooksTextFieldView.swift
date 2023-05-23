@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FavoriteBooksTextFieldView: View {
+struct BookShelfTextFieldView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -198,10 +198,10 @@ extension FavoriteBooksTextFieldView {
 
 // MARK: - PREVIEW
 
-struct FavoriteBooksTextFieldView_Previews: PreviewProvider {
+struct BookShelfTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            FavoriteBooksTextFieldView(
+            BookShelfTextFieldView(
                 inputQuery: .constant(""),
                 searchQuery: .constant(""),
                 selectedSortType: .constant(.latestOrder),
