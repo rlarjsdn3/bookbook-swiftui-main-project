@@ -122,6 +122,6 @@ extension SearchCellButton {
 
 struct SearchCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        SearchCellButton(briefBookInfo.Item.preview[0])
+        SearchCellButton(briefBookInfo.Item.preview)
     }
 }
