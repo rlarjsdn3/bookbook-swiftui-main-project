@@ -169,7 +169,7 @@ extension SearchBookCellButton {
             
             Text("・")
             
-            Text(bookItem.category.rawValue)
+            Text(bookItem.bookCategory.rawValue)
         }
         .fontWeight(.semibold)
     }

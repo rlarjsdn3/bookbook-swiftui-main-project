@@ -108,7 +108,7 @@ extension SearchBookTitleView {
                 Image(systemName: "heart.fill")
                     .foregroundColor(.white)
                     .padding()
-                    .background(bookSearchInfo.category.accentColor)
+                    .background(bookSearchInfo.bookCategory.accentColor)
                     .clipShape(Circle())
             } else {
                 Image(systemName: "heart.fill")

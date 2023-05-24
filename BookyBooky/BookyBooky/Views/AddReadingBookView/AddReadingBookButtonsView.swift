@@ -83,7 +83,7 @@ extension AddReadingBookButtonsView {
         } label: {
             Text("추가하기")
         }
-        .buttonStyle(RightBottomButtonStyle(searchBookInfo.category.accentColor))
+        .buttonStyle(RightBottomButtonStyle(searchBookInfo.bookCategory.accentColor))
     }
     
     var okButton: some View {

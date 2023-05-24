@@ -33,7 +33,7 @@ struct SearchBookView: View {
     
     var categoryAccentColor: Color {
         if let bookDetail = aladinAPIManager.searchBookInfo {
-            return bookDetail.category.accentColor
+            return bookDetail.bookCategory.accentColor
         }
         return Color.black
     }
@@ -62,7 +62,7 @@ struct SearchBookView: View {
                                 dismiss()
                             } label: {
                                 Image(systemName: "chevron.left")
-                                    .foregroundColor(bookDetail.category.foregroundColor)
+                                    .foregroundColor(bookDetail.bookCategory.foregroundColor)
                             }
                             .navigationBarItemStyle()
                             .padding(.vertical, 5)

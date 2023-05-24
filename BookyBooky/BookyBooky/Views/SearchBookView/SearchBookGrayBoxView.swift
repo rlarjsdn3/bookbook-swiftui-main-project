@@ -30,7 +30,7 @@ struct SearchBookGrayBoxView: View {
     var body: some View {
         bookGrayBox
             .sheet(isPresented: $isPresentingSalesPointDescriptionSheet) {
-                SalesPointIntroSheetView(theme: searchBookInfo.category.accentColor)
+                SalesPointIntroSheetView(theme: searchBookInfo.bookCategory.accentColor)
             }
     }
 }
@@ -102,7 +102,7 @@ extension SearchBookGrayBoxView {
                 .font(.headline)
                 .fontWeight(.bold)
             
-            Text(searchBookInfo.category.rawValue)
+            Text(searchBookInfo.bookCategory.rawValue)
                 .redacted(reason: isLoadingCoverImage ? .placeholder : [])
                 .shimmering(active: isLoadingCoverImage)
         }
