@@ -32,15 +32,15 @@ struct SearchSheetView: View {
                 )
                 
                 SearchSheetCategoryView(
-                    startIndex: $searchIndex,
+                    searchIndex: $searchIndex,
                     selectedCategory: $selectedCategory,
-                    categoryAnimation: $selectedCategoryForAnimation
+                    selectedCategoryForAnimation: $selectedCategoryForAnimation
                 )
                 
                 SearchSheetScrollView(
-                    selectedCategory: $selectedCategory,
                     searchQuery: $searchQuery,
-                    startIndex: $searchIndex
+                    searchIndex: $searchIndex,
+                    selectedCategory: $selectedCategory
                 )
             }
             .toast(isPresenting: $aladinAPIManager.isPresentingSearchLoadingToastAlert)  {

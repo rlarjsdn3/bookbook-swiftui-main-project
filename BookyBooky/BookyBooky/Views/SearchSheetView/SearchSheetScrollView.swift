@@ -9,13 +9,17 @@ import SwiftUI
 
 struct SearchSheetScrollView: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    
     @State private var isPresentingSearchInfoView = false
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedCategory: CategoryType
     @Binding var searchQuery: String
-    @Binding var startIndex: Int
+    @Binding var searchIndex: Int
+    @Binding var selectedCategory: CategoryType
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -35,51 +39,51 @@ struct SearchSheetScrollView: View {
         return list
     }
     
-    // MARK: - WRAPPER PROPERTIES
-    
-    @EnvironmentObject var aladinAPIManager: AladinAPIManager
-    
     // MARK: - BODY
     
     var body: some View {
-        // 검색 결과가 존재하는 경우
-        if !aladinAPIManager.searchResults.isEmpty {
-            scrollSearchItems // 각 검색 도서 셀 출력
-        // 검색 결과가 존재하지 않는 경우
-        } else {
-            noResultLabel // '결과 없음' 뷰 출력
-        }
+        searchSheetScroll
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchSheetScrollView {
-    var scrollSearchItems: some View {
-        ScrollViewReader { proxy in
+    var searchSheetScroll: some View {
+        Group {
+            if aladinAPIManager.searchResults.isEmpty {
+                noResultLabel
+            } else {
+                scrollSearchBooks
+            }
+        }
+    }
+    
+    var scrollSearchBooks: some View {
+        ScrollViewReader { scrollProxy in
             ScrollView {
-                lazyListCells
+                searchSheetCellButtons
                 
                 seeMoreButton
             }
-            .onChange(of: startIndex) { _ in
-                // 새로운 검색을 시도할 때만 스크롤을 제일 위로 올립니다.
-                // '더 보기' 버튼을 클릭해도 스크롤이 올라가지 않습니다.
-                if startIndex == 1 {
+            .onChange(of: searchIndex) { _ in
+                // 새로운 검색을 시도할 때만 도서 스크롤을 제일 위로 올립니다.
+                // '더 보기' 버튼을 클릭해도 도서 스크롤이 이동하지 않습니다.
+                if searchIndex == 1 {
                     withAnimation {
-                        proxy.scrollTo("Scroll_To_Top", anchor: .top)
+                        scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
                     }
                 }
             }
             .onChange(of: selectedCategory) { _ in
                 withAnimation {
-                    proxy.scrollTo("Scroll_To_Top", anchor: .top)
+                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }
             }
         }
     }
     
-    var lazyListCells: some View {
+    var searchSheetCellButtons: some View {
         LazyVStack {
             ForEach(filteredSearchItems, id: \.self) { item in
                 SearchSheetCellView(bookItem: item)
@@ -90,10 +94,10 @@ extension SearchSheetScrollView {
     
     var seeMoreButton: some View {
         Button {
-            startIndex += 1
+            searchIndex += 1
             aladinAPIManager.requestBookSearchAPI(
                 searchQuery,
-                page: startIndex
+                page: searchIndex
             )
         } label: {
             Text("더 보기")
@@ -136,9 +140,9 @@ extension SearchSheetScrollView {
 struct SearchSheetScrollView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetScrollView(
-            selectedCategory: .constant(.all),
             searchQuery: .constant(""),
-            startIndex: .constant(1)
+            searchIndex: .constant(1),
+            selectedCategory: .constant(.all)
         )
         .environmentObject(AladinAPIManager())
     }
