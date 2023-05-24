@@ -47,13 +47,13 @@ extension SearchHeaderView {
     
     var navigationBarButtons: some View {
         HStack {
+            Spacer()
+            
             Button {
                 isPresentingSearchSheetView = true
             } label: {
                 searchSFSymbolsImage
             }
-            
-            Spacer()
         }
     }
     

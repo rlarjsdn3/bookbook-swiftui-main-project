@@ -102,7 +102,7 @@ struct BookShelfScrollView: View {
 extension BookShelfScrollView {
     var bookShelfScroll: some View {
         ScrollView {
-            LazyVStack(pinnedViews: [.sectionHeaders]) {
+            LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 topSummaryTab
                 
                 favoriteBookSection
@@ -155,6 +155,7 @@ extension BookShelfScrollView {
             }
         }
         .padding(.horizontal, 15)
+        .padding(.bottom, 10)
     }
     
     func summaryImage(_ item: BookShelfSummaryType) -> some View {
@@ -206,6 +207,7 @@ extension BookShelfScrollView {
                 
                 ForEach(recent10FavoriteBooks) { favoriteBook in
                     FavoriteBookCellButton(favoriteBook, viewType: .sheet)
+                        .padding(.vertical, 10)
                 }
             }
         }
@@ -274,6 +276,7 @@ extension BookShelfScrollView {
         LazyVGrid(columns: columns) {
             ForEach(completeBooks, id: \.self) { book in
                 ReadingBookCellButton(book, buttonType: .shelf)
+                    .padding(.top, 10)
             }
         }
         .padding(.bottom, 40)

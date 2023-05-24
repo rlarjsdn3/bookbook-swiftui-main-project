@@ -20,11 +20,17 @@ struct BookShelfListScrollView: View {
     // MARK: - COMPUTED PROPERTIES
     
     var filteredFavoriteBooks: [FavoriteBook] {
-        favoriteBooks.getFilteredFavoriteBooks(searchQuery: searchQuery, bookSortType: selectedSortType)
+        favoriteBooks.getFilteredFavoriteBooks(
+            searchQuery: searchQuery,
+            bookSortType: selectedSortType
+        )
     }
     
     var filteredCompleteBooks: [ReadingBook] {
-        readingBooks.getFilteredReadingBooks(.complete, searchQuery: searchQuery, bookSortType: selectedSortType)
+        readingBooks.getFilteredReadingBooks(
+            .complete,
+            searchQuery: searchQuery, bookSortType: selectedSortType
+        )
     }
     
     // MARK: - PROPERTIES
@@ -50,25 +56,32 @@ struct BookShelfListScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        if filteredFavoriteBooks.isEmpty || !filteredCompleteBooks.isEmpty {
-            noResultLabel
-        } else {
-            scrollFavoriteBooks
-        }
+        bookShelfList
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookShelfListScrollView {
-    var scrollFavoriteBooks: some View {
+    var bookShelfList: some View {
+        Group {
+            if filteredFavoriteBooks.isEmpty || filteredCompleteBooks.isEmpty {
+                noResultLabel
+            } else {
+                scrollBooks
+            }
+        }
+    }
+    
+    var scrollBooks: some View {
         ScrollView {
             LazyVGrid(columns: coulmns, spacing: 15) {
-                if viewType == .favorite {
+                switch viewType {
+                case .favorite:
                     ForEach(filteredFavoriteBooks) { favoriteBook in
                         FavoriteBookCellButton(favoriteBook, viewType: .navigation)
                     }
-                } else {
+                case .complete:
                     ForEach(filteredCompleteBooks, id: \.self) { completeBook in
                         ReadingBookCellButton(completeBook, buttonType: .shelf)
                     }
