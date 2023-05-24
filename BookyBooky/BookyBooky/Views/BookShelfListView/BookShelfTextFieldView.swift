@@ -38,14 +38,14 @@ struct BookShelfTextFieldView: View {
     // MARK: - BODY
     
     var body: some View {
-        bookTextField
+                bookShelfTextField
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookShelfTextFieldView {
-    var bookTextField: some View {
+    var         bookShelfTextField: some View {
         HStack {
             bookSortMenu
             

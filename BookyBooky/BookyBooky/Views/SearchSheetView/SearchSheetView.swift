@@ -14,10 +14,10 @@ struct SearchSheetView: View {
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
-    @State private var searchQuery = "" // 검색어를 저장하는 변수
-    @State private var startIndex = 1   // 검색 결과 시작페이지를 저장하는 변수, 새로운 검색을 시도하는지 안하는지 판별하는 변수
-    @State private var selectedCategory: CategoryType = .all    // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
-    @State private var categoryAnimation: CategoryType = .all   // 카테고리 애니메이션 효과를 위한 변수
+    @State private var searchQuery = ""
+    @State private var searchIndex = 1
+    @State private var selectedCategory: CategoryType = .all
+    @State private var selectedCategoryForAnimation: CategoryType = .all
     
     // MARK: - BODY
     
@@ -26,21 +26,21 @@ struct SearchSheetView: View {
             VStack {
                 SearchSheetTextFieldView(
                     searchQuery: $searchQuery,
-                    startIndex: $startIndex,
+                    searchIndex: $searchIndex,
                     selectedCategory: $selectedCategory,
-                    categoryAnimation: $categoryAnimation
+                    selectedCategoryForAnimation: $selectedCategoryForAnimation
                 )
                 
                 SearchSheetCategoryView(
-                    startIndex: $startIndex,
+                    startIndex: $searchIndex,
                     selectedCategory: $selectedCategory,
-                    categoryAnimation: $categoryAnimation
+                    categoryAnimation: $selectedCategoryForAnimation
                 )
                 
                 SearchSheetScrollView(
                     selectedCategory: $selectedCategory,
                     searchQuery: $searchQuery,
-                    startIndex: $startIndex
+                    startIndex: $searchIndex
                 )
             }
             .toast(isPresenting: $aladinAPIManager.isPresentingSearchLoadingToastAlert)  {

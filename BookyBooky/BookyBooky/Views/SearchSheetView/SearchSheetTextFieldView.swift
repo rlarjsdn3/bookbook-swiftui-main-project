@@ -10,15 +10,6 @@ import AlertToast
 
 struct SearchSheetTextFieldView: View {
     
-    
-    
-    // MARK: - PROPERTIES
-    
-    @Binding var searchQuery: String            // 검색어를 저장하는 변수
-    @Binding var startIndex: Int                // 검색 결과 시작페이지를 저장하는 변수, 새로운 검색을 시도하는지 안하는지 판별하는 변수
-    @Binding var selectedCategory: CategoryType     // 선택된 카테고리 정보를 저장하는 변수 (검색 결과 출력용)
-    @Binding var categoryAnimation: CategoryType    // 카테고리 애니메이션 효과를 위한 변수
-    
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
@@ -27,38 +18,65 @@ struct SearchSheetTextFieldView: View {
     
     @FocusState var focusedField: Bool
     
+    // MARK: - PROPERTIES
+    
+    @Binding var searchQuery: String
+    @Binding var searchIndex: Int
+    @Binding var selectedCategory: CategoryType
+    @Binding var selectedCategoryForAnimation: CategoryType
+    
     // MARK: - BODY
     
     var body: some View {
-        HStack {
-            textFieldArea
-            
-            searchButton
-        }
-        // 검색 시트가 나타난 후, 0.05초 뒤에 키보드를 보이게 합니다.
-        .onAppear {
-            if aladinAPIManager.searchResults.isEmpty {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                    focusedField = true
+        searchSheetTextField
+            // 검색 시트가 나타난 후, 0.05초 뒤에 키보드를 보이게 합니다.
+            .onAppear {
+                if aladinAPIManager.searchResults.isEmpty {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                        focusedField = true
+                    }
                 }
             }
+            .padding([.leading, .top, .trailing])
+            .padding(.bottom, 5)
+    }
+    
+    func requestBookSearch(_ searchQuery: String) {
+        searchIndex = 0
+        // 새로운 검색 시도 시, 스크롤을 제일 위로 올립니다.
+        // searchIndex 변수값을 짧은 시간에 변경(0→1)함으로써 onChange 제어자가 이를 알아차려 스크롤을 위로 올립니다.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+            searchIndex = 1
         }
-        .padding([.leading, .top, .trailing])
-        .padding(.bottom, 5)
+        aladinAPIManager.requestBookSearchAPI(searchQuery)
+        
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+            selectedCategoryForAnimation = .all
+        }
+        selectedCategory = .all
+        HapticManager.shared.impact(.rigid)
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchSheetTextFieldView {
-    var textFieldArea: some View {
+    var searchSheetTextField: some View {
         HStack {
-            searchImage
-            
             searchTextField
             
+            dismissButton
+        }
+    }
+    
+    var searchTextField: some View {
+        HStack {
+            magnifyingGlassSFSymbolImage
+            
+            searchInputField
+            
             if !searchQuery.isEmpty {
-                xmarkButton
+                eraseButton
             }
         }
         .padding(.horizontal, 10)
@@ -66,36 +84,36 @@ extension SearchSheetTextFieldView {
         .cornerRadius(15)
     }
     
-    var searchImage: some View {
+    var magnifyingGlassSFSymbolImage: some View {
         Image(systemName: "magnifyingglass")
             .foregroundColor(.gray)
     }
     
-    var searchTextField: some View {
+    var searchInputField: some View {
         TextField("제목 / 저자 검색", text: $searchQuery)
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
-                requestBookSearch()
+                requestBookSearch(searchQuery)
             }
             .focused($focusedField)
     }
     
-    var xmarkButton: some View {
+    var eraseButton: some View {
         Button {
             searchQuery.removeAll()
             focusedField = true
         } label: {
-            xmarkImage
+            xmarkCircleSFSymbolImage
         }
     }
     
-    var xmarkImage: some View {
+    var xmarkCircleSFSymbolImage: some View {
         Image(systemName: "xmark.circle.fill")
             .foregroundColor(.gray)
     }
     
-    var searchButton: some View {
+    var dismissButton: some View {
         Button {
             dismiss()
         } label: {
@@ -109,33 +127,15 @@ extension SearchSheetTextFieldView {
     }
 }
 
-extension SearchSheetTextFieldView {
-    func requestBookSearch() {
-        startIndex = 0
-        // 새로운 검색 시도 시, 스크롤을 제일 위로 올립니다.
-        // startIndex 변수값을 짧은 시간에 변경(0→1)함으로써 onChange 제어자가 이를 알아차려 스크롤을 위로 올립니다.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
-            startIndex = 1
-        }
-        aladinAPIManager.requestBookSearchAPI(searchQuery)
-        
-        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-            categoryAnimation = .all
-        }
-        selectedCategory = .all
-        HapticManager.shared.impact(.rigid)
-    }
-}
-
 // MARK: - PREVIEW
 
 struct SearchSheetTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetTextFieldView(
             searchQuery: .constant(""),
-            startIndex: .constant(0),
+            searchIndex: .constant(0),
             selectedCategory: .constant(.all),
-            categoryAnimation: .constant(.all)
+            selectedCategoryForAnimation: .constant(.all)
         )
         .environmentObject(AladinAPIManager())
     }
