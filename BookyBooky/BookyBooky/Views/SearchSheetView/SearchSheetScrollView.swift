@@ -86,7 +86,7 @@ extension SearchSheetScrollView {
     var searchSheetCellButtons: some View {
         LazyVStack {
             ForEach(filteredSearchItems, id: \.self) { item in
-                SearchSheetCellView(bookItem: item)
+                SearchSheetCellButton(bookItem: item)
             }
             .id("Scroll_To_Top")
         }

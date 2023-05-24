@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct SearchSheetCellView: View {
+struct SearchSheetCellButton: View {
     
     // MARK: - CONSTANT PROPERTIES
     
@@ -68,7 +68,7 @@ struct SearchSheetCellView: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchSheetCellView {
+extension SearchSheetCellButton {
     var title: some View {
         Text(bookItem.title.refinedTitle)
             .font(.title3)
@@ -113,7 +113,7 @@ extension SearchSheetCellView {
     }
 }
 
-extension SearchSheetCellView {
+extension SearchSheetCellButton {
     @ViewBuilder
     func leftBookSearchShape(geometryProxy proxy: GeometryProxy) -> some View {
         HStack {
@@ -224,6 +224,6 @@ extension SearchSheetCellView {
 
 struct SearchSheetCellView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetCellView(bookItem: briefBookInfo.Item.preview[0])
+        SearchSheetCellButton(bookItem: briefBookInfo.Item.preview[0])
     }
 }
