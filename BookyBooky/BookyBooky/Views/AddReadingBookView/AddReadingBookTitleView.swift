@@ -106,7 +106,7 @@ extension AddReadingBookTitleView {
 struct BookAddCenterView_Previews: PreviewProvider {
     static var previews: some View {
         AddReadingBookTitleView(
-            detailBookInfo.Item.preview[0],
+            detailBookInfo.Item.preview,
             selectedDate: .constant(Date())
         )
     }

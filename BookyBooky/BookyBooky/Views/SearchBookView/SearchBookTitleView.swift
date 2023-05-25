@@ -129,7 +129,7 @@ extension SearchBookTitleView {
 struct SearchInfoTitleView_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookTitleView(
-            detailBookInfo.Item.preview[0],
+            detailBookInfo.Item.preview,
             isLoadingCoverImage: .constant(false)
         )
         .environmentObject(RealmManager())

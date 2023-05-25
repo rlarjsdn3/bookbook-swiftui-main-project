@@ -14,22 +14,22 @@ struct BookShelfListScrollView: View {
     
     @EnvironmentObject var realmMananger: RealmManager
     
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
     @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     // MARK: - COMPUTED PROPERTIES
-    
-    var filteredFavoriteBooks: [FavoriteBook] {
-        favoriteBooks.getFilteredFavoriteBooks(
-            searchQuery: searchQuery,
-            bookSortType: selectedSortType
-        )
-    }
     
     var filteredCompleteBooks: [ReadingBook] {
         readingBooks.getFilteredReadingBooks(
             .complete,
             searchQuery: searchQuery, bookSortType: selectedSortType
+        )
+    }
+    
+    var filteredFavoriteBooks: [FavoriteBook] {
+        favoriteBooks.getFilteredFavoriteBooks(
+            searchQuery: searchQuery,
+            bookSortType: selectedSortType
         )
     }
     
@@ -65,10 +65,19 @@ struct BookShelfListScrollView: View {
 extension BookShelfListScrollView {
     var bookShelfList: some View {
         Group {
-            if filteredFavoriteBooks.isEmpty || filteredCompleteBooks.isEmpty {
-                noResultLabel
-            } else {
-                scrollBooks
+            switch viewType {
+            case .complete:
+                if filteredCompleteBooks.isEmpty {
+                    noResultLabel
+                } else {
+                    scrollBooks
+                }
+            case .favorite:
+                if filteredFavoriteBooks.isEmpty {
+                    noResultLabel
+                } else {
+                    scrollBooks
+                }
             }
         }
     }

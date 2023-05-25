@@ -77,7 +77,7 @@ extension SearchBookIntroView {
 struct SearchBookIntroView_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookIntroView(
-            detailBookInfo.Item.preview[0],
+            detailBookInfo.Item.preview,
             isLoadingCoverImage: .constant(false)
         )
     }

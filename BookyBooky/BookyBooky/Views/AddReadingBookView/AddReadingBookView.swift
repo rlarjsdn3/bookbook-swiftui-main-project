@@ -70,6 +70,6 @@ extension AddReadingBookView {
 
 struct BookAddView_Previews: PreviewProvider {
     static var previews: some View {
-        AddReadingBookView(detailBookInfo.Item.preview[0])
+        AddReadingBookView(detailBookInfo.Item.preview)
     }
 }

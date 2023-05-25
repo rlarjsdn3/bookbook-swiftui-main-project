@@ -52,9 +52,9 @@ extension Results<ReadingBook> {
         case .latestOrder:
             return readingBookArray.reversed()
         case .titleOrder:
-            return readingBookArray.sorted { $0.title > $1.title }
+            return readingBookArray.sorted { $0.title < $1.title }
         case .authorOrder:
-            return readingBookArray.sorted { $0.author > $1.author }
+            return readingBookArray.sorted { $0.author < $1.author }
         }
     }
     
@@ -80,7 +80,7 @@ extension Results<ReadingBook> {
             return sortedBookArray
         } else {
             return sortedBookArray.filter {
-                $0.title.contains(searchQuery)
+                $0.title.contains(searchQuery) || $0.author.contains(searchQuery)
             }
         }
     }
@@ -162,9 +162,9 @@ extension Results<FavoriteBook> {
         case .latestOrder:
             return self.reversed()
         case .titleOrder:
-            return self.sorted { $0.title > $1.title }
+            return self.sorted { $0.title < $1.title }
         case .authorOrder:
-            return self.sorted { $0.author > $1.author }
+            return self.sorted { $0.author < $1.author }
         }
     }
     
@@ -175,7 +175,7 @@ extension Results<FavoriteBook> {
             return sortedBookArray
         } else {
             return sortedBookArray.filter {
-                $0.title.contains(searchQuery)
+                $0.title.contains(searchQuery) || $0.author.contains(searchQuery)
             }
         }
     }

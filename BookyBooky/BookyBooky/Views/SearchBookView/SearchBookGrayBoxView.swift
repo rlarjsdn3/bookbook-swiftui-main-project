@@ -115,7 +115,7 @@ extension SearchBookGrayBoxView {
 struct SearchInfoBoxView_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookGrayBoxView(
-            detailBookInfo.Item.preview[0],
+            detailBookInfo.Item.preview,
             isLoadingCoverImage: .constant(false)
         )
     }

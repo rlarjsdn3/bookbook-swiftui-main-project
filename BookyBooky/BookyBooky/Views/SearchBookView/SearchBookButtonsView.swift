@@ -114,7 +114,7 @@ extension SearchBookButtonsView {
 struct SearchInfoButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookButtonsView(
-            bookSearchInfo: detailBookInfo.Item.preview[0],
+            bookSearchInfo: detailBookInfo.Item.preview,
             isLoadingCoverImage: .constant(false)
         )
         .previewLayout(.sizeThatFits)

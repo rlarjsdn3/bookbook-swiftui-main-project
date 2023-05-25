@@ -121,7 +121,7 @@ extension AddReadingBookButtonsView {
 struct BookAddButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         AddReadingBookButtonsView(
-            detailBookInfo.Item.preview[0],
+            detailBookInfo.Item.preview,
             selectedDate: .constant(Date())
         )
         .environmentObject(RealmManager())

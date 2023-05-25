@@ -62,7 +62,7 @@ extension SearchBookCoverView {
 struct SearchInfoCoverView_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookCoverView(
-            detailBookInfo.Item.preview[0],
+            detailBookInfo.Item.preview,
             isLoadingCoverImage: .constant(false)
         )
         .environmentObject(AladinAPIManager())
