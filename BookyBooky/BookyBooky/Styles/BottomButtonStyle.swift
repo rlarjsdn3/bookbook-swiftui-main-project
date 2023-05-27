@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct BottomButtonStyle: ButtonStyle {
-    let theme: Color
+    let backgroundColor: Color
     
-    init(_ theme: Color = Color.gray.opacity(0.2)) {
-        self.theme = theme
+    init(backgroundColor: Color = .lightGray) {
+        self.backgroundColor = backgroundColor
     }
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.title3)
             .fontWeight(.bold)
-            .foregroundColor(.white)
+            .foregroundColor(backgroundColor == .lightGray ? .black : .white)
             .frame(height: 55)
             .frame(maxWidth: .infinity)
-            .background(theme)
+            .background(backgroundColor)
             .cornerRadius(15)
             .opacity(configuration.isPressed ? 0.5 : 1)
             .padding(.horizontal)

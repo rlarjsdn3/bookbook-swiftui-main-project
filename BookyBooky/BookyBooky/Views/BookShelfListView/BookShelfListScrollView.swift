@@ -96,8 +96,8 @@ extension BookShelfListScrollView {
                     }
                 }
             }
-            .id("Scroll_To_Top")
             .padding(10)
+            .id("Scroll_To_Top")
         }
     }
 }

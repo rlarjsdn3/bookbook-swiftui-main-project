@@ -89,7 +89,7 @@ extension SalesPointIntroSheetView {
         } label: {
             Text("돌아가기")
         }
-        .buttonStyle(BottomButtonStyle(theme))
+        .buttonStyle(BottomButtonStyle(backgroundColor: theme))
     }
 }
 

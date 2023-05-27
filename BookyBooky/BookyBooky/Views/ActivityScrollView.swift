@@ -54,7 +54,7 @@ extension ActivityScrollView {
                 noReadingDataLabel
             } else {
                 ScrollView {
-                    LazyVStack(pinnedViews: [.sectionHeaders]) {
+                    LazyVStack(spacing: 5, pinnedViews: [.sectionHeaders]) {
                         monthlyReadingActivitySection
                     }
                 }
@@ -82,9 +82,11 @@ extension ActivityScrollView {
     var monthlyReadingActivitySection: some View {
         ForEach(readingBooks.getMonthlyReadingActivity(), id: \.self) { monthlyActivity in
             Section {
-                monthlySummaryLabel(monthlyActivity)
-                
-                activityCellButtons(monthlyActivity)
+                VStack {
+                    monthlySummaryLabel(monthlyActivity)
+                    
+                    activityCellButtons(monthlyActivity)
+                }
             } header: {
                 dateText(monthlyActivity)
             }
@@ -144,8 +146,10 @@ extension ActivityScrollView {
     }
     
     func activityCellButtons(_ monthlyActivity: MonthlyReadingActivity) -> some View {
-        ForEach(monthlyActivity.activities, id: \.self) { activity in
-            ActivityCellButton(activity)
+        VStack(spacing: 5) {
+            ForEach(monthlyActivity.activities, id: \.self) { activity in
+                ActivityCellButton(activity)
+            }
         }
     }
     

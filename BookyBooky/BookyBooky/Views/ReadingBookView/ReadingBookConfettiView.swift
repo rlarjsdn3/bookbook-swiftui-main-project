@@ -126,7 +126,7 @@ extension ReadingBookConfettiView {
         } label: {
              Text("확인")
         }
-        .buttonStyle(BottomButtonStyle(readingBook.category.accentColor))
+        .buttonStyle(BottomButtonStyle(backgroundColor: readingBook.category.accentColor))
     }
 }
 

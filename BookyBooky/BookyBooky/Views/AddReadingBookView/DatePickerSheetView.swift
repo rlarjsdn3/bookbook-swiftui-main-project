@@ -48,7 +48,7 @@ struct DatePickerSheetView: View {
             } label: {
                 Text("적용하기")
             }
-            .buttonStyle(BottomButtonStyle(accentColor))
+            .buttonStyle(BottomButtonStyle(backgroundColor: accentColor))
         }
         .presentationCornerRadius(30)
         .presentationDetents([.height(420)])

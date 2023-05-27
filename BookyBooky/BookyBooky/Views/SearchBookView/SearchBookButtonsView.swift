@@ -102,7 +102,7 @@ extension SearchBookButtonsView {
                 } label: {
                     Text("추가하기")
                 }
-                .buttonStyle(RightBottomButtonStyle(bookSearchInfo.bookCategory.accentColor))
+                .buttonStyle(RightBottomButtonStyle(backgroundColor: bookSearchInfo.bookCategory.accentColor))
                 .disabled(isLoadingCoverImage)
             }
         }

@@ -262,7 +262,7 @@ extension BookShelfScrollView {
             
             Section {
                 if completeBooks.isEmpty {
-                    noFavoriteBooksLabel
+                    noCompleteBooksLabel
                 } else {
                     scrollCompleteBooks(completeBooks)
                 }

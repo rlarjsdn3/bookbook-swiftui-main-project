@@ -73,8 +73,15 @@ extension AddReadingBookButtonsView {
             dismiss()
         } label: {
             Text("돌아가기")
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.black)
+                .frame(height: 55)
+                .frame(maxWidth: .infinity)
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(15)
+                .padding(.leading)
         }
-        .buttonStyle(.leftBottomButtonStyle)
     }
     
     var addReadingBookButton: some View {
@@ -83,7 +90,7 @@ extension AddReadingBookButtonsView {
         } label: {
             Text("추가하기")
         }
-        .buttonStyle(RightBottomButtonStyle(searchBookInfo.bookCategory.accentColor))
+        .buttonStyle(RightBottomButtonStyle(backgroundColor: searchBookInfo.bookCategory.accentColor))
     }
     
     var okButton: some View {
