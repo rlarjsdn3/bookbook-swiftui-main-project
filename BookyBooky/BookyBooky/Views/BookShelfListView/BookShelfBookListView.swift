@@ -43,7 +43,7 @@ struct BookShelfListView: View {
     var body: some View {
         NavigationStack {
             ScrollViewReader { scrollProxy in
-                VStack {
+                VStack(spacing: 0) {
                     BookShelfTextFieldView(
                         inputQuery: $inputQuery,
                         searchQuery: $searchQuery,
