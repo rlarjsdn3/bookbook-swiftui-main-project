@@ -18,7 +18,7 @@ struct LeftBottomButtonStyle: ButtonStyle {
         configuration.label
             .font(.title3)
             .fontWeight(.bold)
-            .foregroundColor(theme == .black ? .white : .black)
+            .foregroundColor(.white)
             .frame(height: 55)
             .frame(maxWidth: .infinity)
             .background(theme)
