@@ -151,6 +151,7 @@ extension ActivityScrollView {
                 ActivityCellButton(activity)
             }
         }
+        .padding(.bottom, 20)
     }
     
     func dateText(_ monthlyActivity: MonthlyReadingActivity) -> some View {

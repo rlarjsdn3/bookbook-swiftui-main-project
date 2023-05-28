@@ -33,6 +33,8 @@ class RealmManager: ObservableObject {
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension RealmManager {
     
     /// 완독 목표 도서를 추가합니다.
@@ -122,6 +124,7 @@ extension RealmManager {
                     object.readingRecords.append(readingRecord)
                 }
             }
+        // 독서 데이터가 하나 이상 존재하지 않는 경우
         } else {
             readingRecord = ReadingRecord(
                 value: ["date": Date(),

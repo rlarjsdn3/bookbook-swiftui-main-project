@@ -209,9 +209,9 @@ extension BookShelfScrollView {
                     FavoriteBookCellButton(favoriteBook, viewType: .sheet)
                         .padding(.vertical, 10)
                 }
+                .padding(.leading, 10)
             }
         }
-        .padding(.horizontal, 3)
     }
     
     var noFavoriteBooksLabel: some View {
@@ -273,13 +273,14 @@ extension BookShelfScrollView {
     }
     
     func scrollCompleteBooks(_ completeBooks: [ReadingBook]) -> some View {
-        LazyVGrid(columns: columns) {
+        LazyVGrid(columns: columns, spacing: 15) {
             ForEach(completeBooks, id: \.self) { book in
                 ReadingBookCellButton(book, buttonType: .shelf)
                     .padding(.top, 10)
             }
         }
-        .padding(.bottom, 40)
+        .padding(.horizontal, 10)
+        .padding(.bottom, 30)
     }
     
     var noCompleteBooksLabel: some View {
