@@ -16,4 +16,8 @@ extension Color {
     static var darkGray: Color {
         return Color.gray.opacity(0.2)
     }
+    
+    static var background: Color {
+        return Color("Background")
+    }
 }
