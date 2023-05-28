@@ -10,7 +10,7 @@ import SwiftUI
 struct LeftBottomButtonStyle: ButtonStyle {
     let backgroundColor: Color
     
-    init(backgroundColor: Color = .lightGray) {
+    init(backgroundColor: Color = .darkGray) {
         self.backgroundColor = backgroundColor
     }
     
@@ -18,7 +18,7 @@ struct LeftBottomButtonStyle: ButtonStyle {
         configuration.label
             .font(.title3)
             .fontWeight(.bold)
-            .foregroundColor(backgroundColor == .lightGray ? .black : .white)
+            .foregroundColor(backgroundColor == .darkGray ? .black : .white)
             .frame(height: 55)
             .frame(maxWidth: .infinity)
             .background(backgroundColor)

@@ -53,7 +53,7 @@ extension ActivityCellButton {
         }
         .padding(.vertical, 10)
         .padding(.horizontal)
-        .background(Color("Background"))
+        .background(Color.lightGray)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .padding(.horizontal, 13)
     }
