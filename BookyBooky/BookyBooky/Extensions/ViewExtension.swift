@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import Combine
 
 extension View {
     /// 실행 중인 기기의 SafeArea 영역의 크기를 반환합니다.
@@ -18,6 +19,22 @@ extension View {
     // 실행 중인 기기의 가로 및 세로 길이를 반환합니다.
     var mainScreen: CGRect {
         UIScreen.main.bounds
+    }
+    
+    // 키보드의 표시 유무를 뷰에 알려줍니다. (코드 출처: https://url.kr/qnl2ws)
+    var keyboardPublisher: AnyPublisher<Bool, Never> {
+        Publishers
+            .Merge(
+                NotificationCenter
+                    .default
+                    .publisher(for: UIResponder.keyboardWillShowNotification)
+                    .map { _ in true },
+                NotificationCenter
+                    .default
+                    .publisher(for: UIResponder.keyboardWillHideNotification)
+                    .map { _ in false })
+//            .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
+            .eraseToAnyPublisher()
     }
     
     /// 키보드를 숨깁니다. (코드 출처: https://url.kr/zsx7m8)

@@ -17,6 +17,7 @@ struct ReadingBookHeaderView: View {
     
     @State private var isPresentingEditBookInformationSheet = false
     @State private var isPresentingDeleteConfirmationDialog = false
+    @State private var isPresentingAddSentenceSheet = false
     
     // MARK: - PROPERTIES
     
@@ -36,6 +37,9 @@ struct ReadingBookHeaderView: View {
         navigationBar
             .sheet(isPresented: $isPresentingEditBookInformationSheet) {
                 ReadingBookEditView(readingBook: readingBook)
+            }
+            .sheet(isPresented: $isPresentingAddSentenceSheet) {
+                AddSentenceView(readingBook)
             }
             .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
@@ -129,7 +133,7 @@ extension ReadingBookHeaderView {
     
     var addBookSentenceButton: some View {
         Button {
-            // ...
+            isPresentingAddSentenceSheet = true
         } label: {
             Label("문장 추가", systemImage: "bookmark.fill")
         }
