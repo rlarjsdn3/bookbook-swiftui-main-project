@@ -60,6 +60,7 @@
 		9E54AA0A29D7CACB00FE080C /* CoverShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E54AA0929D7CACB00FE080C /* CoverShape.swift */; };
 		9E54AA0C29D7CF6600FE080C /* TextShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E54AA0B29D7CF6600FE080C /* TextShape.swift */; };
 		9E54AA0E29D7D84100FE080C /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E54AA0D29D7D84100FE080C /* StringExtension.swift */; };
+		9E595E3A2A28BE8E00F46F74 /* SentenceCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E392A28BE8E00F46F74 /* SentenceCellButton.swift */; };
 		9E7A794329DA5B8F00A51856 /* SearchBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794229DA5B8F00A51856 /* SearchBookView.swift */; };
 		9E7A794529DA6AFF00A51856 /* SearchBookCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794429DA6AFF00A51856 /* SearchBookCoverView.swift */; };
 		9E7A794729DA854D00A51856 /* SearchBookTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794629DA854D00A51856 /* SearchBookTitleView.swift */; };
@@ -170,6 +171,7 @@
 		9E54AA0929D7CACB00FE080C /* CoverShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverShape.swift; sourceTree = "<group>"; };
 		9E54AA0B29D7CF6600FE080C /* TextShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextShape.swift; sourceTree = "<group>"; };
 		9E54AA0D29D7D84100FE080C /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		9E595E392A28BE8E00F46F74 /* SentenceCellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceCellButton.swift; sourceTree = "<group>"; };
 		9E7A794229DA5B8F00A51856 /* SearchBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookView.swift; sourceTree = "<group>"; };
 		9E7A794429DA6AFF00A51856 /* SearchBookCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookCoverView.swift; sourceTree = "<group>"; };
 		9E7A794629DA854D00A51856 /* SearchBookTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookTitleView.swift; sourceTree = "<group>"; };
@@ -631,6 +633,7 @@
 			isa = PBXGroup;
 			children = (
 				9EC71F902A1715690056C11C /* ReadingBookTabButton.swift */,
+				9E595E392A28BE8E00F46F74 /* SentenceCellButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 				9E7A794729DA854D00A51856 /* SearchBookTitleView.swift in Sources */,
 				9E0C0A7129D2866100F1F5F6 /* briefBookInfo.swift in Sources */,
 				9E24DD312A14F8B400366640 /* HomeScrollView.swift in Sources */,
+				9E595E3A2A28BE8E00F46F74 /* SentenceCellButton.swift in Sources */,
 				9EDC2FAF29E6DDEF004E792A /* SearchBookViewType.swift in Sources */,
 				9E061D6129FAA8890042E3B1 /* SettingsView.swift in Sources */,
 				9ED116BD29ED01610072BA41 /* AddReadingBookHeaderView.swift in Sources */,

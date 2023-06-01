@@ -16,7 +16,7 @@ struct ReadingBookCollectSentencesView: View {
     var body: some View {
         VStack {
             ForEach(readingBook.collectSentences, id: \.self) { s in
-                Text(s.sentence)
+                SentenceCellButton(s, bookTitle: readingBook.title)
             }
         }
     }
