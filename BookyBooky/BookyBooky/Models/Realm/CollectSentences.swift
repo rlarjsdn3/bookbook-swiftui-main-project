@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class CollectSentences: EmbeddedObject {
-    @Persisted var date: String         // 수집 날짜
-//    @Persisted var page: Int            // 쪽수
+    @Persisted var date: Date           // 수집 날짜
+    @Persisted var page: Int            // 쪽수
     @Persisted var sentence: String     // 수집된 문장
 }

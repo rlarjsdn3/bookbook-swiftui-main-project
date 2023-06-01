@@ -49,6 +49,11 @@ struct ReadingBookView: View {
             duration: 1.0) {
             realmManager.showReadingBookRenewalSuccessToastAlert(readingBook.category.accentColor)
         }
+        .toast(
+            isPresenting: $realmManager.isPresentingAddSentenceSuccessToastAlert,
+            duration: 1.0) {
+            realmManager.showAddSentenceSuccessToastAlert(readingBook.category.accentColor)
+        }
         .navigationBarBackButtonHidden()
     }
 }

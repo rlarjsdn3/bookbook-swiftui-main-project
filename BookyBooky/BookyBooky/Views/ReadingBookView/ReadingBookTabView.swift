@@ -51,7 +51,7 @@ extension ReadingBookTabView {
             case .analysis:
                 ReadingBookAnalysisView(readingBook: readingBook)
             case .collectSentences:
-                ReadingBookCollectSentencesView()
+                ReadingBookCollectSentencesView(readingBook: readingBook)
             }
         }
     }

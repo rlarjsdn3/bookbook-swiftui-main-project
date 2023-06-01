@@ -19,14 +19,16 @@ struct BookyBookyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .onAppear {
-                    for type in BookListTabType.allCases {
-                        aladinAPIManager.requestBookListAPI(of: type)
+            if let _ = realmManager.realm {
+                ContentView()
+                    .onAppear {
+                        for type in BookListTabType.allCases {
+                            aladinAPIManager.requestBookListAPI(of: type)
+                        }
                     }
-                }
-                .environmentObject(realmManager)
-                .environmentObject(aladinAPIManager)
+                    .environmentObject(realmManager)
+                    .environmentObject(aladinAPIManager)
+            }
         }
     }
 }

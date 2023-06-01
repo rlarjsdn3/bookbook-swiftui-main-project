@@ -68,7 +68,7 @@ struct AddSentenceView: View {
                     
                     Picker("페이지", selection: $inputPage) {
                         ForEach(1..<readingBook.itemPage) { page in
-                            Text("\(page)페이지")
+                            Text("\(page)페이지").tag(page)
                         }
                     }
                 }
@@ -85,6 +85,7 @@ struct AddSentenceView: View {
                     .buttonStyle(.leftBottomButtonStyle)
                     
                     Button {
+                        realmManager.addSentence(readingBook, sentence: inputText, page: inputPage)
                         dismiss()
                     } label: {
                         Text("추가하기")

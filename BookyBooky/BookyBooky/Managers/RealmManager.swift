@@ -13,23 +13,24 @@ class RealmManager: ObservableObject {
         
     // MARK: - PROPERTIES
     
-    lazy var realm = openLocalRealm()
+    lazy var realm: Realm! = openLocalRealm()
     
     @Published var isPresentingReadingBookAddSuccessToastAlert = false
     @Published var isPresentingReadingBookEditSuccessToastAlert = false
     @Published var isPresentingReadingBookRenewalSuccessToastAlert = false
     @Published var isPresentingFavoriteBookAddSuccessToastAlert = false
+    @Published var isPresentingAddSentenceSuccessToastAlert = false
     
     // MARK: - FUNCTIONS
     
-    func openLocalRealm() -> Realm {
+    func openLocalRealm() -> Realm? {
         let config = Realm.Configuration(
             schemaVersion: 0,
             deleteRealmIfMigrationNeeded: true
         )
         print("Realm DB 저장소의 위치: \(config.fileURL!)")
         
-        return try! Realm(configuration: config)
+        return try? Realm(configuration: config)
     }
 }
 
@@ -215,6 +216,27 @@ extension RealmManager {
 }
 
 extension RealmManager {
+    func addSentence(_ readingBook: ReadingBook, sentence: String, page: Int) {
+        guard let object = realm.objects(ReadingBook.self)
+            .findReadingBookFirst(with: readingBook.isbn13) else {
+            return
+        }
+        
+        let sentence = CollectSentences(
+            value: ["date": Date(),
+                    "page": page,
+                    "sentence": sentence] as [String: Any]
+        )
+        
+        try! realm.write {
+            object.collectSentences.append(sentence)
+        }
+        
+        isPresentingAddSentenceSuccessToastAlert = true
+    }
+}
+
+extension RealmManager {
     func showReadingBookAddSuccessToastAlert(_ color: Color) -> AlertToast {
         AlertToast(displayMode: .alert, type: .complete(color), title: "도서 추가 완료")
     }
@@ -231,4 +253,7 @@ extension RealmManager {
         AlertToast(displayMode: .alert, type: .complete(color), title: "찜하기 완료")
     }
     
+    func showAddSentenceSuccessToastAlert(_ color: Color) -> AlertToast {
+        AlertToast(displayMode: .alert, type: .complete(color), title: "문장 추가 완료")
+    }
 }

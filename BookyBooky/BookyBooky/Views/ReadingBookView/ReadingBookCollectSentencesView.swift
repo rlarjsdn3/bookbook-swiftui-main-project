@@ -6,22 +6,24 @@
 //
 
 import SwiftUI
+import RealmSwift
 import Shimmer
 
 struct ReadingBookCollectSentencesView: View {
+    
+    @ObservedRealmObject var readingBook: ReadingBook
+    
     var body: some View {
-        Text("UI 미완성")
-            .font(.title3)
-            .padding()
-            .background(.gray.opacity(0.3))
-            .cornerRadius(15)
-            .shimmering()
-            .padding(.vertical, 25)
+        VStack {
+            ForEach(readingBook.collectSentences, id: \.self) { s in
+                Text(s.sentence)
+            }
+        }
     }
 }
 
 struct ReadingBookCollectSentencesView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookCollectSentencesView()
+        ReadingBookCollectSentencesView(readingBook: ReadingBook.preview)
     }
 }
