@@ -14,11 +14,12 @@ struct ReadingBookCollectSentencesView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     
     var body: some View {
-        VStack {
-            ForEach(readingBook.collectSentences, id: \.self) { s in
-                SentenceCellButton(s, bookTitle: readingBook.title)
+        ScrollView {
+            ForEach(readingBook.collectSentences, id: \.self) { collect in
+                SentenceCellButton(readingBook, collectSentence: collect)
             }
         }
+        .padding(.bottom, 40)
     }
 }
 

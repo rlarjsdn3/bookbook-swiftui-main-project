@@ -77,6 +77,7 @@ extension ReadingBookTabView {
         .overlay(alignment: .bottom) {
             Divider()
         }
+        .padding(.bottom, 10)
     }
 }
 

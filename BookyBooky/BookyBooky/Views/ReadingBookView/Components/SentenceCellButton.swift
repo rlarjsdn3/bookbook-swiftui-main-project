@@ -14,18 +14,18 @@ enum SentenceCellButtonType {
 
 struct SentenceCellButton: View {
     
-    let collect: CollectSentences
-    let bookTitle: String
+    let readingBook: ReadingBook // 이거 한번 고민해보기
+    let collectSentence: CollectSentences
     
-    init(_ collect: CollectSentences, bookTitle: String) {
-        self.collect = collect
-        self.bookTitle = bookTitle
+    init(_ readingBook: ReadingBook, collectSentence: CollectSentences) {
+        self.readingBook = readingBook
+        self.collectSentence = collectSentence
     }
     
     var body: some View {
         VStack {
             HStack(alignment: .firstTextBaseline) {
-                Text(collect.sentence)
+                Text(collectSentence.sentence)
                     .fontWeight(.bold)
                     .lineLimit(3)
                     .minimumScaleFactor(0.8)
@@ -39,20 +39,20 @@ struct SentenceCellButton: View {
             .padding([.leading, .top, .trailing])
             
             HStack {
-                Text(collect.date.standardDateFormat)
+                Text(collectSentence.date.standardDateFormat)
                     .font(.caption)
                     .foregroundColor(.secondary)
                 
                 Spacer()
                 
-                Text("\(collect.page)페이지")
+                Text("\(collectSentence.page)페이지")
                     .padding(.vertical, 3.2)
                     .padding(.horizontal, 15)
                     .font(.caption)
                     .foregroundColor(Color.white)
-                    .background(Color.black)
+                    .background(readingBook.category.accentColor)
                     .clipShape(Capsule())
-                    .padding(.trailing, 15)
+                    .padding(.trailing)
                 
                 Menu {
                     Button {
@@ -70,7 +70,7 @@ struct SentenceCellButton: View {
                 } label: {
                     Image(systemName: "ellipsis.circle.fill")
                         .font(.title2)
-                        .foregroundColor(Color.black)
+                        .foregroundColor(readingBook.category.accentColor)
                 }
             }
             .padding(.horizontal)
@@ -83,6 +83,9 @@ struct SentenceCellButton: View {
 
 struct SentenceCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        SentenceCellButton(CollectSentences.preview, bookTitle: "스티브 잡스")
+        SentenceCellButton(
+            ReadingBook.preview,
+            collectSentence: CollectSentences.preview
+        )
     }
 }
