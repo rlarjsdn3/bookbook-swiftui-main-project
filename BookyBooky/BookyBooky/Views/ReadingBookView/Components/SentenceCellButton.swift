@@ -24,19 +24,23 @@ struct SentenceCellButton: View {
     
     var body: some View {
         VStack {
-            HStack(alignment: .firstTextBaseline) {
-                Text(collectSentence.sentence)
-                    .fontWeight(.bold)
-                    .lineLimit(3)
-                    .minimumScaleFactor(0.8)
-                    .truncationMode(.middle)
-                
-                Spacer()
-                
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.secondary)
+            NavigationLink {
+                Text("dw")
+            } label: {
+                HStack(alignment: .firstTextBaseline) {
+                    Text(collectSentence.sentence)
+                        .fontWeight(.bold)
+                        .lineLimit(5)
+                        .truncationMode(.middle)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.secondary)
+                }
+                .padding([.leading, .top, .trailing])
             }
-            .padding([.leading, .top, .trailing])
+            .buttonStyle(.plain)
             
             HStack {
                 Text(collectSentence.date.standardDateFormat)
