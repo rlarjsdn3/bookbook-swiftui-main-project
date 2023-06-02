@@ -17,8 +17,7 @@ struct ReadingBookCollectSentencesView: View {
         ScrollView {
             ForEach(readingBook.collectSentences, id: \.self) { collect in
                 SentenceCellButton(
-                    readingBook.title,
-                    accentColor: readingBook.category.accentColor,
+                    readingBook,
                     collectSentence: collect
                 )
             }

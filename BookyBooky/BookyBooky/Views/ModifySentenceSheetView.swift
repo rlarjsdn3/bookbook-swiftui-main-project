@@ -1,14 +1,16 @@
 //
-//  AddSentenceView.swift
+//  ModifySentenceSheetView.swift
 //  BookyBooky
 //
-//  Created by 김건우 on 2023/06/01.
+//  Created by 김건우 on 2023/06/02.
 //
 
 import SwiftUI
 import RealmSwift
 
-struct AddSentenceSheetView: View {
+// AddSentenceSheetView와 통합하는 방안 고민할 필요가 있음
+
+struct ModifySentenceSheetView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -29,11 +31,13 @@ struct AddSentenceSheetView: View {
     let characterLimit = 300
     
     let readingBook: ReadingBook
+    let collectSentence: CollectSentences
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook) {
+    init(_ readingBook: ReadingBook, collectSentence: CollectSentences) {
         self.readingBook = readingBook
+        self.collectSentence = collectSentence
     }
     
     // MARK: - BODY
@@ -94,11 +98,10 @@ struct AddSentenceSheetView: View {
                         if inputPage == 1 {
                             isPresentingAddConrimationDialog = true
                         } else {
-                            realmManager.addSentence(readingBook, sentence: inputText, page: inputPage)
-                            dismiss()
+                            modifySentence()
                         }
                     } label: {
-                        Text("추가하기")
+                        Text("수정하기")
                     }
                     .disabled(inputText.isEmpty)
                     .buttonStyle(RightBottomButtonStyle(backgroundColor: readingBook.category.accentColor))
@@ -110,29 +113,39 @@ struct AddSentenceSheetView: View {
                 }
                 .padding(.bottom, isPresentingKeyboard ? 20 : 0)
             }
-            .navigationTitle("수집 문장 추가하기")
+            .navigationTitle("수집 문장 수정하기")
             .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
+            inputText = collectSentence.sentence
+            inputPage = collectSentence.page
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 focusedEditor = true
             }
         }
-        .confirmationDialog("문장이 위치한 페이지가 맞나요? 설정대로 추가하시겠습니까?", isPresented: $isPresentingAddConrimationDialog, titleVisibility: .visible) {
-            Button("추가") {
-                realmManager.addSentence(readingBook, sentence: inputText, page: inputPage)
-                dismiss()
+        .confirmationDialog("문장이 위치한 페이지가 맞나요? 설정대로 수정하시겠습니까?", isPresented: $isPresentingAddConrimationDialog, titleVisibility: .visible) {
+            Button("수정") {
+                modifySentence()
             }
         }
         .presentationCornerRadius(30)
+    }
+    
+    func modifySentence() {
+        realmManager.modifySentence(readingBook, id: collectSentence._id, sentence: inputText, page: inputPage)
+        dismiss()
     }
 }
 
 // MARK: - PREVIEW
 
-struct AddSentenceView_Previews: PreviewProvider {
+struct ModifySentenceView_Previews: PreviewProvider {
     static var previews: some View {
-        AddSentenceSheetView(ReadingBook.preview)
-            .environmentObject(RealmManager())
+        ModifySentenceSheetView(
+            ReadingBook.preview,
+            collectSentence: CollectSentences.preview
+        )
+        .environmentObject(RealmManager())
     }
 }

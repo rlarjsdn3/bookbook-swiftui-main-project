@@ -14,13 +14,15 @@ enum SentenceCellButtonType {
 
 struct SentenceCellButton: View {
     
-    let bookTitle: String
-    let accentColor: Color
+    @EnvironmentObject var realmManager: RealmManager
+    
+    @State private var isPresentingModifySentenceSheetView = false
+    
+    let readingBook: ReadingBook
     let collectSentence: CollectSentences
     
-    init(_ bookTitle: String, accentColor: Color, collectSentence: CollectSentences) {
-        self.bookTitle = bookTitle
-        self.accentColor = accentColor
+    init(_ readingBook: ReadingBook, collectSentence: CollectSentences) {
+        self.readingBook = readingBook
         self.collectSentence = collectSentence
     }
     
@@ -56,31 +58,33 @@ struct SentenceCellButton: View {
                     .padding(.horizontal, 15)
                     .font(.caption)
                     .foregroundColor(Color.white)
-                    .background(accentColor)
+                    .background(readingBook.category.accentColor)
                     .clipShape(Capsule())
                     .padding(.trailing)
                 
                 Menu {
                     Button {
-                        
+                        isPresentingModifySentenceSheetView = true
                     } label: {
                         Label("수정", systemImage: "square.and.pencil")
                     }
                     
                     Button(role: .destructive) {
-                        
+                        realmManager.deleteSentence(readingBook, id: collectSentence._id)
                     } label: {
                         Label("삭제", systemImage: "trash")
-                            .symbolVariant(.fill)
                     }
                 } label: {
                     Image(systemName: "ellipsis.circle.fill")
                         .font(.title2)
-                        .foregroundColor(accentColor)
+                        .foregroundColor(readingBook.category.accentColor)
                 }
             }
             .padding(.horizontal)
             .padding(.bottom, 10)
+        }
+        .sheet(isPresented: $isPresentingModifySentenceSheetView) {
+            ModifySentenceSheetView(readingBook, collectSentence: collectSentence)
         }
         .frame(maxWidth: .infinity)
         .background(Color.background)
@@ -90,9 +94,9 @@ struct SentenceCellButton: View {
 struct SentenceCellButton_Previews: PreviewProvider {
     static var previews: some View {
         SentenceCellButton(
-            "스티브 잡스",
-            accentColor: Color.blue,
+            ReadingBook.preview,
             collectSentence: CollectSentences.preview
         )
+        .environmentObject(RealmManager())
     }
 }

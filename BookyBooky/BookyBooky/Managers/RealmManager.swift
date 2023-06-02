@@ -234,6 +234,40 @@ extension RealmManager {
         
         isPresentingAddSentenceSuccessToastAlert = true
     }
+    
+    func modifySentence(_ readingBook: ReadingBook, id: ObjectId, sentence: String, page: Int) {
+        guard let object = realm.objects(ReadingBook.self)
+            .findReadingBookFirst(with: readingBook.isbn13) else {
+            return
+        }
+        
+        guard let index = readingBook.collectSentences
+            .firstIndex(where: { $0._id == id }) else {
+            return
+        }
+        
+        try! realm.write {
+            object.collectSentences[index].date = Date()
+            object.collectSentences[index].sentence = sentence
+            object.collectSentences[index].page = page
+        }
+    }
+    
+    func deleteSentence(_ readingBook: ReadingBook, id: ObjectId) {
+        guard let object = realm.objects(ReadingBook.self)
+            .findReadingBookFirst(with: readingBook.isbn13) else {
+            return
+        }
+        
+        guard let index = readingBook.collectSentences
+            .firstIndex(where: { $0._id == id }) else {
+            return
+        }
+        
+        try! realm.write {
+            object.collectSentences.remove(at: index)
+        }
+    }
 }
 
 extension RealmManager {
