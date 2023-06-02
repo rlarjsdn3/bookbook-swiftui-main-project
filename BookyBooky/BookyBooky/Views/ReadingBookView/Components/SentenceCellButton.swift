@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 enum SentenceCellButtonType {
     case home
@@ -17,8 +18,9 @@ struct SentenceCellButton: View {
     @EnvironmentObject var realmManager: RealmManager
     
     @State private var isPresentingModifySentenceSheetView = false
+    @State private var isPresentingDeleteConfirmationDialog = false
     
-    let readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     let collectSentence: CollectSentences
     
     init(_ readingBook: ReadingBook, collectSentence: CollectSentences) {
@@ -29,7 +31,7 @@ struct SentenceCellButton: View {
     var body: some View {
         VStack {
             NavigationLink {
-                Text("dw")
+                CollectSentenceView(bookID: readingBook._id, collectID: collectSentence._id)
             } label: {
                 HStack(alignment: .firstTextBaseline) {
                     Text(collectSentence.sentence)
@@ -70,7 +72,7 @@ struct SentenceCellButton: View {
                     }
                     
                     Button(role: .destructive) {
-                        realmManager.deleteSentence(readingBook, id: collectSentence._id)
+                        isPresentingDeleteConfirmationDialog = true
                     } label: {
                         Label("삭제", systemImage: "trash")
                     }
@@ -85,6 +87,11 @@ struct SentenceCellButton: View {
         }
         .sheet(isPresented: $isPresentingModifySentenceSheetView) {
             ModifySentenceSheetView(readingBook, collectSentence: collectSentence)
+        }
+        .confirmationDialog("해당 문장을 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
+            Button("삭제", role: .destructive) {
+                realmManager.deleteSentence(readingBook, id: collectSentence._id)
+            }
         }
         .frame(maxWidth: .infinity)
         .background(Color.background)

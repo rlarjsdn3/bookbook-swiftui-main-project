@@ -36,7 +36,7 @@ struct ActivityCellButton: View {
 extension ActivityCellButton {
     var navigationCellButton: some View {
         NavigationLink {
-            if let readingBook = readingBooks.findReadingBookFirst(with: activity.isbn13) {
+            if let readingBook = readingBooks.findReadingBookFirst(isbn13: activity.isbn13) {
                 ReadingBookView(readingBook)
             }
         } label: {

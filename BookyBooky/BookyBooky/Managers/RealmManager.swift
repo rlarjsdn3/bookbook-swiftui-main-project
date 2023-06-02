@@ -52,7 +52,7 @@ extension RealmManager {
     /// - Parameter object: 삭제할 완독 목표 도서 객체
     func deleteReadingBook(_ object: ReadingBook) {
         guard let object = realm.objects(ReadingBook.self)
-            .findReadingBookFirst(with: object.isbn13) else {
+            .findReadingBookFirst(isbn13: object.isbn13) else {
             return
         }
         
@@ -69,7 +69,7 @@ extension RealmManager {
     ///   - totalPagesRead: 읽은 총 페이지 수
     func addReadingBookRecord(_ readingBook: ReadingBook, totalPagesRead: Int) {
         guard let object = realm.objects(ReadingBook.self)
-            .findReadingBookFirst(with: readingBook.isbn13) else {
+            .findReadingBookFirst(isbn13: readingBook.isbn13) else {
             return
         }
         
@@ -218,7 +218,7 @@ extension RealmManager {
 extension RealmManager {
     func addSentence(_ readingBook: ReadingBook, sentence: String, page: Int) {
         guard let object = realm.objects(ReadingBook.self)
-            .findReadingBookFirst(with: readingBook.isbn13) else {
+            .findReadingBookFirst(isbn13: readingBook.isbn13) else {
             return
         }
         
@@ -237,7 +237,7 @@ extension RealmManager {
     
     func modifySentence(_ readingBook: ReadingBook, id: ObjectId, sentence: String, page: Int) {
         guard let object = realm.objects(ReadingBook.self)
-            .findReadingBookFirst(with: readingBook.isbn13) else {
+            .findReadingBookFirst(isbn13: readingBook.isbn13) else {
             return
         }
         
@@ -255,7 +255,7 @@ extension RealmManager {
     
     func deleteSentence(_ readingBook: ReadingBook, id: ObjectId) {
         guard let object = realm.objects(ReadingBook.self)
-            .findReadingBookFirst(with: readingBook.isbn13) else {
+            .findReadingBookFirst(isbn13: readingBook.isbn13) else {
             return
         }
         

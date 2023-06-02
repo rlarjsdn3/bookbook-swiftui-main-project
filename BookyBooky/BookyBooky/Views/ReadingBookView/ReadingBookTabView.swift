@@ -17,7 +17,7 @@ struct ReadingBookTabView: View {
     
     // MARK: - PROPERTIES
     
-    let readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: ReadingBook
     @Binding var scrollYOffset: Double
     let namespace: Namespace.ID
     

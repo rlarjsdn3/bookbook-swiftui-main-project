@@ -34,27 +34,29 @@ struct ReadingBookView: View {
     // MARK: - BODY
     
     var body: some View {
-        VStack(spacing: 0) {
-            ReadingBookHeaderView(readingBook, scrollYOffset: $scrollYOffset)
-            
-            ReadingBookScrollView(readingBook, scrollYOffset: $scrollYOffset)
+        NavigationStack {
+            VStack(spacing: 0) {
+                ReadingBookHeaderView(readingBook, scrollYOffset: $scrollYOffset)
+                
+                ReadingBookScrollView(readingBook, scrollYOffset: $scrollYOffset)
+            }
+            .toast(
+                isPresenting: $realmManager.isPresentingReadingBookEditSuccessToastAlert,
+                duration: 1.0) {
+                realmManager.showReadingBookEditSuccessToastAlert(readingBook.category.accentColor)
+            }
+            .toast(
+                isPresenting: $realmManager.isPresentingReadingBookRenewalSuccessToastAlert,
+                duration: 1.0) {
+                realmManager.showReadingBookRenewalSuccessToastAlert(readingBook.category.accentColor)
+            }
+            .toast(
+                isPresenting: $realmManager.isPresentingAddSentenceSuccessToastAlert,
+                duration: 1.0) {
+                realmManager.showAddSentenceSuccessToastAlert(readingBook.category.accentColor)
+            }
+            .navigationBarBackButtonHidden()
         }
-        .toast(
-            isPresenting: $realmManager.isPresentingReadingBookEditSuccessToastAlert,
-            duration: 1.0) {
-            realmManager.showReadingBookEditSuccessToastAlert(readingBook.category.accentColor)
-        }
-        .toast(
-            isPresenting: $realmManager.isPresentingReadingBookRenewalSuccessToastAlert,
-            duration: 1.0) {
-            realmManager.showReadingBookRenewalSuccessToastAlert(readingBook.category.accentColor)
-        }
-        .toast(
-            isPresenting: $realmManager.isPresentingAddSentenceSuccessToastAlert,
-            duration: 1.0) {
-            realmManager.showAddSentenceSuccessToastAlert(readingBook.category.accentColor)
-        }
-        .navigationBarBackButtonHidden()
     }
 }
 
