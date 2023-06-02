@@ -70,7 +70,7 @@
 		9E7A794D29DA998F00A51856 /* SalesPointDescSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794C29DA998F00A51856 /* SalesPointDescSheetView.swift */; };
 		9E7A795029DAABA000A51856 /* SearchBookButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794F29DAABA000A51856 /* SearchBookButtonsView.swift */; };
 		9E7BFC7929F0F24F00D72648 /* AnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BFC7829F0F24F00D72648 /* AnalysisView.swift */; };
-		9E7D40892A284285007368CF /* AddSentenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D40882A284285007368CF /* AddSentenceView.swift */; };
+		9E7D40892A284285007368CF /* AddSentenceSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D40882A284285007368CF /* AddSentenceSheetView.swift */; };
 		9E852F1729E1283C00A78EC2 /* BookShelfHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E852F1629E1283C00A78EC2 /* BookShelfHeaderView.swift */; };
 		9EA1983D2A01F18300D385CD /* ReadingBookInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1983A2A01F18300D385CD /* ReadingBookInfoView.swift */; };
 		9EA1983E2A01F18300D385CD /* ReadingBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1983B2A01F18300D385CD /* ReadingBookView.swift */; };
@@ -182,7 +182,7 @@
 		9E7A794C29DA998F00A51856 /* SalesPointDescSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesPointDescSheetView.swift; sourceTree = "<group>"; };
 		9E7A794F29DAABA000A51856 /* SearchBookButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookButtonsView.swift; sourceTree = "<group>"; };
 		9E7BFC7829F0F24F00D72648 /* AnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisView.swift; sourceTree = "<group>"; };
-		9E7D40882A284285007368CF /* AddSentenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSentenceView.swift; sourceTree = "<group>"; };
+		9E7D40882A284285007368CF /* AddSentenceSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSentenceSheetView.swift; sourceTree = "<group>"; };
 		9E852F1629E1283C00A78EC2 /* BookShelfHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfHeaderView.swift; sourceTree = "<group>"; };
 		9EA1983A2A01F18300D385CD /* ReadingBookInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingBookInfoView.swift; sourceTree = "<group>"; };
 		9EA1983B2A01F18300D385CD /* ReadingBookView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingBookView.swift; sourceTree = "<group>"; };
@@ -473,12 +473,12 @@
 			path = AnalysisView;
 			sourceTree = "<group>";
 		};
-		9E7D40872A28426D007368CF /* AddSentenceView */ = {
+		9E7D40872A28426D007368CF /* AddSentenceSheetView */ = {
 			isa = PBXGroup;
 			children = (
-				9E7D40882A284285007368CF /* AddSentenceView.swift */,
+				9E7D40882A284285007368CF /* AddSentenceSheetView.swift */,
 			);
-			name = AddSentenceView;
+			name = AddSentenceSheetView;
 			sourceTree = "<group>";
 		};
 		9EA198392A01F18300D385CD /* ReadingBookView */ = {
@@ -531,7 +531,7 @@
 				9E0C0A6329D1DB4B00F1F5F6 /* HomeView */,
 				9E0EF6F42A0DF74100747847 /* ActivityView  */,
 				9EA198392A01F18300D385CD /* ReadingBookView */,
-				9E7D40872A28426D007368CF /* AddSentenceView */,
+				9E7D40872A28426D007368CF /* AddSentenceSheetView */,
 				9E595E3B2A28C7A100F46F74 /* CollectSentenceView */,
 				9E0C0A6A29D284ED00F1F5F6 /* SearchView */,
 				9E54A9FD29D66BD100FE080C /* SearchSheetView */,
@@ -743,7 +743,7 @@
 				9E459B0B2A19DA7300DB248F /* LeftBottomButtonStyle.swift in Sources */,
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
 				9E7A795029DAABA000A51856 /* SearchBookButtonsView.swift in Sources */,
-				9E7D40892A284285007368CF /* AddSentenceView.swift in Sources */,
+				9E7D40892A284285007368CF /* AddSentenceSheetView.swift in Sources */,
 				9E7A794D29DA998F00A51856 /* SalesPointDescSheetView.swift in Sources */,
 				9EE01FEA2A01F2D900584F39 /* ReadingBookScrollView.swift in Sources */,
 				9E0434BC29E53CD8009A2161 /* CollectSentences.swift in Sources */,

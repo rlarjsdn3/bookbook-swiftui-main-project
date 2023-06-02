@@ -16,7 +16,11 @@ struct ReadingBookCollectSentencesView: View {
     var body: some View {
         ScrollView {
             ForEach(readingBook.collectSentences, id: \.self) { collect in
-                SentenceCellButton(readingBook, collectSentence: collect)
+                SentenceCellButton(
+                    readingBook.title,
+                    accentColor: readingBook.category.accentColor,
+                    collectSentence: collect
+                )
             }
         }
         .padding(.bottom, 40)

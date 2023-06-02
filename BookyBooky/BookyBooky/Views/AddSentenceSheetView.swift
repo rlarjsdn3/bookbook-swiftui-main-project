@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct AddSentenceView: View {
+struct AddSentenceSheetView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -17,6 +17,7 @@ struct AddSentenceView: View {
     @EnvironmentObject var realmManager: RealmManager
     
     @State private var isPresentingKeyboard = true
+    @State private var isPresentingAddConrimationDialog = false
     
     @State private var inputText: String = ""
     @State private var inputPage: Int = 1
@@ -54,6 +55,11 @@ struct AddSentenceView: View {
                                 .padding(18)
                         }
                     }
+                    .onChange(of: inputText) { newText in
+                        if newText.count > 300 {
+                            inputText = String(inputText.prefix(300))
+                        }
+                    }
                     .padding(.horizontal)
                     .focused($focusedEditor)
                 
@@ -85,11 +91,16 @@ struct AddSentenceView: View {
                     .buttonStyle(.leftBottomButtonStyle)
                     
                     Button {
-                        realmManager.addSentence(readingBook, sentence: inputText, page: inputPage)
-                        dismiss()
+                        if inputPage == 1 {
+                            isPresentingAddConrimationDialog = true
+                        } else {
+                            realmManager.addSentence(readingBook, sentence: inputText, page: inputPage)
+                            dismiss()
+                        }
                     } label: {
                         Text("추가하기")
                     }
+                    .disabled(inputText.isEmpty)
                     .buttonStyle(RightBottomButtonStyle(backgroundColor: readingBook.category.accentColor))
                 }
                 .onReceive(keyboardPublisher) { value in
@@ -102,12 +113,18 @@ struct AddSentenceView: View {
             .navigationTitle("수집 문장 추가하기")
             .navigationBarTitleDisplayMode(.inline)
         }
-        .presentationCornerRadius(30)
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 focusedEditor = true
             }
         }
+        .confirmationDialog("문장이 위치한 페이지가 맞나요? 설정대로 추가하시겠습니까?", isPresented: $isPresentingAddConrimationDialog, titleVisibility: .visible) {
+            Button("추가") {
+                realmManager.addSentence(readingBook, sentence: inputText, page: inputPage)
+                dismiss()
+            }
+        }
+        .presentationCornerRadius(30)
     }
 }
 
@@ -115,7 +132,7 @@ struct AddSentenceView: View {
 
 struct AddSentenceView_Previews: PreviewProvider {
     static var previews: some View {
-        AddSentenceView(ReadingBook.preview)
+        AddSentenceSheetView(ReadingBook.preview)
             .environmentObject(RealmManager())
     }
 }

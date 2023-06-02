@@ -14,11 +14,13 @@ enum SentenceCellButtonType {
 
 struct SentenceCellButton: View {
     
-    let readingBook: ReadingBook // 이거 한번 고민해보기
+    let bookTitle: String
+    let accentColor: Color
     let collectSentence: CollectSentences
     
-    init(_ readingBook: ReadingBook, collectSentence: CollectSentences) {
-        self.readingBook = readingBook
+    init(_ bookTitle: String, accentColor: Color, collectSentence: CollectSentences) {
+        self.bookTitle = bookTitle
+        self.accentColor = accentColor
         self.collectSentence = collectSentence
     }
     
@@ -54,7 +56,7 @@ struct SentenceCellButton: View {
                     .padding(.horizontal, 15)
                     .font(.caption)
                     .foregroundColor(Color.white)
-                    .background(readingBook.category.accentColor)
+                    .background(accentColor)
                     .clipShape(Capsule())
                     .padding(.trailing)
                 
@@ -74,7 +76,7 @@ struct SentenceCellButton: View {
                 } label: {
                     Image(systemName: "ellipsis.circle.fill")
                         .font(.title2)
-                        .foregroundColor(readingBook.category.accentColor)
+                        .foregroundColor(accentColor)
                 }
             }
             .padding(.horizontal)
@@ -88,7 +90,8 @@ struct SentenceCellButton: View {
 struct SentenceCellButton_Previews: PreviewProvider {
     static var previews: some View {
         SentenceCellButton(
-            ReadingBook.preview,
+            "스티브 잡스",
+            accentColor: Color.blue,
             collectSentence: CollectSentences.preview
         )
     }
