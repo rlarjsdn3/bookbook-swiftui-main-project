@@ -14,12 +14,9 @@ struct ReadingBookView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    
     @EnvironmentObject var realmManager: RealmManager
     
     @State private var scrollYOffset = 0.0
-    
-    @ObservedResults(ReadingBook.self) var readingBooks
     
     // MARK: - PROPERTIES
     

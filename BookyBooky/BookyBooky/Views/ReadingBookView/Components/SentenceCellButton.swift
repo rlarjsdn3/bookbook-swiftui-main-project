@@ -20,7 +20,7 @@ struct SentenceCellButton: View {
     @State private var isPresentingModifySentenceSheetView = false
     @State private var isPresentingDeleteConfirmationDialog = false
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    let readingBook: ReadingBook
     let collectSentence: CollectSentences
     
     init(_ readingBook: ReadingBook, collectSentence: CollectSentences) {
