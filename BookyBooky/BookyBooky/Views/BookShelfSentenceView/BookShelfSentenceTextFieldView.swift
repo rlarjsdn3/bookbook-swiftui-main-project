@@ -6,6 +6,12 @@
 //
 
 import SwiftUI
+import RealmSwift
+
+enum SentenceSortCriteriaType: String, CaseIterable {
+    case titleAscending = "제목 오름차순"
+    case titleDescending = "제목 내림차순"
+}
 
 struct BookShelfSentenceTextFieldView: View {
     
@@ -13,24 +19,28 @@ struct BookShelfSentenceTextFieldView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State private var isPresentingBookShelfSentenceFilterSheetView = false
+    
     @FocusState var focusedField: Bool
     
     // MARK: - PROPERTIES
     
     @Binding var inputQuery: String
     @Binding var searchQuery: String
-    @Binding var selectedSortType: BookSortCriteriaType
+    @Binding var selectedSortType: SentenceSortCriteriaType
+    @Binding var selectedFilter: [String]
     @Binding var isPresentingShowAllButton: Bool
     let scrollProxy: ScrollViewProxy
     
     // MARK: - INTALIZER
     
     init(inputQuery: Binding<String>, searchQuery: Binding<String>,
-         selectedSortType: Binding<BookSortCriteriaType>, isPresentingShowAllButton: Binding<Bool>,
-         scrollProxy: ScrollViewProxy) {
+         selectedSortType: Binding<SentenceSortCriteriaType>, selectedFilter: Binding<[String]>,
+         isPresentingShowAllButton: Binding<Bool>, scrollProxy: ScrollViewProxy) {
         self._inputQuery = inputQuery
         self._searchQuery = searchQuery
         self._selectedSortType = selectedSortType
+        self._selectedFilter = selectedFilter
         self._isPresentingShowAllButton = isPresentingShowAllButton
         self.scrollProxy = scrollProxy
     }
@@ -38,7 +48,10 @@ struct BookShelfSentenceTextFieldView: View {
     // MARK: - BODY
     
     var body: some View {
-            bookShelfTextField
+        bookShelfTextField
+            .sheet(isPresented: $isPresentingBookShelfSentenceFilterSheetView) {
+                BookShelfSentenceFilterSheetView(selectedFilterBook: $selectedFilter)
+            }
     }
 }
 
@@ -61,6 +74,14 @@ extension BookShelfSentenceTextFieldView {
         Menu {
             Section {
                 sortButtons
+                
+                Divider()
+                
+                Button {
+                    isPresentingBookShelfSentenceFilterSheetView = true
+                } label: {
+                    Label("도서 필터링", systemImage: "line.3.horizontal.decrease.circle")
+                }
             } header: {
                 Text("도서 정렬")
             }
@@ -70,7 +91,7 @@ extension BookShelfSentenceTextFieldView {
     }
     
     var sortButtons: some View {
-        ForEach(BookSortCriteriaType.allCases, id: \.self) { sort in
+        ForEach(SentenceSortCriteriaType.allCases, id: \.self) { sort in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {
@@ -134,7 +155,7 @@ extension BookShelfSentenceTextFieldView {
     }
     
     var searchInputField: some View {
-        TextField("제목 / 문장 검색", text: $inputQuery)
+        TextField("제목 / 저자 검색", text: $inputQuery)
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
@@ -146,10 +167,10 @@ extension BookShelfSentenceTextFieldView {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
                             searchQuery = inputQuery
-                            if !inputQuery.isEmpty {
-                                isPresentingShowAllButton = true
-                            } else {
+                            if inputQuery.isEmpty {
                                 isPresentingShowAllButton = false
+                            } else {
+                                isPresentingShowAllButton = true
                             }
                         }
                         HapticManager.shared.impact(.rigid)
@@ -205,7 +226,8 @@ struct BookShelfSentenceTextFieldView_Previews: PreviewProvider {
             BookShelfSentenceTextFieldView(
                 inputQuery: .constant(""),
                 searchQuery: .constant(""),
-                selectedSortType: .constant(.latestOrder),
+                selectedSortType: .constant(.titleAscending),
+                selectedFilter: .constant([""]),
                 isPresentingShowAllButton: .constant(false),
                 scrollProxy: scrollProxy
             )

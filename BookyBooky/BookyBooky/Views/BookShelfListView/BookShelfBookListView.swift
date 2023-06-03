@@ -19,9 +19,9 @@ struct BookShelfListView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedSort = BookSortCriteriaType.latestOrder
     @State private var inputQuery = ""
     @State private var searchQuery = ""
+    @State private var selectedSort = BookSortCriteriaType.latestOrder
     
     
     @State var isPresentingShowAllButton = false

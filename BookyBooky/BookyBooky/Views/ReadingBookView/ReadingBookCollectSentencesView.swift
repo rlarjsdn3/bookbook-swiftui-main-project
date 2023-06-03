@@ -18,7 +18,7 @@ struct ReadingBookCollectSentencesView: View {
             noCollectSentenceLabel
         } else {
             ScrollView {
-                ForEach(readingBook.collectSentences, id: \.self) { collect in
+                ForEach(readingBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
                     SentenceCellButton(
                         readingBook,
                         collectSentence: collect

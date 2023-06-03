@@ -8,6 +8,17 @@
 import Foundation
 
 extension String {
+    func contains(contentsOf elements: [String]) -> Bool {
+        for element in elements {
+            if self == element {
+                return true
+            }
+        }
+        return false
+    }
+}
+
+extension String {
     /// 문자열로 되어있는 날짜 데이터를 Date 타입으로 형 변환한 결과값을 반환하는 함수입니다. 형 변환에 실패하면 오늘 날짜를 반환합니다.
     func toDate(_ format: String = "yyyy-MM-dd") -> Date {
         let dateFormatter = DateFormatter()

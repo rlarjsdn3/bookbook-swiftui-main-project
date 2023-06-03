@@ -13,16 +13,52 @@ struct BookShelfSentenceListView: View {
     @ObservedResults(ReadingBook.self) var readingBooks
     
     @Binding var searchQuery: String
-    @Binding var selectedSortType: BookSortCriteriaType
+    @Binding var selectedSortType: SentenceSortCriteriaType
+    @Binding var selectedFilter: [String]
+    
+    
+    var sortedCollectSentence: [ReadingBook] {
+        var sorted: [ReadingBook] = []
+        
+        switch selectedSortType {
+        case .titleAscending:
+            sorted = readingBooks.sorted { $0.title < $1.title }
+        case .titleDescending:
+            sorted = readingBooks.sorted { $0.title > $1.title }
+        }
+        
+        if selectedFilter.isEmpty {
+            return sorted
+        } else {
+            return sorted.filter({ $0.title.contains(contentsOf: selectedFilter) })
+        }
+        // 도서 필터링 코드 추가 (전체 혹은 선택한 도서들)
+    }
+    
+    var filteredCollectSentence: [ReadingBook] {
+        var filtered: [ReadingBook]
+        
+        if searchQuery.isEmpty {
+            return sortedCollectSentence
+        } else {
+            filtered = sortedCollectSentence.filter({
+                $0.title.contains(searchQuery) || $0.author.contains(searchQuery)
+            })
+            return filtered
+        }
+    }
+    
     
     var body: some View {
         ScrollView {
-            LazyVStack(pinnedViews: [.sectionHeaders]) {
-                ForEach(readingBooks) { readingBook in
+            LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                ForEach(filteredCollectSentence) { readingBook in
                     if !readingBook.collectSentences.isEmpty {
                         Section {
-                            ForEach(readingBook.collectSentences, id: \.self) { collect in
-                                SentenceCellButton(readingBook, collectSentence: collect)
+                            VStack {
+                                ForEach(readingBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
+                                    SentenceCellButton(readingBook, collectSentence: collect)
+                                }
                             }
                         } header: {
                             Text(readingBook.title)
@@ -30,8 +66,7 @@ struct BookShelfSentenceListView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .lineLimit(1)
                                 .truncationMode(.middle)
-                                .padding([.horizontal, .top])
-                                .padding(.bottom, 7)
+                                .padding([.horizontal, .top, .bottom])
                                 .background(Color.white)
                         }
                     }
@@ -45,7 +80,8 @@ struct BookShelfSentenceListView_Previews: PreviewProvider {
     static var previews: some View {
         BookShelfSentenceListView(
             searchQuery: .constant(""),
-            selectedSortType: .constant(.titleOrder)
+            selectedSortType: .constant(.titleAscending),
+            selectedFilter: .constant([""])
         )
     }
 }

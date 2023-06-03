@@ -11,9 +11,10 @@ struct BookShelfSentenceView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedSort = BookSortCriteriaType.latestOrder
     @State private var inputQuery = ""
     @State private var searchQuery = ""
+    @State private var selectedSort = SentenceSortCriteriaType.titleAscending
+    @State private var selectedFilter: [String] = []
     
     @State var isPresentingShowAllButton = false
     
@@ -29,15 +30,20 @@ struct BookShelfSentenceView: View {
                         inputQuery: $inputQuery,
                         searchQuery: $searchQuery,
                         selectedSortType: $selectedSort,
+                        selectedFilter: $selectedFilter,
                         isPresentingShowAllButton: $isPresentingShowAllButton,
                         scrollProxy: scrollProxy
                     )
                     
                     BookShelfSentenceListView(
                         searchQuery: $searchQuery,
-                        selectedSortType: $selectedSort
+                        selectedSortType: $selectedSort,
+                        selectedFilter: $selectedFilter
                     )
                 }
+            }
+            .overlay(alignment: .bottom) {
+                seeAllButton
             }
         }
     }
@@ -66,7 +72,7 @@ extension BookShelfSentenceView {
             .foregroundColor(.black)
             .padding(.vertical, 10)
             .padding(.horizontal, 25)
-            .background(.gray.opacity(0.2))
+            .background(Color.secondary)
             .cornerRadius(25)
     }
 }
