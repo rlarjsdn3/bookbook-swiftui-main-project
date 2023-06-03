@@ -65,6 +65,7 @@ struct BookShelfSentenceFilterSheetView: View {
                 HStack {
                     if selectedFilterBook.isEmpty {
                         Text("전체")
+                            .fontWeight(.semibold)
                             .foregroundColor(Color.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
@@ -82,6 +83,7 @@ struct BookShelfSentenceFilterSheetView: View {
                                     HapticManager.shared.impact(.rigid)
                                 } label: {
                                     Text(book)
+                                        .fontWeight(.bold)
                                         .lineLimit(1)
                                         .truncationMode(.middle)
                                         .foregroundColor(Color.white)
@@ -115,6 +117,7 @@ struct BookShelfSentenceFilterSheetView: View {
                         } label: {
                             HStack {
                                 Text(readingBook)
+                                    .fontWeight(.bold)
                                     .lineLimit(1)
                                     .truncationMode(.middle)
                                     .foregroundColor(Color.black)

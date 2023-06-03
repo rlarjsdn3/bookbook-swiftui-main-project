@@ -87,10 +87,10 @@ extension BookShelfListView {
         Text("모두 보기")
             .font(.title3)
             .fontWeight(.semibold)
-            .foregroundColor(.black)
+            .foregroundColor(Color.white)
             .padding(.vertical, 10)
             .padding(.horizontal, 25)
-            .background(.gray.opacity(0.2))
+            .background(Color.black)
             .cornerRadius(25)
     }
 }
