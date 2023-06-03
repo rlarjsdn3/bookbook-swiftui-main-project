@@ -184,5 +184,6 @@ extension SearchBookCellButton {
 struct SearchBookCellButton_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookCellButton(briefBookInfo.Item.preview)
+            .previewLayout(.sizeThatFits)
     }
 }

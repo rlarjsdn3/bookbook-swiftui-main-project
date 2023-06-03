@@ -9,10 +9,17 @@ import SwiftUI
 
 struct BookShelfHeaderView: View {
     
+    // MARKL - WRAPPER PROPERTIES
+    
+    @State private var isPresentingCollectSenetenceView = false
+    
     // MARK: - BODY
     
     var body: some View {
         navigationBar
+            .fullScreenCover(isPresented: $isPresentingCollectSenetenceView) {
+                BookShelfSentenceView()
+            }
     }
 }
 
@@ -40,7 +47,7 @@ extension BookShelfHeaderView {
     
     var navigationBarButtons: some View {
         Button {
-            // do something...
+            isPresentingCollectSenetenceView = true
         } label: {
             Image(systemName: "bookmark.fill")
                 .navigationBarItemStyle()

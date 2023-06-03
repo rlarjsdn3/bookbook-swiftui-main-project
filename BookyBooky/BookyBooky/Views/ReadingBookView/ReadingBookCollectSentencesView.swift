@@ -14,14 +14,33 @@ struct ReadingBookCollectSentencesView: View {
     @ObservedRealmObject var readingBook: ReadingBook
     
     var body: some View {
-        ScrollView {
-            ForEach(readingBook.collectSentences, id: \.self) { collect in
-                SentenceCellButton(
-                    readingBook,
-                    collectSentence: collect
-                )
+        if readingBook.collectSentences.isEmpty {
+            noCollectSentenceLabel
+        } else {
+            ScrollView {
+                ForEach(readingBook.collectSentences, id: \.self) { collect in
+                    SentenceCellButton(
+                        readingBook,
+                        collectSentence: collect
+                    )
+                }
             }
+            .padding(.bottom, 40)
         }
+    }
+}
+
+extension ReadingBookCollectSentencesView {
+    var noCollectSentenceLabel: some View {
+        VStack(spacing: 5) {
+            Text("수집한 문장이 없음")
+                .font(.title3)
+                .fontWeight(.bold)
+            
+            Text("문장을 수집해보세요.")
+                .foregroundColor(.secondary)
+        }
+        .padding(.top, 30)
         .padding(.bottom, 40)
     }
 }

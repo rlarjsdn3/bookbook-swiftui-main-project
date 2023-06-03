@@ -63,6 +63,9 @@
 		9E595E3A2A28BE8E00F46F74 /* SentenceCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E392A28BE8E00F46F74 /* SentenceCellButton.swift */; };
 		9E595E3D2A28C7B700F46F74 /* CollectSentenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E3C2A28C7B700F46F74 /* CollectSentenceView.swift */; };
 		9E595E3F2A297D8400F46F74 /* ModifySentenceSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E3E2A297D8400F46F74 /* ModifySentenceSheetView.swift */; };
+		9E595E422A2AD8EC00F46F74 /* BookShelfSentenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E412A2AD8EC00F46F74 /* BookShelfSentenceView.swift */; };
+		9E595E442A2AD9C400F46F74 /* BookShelfSentenceTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E432A2AD9C400F46F74 /* BookShelfSentenceTextFieldView.swift */; };
+		9E595E462A2ADDB900F46F74 /* BookShelfSentenceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E452A2ADDB900F46F74 /* BookShelfSentenceListView.swift */; };
 		9E7A794329DA5B8F00A51856 /* SearchBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794229DA5B8F00A51856 /* SearchBookView.swift */; };
 		9E7A794529DA6AFF00A51856 /* SearchBookCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794429DA6AFF00A51856 /* SearchBookCoverView.swift */; };
 		9E7A794729DA854D00A51856 /* SearchBookTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794629DA854D00A51856 /* SearchBookTitleView.swift */; };
@@ -176,6 +179,9 @@
 		9E595E392A28BE8E00F46F74 /* SentenceCellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceCellButton.swift; sourceTree = "<group>"; };
 		9E595E3C2A28C7B700F46F74 /* CollectSentenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectSentenceView.swift; sourceTree = "<group>"; };
 		9E595E3E2A297D8400F46F74 /* ModifySentenceSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifySentenceSheetView.swift; sourceTree = "<group>"; };
+		9E595E412A2AD8EC00F46F74 /* BookShelfSentenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSentenceView.swift; sourceTree = "<group>"; };
+		9E595E432A2AD9C400F46F74 /* BookShelfSentenceTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSentenceTextFieldView.swift; sourceTree = "<group>"; };
+		9E595E452A2ADDB900F46F74 /* BookShelfSentenceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSentenceListView.swift; sourceTree = "<group>"; };
 		9E7A794229DA5B8F00A51856 /* SearchBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookView.swift; sourceTree = "<group>"; };
 		9E7A794429DA6AFF00A51856 /* SearchBookCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookCoverView.swift; sourceTree = "<group>"; };
 		9E7A794629DA854D00A51856 /* SearchBookTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookTitleView.swift; sourceTree = "<group>"; };
@@ -453,6 +459,16 @@
 			name = CollectSentenceView;
 			sourceTree = "<group>";
 		};
+		9E595E402A2AD8DB00F46F74 /* BookShelfSentenceView */ = {
+			isa = PBXGroup;
+			children = (
+				9E595E412A2AD8EC00F46F74 /* BookShelfSentenceView.swift */,
+				9E595E432A2AD9C400F46F74 /* BookShelfSentenceTextFieldView.swift */,
+				9E595E452A2ADDB900F46F74 /* BookShelfSentenceListView.swift */,
+			);
+			path = BookShelfSentenceView;
+			sourceTree = "<group>";
+		};
 		9E7A794129DA5B7C00A51856 /* SearchBookView */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,6 +558,7 @@
 				9EDC2FB229E6F0F8004E792A /* AddReadingBookView */,
 				9E06071529DFDC05000D542D /* BookShelfView */,
 				9E0434A729E24B90009A2161 /* BookShelfListView */,
+				9E595E402A2AD8DB00F46F74 /* BookShelfSentenceView */,
 				9E7BFC7729F0F23D00D72648 /* AnalysisView */,
 				9E061D5F29FAA87C0042E3B1 /* SettingsView */,
 				9ECA326629D11BB4004D6D5B /* RoundedTabView */,
@@ -747,6 +764,7 @@
 				9ECD921329BF1FA600FCDD2F /* ContentView.swift in Sources */,
 				9E595E3F2A297D8400F46F74 /* ModifySentenceSheetView.swift in Sources */,
 				9E7A795029DAABA000A51856 /* SearchBookButtonsView.swift in Sources */,
+				9E595E422A2AD8EC00F46F74 /* BookShelfSentenceView.swift in Sources */,
 				9E7D40892A284285007368CF /* AddSentenceSheetView.swift in Sources */,
 				9E7A794D29DA998F00A51856 /* SalesPointDescSheetView.swift in Sources */,
 				9EE01FEA2A01F2D900584F39 /* ReadingBookScrollView.swift in Sources */,
@@ -774,6 +792,7 @@
 				9E7A794729DA854D00A51856 /* SearchBookTitleView.swift in Sources */,
 				9E0C0A7129D2866100F1F5F6 /* briefBookInfo.swift in Sources */,
 				9E24DD312A14F8B400366640 /* HomeScrollView.swift in Sources */,
+				9E595E442A2AD9C400F46F74 /* BookShelfSentenceTextFieldView.swift in Sources */,
 				9E595E3A2A28BE8E00F46F74 /* SentenceCellButton.swift in Sources */,
 				9EDC2FAF29E6DDEF004E792A /* SearchBookViewType.swift in Sources */,
 				9E061D6129FAA8890042E3B1 /* SettingsView.swift in Sources */,
@@ -814,6 +833,7 @@
 				9E7A794529DA6AFF00A51856 /* SearchBookCoverView.swift in Sources */,
 				9E06070E29DD516D000D542D /* RealmManager.swift in Sources */,
 				9EE01FEE2A01FAF800584F39 /* ReadingBookTabView.swift in Sources */,
+				9E595E462A2ADDB900F46F74 /* BookShelfSentenceListView.swift in Sources */,
 				9E2BA90C2A051C9200FD2E93 /* ReadingBookDataSheetView.swift in Sources */,
 				9E7A794B29DA8EBD00A51856 /* SearchBookIntroView.swift in Sources */,
 				9EC71F8D2A15DEEE0056C11C /* MonthlyReadingActivity.swift in Sources */,
