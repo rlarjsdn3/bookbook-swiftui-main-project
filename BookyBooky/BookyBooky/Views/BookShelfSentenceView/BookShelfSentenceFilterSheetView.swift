@@ -8,6 +8,8 @@
 import SwiftUI
 import RealmSwift
 
+// 도서 리팩토링하기
+
 struct BookShelfSentenceFilterSheetView: View {
     
     @Environment(\.dismiss) var dismiss
@@ -24,20 +26,96 @@ struct BookShelfSentenceFilterSheetView: View {
     ]
     
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                
-                Text("도서 필터링하기")
-                    .navigationTitleStyle()
-                
-                Spacer()
-            }
-            .overlay {
-                HStack {
-                    Spacer()
+        NavigationStack {
+            VStack(spacing: 0) {
+                ScrollView(showsIndicators: false) {
+                    Text("필터 도서")
+                        .font(.title3.weight(.bold))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
                     
-                    Button("전체") {
+                    HStack {
+                        if selectedFilterBook.isEmpty {
+                            Text("전체")
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color.white)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 10)
+                                .background(Color.black)
+                                .cornerRadius(20)
+                                .padding(.horizontal)
+                        } else {
+                            LazyVGrid(columns: columns) {
+                                ForEach(selectedFilterBook, id: \.self) { book in
+                                    Button {
+                                        if let index = selectedFilterBook.firstIndex(of: book) {
+                                            selectedFilterBook.remove(at: index)
+                                            unselectedFilterBook.append(book)
+                                        }
+                                        HapticManager.shared.impact(.rigid)
+                                    } label: {
+                                        Text(book)
+                                            .fontWeight(.bold)
+                                            .lineLimit(1)
+                                            .truncationMode(.middle)
+                                            .foregroundColor(Color.white)
+                                            .frame(maxWidth: .infinity)
+                                            .padding(.vertical, 10)
+                                            .background(Color.black)
+                                            .cornerRadius(20)
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                    .padding(.bottom, 15)
+                    
+                    //
+                    
+                    Text("도서 목록")
+                        .font(.title3.weight(.bold))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                    
+                    LazyVGrid(columns: columns) {
+                        ForEach(unselectedFilterBook, id: \.self) { readingBook in
+                            Button {
+                                if let index = unselectedFilterBook.firstIndex(of: readingBook) {
+                                    selectedFilterBook.append(readingBook)
+                                    unselectedFilterBook.remove(at: index)
+                                }
+                                HapticManager.shared.impact(.rigid)
+                            } label: {
+                                HStack {
+                                    Text(readingBook)
+                                        .fontWeight(.bold)
+                                        .lineLimit(1)
+                                        .truncationMode(.middle)
+                                        .foregroundColor(Color.black)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical, 10)
+                                        .background(Color.background)
+                                        .cornerRadius(20)
+                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                
+                Spacer()
+                
+                Button {
+                    dismiss()
+                } label: {
+                    Text("적용하기")
+                }
+                .buttonStyle(BottomButtonStyle(backgroundColor: Color.black))
+            }
+            .toolbar {
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                    Button {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                             selectedFilterBook.removeAll()
                             
@@ -47,113 +125,23 @@ struct BookShelfSentenceFilterSheetView: View {
                                 }
                             }
                         }
+                    } label: {
+                        Text("전체")
                     }
                     .disabled(selectedFilterBook.isEmpty)
-                    .padding(.trailing, 25)
                 }
             }
-            .padding(.vertical)
-            
-            //
-            
-            ScrollView(showsIndicators: false) {
-                Text("필터 도서")
-                    .font(.title3.weight(.bold))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                
-                HStack {
-                    if selectedFilterBook.isEmpty {
-                        Text("전체")
-                            .fontWeight(.semibold)
-                            .foregroundColor(Color.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 10)
-                            .background(Color.black)
-                            .cornerRadius(20)
-                            .padding(.horizontal)
-                    } else {
-                        LazyVGrid(columns: columns) {
-                            ForEach(selectedFilterBook, id: \.self) { book in
-                                Button {
-                                    if let index = selectedFilterBook.firstIndex(of: book) {
-                                        selectedFilterBook.remove(at: index)
-                                        unselectedFilterBook.append(book)
-                                    }
-                                    HapticManager.shared.impact(.rigid)
-                                } label: {
-                                    Text(book)
-                                        .fontWeight(.bold)
-                                        .lineLimit(1)
-                                        .truncationMode(.middle)
-                                        .foregroundColor(Color.white)
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical, 10)
-                                        .background(Color.black)
-                                        .cornerRadius(20)
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
-                }
-                .padding(.bottom, 15)
-                
-                //
-                
-                Text("도서 목록")
-                    .font(.title3.weight(.bold))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                
-                LazyVGrid(columns: columns) {
-                    ForEach(unselectedFilterBook, id: \.self) { readingBook in
-                        Button {
-                            if let index = unselectedFilterBook.firstIndex(of: readingBook) {
-                                selectedFilterBook.append(readingBook)
-                                unselectedFilterBook.remove(at: index)
-                            }
-                            HapticManager.shared.impact(.rigid)
-                        } label: {
-                            HStack {
-                                Text(readingBook)
-                                    .fontWeight(.bold)
-                                    .lineLimit(1)
-                                    .truncationMode(.middle)
-                                    .foregroundColor(Color.black)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 10)
-                                    .background(Color.background)
-                                    .cornerRadius(20)
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal)
-                
-            }
-            
-            Spacer()
-            
-            Button {
-                dismiss()
-            } label: {
-                Text("적용하기")
-            }
-            .buttonStyle(BottomButtonStyle(backgroundColor: Color.black))
+            .navigationTitle("도서 필터링하기")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
-            getUnselectedFilterBook()
-        }
-        .presentationCornerRadius(30)
-    }
-    
-    func getUnselectedFilterBook() {
-        readingBooks.forEach { book in
-            if !selectedFilterBook.contains(where: { $0 == book.title }) {
-                unselectedFilterBook.append(book.title)
+            readingBooks.forEach { book in
+                if !selectedFilterBook.contains(where: { $0 == book.title }) {
+                    unselectedFilterBook.append(book.title)
+                }
             }
         }
+        .presentationCornerRadius(30)
     }
 }
 
