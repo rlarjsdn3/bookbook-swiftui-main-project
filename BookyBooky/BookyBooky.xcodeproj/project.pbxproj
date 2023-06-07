@@ -18,7 +18,6 @@
 		9E0434B629E537BE009A2161 /* ReadingBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B529E537BE009A2161 /* ReadingBook.swift */; };
 		9E0434BA29E53CA0009A2161 /* ReadingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434B929E53CA0009A2161 /* ReadingRecord.swift */; };
 		9E0434BC29E53CD8009A2161 /* CollectSentences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0434BB29E53CD8009A2161 /* CollectSentences.swift */; };
-		9E06070B29DD10D8000D542D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9E06070A29DD10D8000D542D /* AlertToast */; };
 		9E06070E29DD516D000D542D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06070D29DD516D000D542D /* RealmManager.swift */; };
 		9E06071429DF9847000D542D /* FavoriteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06071329DF9847000D542D /* FavoriteBook.swift */; };
 		9E06071729DFDC1D000D542D /* BookShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E06071629DFDC1D000D542D /* BookShelfView.swift */; };
@@ -80,6 +79,11 @@
 		9EA1983D2A01F18300D385CD /* ReadingBookInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1983A2A01F18300D385CD /* ReadingBookInfoView.swift */; };
 		9EA1983E2A01F18300D385CD /* ReadingBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1983B2A01F18300D385CD /* ReadingBookView.swift */; };
 		9EA1983F2A01F18300D385CD /* ReadingBookHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1983C2A01F18300D385CD /* ReadingBookHeaderView.swift */; };
+		9EB136032A30D61D0081832D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB136022A30D61D0081832D /* Alamofire */; };
+		9EB136062A30D63E0081832D /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB136052A30D63E0081832D /* Realm */; };
+		9EB136082A30D63E0081832D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB136072A30D63E0081832D /* RealmSwift */; };
+		9EB1360B2A30D6500081832D /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB1360A2A30D6500081832D /* Shimmer */; };
+		9EB1360E2A30D65B0081832D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB1360D2A30D65B0081832D /* AlertToast */; };
 		9EB749FA29D5C43200610D97 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB749F629D5C3A500610D97 /* CategoryType.swift */; };
 		9EC71F892A15D3A30056C11C /* ActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F882A15D3A30056C11C /* ActivityHeaderView.swift */; };
 		9EC71F8B2A15D50F0056C11C /* ActivityScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F8A2A15D50F0056C11C /* ActivityScrollView.swift */; };
@@ -90,11 +94,6 @@
 		9EC71F982A177D930056C11C /* ResultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F972A177D930056C11C /* ResultsExtension.swift */; };
 		9EC71F9A2A1782B70056C11C /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F992A1782B70056C11C /* ArrayExtension.swift */; };
 		9EC88D622A11F76400C2701F /* ReadingBookConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC88D612A11F76400C2701F /* ReadingBookConfettiView.swift */; };
-		9EC88D652A11F7B500C2701F /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9EC88D642A11F7B500C2701F /* ConfettiSwiftUI */; };
-		9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325829D119FE004D6D5B /* Alamofire */; };
-		9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325B29D11A6B004D6D5B /* Realm */; };
-		9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA325D29D11A6B004D6D5B /* RealmSwift */; };
-		9ECA326429D11AFF004D6D5B /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECA326329D11AFF004D6D5B /* Shimmer */; };
 		9ECA326929D11C02004D6D5B /* RoundedTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECA326829D11C02004D6D5B /* RoundedTabView.swift */; };
 		9ECA326B29D12044004D6D5B /* RoundedTabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECA326A29D12044004D6D5B /* RoundedTabType.swift */; };
 		9ECD921129BF1FA600FCDD2F /* BookyBookyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD921029BF1FA600FCDD2F /* BookyBookyApp.swift */; };
@@ -112,9 +111,10 @@
 		9EDC2FB129E6E48C004E792A /* UINavigationControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FB029E6E48C004E792A /* UINavigationControllerExtension.swift */; };
 		9EDC2FB429E6F108004E792A /* AddReadingBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FB329E6F108004E792A /* AddReadingBookView.swift */; };
 		9EDC2FB729E92E90004E792A /* DatePickerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FB629E92E90004E792A /* DatePickerSheetView.swift */; };
-		9EDC2FBA29EA3808004E792A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9EDC2FB929EA3808004E792A /* Lottie */; };
 		9EDC2FBC29EA3811004E792A /* LottieBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBB29EA3811004E792A /* LottieBookView.swift */; };
 		9EDC2FBE29EA3898004E792A /* book.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EDC2FBD29EA3898004E792A /* book.json */; };
+		9EDEDD3F2A30D692002232B9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9EDEDD3E2A30D692002232B9 /* Lottie */; };
+		9EDEDD422A30D6A8002232B9 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9EDEDD412A30D6A8002232B9 /* ConfettiSwiftUI */; };
 		9EDEEF852A02963D0036FB1A /* ReadingBookCollectSentencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDEEF842A02963D0036FB1A /* ReadingBookCollectSentencesView.swift */; };
 		9EE01FEA2A01F2D900584F39 /* ReadingBookScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FE92A01F2D900584F39 /* ReadingBookScrollView.swift */; };
 		9EE01FEE2A01FAF800584F39 /* ReadingBookTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FED2A01FAF800584F39 /* ReadingBookTabView.swift */; };
@@ -240,13 +240,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EDC2FBA29EA3808004E792A /* Lottie in Frameworks */,
-				9ECA326429D11AFF004D6D5B /* Shimmer in Frameworks */,
-				9ECA325E29D11A6B004D6D5B /* RealmSwift in Frameworks */,
-				9E06070B29DD10D8000D542D /* AlertToast in Frameworks */,
-				9ECA325C29D11A6B004D6D5B /* Realm in Frameworks */,
-				9ECA325929D119FE004D6D5B /* Alamofire in Frameworks */,
-				9EC88D652A11F7B500C2701F /* ConfettiSwiftUI in Frameworks */,
+				9EB1360B2A30D6500081832D /* Shimmer in Frameworks */,
+				9EB136082A30D63E0081832D /* RealmSwift in Frameworks */,
+				9EB136062A30D63E0081832D /* Realm in Frameworks */,
+				9EB1360E2A30D65B0081832D /* AlertToast in Frameworks */,
+				9EB136032A30D61D0081832D /* Alamofire in Frameworks */,
+				9EDEDD3F2A30D692002232B9 /* Lottie in Frameworks */,
+				9EDEDD422A30D6A8002232B9 /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,13 +689,13 @@
 			);
 			name = BookyBooky;
 			packageProductDependencies = (
-				9ECA325829D119FE004D6D5B /* Alamofire */,
-				9ECA325B29D11A6B004D6D5B /* Realm */,
-				9ECA325D29D11A6B004D6D5B /* RealmSwift */,
-				9ECA326329D11AFF004D6D5B /* Shimmer */,
-				9E06070A29DD10D8000D542D /* AlertToast */,
-				9EDC2FB929EA3808004E792A /* Lottie */,
-				9EC88D642A11F7B500C2701F /* ConfettiSwiftUI */,
+				9EB136022A30D61D0081832D /* Alamofire */,
+				9EB136052A30D63E0081832D /* Realm */,
+				9EB136072A30D63E0081832D /* RealmSwift */,
+				9EB1360A2A30D6500081832D /* Shimmer */,
+				9EB1360D2A30D65B0081832D /* AlertToast */,
+				9EDEDD3E2A30D692002232B9 /* Lottie */,
+				9EDEDD412A30D6A8002232B9 /* ConfettiSwiftUI */,
 			);
 			productName = BookyBooky;
 			productReference = 9ECD920D29BF1FA600FCDD2F /* BookyBooky.app */;
@@ -726,12 +726,12 @@
 			);
 			mainGroup = 9ECD920429BF1FA600FCDD2F;
 			packageReferences = (
-				9ECA325729D119FE004D6D5B /* XCRemoteSwiftPackageReference "Alamofire" */,
-				9ECA325A29D11A6B004D6D5B /* XCRemoteSwiftPackageReference "realm-swift" */,
-				9ECA326229D11AFF004D6D5B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
-				9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */,
-				9EDC2FB829EA3808004E792A /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				9EC88D632A11F7B500C2701F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+				9EB136012A30D61D0081832D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				9EB136042A30D63E0081832D /* XCRemoteSwiftPackageReference "realm-swift" */,
+				9EB136092A30D6500081832D /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
+				9EB1360C2A30D65B0081832D /* XCRemoteSwiftPackageReference "AlertToast" */,
+				9EDEDD3D2A30D692002232B9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				9EDEDD402A30D6A8002232B9 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = 9ECD920E29BF1FA600FCDD2F /* Products */;
 			projectDirPath = "";
@@ -1082,31 +1082,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/elai950/AlertToast.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		9EC88D632A11F7B500C2701F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		9ECA325729D119FE004D6D5B /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		9EB136012A30D61D0081832D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 5.7.1;
 			};
 		};
-		9ECA325A29D11A6B004D6D5B /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		9EB136042A30D63E0081832D /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift";
 			requirement = {
@@ -1114,59 +1098,75 @@
 				kind = branch;
 			};
 		};
-		9ECA326229D11AFF004D6D5B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
+		9EB136092A30D6500081832D /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.3.0;
 			};
 		};
-		9EDC2FB829EA3808004E792A /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		9EB1360C2A30D65B0081832D /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
+		9EDEDD3D2A30D692002232B9 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
+				minimumVersion = 4.2.0;
+			};
+		};
+		9EDEDD402A30D6A8002232B9 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9E06070A29DD10D8000D542D /* AlertToast */ = {
+		9EB136022A30D61D0081832D /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9E06070929DD10D8000D542D /* XCRemoteSwiftPackageReference "AlertToast" */;
-			productName = AlertToast;
-		};
-		9EC88D642A11F7B500C2701F /* ConfettiSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9EC88D632A11F7B500C2701F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
-			productName = ConfettiSwiftUI;
-		};
-		9ECA325829D119FE004D6D5B /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9ECA325729D119FE004D6D5B /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 9EB136012A30D61D0081832D /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		9ECA325B29D11A6B004D6D5B /* Realm */ = {
+		9EB136052A30D63E0081832D /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9ECA325A29D11A6B004D6D5B /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = 9EB136042A30D63E0081832D /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = Realm;
 		};
-		9ECA325D29D11A6B004D6D5B /* RealmSwift */ = {
+		9EB136072A30D63E0081832D /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9ECA325A29D11A6B004D6D5B /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = 9EB136042A30D63E0081832D /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
-		9ECA326329D11AFF004D6D5B /* Shimmer */ = {
+		9EB1360A2A30D6500081832D /* Shimmer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9ECA326229D11AFF004D6D5B /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
+			package = 9EB136092A30D6500081832D /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
 			productName = Shimmer;
 		};
-		9EDC2FB929EA3808004E792A /* Lottie */ = {
+		9EB1360D2A30D65B0081832D /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9EDC2FB829EA3808004E792A /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 9EB1360C2A30D65B0081832D /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+		9EDEDD3E2A30D692002232B9 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EDEDD3D2A30D692002232B9 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		9EDEDD412A30D6A8002232B9 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EDEDD402A30D6A8002232B9 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
