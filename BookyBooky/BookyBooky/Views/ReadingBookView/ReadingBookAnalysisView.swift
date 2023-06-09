@@ -9,76 +9,57 @@ import SwiftUI
 import Charts
 import RealmSwift
 
-// 차트 수정해보기
-
-enum ChartDateRangeTabItems: CaseIterable {
-    case month
-    case year
-    
-    var name: String {
-        switch self {
-        case .month:
-            return "30일"
-        case .year:
-            return "1년"
-        }
-    }
-}
-
-enum HighlightMajorReadingPeriodItems {
-    case morning
-    case lunch
-    case evening
-    case dawn
-    case none
-    
-    var name: String {
-        switch self {
-        case .morning:
-            return "아침"
-        case .lunch:
-            return "점심"
-        case .evening:
-            return "저녁"
-        case .dawn:
-            return "새벽"
-        case .none:
-            return "-"
-        }
-    }
-    
-    var systemImage: String {
-        switch self {
-        case .morning:
-            return "sunrise.circle.fill"
-        case .lunch:
-            return "sun.max.circle.fill"
-        case .evening:
-            return "moon.circle.fill"
-        case .dawn:
-            return "moon.stars.circle.fill"
-        case .none:
-            return "circle"
-        }
-    }
-    
-    var accentColor: Color {
-        switch self {
-        case .morning:
-            return Color.yellow
-        case .lunch:
-            return Color.orange
-        case .evening:
-            return Color.red
-        case .dawn:
-            return Color.black
-        case .none:
-            return Color.gray
-        }
-    }
-}
+// 코드 리팩토링 중...
 
 struct ReadingBookAnalysisView: View {
+    
+    // MARK: - INNER ENUM
+    
+    enum MajorReadingPeriodItems {
+        case morning
+        case lunch
+        case evening
+        case dawn
+        
+        var name: String {
+            switch self {
+            case .morning:
+                return "아침"
+            case .lunch:
+                return "점심"
+            case .evening:
+                return "저녁"
+            case .dawn:
+                return "새벽"
+            }
+        }
+        
+        var systemImage: String {
+            switch self {
+            case .morning:
+                return "sunrise.circle.fill"
+            case .lunch:
+                return "sun.max.circle.fill"
+            case .evening:
+                return "moon.circle.fill"
+            case .dawn:
+                return "moon.stars.circle.fill"
+            }
+        }
+        
+        var accentColor: Color {
+            switch self {
+            case .morning:
+                return Color.yellow
+            case .lunch:
+                return Color.orange
+            case .evening:
+                return Color.red
+            case .dawn:
+                return Color.black
+            }
+        }
+    }
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -105,6 +86,16 @@ struct ReadingBookAnalysisView: View {
     
     var scrollPositionEndString: String {
         scrollPositionEnd.toFormat("M월 d일 (E)")
+    }
+    
+    // MARK: - PROPERTIES
+    
+    var consecutiveReadingDays: Int? {
+        getConsecutiveReadingDays()
+    }
+        
+    var majorReadingPeriod: MajorReadingPeriodItems {
+        getMajorReadingPeriod()
     }
     
     // MARK: - BODY
@@ -246,17 +237,17 @@ extension ReadingBookAnalysisView {
             
             HStack {
                 HStack {
-                    Image(systemName: highlightMajorReadingPeriod.systemImage)
+                    Image(systemName: majorReadingPeriod.systemImage)
                         .font(.largeTitle)
-                        .foregroundColor(highlightMajorReadingPeriod.accentColor)
+                        .foregroundColor(majorReadingPeriod.accentColor)
                     
                     VStack(alignment: .leading) {
                         Text("주 독서 시간대")
                             .font(.caption)
                             .foregroundColor(Color.gray)
-                        Text("\(highlightMajorReadingPeriod.name)")
+                        Text("\(majorReadingPeriod.name)")
                             .font(.title2.weight(.bold))
-                            .foregroundColor(highlightMajorReadingPeriod.accentColor)
+                            .foregroundColor(majorReadingPeriod.accentColor)
                     }
                     
                     Spacer()
@@ -267,26 +258,18 @@ extension ReadingBookAnalysisView {
                 .padding([.bottom])
                 
                 HStack {
-                    if consecutiveReadingDays != 0 {
+                    if let consecutiveReadingDays {
                         Image(systemName: "calendar.circle.fill")
                             .font(.largeTitle)
-                    } else {
-                        Image(systemName: "circle")
-                            .font(.largeTitle)
-                            .foregroundColor(Color.gray)
                     }
                     
                     VStack(alignment: .leading) {
                         Text("연속 스트릭")
                             .font(.caption)
                             .foregroundColor(Color.gray)
-                        if consecutiveReadingDays != 0 {
+                        if let consecutiveReadingDays {
                             Text("\(consecutiveReadingDays)일")
                                 .font(.title2.weight(.bold))
-                        } else {
-                            Text("-")
-                                .font(.title2.weight(.bold))
-                                .foregroundColor(Color.gray)
                         }
                     }
                     
@@ -343,59 +326,61 @@ extension ReadingBookAnalysisView {
     
     
     // 코드 깔끔하게 다듬기
-    var highlightMajorReadingPeriod: HighlightMajorReadingPeriodItems {
-        // 0번 - 새벽, 1번 - 아침, 2번 - 점심, 3번 저녁, 4번 - 없음
-        var count = [Int](repeating: 0, count: 5)
+    func getMajorReadingPeriod() -> MajorReadingPeriodItems {
+        var period = ["dawn": 0, "morning": 0, "lunch": 0, "evening": 0]
         
         for records in readingBook.readingRecords {
-            let hour = Calendar.current.dateComponents([.hour], from: records.date).hour!
-            print(hour)
+            let calendar = Calendar.current
+            let hour = calendar.dateComponents([.hour], from: records.date).hour!
             
             switch hour {
-            case _ where 0 < hour && hour <= 6:
-                count[0] += 1
+            case _ where 0 <= hour && hour <= 6:
+                period["dawn"]? += 1
             case _ where 6 < hour && hour <= 12:
-                count[1] += 1
+                period["morning"]? += 1
             case _ where 12 < hour && hour <= 18:
-                count[2] += 1
+                period["lunch"]? += 1
             case _ where 18 < hour && hour <= 24:
-                count[3] += 1
+                period["evening"]? += 1
             default:
                 break
             }
         }
         
-        var maxIndex = 4
-        for index in count.indices where count[index] > count[maxIndex] {
-            maxIndex = index
-        }
+        let maxPeriod = Array(period).sorted(by: { $0.key < $1.key }).max(by: { $0.value < $1.value })!
         
-        switch maxIndex {
-        case 0:
+        switch maxPeriod.key {
+        case "dawn":
             return .dawn
-        case 1:
+        case "morning":
             return .morning
-        case 2:
+        case "lunch":
             return .lunch
-        case 3:
+        case "evening":
             return .evening
         default:
-            return .none
+            return .morning
         }
     }
     
-    var consecutiveReadingDays: Int {
+    func getConsecutiveReadingDays() -> Int? {
         guard !readingBook.readingRecords.isEmpty else {
-            return 0
+            return nil
         }
         
         var maxConsecutiveDays = 1
         var currentConsecutiveDays = 1
         
         for i in 1..<readingBook.readingRecords.count {
-            let previousDate = Calendar.current.date(byAdding: .day, value: -1, to: readingBook.readingRecords[i].date)!
+            let calendar = Calendar.current
+            let previousDate = calendar.date(
+                byAdding: .day,
+                value: -1,
+                to: readingBook.readingRecords[i].date
+            )!
             
-            if previousDate.formatted(date: .abbreviated, time: .omitted) == readingBook.readingRecords[i-1].date.formatted(date: .abbreviated, time: .omitted) {
+            if (previousDate.standardDateFormat
+                    == readingBook.readingRecords[i-1].date.standardDateFormat) {
                 currentConsecutiveDays += 1
             } else {
                 maxConsecutiveDays = max(currentConsecutiveDays, maxConsecutiveDays)
