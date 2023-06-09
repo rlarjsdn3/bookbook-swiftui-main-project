@@ -40,7 +40,7 @@ extension ReadingBookCollectSentencesView {
             Text("문장을 수집해보세요.")
                 .foregroundColor(.secondary)
         }
-        .padding(.top, 30)
+        .padding(.top, 50)
         .padding(.bottom, 40)
     }
 }

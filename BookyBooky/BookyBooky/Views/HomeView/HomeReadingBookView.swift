@@ -172,6 +172,8 @@ extension HomeReadingBookView {
                 }
             }
             .padding([.horizontal, .top])
+            
+            
             // 코드 수정할 필요가 있음(직관적으로 수정하기 혹은 주석 설명 달기)
             .padding(.bottom,
                      filterReadingBooks.count <= 2 ?

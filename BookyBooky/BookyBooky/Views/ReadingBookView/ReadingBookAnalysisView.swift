@@ -104,188 +104,53 @@ struct ReadingBookAnalysisView: View {
     }
     
     var scrollPositionEndString: String {
-        scrollPositionEnd.standardDateFormat
+        scrollPositionEnd.toFormat("M월 d일 (E)")
     }
     
     // MARK: - BODY
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: -2) {
-                Text("총 읽은 페이지")
-                    .font(.callout.weight(.semibold))
-                    .foregroundStyle(Color.secondary)
-                
-                HStack(alignment: .firstTextBaseline) {
-                    Text("\(totalReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
-                        .font(.title.weight(.bold))
-                        .foregroundStyle(readingBook.category.accentColor)
-                    Text("페이지")
-                        .font(.headline)
-                        .foregroundStyle(readingBook.category.accentColor)
-                    Spacer()
-                }
-                
-                Text("\(scrollPositionStartString) ~ \(scrollPositionEndString)")
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(Color.secondary)
-            }
-            
-            Chart {
-                ForEach(readingBook.readingRecords, id: \.self) { record in
-                    BarMark(
-                        x: .value("date", record.date, unit: .day),
-                        y: .value("page", record.numOfPagesRead)
-                    )
-                    .foregroundStyle(readingBook.category.accentColor)
-                }
-                
-                if isPresentingAverageRuleMark {
-                    RuleMark(
-                        y: .value(
-                            "average",
-                            averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd)
-                        )
-                    )
-                    .lineStyle(StrokeStyle(lineWidth: 3))
-                    .foregroundStyle(readingBook.category.accentColor == Color.black ? Color.gray : Color.black)
-                    .annotation(position: .top, alignment: .leading) {
-                        Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
-                            .font(.headline)
-                            .foregroundStyle(readingBook.category.accentColor == Color.black ? Color.gray : Color.black)
-                    }
-                }
-            }
-            .chartScrollableAxes(.horizontal)
-            .chartXVisibleDomain(length: 3600 * 24 * 14)
-            .chartScrollTargetBehavior(
-                .valueAligned(
-                    matching: DateComponents(hour: 0),
-                    majorAlignment: .matching(.init(day: 1))
-                )
-            )
-            .chartScrollPosition(x: $scrollPosition)
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .day, count: 7)) {
-                    AxisTick()
-                    AxisGridLine()
-                    AxisValueLabel(format: .dateTime.month().day())
-                }
-            }
-            .frame(height: 300)
-            
-            Button {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    isPresentingAverageRuleMark.toggle()
-                }
-            } label: {
-                HStack {
-                    Text("일 평균 독서 페이지")
+        Group {
+            if readingBook.readingRecords.isEmpty {
+                VStack(spacing: 5) {
+                    Text("분석 데이터가 없음")
+                        .font(.title3)
                         .fontWeight(.bold)
                     
-                    Spacer()
+                    Text("독서를 시작해보세요.")
+                        .foregroundColor(.secondary)
+                }
+                .padding(.top, 50)
+                .padding(.bottom, 40)
+            } else {
+                VStack {
+                    chartTitle
                     
-                    if !readingBook.readingRecords.isEmpty {
-                        Text("\(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
-                    } else {
-                        Text("-")
-                    }
-                }
-                .padding()
-                .foregroundColor(isPresentingAverageRuleMark ? Color.white : Color.black)
-                .background(isPresentingAverageRuleMark ? readingBook.category.accentColor : Color("Background"))
-                .cornerRadius(20)
-
-                .padding(.vertical, 5)
-            }
-            .disabled(readingBook.readingRecords.isEmpty)
-            
-            Section {
-                HStack {
-                    HStack {
-                        Image(systemName: highlightMajorReadingPeriod.systemImage)
-                            .font(.largeTitle)
-                            .foregroundColor(highlightMajorReadingPeriod.accentColor)
-                        
-                        VStack(alignment: .leading) {
-                            Text("주 독서 시간대")
-                                .font(.caption)
-                                .foregroundColor(Color.gray)
-                            Text("\(highlightMajorReadingPeriod.name)")
-                                .font(.title2.weight(.bold))
-                                .foregroundColor(highlightMajorReadingPeriod.accentColor)
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color("Background"))
-                    .cornerRadius(20)
-                    .padding([.bottom])
+                    barChart
                     
-                    HStack {
-                        if consecutiveReadingDays != 0 {
-                            Image(systemName: "calendar.circle.fill")
-                                .font(.largeTitle)
-                        } else {
-                            Image(systemName: "circle")
-                                .font(.largeTitle)
-                                .foregroundColor(Color.gray)
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text("연속 스트릭")
-                                .font(.caption)
-                                .foregroundColor(Color.gray)
-                            if consecutiveReadingDays != 0 {
-                                Text("\(consecutiveReadingDays)일")
-                                    .font(.title2.weight(.bold))
-                            } else {
-                                Text("-")
-                                    .font(.title2.weight(.bold))
-                                    .foregroundColor(Color.gray)
-                            }
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color("Background"))
-                    .cornerRadius(20)
-                    .padding([.bottom])
+                    dailyAverageValueButton
+                    
+                    hightlightLabel
+                    
+                    seeAllRecordButton
                 }
-            } header: {
-                Text("하이라이트")
-                    .font(.title3.weight(.bold))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding([.horizontal, .top])
+                .padding([.leading, .bottom, .trailing])
+                .padding(.top, 5)
             }
-
-            VStack {
-                Button {
-                    isPresentingAllReadingDataSheet = true
-                } label: {
-                    Text("모든 데이터 보기")
-                        .font(.headline.weight(.bold))
-                        .foregroundColor(.primary)
-                        .frame(height: 45)
-                        .frame(maxWidth: .infinity)
-                        .background(Color("Background"))
-                        .clipShape(Capsule(style: .continuous))
-                        .opacity(readingBook.readingRecords.isEmpty ? 0.3 : 1)
-                }
-                .disabled(readingBook.readingRecords.isEmpty)
-                .padding(.bottom)
-            }
-            .padding(.bottom, 20)
         }
         .onAppear {
-            scrollPosition = readingBook.readingRecords.last!.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
+            if let lastRecord = readingBook.lastRecord {
+                scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
+            }
+        }
+        .onChange(of: readingBook.readingRecords) { _, _ in
+            if let lastRecord = readingBook.lastRecord {
+                scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
+            }
         }
         .sheet(isPresented: $isPresentingAllReadingDataSheet) {
             ReadingBookDataSheetView(readingBook)
         }
-        .padding()
     }
     
     func totalReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
@@ -305,6 +170,178 @@ struct ReadingBookAnalysisView: View {
 // MARK: - EXTENSIONS
 
 extension ReadingBookAnalysisView {
+    var chartTitle: some View {
+        VStack(alignment: .leading, spacing: -2) {
+            Text("총 읽은 페이지")
+                .font(.callout.weight(.semibold))
+                .foregroundStyle(Color.secondary)
+            
+            HStack(alignment: .firstTextBaseline) {
+                Text("\(totalReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
+                    .font(.title.weight(.bold))
+                    .foregroundStyle(readingBook.category.accentColor)
+                Text("페이지")
+                    .font(.headline)
+                    .foregroundStyle(readingBook.category.accentColor)
+                Spacer()
+            }
+            
+            Text("\(scrollPositionStartString) ~ \(scrollPositionEndString)")
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(Color.secondary)
+        }
+    }
+    
+    var barChart: some View {
+        Chart {
+            ForEach(readingBook.readingRecords, id: \.self) { record in
+                BarMark(
+                    x: .value("date", record.date, unit: .day),
+                    y: .value("page", record.numOfPagesRead)
+                )
+                .foregroundStyle(readingBook.category.accentColor)
+            }
+            
+            if isPresentingAverageRuleMark {
+                RuleMark(
+                    y: .value(
+                        "average",
+                        averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd)
+                    )
+                )
+                .lineStyle(StrokeStyle(lineWidth: 3))
+                .foregroundStyle(readingBook.category.accentColor == Color.black ? Color.gray : Color.black)
+                .annotation(position: .top, alignment: .leading) {
+                    Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
+                        .font(.headline)
+                        .foregroundStyle(readingBook.category.accentColor == Color.black ? Color.gray : Color.black)
+                }
+            }
+        }
+        .chartScrollableAxes(.horizontal)
+        .chartXVisibleDomain(length: 3600 * 24 * 14)
+        .chartScrollTargetBehavior(
+            .valueAligned(
+                matching: DateComponents(hour: 0),
+                majorAlignment: .matching(.init(day: 1))
+            )
+        )
+        .chartScrollPosition(x: $scrollPosition)
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .day, count: 7)) {
+                AxisTick()
+                AxisGridLine()
+                AxisValueLabel(format: .dateTime.month().day())
+            }
+        }
+        .frame(height: 250)
+    }
+    
+    var hightlightLabel: some View {
+        VStack {
+            Text("하이라이트")
+                .font(.title3.weight(.bold))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding([.horizontal, .top])
+            
+            HStack {
+                HStack {
+                    Image(systemName: highlightMajorReadingPeriod.systemImage)
+                        .font(.largeTitle)
+                        .foregroundColor(highlightMajorReadingPeriod.accentColor)
+                    
+                    VStack(alignment: .leading) {
+                        Text("주 독서 시간대")
+                            .font(.caption)
+                            .foregroundColor(Color.gray)
+                        Text("\(highlightMajorReadingPeriod.name)")
+                            .font(.title2.weight(.bold))
+                            .foregroundColor(highlightMajorReadingPeriod.accentColor)
+                    }
+                    
+                    Spacer()
+                }
+                .padding()
+                .background(Color("Background"))
+                .cornerRadius(20)
+                .padding([.bottom])
+                
+                HStack {
+                    if consecutiveReadingDays != 0 {
+                        Image(systemName: "calendar.circle.fill")
+                            .font(.largeTitle)
+                    } else {
+                        Image(systemName: "circle")
+                            .font(.largeTitle)
+                            .foregroundColor(Color.gray)
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("연속 스트릭")
+                            .font(.caption)
+                            .foregroundColor(Color.gray)
+                        if consecutiveReadingDays != 0 {
+                            Text("\(consecutiveReadingDays)일")
+                                .font(.title2.weight(.bold))
+                        } else {
+                            Text("-")
+                                .font(.title2.weight(.bold))
+                                .foregroundColor(Color.gray)
+                        }
+                    }
+                    
+                    Spacer()
+                }
+                .padding()
+                .background(Color("Background"))
+                .cornerRadius(20)
+                .padding([.bottom])
+            }
+        }
+    }
+    
+    var seeAllRecordButton: some View {
+        Button {
+            isPresentingAllReadingDataSheet = true
+        } label: {
+            Text("모든 데이터 보기")
+                .font(.headline.weight(.bold))
+                .foregroundColor(.primary)
+                .frame(height: 45)
+                .frame(maxWidth: .infinity)
+                .background(Color("Background"))
+                .clipShape(.capsule(style: .continuous))
+        }
+        .padding(.bottom, 20)
+    }
+    
+    var dailyAverageValueButton: some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isPresentingAverageRuleMark.toggle()
+            }
+        } label: {
+            HStack {
+                Text("일 평균 독서 페이지")
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                if !readingBook.readingRecords.isEmpty {
+                    Text("\(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
+                } else {
+                    Text("-")
+                }
+            }
+            .padding()
+            .foregroundColor(isPresentingAverageRuleMark ? Color.white : Color.black)
+            .background(isPresentingAverageRuleMark ? readingBook.category.accentColor : Color("Background"))
+            .clipShape(.rect(cornerRadius: 20))
+            .padding(.vertical, 5)
+        }
+    }
+    
+    
     // 코드 깔끔하게 다듬기
     var highlightMajorReadingPeriod: HighlightMajorReadingPeriodItems {
         // 0번 - 새벽, 1번 - 아침, 2번 - 점심, 3번 저녁, 4번 - 없음
