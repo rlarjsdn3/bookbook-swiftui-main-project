@@ -122,8 +122,7 @@ struct ReadingBookAnalysisView: View {
                         .foregroundStyle(readingBook.category.accentColor)
                     Text("페이지")
                         .font(.headline)
-                        .foregroundStyle(Color.secondary)
-                    
+                        .foregroundStyle(readingBook.category.accentColor)
                     Spacer()
                 }
                 
@@ -132,12 +131,30 @@ struct ReadingBookAnalysisView: View {
                     .foregroundStyle(Color.secondary)
             }
             
-            Chart(readingBook.readingRecords, id: \.self) { record in
-                BarMark(
-                    x: .value("date", record.date, unit: .day),
-                    y: .value("page", record.numOfPagesRead)
-                )
-                .foregroundStyle(readingBook.category.accentColor)
+            Chart {
+                ForEach(readingBook.readingRecords, id: \.self) { record in
+                    BarMark(
+                        x: .value("date", record.date, unit: .day),
+                        y: .value("page", record.numOfPagesRead)
+                    )
+                    .foregroundStyle(readingBook.category.accentColor)
+                }
+                
+                if isPresentingAverageRuleMark {
+                    RuleMark(
+                        y: .value(
+                            "average",
+                            averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd)
+                        )
+                    )
+                    .lineStyle(StrokeStyle(lineWidth: 3))
+                    .foregroundStyle(readingBook.category.accentColor == Color.black ? Color.gray : Color.black)
+                    .annotation(position: .top, alignment: .leading) {
+                        Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
+                            .font(.headline)
+                            .foregroundStyle(readingBook.category.accentColor == Color.black ? Color.gray : Color.black)
+                    }
+                }
             }
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: 3600 * 24 * 14)

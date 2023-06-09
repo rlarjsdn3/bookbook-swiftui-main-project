@@ -73,39 +73,49 @@ extension RealmManager {
             return
         }
         
-        var readingRecord: ReadingRecord
-        
         // 독서 데이터가 하나 이상 존재하는 경우
         if let lastRecord = object.lastRecord {
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일한 경우
             if Date().isEqual([.year, .month, .day], date: lastRecord.date) {
                 // 독서 데이터 삭제하기
-                DispatchQueue.global().sync {
+//                DispatchQueue.global().sync {
+//                    try! realm.write {
+//                        object.readingRecords.remove(at: object.readingRecords.endIndex - 1)
+//                    }
+//                }
+                
+                if object.readingRecords.count <= 1 {
+//                    readingRecord = ReadingRecord(
+//                        value: ["date": Date(),
+//                                "totalPagesRead": totalPagesRead,
+//                                "numOfPagesRead": totalPagesRead
+//                               ] as [String : Any]
+//                    )
+//                     독서 데이터 추가하기
                     try! realm.write {
-                        object.readingRecords.remove(at: object.readingRecords.endIndex - 1)
+                        object.readingRecords.last?.date = Date()
+                        object.readingRecords.last?.totalPagesRead = totalPagesRead
+                        object.readingRecords.last?.numOfPagesRead = totalPagesRead
+                    }
+                } else {
+//                    readingRecord = ReadingRecord(
+//                        value: ["date": Date(),
+//                                "totalPagesRead": totalPagesRead,
+//                                "numOfPagesRead": totalPagesRead - lastRecord.totalPagesRead
+//                               ] as [String : Any]
+//                    )
+//                     독서 데이터 추가하기
+                    
+                    try! realm.write {
+                        object.readingRecords.last?.date = Date().addingTimeInterval(86400)
+                        object.readingRecords.last?.totalPagesRead = totalPagesRead
+                        object.readingRecords.last?.numOfPagesRead = totalPagesRead - readingBook.readingRecords[readingBook.readingRecords.endIndex - 2].totalPagesRead
                     }
                 }
                 
-                if object.readingRecords.isEmpty {
-                    readingRecord = ReadingRecord(
-                        value: ["date": Date(),
-                                "totalPagesRead": totalPagesRead,
-                                "numOfPagesRead": totalPagesRead
-                               ] as [String : Any]
-                    )
-                } else {
-                    readingRecord = ReadingRecord(
-                        value: ["date": Date(),
-                                "totalPagesRead": totalPagesRead,
-                                "numOfPagesRead": totalPagesRead - lastRecord.totalPagesRead
-                               ] as [String : Any]
-                    )
-                }
-                
-                // 독서 데이터 추가하기
-                try! realm.write {
-                    object.readingRecords.append(readingRecord)
-                }
+//                try! realm.write {
+//                    object.readingRecords.append(readingRecord)
+//                }
                 
                 // NOTE: - 하나의 코드 블록 안에 두 번의 트랜잭션을 수행한다면, 각각의 트랜잭션이 다른 스레드에서 동시에 수행될 수 있습니다.
                 //       - 이는 동시성 문제를 야기할 수 있는 상황입니다. 따라서 DispatchQueue를 활용해 트랜잭션을 동기적으로 수행하도록 해야 합니다.
@@ -114,7 +124,7 @@ extension RealmManager {
                 
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일하지 않은 경우
             } else {
-                readingRecord = ReadingRecord(
+                let readingRecord = ReadingRecord(
                     value: ["date": Date(),
                             "totalPagesRead": totalPagesRead,
                             "numOfPagesRead": totalPagesRead - lastRecord.totalPagesRead
@@ -127,7 +137,7 @@ extension RealmManager {
             }
         // 독서 데이터가 하나 이상 존재하지 않는 경우
         } else {
-            readingRecord = ReadingRecord(
+            let readingRecord = ReadingRecord(
                 value: ["date": Date(),
                         "totalPagesRead": totalPagesRead,
                         "numOfPagesRead": totalPagesRead
