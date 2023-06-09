@@ -9,16 +9,18 @@ import SwiftUI
 import Charts
 import RealmSwift
 
+// 차트 수정해보기
+
 enum ChartDateRangeTabItems: CaseIterable {
-    case oneMonth
-    case oneYear
+    case month
+    case year
     
     var name: String {
         switch self {
-        case .oneMonth:
-            return "지난 30일"
-        case .oneYear:
-            return "지난 1년"
+        case .month:
+            return "30일"
+        case .year:
+            return "1년"
         }
     }
 }
@@ -78,64 +80,215 @@ enum HighlightMajorReadingPeriodItems {
 
 struct ReadingBookAnalysisView: View {
     
-    // MARK: - INNER STRUCT
-    
-    private struct ReadingData: Hashable {
-        var date: Date
-        var pagesRead: Int
-    }
-    
     // MARK: - WRAPPER PROPERTIES
     
     @ObservedRealmObject var readingBook: ReadingBook
     
-    @State private var selectedChartDateRange: ChartDateRangeTabItems = .oneMonth
-    @State private var selectedChartElement: ReadingData?
+    @State private var scrollPosition: TimeInterval = 0.0
     
-    @State private var isShowingAverageRuleMark = false
+    @State private var isPresentingAverageRuleMark = false
     @State private var isPresentingAllReadingDataSheet = false
     
     // MARK: - COMPUTED PROPERTIES
-    
-    private var filteredChartDataArray: [ReadingData] {
-        var filterChartDataArray: [ReadingData] = []
-        
-        switch selectedChartDateRange {
-        case .oneMonth:
-            if let lastRecord = readingBook.readingRecords.last {
-                for i in 0..<31 {
-                    filterChartDataArray.append(ReadingData(date: Date(timeInterval: Double(86400 * -i), since: lastRecord.date), pagesRead: 0))
-                }
-                
-                for record in readingBook.readingRecords {
-                    if let index = filterChartDataArray.firstIndex(where: { element in
-                        return record.date.isEqual([.year, .month, .day], date: element.date)
-                    }) {
-                        filterChartDataArray[index].pagesRead = record.numOfPagesRead
-                    }
-                }
-            }
-            return filterChartDataArray
-        case .oneYear:
-            if let lastRecord = readingBook.readingRecords.last {
-                for i in 0..<12 {
-                    filterChartDataArray.append(ReadingData(date: Date(timeInterval: Double(86400 * 30 * -i), since: lastRecord.date), pagesRead: 0))
-                }
-                
-                for record in readingBook.readingRecords {
-                    if let index = filterChartDataArray.firstIndex(where: { element in
-                        return record.date.isEqual([.year, .month], date: element.date)
-                    }) {
-                        filterChartDataArray[index].pagesRead += record.numOfPagesRead
-                    } else {
-                        filterChartDataArray.append(ReadingData(date: record.date, pagesRead: record.numOfPagesRead))
-                    }
-                }
-            }
-            return filterChartDataArray
-        }
+
+    var scrollPositionStart: Date {
+        Date(timeIntervalSinceReferenceDate: scrollPosition)
     }
     
+    var scrollPositionEnd: Date {
+        scrollPositionStart.addingTimeInterval(3600 * 14 * 24)
+    }
+    
+    var scrollPositionStartString: String {
+        scrollPositionStart.standardDateFormat
+    }
+    
+    var scrollPositionEndString: String {
+        scrollPositionEnd.standardDateFormat
+    }
+    
+    // MARK: - BODY
+    
+    var body: some View {
+        VStack {
+            VStack(alignment: .leading, spacing: -2) {
+                Text("총 읽은 페이지")
+                    .font(.callout.weight(.semibold))
+                    .foregroundStyle(Color.secondary)
+                
+                HStack(alignment: .firstTextBaseline) {
+                    Text("\(totalReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
+                        .font(.title.weight(.bold))
+                        .foregroundStyle(readingBook.category.accentColor)
+                    Text("페이지")
+                        .font(.headline)
+                        .foregroundStyle(Color.secondary)
+                    
+                    Spacer()
+                }
+                
+                Text("\(scrollPositionStartString) ~ \(scrollPositionEndString)")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Color.secondary)
+            }
+            
+            Chart(readingBook.readingRecords, id: \.self) { record in
+                BarMark(
+                    x: .value("date", record.date, unit: .day),
+                    y: .value("page", record.numOfPagesRead)
+                )
+                .foregroundStyle(readingBook.category.accentColor)
+            }
+            .chartScrollableAxes(.horizontal)
+            .chartXVisibleDomain(length: 3600 * 24 * 14)
+            .chartScrollTargetBehavior(
+                .valueAligned(
+                    matching: DateComponents(hour: 0),
+                    majorAlignment: .matching(.init(day: 1))
+                )
+            )
+            .chartScrollPosition(x: $scrollPosition)
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day, count: 7)) {
+                    AxisTick()
+                    AxisGridLine()
+                    AxisValueLabel(format: .dateTime.month().day())
+                }
+            }
+            .frame(height: 300)
+            
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isPresentingAverageRuleMark.toggle()
+                }
+            } label: {
+                HStack {
+                    Text("일 평균 독서 페이지")
+                        .fontWeight(.bold)
+                    
+                    Spacer()
+                    
+                    if !readingBook.readingRecords.isEmpty {
+                        Text("\(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
+                    } else {
+                        Text("-")
+                    }
+                }
+                .padding()
+                .foregroundColor(isPresentingAverageRuleMark ? Color.white : Color.black)
+                .background(isPresentingAverageRuleMark ? readingBook.category.accentColor : Color("Background"))
+                .cornerRadius(20)
+
+                .padding(.vertical, 5)
+            }
+            .disabled(readingBook.readingRecords.isEmpty)
+            
+            Section {
+                HStack {
+                    HStack {
+                        Image(systemName: highlightMajorReadingPeriod.systemImage)
+                            .font(.largeTitle)
+                            .foregroundColor(highlightMajorReadingPeriod.accentColor)
+                        
+                        VStack(alignment: .leading) {
+                            Text("주 독서 시간대")
+                                .font(.caption)
+                                .foregroundColor(Color.gray)
+                            Text("\(highlightMajorReadingPeriod.name)")
+                                .font(.title2.weight(.bold))
+                                .foregroundColor(highlightMajorReadingPeriod.accentColor)
+                        }
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    .background(Color("Background"))
+                    .cornerRadius(20)
+                    .padding([.bottom])
+                    
+                    HStack {
+                        if consecutiveReadingDays != 0 {
+                            Image(systemName: "calendar.circle.fill")
+                                .font(.largeTitle)
+                        } else {
+                            Image(systemName: "circle")
+                                .font(.largeTitle)
+                                .foregroundColor(Color.gray)
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text("연속 스트릭")
+                                .font(.caption)
+                                .foregroundColor(Color.gray)
+                            if consecutiveReadingDays != 0 {
+                                Text("\(consecutiveReadingDays)일")
+                                    .font(.title2.weight(.bold))
+                            } else {
+                                Text("-")
+                                    .font(.title2.weight(.bold))
+                                    .foregroundColor(Color.gray)
+                            }
+                        }
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    .background(Color("Background"))
+                    .cornerRadius(20)
+                    .padding([.bottom])
+                }
+            } header: {
+                Text("하이라이트")
+                    .font(.title3.weight(.bold))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding([.horizontal, .top])
+            }
+
+            VStack {
+                Button {
+                    isPresentingAllReadingDataSheet = true
+                } label: {
+                    Text("모든 데이터 보기")
+                        .font(.headline.weight(.bold))
+                        .foregroundColor(.primary)
+                        .frame(height: 45)
+                        .frame(maxWidth: .infinity)
+                        .background(Color("Background"))
+                        .clipShape(Capsule(style: .continuous))
+                        .opacity(readingBook.readingRecords.isEmpty ? 0.3 : 1)
+                }
+                .disabled(readingBook.readingRecords.isEmpty)
+                .padding(.bottom)
+            }
+            .padding(.bottom, 20)
+        }
+        .onAppear {
+            scrollPosition = readingBook.readingRecords.last!.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
+        }
+        .sheet(isPresented: $isPresentingAllReadingDataSheet) {
+            ReadingBookDataSheetView(readingBook)
+        }
+        .padding()
+    }
+    
+    func totalReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
+        readingBook.readingRecords.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.numOfPagesRead }
+    }
+    
+    func averageReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
+        totalReadPagesInPreiod(in: range) / readPagesCountInPeriod(in: range)
+    }
+    
+    func readPagesCountInPeriod(in range: ClosedRange<Date>) -> Int {
+        let count = readingBook.readingRecords.filter({ range.contains($0.date) }).count
+        return count != 0 ? count : 1
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension ReadingBookAnalysisView {
+    // 코드 깔끔하게 다듬기
     var highlightMajorReadingPeriod: HighlightMajorReadingPeriodItems {
         // 0번 - 새벽, 1번 - 아침, 2번 - 점심, 3번 저녁, 4번 - 없음
         var count = [Int](repeating: 0, count: 5)
@@ -199,350 +352,6 @@ struct ReadingBookAnalysisView: View {
         return max(currentConsecutiveDays, maxConsecutiveDays)
     }
     
-    // MARK: - BODY
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Text("독서 그래프")
-                    .font(.title3.weight(.semibold))
-                
-                Picker(selection: $selectedChartDateRange) {
-                    ForEach(ChartDateRangeTabItems.allCases, id: \.self) { item in
-                        Text(item.name)
-                    }
-                } label: {
-                    Text("Label")
-                }
-                .pickerStyle(.segmented)
-                .padding(.leading)
-            }
-            .padding(.horizontal)
-            .padding(.top, 10)
-            .padding(.bottom, 50)
-        
-            // MARK: - CHART (TEMP)
-            
-            barChart
-            
-            Button {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    isShowingAverageRuleMark.toggle()
-                }
-            } label: {
-                HStack {
-                    Group {
-                        if selectedChartDateRange == .oneMonth {
-                            Text("일 평균 독서 페이지")
-                        } else {
-                            Text("월 평균 독서 페이지")
-                        }
-                    }
-                    .fontWeight(.bold)
-                    
-                    Spacer()
-                    
-                    if !filteredChartDataArray.isEmpty {
-                        Text("\(getAverageValue())")
-                    } else {
-                        Text("-")
-                    }
-                }
-                .padding()
-                .foregroundColor(isShowingAverageRuleMark ? Color.white : Color.black)
-                .background(isShowingAverageRuleMark ? readingBook.category.accentColor : Color("Background"))
-                .cornerRadius(20)
-                .padding(.horizontal)
-                .padding(.vertical, 5)
-            }
-            .disabled(filteredChartDataArray.isEmpty)
-            
-            Section {
-                HStack {
-                    // ... 주 독서 시간대
-                    
-                    HStack {
-                        Image(systemName: highlightMajorReadingPeriod.systemImage)
-                            .font(.largeTitle)
-                            .foregroundColor(highlightMajorReadingPeriod.accentColor)
-                        
-                        VStack(alignment: .leading) {
-                            Text("주 독서 시간대")
-                                .font(.caption)
-                                .foregroundColor(Color.gray)
-                            Text("\(highlightMajorReadingPeriod.name)")
-                                .font(.title2.weight(.bold))
-                                .foregroundColor(highlightMajorReadingPeriod.accentColor)
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color("Background"))
-                    .cornerRadius(20)
-                    .padding([.bottom])
-                    
-                    // ... 연속 스트릭
-                    
-                    HStack {
-                        if consecutiveReadingDays != 0 {
-                            Image(systemName: "calendar.circle.fill")
-                                .font(.largeTitle)
-                        } else {
-                            Image(systemName: "circle")
-                                .font(.largeTitle)
-                                .foregroundColor(Color.gray)
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text("연속 스트릭")
-                                .font(.caption)
-                                .foregroundColor(Color.gray)
-                            if consecutiveReadingDays != 0 {
-                                Text("\(consecutiveReadingDays)일")
-                                    .font(.title2.weight(.bold))
-                            } else {
-                                Text("-")
-                                    .font(.title2.weight(.bold))
-                                    .foregroundColor(Color.gray)
-                            }
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color("Background"))
-                    .cornerRadius(20)
-                    .padding([.bottom])
-                }
-                .padding(.horizontal)
-            } header: {
-                Text("하이라이트")
-                    .font(.title3.weight(.bold))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding([.horizontal, .top])
-            }
-
-            
-            VStack {
-                Button {
-                    isPresentingAllReadingDataSheet = true
-                } label: {
-                    Text("모든 데이터 보기")
-                        .font(.headline.weight(.bold))
-                        .foregroundColor(.primary)
-                        .frame(height: 45)
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal)
-                        .background(Color("Background"))
-                        .clipShape(Capsule(style: .continuous))
-                        .opacity(readingBook.readingRecords.isEmpty ? 0.3 : 1)
-                }
-                .disabled(readingBook.readingRecords.isEmpty)
-                .padding([.horizontal, .bottom])
-            }
-            .padding(.bottom, 20)
-        }
-        .sheet(isPresented: $isPresentingAllReadingDataSheet) {
-            ReadingBookDataSheetView(readingBook)
-        }
-        .onChange(of: selectedChartDateRange) { _ in
-            selectedChartElement = nil
-        }
-    }
-
-    private func findElement(location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) -> ReadingData? {
-        let relativeXPosition = location.x - geometry[proxy.plotAreaFrame].origin.x
-        if let date = proxy.value(atX: relativeXPosition) as Date? {
-            // Find the closest date element.
-            var minDistance: TimeInterval = .infinity
-            var index: Int? = nil
-            for dataIndex in filteredChartDataArray.indices {
-                let nthDataDistance = filteredChartDataArray[dataIndex].date.distance(to: date)
-                if abs(nthDataDistance) < minDistance {
-                    minDistance = abs(nthDataDistance)
-                    index = dataIndex
-                }
-            }
-            if let index = index {
-                return filteredChartDataArray[index]
-            }
-        }
-        return nil
-    }
-    
-    private func getAverageValue() -> Int {
-        return filteredChartDataArray.reduce(0, { $0 + $1.pagesRead }) / countChartData()
-    }
-    
-    private func countChartData() -> Int {
-        var count = 1
-        
-        for data in filteredChartDataArray where data.pagesRead > 0 {
-            count += 1
-        }
-        return count
-    }
-}
-
-// MARK: - EXTENSIONS
-
-extension ReadingBookAnalysisView {
-    var barChart: some View {
-        Group {
-            if !filteredChartDataArray.isEmpty {
-                Chart {
-                    ForEach(filteredChartDataArray, id: \.self) { record in
-                        if selectedChartDateRange == .oneMonth {
-                            BarMark(
-                                x: .value("Date", record.date, unit: .day),
-                                y: .value("Page", record.pagesRead),
-                                width: .ratio(0.6)
-                            )
-                            .foregroundStyle(readingBook.category.accentColor.gradient)
-                            .opacity(isShowingAverageRuleMark ? 0.3 : 1)
-                        } else {
-                            BarMark(
-                                x: .value("Date", record.date, unit: .month),
-                                y: .value("Page", record.pagesRead),
-                                width: .ratio(0.6)
-                            )
-                            .foregroundStyle(readingBook.category.accentColor.gradient)
-                            .opacity(isShowingAverageRuleMark ? 0.3 : 1)
-                        }
-                        
-                        if isShowingAverageRuleMark {
-                            RuleMark(
-                                y: .value("Average", getAverageValue())
-                            )
-                            .foregroundStyle(Color.black)
-                            .annotation(position: .top, alignment: .leading) {
-                                if selectedChartDateRange == .oneMonth {
-                                    Text("일 평균 독서 페이지: \(getAverageValue())")
-                                } else {
-                                    Text("월 평균 독서 페이지: \(getAverageValue())")
-                                }
-                            }
-                        }
-                        
-                        
-                    }
-                }
-                .chartXAxis {
-                    if selectedChartDateRange == .oneMonth {
-                        AxisMarks(values: .stride(by: .day)) { value in
-                            
-                            let date = value.as(Date.self)!
-                            let components1 = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date)
-                            
-                            if components1.weekday == 1 {
-                                AxisGridLine()
-                                AxisTick()
-                                AxisValueLabel(format: .dateTime.day().locale(Locale(identifier: "ko_kr")))
-                            }
-                            
-                        }
-                    } else {
-                        AxisMarks(values: .stride(by: .month)) { value in
-                            AxisGridLine()
-                            AxisTick()
-                            AxisValueLabel(format: .dateTime.month(.defaultDigits))
-                        }
-                    }
-                }
-                .chartOverlay { proxy in
-                    GeometryReader { geo in
-                        Rectangle().fill(.clear).contentShape(Rectangle())
-                            .gesture(
-                                SpatialTapGesture()
-                                    .onEnded { value in
-                                        let element = findElement(location: value.location, proxy: proxy, geometry: geo)
-                                        if selectedChartElement?.date == element?.date {
-                                            // If tapping the same element, clear the selection.
-                                            selectedChartElement = nil
-                                        } else {
-                                            selectedChartElement = element
-                                        }
-                                    }
-                                    .exclusively(
-                                        before: DragGesture()
-                                            .onChanged { value in
-                                                selectedChartElement = findElement(location: value.location, proxy: proxy, geometry: geo)
-                                            }
-                                            .onEnded { _ in
-                                                selectedChartElement = nil
-                                            }
-                                    )
-                            )
-                    }
-                }
-                .chartBackground { proxy in
-                    ZStack(alignment: .topLeading) {
-                        GeometryReader { geo in
-                            if let selectedElement = selectedChartElement {
-                                let dateInterval = Calendar.current.dateInterval(of: .day, for: selectedElement.date)!
-                                let startPositionX = proxy.position(forX: dateInterval.start) ?? 0
-                                let midStartPositionX = startPositionX + geo[proxy.plotAreaFrame].origin.x + 5
-                                let lineHeight = geo[proxy.plotAreaFrame].maxY
-                                let boxWidth: CGFloat = 120
-                                let boxOffset = max(0, min(geo.size.width - boxWidth, midStartPositionX - boxWidth / 2))
-                                
-                                Rectangle()
-                                    .fill(.quaternary)
-                                    .frame(width: 2, height: lineHeight)
-                                    .position(x: midStartPositionX, y: lineHeight / 2)
-                                
-                                VStack(alignment: .leading) {
-                                    Group {
-                                        if selectedChartDateRange == .oneMonth {
-                                            Text(selectedElement.date.toFormat("yyyy년 M월 d일"))
-                                        } else {
-                                            Text(selectedElement.date.toFormat("yyyy년 M월 d일"))
-                                        }
-                                    }
-                                    .font(.callout)
-                                    .foregroundStyle(.secondary)
-                                                                                
-                                    Text("\(selectedElement.pagesRead, format: .number) 페이지")
-                                        .font(.title2.bold())
-                                        .foregroundColor(.primary)
-                                }
-                                .frame(width: boxWidth, alignment: .leading)
-                                .background {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(.background)
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(.quaternary.opacity(0.7))
-                                    }
-                                    .padding([.leading, .trailing], -8)
-                                    .padding([.top, .bottom], -4)
-                                }
-                                .offset(x: boxOffset, y: -58)
-                            }
-                        }
-                    }
-                }
-                .frame(height: 250)
-                .padding()
-            } else {
-                VStack(spacing: 5) {
-                    Text("그래프를 그릴 수 없음")
-                        .font(.title2.weight(.bold))
-                    
-                    Text("그래프를 보려면 독서 데이터를 추가하십시오.")
-                        .font(.callout)
-                        .foregroundColor(.secondary)
-                        .minimumScaleFactor(0.5)
-                }
-                .frame(height: 280)
-                .frame(maxWidth: .infinity)
-                .background(Color("Background"))
-                .cornerRadius(20)
-                .padding(.horizontal)
-            }
-        }
-    }
 }
 
 // MARK: - PREVIEW

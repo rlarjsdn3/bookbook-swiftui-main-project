@@ -28,16 +28,18 @@ struct SentenceCellButton: View {
         self.collectSentence = collectSentence
     }
     
+    // 문장 상세보기 화면 추가는 보류하기
+    
     var body: some View {
         VStack {
-            NavigationLink {
-                CollectSentenceView(bookID: readingBook._id, collectID: collectSentence._id)
-            } label: {
+//            NavigationLink {
+//                CollectSentenceView(bookID: readingBook._id, collectID: collectSentence._id)
+//            } label: {
                 HStack(alignment: .firstTextBaseline) {
                     Text(collectSentence.sentence)
                         .fontWeight(.bold)
-                        .lineLimit(5)
-                        .truncationMode(.middle)
+//                        .lineLimit(5)
+//                        .truncationMode(.middle)
                     
                     Spacer()
                     
@@ -45,8 +47,8 @@ struct SentenceCellButton: View {
                         .foregroundColor(.secondary)
                 }
                 .padding([.leading, .top, .trailing])
-            }
-            .buttonStyle(.plain)
+//            }
+//            .buttonStyle(.plain)
             
             HStack {
                 Text(collectSentence.date.standardDateFormat)

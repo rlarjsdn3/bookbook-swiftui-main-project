@@ -38,6 +38,7 @@ struct CategoryRoundedButton: View {
                 scrollProxy.scrollTo(type.rawValue)
             }
             selectedCategory = type
+            HapticManager.shared.impact(.light)
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 15)
@@ -55,7 +56,8 @@ struct CategoryRoundedButton: View {
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(selectedCategoryForAnimation == type ? .white : .black)
-                    .padding(.horizontal, selectedCategoryForAnimation == type ? 25 : 15)
+//                    .minimumScaleFactor(0.9)
+                    .padding(.horizontal, selectedCategoryForAnimation == type ? 15 : 15)
             }
         }
         .padding(.horizontal, 15)
