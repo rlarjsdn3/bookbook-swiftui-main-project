@@ -84,6 +84,8 @@ struct TotalPagesReadByCategoryChartView: View {
                                         .foregroundStyle(Color.secondary)
                                     Text("\(selectedStyle.pages)페이지")
                                         .font(.callout.weight(.bold))
+                                    Text("\(readingPageRatio(selectedStyle.pages))%")
+                                        .font(.caption)
                                 } else {
                                     VStack {
                                         Text("분류 별")
@@ -114,12 +116,16 @@ struct TotalPagesReadByCategoryChartView: View {
                     VStack(spacing: 0) {
                         ForEach(totalPagesReadByCategoryData) { item in
                             VStack(spacing: 0) {
-                                HStack {
+                                HStack(alignment: .firstTextBaseline, spacing: 3) {
                                     Text(item.category.rawValue)
                                     
                                     Spacer()
                                     
                                     Text("\(item.pages)페이지")
+                                        .foregroundStyle(Color.secondary)
+                                    
+                                    Text("(\(readingPageRatio(item.pages))%)")
+                                        .font(.caption)
                                         .foregroundStyle(Color.secondary)
                                 }
                                 .padding(.vertical, 13)
@@ -141,6 +147,10 @@ struct TotalPagesReadByCategoryChartView: View {
             }
         }
         .navigationBarBackButtonHidden()
+    }
+    
+    func readingPageRatio(_ pages: Int) -> String {
+        (Double(pages) / Double(totalPagesReadByCategoryData.reduce(0, { $0 + $1.pages })) * 100.0).formatted(.number.precision(.fractionLength(1)))
     }
 }
 
