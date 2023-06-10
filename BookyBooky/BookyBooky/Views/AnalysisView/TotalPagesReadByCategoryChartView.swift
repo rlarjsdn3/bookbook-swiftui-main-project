@@ -9,6 +9,8 @@ import SwiftUI
 import Charts
 import RealmSwift
 
+// 퍼센티지 비율도 함께 출력하기
+
 struct TotalPagesReadByCategoryChartView: View {
     
     @Environment(\.dismiss) var dismiss
@@ -100,13 +102,13 @@ struct TotalPagesReadByCategoryChartView: View {
                     .padding()
                     .background(Color.white)
                     .clipShape(.rect(cornerRadius: 15))
-                    .padding()
+                    .padding(.bottom, 15)
                     
                     Text("세부 정보")
                         .font(.caption)
                         .foregroundStyle(Color.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 33)
+                        .padding(.horizontal, 17)
                         .padding(.bottom, 0)
                     
                     VStack(spacing: 0) {
@@ -133,8 +135,8 @@ struct TotalPagesReadByCategoryChartView: View {
                     }
                     .background(Color.white)
                     .clipShape(.rect(cornerRadius: 15))
-                    .padding(.horizontal)
                 }
+                .safeAreaPadding()
             }
         }
         .navigationBarBackButtonHidden()

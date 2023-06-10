@@ -64,6 +64,24 @@ struct AnalysisView: View {
         return dailyPages
     }
     
+    var monthlyPages: [DailyPagesRead] {
+        var monthlyPages: [DailyPagesRead] = []
+        
+        for readingBook in readingBooks {
+            for record in readingBook.readingRecords {
+                if let index = monthlyPages.firstIndex(where: { $0.date.isEqual([.year, .month], date: record.date) }) {
+                    monthlyPages[index].pages += record.numOfPagesRead
+                } else {
+                    monthlyPages.append(
+                        DailyPagesRead(date: record.date, pages: record.numOfPagesRead)
+                    )
+                }
+            }
+        }
+        
+        return monthlyPages
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -136,7 +154,7 @@ struct AnalysisView: View {
                         // 구분선 - 일일 독서 페이지 막대 그래프
                         
                         NavigationLink {
-                            TotalPagesReadByCategoryChartView(data: totalPagesByCategory)
+                            DailyPagesReadChartView(daily: dailyPages, monthly: monthlyPages)
                         } label: {
                             VStack {
                                 HStack(alignment: .firstTextBaseline) {
