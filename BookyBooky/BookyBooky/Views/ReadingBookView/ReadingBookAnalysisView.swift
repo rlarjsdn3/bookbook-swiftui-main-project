@@ -104,7 +104,7 @@ struct ReadingBookAnalysisView: View {
         Group {
             if readingBook.readingRecords.isEmpty {
                 VStack(spacing: 5) {
-                    Text("분석 데이터가 없음")
+                    Text("차트를 표시할 수 없음")
                         .font(.title3)
                         .fontWeight(.bold)
                     

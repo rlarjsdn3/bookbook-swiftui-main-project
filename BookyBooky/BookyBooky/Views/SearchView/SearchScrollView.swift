@@ -53,8 +53,7 @@ struct SearchScrollView: View {
     
     var body: some View {
         ZStack {
-            Color.background
-                .ignoresSafeArea()
+            Color(.background)
             
             if listOfBooksAccordingToSelectedType.isEmpty {
                 networkErrorLabel

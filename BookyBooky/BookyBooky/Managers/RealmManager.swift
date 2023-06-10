@@ -77,51 +77,19 @@ extension RealmManager {
         if let lastRecord = object.lastRecord {
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일한 경우
             if Date().isEqual([.year, .month, .day], date: lastRecord.date) {
-                // 독서 데이터 삭제하기
-//                DispatchQueue.global().sync {
-//                    try! realm.write {
-//                        object.readingRecords.remove(at: object.readingRecords.endIndex - 1)
-//                    }
-//                }
-                
                 if object.readingRecords.count <= 1 {
-//                    readingRecord = ReadingRecord(
-//                        value: ["date": Date(),
-//                                "totalPagesRead": totalPagesRead,
-//                                "numOfPagesRead": totalPagesRead
-//                               ] as [String : Any]
-//                    )
-//                     독서 데이터 추가하기
                     try! realm.write {
                         object.readingRecords.last?.date = Date()
                         object.readingRecords.last?.totalPagesRead = totalPagesRead
                         object.readingRecords.last?.numOfPagesRead = totalPagesRead
                     }
                 } else {
-//                    readingRecord = ReadingRecord(
-//                        value: ["date": Date(),
-//                                "totalPagesRead": totalPagesRead,
-//                                "numOfPagesRead": totalPagesRead - lastRecord.totalPagesRead
-//                               ] as [String : Any]
-//                    )
-//                     독서 데이터 추가하기
-                    
                     try! realm.write {
-                        object.readingRecords.last?.date = Date().addingTimeInterval(86400)
+                        object.readingRecords.last?.date = Date()
                         object.readingRecords.last?.totalPagesRead = totalPagesRead
                         object.readingRecords.last?.numOfPagesRead = totalPagesRead - readingBook.readingRecords[readingBook.readingRecords.endIndex - 2].totalPagesRead
                     }
-                }
-                
-//                try! realm.write {
-//                    object.readingRecords.append(readingRecord)
-//                }
-                
-                // NOTE: - 하나의 코드 블록 안에 두 번의 트랜잭션을 수행한다면, 각각의 트랜잭션이 다른 스레드에서 동시에 수행될 수 있습니다.
-                //       - 이는 동시성 문제를 야기할 수 있는 상황입니다. 따라서 DispatchQueue를 활용해 트랜잭션을 동기적으로 수행하도록 해야 합니다.
-                //       - 위 코드에서는 마지막 독서 데이터의 삭제 연산을 동기적으로 수행합니다.
-                //       - (알 수 없는 이유로 수정 연산을 수행하는 경우, 뷰가 제대로 리-렌더링되지 않습니다. 하는 수 없이 삭제 후 추가 연산으로 구현하였습니다.)
-                
+                }                
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일하지 않은 경우
             } else {
                 let readingRecord = ReadingRecord(
