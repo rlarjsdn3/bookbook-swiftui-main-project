@@ -136,6 +136,7 @@ struct TotalPagesReadByCategoryChartView: View {
                     .background(Color.white)
                     .clipShape(.rect(cornerRadius: 15))
                 }
+                .scrollIndicators(.hidden)
                 .safeAreaPadding()
             }
         }

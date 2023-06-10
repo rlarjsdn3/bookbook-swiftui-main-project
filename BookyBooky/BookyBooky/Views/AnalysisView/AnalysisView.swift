@@ -193,15 +193,17 @@ struct AnalysisView: View {
                                     }
                                     .chartXAxis(.hidden)
                                     .chartYAxis(.hidden)
-                                    .chartXScale(domain: Date().addingTimeInterval(-14*86400)...Date())
+                                    .chartXScale(
+                                        domain: Date().addingTimeInterval(-14*86400)...Date(),
+                                        range: .plotDimension(startPadding: 0, endPadding: 15)
+                                    )
                                     .frame(height: 50)
                                     .padding(5)
                                 }
                             }
                             .padding(.vertical, 15)
                             .padding(.horizontal, 10)
-                            .background(Color.white)
-                            .clipShape(.rect(cornerRadius: 10))
+                            .background(Color.white, in: .rect(cornerRadius: 10))
                         }
                         .disabled(totalPagesByCategory.isEmpty ? true : false)
                         .buttonStyle(.plain)

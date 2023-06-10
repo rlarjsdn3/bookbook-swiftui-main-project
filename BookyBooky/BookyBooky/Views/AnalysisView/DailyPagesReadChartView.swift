@@ -262,6 +262,7 @@ struct DailyPagesReadChartView: View {
                         .clipShape(.rect(cornerRadius: 15))
                     }
                 }
+                .scrollIndicators(.hidden)
                 .safeAreaPadding()
             }
         }
