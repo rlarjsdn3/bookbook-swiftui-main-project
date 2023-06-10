@@ -17,10 +17,10 @@ struct TotalPagesReadByCategoryChartView: View {
     
     @State private var selectedCategory: Double? = nil
     
-    let totalPagesReadByCategoryData: [totalPagesReadByCategory]
+    let totalPagesReadByCategoryData: [TotalPagesReadByCategory]
     let cumulativeSalesRangesForStyles: [(name: String, range: Range<Double>)]
     
-    var selectedStyle: totalPagesReadByCategory? {
+    var selectedStyle: TotalPagesReadByCategory? {
         if let selectedCategory,
            let selectedIndex = cumulativeSalesRangesForStyles
             .firstIndex(where: { $0.range.contains(selectedCategory) }) {
@@ -30,12 +30,12 @@ struct TotalPagesReadByCategoryChartView: View {
         return nil
     }
 
-    init(data: [totalPagesReadByCategory]) {
+    init(data: [TotalPagesReadByCategory]) {
         self.totalPagesReadByCategoryData = data
         
         var cumulative = 0.0
         self.cumulativeSalesRangesForStyles = totalPagesReadByCategoryData.map {
-            let newCumulative = cumulative + Double($0.totalPagesRead)
+            let newCumulative = cumulative + Double($0.pages)
             let result = (name: $0.category.rawValue, range: cumulative ..< newCumulative)
             cumulative = newCumulative
             return result
@@ -63,7 +63,7 @@ struct TotalPagesReadByCategoryChartView: View {
                 ScrollView {
                     Chart(totalPagesReadByCategoryData) { element in
                         SectorMark(
-                            angle: .value("pages", element.totalPagesRead),
+                            angle: .value("pages", element.pages),
                             innerRadius: .ratio(0.618),
                             angularInset: 1.5
                         )
@@ -80,7 +80,7 @@ struct TotalPagesReadByCategoryChartView: View {
                                     Text(selectedStyle.category.rawValue)
                                         .font(.caption)
                                         .foregroundStyle(Color.secondary)
-                                    Text("\(selectedStyle.totalPagesRead)페이지")
+                                    Text("\(selectedStyle.pages)페이지")
                                         .font(.callout.weight(.bold))
                                 } else {
                                     VStack {
@@ -110,22 +110,20 @@ struct TotalPagesReadByCategoryChartView: View {
                         .padding(.bottom, 0)
                     
                     VStack(spacing: 0) {
-                        let sorted = totalPagesReadByCategoryData.sorted { $0.totalPagesRead > $1.totalPagesRead }
-                        
-                        ForEach(sorted) { item in
+                        ForEach(totalPagesReadByCategoryData) { item in
                             VStack(spacing: 0) {
                                 HStack {
                                     Text(item.category.rawValue)
                                     
                                     Spacer()
                                     
-                                    Text("\(item.totalPagesRead)페이지")
+                                    Text("\(item.pages)페이지")
                                         .foregroundStyle(Color.secondary)
                                 }
                                 .padding(.vertical, 13)
                                 .padding(.horizontal)
                                 
-                                if sorted.last != item {
+                                if totalPagesReadByCategoryData.last != item {
                                     Divider()
                                         .padding(.horizontal, 10)
                                         .offset(x: 10)
