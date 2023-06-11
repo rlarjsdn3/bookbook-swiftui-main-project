@@ -325,12 +325,12 @@ struct AnalysisView: View {
                             .background(Color.white, in: .rect(cornerRadius: 20))
                             
                             HStack {
-                                Image(systemName: "heart")
+                                Image(systemName: "calendar.circle.fill")
                                     .font(.largeTitle)
                                     .foregroundColor(Color.black)
                                 
                                 VStack(alignment: .leading) {
-                                    Text("주 독서 시간대")
+                                    Text("연속 독서일")
                                         .font(.caption)
                                         .foregroundColor(Color.gray)
                                     Text("오전")
@@ -346,17 +346,30 @@ struct AnalysisView: View {
                         
                         HStack {
                             HStack {
-                                Image(systemName: "heart")
-                                    .font(.largeTitle)
-                                    .foregroundColor(Color.black)
+                                if !totalPagesByCategory.isEmpty {
+                                    Image(systemName: "list.bullet.circle.fill")
+                                        .font(.largeTitle)
+                                        .foregroundColor(totalPagesByCategory[0].category.accentColor)
+                                } else {
+                                    Image(systemName: "list.bullet.circle.fill")
+                                        .font(.largeTitle)
+                                        .foregroundColor(Color.black)
+                                }
                                 
                                 VStack(alignment: .leading) {
-                                    Text("주 독서 시간대")
+                                    Text("주 독서 분야")
                                         .font(.caption)
                                         .foregroundColor(Color.gray)
-                                    Text("오전")
-                                        .font(.title2.weight(.bold))
-                                        .foregroundColor(Color.yellow)
+                                    if !totalPagesByCategory.isEmpty {
+                                        Text("\(totalPagesByCategory[0].category.rawValue)")
+                                            .font(.title2.weight(.bold))
+                                            .foregroundColor(totalPagesByCategory[0].category.accentColor)
+                                            .minimumScaleFactor(0.5)
+                                    } else {
+                                        Text("-")
+                                            .font(.title2.weight(.bold))
+                                            .foregroundColor(Color.secondary)
+                                    }
                                 }
                                 
                                 Spacer()
@@ -365,12 +378,12 @@ struct AnalysisView: View {
                             .background(Color.white, in: .rect(cornerRadius: 20))
                             
                             HStack {
-                                Image(systemName: "heart")
+                                Image(systemName: "books.vertical.circle.fill")
                                     .font(.largeTitle)
                                     .foregroundColor(Color.black)
                                 
                                 VStack(alignment: .leading) {
-                                    Text("주 독서 시간대")
+                                    Text("총 완독 권수")
                                         .font(.caption)
                                         .foregroundColor(Color.gray)
                                     Text("오전")
@@ -386,7 +399,9 @@ struct AnalysisView: View {
                         
                         
                     }
-                    .safeAreaPadding()
+                    .scrollIndicators(.hidden)
+                    .safeAreaPadding([.leading, .top, .trailing])
+                    .safeAreaPadding(.bottom, 40)
                 }
             }
         }
