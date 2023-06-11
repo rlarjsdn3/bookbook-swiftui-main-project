@@ -127,6 +127,11 @@ struct AnalysisView: View {
                     
                     ScrollView {
                         
+                        Text("요약")
+                            .font(.title2.weight(.bold))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.bottom, -2)
+                        
                         // 구분선: - 분류 별 독서 현황 파이 차트
                         
                         NavigationLink {
@@ -240,7 +245,7 @@ struct AnalysisView: View {
                         // 구분선 - 일일 독서 페이지 막대 그래프
                         
                         NavigationLink {
-                            DailyPagesReadChartView(daily: dailyPages, monthly: monthlyPages)
+                            monthlyCompleteBookChartView(monthlyCompleteBook)
                         } label: {
                             VStack {
                                 HStack(alignment: .firstTextBaseline) {
@@ -292,9 +297,92 @@ struct AnalysisView: View {
                         }
                         .disabled(monthlyCompleteBook.isEmpty ? true : false)
                         .buttonStyle(.plain)
+                        .padding(.bottom)
                         
+                        Text("하이라이트")
+                            .font(.title2.weight(.bold))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.bottom, -2)
                         
+                        HStack {
+                            HStack {
+                                Image(systemName: "heart")
+                                    .font(.largeTitle)
+                                    .foregroundColor(Color.black)
+                                
+                                VStack(alignment: .leading) {
+                                    Text("주 독서 시간대")
+                                        .font(.caption)
+                                        .foregroundColor(Color.gray)
+                                    Text("오전")
+                                        .font(.title2.weight(.bold))
+                                        .foregroundColor(Color.yellow)
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding()
+                            .background(Color.white, in: .rect(cornerRadius: 20))
+                            
+                            HStack {
+                                Image(systemName: "heart")
+                                    .font(.largeTitle)
+                                    .foregroundColor(Color.black)
+                                
+                                VStack(alignment: .leading) {
+                                    Text("주 독서 시간대")
+                                        .font(.caption)
+                                        .foregroundColor(Color.gray)
+                                    Text("오전")
+                                        .font(.title2.weight(.bold))
+                                        .foregroundColor(Color.yellow)
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding()
+                            .background(Color.white, in: .rect(cornerRadius: 20))
+                        }
                         
+                        HStack {
+                            HStack {
+                                Image(systemName: "heart")
+                                    .font(.largeTitle)
+                                    .foregroundColor(Color.black)
+                                
+                                VStack(alignment: .leading) {
+                                    Text("주 독서 시간대")
+                                        .font(.caption)
+                                        .foregroundColor(Color.gray)
+                                    Text("오전")
+                                        .font(.title2.weight(.bold))
+                                        .foregroundColor(Color.yellow)
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding()
+                            .background(Color.white, in: .rect(cornerRadius: 20))
+                            
+                            HStack {
+                                Image(systemName: "heart")
+                                    .font(.largeTitle)
+                                    .foregroundColor(Color.black)
+                                
+                                VStack(alignment: .leading) {
+                                    Text("주 독서 시간대")
+                                        .font(.caption)
+                                        .foregroundColor(Color.gray)
+                                    Text("오전")
+                                        .font(.title2.weight(.bold))
+                                        .foregroundColor(Color.yellow)
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding()
+                            .background(Color.white, in: .rect(cornerRadius: 20))
+                        }
                         
                         
                     }

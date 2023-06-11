@@ -263,7 +263,8 @@ struct DailyPagesReadChartView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
-                .safeAreaPadding()
+                .safeAreaPadding([.leading, .top, .trailing])
+                .safeAreaPadding(.bottom, 40)
             }
         }
         .onChange(of: selectedTimeRange, initial: true) { newValue, _ in

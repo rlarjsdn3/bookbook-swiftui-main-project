@@ -253,8 +253,7 @@ extension ReadingBookAnalysisView {
                     Spacer()
                 }
                 .padding()
-                .background(Color("Background"))
-                .cornerRadius(20)
+                .background(Color(.background), in: .rect(cornerRadius: 20))
                 .padding([.bottom])
                 
                 HStack {

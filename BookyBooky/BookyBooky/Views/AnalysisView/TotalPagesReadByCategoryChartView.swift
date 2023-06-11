@@ -143,7 +143,8 @@ struct TotalPagesReadByCategoryChartView: View {
                     .clipShape(.rect(cornerRadius: 15))
                 }
                 .scrollIndicators(.hidden)
-                .safeAreaPadding()
+                .safeAreaPadding([.leading, .top, .trailing])
+                .safeAreaPadding(.bottom, 40)
             }
         }
         .navigationBarBackButtonHidden()
