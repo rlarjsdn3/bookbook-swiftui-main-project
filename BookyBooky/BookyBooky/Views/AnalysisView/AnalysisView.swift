@@ -23,6 +23,13 @@ struct DailyPagesRead: Identifiable, Hashable {
     var id: Date { date }
 }
 
+struct MonthlyCompleteBook: Identifiable, Hashable {
+    var date: Date
+    var count: Int
+    
+    var id: Date { date }
+}
+
 
 struct AnalysisView: View {
     
@@ -80,6 +87,26 @@ struct AnalysisView: View {
         }
         
         return monthlyPages
+    }
+    
+    // 아직 미완성 코드 - 월별 완독 권수를 카운팅하는 게산 프로퍼티
+    
+    var monthlyCompleteBook: [MonthlyCompleteBook] {
+        var monthlyCompleteBook: [MonthlyCompleteBook] = []
+        
+        for readingBook in readingBooks {
+            if readingBook.isComplete {
+                if let index = monthlyCompleteBook.firstIndex(where: { $0.date.isEqual([.year ,.month], date: readingBook.completeDate ?? Date()) } ) {
+                    monthlyCompleteBook[index].count += 1
+                } else {
+                    monthlyCompleteBook.append(
+                        MonthlyCompleteBook(date: readingBook.completeDate ?? Date(), count: 1)
+                    )
+                }
+            }
+        }
+        
+        return monthlyCompleteBook
     }
     
     var body: some View {
@@ -194,8 +221,7 @@ struct AnalysisView: View {
                                     .chartXAxis(.hidden)
                                     .chartYAxis(.hidden)
                                     .chartXScale(
-                                        domain: Date().addingTimeInterval(-14*86400)...Date(),
-                                        range: .plotDimension(startPadding: 0, endPadding: 15)
+                                        domain: Date().addingTimeInterval(-14*86400)...Date()
                                     )
                                     .frame(height: 50)
                                     .padding(5)
@@ -210,6 +236,67 @@ struct AnalysisView: View {
                         
                         
                         
+                        
+                        // 구분선 - 일일 독서 페이지 막대 그래프
+                        
+                        NavigationLink {
+                            DailyPagesReadChartView(daily: dailyPages, monthly: monthlyPages)
+                        } label: {
+                            VStack {
+                                HStack(alignment: .firstTextBaseline) {
+                                    Label("일일 완독 권수", systemImage: "book")
+                                        .font(.headline)
+                                        .foregroundStyle(Color.black)
+                                    
+                                    Spacer()
+                                    
+                                    Group {
+                                        Text("자세히 보기")
+                                        Image(systemName: "chevron.right")
+                                    }
+                                    .font(.subheadline)
+                                    .foregroundStyle(Color.secondary)
+                                }
+                                
+                                if monthlyCompleteBook.isEmpty {
+                                    VStack(spacing: 3) {
+                                        Text("차트를 표시할 수 없음")
+                                            .font(.headline)
+                                        
+                                        Text("독서를 시작해보세요.")
+                                            .font(.subheadline)
+                                            .foregroundStyle(Color.secondary)
+                                    }
+                                    .padding()
+                                } else {
+                                    Chart(monthlyCompleteBook, id: \.self) { element in
+                                        BarMark(
+                                            x: .value("date", element.date, unit: .day),
+                                            y: .value("pages", element.count)
+                                        )
+                                        .cornerRadius(5.0)
+                                        .foregroundStyle(element.date.isEqual([.year, .month, .day], date: Date()) ? Color.blue : Color.gray)
+                                    }
+                                    .chartXAxis(.hidden)
+                                    .chartYAxis(.hidden)
+                                    .chartXScale(
+                                        domain: Date().addingTimeInterval(-14*86400)...Date()
+                                    )
+                                    .frame(height: 50)
+                                    .padding(5)
+                                }
+                            }
+                            .padding(.vertical, 15)
+                            .padding(.horizontal, 10)
+                            .background(Color.white, in: .rect(cornerRadius: 10))
+                        }
+                        .disabled(monthlyCompleteBook.isEmpty ? true : false)
+                        .buttonStyle(.plain)
+                        
+                        
+                        
+                        
+                        
                     }
                     .safeAreaPadding()
                 }
@@ -218,6 +305,7 @@ struct AnalysisView: View {
         .onAppear {
             print(totalPagesByCategory)
             print(dailyPages)
+            print(monthlyCompleteBook)
         }
     }
 }
