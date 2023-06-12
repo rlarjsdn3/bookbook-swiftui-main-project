@@ -10,7 +10,7 @@ import SwiftUI
 struct NavigationBarItemStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.title2)
+            .font(.title3)
             .fontWeight(.semibold)
             .foregroundColor(.black)
             .padding([.leading, .trailing], 25)

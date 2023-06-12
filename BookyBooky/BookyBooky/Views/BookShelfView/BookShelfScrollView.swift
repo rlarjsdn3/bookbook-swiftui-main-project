@@ -207,11 +207,11 @@ extension BookShelfScrollView {
                 
                 ForEach(recent10FavoriteBooks) { favoriteBook in
                     FavoriteBookCellButton(favoriteBook, viewType: .sheet)
-                        .padding(.vertical, 10)
+                        .padding(.top)
                 }
-                .padding(.leading, 10)
             }
         }
+        .safeAreaPadding([.leading, .bottom, .trailing])
     }
     
     var noFavoriteBooksLabel: some View {
@@ -250,7 +250,6 @@ extension BookShelfScrollView {
         .background(.white)
         .overlay(alignment: .bottom) {
             Divider()
-                .opacity(scrollYOffset > 150.0 ? 1 : 0)
         }
     }
 }
@@ -319,7 +318,6 @@ extension BookShelfScrollView {
         
         .overlay(alignment: .bottom) {
             Divider()
-                .opacity(!favoriteBooks.isEmpty ? scrollYOffset > 480.0 ? 1 : 0 : scrollYOffset > 290.0 ? 1 : 0)
         }
     }
 }

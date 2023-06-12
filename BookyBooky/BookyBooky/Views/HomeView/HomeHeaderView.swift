@@ -54,6 +54,10 @@ extension HomeHeaderView {
             SearchSheetView()
         }
         .padding(.vertical)
+        .overlay(alignment: .bottom) {
+            Divider()
+                .opacity((scrollYOffset > 10 && scrollYOffset < 335) ? 1 : 0)
+        }
     }
     
     var navigationBarTitle: some View {

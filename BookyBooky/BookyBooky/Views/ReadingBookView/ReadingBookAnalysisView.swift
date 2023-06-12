@@ -11,55 +11,56 @@ import RealmSwift
 
 // 코드 리팩토링 중...
 
+enum MajorReadingPeriodItems {
+    case morning
+    case lunch
+    case evening
+    case dawn
+    
+    var name: String {
+        switch self {
+        case .morning:
+            return "아침"
+        case .lunch:
+            return "점심"
+        case .evening:
+            return "저녁"
+        case .dawn:
+            return "새벽"
+        }
+    }
+    
+    var systemImage: String {
+        switch self {
+        case .morning:
+            return "sunrise.circle.fill"
+        case .lunch:
+            return "sun.max.circle.fill"
+        case .evening:
+            return "moon.circle.fill"
+        case .dawn:
+            return "moon.stars.circle.fill"
+        }
+    }
+    
+    var accentColor: Color {
+        switch self {
+        case .morning:
+            return Color.yellow
+        case .lunch:
+            return Color.orange
+        case .evening:
+            return Color.red
+        case .dawn:
+            return Color.black
+        }
+    }
+}
+
 struct ReadingBookAnalysisView: View {
     
     // MARK: - INNER ENUM
     
-    enum MajorReadingPeriodItems {
-        case morning
-        case lunch
-        case evening
-        case dawn
-        
-        var name: String {
-            switch self {
-            case .morning:
-                return "아침"
-            case .lunch:
-                return "점심"
-            case .evening:
-                return "저녁"
-            case .dawn:
-                return "새벽"
-            }
-        }
-        
-        var systemImage: String {
-            switch self {
-            case .morning:
-                return "sunrise.circle.fill"
-            case .lunch:
-                return "sun.max.circle.fill"
-            case .evening:
-                return "moon.circle.fill"
-            case .dawn:
-                return "moon.stars.circle.fill"
-            }
-        }
-        
-        var accentColor: Color {
-            switch self {
-            case .morning:
-                return Color.yellow
-            case .lunch:
-                return Color.orange
-            case .evening:
-                return Color.red
-            case .dawn:
-                return Color.black
-            }
-        }
-    }
     
     // MARK: - WRAPPER PROPERTIES
     

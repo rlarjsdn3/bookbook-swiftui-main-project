@@ -206,7 +206,6 @@ extension HomeReadingBookView {
         .background(.white)
         .overlay(alignment: .bottom) {
             Divider()
-                .opacity(scrollYOffset > 30 ? 1 : 0)
         }
     }
 }
