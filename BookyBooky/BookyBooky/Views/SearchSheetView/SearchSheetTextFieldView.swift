@@ -22,6 +22,7 @@ struct SearchSheetTextFieldView: View {
     
     @Binding var searchQuery: String
     @Binding var searchIndex: Int
+    @Binding var selectedListMode: ListMode
     @Binding var selectedCategory: CategoryType
     @Binding var selectedCategoryForAnimation: CategoryType
     
@@ -63,6 +64,37 @@ struct SearchSheetTextFieldView: View {
 extension SearchSheetTextFieldView {
     var searchSheetTextField: some View {
         HStack {
+            Menu {
+                Section {
+                    Button {
+                        selectedListMode = .grid
+                    } label: {
+                        Label("격자 모드", systemImage: "square.grid.2x2")
+                        if selectedListMode == .grid {
+                            Text("적용됨")
+                        }
+                    }
+                    
+                    Button {
+                        selectedListMode = .list
+                    } label: {
+                        Label("리스트 모드", systemImage: "list.dash")
+                        if selectedListMode == .list {
+                            Text("적용됨")
+                        }
+                    }
+                } header: {
+                    Text("보기 모드")
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .font(.title2)
+                    .foregroundColor(.primary)
+                    .frame(width: 45, height: 45)
+                    .background(Color(.background), in: .rect(cornerRadius: 15))
+            }
+
+            
             searchTextField
             
             dismissButton
@@ -134,6 +166,7 @@ struct SearchSheetTextFieldView_Previews: PreviewProvider {
         SearchSheetTextFieldView(
             searchQuery: .constant(""),
             searchIndex: .constant(0),
+            selectedListMode: .constant(.list),
             selectedCategory: .constant(.all),
             selectedCategoryForAnimation: .constant(.all)
         )

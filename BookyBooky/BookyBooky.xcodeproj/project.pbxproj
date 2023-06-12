@@ -106,6 +106,8 @@
 		9ED4B5D92A343D0D003BA12C /* TotalPagesReadByCategoryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4B5D82A343D0D003BA12C /* TotalPagesReadByCategoryChartView.swift */; };
 		9ED4B5DB2A34A0B0003BA12C /* DailyPagesReadChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4B5DA2A34A0B0003BA12C /* DailyPagesReadChartView.swift */; };
 		9ED4B5DD2A35F60E003BA12C /* monthlyCompleteBookChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4B5DC2A35F60E003BA12C /* monthlyCompleteBookChartView.swift */; };
+		9ED4B5DF2A36DA8D003BA12C /* ReverseIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4B5DE2A36DA8D003BA12C /* ReverseIconStyle.swift */; };
+		9ED4B5E12A36E2CF003BA12C /* SearchSheetBookGridButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4B5E02A36E2CF003BA12C /* SearchSheetBookGridButton.swift */; };
 		9ED4CB6129D3E0AA00CA493D /* SearchTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6029D3E0AA00CA493D /* SearchTabView.swift */; };
 		9ED4CB6429D3E21C00CA493D /* SearchTabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6329D3E21C00CA493D /* SearchTabButton.swift */; };
 		9ED4CB6729D4046400CA493D /* SearchSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4CB6629D4046400CA493D /* SearchSheetView.swift */; };
@@ -223,6 +225,8 @@
 		9ED4B5D82A343D0D003BA12C /* TotalPagesReadByCategoryChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPagesReadByCategoryChartView.swift; sourceTree = "<group>"; };
 		9ED4B5DA2A34A0B0003BA12C /* DailyPagesReadChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPagesReadChartView.swift; sourceTree = "<group>"; };
 		9ED4B5DC2A35F60E003BA12C /* monthlyCompleteBookChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthlyCompleteBookChartView.swift; sourceTree = "<group>"; };
+		9ED4B5DE2A36DA8D003BA12C /* ReverseIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseIconStyle.swift; sourceTree = "<group>"; };
+		9ED4B5E02A36E2CF003BA12C /* SearchSheetBookGridButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetBookGridButton.swift; sourceTree = "<group>"; };
 		9ED4CB6029D3E0AA00CA493D /* SearchTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabView.swift; sourceTree = "<group>"; };
 		9ED4CB6329D3E21C00CA493D /* SearchTabButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabButton.swift; sourceTree = "<group>"; };
 		9ED4CB6629D4046400CA493D /* SearchSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSheetView.swift; sourceTree = "<group>"; };
@@ -455,6 +459,7 @@
 			children = (
 				9E54A9FB29D5DC9800FE080C /* CategoryRoundedButton.swift */,
 				9E54AA0729D7C9B500FE080C /* SearchBookCellButton.swift */,
+				9ED4B5E02A36E2CF003BA12C /* SearchSheetBookGridButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -551,6 +556,7 @@
 				9EC71F932A174A410056C11C /* BottomButtonStyle.swift */,
 				9E459B0A2A19DA7300DB248F /* LeftBottomButtonStyle.swift */,
 				9E459B0C2A19DA9900DB248F /* RightBottomButtonStyle.swift */,
+				9ED4B5DE2A36DA8D003BA12C /* ReverseIconStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -770,6 +776,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E0EF6F32A0DF56500747847 /* Activity.swift in Sources */,
+				9ED4B5E12A36E2CF003BA12C /* SearchSheetBookGridButton.swift in Sources */,
 				9E0434A929E24BA5009A2161 /* BookShelfBookListView.swift in Sources */,
 				9E06071729DFDC1D000D542D /* BookShelfView.swift in Sources */,
 				9E459B0B2A19DA7300DB248F /* LeftBottomButtonStyle.swift in Sources */,
@@ -852,6 +859,7 @@
 				9E7A794B29DA8EBD00A51856 /* SearchBookIntroView.swift in Sources */,
 				9EC71F8D2A15DEEE0056C11C /* MonthlyReadingActivity.swift in Sources */,
 				9E2BA9062A04CBF600FD2E93 /* ReadingBookRenewalSheetView.swift in Sources */,
+				9ED4B5DF2A36DA8D003BA12C /* ReverseIconStyle.swift in Sources */,
 				9EDC2FB729E92E90004E792A /* DatePickerSheetView.swift in Sources */,
 				9E5283862A223D3200687385 /* ColorExtension.swift in Sources */,
 				9E7A794329DA5B8F00A51856 /* SearchBookView.swift in Sources */,

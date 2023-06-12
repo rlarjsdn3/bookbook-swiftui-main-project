@@ -19,6 +19,7 @@ struct SearchSheetScrollView: View {
     
     @Binding var searchQuery: String
     @Binding var searchIndex: Int
+    @Binding var selectedListMode: ListMode
     @Binding var selectedCategory: CategoryType
     
     // MARK: - COMPUTED PROPERTIES
@@ -62,7 +63,17 @@ extension SearchSheetScrollView {
     var scrollSearchBooks: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
-                searchSheetCellButtons
+                switch selectedListMode {
+                case .grid:
+                    LazyVGrid(columns: [.init(.flexible()), .init(.flexible())], spacing: 25) {
+                        ForEach(filteredSearchItems, id: \.self) { book in
+                            SearchSheetBookGridButton(bookItem: book)
+                        }
+                    }
+                    .safeAreaPadding()
+                case .list:
+                    searchSheetCellButtons
+                }
                 
                 seeMoreButton
             }
@@ -142,6 +153,7 @@ struct SearchSheetScrollView_Previews: PreviewProvider {
         SearchSheetScrollView(
             searchQuery: .constant(""),
             searchIndex: .constant(1),
+            selectedListMode: .constant(.list),
             selectedCategory: .constant(.all)
         )
         .environmentObject(AladinAPIManager())

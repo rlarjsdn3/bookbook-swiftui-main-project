@@ -8,16 +8,24 @@
 import SwiftUI
 import AlertToast
 
+enum ListMode: String, CaseIterable {
+    case grid = "격자 모드"
+    case list = "리스트 모드"
+}
+
 struct SearchSheetView: View {
     
     // MARK: - WRAPPPER PROPERTIES
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
+    @AppStorage("SearchResultListMode") private var selectedListMode: ListMode = .list
+    
     @State private var searchQuery = ""
     @State private var searchIndex = 1
     @State private var selectedCategory: CategoryType = .all
     @State private var selectedCategoryForAnimation: CategoryType = .all
+    
     
     // MARK: - BODY
     
@@ -27,6 +35,7 @@ struct SearchSheetView: View {
                 SearchSheetTextFieldView(
                     searchQuery: $searchQuery,
                     searchIndex: $searchIndex,
+                    selectedListMode: $selectedListMode,
                     selectedCategory: $selectedCategory,
                     selectedCategoryForAnimation: $selectedCategoryForAnimation
                 )
@@ -40,6 +49,7 @@ struct SearchSheetView: View {
                 SearchSheetScrollView(
                     searchQuery: $searchQuery,
                     searchIndex: $searchIndex,
+                    selectedListMode: $selectedListMode,
                     selectedCategory: $selectedCategory
                 )
             }

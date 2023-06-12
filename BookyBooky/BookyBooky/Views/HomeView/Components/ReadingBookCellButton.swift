@@ -66,7 +66,7 @@ extension ReadingBookCellButton {
             
             readingBookAuthorText
         }
-        .padding(.horizontal, 10)
+//        .padding(.horizontal, 10)
     }
     
     var exclamationMarkSFSymbolImage: some View {
@@ -76,13 +76,7 @@ extension ReadingBookCellButton {
                     .font(.system(size: 50))
                     .foregroundColor(Color.red)
                     .frame(width: 150, height: 200)
-                    .background(Color.gray.opacity(0.15))
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 15,
-                            style: .continuous
-                        )
-                    )
+                    .background(Color.gray.opacity(0.15), in: .rect(cornerRadius: 25))
             }
         }
     }

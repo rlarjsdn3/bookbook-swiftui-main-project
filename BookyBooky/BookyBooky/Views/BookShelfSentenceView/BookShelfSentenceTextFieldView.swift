@@ -123,8 +123,7 @@ extension BookShelfSentenceTextFieldView {
             .font(.title2)
             .foregroundColor(.primary)
             .frame(width: 45, height: 45)
-            .background(Color("Background"))
-            .cornerRadius(15)
+            .background(Color(.background), in: .rect(cornerRadius: 15))
     }
     
     var checkMarkSFSymbolImage: some View {

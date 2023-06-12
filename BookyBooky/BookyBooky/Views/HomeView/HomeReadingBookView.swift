@@ -171,13 +171,13 @@ extension HomeReadingBookView {
                     ReadingBookCellButton(book, buttonType: .home)
                 }
             }
-            .padding([.horizontal, .top])
+            .safeAreaPadding()
             
             
             // 코드 수정할 필요가 있음(직관적으로 수정하기 혹은 주석 설명 달기)
-            .padding(.bottom,
-                     filterReadingBooks.count <= 2 ?
-                     (mainScreen.height > 900 ? 400 : mainScreen.height < 700 ? 190 : 325) : (mainScreen.height > 900 ? 100 : 30))
+//            .padding(.bottom,
+//                     filterReadingBooks.count <= 2 ?
+//                     (mainScreen.height > 900 ? 400 : mainScreen.height < 700 ? 190 : 325) : (mainScreen.height > 900 ? 100 : 30))
         }
     }
     

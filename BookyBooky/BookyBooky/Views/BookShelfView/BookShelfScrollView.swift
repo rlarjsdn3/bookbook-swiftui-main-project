@@ -278,8 +278,7 @@ extension BookShelfScrollView {
                     .padding(.top, 10)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.bottom, 30)
+        .padding()
     }
     
     var noCompleteBooksLabel: some View {
