@@ -72,7 +72,12 @@ struct BookShelfScrollView: View {
     }
     
     var collectedSentenceCount: Int {
-        return 0 // 코드 미완성
+        var count: Int = 0
+        
+        for readingBook in readingBooks {
+            count += readingBook.collectSentences.count
+        }
+        return count
     }
     
     // MARK: - PROPERTIES
@@ -207,10 +212,11 @@ extension BookShelfScrollView {
                 
                 ForEach(recent10FavoriteBooks) { favoriteBook in
                     FavoriteBookCellButton(favoriteBook, viewType: .sheet)
-                        .padding(.top)
                 }
             }
+            .padding(.top, 25)
         }
+//        .safeAreaPadding()
         .safeAreaPadding([.leading, .bottom, .trailing])
     }
     
@@ -223,8 +229,7 @@ extension BookShelfScrollView {
             Text("도서를 찜해보세요.")
                 .foregroundColor(.secondary)
         }
-        .padding(.top, 30)
-        .padding(.bottom, 40)
+        .padding(.vertical, 50)
     }
     
     var favoriteBooksHeader: some View {
@@ -290,8 +295,8 @@ extension BookShelfScrollView {
             Text("독서를 시작해보세요.")
                 .foregroundColor(.secondary)
         }
-        .padding(.vertical, 30)
-        .padding(.bottom, 100) // 임시
+        .padding(.top, 50)
+        .padding(.bottom, 200) // 임시
     }
     
     func completeBooksHeader(_ completeBooks: [ReadingBook]) -> some View {

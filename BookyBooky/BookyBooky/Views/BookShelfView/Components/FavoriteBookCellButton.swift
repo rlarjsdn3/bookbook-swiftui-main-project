@@ -65,8 +65,6 @@ extension FavoriteBookCellButton {
                 isPresentingSearchBookViewFromNavigation = true
             }
         }
-        .padding(.top, 2)
-        .padding(.bottom, 10)
     }
     
     var favoriteBookInfoLabel: some View {
