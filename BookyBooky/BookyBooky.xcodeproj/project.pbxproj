@@ -125,6 +125,7 @@
 		9EE01FEE2A01FAF800584F39 /* ReadingBookTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FED2A01FAF800584F39 /* ReadingBookTabView.swift */; };
 		9EE01FF12A020FAA00584F39 /* ReadingBookOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FF02A020FAA00584F39 /* ReadingBookOutlineView.swift */; };
 		9EE01FF32A022D4100584F39 /* ReadingBookAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE01FF22A022D4100584F39 /* ReadingBookAnalysisView.swift */; };
+		9EF659CF2A386034003CF6A5 /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9EF659CE2A386034003CF6A5 /* DeviceKit */; };
 		9EFBE7CF29FFA90800308BAE /* ReadingBookTabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* ReadingBookTabType.swift */; };
 /* End PBXBuildFile section */
 
@@ -251,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EB1360B2A30D6500081832D /* Shimmer in Frameworks */,
+				9EF659CF2A386034003CF6A5 /* DeviceKit in Frameworks */,
 				9EB136082A30D63E0081832D /* RealmSwift in Frameworks */,
 				9EB136062A30D63E0081832D /* Realm in Frameworks */,
 				9EB1360E2A30D65B0081832D /* AlertToast in Frameworks */,
@@ -711,6 +713,7 @@
 				9EB1360D2A30D65B0081832D /* AlertToast */,
 				9EDEDD3E2A30D692002232B9 /* Lottie */,
 				9EDEDD412A30D6A8002232B9 /* ConfettiSwiftUI */,
+				9EF659CE2A386034003CF6A5 /* DeviceKit */,
 			);
 			productName = BookyBooky;
 			productReference = 9ECD920D29BF1FA600FCDD2F /* BookyBooky.app */;
@@ -747,6 +750,7 @@
 				9EB1360C2A30D65B0081832D /* XCRemoteSwiftPackageReference "AlertToast" */,
 				9EDEDD3D2A30D692002232B9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				9EDEDD402A30D6A8002232B9 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+				9EF659CD2A386034003CF6A5 /* XCRemoteSwiftPackageReference "DeviceKit" */,
 			);
 			productRefGroup = 9ECD920E29BF1FA600FCDD2F /* Products */;
 			projectDirPath = "";
@@ -1150,6 +1154,14 @@
 				minimumVersion = 1.0.1;
 			};
 		};
+		9EF659CD2A386034003CF6A5 /* XCRemoteSwiftPackageReference "DeviceKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devicekit/DeviceKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1187,6 +1199,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9EDEDD402A30D6A8002232B9 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
 			productName = ConfettiSwiftUI;
+		};
+		9EF659CE2A386034003CF6A5 /* DeviceKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EF659CD2A386034003CF6A5 /* XCRemoteSwiftPackageReference "DeviceKit" */;
+			productName = DeviceKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

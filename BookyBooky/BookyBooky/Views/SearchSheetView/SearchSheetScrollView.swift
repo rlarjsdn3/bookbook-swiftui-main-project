@@ -71,6 +71,7 @@ extension SearchSheetScrollView {
                         }
                     }
                     .safeAreaPadding()
+                    .id("Scroll_To_Top")
                 case .list:
                     searchSheetCellButtons
                 }
@@ -115,7 +116,7 @@ extension SearchSheetScrollView {
                 .font(.title3)
                 .fontWeight(.bold)
                 .frame(
-                    width: UIScreen.main.bounds.width / 3,
+                    width: mainScreen.width / 3,
                     height: 40
                 )
                 .foregroundColor(.white)
@@ -123,9 +124,9 @@ extension SearchSheetScrollView {
                 .cornerRadius(20)
         }
         .padding(.top, 15)
-        // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
-        // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 15으로 설정
-        .padding(.bottom, safeAreaInsets.bottom == 0 ? 30 : 0)
+        // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 10으로 설정
+        // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 30으로 설정
+        .padding(.bottom, safeAreaInsets.bottom == 0 ? 30 : 10)
     }
     
     var noResultLabel: some View {
