@@ -40,7 +40,6 @@ struct AnalysisView: View {
     @State private var startOffset: CGFloat = 0.0
     @State private var scrollYOffset: CGFloat = 0.0
     
-    
     // MARK: - BODY
     
     var body: some View {

@@ -13,7 +13,7 @@ struct AnalysisChartsTabView: View {
     
     @ObservedResults(ReadingBook.self) var readingBooks
     
-    var totalPagesByCategory: [TotalPagesReadByCategory] {
+    var totalPagesByCategoryChartData: [TotalPagesReadByCategory] {
         var totalPagesReadByCategory: [TotalPagesReadByCategory] = []
         
         for readingBook in readingBooks {
@@ -31,7 +31,7 @@ struct AnalysisChartsTabView: View {
         return totalPagesReadByCategory.sorted { $0.pages > $1.pages }
     }
     
-    var dailyPages: [DailyPagesRead] {
+    var totalDailyReadPagesChartData: [DailyPagesRead] {
         var dailyPages: [DailyPagesRead] = []
         
         for readingBook in readingBooks {
@@ -49,25 +49,22 @@ struct AnalysisChartsTabView: View {
         return dailyPages
     }
     
-    var monthlyPages: [DailyPagesRead] {
-        var monthlyPages: [DailyPagesRead] = []
+    var monthlyBooksCompletedChartData: [MonthlyCompleteBook] {
+        var monthlyCompleteBook: [MonthlyCompleteBook] = []
         
         for readingBook in readingBooks {
-            for record in readingBook.readingRecords {
-                if let index = monthlyPages.firstIndex(where: { $0.date.isEqual([.year, .month], date: record.date) }) {
-                    monthlyPages[index].pages += record.numOfPagesRead
+            if readingBook.isComplete {
+                if let index = monthlyCompleteBook.firstIndex(where: { $0.date.isEqual([.year ,.month], date: readingBook.completeDate ?? Date()) } ) {
+                    monthlyCompleteBook[index].count += 1
                 } else {
-                    monthlyPages.append(
-                        DailyPagesRead(date: record.date, pages: record.numOfPagesRead)
+                    monthlyCompleteBook.append(
+                        MonthlyCompleteBook(date: readingBook.completeDate ?? Date(), count: 1)
                     )
                 }
             }
         }
-        
-        return monthlyPages
+        return monthlyCompleteBook
     }
-    
-    
     
     
     var body: some View {
@@ -94,11 +91,11 @@ extension AnalysisChartsTabView {
     
     var totalPagesReadByCategoryChartCellButton: some View {
         NavigationLink {
-            TotalPagesReadByCategoryChartView(data: totalPagesByCategory)
+            TotalPagesCountByCategoryChartView(chartData: totalPagesByCategoryChartData)
         } label: {
             VStack {
                 HStack(alignment: .firstTextBaseline) {
-                    Label("분류 별 읽은 총 페이지", systemImage: "book")
+                    Label("분야 별 총 읽은 페이지", systemImage: "book")
                         .font(.headline)
                         .foregroundStyle(Color.black)
                     
@@ -112,7 +109,7 @@ extension AnalysisChartsTabView {
                     .foregroundStyle(Color.secondary)
                 }
                 
-                if totalPagesByCategory.isEmpty {
+                if totalPagesByCategoryChartData.isEmpty {
                     VStack(spacing: 3) {
                         Text("차트를 표시할 수 없음")
                             .font(.headline)
@@ -123,7 +120,7 @@ extension AnalysisChartsTabView {
                     }
                     .padding()
                 } else {
-                    Chart(totalPagesByCategory, id: \.self) { element in
+                    Chart(totalPagesByCategoryChartData, id: \.self) { element in
                         BarMark(
                             x: .value("pages", element.pages),
                             stacking: .normalized
@@ -139,13 +136,13 @@ extension AnalysisChartsTabView {
             .background(Color.white)
             .clipShape(.rect(cornerRadius: 10))
         }
-        .disabled(totalPagesByCategory.isEmpty ? true : false)
+        .disabled(totalPagesByCategoryChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
     }
     
     var totalDailyPagesReadChartCellButton: some View {
         NavigationLink {
-            DailyPagesReadChartView(daily: dailyPages, monthly: monthlyPages)
+            DailyPagesReadChartView(dailyChartData: totalDailyReadPagesChartData)
         } label: {
             VStack {
                 HStack(alignment: .firstTextBaseline) {
@@ -163,7 +160,7 @@ extension AnalysisChartsTabView {
                     .foregroundStyle(Color.secondary)
                 }
                 
-                if totalPagesByCategory.isEmpty {
+                if totalPagesByCategoryChartData.isEmpty {
                     VStack(spacing: 3) {
                         Text("차트를 표시할 수 없음")
                             .font(.headline)
@@ -174,7 +171,7 @@ extension AnalysisChartsTabView {
                     }
                     .padding()
                 } else {
-                    Chart(dailyPages, id: \.self) { element in
+                    Chart(totalDailyReadPagesChartData, id: \.self) { element in
                         BarMark(
                             x: .value("date", element.date, unit: .day),
                             y: .value("pages", element.pages)
@@ -196,17 +193,17 @@ extension AnalysisChartsTabView {
             .padding(.horizontal, 10)
             .background(Color.white, in: .rect(cornerRadius: 10))
         }
-        .disabled(totalPagesByCategory.isEmpty ? true : false)
+        .disabled(totalPagesByCategoryChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
     }
     
     var totalNumberOfBooksReadPerMonthChartCellButton: some View {
         NavigationLink {
-            monthlyCompleteBookChartView(getMonthlyCompleteBook() ?? [])
+            MonthlyBooksCompletedChartView(chartData: monthlyBooksCompletedChartData)
         } label: {
             VStack {
                 HStack(alignment: .firstTextBaseline) {
-                    Label("월별 읽은 도서 수", systemImage: "book")
+                    Label("월 별 읽은 도서 수", systemImage: "book")
                         .font(.headline)
                         .foregroundStyle(Color.black)
                     
@@ -220,8 +217,8 @@ extension AnalysisChartsTabView {
                     .foregroundStyle(Color.secondary)
                 }
                 
-                if let completeBookCount = getMonthlyCompleteBook() {
-                    Chart(completeBookCount, id: \.self) { element in
+                if monthlyBooksCompletedChartData.isEmpty {
+                    Chart(monthlyBooksCompletedChartData, id: \.self) { element in
                         BarMark(
                             x: .value("date", element.date, unit: .month),
                             y: .value("pages", element.count)
@@ -253,30 +250,8 @@ extension AnalysisChartsTabView {
             .padding(.horizontal, 10)
             .background(Color.white, in: .rect(cornerRadius: 10))
         }
-        .disabled(getMonthlyCompleteBook() == nil ? true : false)
+        .disabled(monthlyBooksCompletedChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
-    }
-    
-    
-    func getMonthlyCompleteBook() -> [MonthlyCompleteBook]? {
-        var monthlyCompleteBook: [MonthlyCompleteBook] = []
-        
-        for readingBook in readingBooks {
-            if readingBook.isComplete {
-                if let index = monthlyCompleteBook.firstIndex(where: { $0.date.isEqual([.year ,.month], date: readingBook.completeDate ?? Date()) } ) {
-                    monthlyCompleteBook[index].count += 1
-                } else {
-                    monthlyCompleteBook.append(
-                        MonthlyCompleteBook(date: readingBook.completeDate ?? Date(), count: 1)
-                    )
-                }
-            }
-        }
-        
-        if monthlyCompleteBook.isEmpty {
-            return nil
-        }
-        return monthlyCompleteBook
     }
 }
 

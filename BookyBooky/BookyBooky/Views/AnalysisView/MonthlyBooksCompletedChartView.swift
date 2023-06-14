@@ -10,18 +10,18 @@ import Charts
 
 struct MonthlyBooksCompletedChartView: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
     @Environment(\.dismiss) var dismiss
-    
-    @State private var selectedTimeRange: TimeRange = .last14Days
-    
+        
     @State private var scrollPosition: TimeInterval = 0.0
     @State private var isPresentingAverageRuleMark = false
     
-    let data: [MonthlyCompleteBook]
+    // MARK: - PROPERTIES
     
-    init(_ data: [MonthlyCompleteBook]) {
-        self.data = data
-    }
+    let chartData: [MonthlyCompleteBook]
+    
+    // MARK: - COMPUTED PROPERTIES
     
     var scrollPositionStart: Date {
         Date(timeIntervalSinceReferenceDate: scrollPosition)
@@ -38,6 +38,14 @@ struct MonthlyBooksCompletedChartView: View {
     var scrollPositionEndString: String {
         scrollPositionEnd.toFormat("yyyy년 M월")
     }
+    
+    // MARK: - INTILAIZER
+    
+    init(chartData: [MonthlyCompleteBook]) {
+        self.chartData = chartData
+    }
+    
+    // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
@@ -80,7 +88,7 @@ struct MonthlyBooksCompletedChartView: View {
                         }
                         
                         Chart {
-                            ForEach(data, id: \.self) { element in
+                            ForEach(chartData, id: \.self) { element in
                                 BarMark(
                                     x: .value("date", element.date, unit: .day),
                                     y: .value("page", element.count)
@@ -154,7 +162,7 @@ struct MonthlyBooksCompletedChartView: View {
                         .padding(.bottom, 0)
                     
                     VStack(spacing: 0) {
-                        ForEach(data) { item in
+                        ForEach(chartData) { item in
                             VStack(spacing: 0) {
                                 HStack {
                                     Text(item.date.toFormat("yyyy년 M월"))
@@ -167,7 +175,7 @@ struct MonthlyBooksCompletedChartView: View {
                                 .padding(.vertical, 13)
                                 .padding(.horizontal)
                                 
-                                if data.last != item {
+                                if chartData.last != item {
                                     Divider()
                                         .padding(.horizontal, 10)
                                         .offset(x: 10)
@@ -183,23 +191,23 @@ struct MonthlyBooksCompletedChartView: View {
                 .safeAreaPadding(.bottom, 40)
             }
         }
-        .onChange(of: selectedTimeRange, initial: true) { newValue, _ in
-            scrollPosition = data.last?.date.addingTimeInterval(-1 * 86400 * 30 * 6).timeIntervalSinceReferenceDate ?? 0.0
+        .onAppear {
+            scrollPosition = chartData.last?.date.addingTimeInterval(-1 * 86400 * 30 * 6).timeIntervalSinceReferenceDate ?? 0.0
         }
         .navigationBarBackButtonHidden()
     }
     
     func totalReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
-        data.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.count }
+        chartData.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.count }
     }
     
     func averageReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
-        totalReadPagesInPreiod(in: range) / readPagesCountInPeriod(in: range)
+        totalReadPagesInPreiod(in: range) / bookCompletedDayCountInPeriod(in: range)
     }
     
-    func readPagesCountInPeriod(in range: ClosedRange<Date>) -> Int {
+    func bookCompletedDayCountInPeriod(in range: ClosedRange<Date>) -> Int {
         var count: Int = 0
-        count = data.filter({ range.contains($0.date) }).count
+        count = chartData.filter({ range.contains($0.date) }).count
         return count != 0 ? count : 1
     }
 }
@@ -220,5 +228,5 @@ extension MonthlyBooksCompletedChartView {
 }
 
 #Preview {
-    MonthlyBooksCompletedChartView([])
+    MonthlyBooksCompletedChartView(chartData: [])
 }

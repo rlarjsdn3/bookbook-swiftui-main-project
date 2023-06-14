@@ -15,6 +15,8 @@ enum TimeRange: String, CaseIterable {
 
 struct DailyPagesReadChartView: View {
 
+    // MARK: - WRAPPER PROPERTIES
+    
     @Environment(\.dismiss) var dismiss
     
     @State private var selectedTimeRange: TimeRange = .last14Days
@@ -22,6 +24,27 @@ struct DailyPagesReadChartView: View {
     @State private var scrollPosition: TimeInterval = 0.0
     @State private var isPresentingAverageRuleMark = false
     
+    // MARK: - PROPERTIES
+    
+    let dailyChartData: [DailyPagesRead]
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    var monthlyChartData: [DailyPagesRead] {
+        var monthlyPages: [DailyPagesRead] = []
+        
+        for d in dailyChartData {
+            if let index = monthlyPages.firstIndex(where: { $0.date.isEqual([.year, .month], date: d.date) }) {
+                monthlyPages[index].pages += d.pages
+            } else {
+                monthlyPages.append(
+                    DailyPagesRead(date: d.date, pages: d.pages)
+                )
+            }
+        }
+        
+        return monthlyPages
+    }
     
     var scrollPositionStart: Date {
         Date(timeIntervalSinceReferenceDate: scrollPosition)
@@ -51,14 +74,13 @@ struct DailyPagesReadChartView: View {
         monthlyScrollPositionEnd.toFormat("yyyy년 M월")
     }
     
+    // MARK: - INTIALIZER
     
-    let daily: [DailyPagesRead]
-    let monthly: [DailyPagesRead]
-    
-    init(daily: [DailyPagesRead], monthly: [DailyPagesRead]) {
-        self.daily = daily
-        self.monthly = monthly
+    init(dailyChartData: [DailyPagesRead]) {
+        self.dailyChartData = dailyChartData
     }
+    
+    // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
@@ -94,7 +116,7 @@ struct DailyPagesReadChartView: View {
                         Chart {
                             switch selectedTimeRange {
                             case .last14Days:
-                                ForEach(daily, id: \.self) { element in
+                                ForEach(dailyChartData, id: \.self) { element in
                                     BarMark(
                                         x: .value("date", element.date, unit: .day),
                                         y: .value("page", element.pages)
@@ -102,7 +124,7 @@ struct DailyPagesReadChartView: View {
                                     .foregroundStyle(Color.orange)
                                 }
                             case .last180Days:
-                                ForEach(monthly, id: \.self) { element in
+                                ForEach(monthlyChartData, id: \.self) { element in
                                     BarMark(
                                         x: .value("date", element.date, unit: .month),
                                         y: .value("page", element.pages)
@@ -212,20 +234,20 @@ struct DailyPagesReadChartView: View {
                     switch selectedTimeRange {
                     case .last14Days:
                         VStack(spacing: 0) {
-                            ForEach(daily) { item in
+                            ForEach(dailyChartData) { element in
                                 VStack(spacing: 0) {
                                     HStack {
-                                        Text(item.date.standardDateFormat)
+                                        Text(element.date.standardDateFormat)
                                         
                                         Spacer()
                                         
-                                        Text("\(item.pages)페이지")
+                                        Text("\(element.pages)페이지")
                                             .foregroundStyle(Color.secondary)
                                     }
                                     .padding(.vertical, 13)
                                     .padding(.horizontal)
                                     
-                                    if daily.last != item {
+                                    if dailyChartData.last != element {
                                         Divider()
                                             .padding(.horizontal, 10)
                                             .offset(x: 10)
@@ -237,20 +259,20 @@ struct DailyPagesReadChartView: View {
                         .clipShape(.rect(cornerRadius: 15))
                     case .last180Days:
                         VStack(spacing: 0) {
-                            ForEach(monthly) { item in
+                            ForEach(monthlyChartData) { element in
                                 VStack(spacing: 0) {
                                     HStack {
-                                        Text(item.date.toFormat("yyyy년 M월"))
+                                        Text(element.date.toFormat("yyyy년 M월"))
                                         
                                         Spacer()
                                         
-                                        Text("\(item.pages)페이지")
+                                        Text("\(element.pages)페이지")
                                             .foregroundStyle(Color.secondary)
                                     }
                                     .padding(.vertical, 13)
                                     .padding(.horizontal)
                                     
-                                    if monthly.last != item {
+                                    if monthlyChartData.last != element {
                                         Divider()
                                             .padding(.horizontal, 10)
                                             .offset(x: 10)
@@ -270,33 +292,35 @@ struct DailyPagesReadChartView: View {
         .onChange(of: selectedTimeRange, initial: true) { newValue, _ in
             switch selectedTimeRange {
             case .last14Days:
-                scrollPosition = daily.last?.date.addingTimeInterval(-1 * 86400 * 14).timeIntervalSinceReferenceDate ?? 0.0
+                scrollPosition = dailyChartData.last?.date.addingTimeInterval(-1 * 86400 * 14).timeIntervalSinceReferenceDate ?? 0.0
             case .last180Days:
-                scrollPosition = daily.last?.date.addingTimeInterval(-1 * 86400 * 30 * 6).timeIntervalSinceReferenceDate ?? 0.0
+                scrollPosition = dailyChartData.last?.date.addingTimeInterval(-1 * 86400 * 30 * 6).timeIntervalSinceReferenceDate ?? 0.0
             }
         }
         .navigationBarBackButtonHidden()
     }
     
     func totalReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
-        daily.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.pages }
+        dailyChartData.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.pages }
     }
     
     func averageReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
-        totalReadPagesInPreiod(in: range) / readPagesCountInPeriod(in: range)
+        totalReadPagesInPreiod(in: range) / readingDaysCountInPeriod(in: range)
     }
     
-    func readPagesCountInPeriod(in range: ClosedRange<Date>) -> Int {
+    func readingDaysCountInPeriod(in range: ClosedRange<Date>) -> Int {
         var count: Int = 0
         switch selectedTimeRange {
         case .last14Days:
-            count = daily.filter({ range.contains($0.date) }).count
+            count = dailyChartData.filter({ range.contains($0.date) }).count
         case .last180Days:
-            count = monthly.filter({ range.contains($0.date) }).count
+            count = monthlyChartData.filter({ range.contains($0.date) }).count
         }
         return count != 0 ? count : 1
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension DailyPagesReadChartView {
     var navigationBarButtons: some View {
@@ -356,6 +380,8 @@ extension DailyPagesReadChartView {
     }
 }
 
+// MARK: - PREVIEW
+
 #Preview {
-    DailyPagesReadChartView(daily: [], monthly: [])
+    DailyPagesReadChartView(dailyChartData: [])
 }
