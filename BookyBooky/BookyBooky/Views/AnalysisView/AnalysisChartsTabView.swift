@@ -11,7 +11,11 @@ import RealmSwift
 
 struct AnalysisChartsTabView: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
     @ObservedResults(ReadingBook.self) var readingBooks
+    
+    // MARK: - COMPUTED PROPERTIES
     
     var totalPagesByCategoryChartData: [TotalPagesReadByCategory] {
         var totalPagesReadByCategory: [TotalPagesReadByCategory] = []
@@ -66,6 +70,7 @@ struct AnalysisChartsTabView: View {
         return monthlyCompleteBook
     }
     
+    // MARK: - BODY
     
     var body: some View {
         VStack {
@@ -80,6 +85,8 @@ struct AnalysisChartsTabView: View {
         }
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension AnalysisChartsTabView {
     var summaryHeaderText: some View {
@@ -254,6 +261,8 @@ extension AnalysisChartsTabView {
         .buttonStyle(.plain)
     }
 }
+
+// MARK: - PREVIEW
 
 #Preview {
     AnalysisChartsTabView()

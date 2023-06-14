@@ -11,7 +11,7 @@ import RealmSwift
 
 // 코드 리팩토링 중...
 
-enum MajorReadingPeriodItems {
+enum mainReadingTime {
     case morning
     case lunch
     case evening
@@ -95,7 +95,7 @@ struct ReadingBookAnalysisView: View {
         getConsecutiveReadingDays()
     }
         
-    var majorReadingPeriod: MajorReadingPeriodItems {
+    var majorReadingPeriod: mainReadingTime {
         getMajorReadingPeriod()
     }
     
@@ -326,7 +326,7 @@ extension ReadingBookAnalysisView {
     
     
     // 코드 깔끔하게 다듬기
-    func getMajorReadingPeriod() -> MajorReadingPeriodItems {
+    func getMajorReadingPeriod() -> mainReadingTime {
         var period = ["dawn": 0, "morning": 0, "lunch": 0, "evening": 0]
         
         for records in readingBook.readingRecords {

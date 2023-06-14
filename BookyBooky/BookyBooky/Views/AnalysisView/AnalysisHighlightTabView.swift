@@ -10,11 +10,13 @@ import RealmSwift
 
 struct AnalysisHighlightTabView: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
     @ObservedResults(ReadingBook.self) var readingBooks
     
+    // MARK: - COMPUTED PROPERTIES
     
-    
-    var totalPagesByCategory: [TotalPagesReadByCategory] {
+    var totalPagesByCategoryChartData: [TotalPagesReadByCategory] {
         var totalPagesReadByCategory: [TotalPagesReadByCategory] = []
         
         for readingBook in readingBooks {
@@ -32,17 +34,25 @@ struct AnalysisHighlightTabView: View {
         return totalPagesReadByCategory.sorted { $0.pages > $1.pages }
     }
     
-    
-    
-    var body: some View {
-        VStack {
-            highlightHeaderText
-            
-            highlightCells
+    var totalDailyReadPagesChartData: [DailyPagesRead] {
+        var dailyPages: [DailyPagesRead] = []
+        
+        for readingBook in readingBooks {
+            for record in readingBook.readingRecords {
+                if let index = dailyPages.firstIndex(where: { $0.date.isEqual([.year, .month, .day], date: record.date) }) {
+                    dailyPages[index].pages += record.numOfPagesRead
+                } else {
+                    dailyPages.append(
+                        DailyPagesRead(date: record.date, pages: record.numOfPagesRead)
+                    )
+                }
+            }
         }
+        
+        return dailyPages
     }
     
-    func getMonthlyCompleteBook() -> [MonthlyCompleteBook]? {
+    var monthlyBooksCompletedChartData: [MonthlyCompleteBook] {
         var monthlyCompleteBook: [MonthlyCompleteBook] = []
         
         for readingBook in readingBooks {
@@ -56,167 +66,10 @@ struct AnalysisHighlightTabView: View {
                 }
             }
         }
-        
-        if monthlyCompleteBook.isEmpty {
-            return nil
-        }
         return monthlyCompleteBook
     }
-}
-
-extension AnalysisHighlightTabView {
-    var highlightHeaderText: some View {
-        Text("하이라이트")
-            .font(.title2.weight(.bold))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.bottom, -2)
-    }
     
-    var highlightCells: some View {
-        VStack {
-            HStack {
-                mainReadingHourHighlight
-                
-                consecutiveReadingDaysHighlight
-            }
-            
-            HStack {
-                mainReadingGenreHighlight
-                
-                totalNumberOfBooksReadHighlight
-            }
-        }
-    }
-    
-    var mainReadingHourHighlight: some View {
-        HStack {
-            if let majorPeriod = getMajorReadingPeriod() {
-                Image(systemName: majorPeriod.systemImage)
-                    .font(.largeTitle)
-                    .foregroundColor(majorPeriod.accentColor)
-                
-                VStack(alignment: .leading) {
-                    Text("주 독서 시간대")
-                        .font(.caption)
-                        .foregroundColor(Color.gray)
-                    Text(majorPeriod.name)
-                        .font(.title2.weight(.bold))
-                        .foregroundColor(majorPeriod.accentColor)
-                }
-            } else {
-                Image(systemName: "sunrise.circle.fill")
-                    .font(.largeTitle)
-                    .foregroundColor(Color.black)
-                
-                VStack(alignment: .leading) {
-                    Text("주 독서 시간대")
-                        .font(.caption)
-                        .foregroundColor(Color.gray)
-                    Text("-")
-                        .font(.title2.weight(.bold))
-                        .foregroundColor(Color.black)
-                }
-            }
-            
-            Spacer()
-        }
-        .padding()
-        .background(Color.white, in: .rect(cornerRadius: 20))
-        .opacity(getMajorReadingPeriod() == nil ? 0.5 : 1)
-    }
-    
-    var consecutiveReadingDaysHighlight: some View {
-        HStack {
-            Image(systemName: "calendar.circle.fill")
-                .font(.largeTitle)
-                .foregroundColor(Color.black)
-            
-            VStack(alignment: .leading) {
-                Text("연속 독서일")
-                    .font(.caption)
-                    .foregroundColor(Color.gray)
-                if let consecutiveDays = getConsecutiveReadingDays() {
-                    Text("\(consecutiveDays)일")
-                        .font(.title2.weight(.bold))
-                        .foregroundColor(Color.black)
-                } else {
-                    Text("-")
-                        .font(.title2.weight(.bold))
-                        .foregroundColor(Color.black)
-                }
-            }
-            
-            Spacer()
-        }
-        .padding()
-        .background(Color.white, in: .rect(cornerRadius: 20))
-        .opacity(getConsecutiveReadingDays() == nil ? 0.5 : 1)
-    }
-    
-    var mainReadingGenreHighlight: some View {
-        HStack {
-            if !totalPagesByCategory.isEmpty {
-                Image(systemName: "list.bullet.circle.fill")
-                    .font(.largeTitle)
-                    .foregroundColor(totalPagesByCategory[0].category.accentColor)
-            } else {
-                Image(systemName: "list.bullet.circle.fill")
-                    .font(.largeTitle)
-                    .foregroundColor(Color.black)
-            }
-            
-            VStack(alignment: .leading) {
-                Text("주 독서 분야")
-                    .font(.caption)
-                    .foregroundColor(Color.gray)
-                if !totalPagesByCategory.isEmpty {
-                    Text("\(totalPagesByCategory[0].category.rawValue)")
-                        .font(.title2.weight(.bold))
-                        .foregroundColor(totalPagesByCategory[0].category.accentColor)
-                        .lineLimit(1)
-                } else {
-                    Text("-")
-                        .font(.title2.weight(.bold))
-                        .foregroundColor(Color.secondary)
-                }
-            }
-            
-            Spacer()
-        }
-        .padding()
-        .background(Color.white, in: .rect(cornerRadius: 20))
-        .opacity(totalPagesByCategory.isEmpty ? 0.5 : 1)
-    }
-    
-    var totalNumberOfBooksReadHighlight: some View {
-        HStack {
-            Image(systemName: "books.vertical.circle.fill")
-                .font(.largeTitle)
-                .foregroundColor(getMonthlyCompleteBook() != nil ? Color.blue : Color.black)
-            
-            VStack(alignment: .leading) {
-                Text("총 읽은 도서 수")
-                    .font(.caption)
-                    .foregroundColor(Color.gray)
-                if let completeBooksCount = getMonthlyCompleteBook() {
-                    Text("\(completeBooksCount.reduce(0, { $0 + $1.count }))권")
-                        .font(.title2.weight(.bold))
-                        .foregroundColor(Color.blue)
-                } else {
-                    Text("-")
-                        .font(.title2.weight(.bold))
-                        .foregroundColor(Color.black)
-                }
-            }
-            
-            Spacer()
-        }
-        .padding()
-        .background(Color.white, in: .rect(cornerRadius: 20))
-        .opacity(getMonthlyCompleteBook() == nil ? 0.5 : 1)
-    }
-    
-    func getMajorReadingPeriod() -> MajorReadingPeriodItems? {
+    var mainReadingTime: mainReadingTime? {
         guard !readingBooks.isEmpty else {
             return nil
         }
@@ -265,7 +118,7 @@ extension AnalysisHighlightTabView {
         }
     }
     
-    func getConsecutiveReadingDays() -> Int? {
+    var consecutiveReadingDay: Int? {
         guard !readingBooks.isEmpty else {
             return nil
         }
@@ -302,7 +155,190 @@ extension AnalysisHighlightTabView {
         
         return max(currentConsecutiveDays, maxConsecutiveDays)
     }
+    
+    // MARK: - BODY
+    
+    var body: some View {
+        VStack {
+            highlightHeaderText
+            
+            highlightCells
+        }
+    }
 }
+
+// MARK: - EXTENSIONS
+
+extension AnalysisHighlightTabView {
+    var highlightHeaderText: some View {
+        Text("하이라이트")
+            .font(.title2.weight(.bold))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.bottom, -2)
+    }
+    
+    var highlightCells: some View {
+        VStack {
+            HStack {
+                mainReadingHourHighlight
+                
+                consecutiveReadingDaysHighlight
+            }
+            
+            HStack {
+                mainReadingGenreHighlight
+                
+                totalNumberOfBooksReadHighlight
+            }
+        }
+    }
+    
+    var mainReadingHourHighlight: some View {
+        Group {
+            let time = mainReadingTime
+            
+            HStack {
+                if let time {
+                    Image(systemName: time.systemImage)
+                        .font(.largeTitle)
+                        .foregroundColor(time.accentColor)
+                    
+                    VStack(alignment: .leading) {
+                        Text("주 독서 시간대")
+                            .font(.caption)
+                            .foregroundColor(Color.gray)
+                        Text(time.name)
+                            .font(.title2.weight(.bold))
+                            .foregroundColor(time.accentColor)
+                    }
+                } else {
+                    Image(systemName: "sunrise.circle.fill")
+                        .font(.largeTitle)
+                        .foregroundColor(Color.black)
+                    
+                    VStack(alignment: .leading) {
+                        Text("주 독서 시간대")
+                            .font(.caption)
+                            .foregroundColor(Color.gray)
+                        Text("-")
+                            .font(.title2.weight(.bold))
+                            .foregroundColor(Color.black)
+                    }
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color.white, in: .rect(cornerRadius: 20))
+            .opacity(time == nil ? 0.5 : 1)
+        }
+    }
+    
+    var consecutiveReadingDaysHighlight: some View {
+        Group {
+            let days = consecutiveReadingDay
+            
+            HStack {
+                Image(systemName: "calendar.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(Color.black)
+                
+                VStack(alignment: .leading) {
+                    Text("연속 독서일")
+                        .font(.caption)
+                        .foregroundColor(Color.gray)
+                    if let days {
+                        Text("\(days)일")
+                            .font(.title2.weight(.bold))
+                            .foregroundColor(Color.black)
+                    } else {
+                        Text("-")
+                            .font(.title2.weight(.bold))
+                            .foregroundColor(Color.black)
+                    }
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color.white, in: .rect(cornerRadius: 20))
+            .opacity(days == nil ? 0.5 : 1)
+        }
+    }
+    
+    var mainReadingGenreHighlight: some View {
+        Group {
+            let chartData = totalPagesByCategoryChartData
+            
+            HStack {
+                if !chartData.isEmpty {
+                    Image(systemName: "list.bullet.circle.fill")
+                        .font(.largeTitle)
+                        .foregroundColor(chartData[0].category.accentColor)
+                } else {
+                    Image(systemName: "list.bullet.circle.fill")
+                        .font(.largeTitle)
+                        .foregroundColor(Color.black)
+                }
+                
+                VStack(alignment: .leading) {
+                    Text("주 독서 분야")
+                        .font(.caption)
+                        .foregroundColor(Color.gray)
+                    if !chartData.isEmpty {
+                        Text("\(chartData[0].category.rawValue)")
+                            .font(.title2.weight(.bold))
+                            .foregroundColor(chartData[0].category.accentColor)
+                            .lineLimit(1)
+                    } else {
+                        Text("-")
+                            .font(.title2.weight(.bold))
+                            .foregroundColor(Color.secondary)
+                    }
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color.white, in: .rect(cornerRadius: 20))
+            .opacity(chartData.isEmpty ? 0.5 : 1)
+        }
+    }
+    
+    var totalNumberOfBooksReadHighlight: some View {
+        Group {
+            let chartData = monthlyBooksCompletedChartData
+            
+            HStack {
+                Image(systemName: "books.vertical.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(chartData.isEmpty ? Color.black : Color.blue)
+                
+                VStack(alignment: .leading) {
+                    Text("총 읽은 도서 수")
+                        .font(.caption)
+                        .foregroundColor(Color.gray)
+                    if chartData.isEmpty {
+                        Text("-")
+                            .font(.title2.weight(.bold))
+                            .foregroundColor(Color.black)
+                    } else {
+                        Text("\(chartData.reduce(0, { $0 + $1.count }))권")
+                            .font(.title2.weight(.bold))
+                            .foregroundColor(Color.blue)
+                    }
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color.white, in: .rect(cornerRadius: 20))
+            .opacity(chartData.isEmpty ? 0.5 : 1)
+        }
+    }
+}
+
+// MARK: - PREVIEW
 
 #Preview {
     AnalysisHighlightTabView()
