@@ -18,7 +18,7 @@ struct SearchSheetBookGridButton: View {
             asyncCoverImage(
                 bookItem.cover,
                 width: 150, height: 200,
-                coverShape: RoundedCoverShape()
+                coverShape: RoundedRect()
             )
             
             bookTitleText

@@ -62,7 +62,7 @@ extension SearchCellButton {
             asyncCoverImage(
                 listOfBookItem.cover,
                 width: 150, height: 200,
-                coverShape: RoundedCoverShape()
+                coverShape: RoundedRect()
             )
             
             bookInfoLabel

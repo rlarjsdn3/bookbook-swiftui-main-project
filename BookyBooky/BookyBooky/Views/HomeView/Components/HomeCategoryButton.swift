@@ -41,7 +41,7 @@ struct HomeCategoryButton: View {
             }
             selectedCategoryType = type
         } label: {
-            Text(type.rawValue)
+            Text(type.name)
                 .font(.headline)
                 .fontWeight(.bold)
                 .foregroundColor(selectedCategoryTypeForAnimation == type ? .black : .gray)

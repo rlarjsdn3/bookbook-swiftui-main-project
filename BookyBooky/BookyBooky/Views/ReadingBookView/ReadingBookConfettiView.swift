@@ -77,7 +77,7 @@ extension ReadingBookConfettiView {
             
             asyncCoverImage(
                 readingBook.cover,
-                coverShape: RoundedCoverShape()
+                coverShape: RoundedRect()
             )
             
             timeToCompleteBookText

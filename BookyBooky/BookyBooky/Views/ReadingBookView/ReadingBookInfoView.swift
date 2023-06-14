@@ -60,7 +60,7 @@ extension ReadingBookInfoView {
                 asyncCoverImage(
                     readingBook.cover,
                     width: 130, height: 180,
-                    coverShape: CoverShape()
+                    coverShape: RoundedRectTRBR()
                 )
                 
                 exclamationMarkSFSymbolImage
@@ -91,7 +91,7 @@ extension ReadingBookInfoView {
                     .foregroundColor(Color.red)
                     .frame(width: 130, height: 180)
                     .background(Color.gray.opacity(0.15))
-                    .clipShape(CoverShape())
+                    .clipShape(RoundedRectTRBR())
             }
         }
     }

@@ -131,6 +131,10 @@ struct AnalysisHighlightTabView: View {
             }
         }
         
+        guard !readingDate.isEmpty else {
+            return nil
+        }
+        
         readingDate.sort(by: { $0 < $1 })
         
         var maxConsecutiveDays = 1

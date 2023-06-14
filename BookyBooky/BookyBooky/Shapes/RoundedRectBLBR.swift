@@ -1,17 +1,17 @@
 //
-//  CoverShape.swift
+//  TabShape.swift
 //  BookyBooky
 //
-//  Created by 김건우 on 2023/04/01.
+//  Created by 김건우 on 2023/03/27.
 //
 
 import SwiftUI
 
-struct CoverShape: Shape {
+struct RoundedRectBLBR: Shape {
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(
             roundedRect: rect,
-            byRoundingCorners: [.topRight, .bottomRight],
+            byRoundingCorners: [.bottomLeft, .bottomRight],
             cornerRadii: CGSize(width: 25, height: 25)
         )
         
@@ -21,8 +21,8 @@ struct CoverShape: Shape {
 
 // MARK: - PREVIEW
 
-struct CoverShape_Previews: PreviewProvider {
+struct TabShape_Previews: PreviewProvider {
     static var previews: some View {
-        CoverShape()
+        RoundedRectBLBR()
     }
 }

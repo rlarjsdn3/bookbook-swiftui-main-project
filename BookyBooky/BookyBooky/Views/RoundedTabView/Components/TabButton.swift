@@ -50,7 +50,7 @@ struct TabButton: View {
             .padding(.bottom, 5)
             .overlay {
                 if selectedTabBarType == type {
-                    TabShape()
+                    RoundedRectBLBR()
                         .foregroundColor(.black)
                         .frame(width: 40, height: 5)
                         .offset(y: -32)

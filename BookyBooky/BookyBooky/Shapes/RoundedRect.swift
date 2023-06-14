@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct RoundedCoverShape: Shape {
+struct RoundedRect: Shape {
     func path(in rect: CGRect) -> Path {
-        let roundedRectangle = UIBezierPath(
+        let path = UIBezierPath(
             roundedRect: rect,
             byRoundingCorners: [.allCorners],
             cornerRadii: CGSize(width: 25, height: 25)
         )
         
-        return Path(roundedRectangle.cgPath)
+        return Path(path.cgPath)
     }
 }
 
@@ -23,6 +23,6 @@ struct RoundedCoverShape: Shape {
 
 struct RoundedCoverShape_Preview: PreviewProvider {
     static var previews: some View {
-        RoundedCoverShape()
+        RoundedRect()
     }
 }

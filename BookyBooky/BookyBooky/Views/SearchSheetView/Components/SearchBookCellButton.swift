@@ -74,7 +74,7 @@ extension SearchBookCellButton {
             asyncCoverImage(
                 bookItem.cover,
                 width: mainScreen.width * 0.32, height: 190,
-                coverShape: CoverShape()
+                coverShape: RoundedRectTRBR()
             )
             .onAppear {
                 isLoadingCoverImage = false
@@ -89,12 +89,12 @@ extension SearchBookCellButton {
             Spacer()
             
             ZStack {
-                TextShape()
+                RoundedRectTLBL()
                     .fill(bookItem.categoryName.refinedCategory.themeColor)
                     .offset(y: 4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                 
-                TextShape()
+                RoundedRectTLBL()
                     .fill(.white)
                     .offset(y: -4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: 5)
