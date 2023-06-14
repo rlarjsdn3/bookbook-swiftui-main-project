@@ -62,7 +62,7 @@ struct SentenceCellButton: View {
                     .padding(.horizontal, 15)
                     .font(.caption)
                     .foregroundColor(Color.white)
-                    .background(readingBook.category.accentColor)
+                    .background(readingBook.category.themeColor)
                     .clipShape(Capsule())
                     .padding(.trailing)
                 
@@ -81,7 +81,7 @@ struct SentenceCellButton: View {
                 } label: {
                     Image(systemName: "ellipsis.circle.fill")
                         .font(.title2)
-                        .foregroundColor(readingBook.category.accentColor)
+                        .foregroundColor(readingBook.category.themeColor)
                 }
             }
             .padding(.horizontal)

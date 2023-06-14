@@ -171,10 +171,10 @@ extension ReadingBookAnalysisView {
             HStack(alignment: .firstTextBaseline) {
                 Text("\(totalReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
                     .font(.title.weight(.bold))
-                    .foregroundStyle(readingBook.category.accentColor)
+                    .foregroundStyle(readingBook.category.themeColor)
                 Text("페이지")
                     .font(.headline)
-                    .foregroundStyle(readingBook.category.accentColor)
+                    .foregroundStyle(readingBook.category.themeColor)
                 Spacer()
             }
             
@@ -191,7 +191,7 @@ extension ReadingBookAnalysisView {
                     x: .value("date", record.date, unit: .day),
                     y: .value("page", record.numOfPagesRead)
                 )
-                .foregroundStyle(readingBook.category.accentColor)
+                .foregroundStyle(readingBook.category.themeColor)
             }
             
             if isPresentingAverageRuleMark {
@@ -202,11 +202,11 @@ extension ReadingBookAnalysisView {
                     )
                 )
                 .lineStyle(StrokeStyle(lineWidth: 3))
-                .foregroundStyle(readingBook.category.accentColor == Color.black ? Color.gray : Color.black)
+                .foregroundStyle(readingBook.category.themeColor == Color.black ? Color.gray : Color.black)
                 .annotation(position: .top, alignment: .leading) {
                     Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
                         .font(.headline)
-                        .foregroundStyle(readingBook.category.accentColor == Color.black ? Color.gray : Color.black)
+                        .foregroundStyle(readingBook.category.themeColor == Color.black ? Color.gray : Color.black)
                 }
             }
         }
@@ -318,7 +318,7 @@ extension ReadingBookAnalysisView {
             }
             .padding()
             .foregroundColor(isPresentingAverageRuleMark ? Color.white : Color.black)
-            .background(isPresentingAverageRuleMark ? readingBook.category.accentColor : Color("Background"))
+            .background(isPresentingAverageRuleMark ? readingBook.category.themeColor : Color("Background"))
             .clipShape(.rect(cornerRadius: 20))
             .padding(.vertical, 5)
         }

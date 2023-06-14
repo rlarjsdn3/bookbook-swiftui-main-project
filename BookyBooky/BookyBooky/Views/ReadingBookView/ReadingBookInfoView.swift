@@ -169,7 +169,7 @@ extension ReadingBookInfoView {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
-            .tint(readingBook.category.accentColor.gradient)
+            .tint(readingBook.category.themeColor.gradient)
             .gaugeStyle(.accessoryCircularCapacity)
             .padding(10)
         }

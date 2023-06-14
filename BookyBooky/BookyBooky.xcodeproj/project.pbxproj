@@ -26,7 +26,7 @@
 		9E061D6129FAA8890042E3B1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E061D6029FAA8890042E3B1 /* SettingsView.swift */; };
 		9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */; };
 		9E0C0A6229D1DB4700F1F5F6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6129D1DB4700F1F5F6 /* HomeView.swift */; };
-		9E0C0A6629D1DF4800F1F5F6 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6529D1DF4800F1F5F6 /* HomeHeaderView.swift */; };
+		9E0C0A6629D1DF4800F1F5F6 /* HomeTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6529D1DF4800F1F5F6 /* HomeTopBarView.swift */; };
 		9E0C0A6929D281BF00F1F5F6 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */; };
 		9E0C0A6C29D284FD00F1F5F6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6B29D284FD00F1F5F6 /* SearchView.swift */; };
 		9E0C0A6F29D2856B00F1F5F6 /* AladinAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */; };
@@ -153,7 +153,7 @@
 		9E061D6029FAA8890042E3B1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9E0C0A5E29D1D85200F1F5F6 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		9E0C0A6129D1DB4700F1F5F6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		9E0C0A6529D1DF4800F1F5F6 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
+		9E0C0A6529D1DF4800F1F5F6 /* HomeTopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopBarView.swift; sourceTree = "<group>"; };
 		9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		9E0C0A6B29D284FD00F1F5F6 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AladinAPIManager.swift; sourceTree = "<group>"; };
@@ -377,7 +377,7 @@
 			isa = PBXGroup;
 			children = (
 				9E0C0A6129D1DB4700F1F5F6 /* HomeView.swift */,
-				9E0C0A6529D1DF4800F1F5F6 /* HomeHeaderView.swift */,
+				9E0C0A6529D1DF4800F1F5F6 /* HomeTopBarView.swift */,
 				9E24DD2E2A14F8B400366640 /* HomeScrollView.swift */,
 				9E24DD2D2A14F8B300366640 /* HomeActivityTabView.swift */,
 				9E24DD2F2A14F8B400366640 /* HomeReadingBookTabView.swift */,
@@ -842,7 +842,7 @@
 				9ED4CB6429D3E21C00CA493D /* SearchTabButton.swift in Sources */,
 				9E54AA0029D6704900FE080C /* SearchSheetScrollView.swift in Sources */,
 				9E524DF829D1CF3500FD7B98 /* TabButton.swift in Sources */,
-				9E0C0A6629D1DF4800F1F5F6 /* HomeHeaderView.swift in Sources */,
+				9E0C0A6629D1DF4800F1F5F6 /* HomeTopBarView.swift in Sources */,
 				9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */,
 				9E24DD322A14F8B400366640 /* HomeReadingBookTabView.swift in Sources */,
 				9E54A9FC29D5DC9800FE080C /* CategoryRoundedButton.swift in Sources */,

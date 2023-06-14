@@ -101,7 +101,7 @@ struct CollectSentenceView: View {
                             .padding(.horizontal, 15)
                             .font(.caption)
                             .foregroundColor(Color.white)
-                            .background(readingBook.category.accentColor)
+                            .background(readingBook.category.themeColor)
                             .clipShape(Capsule())
                     }
                     .padding(.horizontal)

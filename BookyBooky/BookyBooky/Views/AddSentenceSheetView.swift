@@ -101,7 +101,7 @@ struct AddSentenceSheetView: View {
                         Text("추가하기")
                     }
                     .disabled(inputText.isEmpty)
-                    .buttonStyle(RightBottomButtonStyle(backgroundColor: readingBook.category.accentColor))
+                    .buttonStyle(RightBottomButtonStyle(backgroundColor: readingBook.category.themeColor))
                 }
                 .onReceive(keyboardPublisher) { value in
                     withAnimation {

@@ -108,15 +108,15 @@ extension SearchBookTitleView {
                 Image(systemName: "heart.fill")
                     .foregroundColor(.white)
                     .padding()
-                    .background(bookSearchInfo.bookCategory.accentColor)
+                    .background(bookSearchInfo.bookCategory.themeColor)
                     .clipShape(Circle())
             } else {
                 Image(systemName: "heart.fill")
-                    .foregroundColor(bookSearchInfo.categoryName.refinedCategory.accentColor)
+                    .foregroundColor(bookSearchInfo.categoryName.refinedCategory.themeColor)
                     .padding()
                     .background {
                         Circle()
-                            .stroke(bookSearchInfo.categoryName.refinedCategory.accentColor, lineWidth: 1.8)
+                            .stroke(bookSearchInfo.categoryName.refinedCategory.themeColor, lineWidth: 1.8)
                     }
             }
         }

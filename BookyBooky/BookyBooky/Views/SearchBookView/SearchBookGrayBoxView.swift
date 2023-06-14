@@ -30,7 +30,7 @@ struct SearchBookGrayBoxView: View {
     var body: some View {
         bookGrayBox
             .sheet(isPresented: $isPresentingSalesPointDescriptionSheet) {
-                SalesPointIntroSheetView(theme: searchBookInfo.bookCategory.accentColor)
+                SalesPointIntroSheetView(theme: searchBookInfo.bookCategory.themeColor)
             }
     }
 }

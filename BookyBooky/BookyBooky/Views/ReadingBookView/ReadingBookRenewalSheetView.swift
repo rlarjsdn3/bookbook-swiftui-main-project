@@ -110,7 +110,7 @@ extension ReadingBookRenewalSheetView {
                     .foregroundColor(.white)
                     .padding(.vertical, 23)
                     .padding(.horizontal)
-                    .background(readingBook.category.accentColor)
+                    .background(readingBook.category.themeColor)
                     .clipShape(Circle())
             }
             .opacity(lastRecordTotalPagesRead >= totalPagesRead  ? 0.5 : 1)
@@ -129,7 +129,7 @@ extension ReadingBookRenewalSheetView {
                     .font(.largeTitle)
                     .foregroundColor(.white)
                     .padding(10)
-                    .background(readingBook.category.accentColor)
+                    .background(readingBook.category.themeColor)
                     .clipShape(Circle())
             }
             .opacity(readingBookPage <= totalPagesRead  ? 0.5 : 1)

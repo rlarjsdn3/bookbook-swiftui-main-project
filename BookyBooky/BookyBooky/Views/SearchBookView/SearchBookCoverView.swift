@@ -52,7 +52,7 @@ extension SearchBookCoverView {
     
     var coverBackgroundColor: some View {
         Rectangle()
-            .fill(searchBookInfo.categoryName.refinedCategory.accentColor.gradient)
+            .fill(searchBookInfo.categoryName.refinedCategory.themeColor.gradient)
             .ignoresSafeArea()
     }
 }

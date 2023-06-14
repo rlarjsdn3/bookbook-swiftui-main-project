@@ -40,17 +40,17 @@ struct ReadingBookView: View {
             .toast(
                 isPresenting: $realmManager.isPresentingReadingBookEditSuccessToastAlert,
                 duration: 1.0) {
-                realmManager.showReadingBookEditSuccessToastAlert(readingBook.category.accentColor)
+                realmManager.showReadingBookEditSuccessToastAlert(readingBook.category.themeColor)
             }
             .toast(
                 isPresenting: $realmManager.isPresentingReadingBookRenewalSuccessToastAlert,
                 duration: 1.0) {
-                realmManager.showReadingBookRenewalSuccessToastAlert(readingBook.category.accentColor)
+                realmManager.showReadingBookRenewalSuccessToastAlert(readingBook.category.themeColor)
             }
             .toast(
                 isPresenting: $realmManager.isPresentingAddSentenceSuccessToastAlert,
                 duration: 1.0) {
-                realmManager.showAddSentenceSuccessToastAlert(readingBook.category.accentColor)
+                realmManager.showAddSentenceSuccessToastAlert(readingBook.category.themeColor)
             }
             .navigationBarBackButtonHidden()
         }

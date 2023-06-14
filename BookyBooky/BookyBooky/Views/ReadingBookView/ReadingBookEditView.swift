@@ -83,7 +83,7 @@ struct ReadingBookEditView: View {
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .environment(\.locale, Locale(identifier: "ko"))
-                        .tint(readingBook.category.accentColor)
+                        .tint(readingBook.category.themeColor)
                         .padding(.horizontal, 3)
                 }
                 .padding(.vertical, 14)
@@ -115,7 +115,7 @@ struct ReadingBookEditView: View {
                         .foregroundColor(.white)
                         .frame(height: 55)
                         .frame(maxWidth: .infinity)
-                        .background(readingBook.category.accentColor)
+                        .background(readingBook.category.themeColor)
                         .cornerRadius(15)
                 }
                 .padding(.horizontal)

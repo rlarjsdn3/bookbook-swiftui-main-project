@@ -69,7 +69,7 @@ extension ActivityCellButton {
             }
         }
         .font(.largeTitle)
-        .foregroundColor(activity.category.accentColor)
+        .foregroundColor(activity.category.themeColor)
     }
     
     var statusLabel: some View {
@@ -103,7 +103,7 @@ extension ActivityCellButton {
             }
         }
         .font(.title3.weight(.semibold))
-        .foregroundColor(activity.category.accentColor)
+        .foregroundColor(activity.category.themeColor)
     }
     
     var readingDateText: some View {

@@ -87,7 +87,7 @@ extension String {
             return .autobiography
         case "만화":
             return .cartoon
-        case "어린이":
+        case "어린이", "유아", "유아/아동":
             return .children
         case "중국 도서":
             return .chinese
@@ -189,8 +189,6 @@ extension String {
             return .teenager
         case "공포/스릴러":
             return .thriller
-        case "유아", "유아/아동":
-            return .toddler
         case "여행":
             return .travel
         default:

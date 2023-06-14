@@ -28,6 +28,8 @@ struct BookyBookyApp: App {
                     }
                     .environmentObject(realmManager)
                     .environmentObject(aladinAPIManager)
+            } else {
+                Text("Error")
             }
         }
     }

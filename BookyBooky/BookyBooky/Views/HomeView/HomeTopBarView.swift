@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeHeaderView: View {
+struct HomeTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -29,23 +29,23 @@ struct HomeHeaderView: View {
     // MARK: - BODY
     
     var body: some View {
-        navigationBar
+        navigationTopBar
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension HomeHeaderView {
-    var navigationBar: some View {
+extension HomeTopBarView {
+    var navigationTopBar: some View {
         HStack {
             Spacer()
             
-            navigationBarTitle
+            navigationTopBarTitle
             
             Spacer()
         }
         .overlay {
-            navigationBarButtons
+            navigationTopBarButtons
         }
         .sheet(isPresented: $isPresentingSettingsView) {
             SettingsView()
@@ -60,13 +60,13 @@ extension HomeHeaderView {
         }
     }
     
-    var navigationBarTitle: some View {
+    var navigationTopBarTitle: some View {
         Text("홈")
             .navigationTitleStyle()
             .opacity(scrollYOffset > 10 ? 1 : 0)
     }
     
-    var navigationBarButtons: some View {
+    var navigationTopBarButtons: some View {
         HStack {
             addReadingBookMenu
 
@@ -75,8 +75,13 @@ extension HomeHeaderView {
             // 추후 프로필 이미지 기능 구현 시 코드 수정 예정
             ZStack {
                 settingsButton
+                    // 이거 수저해야 함!
+                    .opacity(scrollYOffset > 268 ? 0 : 1)
                 
                 bookSortCriteriaMenu
+                    // 이거 수정해야 함!
+                    .offset(y: scrollYOffset > 270 ? 0 : 5)
+                    .opacity(scrollYOffset > 270 ? 1 : 0)
             }
         }
     }
@@ -116,8 +121,6 @@ extension HomeHeaderView {
         } label: {
             gearShapeSFSymbolImage
         }
-        // 이거 수저해야 함!
-        .opacity(scrollYOffset > 268 ? 0 : 1)
     }
     
     var gearShapeSFSymbolImage: some View {
@@ -137,8 +140,6 @@ extension HomeHeaderView {
                 .font(.title2)
                 .foregroundColor(.black)
         }
-        .offset(y: scrollYOffset > 270 ? 0 : 5)
-        .opacity(scrollYOffset > 270 ? 1 : 0)
         .navigationBarItemStyle()
     }
     
@@ -174,7 +175,7 @@ extension HomeHeaderView {
 
 struct HomeHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeHeaderView(
+        HomeTopBarView(
             .constant(0.0),
             selectedBookSortType: .constant(.latestOrder)
         )

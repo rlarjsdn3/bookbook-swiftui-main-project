@@ -274,7 +274,7 @@ extension AnalysisHighlightTabView {
                 if !chartData.isEmpty {
                     Image(systemName: "list.bullet.circle.fill")
                         .font(.largeTitle)
-                        .foregroundColor(chartData[0].category.accentColor)
+                        .foregroundColor(chartData[0].category.themeColor)
                 } else {
                     Image(systemName: "list.bullet.circle.fill")
                         .font(.largeTitle)
@@ -288,7 +288,7 @@ extension AnalysisHighlightTabView {
                     if !chartData.isEmpty {
                         Text("\(chartData[0].category.rawValue)")
                             .font(.title2.weight(.bold))
-                            .foregroundColor(chartData[0].category.accentColor)
+                            .foregroundColor(chartData[0].category.themeColor)
                             .lineLimit(1)
                     } else {
                         Text("-")

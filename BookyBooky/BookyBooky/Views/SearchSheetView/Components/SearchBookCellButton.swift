@@ -90,7 +90,7 @@ extension SearchBookCellButton {
             
             ZStack {
                 TextShape()
-                    .fill(bookItem.categoryName.refinedCategory.accentColor)
+                    .fill(bookItem.categoryName.refinedCategory.themeColor)
                     .offset(y: 4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                 

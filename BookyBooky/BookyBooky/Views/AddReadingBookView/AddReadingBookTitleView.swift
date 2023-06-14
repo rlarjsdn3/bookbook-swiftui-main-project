@@ -46,7 +46,7 @@ struct AddReadingBookTitleView: View {
         }
         .sheet(isPresented: $isPresentingDatePickerSheet) {
             DatePickerSheetView(
-                accentColor: searchBookInfo.bookCategory.accentColor,
+                accentColor: searchBookInfo.bookCategory.themeColor,
                 selectedDate: $selectedDate)
         }
         .padding(.bottom, 40)

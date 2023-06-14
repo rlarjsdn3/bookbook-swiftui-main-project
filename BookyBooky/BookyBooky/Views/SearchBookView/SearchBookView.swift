@@ -33,7 +33,7 @@ struct SearchBookView: View {
     
     var categoryAccentColor: Color {
         if let bookDetail = aladinAPIManager.searchBookInfo {
-            return bookDetail.bookCategory.accentColor
+            return bookDetail.bookCategory.themeColor
         }
         return Color.black
     }

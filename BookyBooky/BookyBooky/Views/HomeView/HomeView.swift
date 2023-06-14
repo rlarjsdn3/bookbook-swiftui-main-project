@@ -19,7 +19,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                HomeHeaderView($scrollYOffset, selectedBookSortType: $selectedBookSortType)
+                HomeTopBarView($scrollYOffset, selectedBookSortType: $selectedBookSortType)
                 
                 HomeScrollView($scrollYOffset, selectedBookSortType: $selectedBookSortType)
             }
