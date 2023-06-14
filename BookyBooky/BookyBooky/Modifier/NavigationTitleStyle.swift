@@ -14,3 +14,9 @@ struct NavigationTitleStyle: ViewModifier {
             .fontWeight(.semibold)
     }
 }
+
+extension View {
+    func navigationBarItemStyle() -> some View {
+        modifier(NavigationBarItemStyle())
+    }
+}

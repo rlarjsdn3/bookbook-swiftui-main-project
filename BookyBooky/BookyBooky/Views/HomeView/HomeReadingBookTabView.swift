@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct HomeReadingBookView: View {
+struct HomeReadingBookTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -28,13 +28,13 @@ struct HomeReadingBookView: View {
         GridItem(.flexible())
     ]
     
-    @Binding var scrollYOffset: Double
+    @Binding var scrollYOffset: CGFloat
     @Binding var selectedBookSortType: BookSortCriteriaType
     let scrollProxy: ScrollViewProxy
     
     // MARK: - INTIALIZER
     
-    init(_ scrollYOffset: Binding<Double>,
+    init(_ scrollYOffset: Binding<CGFloat>,
          selectedBookSortType: Binding<BookSortCriteriaType>, scrollProxy: ScrollViewProxy) {
         self._scrollYOffset = scrollYOffset
         self._selectedBookSortType = selectedBookSortType
@@ -50,7 +50,7 @@ struct HomeReadingBookView: View {
 
 // MARK: - EXTENSIONS
 
-extension HomeReadingBookView {
+extension HomeReadingBookTabView {
     var readingBookTab: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             readingBookTabTitle
@@ -215,7 +215,7 @@ extension HomeReadingBookView {
 struct HomeReadingBookTabView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            HomeReadingBookView(.constant(0.0),
+            HomeReadingBookTabView(.constant(0.0),
                                    selectedBookSortType: .constant(.latestOrder),
                                    scrollProxy: scrollProxy)
                 .environmentObject(RealmManager())

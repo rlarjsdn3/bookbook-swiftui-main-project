@@ -34,7 +34,7 @@ extension AnalysisTopBarView {
         }
         .padding(.vertical)
         .overlay(alignment: .bottom) {
-            if scrollYOffset > 15.0 {
+            if scrollYOffset > 10.0 {
                 Divider()
             }
         }

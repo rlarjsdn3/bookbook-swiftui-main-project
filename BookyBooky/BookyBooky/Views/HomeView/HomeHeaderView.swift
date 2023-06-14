@@ -16,12 +16,12 @@ struct HomeHeaderView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var scrollYOffset: Double
+    @Binding var scrollYOffset: CGFloat
     @Binding var selectedBookSortType: BookSortCriteriaType
     
     // MARK: - INITALIZER
     
-    init(_ scrollYOffset: Binding<Double>, selectedBookSortType: Binding<BookSortCriteriaType>) {
+    init(_ scrollYOffset: Binding<CGFloat>, selectedBookSortType: Binding<BookSortCriteriaType>) {
         self._scrollYOffset = scrollYOffset
         self._selectedBookSortType = selectedBookSortType
     }
@@ -56,7 +56,7 @@ extension HomeHeaderView {
         .padding(.vertical)
         .overlay(alignment: .bottom) {
             Divider()
-                .opacity((scrollYOffset > 10 && scrollYOffset < 335) ? 1 : 0)
+                .opacity((scrollYOffset > 10 && scrollYOffset < 335) ? 1 : 0) // 이거 수정할 필요 있음
         }
     }
     

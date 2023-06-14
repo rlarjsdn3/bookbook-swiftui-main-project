@@ -112,13 +112,3 @@ extension View {
         return 0.0 // 폰트 추가 사이즈 없음
     }
 }
-
-extension View {
-    func navigationBarItemStyle() -> some View {
-        modifier(NavigationBarItemStyle())
-    }
-    
-    func navigationTitleStyle() -> some View {
-        modifier(NavigationTitleStyle())
-    }
-}

@@ -16,16 +16,16 @@ struct HomeScrollView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    @State private var startOffset = 0.0
+    @State private var startOffset: CGFloat = 0.0
     
     // MARK: - PROPERTIES
     
-    @Binding var scrollYOffset: Double
+    @Binding var scrollYOffset: CGFloat
     @Binding var selectedBookSortType: BookSortCriteriaType
     
     // MARK: - INTIALIZER
     
-    init(_ scrollYOffset: Binding<Double>, selectedBookSortType: Binding<BookSortCriteriaType>) {
+    init(_ scrollYOffset: Binding<CGFloat>, selectedBookSortType: Binding<BookSortCriteriaType>) {
         self._scrollYOffset = scrollYOffset
         self._selectedBookSortType = selectedBookSortType
     }
@@ -39,31 +39,15 @@ struct HomeScrollView: View {
                     VStack {
                         navigationBarTitle
                         
-                        HomeActivityView()
+                        HomeActivityTabView()
                         
-                        HomeReadingBookView(
+                        HomeReadingBookTabView(
                             $scrollYOffset,
                             selectedBookSortType: $selectedBookSortType,
                             scrollProxy: scrollProxy
                         )
                     }
-                    .overlay(alignment: .top) {
-                        GeometryReader { proxy -> Color in
-                            DispatchQueue.main.async {
-                                let offset = proxy.frame(in: .global).minY
-                                if startOffset == 0 {
-                                    self.startOffset = offset
-                                }
-                                withAnimation(.easeInOut(duration: 0.1)) {
-                                    scrollYOffset = startOffset - offset
-                                }
-                                
-                                print(scrollYOffset)
-                            }
-                            return Color.clear
-                        }
-                        .frame(width: 0, height: 0)
-                    }
+                    .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
                 }
             }
         }

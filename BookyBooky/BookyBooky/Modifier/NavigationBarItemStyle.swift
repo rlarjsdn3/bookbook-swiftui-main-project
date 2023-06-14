@@ -17,3 +17,9 @@ struct NavigationBarItemStyle: ViewModifier {
             .padding([.vertical], 10)
     }
 }
+
+extension View {    
+    func navigationTitleStyle() -> some View {
+        modifier(NavigationTitleStyle())
+    }
+}

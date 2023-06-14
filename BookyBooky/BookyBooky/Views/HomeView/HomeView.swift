@@ -11,7 +11,7 @@ struct HomeView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var scrollYOffset = 0.0
+    @State private var scrollYOffset: CGFloat = 0.0
     @State private var selectedBookSortType: BookSortCriteriaType = .latestOrder
     
     // MARK: - BODY
