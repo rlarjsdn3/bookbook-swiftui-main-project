@@ -101,31 +101,10 @@ extension AnalysisChartsTabView {
             TotalPagesCountByCategoryChartView(chartData: totalPagesByCategoryChartData)
         } label: {
             VStack {
-                HStack(alignment: .firstTextBaseline) {
-                    Label("분야 별 총 읽은 페이지", systemImage: "book")
-                        .font(.headline)
-                        .foregroundStyle(Color.black)
-                    
-                    Spacer()
-                    
-                    Group {
-                        Text("자세히 보기")
-                        Image(systemName: "chevron.right")
-                    }
-                    .font(.subheadline)
-                    .foregroundStyle(Color.secondary)
-                }
+                chartTitleLabel("분야 별 총 읽은 페이지")
                 
                 if totalPagesByCategoryChartData.isEmpty {
-                    VStack(spacing: 3) {
-                        Text("차트를 표시할 수 없음")
-                            .font(.headline)
-                        
-                        Text("독서를 시작해보세요.")
-                            .font(.subheadline)
-                            .foregroundStyle(Color.secondary)
-                    }
-                    .padding()
+                    unableToDisplayChartLabel
                 } else {
                     Chart(totalPagesByCategoryChartData, id: \.self) { element in
                         BarMark(
@@ -152,31 +131,10 @@ extension AnalysisChartsTabView {
             DailyPagesReadChartView(dailyChartData: totalDailyReadPagesChartData)
         } label: {
             VStack {
-                HStack(alignment: .firstTextBaseline) {
-                    Label("일일 독서 페이지", systemImage: "book")
-                        .font(.headline)
-                        .foregroundStyle(Color.black)
-                    
-                    Spacer()
-                    
-                    Group {
-                        Text("자세히 보기")
-                        Image(systemName: "chevron.right")
-                    }
-                    .font(.subheadline)
-                    .foregroundStyle(Color.secondary)
-                }
+                chartTitleLabel("일일 독서 페이지")
                 
                 if totalPagesByCategoryChartData.isEmpty {
-                    VStack(spacing: 3) {
-                        Text("차트를 표시할 수 없음")
-                            .font(.headline)
-                        
-                        Text("독서를 시작해보세요.")
-                            .font(.subheadline)
-                            .foregroundStyle(Color.secondary)
-                    }
-                    .padding()
+                    unableToDisplayChartLabel
                 } else {
                     Chart(totalDailyReadPagesChartData, id: \.self) { element in
                         BarMark(
@@ -225,6 +183,8 @@ extension AnalysisChartsTabView {
                 }
                 
                 if monthlyBooksCompletedChartData.isEmpty {
+                    unableToDisplayChartLabel
+                } else {
                     Chart(monthlyBooksCompletedChartData, id: \.self) { element in
                         BarMark(
                             x: .value("date", element.date, unit: .month),
@@ -241,16 +201,6 @@ extension AnalysisChartsTabView {
                     )
                     .frame(height: 50)
                     .padding(5)
-                } else {
-                    VStack(spacing: 3) {
-                        Text("차트를 표시할 수 없음")
-                            .font(.headline)
-                        
-                        Text("독서를 시작해보세요.")
-                            .font(.subheadline)
-                            .foregroundStyle(Color.secondary)
-                    }
-                    .padding()
                 }
             }
             .padding(.vertical, 15)
@@ -259,6 +209,35 @@ extension AnalysisChartsTabView {
         }
         .disabled(monthlyBooksCompletedChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
+    }
+    
+    var unableToDisplayChartLabel: some View {
+        VStack(spacing: 3) {
+            Text("차트를 표시할 수 없음")
+                .font(.headline)
+            
+            Text("독서를 시작해보세요.")
+                .font(.subheadline)
+                .foregroundStyle(Color.secondary)
+        }
+        .padding()
+    }
+    
+    func chartTitleLabel(_ title: String) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            Label(title, systemImage: "book")
+                .font(.headline)
+                .foregroundStyle(Color.black)
+            
+            Spacer()
+            
+            Group {
+                Text("자세히 보기")
+                Image(systemName: "chevron.right")
+            }
+            .font(.subheadline)
+            .foregroundStyle(Color.secondary)
+        }
     }
 }
 

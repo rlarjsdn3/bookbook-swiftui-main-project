@@ -66,94 +66,91 @@ struct TotalPagesCountByCategoryChartView: View {
                 navigationBarButtons
             }
             .padding(.vertical)
-            
-            ZStack {
-                Color(.background)
                 
-                ScrollView {
-                    Chart(chartData) { element in
-                        SectorMark(
-                            angle: .value("pages", element.pages),
-                            innerRadius: .ratio(0.618),
-                            angularInset: 1.5
-                        )
-                        .cornerRadius(5.0)
-                        .opacity(selectedStyle == nil ? 1 : (selectedStyle?.category == element.category ? 1 : 0.3))
-                        .foregroundStyle(by: .value("category", element.category.rawValue))
-                    }
-                    .chartLegend(alignment: .center, spacing: 18)
-                    .chartBackground { chartProxy  in
-                        GeometryReader { geometry in
-                            let frame = geometry[chartProxy.plotAreaFrame]
-                            VStack {
-                                if let selectedStyle = selectedStyle {
-                                    Text(selectedStyle.category.rawValue)
-                                        .font(.caption)
-                                        .foregroundStyle(Color.secondary)
-                                    Text("\(selectedStyle.pages)페이지")
-                                        .font(.callout.weight(.bold))
-                                    Text("\(pageCountByCategoryRatio(selectedStyle.pages))%")
-                                        .font(.caption)
-                                } else {
-                                    VStack {
-                                        Text("분야 별")
-                                            .font(.caption)
-                                            .foregroundStyle(Color.secondary)
-                                        Text("총 읽은 페이지")
-                                            .font(.callout.weight(.bold))
-                                    }
-                                }
-                            }
-                            .position(x: frame.midX, y: frame.midY)
-                        }
-                    }
-                    .chartAngleSelection($selectedCategory)
-                    .frame(height: 300)
-                    .padding()
-                    .background(Color.white)
-                    .clipShape(.rect(cornerRadius: 15))
-                    .padding(.bottom, 15)
-                    
-                    Text("세부 정보")
-                        .font(.caption)
-                        .foregroundStyle(Color.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 17)
-                        .padding(.bottom, 0)
-                    
-                    VStack(spacing: 0) {
-                        ForEach(chartData) { element in
-                            VStack(spacing: 0) {
-                                HStack(alignment: .firstTextBaseline, spacing: 3) {
-                                    Text(element.category.rawValue)
-                                    
-                                    Spacer()
-                                    
-                                    Text("\(element.pages)페이지")
-                                        .foregroundStyle(Color.secondary)
-                                    
-                                    Text("(\(pageCountByCategoryRatio(element.pages))%)")
-                                        .font(.caption)
-                                        .foregroundStyle(Color.secondary)
-                                }
-                                .padding(.vertical, 13)
-                                .padding(.horizontal)
-                                
-                                if chartData.last != element {
-                                    Divider()
-                                        .padding(.horizontal, 10)
-                                        .offset(x: 10)
-                                }
-                            }
-                        }
-                    }
-                    .background(Color.white)
-                    .clipShape(.rect(cornerRadius: 15))
+            ScrollView {
+                Chart(chartData) { element in
+                    SectorMark(
+                        angle: .value("pages", element.pages),
+                        innerRadius: .ratio(0.618),
+                        angularInset: 1.5
+                    )
+                    .cornerRadius(5.0)
+                    .opacity(selectedStyle == nil ? 1 : (selectedStyle?.category == element.category ? 1 : 0.3))
+                    .foregroundStyle(by: .value("category", element.category.rawValue))
                 }
-                .scrollIndicators(.hidden)
-                .safeAreaPadding([.leading, .top, .trailing])
-                .safeAreaPadding(.bottom, 40)
+                .chartLegend(alignment: .center, spacing: 18)
+                .chartBackground { chartProxy  in
+                    GeometryReader { geometry in
+                        let frame = geometry[chartProxy.plotAreaFrame]
+                        VStack {
+                            if let selectedStyle = selectedStyle {
+                                Text(selectedStyle.category.rawValue)
+                                    .font(.caption)
+                                    .foregroundStyle(Color.secondary)
+                                Text("\(selectedStyle.pages)페이지")
+                                    .font(.callout.weight(.bold))
+                                Text("\(pageCountByCategoryRatio(selectedStyle.pages))%")
+                                    .font(.caption)
+                            } else {
+                                VStack {
+                                    Text("분야 별")
+                                        .font(.caption)
+                                        .foregroundStyle(Color.secondary)
+                                    Text("총 읽은 페이지")
+                                        .font(.callout.weight(.bold))
+                                }
+                            }
+                        }
+                        .position(x: frame.midX, y: frame.midY)
+                    }
+                }
+                .chartAngleSelection($selectedCategory)
+                .frame(height: 300)
+                .padding()
+                .background(Color.white)
+                .clipShape(.rect(cornerRadius: 15))
+                .padding(.bottom, 15)
+                
+                Text("세부 정보")
+                    .font(.caption)
+                    .foregroundStyle(Color.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 17)
+                    .padding(.bottom, 0)
+                
+                VStack(spacing: 0) {
+                    ForEach(chartData) { element in
+                        VStack(spacing: 0) {
+                            HStack(alignment: .firstTextBaseline, spacing: 3) {
+                                Text(element.category.rawValue)
+                                
+                                Spacer()
+                                
+                                Text("\(element.pages)페이지")
+                                    .foregroundStyle(Color.secondary)
+                                
+                                Text("(\(pageCountByCategoryRatio(element.pages))%)")
+                                    .font(.caption)
+                                    .foregroundStyle(Color.secondary)
+                            }
+                            .padding(.vertical, 13)
+                            .padding(.horizontal)
+                            
+                            if chartData.last != element {
+                                Divider()
+                                    .padding(.horizontal, 10)
+                                    .offset(x: 10)
+                            }
+                        }
+                    }
+                }
+                .background(Color.white)
+                .clipShape(.rect(cornerRadius: 15))
             }
+            .scrollIndicators(.hidden)
+            .safeAreaPadding([.leading, .top, .trailing])
+            .safeAreaPadding(.bottom, 40)
+            .background(Color(.background))
         }
         .navigationBarBackButtonHidden()
     }
