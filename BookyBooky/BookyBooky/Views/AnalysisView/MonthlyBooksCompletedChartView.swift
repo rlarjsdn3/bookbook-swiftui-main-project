@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct monthlyCompleteBookChartView: View {
+struct MonthlyBooksCompletedChartView: View {
     
     @Environment(\.dismiss) var dismiss
     
@@ -204,7 +204,7 @@ struct monthlyCompleteBookChartView: View {
     }
 }
 
-extension monthlyCompleteBookChartView {
+extension MonthlyBooksCompletedChartView {
     var navigationBarButtons: some View {
         HStack {
             Button {
@@ -220,5 +220,5 @@ extension monthlyCompleteBookChartView {
 }
 
 #Preview {
-    monthlyCompleteBookChartView([])
+    MonthlyBooksCompletedChartView([])
 }

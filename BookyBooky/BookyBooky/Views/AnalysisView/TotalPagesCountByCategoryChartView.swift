@@ -9,9 +9,9 @@ import SwiftUI
 import Charts
 import RealmSwift
 
-// 퍼센티지 비율도 함께 출력하기
-
-struct TotalPagesReadByCategoryChartView: View {
+struct TotalPagesCountByCategoryChartView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
     
@@ -19,37 +19,45 @@ struct TotalPagesReadByCategoryChartView: View {
     
     @State private var selectedCategory: Double? = nil
     
-    let totalPagesReadByCategoryData: [TotalPagesReadByCategory]
-    let cumulativeSalesRangesForStyles: [(name: String, range: Range<Double>)]
+    // MARK: - PROPERTIES
+    
+    let chartData: [TotalPagesReadByCategory]
+    let cumulativeSalesRangesForStyles: [(category: String, range: Range<Double>)]
+    
+    // MARK: - COMPUTED PROPERTIES
     
     var selectedStyle: TotalPagesReadByCategory? {
         if let selectedCategory,
            let selectedIndex = cumulativeSalesRangesForStyles
             .firstIndex(where: { $0.range.contains(selectedCategory) }) {
-            return totalPagesReadByCategoryData[selectedIndex]
+            return chartData[selectedIndex]
         }
         
         return nil
     }
+    
+    // MARK: - INTILAIZER
 
-    init(data: [TotalPagesReadByCategory]) {
-        self.totalPagesReadByCategoryData = data
+    init(chartData: [TotalPagesReadByCategory]) {
+        self.chartData = chartData
         
         var cumulative = 0.0
-        self.cumulativeSalesRangesForStyles = totalPagesReadByCategoryData.map {
+        self.cumulativeSalesRangesForStyles = chartData.map {
             let newCumulative = cumulative + Double($0.pages)
-            let result = (name: $0.category.rawValue, range: cumulative ..< newCumulative)
+            let result = (category: $0.category.rawValue, range: cumulative..<newCumulative)
             cumulative = newCumulative
             return result
         }
     }
+    
+    // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
             HStack {
                 Spacer()
                 
-                Text("분류 별 총 읽은 페이지")
+                Text("분야 별 총 읽은 페이지")
                     .navigationTitleStyle()
                 
                 Spacer()
@@ -63,7 +71,7 @@ struct TotalPagesReadByCategoryChartView: View {
                 Color(.background)
                 
                 ScrollView {
-                    Chart(totalPagesReadByCategoryData) { element in
+                    Chart(chartData) { element in
                         SectorMark(
                             angle: .value("pages", element.pages),
                             innerRadius: .ratio(0.618),
@@ -84,11 +92,11 @@ struct TotalPagesReadByCategoryChartView: View {
                                         .foregroundStyle(Color.secondary)
                                     Text("\(selectedStyle.pages)페이지")
                                         .font(.callout.weight(.bold))
-                                    Text("\(readingPageRatio(selectedStyle.pages))%")
+                                    Text("\(pageCountByCategoryRatio(selectedStyle.pages))%")
                                         .font(.caption)
                                 } else {
                                     VStack {
-                                        Text("분류 별")
+                                        Text("분야 별")
                                             .font(.caption)
                                             .foregroundStyle(Color.secondary)
                                         Text("총 읽은 페이지")
@@ -114,24 +122,24 @@ struct TotalPagesReadByCategoryChartView: View {
                         .padding(.bottom, 0)
                     
                     VStack(spacing: 0) {
-                        ForEach(totalPagesReadByCategoryData) { item in
+                        ForEach(chartData) { element in
                             VStack(spacing: 0) {
                                 HStack(alignment: .firstTextBaseline, spacing: 3) {
-                                    Text(item.category.rawValue)
+                                    Text(element.category.rawValue)
                                     
                                     Spacer()
                                     
-                                    Text("\(item.pages)페이지")
+                                    Text("\(element.pages)페이지")
                                         .foregroundStyle(Color.secondary)
                                     
-                                    Text("(\(readingPageRatio(item.pages))%)")
+                                    Text("(\(pageCountByCategoryRatio(element.pages))%)")
                                         .font(.caption)
                                         .foregroundStyle(Color.secondary)
                                 }
                                 .padding(.vertical, 13)
                                 .padding(.horizontal)
                                 
-                                if totalPagesReadByCategoryData.last != item {
+                                if chartData.last != element {
                                     Divider()
                                         .padding(.horizontal, 10)
                                         .offset(x: 10)
@@ -150,12 +158,15 @@ struct TotalPagesReadByCategoryChartView: View {
         .navigationBarBackButtonHidden()
     }
     
-    func readingPageRatio(_ pages: Int) -> String {
-        (Double(pages) / Double(totalPagesReadByCategoryData.reduce(0, { $0 + $1.pages })) * 100.0).formatted(.number.precision(.fractionLength(1)))
+    func pageCountByCategoryRatio(_ pageCountByCategory: Int) -> String {
+        let pageCount = Double(pageCountByCategory)
+        let totalReadPages = Double(chartData.reduce(0, { $0 + $1.pages }))
+        let ratio = (pageCount / totalReadPages) * 100.0
+        return ratio.formatted(.number.precision(.fractionLength(1)))
     }
 }
 
-extension TotalPagesReadByCategoryChartView {
+extension TotalPagesCountByCategoryChartView {
     var navigationBarButtons: some View {
         HStack {
             Button {
@@ -171,5 +182,5 @@ extension TotalPagesReadByCategoryChartView {
 }
 
 #Preview {
-    TotalPagesReadByCategoryChartView(data: [])
+    TotalPagesCountByCategoryChartView(chartData: [])
 }
