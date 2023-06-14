@@ -18,6 +18,8 @@ struct SearchSheetTextFieldView: View {
     
     @FocusState var focusedField: Bool
     
+    @Namespace var namespace: Namespace.ID
+    
     // MARK: - PROPERTIES
     
     @Binding var searchQuery: String
@@ -29,17 +31,20 @@ struct SearchSheetTextFieldView: View {
     // MARK: - BODY
     
     var body: some View {
-        searchSheetTextField
+        VStack(spacing: 10) {
+            searchSheetTextField
             // 검색 시트가 나타난 후, 0.05초 뒤에 키보드를 보이게 합니다.
-            .onAppear {
-                if aladinAPIManager.searchResults.isEmpty {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                        focusedField = true
+                .onAppear {
+                    if aladinAPIManager.searchResults.isEmpty {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                            focusedField = true
+                        }
                     }
                 }
-            }
-            .padding([.leading, .top, .trailing])
-            .padding(.bottom, 5)
+                .padding([.leading, .top, .trailing])
+            
+            searchCategory
+        }
     }
     
     func requestBookSearch(_ searchQuery: String) {
@@ -157,6 +162,52 @@ extension SearchSheetTextFieldView {
                 .cornerRadius(15)
         }
     }
+    
+    
+    var searchCategory: some View {
+        Group {
+            if aladinAPIManager.searchResults.isEmpty {
+                EmptyView()
+            } else {
+                scrollCategoryButtons
+            }
+        }
+    }
+    
+    var scrollCategoryButtons: some View {
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                categoryButtons(scrollProxy: proxy)
+            }
+            .onChange(of: searchIndex) { _ in
+                // 새로운 검색을 시도할 때만 카테고리 스크롤을 제일 앞으로 전진합니다.
+                // '더 보기' 버튼을 클릭해도 카테고리 스크롤이 이동하지 않습니다.
+                if searchIndex == 1 {
+                    withAnimation {
+                        proxy.scrollTo("Scroll_To_Leading", anchor: .top)
+                    }
+                }
+            }
+            .frame(height: 35)
+        }
+    }
+    
+    func categoryButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
+        HStack(spacing: -20) {
+            ForEach(aladinAPIManager.categories, id: \.self) { type in
+                CategoryButton(
+                    type,
+                    selectedCategory: $selectedCategory,
+                    selectedCategoryForAnimation: $selectedCategoryForAnimation,
+                    namespace: namespace,
+                    scrollProxy: proxy
+                )
+                .id(type.rawValue)
+            }
+            .id("Scroll_To_Leading")
+        }
+    }
+    
 }
 
 // MARK: - PREVIEW

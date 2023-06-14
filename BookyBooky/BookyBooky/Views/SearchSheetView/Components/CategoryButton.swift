@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoryRoundedButton: View {
+struct CategoryButton: View {
     
     // MARK: - PROPERTIES
     
@@ -52,11 +52,10 @@ struct CategoryRoundedButton: View {
                         .matchedGeometryEffect(id: "roundedRectangle", in: namespace)
                 }
                 
-                Text(type.rawValue)
+                Text(type.name)
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(selectedCategoryForAnimation == type ? .white : .black)
-//                    .minimumScaleFactor(0.9)
                     .padding(.horizontal, selectedCategoryForAnimation == type ? 15 : 15)
             }
         }
@@ -71,7 +70,7 @@ struct CategoryButtonView_Previews: PreviewProvider {
     
     static var previews: some View {
         ScrollViewReader { proxy in
-            CategoryRoundedButton(
+            CategoryButton(
                 .all,
                 selectedCategory: .constant(.all),
                 selectedCategoryForAnimation: .constant(.all),

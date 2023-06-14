@@ -32,16 +32,13 @@ struct SearchSheetView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                
+                // TextFieldView 와 Category 합치기
+                
                 SearchSheetTextFieldView(
                     searchQuery: $searchQuery,
                     searchIndex: $searchIndex,
                     selectedListMode: $selectedListMode,
-                    selectedCategory: $selectedCategory,
-                    selectedCategoryForAnimation: $selectedCategoryForAnimation
-                )
-                
-                SearchSheetCategoryView(
-                    searchIndex: $searchIndex,
                     selectedCategory: $selectedCategory,
                     selectedCategoryForAnimation: $selectedCategoryForAnimation
                 )
