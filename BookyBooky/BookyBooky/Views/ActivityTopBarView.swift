@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ActivityHeaderView: View {
+struct ActivityTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -16,14 +16,14 @@ struct ActivityHeaderView: View {
     // MARK: - BODY
     
     var body: some View {
-        navigationBar
+        navigationTopBar
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension ActivityHeaderView {
-    var navigationBar: some View {
+extension ActivityTopBarView {
+    var navigationTopBar: some View {
         HStack {
             Spacer()
             
@@ -61,6 +61,6 @@ extension ActivityHeaderView {
 
 struct ActivityHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityHeaderView()
+        ActivityTopBarView()
     }
 }
