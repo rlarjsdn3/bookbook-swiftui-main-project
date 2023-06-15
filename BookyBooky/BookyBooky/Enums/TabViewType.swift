@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-enum RoundedTabType: CaseIterable {
+enum TabViewType: CaseIterable {
     case home, search, bookShelf, analysis
     
     var name: String {

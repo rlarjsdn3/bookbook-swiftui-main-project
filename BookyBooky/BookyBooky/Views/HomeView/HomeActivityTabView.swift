@@ -36,7 +36,7 @@ extension HomeActivityTabView {
     
     var activityTabTitle: some View {
         HStack {
-            activityHeadlineText
+            headlineText
             
             Spacer()
             
@@ -46,7 +46,7 @@ extension HomeActivityTabView {
         .padding(.trailing, 25)
     }
     
-    var activityHeadlineText: some View {
+    var headlineText: some View {
         Text("활동")
             .font(.title2)
             .fontWeight(.bold)
@@ -66,14 +66,14 @@ extension HomeActivityTabView {
             if recentActivities.isEmpty {
                 noActivityLabel
             } else {
-                activityButtons(recentActivities)
+                activityButtonGroup(recentActivities)
             }
         }
     }
     
-    func activityButtons(_ activities: [ReadingActivity]) -> some View {
+    func activityButtonGroup(_ activities: [ReadingActivity]) -> some View {
         ForEach(activities, id: \.self) { activity in
-            ActivityCellButton(activity)
+            ActivityButton(activity)
         }
     }
     

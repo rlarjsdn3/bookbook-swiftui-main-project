@@ -25,8 +25,8 @@ struct SearchSheetTextFieldView: View {
     @Binding var searchQuery: String
     @Binding var searchIndex: Int
     @Binding var selectedListMode: ListMode
-    @Binding var selectedCategory: CategoryType
-    @Binding var selectedCategoryForAnimation: CategoryType
+    @Binding var selectedCategory: Category
+    @Binding var selectedCategoryForAnimation: Category
     
     // MARK: - BODY
     

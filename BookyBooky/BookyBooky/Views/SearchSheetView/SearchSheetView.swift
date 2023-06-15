@@ -23,8 +23,8 @@ struct SearchSheetView: View {
     
     @State private var searchQuery = ""
     @State private var searchIndex = 1
-    @State private var selectedCategory: CategoryType = .all
-    @State private var selectedCategoryForAnimation: CategoryType = .all
+    @State private var selectedCategory: Category = .all
+    @State private var selectedCategoryForAnimation: Category = .all
     
     
     // MARK: - BODY

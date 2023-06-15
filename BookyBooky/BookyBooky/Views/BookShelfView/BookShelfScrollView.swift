@@ -279,7 +279,7 @@ extension BookShelfScrollView {
     func scrollCompleteBooks(_ completeBooks: [ReadingBook]) -> some View {
         LazyVGrid(columns: columns, spacing: 15) {
             ForEach(completeBooks, id: \.self) { book in
-                ReadingBookButton(book, buttonType: .shelf)
+                ReadingBookButton(book, type: .shelf)
                     .padding(.top, 10)
             }
         }

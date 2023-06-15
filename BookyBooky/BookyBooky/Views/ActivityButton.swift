@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ActivityCellButton: View {
+struct ActivityButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -27,25 +27,25 @@ struct ActivityCellButton: View {
     // MARK: - BODY
     
     var body: some View {
-        navigationCellButton
+        activityButton
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension ActivityCellButton {
-    var navigationCellButton: some View {
+extension ActivityButton {
+    var activityButton: some View {
         NavigationLink {
-            if let readingBook = readingBooks.findReadingBookFirst(isbn13: activity.isbn13) {
+            if let readingBook = readingBooks.findFirst(isbn13: activity.isbn13) {
                 ReadingBookView(readingBook)
             }
         } label: {
-            cellLabel
+            activityLabel
         }
         .buttonStyle(.plain)
     }
     
-    var cellLabel: some View {
+    var activityLabel: some View {
         HStack {
             statusSFSymbolImage
             
@@ -81,7 +81,7 @@ extension ActivityCellButton {
                 
                 Spacer()
                 
-                readingDateText
+                moreDateText
             }
         }
     }
@@ -106,7 +106,7 @@ extension ActivityCellButton {
         .foregroundColor(activity.category.themeColor)
     }
     
-    var readingDateText: some View {
+    var moreDateText: some View {
         Group {
             Text(activity.date.toFormat("yyyy. M. d."))
             
@@ -119,6 +119,6 @@ extension ActivityCellButton {
 
 struct ActivityCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityCellButton(ReadingActivity.preview)
+        ActivityButton(ReadingActivity.preview)
     }
 }

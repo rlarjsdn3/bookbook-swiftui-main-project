@@ -8,12 +8,15 @@
 import SwiftUI
 import RealmSwift
 
-enum ReadingBookCellButtonType {
+enum ReadingBookButtonType {
     case home
     case shelf
 }
 
 struct ReadingBookButton: View {
+    
+    // MARK: - INNER ENUM
+    
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -22,13 +25,13 @@ struct ReadingBookButton: View {
     // MARK: - PROPERTIES
     
     @ObservedRealmObject var readingBook: ReadingBook
-    let buttonType: ReadingBookCellButtonType
+    let type: ReadingBookButtonType
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook, buttonType: ReadingBookCellButtonType) {
+    init(_ readingBook: ReadingBook, type: ReadingBookButtonType) {
         self.readingBook = readingBook
-        self.buttonType = buttonType
+        self.type = type
     }
     
     // MARK: - BODY
@@ -61,7 +64,7 @@ extension ReadingBookButton {
                 }
             }
             
-            if buttonType == .home {
+            if type == .home {
                 progressBar
             }
             
@@ -104,7 +107,7 @@ extension ReadingBookButton {
             .minimumScaleFactor(0.8)
             .frame(width: 150, height: 25)
             .padding(.horizontal)
-            .padding([buttonType == .home ? .top : [], .bottom], -5)
+            .padding([type == .home ? .top : [], .bottom], -5)
     }
     
     var readingBookAuthorText: some View {
@@ -117,6 +120,6 @@ extension ReadingBookButton {
 
 struct ReadingBookCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookButton(ReadingBook.preview, buttonType: .home)
+        ReadingBookButton(.preview, type: .home)
     }
 }

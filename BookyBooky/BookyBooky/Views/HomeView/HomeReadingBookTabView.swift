@@ -17,8 +17,8 @@ struct HomeReadingBookTabView: View {
     
     @ObservedResults(ReadingBook.self) var readingBooks
     
-    @State private var selectedCategory: CategoryType = .all
-    @State private var selectedCategoryForAnimation: CategoryType = .all
+    @State private var selectedCategory: Category = .all
+    @State private var selectedCategoryForAnimation: Category = .all
     
     @Namespace var namespace
     
@@ -36,7 +36,22 @@ struct HomeReadingBookTabView: View {
     // MARK: - COMPUTED PROPERTIES
     
     var dynamicBottomPaddingValue: CGFloat {
-        return 300.0
+        let filteredUnfinishedBooksCount = readingBooks.getFilteredReadingBooks(
+            .unfinished, sort: selectedBookSortCriteria, category: selectedCategory
+        ).count
+        
+        switch filteredUnfinishedBooksCount {
+        case _ where filteredUnfinishedBooksCount <= 2:
+            // iPhone 12Pro 기준, 하단 패딩 값
+            // 추후 스크린 사이즈(기기) 별로 별도 다른 하단 패딩 값을 부여해야 함
+            return 315
+        case _ where filteredUnfinishedBooksCount <= 4:
+            // iPhone 12Pro 기준, 하단 패딩 값
+            // 추후 스크린 사이즈(기기) 별로 별도 다른 하단 패딩 값을 부여해야 함
+            return 22
+        default:
+            return 0
+        }
     }
     
     // MARK: - INTIALIZER
@@ -60,27 +75,28 @@ struct HomeReadingBookTabView: View {
 
 extension HomeReadingBookTabView {
     var readingBookTab: some View {
-        LazyVStack(pinnedViews: [.sectionHeaders]) {
+        VStack {
             readingBookTabTitle
             
             Section {
                 readingBookTabContent
             } header: {
-                categoryButtons(scrollProxy: scrollProxy)
+                categoryButtonGroup(scrollProxy: scrollProxy)
             }
         }
     }
     
     var readingBookTabTitle: some View {
         HStack {
-            readingBookHeadlineText
+            headlineText
             
             utilMenu
         }
+        .padding(.top, 10)
         .padding(.bottom, -10)
     }
     
-    var readingBookHeadlineText: some View {
+    var headlineText: some View {
         Text("독서")
             .font(.title2)
             .fontWeight(.bold)
@@ -92,6 +108,8 @@ extension HomeReadingBookTabView {
         Menu {
             Section {
                 sortButtons
+                
+                // TODO: - 읽고 있는 도서 리스트를 '격자 모드' 혹은 '리스트 모드'로 보게 만들기 (버전 1.1)
             } header: {
                 Text("도서 정렬")
             }
@@ -136,7 +154,7 @@ extension HomeReadingBookTabView {
             if readingBook.isEmpty {
                 noBookIsBeingReadLabel
             } else {
-                readingBookButtons
+                readingBookButtonGroup
             }
         }
     }
@@ -153,7 +171,7 @@ extension HomeReadingBookTabView {
         .padding(.top, 50)
     }
     
-    var readingBookButtons: some View {
+    var readingBookButtonGroup: some View {
         Group {
             let filterReadingBooks = readingBooks.getFilteredReadingBooks(
                 .unfinished,
@@ -161,17 +179,19 @@ extension HomeReadingBookTabView {
                 category: selectedCategory
             )
             
+            // TODO: - 읽고 있는 도서 리스트를 '격자 모드' 혹은 '리스트 모드'로 보게 만들기 (버전 1.1)
+            
             LazyVGrid(columns: columns, spacing: 25) {
                 ForEach(filterReadingBooks) { readingBook in
-                    ReadingBookButton(readingBook, buttonType: .home)
+                    ReadingBookButton(readingBook, type: .home)
                 }
             }
-            .padding(.bottom, dynamicBottomPaddingValue)
-            .safeAreaPadding()
+            .safeAreaPadding([.leading, .top, .trailing])
+            .safeAreaPadding(.bottom, dynamicBottomPaddingValue)
         }
     }
     
-    func categoryButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
+    func categoryButtonGroup(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {

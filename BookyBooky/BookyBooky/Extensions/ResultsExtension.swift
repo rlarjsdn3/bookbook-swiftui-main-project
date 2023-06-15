@@ -19,7 +19,7 @@ extension Results<ReadingBook> {
     /// 매개변수로 주어진 도서의 ISBN13과 동일한 값을 가지는 객체를 반환하는 함수입니다. 해당하는 객체가 존재하지 않는다면 nil을 반환합니다.
     /// - Parameter isbn13: 찾고자 하는 도서의 ISBN13
     /// - Returns: ReadingBook 타입의 Obect 객체
-    func findReadingBookFirst(isbn13: String) -> ReadingBook? {
+    func findFirst(isbn13: String) -> ReadingBook? {
         if let readingBook = self.first(where: { $0.isbn13 == isbn13 }) {
             return readingBook
         }

@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct RoundedTabView: View {
+struct CustomTabView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedTabBarItem: RoundedTabType
+    @Binding var selectedTabViewType: TabViewType
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -21,10 +21,10 @@ struct RoundedTabView: View {
     
     var body: some View {
         HStack {
-            ForEach(RoundedTabType.allCases, id: \.self) { type in
+            ForEach(TabViewType.allCases, id: \.self) { type in
                 TabButton(
                     type,
-                    selectedTabBarItem: $selectedTabBarItem,
+                    selectedTabViewType: $selectedTabViewType,
                     namespace: namespace
                 )
             }
@@ -32,10 +32,10 @@ struct RoundedTabView: View {
         .background {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(.gray, lineWidth: 0.2)
+                    .stroke(Color.gray, lineWidth: 0.2)
                 
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(.white)
+                    .fill(Color.white)
                     .frame(height: 100)
             }
             .offset(y: 15.5)
@@ -50,6 +50,6 @@ struct RoundedTabView: View {
 
 struct RoundedTabView_Previews: PreviewProvider {
     static var previews: some View {
-        RoundedTabView(selectedTabBarItem: .constant(.home))
+        CustomTabView(selectedTabViewType: .constant(.home))
     }
 }

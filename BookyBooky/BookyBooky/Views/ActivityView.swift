@@ -14,12 +14,14 @@ struct ActivityView: View {
     // MARK: - BODY
     
     var body: some View {
-        VStack(spacing: 0) {
-            ActivityTopBarView()
-            
-            ActivityScrollView()
+        NavigationStack {
+            VStack(spacing: 0) {
+                ActivityTopBarView()
+                
+                ActivityScrollView()
+            }
+            .toolbar(.hidden, for: .navigationBar)
         }
-        .toolbar(.hidden, for: .navigationBar)
     }
 }
 

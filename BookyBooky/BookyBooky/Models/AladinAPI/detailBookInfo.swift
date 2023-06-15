@@ -37,7 +37,7 @@ struct detailBookInfo: Codable {
 // MARK: - EXTENSIONS
 
 extension detailBookInfo.Item {
-    var bookCategory: CategoryType {
+    var bookCategory: Category {
         return categoryName.refinedCategory
     }
     

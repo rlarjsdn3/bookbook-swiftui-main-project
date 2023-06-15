@@ -11,15 +11,18 @@ struct TabButton: View {
     
     // MARK: - PROPERTIES
     
-    var type: RoundedTabType
-    @Binding var selectedTabBarType: RoundedTabType
+    var type: TabViewType
+    @Binding var selectedTabViewType: TabViewType
     var namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
-    init(_ type: RoundedTabType, selectedTabBarItem: Binding<RoundedTabType>, namespace: Namespace.ID) {
+    init(
+        _ type: TabViewType,
+        selectedTabViewType: Binding<TabViewType>,
+        namespace: Namespace.ID) {
         self.type = type
-        self._selectedTabBarType = selectedTabBarItem
+        self._selectedTabViewType = selectedTabViewType
         self.namespace = namespace
     }
     
@@ -27,20 +30,21 @@ struct TabButton: View {
     
     var body: some View {
         Spacer()
+        
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                selectedTabBarType = type
+                selectedTabViewType = type
             }
             HapticManager.shared.impact(.light)
         } label: {
             VStack(spacing: -5) {
                 Image(systemName: type.icon)
                     .font(.title3)
-                    .offset(y: selectedTabBarType == type ? -8 : 0)
-                    .foregroundColor(selectedTabBarType == type ? type.colorPressed : type.color)
-                    .scaleEffect(selectedTabBarType == type ? 1.0 : 0.95)
+                    .offset(y: selectedTabViewType == type ? -8 : 0)
+                    .foregroundColor(selectedTabViewType == type ? type.colorPressed : type.color)
+                    .scaleEffect(selectedTabViewType == type ? 1.0 : 0.9)
                 
-                if selectedTabBarType == type {
+                if selectedTabViewType == type {
                     Text(type.name)
                         .font(.caption2)
                         .foregroundColor(.black)
@@ -49,7 +53,7 @@ struct TabButton: View {
             .frame(height: 20)
             .padding(.bottom, 5)
             .overlay {
-                if selectedTabBarType == type {
+                if selectedTabViewType == type {
                     RoundedRectBLBR()
                         .foregroundColor(.black)
                         .frame(width: 40, height: 5)
@@ -58,6 +62,7 @@ struct TabButton: View {
                 }
             }
         }
+        
         Spacer()
     }
 }
@@ -68,6 +73,10 @@ struct TabButtonView_Previews: PreviewProvider {
     @Namespace static var namespace
     
     static var previews: some View {
-        TabButton(.home, selectedTabBarItem: .constant(.home)  ,namespace: namespace)
+        TabButton(
+            .home,
+            selectedTabViewType: .constant(.home),
+            namespace: namespace
+        )
     }
 }

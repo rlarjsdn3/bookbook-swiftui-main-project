@@ -16,10 +16,6 @@ struct ActivityScrollView: View {
     
     @ObservedResults(ReadingBook.self) var readingBooks
     
-    var monthlyReadingActivity: [MonthlyReadingActivity] {
-        return readingBooks.getMonthlyReadingActivity()
-    }
-    
     // MARK: - BODY
     
     var body: some View {
@@ -48,22 +44,17 @@ struct ActivityScrollView: View {
 extension ActivityScrollView {
     var activityPinnedScroll: some View {
         Group {
-            let monthlyReadingActivity = monthlyReadingActivity
+            let monthlyActivity = readingBooks.getMonthlyReadingActivity()
             
-            if monthlyReadingActivity.isEmpty {
-                noReadingDataLabel
+            if monthlyActivity.isEmpty {
+                noActivityLabel
             } else {
-                ScrollView {
-                    LazyVStack(spacing: 5, pinnedViews: [.sectionHeaders]) {
-                        monthlyReadingActivitySection
-                    }
-                }
-                .padding(.bottom, 40)
+                monthlyActivityScrollContent(monthlyActivity)
             }
         }
     }
     
-    var noReadingDataLabel: some View {
+    var noActivityLabel: some View {
         VStack(spacing: 5) {
             Spacer()
             
@@ -79,55 +70,60 @@ extension ActivityScrollView {
         .padding(.vertical, 30)
     }
     
-    var monthlyReadingActivitySection: some View {
-        ForEach(readingBooks.getMonthlyReadingActivity(), id: \.self) { monthlyActivity in
-            Section {
-                VStack {
-                    monthlySummaryLabel(monthlyActivity)
-                    
-                    activityCellButtons(monthlyActivity)
+    func monthlyActivityScrollContent(_ activities: [MonthlyReadingActivity]) -> some View {
+        ScrollView {
+            LazyVStack(spacing: 5, pinnedViews: [.sectionHeaders]) {
+                ForEach(activities, id: \.self) { activity in
+                    Section {
+                        VStack {
+                            summaryLabel(activity)
+                            
+                            activityButtons(activity)
+                        }
+                    } header: {
+                        dateText(activity)
+                    }
                 }
-            } header: {
-                dateText(monthlyActivity)
             }
         }
+        .safeAreaPadding(.bottom, 40)
     }
     
-    func monthlySummaryLabel(_ monthlyActivity: MonthlyReadingActivity) -> some View {
+    func summaryLabel(_ activity: MonthlyReadingActivity) -> some View {
         VStack(spacing: 10) {
-            readingDayCountLabel(monthlyActivity)
+            readingDayCountLabel(activity)
             
-            completeBookCountLabel(monthlyActivity)
+            completeBookCountLabel(activity)
             
-            monthlyTotalReadPagesLabel(monthlyActivity)
+            monthlyTotalReadPagesLabel(activity)
         }
         .padding(.horizontal)
     }
     
-    func readingDayCountLabel(_ monthlyActivity: MonthlyReadingActivity) -> some View {
+    func readingDayCountLabel(_ activity: MonthlyReadingActivity) -> some View {
         HStack {
             Label("독서일", systemImage: "calendar.circle.fill")
                 .font(.headline.weight(.bold))
             
             Spacer()
             
-            Text("\(getMonthlyReadingDayCount(monthlyActivity))일")
+            Text("\(getMonthlyReadingDayCount(activity))일")
         }
     }
     
-    func completeBookCountLabel(_ monthlyActivity: MonthlyReadingActivity) -> some View {
+    func completeBookCountLabel(_ activity: MonthlyReadingActivity) -> some View {
         HStack {
             Label("완독한 권수", systemImage: "book.closed.circle.fill")
                 .font(.headline.weight(.bold))
             
             Spacer()
             
-            Text("\(monthlyActivity.activities.reduce(0, { $1.itemPage == $1.totalPagesRead ? $0 + 1 : $0 }))권")
+            Text("\(activity.activities.reduce(0, { $1.isComplete ? $0 + 1 : $0 }))권")
                 .foregroundColor(Color.purple)
         }
     }
     
-    func monthlyTotalReadPagesLabel(_ monthlyActivity: MonthlyReadingActivity) -> some View {
+    func monthlyTotalReadPagesLabel(_ activity: MonthlyReadingActivity) -> some View {
         HStack(alignment: .firstTextBaseline) {
             Label("읽은 페이지", systemImage: "paperclip.circle.fill")
                 .font(.headline.weight(.bold))
@@ -135,20 +131,20 @@ extension ActivityScrollView {
             Spacer()
             
             VStack(alignment: .trailing) {
-                Text("\(monthlyActivity.activities.reduce(0, { $0 + $1.numOfPagesRead }))페이지")
+                Text("\(activity.activities.reduce(0, { $0 + $1.numOfPagesRead }))페이지")
                     .foregroundColor(Color.pink)
                 
-                Text("하루 평균 \( monthlyActivity.activities.reduce(0, { $0 + $1.numOfPagesRead }) / getMonthlyReadingDayCount(monthlyActivity) )페이지")
+                Text("하루 평균 \( activity.activities.reduce(0, { $0 + $1.numOfPagesRead }) / getMonthlyReadingDayCount(activity) )페이지")
                     .font(.footnote)
                     .foregroundColor(Color.secondary)
             }
         }
     }
     
-    func activityCellButtons(_ monthlyActivity: MonthlyReadingActivity) -> some View {
+    func activityButtons(_ monthlyActivity: MonthlyReadingActivity) -> some View {
         VStack(spacing: 5) {
             ForEach(monthlyActivity.activities, id: \.self) { activity in
-                ActivityCellButton(activity)
+                ActivityButton(activity)
             }
         }
         .padding(.bottom, 20)

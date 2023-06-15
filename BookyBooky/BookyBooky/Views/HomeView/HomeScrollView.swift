@@ -36,53 +36,73 @@ struct HomeScrollView: View {
     var body: some View {
         scrollContent
     }
+    
+    // MARK: - FUNCTIONS
+    
+    func getNavigationTopBarTitleFontSize(_ scrollYOffset: Double) -> CGFloat {
+        let startYOffset = 20.0 // 폰트 크기가 커지기 시작하는 Y축 좌표값
+        let endYOffset = 130.0  // 폰트 크기가 최대로 커진 Y축 좌표값
+        let scale = 0.03         // Y축 좌표값에 비례하여 커지는 폰트 크기의 배수
+        
+        // Y축 좌표가 startYOffset 이상이라면
+        if -scrollYOffset > startYOffset {
+            // Y축 좌표가 endYOffset 미만이라면
+            if -scrollYOffset < endYOffset {
+                return -scrollYOffset * scale // 현재 최상단 Y축 좌표의 scale배만큼 추가 사이즈 반환
+            // Y축 좌표가 endYOffset 이상이면
+            } else {
+                return endYOffset * scale // 폰트의 최고 추가 사이즈 반환
+            }
+        }
+        // Y축 좌표가 startYOffset 미만이라면
+        return 0.0 // 폰트 추가 사이즈 없음
+    }
 }
 
 // MARK: - EXTENSION
 
 extension HomeScrollView {
     var scrollContent: some View {
-        NavigationStack {
-            ScrollViewReader { scrollProxy in
-                ScrollView(showsIndicators: false) {
-                    VStack {
-                        navigationBarTitle
-                        
-                        HomeActivityTabView()
-                        
-                        HomeReadingBookTabView(
-                            scrollYOffset: $scrollYOffset,
-                            selectedBookSortCriteria: $selectedBookSortCriteria,
-                            scrollProxy: scrollProxy
-                        )
-                    }
-                    .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                LazyVStack(pinnedViews: [.sectionHeaders]) {
+                    navigationTopBarTitle
+                    
+                    HomeActivityTabView()
+                    
+                    HomeReadingBookTabView(
+                        scrollYOffset: $scrollYOffset,
+                        selectedBookSortCriteria: $selectedBookSortCriteria,
+                        scrollProxy: scrollProxy
+                    )
                 }
+                .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
             }
+            .scrollIndicators(.hidden)
         }
     }
     
-    var navigationBarTitle: some View {
+    var navigationTopBarTitle: some View {
         VStack(alignment: .leading) {
-            navigationSubTitle
+            navigationTopBarSubTitle
             
-            navigationMainTitle
+            navigationTopBarMainTitle
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 15)
         .padding(.vertical, 5)
     }
     
-    var navigationSubTitle: some View {
+    var navigationTopBarSubTitle: some View {
         Text(Date().toFormat("M월 d일 E요일"))
-            .fontWeight(.semibold)
-            .foregroundColor(.secondary)
+            .font(.callout.weight(.semibold))
+            .foregroundStyle(Color.secondary)
             .opacity(scrollYOffset > 10 ? 0 : 1)
     }
     
-    var navigationMainTitle: some View {
+    var navigationTopBarMainTitle: some View {
         Text("홈")
-            .font(.system(size: 34 + getNavigationTitleFontSizeOffset(scrollYOffset)))
+            .font(.system(size: 34 + getNavigationTopBarTitleFontSize(scrollYOffset)))
             .fontWeight(.bold)
             .minimumScaleFactor(0.001)
     }
