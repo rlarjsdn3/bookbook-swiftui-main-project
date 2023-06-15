@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchSheetBookGridButton: View {
+struct SearchSheetGridBookButton: View {
     
     let bookItem: briefBookInfo.Item
     
@@ -57,5 +57,5 @@ struct SearchSheetBookGridButton: View {
 }
 
 #Preview {
-    SearchSheetBookGridButton(bookItem: .preview)
+    SearchSheetGridBookButton(bookItem: .preview)
 }

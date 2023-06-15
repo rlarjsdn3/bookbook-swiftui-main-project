@@ -55,16 +55,18 @@ extension Results<ReadingBook> {
     /// - Parameters:
     ///   - sortType: 정렬 기준
     /// - Returns: 정렬된 Book 프로토콜을 준수하는 도서 배열
-    private func getSortReadingBooks(_ bookType: ReadingBookType, sortType: BookSortCriteriaType) -> [ReadingBook] {
+    private func getSortReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria) -> [ReadingBook] {
         let readingBookArray = get(bookType)
         
-        switch sortType {
-        case .latestOrder:
-            return readingBookArray.reversed()
-        case .titleOrder:
+        switch sort {
+        case .titleAscendingOrder:
             return readingBookArray.sorted { $0.title < $1.title }
-        case .authorOrder:
+        case .titleDescendingOrder:
+            return readingBookArray.sorted { $0.title > $1.title }
+        case .authorAscendingOrder:
             return readingBookArray.sorted { $0.author < $1.author }
+        case .authorDescendingOrder:
+            return readingBookArray.sorted { $0.author > $1.author }
         }
     }
     
@@ -73,18 +75,18 @@ extension Results<ReadingBook> {
     ///   - bookSortType: 도서 정렬 기준
     ///   - categoryType: 도서 필터 기준 (카테고리 별)
     /// - Returns: 정렬 및 필터링된 ReadingBook 형의 배열
-    func getFilteredReadingBooks(_ bookType: ReadingBookType, bookSortType: BookSortCriteriaType, categoryType: CategoryType) -> [ReadingBook] {
-        let sortedBookArray = getSortReadingBooks(bookType, sortType: bookSortType)
+    func getFilteredReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria, category: CategoryType) -> [ReadingBook] {
+        let sortedBookArray = getSortReadingBooks(bookType, sort: sort)
         
-        if categoryType == .all {
+        if category == .all {
             return sortedBookArray.filter { !$0.isComplete }
         } else {
-            return sortedBookArray.filter { categoryType == $0.category && !$0.isComplete }
+            return sortedBookArray.filter { category == $0.category && !$0.isComplete }
         }
     }
     
-    func getFilteredReadingBooks(_ bookType: ReadingBookType, searchQuery: String = "", bookSortType: BookSortCriteriaType) -> [ReadingBook] {
-        let sortedBookArray = getSortReadingBooks(bookType ,sortType: bookSortType)
+    func getFilteredReadingBooks(_ bookType: ReadingBookType, searchQuery: String = "", bookSortType: BookSortCriteria) -> [ReadingBook] {
+        let sortedBookArray = getSortReadingBooks(bookType ,sort: bookSortType)
         
         if searchQuery.isEmpty {
             return sortedBookArray
@@ -118,7 +120,9 @@ extension Results<ReadingBook> {
             }
         }
         
-        return Array(activities.sorted { $0.date > $1.date }.prefix(Swift.min(activities.count, 3)))
+        return Array(
+            activities.sorted { $0.date > $1.date }.prefix(Swift.min(activities.count, 3))
+        )
     }
     
     /// <#Description#>
@@ -154,7 +158,7 @@ extension Results<ReadingBook> {
         }
         
         for index in monthlyActivities.indices {
-            monthlyActivities[index].activities.sort { $0.date < $1.date } // 어떻게 구조체의 변수를 변경할 수 있는건가? immutable한 구조체를?
+            monthlyActivities[index].activities.sort { $0.date < $1.date }
         }
         monthlyActivities.sort { $0.date > $1.date }
         
@@ -167,19 +171,21 @@ extension Results<FavoriteBook> {
     /// - Parameters:
     ///   - sortType: 정렬 기준
     /// - Returns: 정렬된 Book 프로토콜을 준수하는 도서 배열
-    private func getSortFavoriteBooks(sortType: BookSortCriteriaType) -> [FavoriteBook] {
-        switch sortType {
-        case .latestOrder:
-            return self.reversed()
-        case .titleOrder:
+    private func getSortFavoriteBooks(sort: BookSortCriteria) -> [FavoriteBook] {
+        switch sort {
+        case .titleAscendingOrder:
             return self.sorted { $0.title < $1.title }
-        case .authorOrder:
+        case .titleDescendingOrder:
+            return self.sorted { $0.title > $1.title }
+        case .authorAscendingOrder:
             return self.sorted { $0.author < $1.author }
+        case .authorDescendingOrder:
+            return self.sorted { $0.author > $1.author }
         }
     }
     
-    func getFilteredFavoriteBooks(searchQuery: String = "", bookSortType: BookSortCriteriaType) -> [FavoriteBook] {
-        let sortedBookArray = getSortFavoriteBooks(sortType: bookSortType)
+    func getFilteredFavoriteBooks(searchQuery: String = "", bookSortType: BookSortCriteria) -> [FavoriteBook] {
+        let sortedBookArray = getSortFavoriteBooks(sort: bookSortType)
         
         if searchQuery.isEmpty {
             return sortedBookArray

@@ -19,14 +19,14 @@ struct BookShelfTextFieldView: View {
     
     @Binding var inputQuery: String
     @Binding var searchQuery: String
-    @Binding var selectedSortType: BookSortCriteriaType
+    @Binding var selectedSortType: BookSortCriteria
     @Binding var isPresentingShowAllButton: Bool
     let scrollProxy: ScrollViewProxy
     
     // MARK: - INTALIZER
     
     init(inputQuery: Binding<String>, searchQuery: Binding<String>,
-         selectedSortType: Binding<BookSortCriteriaType>, isPresentingShowAllButton: Binding<Bool>,
+         selectedSortType: Binding<BookSortCriteria>, isPresentingShowAllButton: Binding<Bool>,
          scrollProxy: ScrollViewProxy) {
         self._inputQuery = inputQuery
         self._searchQuery = searchQuery
@@ -69,7 +69,7 @@ extension BookShelfTextFieldView {
     }
     
     var sortButtons: some View {
-        ForEach(BookSortCriteriaType.allCases, id: \.self) { sort in
+        ForEach(BookSortCriteria.allCases) { criteria in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {
@@ -78,19 +78,15 @@ extension BookShelfTextFieldView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedSortType = sort
+                            selectedSortType = criteria
                         }
                         HapticManager.shared.impact(.rigid)
                     }
                 }
             } label: {
-                HStack {
-                    Text(sort.rawValue)
-                    
-                    // 현재 선택한 정렬 타입에 체크마크 표시
-                    if selectedSortType == sort {
-                        checkMarkSFSymbolImage
-                    }
+                Text(criteria.name)
+                if selectedSortType == criteria {
+                    Text("적용됨")
                 }
             }
         }
@@ -204,7 +200,7 @@ struct BookShelfTextFieldView_Previews: PreviewProvider {
             BookShelfTextFieldView(
                 inputQuery: .constant(""),
                 searchQuery: .constant(""),
-                selectedSortType: .constant(.latestOrder),
+                selectedSortType: .constant(.titleAscendingOrder),
                 isPresentingShowAllButton: .constant(false),
                 scrollProxy: scrollProxy
             )

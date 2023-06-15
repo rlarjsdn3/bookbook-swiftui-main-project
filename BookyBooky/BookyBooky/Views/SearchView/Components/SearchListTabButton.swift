@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchTabButton: View {
+struct SearchListTabButton: View {
     
     // MARK: - PROPERTIES
     
@@ -26,7 +26,7 @@ struct SearchTabButton: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchTabButton {
+extension SearchListTabButton {
     var searchTabButton: some View {
         Button {
             selectListType()
@@ -69,7 +69,7 @@ struct SearchTabButton_Previews: PreviewProvider {
     
     static var previews: some View {
         ScrollViewReader { proxy in
-            SearchTabButton(
+            SearchListTabButton(
                 listTypeSelected: .constant(.bestSeller),
                 type: .bestSeller,
                 scrollProxy: proxy,

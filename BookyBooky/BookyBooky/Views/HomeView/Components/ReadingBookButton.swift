@@ -13,7 +13,7 @@ enum ReadingBookCellButtonType {
     case shelf
 }
 
-struct ReadingBookCellButton: View {
+struct ReadingBookButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -34,68 +34,65 @@ struct ReadingBookCellButton: View {
     // MARK: - BODY
     
     var body: some View {
-        navigationCellButton
+        readingBookButton
     }
 }
 
-extension ReadingBookCellButton {
-    var navigationCellButton: some View {
+extension ReadingBookButton {
+    var readingBookButton: some View {
         NavigationLink {
             ReadingBookView(readingBook)
         } label: {
-            readingBookCellLabel
+            readingBookGridLabel
         }
         .buttonStyle(.plain)
     }
     
-    var readingBookCellLabel: some View {
+    var readingBookGridLabel: some View {
         VStack {
-            ZStack {
-                asyncCoverImage(
-                    readingBook.cover,
-                    width: 150, height: 200,
-                    coverShape: RoundedRect()
-                )
-                
-                exclamationMarkSFSymbolImage
+            asyncCoverImage(
+                readingBook.cover,
+                width: 150, height: 200,
+                coverShape: RoundedRect()
+            )
+            .overlay {
+                if readingBook.isBehindTargetDate {
+                    exclamationMarkSFSymbolImage
+                }
             }
             
-            progressBar
+            if buttonType == .home {
+                progressBar
+            }
             
             readingBookTitleText
             
             readingBookAuthorText
         }
-//        .padding(.horizontal, 10)
     }
     
     var exclamationMarkSFSymbolImage: some View {
-        Group {
-            if readingBook.isBehindTargetDate {
-                Image(systemName: "exclamationmark.circle.fill")
-                    .font(.system(size: 50))
-                    .foregroundColor(Color.red)
-                    .frame(width: 150, height: 200)
-                    .background(Color.gray.opacity(0.15), in: .rect(cornerRadius: 25))
-            }
-        }
+        Image(systemName: "exclamationmark.circle.fill")
+            .font(.system(size: 50))
+            .foregroundColor(Color.red)
+            .frame(width: 150, height: 200)
+            .background(
+                Color.gray.opacity(0.15),
+                in: .rect(cornerRadius: 25)
+            )
     }
     
     var progressBar: some View {
-        Group {
-            if buttonType == .home {
-                HStack {
-                    let readingProgressRate = readingBook.readingProgressRate
-                    
-                    ProgressView(value: readingProgressRate, total: 100.0)
-                        .tint(Color.black.gradient)
-                        .frame(width: 100, alignment: .leading)
-                    
-                    Text("\(readingProgressRate.formatted(.number.precision(.fractionLength(0))))%")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-            }
+        HStack {
+            let progressRatio = readingBook.readingProgressRate
+            
+            ProgressView(value: progressRatio, total: 100.0)
+                .tint(Color.black.gradient)
+                .frame(width: 100, alignment: .leading)
+            
+            Text("\(progressRatio.formatted(.number.precision(.fractionLength(0))))%")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
         }
     }
     
@@ -120,6 +117,6 @@ extension ReadingBookCellButton {
 
 struct ReadingBookCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookCellButton(ReadingBook.preview, buttonType: .home)
+        ReadingBookButton(ReadingBook.preview, buttonType: .home)
     }
 }

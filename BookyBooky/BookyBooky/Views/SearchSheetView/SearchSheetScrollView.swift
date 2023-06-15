@@ -67,7 +67,7 @@ extension SearchSheetScrollView {
                 case .grid:
                     LazyVGrid(columns: [.init(.flexible()), .init(.flexible())], spacing: 25) {
                         ForEach(filteredSearchItems, id: \.self) { book in
-                            SearchSheetBookGridButton(bookItem: book)
+                            SearchSheetGridBookButton(bookItem: book)
                         }
                     }
                     .safeAreaPadding()
@@ -98,7 +98,7 @@ extension SearchSheetScrollView {
     var searchSheetCellButtons: some View {
         LazyVStack {
             ForEach(filteredSearchItems, id: \.self) { item in
-                SearchBookCellButton(item)
+                SearchSheetListBookButton(item)
             }
             .id("Scroll_To_Top")
         }

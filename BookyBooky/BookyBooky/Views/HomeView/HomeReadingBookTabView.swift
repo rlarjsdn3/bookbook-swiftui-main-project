@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RealmSwift
+import DeviceKit
 
 struct HomeReadingBookTabView: View {
     
@@ -16,8 +17,8 @@ struct HomeReadingBookTabView: View {
     
     @ObservedResults(ReadingBook.self) var readingBooks
     
-    @State private var selectedCategoryType: CategoryType = .all
-    @State private var selectedCategoryTypeForAnimation: CategoryType = .all
+    @State private var selectedCategory: CategoryType = .all
+    @State private var selectedCategoryForAnimation: CategoryType = .all
     
     @Namespace var namespace
     
@@ -29,15 +30,22 @@ struct HomeReadingBookTabView: View {
     ]
     
     @Binding var scrollYOffset: CGFloat
-    @Binding var selectedBookSortType: BookSortCriteriaType
+    @Binding var selectedBookSortCriteria: BookSortCriteria
     let scrollProxy: ScrollViewProxy
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    var dynamicBottomPaddingValue: CGFloat {
+        return 300.0
+    }
     
     // MARK: - INTIALIZER
     
-    init(_ scrollYOffset: Binding<CGFloat>,
-         selectedBookSortType: Binding<BookSortCriteriaType>, scrollProxy: ScrollViewProxy) {
+    init(scrollYOffset: Binding<CGFloat>,
+         selectedBookSortCriteria: Binding<BookSortCriteria>,
+         scrollProxy: ScrollViewProxy) {
         self._scrollYOffset = scrollYOffset
-        self._selectedBookSortType = selectedBookSortType
+        self._selectedBookSortCriteria = selectedBookSortCriteria
         self.scrollProxy = scrollProxy
     }
     
@@ -58,7 +66,7 @@ extension HomeReadingBookTabView {
             Section {
                 readingBookTabContent
             } header: {
-                readingBookCategoryButtons(scrollProxy: scrollProxy)
+                categoryButtons(scrollProxy: scrollProxy)
             }
         }
     }
@@ -67,7 +75,7 @@ extension HomeReadingBookTabView {
         HStack {
             readingBookHeadlineText
             
-            readingBookSortMenu
+            utilMenu
         }
         .padding(.bottom, -10)
     }
@@ -80,58 +88,45 @@ extension HomeReadingBookTabView {
             .padding(.leading, 15)
     }
     
-    var readingBookSortMenu: some View {
+    var utilMenu: some View {
         Menu {
             Section {
-                bookSortMenuButtons
+                sortButtons
             } header: {
                 Text("도서 정렬")
             }
         } label: {
             ellipsisSFSymbolImage
         }
-        .navigationBarItemStyle()
     }
     
     var ellipsisSFSymbolImage: some View {
         Image(systemName: "ellipsis.circle.fill")
             .font(.title2)
             .foregroundColor(.black)
+            .navigationBarItemStyle()
     }
     
-    var bookSortMenuButtons: some View {
-        ForEach(BookSortCriteriaType.allCases, id: \.self) { type in
+    var sortButtons: some View {
+        ForEach(BookSortCriteria.allCases) { criteria in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedBookSortType = type
+                            selectedBookSortCriteria = criteria
                         }
                         HapticManager.shared.impact(.rigid)
                     }
                 }
             } label: {
-                bookSortMenuButtonLabel(type)
+                Text(criteria.name)
+                if selectedBookSortCriteria == criteria {
+                    Text("적용됨")
+                }
             }
         }
-    }
-    
-    func bookSortMenuButtonLabel(_ type: BookSortCriteriaType) -> some View {
-        HStack {
-            Text(type.rawValue)
-            
-            // 현재 선택한 정렬 타입에 체크마크 표시
-            if selectedBookSortType == type {
-                checkMarkSFSymbolImage
-            }
-        }
-    }
-    
-    var checkMarkSFSymbolImage: some View {
-        Image(systemName: "checkmark")
-            .font(.title3)
     }
     
     var readingBookTabContent: some View {
@@ -141,7 +136,7 @@ extension HomeReadingBookTabView {
             if readingBook.isEmpty {
                 noBookIsBeingReadLabel
             } else {
-                readingBookCellButtons
+                readingBookButtons
             }
         }
     }
@@ -158,44 +153,39 @@ extension HomeReadingBookTabView {
         .padding(.top, 50)
     }
     
-    var readingBookCellButtons: some View {
+    var readingBookButtons: some View {
         Group {
             let filterReadingBooks = readingBooks.getFilteredReadingBooks(
                 .unfinished,
-                bookSortType: selectedBookSortType,
-                categoryType: selectedCategoryType
+                sort: selectedBookSortCriteria,
+                category: selectedCategory
             )
             
             LazyVGrid(columns: columns, spacing: 25) {
-                ForEach(filterReadingBooks) { book in
-                    ReadingBookCellButton(book, buttonType: .home)
+                ForEach(filterReadingBooks) { readingBook in
+                    ReadingBookButton(readingBook, buttonType: .home)
                 }
             }
+            .padding(.bottom, dynamicBottomPaddingValue)
             .safeAreaPadding()
-            
-            
-            // 코드 수정할 필요가 있음(직관적으로 수정하기 혹은 주석 설명 달기)
-//            .padding(.bottom,
-//                     filterReadingBooks.count <= 2 ?
-//                     (mainScreen.height > 900 ? 400 : mainScreen.height < 700 ? 190 : 325) : (mainScreen.height > 900 ? 100 : 30))
         }
     }
     
-    func readingBookCategoryButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
+    func categoryButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    let readingBooks = readingBooks.get(.unfinished)
+                    let categories = readingBooks.get(.unfinished).getReadingBookCategoryType()
                     
-                    ForEach(readingBooks.getReadingBookCategoryType(), id: \.self) { type in
+                    ForEach(categories, id: \.self) { category in
                         HomeCategoryButton(
-                            type,
-                            selectedCategoryType: $selectedCategoryType,
-                            selectedCategoryTypeForAnimation: $selectedCategoryTypeForAnimation,
+                            category,
+                            selectedCategoryType: $selectedCategory,
+                            selectedCategoryTypeForAnimation: $selectedCategoryForAnimation,
                             scrollProxy: proxy,
                             namespace: namespace
                         )
-                        .id("\(type.rawValue)")
+                        .id("\(category.rawValue)")
                     }
                 }
                 .padding(.vertical, 10)
@@ -215,10 +205,12 @@ extension HomeReadingBookTabView {
 struct HomeReadingBookTabView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            HomeReadingBookTabView(.constant(0.0),
-                                   selectedBookSortType: .constant(.latestOrder),
-                                   scrollProxy: scrollProxy)
-                .environmentObject(RealmManager())
+            HomeReadingBookTabView(
+                scrollYOffset: .constant(0.0),
+                selectedBookSortCriteria: .constant(.titleAscendingOrder),
+                scrollProxy: scrollProxy
+            )
+            .environmentObject(RealmManager())
         }
     }
 }

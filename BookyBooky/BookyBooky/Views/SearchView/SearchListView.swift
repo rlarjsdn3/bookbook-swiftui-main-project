@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchView: View {
+struct SearchListView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -37,7 +37,7 @@ struct SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        SearchListView()
             .environmentObject(AladinAPIManager())
     }
 }

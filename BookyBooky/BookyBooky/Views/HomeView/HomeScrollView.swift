@@ -21,18 +21,27 @@ struct HomeScrollView: View {
     // MARK: - PROPERTIES
     
     @Binding var scrollYOffset: CGFloat
-    @Binding var selectedBookSortType: BookSortCriteriaType
+    @Binding var selectedBookSortCriteria: BookSortCriteria
     
     // MARK: - INTIALIZER
     
-    init(_ scrollYOffset: Binding<CGFloat>, selectedBookSortType: Binding<BookSortCriteriaType>) {
+    init(scrollYOffset: Binding<CGFloat>,
+         selectedBookSortCriteria: Binding<BookSortCriteria>) {
         self._scrollYOffset = scrollYOffset
-        self._selectedBookSortType = selectedBookSortType
+        self._selectedBookSortCriteria = selectedBookSortCriteria
     }
     
     // MARK: - BODY
     
     var body: some View {
+        scrollContent
+    }
+}
+
+// MARK: - EXTENSION
+
+extension HomeScrollView {
+    var scrollContent: some View {
         NavigationStack {
             ScrollViewReader { scrollProxy in
                 ScrollView(showsIndicators: false) {
@@ -42,8 +51,8 @@ struct HomeScrollView: View {
                         HomeActivityTabView()
                         
                         HomeReadingBookTabView(
-                            $scrollYOffset,
-                            selectedBookSortType: $selectedBookSortType,
+                            scrollYOffset: $scrollYOffset,
+                            selectedBookSortCriteria: $selectedBookSortCriteria,
                             scrollProxy: scrollProxy
                         )
                     }
@@ -52,11 +61,7 @@ struct HomeScrollView: View {
             }
         }
     }
-}
-
-// MARK: - EXTENSION
-
-extension HomeScrollView {
+    
     var navigationBarTitle: some View {
         VStack(alignment: .leading) {
             navigationSubTitle
@@ -87,7 +92,10 @@ extension HomeScrollView {
 
 struct HomeMainView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeScrollView(.constant(0.0), selectedBookSortType: .constant(.latestOrder))
-            .environmentObject(RealmManager())
+        HomeScrollView(
+            scrollYOffset: .constant(0.0),
+            selectedBookSortCriteria: .constant(.titleAscendingOrder)
+        )
+        .environmentObject(RealmManager())
     }
 }

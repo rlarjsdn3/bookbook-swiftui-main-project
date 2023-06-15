@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct HomeTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
+    
+    @ObservedResults(ReadingBook.self) var readingBooks
     
     @State private var isPresentingSettingsView = false
     @State private var isPresentingSearchSheetView = false
@@ -17,13 +20,36 @@ struct HomeTopBarView: View {
     // MARK: - PROPERTIES
     
     @Binding var scrollYOffset: CGFloat
-    @Binding var selectedBookSortType: BookSortCriteriaType
+    @Binding var selectedBookSortCriteria: BookSortCriteria
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    var showingTopBarDividerYPositionValue: CGFloat {
+        let activityCount = readingBooks.getRecentReadingActivity().count
+        
+        if activityCount == 0 {
+            return 205.0
+        } else {
+            return CGFloat(110 + (70 * activityCount))
+        }
+    }
+    
+    var showingUtilMenuYPositionValue: CGFloat {
+        let activityCount = readingBooks.getRecentReadingActivity().count
+        
+        if activityCount == 0 {
+            return 283.0
+        } else {
+            return CGFloat(148 + (70 * activityCount))
+        }
+    }
     
     // MARK: - INITALIZER
     
-    init(_ scrollYOffset: Binding<CGFloat>, selectedBookSortType: Binding<BookSortCriteriaType>) {
+    init(scrollYOffset: Binding<CGFloat>,
+         selectedBookSortCriteria: Binding<BookSortCriteria>) {
         self._scrollYOffset = scrollYOffset
-        self._selectedBookSortType = selectedBookSortType
+        self._selectedBookSortCriteria = selectedBookSortCriteria
     }
     
     // MARK: - BODY
@@ -44,9 +70,6 @@ extension HomeTopBarView {
             
             Spacer()
         }
-        .overlay {
-            navigationTopBarButtons
-        }
         .sheet(isPresented: $isPresentingSettingsView) {
             SettingsView()
         }
@@ -54,59 +77,56 @@ extension HomeTopBarView {
             SearchSheetView()
         }
         .padding(.vertical)
+        .overlay {
+            navigationTopBarButtons
+        }
         .overlay(alignment: .bottom) {
             Divider()
-                .opacity((scrollYOffset > 10 && scrollYOffset < 335) ? 1 : 0) // 이거 수정할 필요 있음
+                // scrollYOffset값이 10 ~ showingTopBarDivierYPositionValue 사이라면,
+                // Divider를 보이게 합니다,
+                .opacity(
+                    (scrollYOffset > 10 &&
+                     scrollYOffset < showingTopBarDividerYPositionValue) ? 1 : 0
+                )
         }
     }
     
     var navigationTopBarTitle: some View {
         Text("홈")
             .navigationTitleStyle()
-            .opacity(scrollYOffset > 10 ? 1 : 0)
+            .opacity(scrollYOffset > 35 ? 1 : 0)
     }
     
     var navigationTopBarButtons: some View {
         HStack {
-            addReadingBookMenu
+            addReadingBookButton
 
             Spacer()
             
-            // 추후 프로필 이미지 기능 구현 시 코드 수정 예정
-            ZStack {
-                settingsButton
-                    // 이거 수저해야 함!
-                    .opacity(scrollYOffset > 268 ? 0 : 1)
-                
-                bookSortCriteriaMenu
-                    // 이거 수정해야 함!
-                    .offset(y: scrollYOffset > 270 ? 0 : 5)
-                    .opacity(scrollYOffset > 270 ? 1 : 0)
-            }
+            settingsButton
+                // scrollYOffset값이 10 ~ showingUtilYPositionValue 사이라면,
+                // SettingsButton을 숨기고, UtilMenu을 보이게 합니다.
+                .opacity(
+                    scrollYOffset < showingUtilMenuYPositionValue ? 1 : 0
+                )
+                .overlay {
+                    utilMenu
+                        .offset(
+                            y: scrollYOffset < showingUtilMenuYPositionValue ? 5 : 0
+                        )
+                        .opacity(
+                            scrollYOffset < showingUtilMenuYPositionValue ? 0 : 1
+                        )
+                    
+                }
         }
     }
     
-    var addReadingBookMenu: some View {
-        Menu {
-            Section {
-                Button {
-                    // do somethings...
-                } label: {
-                    Label("직접 추가", systemImage: "pencil.line")
-                }
-                
-                Button {
-                    isPresentingSearchSheetView = true
-                } label: {
-                    Label("검색 추가", systemImage: "magnifyingglass")
-                }
-            } header: {
-                Text("도서 추가")
-            }
+    var addReadingBookButton: some View {
+        Button {
+            isPresentingSearchSheetView = true
         } label: {
             plusSFSymbolImage
-        } primaryAction: {
-            isPresentingSearchSheetView = true
         }
     }
     
@@ -128,10 +148,10 @@ extension HomeTopBarView {
             .navigationBarItemStyle()
     }
     
-    var bookSortCriteriaMenu: some View {
+    var utilMenu: some View {
         Menu {
             Section {
-                bookSortMenuButtons
+                sortButtons
             } header: {
                 Text("도서 정렬")
             }
@@ -143,31 +163,24 @@ extension HomeTopBarView {
         .navigationBarItemStyle()
     }
     
-    var bookSortMenuButtons: some View {
-        ForEach(BookSortCriteriaType.allCases, id: \.self) { type in
+    var sortButtons: some View {
+        ForEach(BookSortCriteria.allCases, id: \.self) { criteria in
             Button {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                        selectedBookSortType = type
+                        selectedBookSortCriteria = criteria
                     }
                     HapticManager.shared.impact(.rigid)
                 }
             } label: {
                 HStack {
-                    Text(type.rawValue)
-                    
-                    // 현재 선택한 정렬 타입에 체크마크 표시
-                    if selectedBookSortType == type {
-                        checkMarkSFSymbolImage
+                    Text(criteria.name)
+                    if selectedBookSortCriteria == criteria {
+                        Text("적용됨")
                     }
                 }
             }
         }
-    }
-    
-    var checkMarkSFSymbolImage: some View {
-        Image(systemName: "checkmark")
-            .font(.title3)
     }
 }
 
@@ -176,8 +189,8 @@ extension HomeTopBarView {
 struct HomeHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         HomeTopBarView(
-            .constant(0.0),
-            selectedBookSortType: .constant(.latestOrder)
+            scrollYOffset: .constant(0.0),
+            selectedBookSortCriteria: .constant(.titleAscendingOrder)
         )
     }
 }

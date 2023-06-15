@@ -37,7 +37,7 @@ extension SearchTabView {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(BookListTabType.allCases, id: \.self) { type in
-                        SearchTabButton(
+                        SearchListTabButton(
                             listTypeSelected: $selectedListType,
                             type: type,
                             scrollProxy: scrollProxy,

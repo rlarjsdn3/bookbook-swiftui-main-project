@@ -195,7 +195,7 @@ extension SearchSheetTextFieldView {
     func categoryButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack(spacing: -20) {
             ForEach(aladinAPIManager.categories, id: \.self) { type in
-                CategoryButton(
+                SearchCategoryButton(
                     type,
                     selectedCategory: $selectedCategory,
                     selectedCategoryForAnimation: $selectedCategoryForAnimation,

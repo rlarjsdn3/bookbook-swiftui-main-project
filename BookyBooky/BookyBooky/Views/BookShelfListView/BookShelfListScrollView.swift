@@ -41,12 +41,12 @@ struct BookShelfListScrollView: View {
     ]
     
     @Binding var searchQuery: String
-    @Binding var selectedSortType: BookSortCriteriaType
+    @Binding var selectedSortType: BookSortCriteria
     let viewType: BookShelfListViewType
     
     // MARK: - INITIALIZER
     
-    init(searchQuery: Binding<String>, selectedSortType: Binding<BookSortCriteriaType>,
+    init(searchQuery: Binding<String>, selectedSortType: Binding<BookSortCriteria>,
          viewType: BookShelfListViewType) {
         self._searchQuery = searchQuery
         self._selectedSortType = selectedSortType
@@ -92,7 +92,7 @@ extension BookShelfListScrollView {
                     }
                 case .complete:
                     ForEach(filteredCompleteBooks, id: \.self) { completeBook in
-                        ReadingBookCellButton(completeBook, buttonType: .shelf)
+                        ReadingBookButton(completeBook, buttonType: .shelf)
                     }
                 }
             }
@@ -127,7 +127,7 @@ struct FavoriteBooksScrollView_Previews: PreviewProvider {
     static var previews: some View {
         BookShelfListScrollView(
             searchQuery: .constant(""),
-            selectedSortType: .constant(.latestOrder),
+            selectedSortType: .constant(.titleAscendingOrder),
             viewType: .favorite
         )
         .environmentObject(RealmManager())

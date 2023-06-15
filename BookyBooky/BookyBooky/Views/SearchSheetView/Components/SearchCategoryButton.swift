@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoryButton: View {
+struct SearchCategoryButton: View {
     
     // MARK: - PROPERTIES
     
@@ -70,7 +70,7 @@ struct CategoryButtonView_Previews: PreviewProvider {
     
     static var previews: some View {
         ScrollViewReader { proxy in
-            CategoryButton(
+            SearchCategoryButton(
                 .all,
                 selectedCategory: .constant(.all),
                 selectedCategoryForAnimation: .constant(.all),

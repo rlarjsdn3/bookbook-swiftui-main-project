@@ -21,7 +21,7 @@ struct BookShelfListView: View {
     
     @State private var inputQuery = ""
     @State private var searchQuery = ""
-    @State private var selectedSort = BookSortCriteriaType.latestOrder
+    @State private var selectedSort: BookSortCriteria = .titleAscendingOrder
     
     
     @State var isPresentingShowAllButton = false

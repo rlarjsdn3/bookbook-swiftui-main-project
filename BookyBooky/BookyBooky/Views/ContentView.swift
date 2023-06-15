@@ -40,7 +40,7 @@ extension ContentView {
             HomeView()
                 .tag(RoundedTabType.home)
             
-            SearchView()
+            SearchListView()
                 .tag(RoundedTabType.search)
             
             BookShelfView()

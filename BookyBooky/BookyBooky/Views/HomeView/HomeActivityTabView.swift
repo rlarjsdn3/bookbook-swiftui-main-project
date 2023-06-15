@@ -27,10 +27,10 @@ struct HomeActivityTabView: View {
 
 extension HomeActivityTabView {
     var activityTab: some View {
-        VStack {
+        VStack(spacing: 10) {
             activityTabTitle
             
-            activityTabMain
+            activityTabContent
         }
     }
     
@@ -40,7 +40,7 @@ extension HomeActivityTabView {
             
             Spacer()
             
-            moreActivityInformationButton
+            moreButton
         }
         .padding(.leading, 15)
         .padding(.trailing, 25)
@@ -52,33 +52,32 @@ extension HomeActivityTabView {
             .fontWeight(.bold)
     }
     
-    var moreActivityInformationButton: some View {
+    var moreButton: some View {
         NavigationLink("더 보기") {
             ActivityView()
         }
         .disabled(readingBooks.isEmpty)
     }
     
-    var activityTabMain: some View {
+    var activityTabContent: some View {
         VStack(spacing: 5) {
-            let activities = readingBooks.getRecentReadingActivity()
+            let recentActivities = readingBooks.getRecentReadingActivity()
             
-            if !activities.isEmpty {
-                activityCellButtons(activities)
+            if recentActivities.isEmpty {
+                noActivityLabel
             } else {
-                noReadingDataLabel
+                activityButtons(recentActivities)
             }
         }
-        .padding(.bottom, 10)
     }
     
-    func activityCellButtons(_ activities: [ReadingActivity]) -> some View {
+    func activityButtons(_ activities: [ReadingActivity]) -> some View {
         ForEach(activities, id: \.self) { activity in
             ActivityCellButton(activity)
         }
     }
     
-    var noReadingDataLabel: some View {
+    var noActivityLabel: some View {
         VStack(spacing: 5) {
             Text("독서 데이터가 없음")
                 .font(.title3)
@@ -87,7 +86,7 @@ extension HomeActivityTabView {
             Text("독서 데이터를 추가하십시오.")
                 .foregroundColor(.secondary)
         }
-        .padding(.vertical, 30)
+        .padding(.vertical, 40)
     }
 }
 

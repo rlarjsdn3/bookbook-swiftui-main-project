@@ -84,7 +84,7 @@ extension SearchScrollView {
     var searchCellButtons: some View {
         LazyVGrid(columns: columns, spacing: 25) {
             ForEach(listOfBooksAccordingToSelectedType, id: \.self) { item in
-                SearchCellButton(item)
+                SearchListBookButton(item)
             }
 
         }

@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct SearchBookCellButton: View {
+struct SearchSheetListBookButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -59,7 +59,7 @@ struct SearchBookCellButton: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchBookCellButton {
+extension SearchSheetListBookButton {
     var bookCellButton: some View {
         ZStack {
             bookCoverImage
@@ -134,7 +134,7 @@ extension SearchBookCellButton {
     }
 }
 
-extension SearchBookCellButton {
+extension SearchSheetListBookButton {
     var bookTitleText: some View {
         Text(bookItem.title.refinedTitle)
             .font(.title3)
@@ -183,7 +183,7 @@ extension SearchBookCellButton {
 
 struct SearchBookCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookCellButton(briefBookInfo.Item.preview)
+        SearchSheetListBookButton(briefBookInfo.Item.preview)
             .previewLayout(.sizeThatFits)
     }
 }
