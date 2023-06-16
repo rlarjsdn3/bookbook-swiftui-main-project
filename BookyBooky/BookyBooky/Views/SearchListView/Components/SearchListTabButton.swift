@@ -11,10 +11,10 @@ struct SearchListTabButton: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var listTypeSelected: BookListTabType
-    let type: BookListTabType
+    @Binding var listTypeSelected: BookListTab
+    let type: BookListTab
     let scrollProxy: ScrollViewProxy
-    @Binding var selectedAnimation: BookListTabType
+    @Binding var selectedAnimation: BookListTab
     let selectedNamespace: Namespace.ID
     
     // MARK: - BODY

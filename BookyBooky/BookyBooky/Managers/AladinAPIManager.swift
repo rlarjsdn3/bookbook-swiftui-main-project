@@ -71,7 +71,7 @@ class AladinAPIManager: ObservableObject {
     
     /// 알라딘 리스트 API를 호출하여 도서 리스트(베스트셀러 등) 결과를 반환하는 함수입니다,
     /// - Parameter query: 도서 리스트 출력 타입
-    func requestBookListAPI(of queryType: BookListTabType) {
+    func requestBookListAPI(of queryType: BookListTab) {
         var baseURL = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?"
         
         let parameters = [

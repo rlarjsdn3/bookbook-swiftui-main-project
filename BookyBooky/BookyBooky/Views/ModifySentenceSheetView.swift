@@ -8,8 +8,6 @@
 import SwiftUI
 import RealmSwift
 
-// AddSentenceSheetView와 통합하는 방안 고민할 필요가 있음
-
 struct ModifySentenceSheetView: View {
     
     // MARK: - WRAPPER PROPERTIES

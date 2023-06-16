@@ -14,17 +14,23 @@ struct SearchListView: View {
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var scrollYOffset: CGFloat = 0.0
-    @State private var listTypeSelected = BookListTabType.bestSeller
+    @State private var listTypeSelected: BookListTab = .bestSeller
     
     // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
-            SearchHeaderView()
+            SearchListTopBarView()
             
-            SearchTabView($scrollYOffset, selectedListType: $listTypeSelected)
+            SearchListTopTabView(
+                scrollYOffset: $scrollYOffset,
+                selectedListType: $listTypeSelected
+            )
 
-            SearchScrollView($scrollYOffset, selectedListType: $listTypeSelected)
+            SearchListScrollView(
+                scrollYOffset: $scrollYOffset,
+                selectedListType: $listTypeSelected
+            )
         }
         .toast(isPresenting: $aladinAPIManager.isPresentingDetailBookErrorToastAlert,
                duration: 2.0, offsetY: -5) {

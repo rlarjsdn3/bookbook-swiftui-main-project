@@ -8,7 +8,7 @@
 import SwiftUI
 import AlertToast
 
-struct SearchScrollView: View {
+struct SearchListScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -24,19 +24,19 @@ struct SearchScrollView: View {
     ]
     
     @Binding var scrollYOffset: CGFloat
-    @Binding var selectedListType: BookListTabType
+    @Binding var selectedBookListTab: BookListTab
     
     // MARK: - INTALIZER
     
-    init(_ scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTabType>) {
+    init(scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTab>) {
         self._scrollYOffset = scrollYOffset
-        self._selectedListType = selectedListType
+        self._selectedBookListTab = selectedListType
     }
     
     // MARK: - COMPUTED PROPERTIES
     
-    var listOfBooksAccordingToSelectedType: [briefBookInfo.Item] {
-        switch selectedListType {
+    var listBookType: [briefBookInfo.Item] {
+        switch selectedBookListTab {
         case .bestSeller:
             return aladinAPIManager.bestSeller
         case .itemNewAll:
@@ -55,10 +55,10 @@ struct SearchScrollView: View {
         ZStack {
             Color(.background)
             
-            if listOfBooksAccordingToSelectedType.isEmpty {
+            if listBookType.isEmpty {
                 networkErrorLabel
             } else {
-                scrollLazyGridCells
+                bookScrollContent
             }
         }
     }
@@ -66,60 +66,43 @@ struct SearchScrollView: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchScrollView {
-    var scrollLazyGridCells: some View {
+extension SearchListScrollView {
+    var bookScrollContent: some View {
         ScrollViewReader { scrollProxy in
             ScrollView(showsIndicators: false) {
-                searchCellButtons
+                bookButtonGroup
             }
-            // 도서 리스트 타입이 변경될 때마다 리스트의 스크롤을 맨 위로 올림
-            .onChange(of: selectedListType) { _ in
+            // 도서 리스트 타입이 변경될 때마다 리스트의 스크롤을 제일 위로 올립니다.
+            .onChange(of: selectedBookListTab) {
                 withAnimation {
                     scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }
             }
+            .safeAreaPadding(.top, 20)
+            .safeAreaPadding(.horizontal)
+            .safeAreaPadding(.bottom, 40)
+            .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
+            .id("Scroll_To_Top")
         }
     }
     
-    var searchCellButtons: some View {
+    var bookButtonGroup: some View {
         LazyVGrid(columns: columns, spacing: 25) {
-            ForEach(listOfBooksAccordingToSelectedType, id: \.self) { item in
+            ForEach(listBookType, id: \.self) { item in
                 SearchListBookButton(item)
             }
-
         }
-        .overlay(alignment: .top) {
-            GeometryReader { proxy -> Color in
-                DispatchQueue.main.async {
-                    let offset = proxy.frame(in: .global).minY
-                    if startOffset == 0 {
-                        self.startOffset = offset
-                    }
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        scrollYOffset = startOffset - offset
-                    }
-                    print(scrollYOffset)
-                }
-                return Color.clear
-            }
-            .frame(width: 0, height: 0)
-        }
-        // 하단 사용자화 탭 뷰가 기본 탭 뷰와 높이가 상이하기 때문에 위/아래 간격을 달리함
-        .padding(.top, 20)
-        .padding(.bottom, 40)
-        .padding(.horizontal, 10)
-        .id("Scroll_To_Top")
     }
     
     var networkErrorLabel: some View {
         VStack {
-            noListOfBooksLabel
+            ErrorLabel
             
             refreshButton
         }
     }
     
-    var noListOfBooksLabel: some View {
+    var ErrorLabel: some View {
         VStack(spacing: 5) {
             Text("도서 정보 불러오기 실패")
                 .font(.title2)
@@ -134,7 +117,7 @@ extension SearchScrollView {
     
     var refreshButton: some View {
         Button("다시 불러오기") {
-            for type in BookListTabType.allCases {
+            for type in BookListTab.allCases {
                 aladinAPIManager.requestBookListAPI(of: type)
             }
             HapticManager.shared.impact(.rigid)
@@ -146,9 +129,12 @@ extension SearchScrollView {
 
 // MARK: - PREVIEW
 
-struct SearchLazyGridView_Previews: PreviewProvider {
+struct SearchListScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchScrollView(.constant(0.0), selectedListType: .constant(.bestSeller))
-            .environmentObject(AladinAPIManager())
+        SearchListScrollView(
+            scrollYOffset: .constant(0.0),
+            selectedListType: .constant(.bestSeller)
+        )
+        .environmentObject(AladinAPIManager())
     }
 }

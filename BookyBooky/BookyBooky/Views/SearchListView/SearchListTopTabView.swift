@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct SearchTabView: View {
+struct SearchListTopTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedAnimation = BookListTabType.bestSeller
+    @State private var selectedAnimation = BookListTab.bestSeller
     
     @Binding var scrollYOffset: CGFloat
-    @Binding var selectedListType: BookListTabType
+    @Binding var selectedListType: BookListTab
     @Namespace var namespace: Namespace.ID
     
-    init(_ scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTabType>) {
+    init(scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTab>) {
         self._scrollYOffset = scrollYOffset
         self._selectedListType = selectedListType
     }
@@ -31,12 +31,12 @@ struct SearchTabView: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchTabView {
+extension SearchListTopTabView {
     var bookListTypeButtons: some View {
         ScrollViewReader { scrollProxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(BookListTabType.allCases, id: \.self) { type in
+                    ForEach(BookListTab.allCases, id: \.self) { type in
                         SearchListTabButton(
                             listTypeSelected: $selectedListType,
                             type: type,
@@ -61,8 +61,11 @@ extension SearchTabView {
 
 // MARK: - PREVIEW
 
-struct SearchTabView_Previews: PreviewProvider {
+struct SearchListTopTabView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchTabView(.constant(0.0), selectedListType: .constant(.itemNewAll))
+        SearchListTopTabView(
+            scrollYOffset: .constant(0.0),
+            selectedListType: .constant(.itemNewAll)
+        )
     }
 }

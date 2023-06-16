@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchHeaderView: View {
+struct SearchListTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -16,7 +16,7 @@ struct SearchHeaderView: View {
     // MARK: - BODY
     
     var body: some View {
-        navigationBar
+        navigationTopBar
             .sheet(isPresented: $isPresentingSearchSheetView) {
                 SearchSheetView()
             }
@@ -25,27 +25,27 @@ struct SearchHeaderView: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchHeaderView {
-    var navigationBar: some View {
+extension SearchListTopBarView {
+    var navigationTopBar: some View {
         HStack {
             Spacer()
             
-            navigationBarTitle
+            navigationTopBarTitle
             
             Spacer()
         }
         .overlay {
-            navigationBarButtons
+            navigationTopBarButtonGroup
         }
         .padding(.vertical)
     }
     
-    var navigationBarTitle: some View {
+    var navigationTopBarTitle: some View {
         Text("검색")
             .navigationTitleStyle()
     }
     
-    var navigationBarButtons: some View {
+    var navigationTopBarButtonGroup: some View {
         HStack {
             Spacer()
             
@@ -65,8 +65,8 @@ extension SearchHeaderView {
 
 // MARK: - PREVIEW
 
-struct SearchHeaderView_Previews: PreviewProvider {
+struct SearchListTopBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchHeaderView()
+        SearchListTopBarView()
     }
 }
