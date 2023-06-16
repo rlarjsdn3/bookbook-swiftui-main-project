@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookInfoView: View {
+struct ReadingBookTopInfoView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -45,7 +45,7 @@ struct ReadingBookInfoView: View {
 
 // MARK: - EXTENSIONS
 
-extension ReadingBookInfoView {
+extension ReadingBookTopInfoView {
     var readingBookInfo: some View {
         VStack {
             readingBookCover
@@ -176,7 +176,7 @@ extension ReadingBookInfoView {
     }
 }
 
-extension ReadingBookInfoView {
+extension ReadingBookTopInfoView {
     var renewalButton: some View {
         Button {
             isPresentingRenewalSheet = true
@@ -240,7 +240,7 @@ extension ReadingBookInfoView {
 
 struct ReadingBookInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookInfoView(ReadingBook.preview)
+        ReadingBookTopInfoView(ReadingBook.preview)
             .environmentObject(RealmManager())
     }
 }

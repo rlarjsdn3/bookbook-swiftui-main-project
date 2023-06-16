@@ -8,42 +8,42 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookTabView: View {
+struct ReadingBookBottomTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
     @State private var selectedTabType: ReadingBookTabType = .overview
     @State private var selectedTabTypeForAnimation: ReadingBookTabType = .overview
     
+    @Namespace var namespace
+    
     // MARK: - PROPERTIES
     
     @ObservedRealmObject var readingBook: ReadingBook
-    @Binding var scrollYOffset: Double
-    let namespace: Namespace.ID
+    @Binding var scrollYOffset: CGFloat
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook, scrollYOffset: Binding<Double>, namespace: Namespace.ID) {
+    init(_ readingBook: ReadingBook, scrollYOffset: Binding<CGFloat>) {
         self.readingBook = readingBook
         self._scrollYOffset = scrollYOffset
-        self.namespace = namespace
     }
     
     // MARK: - BODY
     
     var body: some View {
         Section {
-            viewThatChangesAccordingToTab(selectedTabType)
+            tabView(selectedTabType)
         } header: {
-            readingBooktTabButtons
+            tabButtonGroup
         }
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension ReadingBookTabView {
-    func viewThatChangesAccordingToTab(_ selectedTabType: ReadingBookTabType) -> some View {
+extension ReadingBookBottomTabView {
+    func tabView(_ selectedTabType: ReadingBookTabType) -> some View {
         Group {
             switch selectedTabType {
             case .overview:
@@ -56,7 +56,7 @@ extension ReadingBookTabView {
         }
     }
     
-    var readingBooktTabButtons: some View {
+    var tabButtonGroup: some View {
         HStack {
             ForEach(ReadingBookTabType.allCases, id: \.self) { type in
                 Spacer()
@@ -83,14 +83,11 @@ extension ReadingBookTabView {
 
 // MARK: - PREVIEW
 
-struct ReadingBookTabSectionView_Previews: PreviewProvider {
-    @Namespace static var namespace
-    
+struct ReadingBookTabSectionView_Previews: PreviewProvider {    
     static var previews: some View {
-        ReadingBookTabView(
+        ReadingBookBottomTabView(
             ReadingBook.preview,
-            scrollYOffset: .constant(0.0),
-            namespace: namespace
+            scrollYOffset: .constant(0.0)
         )
     }
 }

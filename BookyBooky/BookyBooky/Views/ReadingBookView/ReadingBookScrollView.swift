@@ -12,18 +12,16 @@ struct ReadingBookScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var startOffset = 0.0
-    
-    @Namespace var namespace
+    @State private var startOffset: CGFloat = 0.0
     
     // MARK: - PROPERTIES
     
     @ObservedRealmObject var readingBook: ReadingBook
-    @Binding var scrollYOffset: Double
+    @Binding var scrollYOffset: CGFloat
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook, scrollYOffset: Binding<Double>) {
+    init(_ readingBook: ReadingBook, scrollYOffset: Binding<CGFloat>) {
         self.readingBook = readingBook
         self._scrollYOffset = scrollYOffset
     }
@@ -33,12 +31,11 @@ struct ReadingBookScrollView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                ReadingBookInfoView(readingBook)
+                ReadingBookTopInfoView(readingBook)
                 
-                ReadingBookTabView(
+                ReadingBookBottomTabView(
                     readingBook,
-                    scrollYOffset: $scrollYOffset,
-                    namespace: namespace
+                    scrollYOffset: $scrollYOffset
                 )
             }
             .overlay(alignment: .top) {

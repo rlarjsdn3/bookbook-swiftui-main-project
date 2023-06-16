@@ -159,6 +159,21 @@ extension RealmManager {
             }
         }
     }
+    
+    func editReadingBook(_ book: ReadingBook, title: String, publisher: String, category: Category, targetDate: Date) {
+        guard let object = realm.object(ofType: ReadingBook.self, forPrimaryKey: book._id) else { return }
+          
+        try! realm.write {
+            object.title = title
+            object.publisher = publisher
+            object.category = category
+            object.targetDate = targetDate
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.isPresentingReadingBookEditSuccessToastAlert = true
+        }
+    }
 }
 
 extension RealmManager {

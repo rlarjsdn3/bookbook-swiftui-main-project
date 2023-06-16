@@ -9,124 +9,41 @@ import SwiftUI
 import RealmSwift
 
 struct ReadingBookEditView: View {
-    @EnvironmentObject var realmManager: RealmManager
+    
+    // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    @Environment(\.realm) var realm
+    @EnvironmentObject var realmManager: RealmManager
+    
+    @State private var inputTitle = ""
+    @State private var inputPublisher = ""
+    @State private var inputCategory: Category = .all
+    @State private var inputTargetDate = Date.now
+    
+    // MARK: - PROPERTIES
     
     var readingBook: ReadingBook
     
-    @State private var titleTextField = ""
-    @State private var publisherTextField = ""
-    @State private var selectedCategory: Category = .all
-    @State private var selectedTargetDate = Date.now
+    // MARK: - INTIALIZER
+    
+    init(_ readingBook: ReadingBook) {
+        self.readingBook = readingBook
+    }
+    
+    // MARK: - BODY
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 8) {                
-                HStack {
-                    Text("제목")
-                        .font(.title3.weight(.bold))
-                        .padding(.trailing, 50)
-                    TextField("", text: $titleTextField)
-                }
-                .padding(.vertical, 18)
-                .padding(.horizontal)
-                .background(Color("Background"))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal)
-                .padding(.top, 20)
+            VStack {
+                inputFieldGroup
                 
-                HStack {
-                    Text("출판사")
-                        .font(.title3.weight(.bold))
-                        .padding(.trailing, 34)
-                    TextField("", text: $publisherTextField)
-                }
-                .padding(.vertical, 18)
-                .padding(.horizontal)
-                .background(Color("Background"))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("카테고리")
-                        .font(.title3.weight(.bold))
-                        .padding(.trailing)
-                    
-                    Spacer()
-                    
-                    Picker("Category Picker", selection: $selectedCategory) {
-                        ForEach(Category.allCases, id: \.self) { category in
-                            Text(category.rawValue)
-                        }
-                    }
-                }
-                .padding(.vertical, 14)
-                .padding(.horizontal)
-                .background(Color("Background"))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("목표일자")
-                        .font(.title3.weight(.bold))
-                        .padding(.trailing)
-                    
-                    Spacer()
-                    
-                    DatePicker(
-                            "DatePicker",
-                            selection: $selectedTargetDate,
-                            in: Date()...(Calendar.current.date(byAdding: .day, value: 365, to: Date())!),
-                            displayedComponents: [.date])
-                        .datePickerStyle(.compact)
-                        .labelsHidden()
-                        .environment(\.locale, Locale(identifier: "ko"))
-                        .tint(readingBook.category.themeColor)
-                        .padding(.horizontal, 3)
-                }
-                .padding(.vertical, 14)
-                .padding(.horizontal)
-                .background(Color("Background"))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal)
-                
-                Spacer()
-                
-                Button {
-                    guard let object = realm.object(ofType: ReadingBook.self, forPrimaryKey: readingBook._id) else { return }
-                      
-                    try! realm.write {
-                        object.title = titleTextField
-                        object.publisher = publisherTextField
-                        object.category = selectedCategory
-                        object.targetDate = selectedTargetDate
-                    }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        realmManager.isPresentingReadingBookEditSuccessToastAlert = true
-                        dismiss()
-                    }
-                } label: {
-                    Text("수정하기")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(readingBook.category.themeColor)
-                        .cornerRadius(15)
-                }
-                .padding(.horizontal)
-                // 베젤이 있는 아이폰은 하단 간격 주기
-                .padding(safeAreaInsets.bottom == 0 ? .bottom : [])
+                editButton
             }
             .onAppear {
-                titleTextField = readingBook.title
-                publisherTextField = readingBook.publisher
-                selectedCategory = readingBook.category
-                selectedTargetDate = readingBook.targetDate
+                inputTitle = readingBook.title
+                inputPublisher = readingBook.publisher
+                inputCategory = readingBook.category
+                inputTargetDate = readingBook.targetDate
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -140,14 +57,120 @@ struct ReadingBookEditView: View {
             .ignoresSafeArea(.keyboard)
         }
         .presentationCornerRadius(30)
-//        .presentationDetents([.height(420)])
     }
 }
 
+// MARK: - EXTENSIONS
+
+extension ReadingBookEditView {    
+    var inputFieldGroup: some View {
+        VStack {
+            titleTextField
+            
+            publisherTextField
+            
+            categoryField
+            
+            targetDateField
+            
+            Spacer()
+        }
+        .padding()
+    }
+    
+    var titleTextField: some View {
+        HStack {
+            Text("제목")
+                .font(.title3.weight(.bold))
+                .padding(.trailing, 50)
+            TextField("", text: $inputTitle)
+        }
+        .padding(.vertical, 18)
+        .padding(.horizontal)
+        .background(Color(.background), in: .rect(cornerRadius: 10))
+    }
+    
+    var publisherTextField: some View {
+        HStack {
+            Text("출판사")
+                .font(.title3.weight(.bold))
+                .padding(.trailing, 34)
+            TextField("", text: $inputPublisher)
+        }
+        .padding(.vertical, 18)
+        .padding(.horizontal)
+        .background(Color(.background), in: .rect(cornerRadius: 10))
+    }
+    
+    var categoryField: some View {
+        HStack {
+            Text("카테고리")
+                .font(.title3.weight(.bold))
+                .padding(.trailing)
+            
+            Spacer()
+            
+            Picker("Category Picker", selection: $inputCategory) {
+                ForEach(Category.allCases, id: \.self) { category in
+                    Text(category.rawValue)
+                }
+            }
+        }
+        .padding(.vertical, 14)
+        .padding(.horizontal)
+        .background(Color(.background), in: .rect(cornerRadius: 10))
+    }
+    
+    var targetDateField: some View {
+        HStack {
+            Text("목표일자")
+                .font(.title3.weight(.bold))
+                .padding(.trailing)
+            
+            Spacer()
+            
+            DatePicker(
+                    "DatePicker",
+                    selection: $inputTargetDate,
+                    in: Date()...(Calendar.current.date(byAdding: .day, value: 365, to: Date())!),
+                    displayedComponents: [.date])
+                .datePickerStyle(.compact)
+                .labelsHidden()
+                .environment(\.locale, Locale(identifier: "ko"))
+                .tint(readingBook.category.themeColor)
+                .padding(.horizontal, 3)
+        }
+        .padding(.vertical, 14)
+        .padding(.horizontal)
+        .background(Color(.background), in: .rect(cornerRadius: 10))
+    }
+    
+    var editButton: some View {
+        Button {
+            realmManager.editReadingBook(
+                readingBook,
+                title: inputTitle,
+                publisher: inputPublisher,
+                category: inputCategory,
+                targetDate: inputTargetDate
+            )
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                dismiss()
+            }
+        } label: {
+            Text("수정하기")
+        }
+        .buttonStyle(BottomButtonStyle(backgroundColor: readingBook.category.themeColor))
+        // 베젤이 있는 아이폰은 하단 간격 주기
+        .padding(safeAreaInsets.bottom == 0 ? .bottom : [])
+    }
+}
+
+// MARK: - PREVIEW
+
 struct EditBookInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookEditView(readingBook: ReadingBook.preview)
-            .environment(\.realm, RealmManager().realm)
+        ReadingBookEditView(ReadingBook.preview)
             .environmentObject(RealmManager())
     }
 }

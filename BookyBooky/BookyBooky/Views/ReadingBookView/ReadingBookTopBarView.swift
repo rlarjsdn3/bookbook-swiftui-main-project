@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookHeaderView: View {
+struct ReadingBookTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -22,11 +22,11 @@ struct ReadingBookHeaderView: View {
     // MARK: - PROPERTIES
     
     @ObservedRealmObject var readingBook: ReadingBook
-    @Binding var scrollYOffset: Double
+    @Binding var scrollYOffset: CGFloat
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook, scrollYOffset: Binding<Double>) {
+    init(_ readingBook: ReadingBook, scrollYOffset: Binding<CGFloat>) {
         self.readingBook = readingBook
         self._scrollYOffset = scrollYOffset
     }
@@ -34,9 +34,9 @@ struct ReadingBookHeaderView: View {
     // MARK: - BODY
     
     var body: some View {
-        navigationBar
+        navigationTopBar
             .sheet(isPresented: $isPresentingEditBookInformationSheet) {
-                ReadingBookEditView(readingBook: readingBook)
+                ReadingBookEditView(readingBook)
             }
             .sheet(isPresented: $isPresentingAddSentenceSheet) {
                 AddSentenceSheetView(readingBook)
@@ -52,22 +52,22 @@ struct ReadingBookHeaderView: View {
 
 // MARK: - EXTENSIONS
 
-extension ReadingBookHeaderView {
-    var navigationBar: some View {
+extension ReadingBookTopBarView {
+    var navigationTopBar: some View {
         HStack {
             Spacer()
             
-            navigationBarTitle
+            navigationTopBarTitle
             
             Spacer()
         }
         .overlay {
-            navigationBarButtons
+            navigationTopBarButtonGroup
         }
         .padding(.vertical)
     }
     
-    var navigationBarTitle: some View {
+    var navigationTopBarTitle: some View {
         Group {
             if scrollYOffset > 30 {
                 Text(readingBook.title)
@@ -82,21 +82,21 @@ extension ReadingBookHeaderView {
         }
     }
     
-    var navigationBarButtons: some View {
+    var navigationTopBarButtonGroup: some View {
         HStack {
-            navigationBackButton
+            backButton
             
             Spacer()
             
             Menu {
                 Section {
-                    addBookSentenceButton
+                    addSentenceButton
                     
                     Divider()
                     
-                    editReadingBookButton
+                    editButton
 
-                    deleteReadingBoolButton
+                    deleteButton
                 } header: {
                     Text("도서 편집")
                 }
@@ -106,7 +106,7 @@ extension ReadingBookHeaderView {
         }
     }
     
-    var navigationBackButton: some View {
+    var backButton: some View {
         Button {
             dismiss()
         } label: {
@@ -115,7 +115,7 @@ extension ReadingBookHeaderView {
         }
     }
     
-    var editReadingBookButton: some View {
+    var editButton: some View {
         Button {
             isPresentingEditBookInformationSheet = true
         } label: {
@@ -123,7 +123,7 @@ extension ReadingBookHeaderView {
         }
     }
     
-    var deleteReadingBoolButton: some View {
+    var deleteButton: some View {
         Button(role: .destructive) {
             isPresentingDeleteConfirmationDialog = true
         } label: {
@@ -131,7 +131,7 @@ extension ReadingBookHeaderView {
         }
     }
     
-    var addBookSentenceButton: some View {
+    var addSentenceButton: some View {
         Button {
             isPresentingAddSentenceSheet = true
         } label: {
@@ -149,7 +149,7 @@ extension ReadingBookHeaderView {
 
 struct TargetBookDetailHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookHeaderView(ReadingBook.preview, scrollYOffset: .constant(0.0))
+        ReadingBookTopBarView(ReadingBook.preview, scrollYOffset: .constant(0.0))
             .environmentObject(RealmManager())
     }
 }

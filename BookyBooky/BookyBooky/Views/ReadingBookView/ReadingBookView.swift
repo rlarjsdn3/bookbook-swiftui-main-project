@@ -16,7 +16,7 @@ struct ReadingBookView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
     
-    @State private var scrollYOffset = 0.0
+    @State private var scrollYOffset: CGFloat = 0.0
     
     // MARK: - PROPERTIES
     
@@ -33,7 +33,7 @@ struct ReadingBookView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                ReadingBookHeaderView(readingBook, scrollYOffset: $scrollYOffset)
+                ReadingBookTopBarView(readingBook, scrollYOffset: $scrollYOffset)
                 
                 ReadingBookScrollView(readingBook, scrollYOffset: $scrollYOffset)
             }
