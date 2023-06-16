@@ -75,7 +75,7 @@ extension Results<ReadingBook> {
     ///   - bookSortType: 도서 정렬 기준
     ///   - categoryType: 도서 필터 기준 (카테고리 별)
     /// - Returns: 정렬 및 필터링된 ReadingBook 형의 배열
-    func getFilteredReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria, category: CategoryType) -> [ReadingBook] {
+    func getFilteredReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria, category: Category) -> [ReadingBook] {
         let sortedBookArray = getSortReadingBooks(bookType, sort: sort)
         
         if category == .all {
@@ -101,7 +101,7 @@ extension Results<ReadingBook> {
 extension Results<ReadingBook> {
     /// 최근 3개의 활동 데이터를 반환하는 함수입니다.
     /// - Returns: Activity 형의 배열
-    func getRecentReadingActivity() -> [ReadingActivity] {
+    var recentReadingActivity: [ReadingActivity] {
         var activities: [ReadingActivity] = []
         
         for readingBook in self {
@@ -127,8 +127,8 @@ extension Results<ReadingBook> {
     
     /// <#Description#>
     /// - Returns: <#description#>
-    func getMonthlyReadingActivity() -> [MonthlyReadingActivity] {
-        var monthlyActivities: [MonthlyReadingActivity] = []
+    var monthlyReadingActivity: [MonthlyReadingActivity] {
+        var monthlyRecord: [MonthlyReadingActivity] = []
         
         for readingBook in self {
             for record in readingBook.readingRecords {
@@ -142,27 +142,27 @@ extension Results<ReadingBook> {
                                     totalPagesRead: record.totalPagesRead
                                 )
                 
-                if let index = monthlyActivities.firstIndex(where: {
-                    $0.date.isEqual([.year, .month], date: record.date)
+                if let index = monthlyRecord.firstIndex(where: {
+                    $0.month.isEqual([.year, .month], date: record.date)
                 }) {
-                    monthlyActivities[index].activities.append(activity)
+                    monthlyRecord[index].readingActivity.append(activity)
                 } else {
-                    monthlyActivities.append(
+                    monthlyRecord.append(
                         MonthlyReadingActivity(
-                            date: record.date,
-                            activities: [activity]
+                            month: record.date,
+                            readingActivity: [activity]
                         )
                     )
                 }
             }
         }
         
-        for index in monthlyActivities.indices {
-            monthlyActivities[index].activities.sort { $0.date < $1.date }
+        for index in monthlyRecord.indices {
+            monthlyRecord[index].readingActivity.sort { $0.date < $1.date }
         }
-        monthlyActivities.sort { $0.date > $1.date }
+        monthlyRecord.sort { $0.month > $1.month }
         
-        return monthlyActivities
+        return monthlyRecord
     }
 }
 

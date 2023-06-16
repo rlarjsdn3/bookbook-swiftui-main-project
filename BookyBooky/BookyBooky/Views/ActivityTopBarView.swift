@@ -27,32 +27,36 @@ extension ActivityTopBarView {
         HStack {
             Spacer()
             
-            navigationBarTitle
+            navigationTopBarTitle
 
             Spacer()
         }
         .overlay {
-            navigationBarButtons
+            navigationTopBarButtonGroup
         }
         .padding(.vertical)
     }
     
-    var navigationBarTitle: some View {
+    var navigationTopBarTitle: some View {
         Text("활동")
             .navigationTitleStyle()
     }
     
-    var navigationBarButtons: some View {
+    var navigationTopBarButtonGroup: some View {
         HStack {
             Button {
                 dismiss()
             } label: {
-                Image(systemName: "chevron.left")
-                    .navigationBarItemStyle()
+               chevronLeftSFSymbolImage
             }
 
             Spacer()
         }
+    }
+    
+    var chevronLeftSFSymbolImage: some View {
+        Image(systemName: "chevron.left")
+            .navigationBarItemStyle()
     }
 }
 

@@ -35,11 +35,7 @@ struct HomeCategoryButton: View {
     // MARK: - BODY
     
     var body: some View {
-        Button {
-            selectCategory(type)
-        } label: {
-            categoryLabel(type)
-        }
+        categoryButton
     }
     
     // MARK: - FUNCTIONS
@@ -57,6 +53,14 @@ struct HomeCategoryButton: View {
 // MARK: - EXTENSIONS
 
 extension HomeCategoryButton {
+    var categoryButton: some View {
+        Button {
+            selectCategory(type)
+        } label: {
+            categoryLabel(type)
+        }
+    }
+    
     func categoryLabel(_ type: Category) -> some View {
         Text(type.name)
             .font(.headline)

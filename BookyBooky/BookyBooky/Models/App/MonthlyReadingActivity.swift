@@ -8,7 +8,7 @@
 import Foundation
 
 struct MonthlyReadingActivity: Hashable {
-    var date: Date
+    var month: Date
     var readingActivity: [ReadingActivity]
 }
 

@@ -10,10 +10,10 @@ import RealmSwift
 import Charts
 
 struct TotalPagesReadByCategory: Identifiable, Hashable {
-    var category: CategoryType
+    var category: Category
     var pages: Int
     
-    var id: CategoryType { category }
+    var id: Category { category }
 }
 
 struct DailyPagesRead: Identifiable, Hashable {

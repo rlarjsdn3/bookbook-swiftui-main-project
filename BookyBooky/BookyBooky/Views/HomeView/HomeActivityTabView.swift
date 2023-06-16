@@ -61,7 +61,7 @@ extension HomeActivityTabView {
     
     var activityTabContent: some View {
         VStack(spacing: 5) {
-            let recentActivities = readingBooks.getRecentReadingActivity()
+            let recentActivities = readingBooks.recentReadingActivity
             
             if recentActivities.isEmpty {
                 noActivityLabel

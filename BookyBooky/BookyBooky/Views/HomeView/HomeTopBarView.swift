@@ -24,23 +24,23 @@ struct HomeTopBarView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
+    var recentActivityCount: Int {
+        readingBooks.recentReadingActivity.count
+    }
+    
     var showingTopBarDividerYPositionValue: CGFloat {
-        let activityCount = readingBooks.getRecentReadingActivity().count
-        
-        if activityCount == 0 {
+        if recentActivityCount == 0 {
             return 205.0
         } else {
-            return CGFloat(110 + (70 * activityCount))
+            return CGFloat(110 + (70 * recentActivityCount))
         }
     }
     
     var showingUtilMenuYPositionValue: CGFloat {
-        let activityCount = readingBooks.getRecentReadingActivity().count
-        
-        if activityCount == 0 {
+        if recentActivityCount == 0 {
             return 283.0
         } else {
-            return CGFloat(148 + (70 * activityCount))
+            return CGFloat(148 + (70 * recentActivityCount))
         }
     }
     
@@ -78,7 +78,7 @@ extension HomeTopBarView {
         }
         .padding(.vertical)
         .overlay {
-            navigationTopBarButtons
+            navigationTopBarButtonGroup
         }
         .overlay(alignment: .bottom) {
             Divider()
@@ -97,7 +97,7 @@ extension HomeTopBarView {
             .opacity(scrollYOffset > 35 ? 1 : 0)
     }
     
-    var navigationTopBarButtons: some View {
+    var navigationTopBarButtonGroup: some View {
         HStack {
             addReadingBookButton
 
