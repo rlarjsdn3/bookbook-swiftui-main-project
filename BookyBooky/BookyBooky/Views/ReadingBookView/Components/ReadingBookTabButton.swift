@@ -31,30 +31,44 @@ struct ReadingBookTabButton: View {
     // MARK: - BODY
     
     var body: some View {
+        tabButton
+    }
+}
+
+extension ReadingBookTabButton {
+    var tabButton: some View {
         Button {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-                selectedTabTypeForAnimation = type
-            }
-            selectedTabType = type
+            selectType(type)
         } label: {
-            Text(type.name)
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(selectedTabTypeForAnimation == type ? .black : .gray)
-                .overlay(alignment: .bottomLeading) {
-                    if selectedTabTypeForAnimation == type {
-                        Rectangle()
-                            .offset(y: 15)
-                            .fill(.black)
-                            .frame(width: 40, height: 1)
-                            .matchedGeometryEffect(id: "underline", in: namespace)
-                    }
-                }
-                .padding(.horizontal, 10)
+            tabLabel(type)
         }
         .padding(.vertical, 10)
         .padding([.horizontal, .bottom], 5)
         .id("\(type.name)")
+    }
+    
+    func selectType(_ type: ReadingBookTabType) {
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+            selectedTabTypeForAnimation = type
+        }
+        selectedTabType = type
+    }
+    
+    func tabLabel(_ type: ReadingBookTabType) -> some View {
+        Text(type.name)
+            .font(.headline)
+            .fontWeight(.bold)
+            .foregroundColor(selectedTabTypeForAnimation == type ? .black : .gray)
+            .overlay(alignment: .bottomLeading) {
+                if selectedTabTypeForAnimation == type {
+                    Rectangle()
+                        .offset(y: 15)
+                        .fill(.black)
+                        .frame(width: 40, height: 1)
+                        .matchedGeometryEffect(id: "underline", in: namespace)
+                }
+            }
+            .padding(.horizontal, 10)
     }
 }
 

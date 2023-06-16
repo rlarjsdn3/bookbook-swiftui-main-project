@@ -50,7 +50,7 @@ struct ReadingBookConfettiView: View {
     // MARK: - BODY
     
     var body: some View {
-        confettiComplete
+        confettiContent
             .confettiCannon(
                 counter: $counter, num: 50,
                 openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360),
@@ -69,7 +69,7 @@ struct ReadingBookConfettiView: View {
 }
 
 extension ReadingBookConfettiView {
-    var confettiComplete: some View {
+    var confettiContent: some View {
         VStack {
             Spacer()
             
@@ -84,7 +84,7 @@ extension ReadingBookConfettiView {
             
             Spacer()
             
-            dismissButton
+            okButton
         }
     }
     
@@ -120,7 +120,7 @@ extension ReadingBookConfettiView {
         .padding(.top, 30)
     }
     
-    var dismissButton: some View {
+    var okButton: some View {
         Button {
             dismiss()
         } label: {

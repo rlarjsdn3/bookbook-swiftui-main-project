@@ -57,7 +57,7 @@ struct BookShelfSentenceListView: View {
                         Section {
                             VStack {
                                 ForEach(readingBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
-                                    SentenceCellButton(readingBook, collectSentence: collect)
+                                    SentenceButton(readingBook, collectSentence: collect)
                                 }
                             }
                         } header: {

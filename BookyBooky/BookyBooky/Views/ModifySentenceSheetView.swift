@@ -59,8 +59,8 @@ struct ModifySentenceSheetView: View {
                                 .padding(18)
                         }
                     }
-                    .onChange(of: inputText) { newText in
-                        if newText.count > characterLimit {
+                    .onChange(of: inputText) {
+                        if inputText.count > characterLimit {
                             inputText = String(inputText.prefix(characterLimit))
                         }
                     }

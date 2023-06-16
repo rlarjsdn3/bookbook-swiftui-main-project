@@ -11,52 +11,6 @@ import RealmSwift
 
 // 코드 리팩토링 중...
 
-enum mainReadingTime {
-    case morning
-    case lunch
-    case evening
-    case dawn
-    
-    var name: String {
-        switch self {
-        case .morning:
-            return "아침"
-        case .lunch:
-            return "점심"
-        case .evening:
-            return "저녁"
-        case .dawn:
-            return "새벽"
-        }
-    }
-    
-    var systemImage: String {
-        switch self {
-        case .morning:
-            return "sunrise.circle.fill"
-        case .lunch:
-            return "sun.max.circle.fill"
-        case .evening:
-            return "moon.circle.fill"
-        case .dawn:
-            return "moon.stars.circle.fill"
-        }
-    }
-    
-    var accentColor: Color {
-        switch self {
-        case .morning:
-            return Color.yellow
-        case .lunch:
-            return Color.orange
-        case .evening:
-            return Color.red
-        case .dawn:
-            return Color.black
-        }
-    }
-}
-
 struct ReadingBookAnalysisView: View {
     
     // MARK: - INNER ENUM
@@ -73,6 +27,89 @@ struct ReadingBookAnalysisView: View {
     
     // MARK: - COMPUTED PROPERTIES
 
+    var mainReadingTime: MainReadingTime? {
+        guard !readingBook.readingRecords.isEmpty else {
+            return nil
+        }
+        
+        var period = ["dawn": 0, "morning": 0, "lunch": 0, "evening": 0]
+        
+        var readingDate: [Date] = []
+        
+        for record in readingBook.readingRecords {
+            readingDate.append(record.date)
+        }
+        
+        for records in readingDate {
+            let calendar = Calendar.current
+            let hour = calendar.dateComponents([.hour], from: records).hour!
+            
+            switch hour {
+            case _ where 0 <= hour && hour <= 6:
+                period["dawn"]? += 1
+            case _ where 6 < hour && hour <= 12:
+                period["morning"]? += 1
+            case _ where 12 < hour && hour <= 18:
+                period["lunch"]? += 1
+            case _ where 18 < hour && hour <= 24:
+                period["evening"]? += 1
+            default:
+                break
+            }
+        }
+        
+        let maxPeriod = Array(period).sorted(by: { $0.key < $1.key }).max(by: { $0.value < $1.value })!
+        
+        switch maxPeriod.key {
+        case "dawn":
+            return .dawn
+        case "morning":
+            return .morning
+        case "lunch":
+            return .lunch
+        case "evening":
+            return .evening
+        default:
+            return .morning
+        }
+    }
+    
+    var consecutiveReadingDay: Int? {
+        var readingDate: [Date] = []
+        
+        for record in readingBook.readingRecords {
+            readingDate.append(record.date)
+        }
+        
+        guard !readingDate.isEmpty else {
+            return nil
+        }
+        
+        readingDate.sort(by: { $0 < $1 })
+        
+        var maxConsecutiveDays = 1
+        var currentConsecutiveDays = 1
+        
+        for i in 1..<readingDate.count {
+            let calendar = Calendar.current
+            let previousDate = calendar.date(
+                byAdding: .day,
+                value: -1,
+                to: readingDate[i]
+            )!
+            
+            if (previousDate.standardDateFormat
+                    == readingDate[i-1].standardDateFormat) {
+                currentConsecutiveDays += 1
+            } else {
+                maxConsecutiveDays = max(currentConsecutiveDays, maxConsecutiveDays)
+                currentConsecutiveDays = 1
+            }
+        }
+        
+        return max(currentConsecutiveDays, maxConsecutiveDays)
+    }
+    
     var scrollPositionStart: Date {
         Date(timeIntervalSinceReferenceDate: scrollPosition)
     }
@@ -89,19 +126,43 @@ struct ReadingBookAnalysisView: View {
         scrollPositionEnd.toFormat("M월 d일 (E)")
     }
     
-    // MARK: - PROPERTIES
-    
-    var consecutiveReadingDays: Int? {
-        getConsecutiveReadingDays()
-    }
-        
-    var majorReadingPeriod: mainReadingTime {
-        getMajorReadingPeriod()
-    }
-    
     // MARK: - BODY
     
     var body: some View {
+        analysisContent
+            .onAppear {
+                if let lastRecord = readingBook.lastRecord {
+                    scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
+                }
+            }
+            .onChange(of: readingBook.readingRecords) { _, _ in
+                if let lastRecord = readingBook.lastRecord {
+                    scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
+                }
+            }
+            .sheet(isPresented: $isPresentingAllReadingDataSheet) {
+                ReadingBookDataSheetView(readingBook)
+            }
+    }
+    
+    func totalReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
+        readingBook.readingRecords.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.numOfPagesRead }
+    }
+    
+    func averageReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
+        totalReadPagesInPreiod(in: range) / readPagesCountInPeriod(in: range)
+    }
+    
+    func readPagesCountInPeriod(in range: ClosedRange<Date>) -> Int {
+        let count = readingBook.readingRecords.filter({ range.contains($0.date) }).count
+        return count != 0 ? count : 1
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension ReadingBookAnalysisView {
+    var analysisContent: some View {
         Group {
             if readingBook.readingRecords.isEmpty {
                 VStack(spacing: 5) {
@@ -130,38 +191,8 @@ struct ReadingBookAnalysisView: View {
                 .padding(.top, 5)
             }
         }
-        .onAppear {
-            if let lastRecord = readingBook.lastRecord {
-                scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
-            }
-        }
-        .onChange(of: readingBook.readingRecords) { _, _ in
-            if let lastRecord = readingBook.lastRecord {
-                scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
-            }
-        }
-        .sheet(isPresented: $isPresentingAllReadingDataSheet) {
-            ReadingBookDataSheetView(readingBook)
-        }
     }
     
-    func totalReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
-        readingBook.readingRecords.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.numOfPagesRead }
-    }
-    
-    func averageReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
-        totalReadPagesInPreiod(in: range) / readPagesCountInPeriod(in: range)
-    }
-    
-    func readPagesCountInPeriod(in range: ClosedRange<Date>) -> Int {
-        let count = readingBook.readingRecords.filter({ range.contains($0.date) }).count
-        return count != 0 ? count : 1
-    }
-}
-
-// MARK: - EXTENSIONS
-
-extension ReadingBookAnalysisView {
     var chartTitle: some View {
         VStack(alignment: .leading, spacing: -2) {
             Text("총 읽은 페이지")
@@ -237,18 +268,21 @@ extension ReadingBookAnalysisView {
                 .padding([.horizontal, .top])
             
             HStack {
+            
                 HStack {
-                    Image(systemName: majorReadingPeriod.systemImage)
-                        .font(.largeTitle)
-                        .foregroundColor(majorReadingPeriod.accentColor)
-                    
-                    VStack(alignment: .leading) {
-                        Text("주 독서 시간대")
-                            .font(.caption)
-                            .foregroundColor(Color.gray)
-                        Text("\(majorReadingPeriod.name)")
-                            .font(.title2.weight(.bold))
-                            .foregroundColor(majorReadingPeriod.accentColor)
+                    if let time = mainReadingTime {
+                        Image(systemName: time.systemImage)
+                            .font(.largeTitle)
+                            .foregroundColor(time.themeColor)
+                        
+                        VStack(alignment: .leading) {
+                            Text("주 독서 시간대")
+                                .font(.caption)
+                                .foregroundColor(Color.gray)
+                            Text("\(time.name)")
+                                .font(.title2.weight(.bold))
+                                .foregroundColor(time.themeColor)
+                        }
                     }
                     
                     Spacer()
@@ -258,17 +292,15 @@ extension ReadingBookAnalysisView {
                 .padding([.bottom])
                 
                 HStack {
-                    if let consecutiveReadingDays {
+                    if let days = consecutiveReadingDay {
                         Image(systemName: "calendar.circle.fill")
                             .font(.largeTitle)
-                    }
-                    
-                    VStack(alignment: .leading) {
-                        Text("연속 스트릭")
-                            .font(.caption)
-                            .foregroundColor(Color.gray)
-                        if let consecutiveReadingDays {
-                            Text("\(consecutiveReadingDays)일")
+                        
+                        VStack(alignment: .leading) {
+                            Text("연속 스트릭")
+                                .font(.caption)
+                                .foregroundColor(Color.gray)
+                            Text("\(days)일")
                                 .font(.title2.weight(.bold))
                         }
                     }
@@ -323,74 +355,6 @@ extension ReadingBookAnalysisView {
             .padding(.vertical, 5)
         }
     }
-    
-    
-    // 코드 깔끔하게 다듬기
-    func getMajorReadingPeriod() -> mainReadingTime {
-        var period = ["dawn": 0, "morning": 0, "lunch": 0, "evening": 0]
-        
-        for records in readingBook.readingRecords {
-            let calendar = Calendar.current
-            let hour = calendar.dateComponents([.hour], from: records.date).hour!
-            
-            switch hour {
-            case _ where 0 <= hour && hour <= 6:
-                period["dawn"]? += 1
-            case _ where 6 < hour && hour <= 12:
-                period["morning"]? += 1
-            case _ where 12 < hour && hour <= 18:
-                period["lunch"]? += 1
-            case _ where 18 < hour && hour <= 24:
-                period["evening"]? += 1
-            default:
-                break
-            }
-        }
-        
-        let maxPeriod = Array(period).sorted(by: { $0.key < $1.key }).max(by: { $0.value < $1.value })!
-        
-        switch maxPeriod.key {
-        case "dawn":
-            return .dawn
-        case "morning":
-            return .morning
-        case "lunch":
-            return .lunch
-        case "evening":
-            return .evening
-        default:
-            return .morning
-        }
-    }
-    
-    func getConsecutiveReadingDays() -> Int? {
-        guard !readingBook.readingRecords.isEmpty else {
-            return nil
-        }
-        
-        var maxConsecutiveDays = 1
-        var currentConsecutiveDays = 1
-        
-        for i in 1..<readingBook.readingRecords.count {
-            let calendar = Calendar.current
-            let previousDate = calendar.date(
-                byAdding: .day,
-                value: -1,
-                to: readingBook.readingRecords[i].date
-            )!
-            
-            if (previousDate.standardDateFormat
-                    == readingBook.readingRecords[i-1].date.standardDateFormat) {
-                currentConsecutiveDays += 1
-            } else {
-                maxConsecutiveDays = max(currentConsecutiveDays, maxConsecutiveDays)
-                currentConsecutiveDays = 1
-            }
-        }
-        
-        return max(currentConsecutiveDays, maxConsecutiveDays)
-    }
-    
 }
 
 // MARK: - PREVIEW

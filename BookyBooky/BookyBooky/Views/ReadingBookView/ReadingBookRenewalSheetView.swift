@@ -13,9 +13,7 @@ struct ReadingBookRenewalSheetView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    
     @EnvironmentObject var realmManager: RealmManager
-    
     
     @State private var totalPagesRead = 0
     
@@ -34,7 +32,7 @@ struct ReadingBookRenewalSheetView: View {
     // MARK: - BODY
     
     var body: some View {
-        renewalPageStatusLabel
+        renewalContent
             .onAppear {
                 totalPagesRead = readingBook.lastRecord?.totalPagesRead ?? 0
             }
@@ -49,7 +47,7 @@ struct ReadingBookRenewalSheetView: View {
 }
 
 extension ReadingBookRenewalSheetView {
-    var renewalPageStatusLabel: some View {
+    var renewalContent: some View {
         VStack {
             howManyPagesDidYouReadText
             
@@ -66,7 +64,7 @@ extension ReadingBookRenewalSheetView {
     var howManyPagesDidYouReadText: some View {
         Text("어디까지 읽으셨나요?")
             .font(.title.weight(.bold))
-            .offset(y: 45)
+            .padding(.top, 45)
     }
     
     var totalPagesReadLabel: some View {
@@ -80,12 +78,12 @@ extension ReadingBookRenewalSheetView {
         }
         .frame(maxWidth: .infinity)
         .overlay {
-            pageControlButtons
+            pageControlButtonGroup
         }
         .padding()
     }
     
-    var pageControlButtons: some View {
+    var pageControlButtonGroup: some View {
         HStack {
             minusButton
             
@@ -102,6 +100,7 @@ extension ReadingBookRenewalSheetView {
         Group {
             let lastRecordTotalPagesRead = readingBook.lastRecord?.totalPagesRead ?? 0
             
+            // TODO: - ‘+’ 혹은 ‘-‘ 버튼을 길게 클릭하면 페이지 수가 감소하거나 증가하도록 업데이트하기
             Button {
                 totalPagesRead -= 1
             } label: {
@@ -113,6 +112,7 @@ extension ReadingBookRenewalSheetView {
                     .background(readingBook.category.themeColor)
                     .clipShape(Circle())
             }
+            // TODO: -  ‘+’ 혹은 ‘-‘ 버튼을 클릭할 수 없을 때, 흔들기 애니메이션 효과 적용하기
             .opacity(lastRecordTotalPagesRead >= totalPagesRead  ? 0.5 : 1)
             .disabled(lastRecordTotalPagesRead >= totalPagesRead  ? true : false)
         }
@@ -120,8 +120,9 @@ extension ReadingBookRenewalSheetView {
     
     var plusButton: some View {
         Group {
-            let readingBookPage = readingBook.itemPage
+            let readingBookTotalPages = readingBook.itemPage
             
+            // TODO: - ‘+’ 혹은 ‘-‘ 버튼을 길게 클릭하면 페이지 수가 감소하거나 증가하도록 업데이트하기
             Button {
                 totalPagesRead  += 1
             } label: {
@@ -132,8 +133,9 @@ extension ReadingBookRenewalSheetView {
                     .background(readingBook.category.themeColor)
                     .clipShape(Circle())
             }
-            .opacity(readingBookPage <= totalPagesRead  ? 0.5 : 1)
-            .disabled(readingBookPage <= totalPagesRead  ? true : false)
+            // TODO: -  ‘+’ 혹은 ‘-‘ 버튼을 클릭할 수 없을 때, 흔들기 애니메이션 효과 적용하기
+            .opacity(readingBookTotalPages <= totalPagesRead  ? 0.5 : 1)
+            .disabled(readingBookTotalPages <= totalPagesRead  ? true : false)
         }
     }
     

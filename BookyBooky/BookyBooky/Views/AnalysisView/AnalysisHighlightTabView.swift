@@ -69,7 +69,7 @@ struct AnalysisHighlightTabView: View {
         return monthlyCompleteBook
     }
     
-    var mainReadingTime: mainReadingTime? {
+    var mainReadingTime: MainReadingTime? {
         guard !readingBooks.isEmpty else {
             return nil
         }
@@ -205,7 +205,7 @@ extension AnalysisHighlightTabView {
                 if let time {
                     Image(systemName: time.systemImage)
                         .font(.largeTitle)
-                        .foregroundColor(time.accentColor)
+                        .foregroundColor(time.themeColor)
                     
                     VStack(alignment: .leading) {
                         Text("주 독서 시간대")
@@ -213,7 +213,7 @@ extension AnalysisHighlightTabView {
                             .foregroundColor(Color.gray)
                         Text(time.name)
                             .font(.title2.weight(.bold))
-                            .foregroundColor(time.accentColor)
+                            .foregroundColor(time.themeColor)
                     }
                 } else {
                     Image(systemName: "sunrise.circle.fill")

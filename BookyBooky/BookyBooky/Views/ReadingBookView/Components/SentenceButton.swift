@@ -13,7 +13,7 @@ enum SentenceCellButtonType {
     case shelf
 }
 
-struct SentenceCellButton: View {
+struct SentenceButton: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
@@ -31,24 +31,32 @@ struct SentenceCellButton: View {
     // 문장 상세보기 화면 추가는 보류하기
     
     var body: some View {
-        VStack {
-//            NavigationLink {
-//                CollectSentenceView(bookID: readingBook._id, collectID: collectSentence._id)
-//            } label: {
-                HStack(alignment: .firstTextBaseline) {
-                    Text(collectSentence.sentence)
-                        .fontWeight(.bold)
-//                        .lineLimit(5)
-//                        .truncationMode(.middle)
-                    
-                    Spacer()
-                    
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.secondary)
+        sentenceButton
+            .sheet(isPresented: $isPresentingModifySentenceSheetView) {
+                ModifySentenceSheetView(readingBook, collectSentence: collectSentence)
+            }
+            .confirmationDialog("해당 문장을 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
+                Button("삭제", role: .destructive) {
+                    realmManager.deleteSentence(readingBook, id: collectSentence._id)
                 }
-                .padding([.leading, .top, .trailing])
-//            }
-//            .buttonStyle(.plain)
+            }
+    }
+}
+
+extension SentenceButton {
+    var sentenceButton: some View {
+        VStack {
+            // TODO: - 셀을 클릭하면 자세히 보기 뷰로 이동하도록 만들기
+            HStack(alignment: .firstTextBaseline) {
+                Text(collectSentence.sentence)
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                //Image(systemName: "chevron.right")
+                //    .foregroundColor(.secondary)
+            }
+            .padding([.leading, .top, .trailing])
             
             HStack {
                 Text(collectSentence.date.standardDateFormat)
@@ -87,14 +95,6 @@ struct SentenceCellButton: View {
             .padding(.horizontal)
             .padding(.bottom, 10)
         }
-        .sheet(isPresented: $isPresentingModifySentenceSheetView) {
-            ModifySentenceSheetView(readingBook, collectSentence: collectSentence)
-        }
-        .confirmationDialog("해당 문장을 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
-            Button("삭제", role: .destructive) {
-                realmManager.deleteSentence(readingBook, id: collectSentence._id)
-            }
-        }
         .frame(maxWidth: .infinity)
         .background(Color.background)
     }
@@ -102,7 +102,7 @@ struct SentenceCellButton: View {
 
 struct SentenceCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        SentenceCellButton(
+        SentenceButton(
             ReadingBook.preview,
             collectSentence: CollectSentences.preview
         )

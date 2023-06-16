@@ -19,7 +19,7 @@ struct ReadingBookCollectSentencesView: View {
         } else {
             ScrollView {
                 ForEach(readingBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
-                    SentenceCellButton(
+                    SentenceButton(
                         readingBook,
                         collectSentence: collect
                     )

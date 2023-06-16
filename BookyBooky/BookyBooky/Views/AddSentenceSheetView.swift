@@ -13,7 +13,6 @@ struct AddSentenceSheetView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    
     @EnvironmentObject var realmManager: RealmManager
     
     @State private var isPresentingKeyboard = true
@@ -27,7 +26,6 @@ struct AddSentenceSheetView: View {
     // MARK: - PROPERTIES
     
     let characterLimit = 300
-    
     let readingBook: ReadingBook
     
     // MARK: - INTIALIZER
@@ -41,44 +39,46 @@ struct AddSentenceSheetView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                TextEditor(text: $inputText)
-                    .frame(height: mainScreen.height * 0.2)
-                    .padding(10)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 20)
-                            .strokeBorder(Color.darkGray ,lineWidth: 3)
-                    }
-                    .overlay(alignment: .topLeading) {
-                        if inputText.isEmpty {
-                            Text("문장을 입력하세요. (\(characterLimit)자 이내)")
-                                .foregroundColor(.secondary)
-                                .padding(18)
+                VStack {
+                    TextEditor(text: $inputText)
+                        .frame(height: mainScreen.height * 0.2)
+                        .padding(10)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .strokeBorder(Color.darkGray ,lineWidth: 2)
                         }
-                    }
-                    .onChange(of: inputText) { newText in
-                        if newText.count > characterLimit {
-                            inputText = String(inputText.prefix(characterLimit))
+                        .overlay(alignment: .topLeading) {
+                            if inputText.isEmpty {
+                                Text("문장을 입력하세요. (\(characterLimit)자 이내)")
+                                    .foregroundColor(.secondary)
+                                    .padding(18)
+                            }
                         }
-                    }
-                    .padding(.horizontal)
-                    .focused($focusedEditor)
-                
-                HStack {
-                    Text(readingBook.title)
-                        .font(.title3.weight(.bold))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-                        .truncationMode(.middle)
+                        .onChange(of: inputText) {
+                            if inputText.count > characterLimit {
+                                inputText = String(inputText.prefix(characterLimit))
+                            }
+                        }
+                        .focused($focusedEditor)
                     
-                    Spacer()
-                    
-                    Picker("페이지", selection: $inputPage) {
-                        ForEach(1..<readingBook.itemPage) { page in
-                            Text("\(page)페이지").tag(page)
+                    HStack {
+                        Text(readingBook.title)
+                            .font(.title3.weight(.bold))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                            .truncationMode(.middle)
+                        
+                        Spacer()
+                        
+                        Picker("페이지", selection: $inputPage) {
+                            ForEach(1..<readingBook.itemPage) { page in
+                                Text("\(page)페이지")
+                                    .tag(page)
+                            }
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding()
                 
                 Spacer()
                 

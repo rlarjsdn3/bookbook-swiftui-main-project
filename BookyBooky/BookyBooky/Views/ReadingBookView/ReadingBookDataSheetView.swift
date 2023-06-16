@@ -30,7 +30,7 @@ struct ReadingBookDataSheetView: View {
     // MARK: - BODY
     
     var body: some View {
-        readingBookrecordsNavigationStack
+        recordCotent
             .confirmationDialog("마지막으로 추가된 독서 데이터를 삭제하시겠습니까?", isPresented: $isPresentingDeleteLastDataConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
                     realmManager.deleteLastRecord(readingBook)
@@ -50,28 +50,28 @@ struct ReadingBookDataSheetView: View {
 }
 
 extension ReadingBookDataSheetView {
-    var readingBookrecordsNavigationStack: some View {
+    var recordCotent: some View {
         NavigationStack {
-            readingBookRecordsList
+            recordScroll
                 .navigationTitle("기록된 모든 데이터")
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
     
-    var readingBookRecordsList: some View {
+    var recordScroll: some View {
         List {
-            readingBookRecordsSection
+            recordsSection
             
-            readingBookRecordsDeleteButtons
+            deleteButtonGroup
         }
     }
     
-    var readingBookRecordsSection: some View {
+    var recordsSection: some View {
         Section {
             if readingBook.readingRecords.isEmpty {
                 noDataLabel
             } else {
-                recordCells
+                recordCellGroup
             }
         } header: {
             Text("페이지")
@@ -85,17 +85,21 @@ extension ReadingBookDataSheetView {
             .foregroundColor(.secondary)
     }
     
-    var recordCells: some View {
+    var recordCellGroup: some View {
         ForEach(readingBook.readingRecords, id: \.self) { record in
-            HStack {
-                pageLabel(record)
-                
-                Spacer()
-                
-                dateLabel(record)
-            }
-            .padding(.vertical, 1)
+            recordCell(record)
         }
+    }
+    
+    func recordCell(_ record: ReadingRecord) -> some View {
+        HStack {
+            pageLabel(record)
+            
+            Spacer()
+            
+            dateLabel(record)
+        }
+        .padding(.vertical, 1)
     }
     
     func pageLabel(_ record: ReadingRecord) -> some View {
@@ -119,25 +123,33 @@ extension ReadingBookDataSheetView {
         }
     }
     
-    var readingBookRecordsDeleteButtons: some View {
+    var deleteButtonGroup: some View {
         Group {
-            Section {
-                Button("마지막 데이터 삭제하기") {
-                    isPresentingDeleteLastDataConfirmationDialog = true
-                }
-            } footer: {
-                Text("독서 데이터의 일관성과 정확성을 유지하기 위해 개별 독서 데이터의 수정은 불가능합니다. 더불어, 마지막 독서 데이터의 삭제만 가능합니다. 이 작업은 취소할 수 없습니다.")
-            }
+            deleteLastRecordButton
             
-            Section {
-                Button("모든 데이터 삭제하기", role: .destructive) {
-                    isPresentingDeleteallDataConfirmationDialog = true
-                }
-            } footer: {
-                Text("모든 독서 데이터를 삭제합니다. 이 작업은 취소할 수 없습니다.")
-            }
+            deleteAllRecordButton
         }
         .disabled(readingBook.readingRecords.isEmpty)
+    }
+    
+    var deleteLastRecordButton: some View {
+        Section {
+            Button("마지막 데이터 삭제하기") {
+                isPresentingDeleteLastDataConfirmationDialog = true
+            }
+        } footer: {
+            Text("독서 데이터의 일관성과 정확성을 유지하기 위해 개별 독서 데이터의 수정은 불가능합니다. 더불어, 마지막 독서 데이터의 삭제만 가능합니다. 이 작업은 취소할 수 없습니다.")
+        }
+    }
+    
+    var deleteAllRecordButton: some View {
+        Section {
+            Button("모든 데이터 삭제하기", role: .destructive) {
+                isPresentingDeleteallDataConfirmationDialog = true
+            }
+        } footer: {
+            Text("모든 독서 데이터를 삭제합니다. 이 작업은 취소할 수 없습니다.")
+        }
     }
 }
 
