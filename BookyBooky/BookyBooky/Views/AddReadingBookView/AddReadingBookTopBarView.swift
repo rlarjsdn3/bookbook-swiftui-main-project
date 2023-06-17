@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddReadingBookHeaderView: View {
+struct AddReadingBookTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -15,25 +15,25 @@ struct AddReadingBookHeaderView: View {
     
     // MARK: - PROPERTIES
     
-    let bookTitle: String
+    let title: String
     
     // MARK: - INTIALIZER
     
-    init(bookTitle: String) {
-        self.bookTitle = bookTitle
+    init(title: String) {
+        self.title = title
     }
     
     // MARK: - BODY
     
     var body: some View {
-        navigationBar
+        navigationTopBar
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension AddReadingBookHeaderView {
-    var navigationBar: some View {
+extension AddReadingBookTopBarView {
+    var navigationTopBar: some View {
         HStack {
             backButton
             
@@ -45,7 +45,7 @@ extension AddReadingBookHeaderView {
         Button {
             dismiss()
         } label: {
-            Label(bookTitle, systemImage: "chevron.left")
+            Label(title, systemImage: "chevron.left")
                 .frame(width: mainScreen.width * 0.77, alignment: .leading)
                 .lineLimit(1)
         }
@@ -58,6 +58,6 @@ extension AddReadingBookHeaderView {
 
 struct BookAddHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        AddReadingBookHeaderView(bookTitle: "자바의 정석")
+        AddReadingBookTopBarView(title: "자바의 정석")
     }
 }

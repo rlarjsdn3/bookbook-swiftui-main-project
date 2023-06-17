@@ -20,35 +20,35 @@ struct AddReadingBookView: View {
     
     // MARK: - PROPERTIES
     
-    let searchBookInfo: detailBookInfo.Item
+    let bookInfo: detailBookInfo.Item
     
     // MARK: - INTIALIZER
     
-    init(_ searchBookInfo: detailBookInfo.Item) {
-        self.searchBookInfo = searchBookInfo
+    init(_ bookInfo: detailBookInfo.Item) {
+        self.bookInfo = bookInfo
     }
     
     // MARK: - BODY
     
     var body: some View {
-        ZStack {
-            linearGrayGradient
+        VStack(spacing: 0) {
+            AddReadingBookTopBarView(title: bookInfo.bookTitle)
             
-            VStack {
-                AddReadingBookHeaderView(bookTitle: searchBookInfo.title.refinedTitle)
-                
-                Spacer(minLength: 0)
-                
-                LottieBookView()
-                    .frame(height: 200)
-                
-                AddReadingBookTitleView(searchBookInfo, selectedDate: $selectedDate)
+            Spacer()
             
-                Spacer(minLength: 0)
-                
-                AddReadingBookButtonsView(searchBookInfo, selectedDate: $selectedDate)
-            }
+            AddReadingBookCenterView(
+                bookInfo,
+                selectedDate: $selectedDate
+            )
+        
+            Spacer()
+            
+            AddReadingBookButtonGroupView(
+                bookInfo,
+                selectedDate: $selectedDate
+            )
         }
+        .background(linearGrayGradient)
         .toolbar(.hidden, for: .navigationBar)
     }
 }

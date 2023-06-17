@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchBookGrayBoxView: View {
+struct SearchBookSubInfoView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -15,30 +15,30 @@ struct SearchBookGrayBoxView: View {
     
     // MARK: - PROPERTIES
     
-    var searchBookInfo: detailBookInfo.Item
+    var bookInfo: detailBookInfo.Item
     @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ searchBookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
-        self.searchBookInfo = searchBookInfo
+    init(_ bookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+        self.bookInfo = bookInfo
         self._isLoadingCoverImage = isLoadingCoverImage
     }
     
     // MARK: - BODY
     
     var body: some View {
-        bookGrayBox
+        subInfo
             .sheet(isPresented: $isPresentingSalesPointDescriptionSheet) {
-                SalesPointIntroSheetView(theme: searchBookInfo.bookCategory.themeColor)
+                SalesPointDescSheetView(theme: bookInfo.bookCategory.themeColor)
             }
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension SearchBookGrayBoxView {
-    var bookGrayBox: some View {
+extension SearchBookSubInfoView {
+    var subInfo: some View {
         HStack {
             Spacer(minLength: 0)
             
@@ -76,7 +76,7 @@ extension SearchBookGrayBoxView {
                 }
             }
             
-            Text("\(searchBookInfo.salesPoint)")
+            Text("\(bookInfo.salesPoint)")
                 .redacted(reason: isLoadingCoverImage ? .placeholder : [])
                 .shimmering(active: isLoadingCoverImage)
         }
@@ -89,7 +89,7 @@ extension SearchBookGrayBoxView {
                 .font(.headline)
                 .fontWeight(.bold)
             
-            Text("\(searchBookInfo.subInfo.itemPage)")
+            Text("\(bookInfo.subInfo.itemPage)")
                 .redacted(reason: isLoadingCoverImage ? .placeholder : [])
                 .shimmering(active: isLoadingCoverImage)
         }
@@ -102,7 +102,7 @@ extension SearchBookGrayBoxView {
                 .font(.headline)
                 .fontWeight(.bold)
             
-            Text(searchBookInfo.bookCategory.rawValue)
+            Text(bookInfo.bookCategory.name)
                 .redacted(reason: isLoadingCoverImage ? .placeholder : [])
                 .shimmering(active: isLoadingCoverImage)
         }
@@ -114,7 +114,7 @@ extension SearchBookGrayBoxView {
 
 struct SearchInfoBoxView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookGrayBoxView(
+        SearchBookSubInfoView(
             detailBookInfo.Item.preview,
             isLoadingCoverImage: .constant(false)
         )

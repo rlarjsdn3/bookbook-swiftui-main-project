@@ -16,13 +16,13 @@ struct SearchBookCoverView: View {
     
     // MARK: - PROERTIES
     
-    var searchBookInfo: detailBookInfo.Item
+    var bookInfo: detailBookInfo.Item
     @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ searchBookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
-        self.searchBookInfo = searchBookInfo
+    init(_ bookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+        self.bookInfo = bookInfo
         self._isLoadingCoverImage = isLoadingCoverImage
     }
     
@@ -40,7 +40,7 @@ extension SearchBookCoverView {
         ZStack {
             coverBackgroundColor
             
-            asyncCoverImage(searchBookInfo.cover,
+            asyncCoverImage(bookInfo.cover,
                             width: 170, height: mainScreen.height * 0.27
             )
             .onAppear {
@@ -52,7 +52,7 @@ extension SearchBookCoverView {
     
     var coverBackgroundColor: some View {
         Rectangle()
-            .fill(searchBookInfo.categoryName.refinedCategory.themeColor.gradient)
+            .fill(bookInfo.categoryName.refinedCategory.themeColor.gradient)
             .ignoresSafeArea()
     }
 }

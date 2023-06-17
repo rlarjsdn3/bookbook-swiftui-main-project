@@ -13,12 +13,11 @@ struct SearchSheetTextFieldView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
-    @FocusState var focusedField: Bool
-    
     @Namespace var namespace: Namespace.ID
+    
+    @FocusState var focusedField: Bool
     
     // MARK: - PROPERTIES
     
@@ -26,24 +25,23 @@ struct SearchSheetTextFieldView: View {
     @Binding var searchIndex: Int
     @Binding var selectedListMode: ListMode
     @Binding var selectedCategory: Category
-    @Binding var selectedCategoryForAnimation: Category
+    @Binding var selectedCategoryFA: Category
     
     // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 10) {
-            searchSheetTextField
-            // 검색 시트가 나타난 후, 0.05초 뒤에 키보드를 보이게 합니다.
-                .onAppear {
-                    if aladinAPIManager.searchResults.isEmpty {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                            focusedField = true
-                        }
-                    }
-                }
-                .padding([.leading, .top, .trailing])
+            TextFieldArea
             
             searchCategory
+        }
+        // 검색 시트가 나타난 후, 0.05초 뒤에 키보드를 보이게 합니다.
+        .onAppear {
+            if aladinAPIManager.searchResults.isEmpty {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                    focusedField = true
+                }
+            }
         }
     }
     
@@ -57,7 +55,7 @@ struct SearchSheetTextFieldView: View {
         aladinAPIManager.requestBookSearchAPI(searchQuery)
         
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-            selectedCategoryForAnimation = .all
+            selectedCategoryFA = .all
         }
         selectedCategory = .all
         HapticManager.shared.impact(.rigid)
@@ -67,57 +65,73 @@ struct SearchSheetTextFieldView: View {
 // MARK: - EXTENSIONS
 
 extension SearchSheetTextFieldView {
-    var searchSheetTextField: some View {
+    var TextFieldArea: some View {
         HStack {
-            Menu {
-                Section {
-                    Button {
-                        selectedListMode = .grid
-                    } label: {
-                        Label("격자 모드", systemImage: "square.grid.2x2")
-                        if selectedListMode == .grid {
-                            Text("적용됨")
-                        }
-                    }
-                    
-                    Button {
-                        selectedListMode = .list
-                    } label: {
-                        Label("리스트 모드", systemImage: "list.dash")
-                        if selectedListMode == .list {
-                            Text("적용됨")
-                        }
-                    }
-                } header: {
-                    Text("보기 모드")
-                }
-            } label: {
-                Image(systemName: "ellipsis.circle")
-                    .font(.title2)
-                    .foregroundColor(.primary)
-                    .frame(width: 45, height: 45)
-                    .background(Color(.background), in: .rect(cornerRadius: 15))
-            }
+            listModeMenu
 
+            searchInputField
             
-            searchTextField
-            
-            dismissButton
+            backButton
+        }
+        .padding([.leading, .top, .trailing])
+    }
+    
+    var listModeMenu: some View {
+        Menu {
+            Section {
+                listModeButton
+                
+                gridModeButton
+            } header: {
+                Text("보기 모드")
+            }
+        } label: {
+            epllipsisSFSymbolImage
         }
     }
     
-    var searchTextField: some View {
+    var listModeButton: some View {
+        Button {
+            selectedListMode = .grid
+        } label: {
+            Label("격자 모드", systemImage: "square.grid.2x2")
+            if selectedListMode == .grid {
+                Text("적용됨")
+            }
+        }
+    }
+    
+    var gridModeButton: some View {
+        Button {
+            selectedListMode = .list
+        } label: {
+            Label("리스트 모드", systemImage: "list.dash")
+            if selectedListMode == .list {
+                Text("적용됨")
+            }
+        }
+    }
+    
+    var epllipsisSFSymbolImage: some View {
+        Image(systemName: "ellipsis.circle")
+            .font(.title2)
+            .foregroundColor(.primary)
+            .frame(width: 45, height: 45)
+            .background(Color(.background), in: .rect(cornerRadius: 15))
+    }
+    
+    var searchInputField: some View {
         HStack {
             magnifyingGlassSFSymbolImage
             
-            searchInputField
+            textField
             
             if !searchQuery.isEmpty {
                 eraseButton
             }
         }
         .padding(.horizontal, 10)
-        .background(Color("Background"))
+        .background(Color(.background), in: .rect(cornerRadius: 15))
         .cornerRadius(15)
     }
     
@@ -126,7 +140,7 @@ extension SearchSheetTextFieldView {
             .foregroundColor(.gray)
     }
     
-    var searchInputField: some View {
+    var textField: some View {
         TextField("제목 / 저자 검색", text: $searchQuery)
             .frame(height: 45)
             .submitLabel(.search)
@@ -150,17 +164,20 @@ extension SearchSheetTextFieldView {
             .foregroundColor(.gray)
     }
     
-    var dismissButton: some View {
+    var backButton: some View {
         Button {
             dismiss()
         } label: {
-            Image(systemName: "xmark")
-                .font(.title2)
-                .foregroundColor(.primary)
-                .frame(width: 45, height: 45)
-                .background(Color("Background"))
-                .cornerRadius(15)
+            xmarkSFSymbolImage
         }
+    }
+    
+    var xmarkSFSymbolImage: some View {
+        Image(systemName: "xmark")
+            .font(.title2)
+            .foregroundColor(.primary)
+            .frame(width: 45, height: 45)
+            .background(Color(.background), in: .rect(cornerRadius: 15))
     }
     
     
@@ -169,17 +186,17 @@ extension SearchSheetTextFieldView {
             if aladinAPIManager.searchResults.isEmpty {
                 EmptyView()
             } else {
-                scrollCategoryButtons
+                categoryButtonGroup
             }
         }
     }
     
-    var scrollCategoryButtons: some View {
+    var categoryButtonGroup: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 categoryButtons(scrollProxy: proxy)
             }
-            .onChange(of: searchIndex) { _ in
+            .onChange(of: searchIndex) {
                 // 새로운 검색을 시도할 때만 카테고리 스크롤을 제일 앞으로 전진합니다.
                 // '더 보기' 버튼을 클릭해도 카테고리 스크롤이 이동하지 않습니다.
                 if searchIndex == 1 {
@@ -198,7 +215,7 @@ extension SearchSheetTextFieldView {
                 SearchCategoryButton(
                     type,
                     selectedCategory: $selectedCategory,
-                    selectedCategoryForAnimation: $selectedCategoryForAnimation,
+                    selectedCategoryForAnimation: $selectedCategoryFA,
                     namespace: namespace,
                     scrollProxy: proxy
                 )
@@ -219,7 +236,7 @@ struct SearchSheetTextFieldView_Previews: PreviewProvider {
             searchIndex: .constant(0),
             selectedListMode: .constant(.list),
             selectedCategory: .constant(.all),
-            selectedCategoryForAnimation: .constant(.all)
+            selectedCategoryFA: .constant(.all)
         )
         .environmentObject(AladinAPIManager())
     }

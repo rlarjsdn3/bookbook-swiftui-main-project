@@ -34,10 +34,10 @@ struct FavoriteBookCellButton: View {
     var body: some View {
         favoriteBookCellButton
             .sheet(isPresented: $isPresentingSearchBookViewFromSheet) {
-                SearchBookView(favoriteBook.isbn13, viewType: .sheet)
+                SearchBookView(favoriteBook.isbn13, type: .sheet)
             }
             .navigationDestination(isPresented: $isPresentingSearchBookViewFromNavigation) {
-                SearchBookView(favoriteBook.isbn13, viewType: .navigationStack)
+                SearchBookView(favoriteBook.isbn13, type: .navigationStack)
             }
     }
 }

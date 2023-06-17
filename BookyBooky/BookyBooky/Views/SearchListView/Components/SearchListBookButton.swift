@@ -35,7 +35,7 @@ struct SearchListBookButton: View {
                 isPresentingBookInfoView = true
             }
             .sheet(isPresented: $isPresentingBookInfoView) {
-                SearchBookView(listOfBookItem.isbn13, viewType: .sheet)
+                SearchBookView(listOfBookItem.isbn13, type: .sheet)
             }
     }
     

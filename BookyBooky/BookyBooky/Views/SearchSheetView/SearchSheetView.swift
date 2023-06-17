@@ -19,28 +19,24 @@ struct SearchSheetView: View {
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
-    @AppStorage("SearchResultListMode") private var selectedListMode: ListMode = .list
-    
     @State private var searchQuery = ""
     @State private var searchIndex = 1
     @State private var selectedCategory: Category = .all
-    @State private var selectedCategoryForAnimation: Category = .all
+    @State private var selectedCategoryFA: Category = .all
     
+    @AppStorage("SearchResultListMode") private var selectedListMode: ListMode = .list
     
     // MARK: - BODY
     
     var body: some View {
         NavigationStack {
             VStack {
-                
-                // TextFieldView 와 Category 합치기
-                
                 SearchSheetTextFieldView(
                     searchQuery: $searchQuery,
                     searchIndex: $searchIndex,
                     selectedListMode: $selectedListMode,
                     selectedCategory: $selectedCategory,
-                    selectedCategoryForAnimation: $selectedCategoryForAnimation
+                    selectedCategoryFA: $selectedCategoryFA
                 )
                 
                 SearchSheetScrollView(

@@ -27,7 +27,7 @@ struct SearchBookView: View {
     // MARK: - PROPERTIES
     
     let isbn13: String
-    let viewType: SearchBookViewTypes
+    let type: SearchBookViewTypes
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -40,96 +40,89 @@ struct SearchBookView: View {
     
     // MARK: - INTIALIZER
     
-    init(_ isbn13: String, viewType: SearchBookViewTypes) {
+    init(_ isbn13: String, type: SearchBookViewTypes) {
         self.isbn13 = isbn13
-        self.viewType = viewType
+        self.type = type
     }
     
     // MARK: - BODY
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.white
-                    .ignoresSafeArea()
-                
-                if let bookDetail = aladinAPIManager.searchBookInfo {
-                    ZStack(alignment: .topLeading) {
-                        detailBookInfo(bookDetail)
-                        
-                        if viewType == .navigationStack {
-                            Button {
-                                dismiss()
-                            } label: {
-                                Image(systemName: "chevron.left")
-                                    .foregroundColor(bookDetail.bookCategory.foregroundColor)
-                            }
-                            .navigationBarItemStyle()
-                            .padding(.vertical, 5)
-                        }
-                    }
+        searchBook
+            .onAppear {
+                aladinAPIManager.requestBookDetailAPI(isbn13)
+            }
+            .onDisappear {
+                aladinAPIManager.searchBookInfo = nil
+            }
+            // 도서 정보 불러오기에 실패한다면 이전 화면으로 넘어갑니다.
+            .onChange(of: aladinAPIManager.isPresentingDetailBookErrorToastAlert) { detailBookError in
+                if detailBookError {
+                    dismiss()
                 }
             }
-        }
-        .toolbar(.hidden, for: .navigationBar)
-        .onAppear {
-            hideKeyboard()
-            aladinAPIManager.requestBookDetailAPI(isbn13)
-        }
-        .onDisappear {
-            aladinAPIManager.searchBookInfo = nil
-        }
-        // 도서 정보 불러오기에 실패한다면 이전 화면으로 넘어갑니다.
-        .onChange(of: aladinAPIManager.isPresentingDetailBookErrorToastAlert) { detailBookError in
-            if detailBookError {
-                dismiss()
+            .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddSuccessToastAlert,
+                   duration: 1.0) {
+                realmManager.showFavoriteBookAddSuccessToastAlert(categoryAccentColor)
             }
-        }
-        .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddSuccessToastAlert,
-               duration: 1.0) {
-            realmManager.showFavoriteBookAddSuccessToastAlert(categoryAccentColor)
-        }
-       .toast(isPresenting: $realmManager.isPresentingReadingBookAddSuccessToastAlert,
-              duration: 1.0) {
-           realmManager.showReadingBookAddSuccessToastAlert(categoryAccentColor)
-       }
-        .presentationCornerRadius(30)
+            .toast(isPresenting: $realmManager.isPresentingReadingBookAddSuccessToastAlert,
+                  duration: 1.0) {
+               realmManager.showReadingBookAddSuccessToastAlert(categoryAccentColor)
+            }
+            .toolbar(.hidden, for: .navigationBar)
+            .presentationCornerRadius(30)
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchBookView {
-    func detailBookInfo(_ book: detailBookInfo.Item) -> some View {
-        VStack {
-            SearchBookCoverView(
-                book,
-                isLoadingCoverImage: $isLoadingCoverImage
-            )
-            
-            SearchBookTitleView(
-                book,
-                isLoadingCoverImage: $isLoadingCoverImage
-            )
-            
-            SearchBookGrayBoxView(
-                book,
-                isLoadingCoverImage: $isLoadingCoverImage
-            )
-            
-            Divider()
-            
-            SearchBookIntroView(
-                book,
-                isLoadingCoverImage: $isLoadingCoverImage
-            )
-            
-            Spacer()
-            
-            SearchBookButtonsView(
-                bookSearchInfo: book,
-                isLoadingCoverImage: $isLoadingCoverImage
-            )
+    var searchBook: some View {
+        NavigationStack {
+            if let bookInfo = aladinAPIManager.searchBookInfo {
+                VStack {
+                    SearchBookCoverView(
+                        bookInfo,
+                        isLoadingCoverImage: $isLoadingCoverImage
+                    )
+                    .overlay(alignment: .topLeading) {
+                        if type == .navigationStack {
+                            Button {
+                                dismiss()
+                            } label: {
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(bookInfo.bookCategory.foregroundColor)
+                                    .navigationBarItemStyle()
+                            }
+                            .padding(.vertical, 5)
+                        }
+                    }
+                    
+                    SearchBookMainInfoView(
+                        bookInfo,
+                        isLoadingCoverImage: $isLoadingCoverImage
+                    )
+                    
+                    SearchBookSubInfoView(
+                        bookInfo,
+                        isLoadingCoverImage: $isLoadingCoverImage
+                    )
+                    
+                    Divider()
+                    
+                    SearchBookDescView(
+                        bookInfo,
+                        isLoadingCoverImage: $isLoadingCoverImage
+                    )
+                    
+                    Spacer()
+                    
+                    SearchBookButtonGroupView(
+                        bookInfo,
+                        isLoadingCoverImage: $isLoadingCoverImage
+                    )
+                }
+            }
         }
     }
 }
@@ -138,7 +131,7 @@ extension SearchBookView {
 
 struct SearchInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookView("9788994492049", viewType: .navigationStack)
+        SearchBookView("9788994492049", type: .navigationStack)
             .environmentObject(RealmManager())
             .environmentObject(AladinAPIManager())
     }

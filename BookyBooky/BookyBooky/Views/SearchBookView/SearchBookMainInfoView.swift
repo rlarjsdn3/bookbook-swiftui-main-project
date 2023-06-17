@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct SearchBookTitleView: View {
+struct SearchBookMainInfoView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -16,38 +16,41 @@ struct SearchBookTitleView: View {
     
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
-    @State private var isFavoriteBook: Bool = false
+    @State private var isFavorite: Bool = false
     
     // MARK: - PROPERTIES
     
-    let bookSearchInfo: detailBookInfo.Item
+    let bookInfo: detailBookInfo.Item
     @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTALIZER
     
-    init(_ bookSearchInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
-        self.bookSearchInfo = bookSearchInfo
+    init(_ bookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+        self.bookInfo = bookInfo
         self._isLoadingCoverImage = isLoadingCoverImage
     }
     
     // MARK: - BODY
     
     var body: some View {
-        bookTitleArea
+        mainInfo
     }
     
-    func checkFavoriteBook() {
-        for favoriteBook in favoriteBooks where bookSearchInfo.isbn13 == favoriteBook.isbn13 {
-            isFavoriteBook = true
-            break
+    // MARK: - FUNCTIONS
+    
+    func isFavoriteBook() {
+        for favoriteBook in favoriteBooks {
+            if bookInfo.isbn13 == favoriteBook.isbn13 {
+                isFavorite = true; break
+            }
         }
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension SearchBookTitleView {
-    var bookTitleArea: some View {
+extension SearchBookMainInfoView {
+    var mainInfo: some View {
         HStack {
             bookTitleLabel
             
@@ -56,7 +59,7 @@ extension SearchBookTitleView {
             addFavoriteBookButton
         }
         .onAppear {
-            checkFavoriteBook()
+            isFavoriteBook()
         }
         .frame(height: 60)
         .padding(.top, 5)
@@ -66,57 +69,54 @@ extension SearchBookTitleView {
     
     var bookTitleLabel: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(bookSearchInfo.title.refinedTitle)
+            Text(bookInfo.bookTitle)
                 .font(.title)
                 .fontWeight(.bold)
-                .minimumScaleFactor(0.8)
-                .lineLimit(1)
             
-            Text("\(Text(bookSearchInfo.author.refinedAuthor))・\(Text(bookSearchInfo.publisher))")
+            Text("\(Text(bookInfo.bookAuthor)) ・ \(Text(bookInfo.publisher))")
                 .font(.headline)
                 .foregroundColor(.secondary)
-                .minimumScaleFactor(0.8)
-                .lineLimit(1)
         }
+        .minimumScaleFactor(0.8)
+        .lineLimit(1)
         .redacted(reason: isLoadingCoverImage ? .placeholder : [])
         .shimmering(active: isLoadingCoverImage)
     }
     
     var addFavoriteBookButton: some View {
         Button {
-            isFavoriteBook.toggle()
+            isFavorite.toggle()
             
-            if isFavoriteBook {
+            if isFavorite {
                 let favoriteBook = FavoriteBook(
                     value: [
-                        "title": "\(bookSearchInfo.title.refinedTitle)",
-                        "author": "\(bookSearchInfo.author.refinedAuthor)",
-                        "cover": "\(bookSearchInfo.cover)",
-                        "salesPoint": "\(bookSearchInfo.salesPoint)",
-                        "isbn13": "\(bookSearchInfo.isbn13)"
+                        "title": "\(bookInfo.title.refinedTitle)",
+                        "author": "\(bookInfo.author.refinedAuthor)",
+                        "cover": "\(bookInfo.cover)",
+                        "salesPoint": "\(bookInfo.salesPoint)",
+                        "isbn13": "\(bookInfo.isbn13)"
                     ]
                 )
                 realmManager.addFavoriteBook(favoriteBook)
             } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    realmManager.deleteFavoriteBook(bookSearchInfo.isbn13)
+                    realmManager.deleteFavoriteBook(bookInfo.isbn13)
                 }
             }
             HapticManager.shared.impact(.rigid)
         } label: {
-            if isFavoriteBook {
+            if isFavorite {
                 Image(systemName: "heart.fill")
                     .foregroundColor(.white)
                     .padding()
-                    .background(bookSearchInfo.bookCategory.themeColor)
-                    .clipShape(Circle())
+                    .background(bookInfo.bookCategory.themeColor, in: .circle)
             } else {
                 Image(systemName: "heart.fill")
-                    .foregroundColor(bookSearchInfo.categoryName.refinedCategory.themeColor)
+                    .foregroundColor(bookInfo.categoryName.refinedCategory.themeColor)
                     .padding()
                     .background {
                         Circle()
-                            .stroke(bookSearchInfo.categoryName.refinedCategory.themeColor, lineWidth: 1.8)
+                            .stroke(bookInfo.categoryName.refinedCategory.themeColor, lineWidth: 1.8)
                     }
             }
         }
@@ -128,7 +128,7 @@ extension SearchBookTitleView {
 
 struct SearchInfoTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookTitleView(
+        SearchBookMainInfoView(
             detailBookInfo.Item.preview,
             isLoadingCoverImage: .constant(false)
         )

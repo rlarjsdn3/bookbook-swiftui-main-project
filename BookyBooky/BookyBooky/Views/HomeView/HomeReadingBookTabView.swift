@@ -75,7 +75,7 @@ struct HomeReadingBookTabView: View {
 
 extension HomeReadingBookTabView {
     var readingBookTab: some View {
-        VStack {
+        LazyVStack(pinnedViews: [.sectionHeaders]) {
             readingBookTabTitle
             
             Section {

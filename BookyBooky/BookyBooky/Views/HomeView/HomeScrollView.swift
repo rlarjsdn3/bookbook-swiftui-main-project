@@ -65,7 +65,7 @@ extension HomeScrollView {
     var scrollContent: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
-                LazyVStack(pinnedViews: [.sectionHeaders]) {
+                VStack {
                     navigationTopBarTitle
                     
                     HomeActivityTabView()

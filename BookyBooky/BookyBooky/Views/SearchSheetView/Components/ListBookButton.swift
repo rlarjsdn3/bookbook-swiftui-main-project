@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct SearchSheetListBookButton: View {
+struct ListBookButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -20,37 +20,37 @@ struct SearchSheetListBookButton: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: briefBookInfo.Item
+    let book: briefBookInfo.Item
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: briefBookInfo.Item) {
-        self.bookItem = bookItem
+    init(_ book: briefBookInfo.Item) {
+        self.book = book
     }
     
     // MARK: - BODY
     
     var body: some View {
-        bookCellButton
+        listBookButton
             .onTapGesture {
                 hideKeyboard()
                 isPresentingSearchBookView = true
             }
             .navigationDestination(isPresented: $isPresentingSearchBookView) {
-                SearchBookView(bookItem.isbn13, viewType: .navigationStack)
+                SearchBookView(book.isbn13, type: .navigationStack)
                 
             }
     }
     
     func checkReadingBook() -> Bool {
-        for readingBook in readingBooks where bookItem.isbn13 == readingBook.isbn13 {
+        for readingBook in readingBooks where book.isbn13 == readingBook.isbn13 {
             return true
         }
         return false
     }
     
     func checkFavoriteBook() -> Bool {
-        for favoriteBook in favoriteBooks where bookItem.isbn13 == favoriteBook.isbn13 {
+        for favoriteBook in favoriteBooks where book.isbn13 == favoriteBook.isbn13 {
             return true
         }
         return false
@@ -59,8 +59,8 @@ struct SearchSheetListBookButton: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchSheetListBookButton {
-    var bookCellButton: some View {
+extension ListBookButton {
+    var listBookButton: some View {
         ZStack {
             bookCoverImage
             
@@ -72,7 +72,7 @@ extension SearchSheetListBookButton {
     var bookCoverImage: some View {
         HStack {
             asyncCoverImage(
-                bookItem.cover,
+                book.cover,
                 width: mainScreen.width * 0.32, height: 190,
                 coverShape: RoundedRectTRBR()
             )
@@ -90,7 +90,7 @@ extension SearchSheetListBookButton {
             
             ZStack {
                 RoundedRectTLBL()
-                    .fill(bookItem.categoryName.refinedCategory.themeColor)
+                    .fill(book.categoryName.refinedCategory.themeColor)
                     .offset(y: 4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                 
@@ -134,9 +134,9 @@ extension SearchSheetListBookButton {
     }
 }
 
-extension SearchSheetListBookButton {
+extension ListBookButton {
     var bookTitleText: some View {
-        Text(bookItem.title.refinedTitle)
+        Text(book.title.refinedTitle)
             .font(.title3)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -158,24 +158,24 @@ extension SearchSheetListBookButton {
     }
     
     var bookAuthorText: some View {
-        Text(bookItem.author.refinedAuthor)
+        Text(book.author.refinedAuthor)
             .foregroundColor(.primary)
             .fontWeight(.bold)
     }
     
     var bookPublisherText: some View {
         HStack(spacing: 2) {
-            Text(bookItem.publisher)
+            Text(book.publisher)
             
             Text("・")
             
-            Text(bookItem.bookCategory.rawValue)
+            Text(book.bookCategory.rawValue)
         }
         .fontWeight(.semibold)
     }
     
     var bookPubDateText: some View {
-        Text("\(bookItem.pubDate.refinedPublishDate.standardDateFormat)")
+        Text("\(book.pubDate.refinedPublishDate.standardDateFormat)")
     }
 }
 
@@ -183,7 +183,7 @@ extension SearchSheetListBookButton {
 
 struct SearchBookCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetListBookButton(briefBookInfo.Item.preview)
+        ListBookButton(briefBookInfo.Item.preview)
             .previewLayout(.sizeThatFits)
     }
 }

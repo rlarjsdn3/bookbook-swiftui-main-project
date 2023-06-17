@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct SearchBookButtonsView: View {
+struct SearchBookButtonGroupView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -19,38 +19,54 @@ struct SearchBookButtonsView: View {
     
     // MARK: - PROPERTIES
     
-    let bookSearchInfo: detailBookInfo.Item
+    let bookInfo: detailBookInfo.Item
     @Binding var isLoadingCoverImage: Bool
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    var isExist: Bool {
+        for book in readingBooks where book.isbn13 == bookInfo.isbn13 {
+            return true
+        }
+        return false
+    }
+    
+    // MARK: - INTIALIZER
+    
+    init(_ bookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+        self.bookInfo = bookInfo
+        self._isLoadingCoverImage = isLoadingCoverImage
+    }
     
     // MARK: - BODY
     
     var body: some View {
-        bottomButtons
-            .navigationDestination(isPresented: $isPresentingAddReadingBookView) {
-                AddReadingBookView(bookSearchInfo)
-            }
-    }
-    
-    func isExistingReadingBook() -> Bool {
-        for book in readingBooks where book.isbn13 == bookSearchInfo.isbn13 {
-            return true
-        }
-        return false
+        ButtonGroup
+//            .navigationDestination(isPresented: $isPresentingAddReadingBookView) {
+//                AddReadingBookView(bookInfo)
+//            }
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension SearchBookButtonsView {
-    var bottomButtons: some View {
+extension SearchBookButtonGroupView {
+    var ButtonGroup: some View {
         VStack {
-            bookAPIProviderText
+            dbProviderText
             
-            buttons
+            HStack {
+                backButton
+                
+                addButton
+            }
+            // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
+            // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 20으로 설정
+            .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
         }
     }
     
-    var bookAPIProviderText: some View {
+    var dbProviderText: some View {
         HStack(spacing: 0) {
             Text("도서 DB 제공 : ")
             
@@ -62,20 +78,9 @@ extension SearchBookButtonsView {
         .shimmering(active: isLoadingCoverImage)
     }
     
-    var buttons: some View {
-        HStack {
-            backButton
-            
-            readingBookAddButton
-        }
-        // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
-        // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 20으로 설정
-        .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
-    }
-    
     var backButton: some View {
         Group {
-            if isExistingReadingBook() {
+            if isExist {
                 Button {
                     dismiss()
                 } label: {
@@ -93,16 +98,16 @@ extension SearchBookButtonsView {
         }
     }
     
-    var readingBookAddButton: some View {
+    var addButton: some View {
         // 이미 목표 도서에 추가되어 있는 경우, 버튼 잠그기 (안 보이게 하기)
         Group {
-            if !isExistingReadingBook() {
+            if !isExist {
                 NavigationLink {
-                    AddReadingBookView(bookSearchInfo)
+                    AddReadingBookView(bookInfo)
                 } label: {
                     Text("추가하기")
                 }
-                .buttonStyle(RightBottomButtonStyle(backgroundColor: bookSearchInfo.bookCategory.themeColor))
+                .buttonStyle(RightBottomButtonStyle(backgroundColor: bookInfo.bookCategory.themeColor))
                 .disabled(isLoadingCoverImage)
             }
         }
@@ -113,8 +118,8 @@ extension SearchBookButtonsView {
 
 struct SearchInfoButtonsView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookButtonsView(
-            bookSearchInfo: detailBookInfo.Item.preview,
+        SearchBookButtonGroupView(
+            detailBookInfo.Item.preview,
             isLoadingCoverImage: .constant(false)
         )
         .previewLayout(.sizeThatFits)

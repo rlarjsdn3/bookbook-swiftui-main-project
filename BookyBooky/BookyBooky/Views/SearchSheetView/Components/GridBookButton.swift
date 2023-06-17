@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchSheetGridBookButton: View {
+struct GridBookButton: View {
     
     let bookItem: briefBookInfo.Item
     
@@ -30,7 +30,7 @@ struct SearchSheetGridBookButton: View {
             isPresentingSearchBookView = true
         }
         .navigationDestination(isPresented: $isPresentingSearchBookView) {
-            SearchBookView(bookItem.isbn13, viewType: .navigationStack)
+            SearchBookView(bookItem.isbn13, type: .navigationStack)
             
         }
     }
@@ -57,5 +57,5 @@ struct SearchSheetGridBookButton: View {
 }
 
 #Preview {
-    SearchSheetGridBookButton(bookItem: .preview)
+    GridBookButton(bookItem: .preview)
 }

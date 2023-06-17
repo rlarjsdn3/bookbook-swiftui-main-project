@@ -25,19 +25,19 @@ struct SearchSheetScrollView: View {
     // MARK: - COMPUTED PROPERTIES
     
     // 선택된 도서 카테고리에 맞게 리스트를 필터링한 결과를 반환하는 프로퍼티
-    var filteredSearchItems: [briefBookInfo.Item] {
-        var list: [briefBookInfo.Item] = []
+    var filteredSearchBook: [briefBookInfo.Item] {
+        var filtered: [briefBookInfo.Item] = []
         
         if selectedCategory == .all {
             return aladinAPIManager.searchResults
         } else {
             for item in aladinAPIManager.searchResults
                 where item.categoryName.refinedCategory == selectedCategory {
-                list.append(item)
+                filtered.append(item)
             }
         }
         
-        return list
+        return filtered
     }
     
     // MARK: - BODY
@@ -65,20 +65,14 @@ extension SearchSheetScrollView {
             ScrollView {
                 switch selectedListMode {
                 case .grid:
-                    LazyVGrid(columns: [.init(.flexible()), .init(.flexible())], spacing: 25) {
-                        ForEach(filteredSearchItems, id: \.self) { book in
-                            SearchSheetGridBookButton(bookItem: book)
-                        }
-                    }
-                    .safeAreaPadding()
-                    .id("Scroll_To_Top")
+                    buttonGroupInGridMode
                 case .list:
-                    searchSheetCellButtons
+                    buttonGroupInListMode
                 }
                 
                 seeMoreButton
             }
-            .onChange(of: searchIndex) { _ in
+            .onChange(of: searchIndex) {
                 // 새로운 검색을 시도할 때만 도서 스크롤을 제일 위로 올립니다.
                 // '더 보기' 버튼을 클릭해도 도서 스크롤이 이동하지 않습니다.
                 if searchIndex == 1 {
@@ -87,7 +81,7 @@ extension SearchSheetScrollView {
                     }
                 }
             }
-            .onChange(of: selectedCategory) { _ in
+            .onChange(of: selectedCategory) {
                 withAnimation {
                     scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }
@@ -95,13 +89,23 @@ extension SearchSheetScrollView {
         }
     }
     
-    var searchSheetCellButtons: some View {
+    var buttonGroupInListMode: some View {
         LazyVStack {
-            ForEach(filteredSearchItems, id: \.self) { item in
-                SearchSheetListBookButton(item)
+            ForEach(filteredSearchBook, id: \.self) { book in
+                ListBookButton(book)
             }
-            .id("Scroll_To_Top")
         }
+        .id("Scroll_To_Top")
+    }
+    
+    var buttonGroupInGridMode: some View {
+        LazyVGrid(columns: [.init(.flexible()), .init(.flexible())], spacing: 25) {
+            ForEach(filteredSearchBook, id: \.self) { book in
+                GridBookButton(bookItem: book)
+            }
+        }
+        .safeAreaPadding()
+        .id("Scroll_To_Top")
     }
     
     var seeMoreButton: some View {

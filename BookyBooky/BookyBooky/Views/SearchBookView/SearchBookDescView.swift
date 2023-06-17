@@ -7,38 +7,38 @@
 
 import SwiftUI
 
-struct SearchBookIntroView: View {
+struct SearchBookDescView: View {
     
     // MARK: - PROPERTIES
     
-    let bookSearchInfo: detailBookInfo.Item
+    let bookInfo: detailBookInfo.Item
     @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ bookSearchInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
-        self.bookSearchInfo = bookSearchInfo
+    init(_ bookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+        self.bookInfo = bookInfo
         self._isLoadingCoverImage = isLoadingCoverImage
     }
     
     // MARK: - BODY
     
     var body: some View {
-        bookIntroLabel
+        bookDescriptionLabel
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension SearchBookIntroView {
-    var bookIntroLabel: some View {
+extension SearchBookDescView {
+    var bookDescriptionLabel: some View {
         VStack {
             HStack {
                 aboutBookText
                 
                 Spacer()
                 
-                bookLinkButton
+                moreLinkButton
             }
             .padding(.top, 5)
             .padding(.horizontal)
@@ -56,8 +56,8 @@ extension SearchBookIntroView {
             
     }
     
-    var bookLinkButton: some View {
-        Link(destination: URL(string: bookSearchInfo.link)!) {
+    var moreLinkButton: some View {
+        Link(destination: URL(string: bookInfo.link)!) {
             Text("자세히 보기")
         }
         .redacted(reason: isLoadingCoverImage ? .placeholder : [])
@@ -65,7 +65,7 @@ extension SearchBookIntroView {
     
     var bookDescText: some View {
         ScrollView(showsIndicators: false) {
-            Text(bookSearchInfo.description)
+            Text(bookInfo.description)
                 .multilineTextAlignment(.leading)
         }
         .padding(.horizontal)
@@ -76,7 +76,7 @@ extension SearchBookIntroView {
 
 struct SearchBookIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookIntroView(
+        SearchBookDescView(
             detailBookInfo.Item.preview,
             isLoadingCoverImage: .constant(false)
         )

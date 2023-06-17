@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 // 카테고리 정보를 더 쉽게 가져올 수 있도록 확장하기
 
