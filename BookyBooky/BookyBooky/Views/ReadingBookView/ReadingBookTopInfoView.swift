@@ -121,7 +121,7 @@ extension ReadingBookTopInfoView {
             Text(readingBook.author)
                 .font(.body.weight(.semibold))
             
-            Text("\(readingBook.publisher) ・ \(readingBook.category.rawValue)")
+            Text("\(readingBook.publisher) ・ \(readingBook.category.name)")
                 .font(.subheadline.weight(.semibold))
                 .foregroundColor(.secondary)
                 .lineLimit(1)

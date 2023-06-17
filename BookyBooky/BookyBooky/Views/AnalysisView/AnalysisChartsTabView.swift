@@ -111,7 +111,7 @@ extension AnalysisChartsTabView {
                             x: .value("pages", element.pages),
                             stacking: .normalized
                         )
-                        .foregroundStyle(by: .value("category", element.category.rawValue))
+                        .foregroundStyle(by: .value("category", element.category.name))
                     }
                     .frame(height: 50)
                     .padding(5)

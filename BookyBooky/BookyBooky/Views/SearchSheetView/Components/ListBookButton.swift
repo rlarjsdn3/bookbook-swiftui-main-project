@@ -136,7 +136,7 @@ extension ListBookButton {
 
 extension ListBookButton {
     var bookTitleText: some View {
-        Text(book.title.refinedTitle)
+        Text(book.bookTitle)
             .font(.title3)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -158,20 +158,14 @@ extension ListBookButton {
     }
     
     var bookAuthorText: some View {
-        Text(book.author.refinedAuthor)
+        Text(book.bookAuthor)
             .foregroundColor(.primary)
             .fontWeight(.bold)
     }
     
     var bookPublisherText: some View {
-        HStack(spacing: 2) {
-            Text(book.publisher)
-            
-            Text("・")
-            
-            Text(book.bookCategory.rawValue)
-        }
-        .fontWeight(.semibold)
+        Text("\(book.publisher) ・ \(book.bookCategory.name)")
+            .fontWeight(.semibold)
     }
     
     var bookPubDateText: some View {

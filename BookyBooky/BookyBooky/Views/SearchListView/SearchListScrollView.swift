@@ -81,7 +81,6 @@ extension SearchListScrollView {
             .safeAreaPadding(.top, 20)
             .safeAreaPadding(.horizontal)
             .safeAreaPadding(.bottom, 40)
-            .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
             .id("Scroll_To_Top")
         }
     }
@@ -92,6 +91,7 @@ extension SearchListScrollView {
                 SearchListBookButton(item)
             }
         }
+        .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
     }
     
     var networkErrorLabel: some View {

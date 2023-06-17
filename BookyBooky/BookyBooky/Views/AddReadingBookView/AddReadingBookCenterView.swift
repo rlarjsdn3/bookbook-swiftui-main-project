@@ -38,7 +38,7 @@ struct AddReadingBookCenterView: View {
         centerLabel
             .sheet(isPresented: $isPresentingDatePickerSheet) {
                 DatePickerSheetView(
-                    accentColor: bookInfo.bookCategory.themeColor,
+                    theme: bookInfo.bookCategory.themeColor,
                     selectedDate: $selectedDate)
             }
             .padding(.bottom, 40)

@@ -97,7 +97,7 @@ extension ActivityScrollView {
             
             Spacer()
             
-            Text("\(activity.completeBookCount))권")
+            Text("\(activity.completeBookCount)권")
                 .foregroundColor(Color.purple)
         }
     }
@@ -110,7 +110,7 @@ extension ActivityScrollView {
             Spacer()
             
             VStack(alignment: .trailing) {
-                Text("\(activity.averagePagesRead))페이지")
+                Text("\(activity.averagePagesRead)페이지")
                     .foregroundColor(Color.pink)
                 
                 Text("하루 평균 \(activity.averagePagesRead)페이지")

@@ -17,9 +17,7 @@ struct LottieBookView: UIViewRepresentable {
         return bookAnimation
     }
     
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        
-    }
+    func updateUIView(_ uiView: UIViewType, context: Context) { }
 }
 
 struct LottieView_Previews: PreviewProvider {

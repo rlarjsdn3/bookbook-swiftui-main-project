@@ -84,7 +84,7 @@ struct TotalPagesCountByCategoryChartView: View {
                         let frame = geometry[chartProxy.plotAreaFrame]
                         VStack {
                             if let selectedStyle = selectedStyle {
-                                Text(selectedStyle.category.rawValue)
+                                Text(selectedStyle.category.name)
                                     .font(.caption)
                                     .foregroundStyle(Color.secondary)
                                 Text("\(selectedStyle.pages)페이지")
@@ -122,7 +122,7 @@ struct TotalPagesCountByCategoryChartView: View {
                     ForEach(chartData) { element in
                         VStack(spacing: 0) {
                             HStack(alignment: .firstTextBaseline, spacing: 3) {
-                                Text(element.category.rawValue)
+                                Text(element.category.name)
                                 
                                 Spacer()
                                 

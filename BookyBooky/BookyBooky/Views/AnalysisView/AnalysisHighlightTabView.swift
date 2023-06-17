@@ -290,7 +290,7 @@ extension AnalysisHighlightTabView {
                         .font(.caption)
                         .foregroundColor(Color.gray)
                     if !chartData.isEmpty {
-                        Text("\(chartData[0].category.rawValue)")
+                        Text("\(chartData[0].category.name)")
                             .font(.title2.weight(.bold))
                             .foregroundColor(chartData[0].category.themeColor)
                             .lineLimit(1)

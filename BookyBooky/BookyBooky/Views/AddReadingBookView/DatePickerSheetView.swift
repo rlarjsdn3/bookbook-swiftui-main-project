@@ -13,18 +13,17 @@ struct DatePickerSheetView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State private var inputDate: Date = Date()
+    
     // MARK: - PROPERTIES
     
-    let accentColor: Color
+    let theme: Color
     @Binding var selectedDate: Date
     
-    @State private var selectedDateInSheet: Date
     
-    init(accentColor: Color, selectedDate: Binding<Date>) {
-        self.accentColor = accentColor
+    init(theme: Color, selectedDate: Binding<Date>) {
+        self.theme = theme
         self._selectedDate = selectedDate
-        
-        self._selectedDateInSheet = State(initialValue: selectedDate.wrappedValue)
     }
     
     // MARK: - BODY
@@ -32,23 +31,25 @@ struct DatePickerSheetView: View {
     var body: some View {
         VStack {
             DatePicker(
-                    "DatePicker",
-                    selection: $selectedDateInSheet,
-                    in: Date()...Date(timeIntervalSinceNow: 365 * 86_400),
-                    displayedComponents: [.date]).datePickerStyle(.graphical
-                )
-                .tint(accentColor)
-                .labelsHidden()
-                .environment(\.locale, Locale(identifier: "ko"))
-                .padding()
+                "DatePicker",
+                selection: $inputDate,
+                in: Date(timeIntervalSinceNow: 86_400)...Date(timeIntervalSinceNow: 365 * 86_400),
+                displayedComponents: [.date]).datePickerStyle(.graphical
+            )
+            .tint(theme)
+            .labelsHidden()
+            .padding()
             
             Button {
-                selectedDate = selectedDateInSheet
+                selectedDate = inputDate
                 dismiss()
             } label: {
                 Text("적용하기")
             }
-            .buttonStyle(BottomButtonStyle(backgroundColor: accentColor))
+            .buttonStyle(BottomButtonStyle(backgroundColor: theme))
+        }
+        .onAppear {
+            self.inputDate = selectedDate
         }
         .presentationCornerRadius(30)
         .presentationDetents([.height(420)])
@@ -56,14 +57,13 @@ struct DatePickerSheetView: View {
     }
 }
 
-// MARK: - EXTENSIONS
-
-
-
 // MARK: - PREVIEW
 
 struct DatePickerSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        DatePickerSheetView(accentColor: Color.black, selectedDate: .constant(Date()))
+        DatePickerSheetView(
+            theme: Color.black,
+            selectedDate: .constant(Date())
+        )
     }
 }
