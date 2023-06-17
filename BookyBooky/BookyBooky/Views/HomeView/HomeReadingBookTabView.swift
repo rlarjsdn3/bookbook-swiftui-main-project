@@ -76,17 +76,17 @@ struct HomeReadingBookTabView: View {
 extension HomeReadingBookTabView {
     var readingBookTab: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
-            readingBookTabTitle
+            tabTitle
             
             Section {
-                readingBookTabContent
+                tabContent
             } header: {
                 categoryButtonGroup(scrollProxy: scrollProxy)
             }
         }
     }
     
-    var readingBookTabTitle: some View {
+    var tabTitle: some View {
         HStack {
             headlineText
             
@@ -147,19 +147,19 @@ extension HomeReadingBookTabView {
         }
     }
     
-    var readingBookTabContent: some View {
+    var tabContent: some View {
         Group {
             let readingBook = readingBooks.get(.unfinished)
             
             if readingBook.isEmpty {
-                noBookIsBeingReadLabel
+                noReadingBookLabel
             } else {
                 readingBookButtonGroup
             }
         }
     }
     
-    var noBookIsBeingReadLabel: some View {
+    var noReadingBookLabel: some View {
         VStack(spacing: 5) {
             Text("읽고 있는 도서가 없음")
                 .font(.title3)

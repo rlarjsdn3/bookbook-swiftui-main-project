@@ -60,7 +60,7 @@ extension ActivityScrollView {
                             activityButtonGroup(activity)
                         }
                     } header: {
-                        dateText(activity.month)
+                        dateHeaderText(activity.month)
                     }
                 }
             }
@@ -129,7 +129,7 @@ extension ActivityScrollView {
         .padding(.bottom, 20)
     }
     
-    func dateText(_ date: Date) -> some View {
+    func dateHeaderText(_ date: Date) -> some View {
         Text(date.toFormat("yyyy년 M월"))
             .font(.headline.weight(.bold))
             .frame(maxWidth: .infinity, alignment: .leading)

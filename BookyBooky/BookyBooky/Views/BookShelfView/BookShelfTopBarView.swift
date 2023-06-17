@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BookShelfHeaderView: View {
+struct BookShelfTopBarView: View {
     
     // MARKL - WRAPPER PROPERTIES
     
@@ -16,7 +16,7 @@ struct BookShelfHeaderView: View {
     // MARK: - BODY
     
     var body: some View {
-        navigationBar
+        navigationTopBar
             .fullScreenCover(isPresented: $isPresentingCollectSenetenceView) {
                 BookShelfSentenceView()
             }
@@ -25,27 +25,27 @@ struct BookShelfHeaderView: View {
 
 // MARK: - EXTENSIONS
 
-extension BookShelfHeaderView {
-    var navigationBar: some View {
+extension BookShelfTopBarView {
+    var navigationTopBar: some View {
         HStack {
             Spacer()
             
-            navigationBarTitle
+            navigationTopBarTitle
             
             Spacer()
         }
         .overlay(alignment: .trailing) {
-            navigationBarButtons
+            navigationTopBarButtonGroup
         }
         .padding(.vertical)
     }
     
-    var navigationBarTitle: some View {
+    var navigationTopBarTitle: some View {
         Text("책장")
             .navigationTitleStyle()
     }
     
-    var navigationBarButtons: some View {
+    var navigationTopBarButtonGroup: some View {
         Button {
             isPresentingCollectSenetenceView = true
         } label: {
@@ -59,6 +59,6 @@ extension BookShelfHeaderView {
 
 struct BookShelfHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        BookShelfHeaderView()
+        BookShelfTopBarView()
     }
 }

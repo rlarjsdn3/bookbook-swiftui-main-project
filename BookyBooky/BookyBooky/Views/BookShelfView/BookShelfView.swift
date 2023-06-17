@@ -12,14 +12,14 @@ struct BookShelfView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var scrollYOffset: Double = 0.0
+    @State private var scrollYOffset: CGFloat = 0.0
     
     // MARK: - BODY
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                BookShelfHeaderView()
+                BookShelfTopBarView()
                 
                 BookShelfScrollView($scrollYOffset)
             }
