@@ -57,6 +57,10 @@ extension detailBookInfo.Item {
     var bookPubDate: Date {
         return pubDate.refinedPublishDate
     }
+    
+    var bookDescription: String {
+        return self.description.isEmpty ? "(설명 없음)" : description
+    }
 }
 
 extension detailBookInfo.Item {

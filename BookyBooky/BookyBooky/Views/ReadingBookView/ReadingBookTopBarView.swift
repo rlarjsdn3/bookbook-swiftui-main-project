@@ -65,6 +65,10 @@ extension ReadingBookTopBarView {
             navigationTopBarButtonGroup
         }
         .padding(.vertical)
+        .overlay(alignment: .bottom) {
+            Divider()
+                .opacity(scrollYOffset > 10.0 ? 1 : 0)
+        }
     }
     
     var navigationTopBarTitle: some View {

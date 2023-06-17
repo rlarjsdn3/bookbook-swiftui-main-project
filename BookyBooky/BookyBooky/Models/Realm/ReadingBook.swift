@@ -17,7 +17,7 @@ class ReadingBook: Object, ObjectKeyIdentifiable {
     @Persisted var cover: String                    // 표지(링크)
     @Persisted var itemPage: Int                    // 페이지 쪽 수
     @Persisted var category: Category               // 카테고리
-    @Persisted var introduction: String              // 상품 설명
+    @Persisted var desc: String                     // 상품 설명
     @Persisted var link: String                     // 상품 페이지 링크
     @Persisted var isbn13: String                   // ISBN-13
     
@@ -81,6 +81,10 @@ extension ReadingBook {
         case .orderedDescending:
             return true // True 반환
         }
+    }
+    
+    var bookDescription: String {
+        return self.desc.isEmpty ? "(설명 없음)" : description
     }
 }
 

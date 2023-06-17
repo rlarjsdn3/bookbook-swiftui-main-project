@@ -129,6 +129,7 @@ extension ReadingBookDataSheetView {
             
             deleteAllRecordButton
         }
+        .disabled(readingBook.isComplete)
         .disabled(readingBook.readingRecords.isEmpty)
     }
     

@@ -24,14 +24,14 @@ struct SearchBookDescView: View {
     // MARK: - BODY
     
     var body: some View {
-        bookDescriptionLabel
+        bookDescLabel
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchBookDescView {
-    var bookDescriptionLabel: some View {
+    var bookDescLabel: some View {
         VStack {
             HStack {
                 aboutBookText
@@ -57,16 +57,21 @@ extension SearchBookDescView {
     }
     
     var moreLinkButton: some View {
-        Link(destination: URL(string: bookInfo.link)!) {
-            Text("자세히 보기")
+        Group {
+            if let url = URL(string: bookInfo.link) {
+                Link(destination: url) {
+                    Text("자세히 보기")
+                }
+            }
         }
         .redacted(reason: isLoadingCoverImage ? .placeholder : [])
     }
     
     var bookDescText: some View {
         ScrollView(showsIndicators: false) {
-            Text(bookInfo.description)
+            Text(bookInfo.bookDescription)
                 .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.horizontal)
     }

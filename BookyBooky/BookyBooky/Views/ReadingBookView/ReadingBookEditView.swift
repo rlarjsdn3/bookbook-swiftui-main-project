@@ -112,7 +112,8 @@ extension ReadingBookEditView {
             
             Picker("Category Picker", selection: $inputCategory) {
                 ForEach(Category.allCases, id: \.self) { category in
-                    Text(category.rawValue)
+                    Text(category.name)
+                        .tag(category.name)
                 }
             }
         }
@@ -132,11 +133,10 @@ extension ReadingBookEditView {
             DatePicker(
                     "DatePicker",
                     selection: $inputTargetDate,
-                    in: Date()...(Calendar.current.date(byAdding: .day, value: 365, to: Date())!),
+                    in: Date(timeIntervalSinceNow: 86400)...(Calendar.current.date(byAdding: .day, value: 365, to: Date())!),
                     displayedComponents: [.date])
                 .datePickerStyle(.compact)
                 .labelsHidden()
-                .environment(\.locale, Locale(identifier: "ko"))
                 .tint(readingBook.category.themeColor)
                 .padding(.horizontal, 3)
         }

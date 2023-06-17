@@ -30,7 +30,7 @@ extension ReadingBookOutlineView {
             
             Divider()
             
-            aboutBookLabel
+            bookDescLabel
             
             dbProviderLabel
         }
@@ -125,26 +125,41 @@ extension ReadingBookOutlineView {
         .padding(.vertical, 10)
     }
     
-    var aboutBookLabel: some View {
+    var bookDescLabel: some View {
         VStack {
             HStack {
-                Text("이 책에 관하여")
-                    .font(.title3.weight(.bold))
+                aboutBookText
                 
                 Spacer()
                 
-                if let url = URL(string: readingBook.link) {
-                    Link("자세히 보기", destination: url)
-                }
+                moreLinkButton
             }
-            .padding([.top, .bottom], 3)
+            .padding(.vertical, 3)
             .padding(.horizontal)
             
-            Text(readingBook.introduction)
-                .multilineTextAlignment(.leading)
-                .padding(.horizontal)
+            bookDescText
         }
         .padding(.bottom, 20)
+    }
+    
+    var aboutBookText: some View {
+        Text("이 책에 관하여")
+            .font(.title3.weight(.bold))
+    }
+    
+    var moreLinkButton: some View {
+        Group {
+            if let url = URL(string: readingBook.link) {
+                Link("자세히 보기", destination: url)
+            }
+        }
+    }
+    
+    var bookDescText: some View {
+        Text(readingBook.bookDescription)
+            .multilineTextAlignment(.leading)
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     var dbProviderLabel: some View {

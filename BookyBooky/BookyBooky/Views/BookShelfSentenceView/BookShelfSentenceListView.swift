@@ -50,24 +50,43 @@ struct BookShelfSentenceListView: View {
     
     
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                ForEach(filteredCollectSentence) { readingBook in
-                    if !readingBook.collectSentences.isEmpty {
-                        Section {
-                            VStack {
-                                ForEach(readingBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
-                                    SentenceButton(readingBook, collectSentence: collect)
+        Group {
+            let filteredSentece = filteredCollectSentence
+            
+            if filteredSentece.isEmpty {
+                VStack(spacing: 5) {
+                    Spacer()
+                    
+                    Text("수집한 문장이 없음")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                    
+                    Text("문장을 수집해보세요.")
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                }
+            } else {
+                ScrollView {
+                    LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                        ForEach(filteredCollectSentence) { readingBook in
+                            if !readingBook.collectSentences.isEmpty {
+                                Section {
+                                    VStack {
+                                        ForEach(readingBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
+                                            SentenceButton(readingBook, collectSentence: collect)
+                                        }
+                                    }
+                                } header: {
+                                    Text(readingBook.title)
+                                        .font(.title3.weight(.bold))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .lineLimit(1)
+                                        .truncationMode(.middle)
+                                        .padding([.horizontal, .top, .bottom])
+                                        .background(Color.white)
                                 }
                             }
-                        } header: {
-                            Text(readingBook.title)
-                                .font(.title3.weight(.bold))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .lineLimit(1)
-                                .truncationMode(.middle)
-                                .padding([.horizontal, .top, .bottom])
-                                .background(Color.white)
                         }
                     }
                 }
