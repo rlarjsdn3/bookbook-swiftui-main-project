@@ -21,7 +21,7 @@ struct BookShelfFavBookTabView: View {
     var body: some View {
         favBookTab
             .sheet(isPresented: $isPresentingFavoriteBookListView) {
-                BookShelfListView(viewType: .favorite)
+                BookShelfListView(type: .favorite)
             }
     }
 }
@@ -47,7 +47,7 @@ extension BookShelfFavBookTabView {
                 let recent10FavBooks = favoriteBooks.reversed().prefix(min(10, favoriteBooks.count))
                 
                 ForEach(recent10FavBooks) { book in
-                    FavoriteBookCellButton(book, viewType: .sheet)
+                    FavBookButton(book, type: .sheet)
                 }
             }
             .padding(.top, 26)

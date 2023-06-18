@@ -40,7 +40,7 @@ extension RealmManager {
     
     /// 완독 목표 도서를 추가합니다.
     /// - Parameter object: 추가할 완독 목표 도서 객체
-    func addReadingBook(_ object: ReadingBook) {
+    func addReadingBook(_ object: CompleteBook) {
         try! realm.write {
             realm.add(object)
         }
@@ -50,8 +50,8 @@ extension RealmManager {
     
     /// 완독 목표 도서를 삭제합니다.
     /// - Parameter object: 삭제할 완독 목표 도서 객체
-    func deleteReadingBook(_ object: ReadingBook) {
-        guard let object = realm.objects(ReadingBook.self)
+    func deleteReadingBook(_ object: CompleteBook) {
+        guard let object = realm.objects(CompleteBook.self)
             .findFirst(isbn13: object.isbn13) else {
             return
         }
@@ -67,8 +67,8 @@ extension RealmManager {
     /// - Parameters:
     ///   - readingBook: 독서 기록을 추가할 읽고 있는 도서 객체
     ///   - totalPagesRead: 읽은 총 페이지 수
-    func addReadingBookRecord(_ readingBook: ReadingBook, totalPagesRead: Int) {
-        guard let object = realm.objects(ReadingBook.self)
+    func addReadingBookRecord(_ readingBook: CompleteBook, totalPagesRead: Int) {
+        guard let object = realm.objects(CompleteBook.self)
             .findFirst(isbn13: readingBook.isbn13) else {
             return
         }
@@ -122,8 +122,8 @@ extension RealmManager {
     
     /// 도서를 완독했는지 검사하는 함수입니다.
     /// - Parameter readingBook: 읽고 있는 도서 객체
-    private func checkReadingBookComplete(_ readingBook: ReadingBook) {
-        guard let object = realm.objects(ReadingBook.self)
+    private func checkReadingBookComplete(_ readingBook: CompleteBook) {
+        guard let object = realm.objects(CompleteBook.self)
             .filter({ $0.isbn13 == readingBook.isbn13 }).first else {
             return
         }
@@ -139,8 +139,8 @@ extension RealmManager {
     
     /// 읽고 있는 도서의 마지막 독서 기록을 삭제합니다.
     /// - Parameter book: 읽고 있는 도서 객체
-    func deleteLastRecord(_ readingBook: ReadingBook) {
-        if let object = realm.objects(ReadingBook.self)
+    func deleteLastRecord(_ readingBook: CompleteBook) {
+        if let object = realm.objects(CompleteBook.self)
             .filter({ $0.isbn13 == readingBook.isbn13 }).first {
             try! realm.write {
                 object.readingRecords.remove(at: object.readingRecords.endIndex - 1)
@@ -151,8 +151,8 @@ extension RealmManager {
     
     /// 읽고 있는 도서의 전체 독서 기록을 삭제합니다.
     /// - Parameter book: 읽고 있는 도서 객체
-    func deleteAllRecord(_ book: ReadingBook) {
-        if let object = realm.objects(ReadingBook.self)
+    func deleteAllRecord(_ book: CompleteBook) {
+        if let object = realm.objects(CompleteBook.self)
             .filter({ $0.isbn13 == book.isbn13 }).first {
             try! realm.write {
                 object.readingRecords.removeAll()
@@ -160,8 +160,8 @@ extension RealmManager {
         }
     }
     
-    func editReadingBook(_ book: ReadingBook, title: String, publisher: String, category: Category, targetDate: Date) {
-        guard let object = realm.object(ofType: ReadingBook.self, forPrimaryKey: book._id) else { return }
+    func editReadingBook(_ book: CompleteBook, title: String, publisher: String, category: Category, targetDate: Date) {
+        guard let object = realm.object(ofType: CompleteBook.self, forPrimaryKey: book._id) else { return }
           
         try! realm.write {
             object.title = title
@@ -209,8 +209,8 @@ extension RealmManager {
 }
 
 extension RealmManager {
-    func addSentence(_ readingBook: ReadingBook, sentence: String, page: Int) {
-        guard let object = realm.objects(ReadingBook.self)
+    func addSentence(_ readingBook: CompleteBook, sentence: String, page: Int) {
+        guard let object = realm.objects(CompleteBook.self)
             .findFirst(isbn13: readingBook.isbn13) else {
             return
         }
@@ -228,8 +228,8 @@ extension RealmManager {
         isPresentingAddSentenceSuccessToastAlert = true
     }
     
-    func modifySentence(_ readingBook: ReadingBook, id: ObjectId, sentence: String, page: Int) {
-        guard let object = realm.objects(ReadingBook.self)
+    func modifySentence(_ readingBook: CompleteBook, id: ObjectId, sentence: String, page: Int) {
+        guard let object = realm.objects(CompleteBook.self)
             .findFirst(isbn13: readingBook.isbn13) else {
             return
         }
@@ -246,8 +246,8 @@ extension RealmManager {
         }
     }
     
-    func deleteSentence(_ readingBook: ReadingBook, id: ObjectId) {
-        guard let object = realm.objects(ReadingBook.self)
+    func deleteSentence(_ readingBook: CompleteBook, id: ObjectId) {
+        guard let object = realm.objects(CompleteBook.self)
             .findFirst(isbn13: readingBook.isbn13) else {
             return
         }

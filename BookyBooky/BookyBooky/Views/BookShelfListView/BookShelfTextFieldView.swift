@@ -25,8 +25,10 @@ struct BookShelfTextFieldView: View {
     
     // MARK: - INTALIZER
     
-    init(inputQuery: Binding<String>, searchQuery: Binding<String>,
-         selectedSortType: Binding<BookSortCriteria>, isPresentingShowAllButton: Binding<Bool>,
+    init(inputQuery: Binding<String>,
+         searchQuery: Binding<String>,
+         selectedSortType: Binding<BookSortCriteria>,
+         isPresentingShowAllButton: Binding<Bool>,
          scrollProxy: ScrollViewProxy) {
         self._inputQuery = inputQuery
         self._searchQuery = searchQuery
@@ -38,28 +40,28 @@ struct BookShelfTextFieldView: View {
     // MARK: - BODY
     
     var body: some View {
-            bookShelfTextField
+            textFieldArea
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookShelfTextFieldView {
-    var bookShelfTextField: some View {
+    var textFieldArea: some View {
         HStack {
-            bookSortMenu
+            utilMenu
             
-            searchTextField
+            inputField
             
-            dismissButton
+            backButton
         }
         .padding()
     }
     
-    var bookSortMenu: some View {
+    var utilMenu: some View {
         Menu {
             Section {
-                sortButtons
+                sortButtonGroup
             } header: {
                 Text("도서 정렬")
             }
@@ -68,7 +70,7 @@ extension BookShelfTextFieldView {
         }
     }
     
-    var sortButtons: some View {
+    var sortButtonGroup: some View {
         ForEach(BookSortCriteria.allCases) { criteria in
             Button {
                 // 버튼을 클릭하면
@@ -108,14 +110,14 @@ extension BookShelfTextFieldView {
 }
 
 extension BookShelfTextFieldView {
-    var searchTextField: some View {
+    var inputField: some View {
         HStack {
             magnifyingGlassSFSymbolImage
             
-            searchInputField
+            textField
             
             if !inputQuery.isEmpty {
-                inputEraseButton
+                eraseButton
             }
         }
         .padding(.horizontal, 10)
@@ -128,7 +130,7 @@ extension BookShelfTextFieldView {
             .foregroundColor(.gray)
     }
     
-    var searchInputField: some View {
+    var textField: some View {
         TextField("제목 / 저자 검색", text: $inputQuery)
             .frame(height: 45)
             .submitLabel(.search)
@@ -154,7 +156,7 @@ extension BookShelfTextFieldView {
             .focused($focusedField)
     }
     
-    var inputEraseButton: some View {
+    var eraseButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                 inputQuery.removeAll()
@@ -174,7 +176,7 @@ extension BookShelfTextFieldView {
 }
 
 extension BookShelfTextFieldView {
-    var dismissButton: some View {
+    var backButton: some View {
         Button {
             dismiss()
         } label: {

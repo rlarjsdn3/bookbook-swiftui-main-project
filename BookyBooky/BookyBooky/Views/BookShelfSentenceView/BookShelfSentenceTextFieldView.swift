@@ -8,11 +8,6 @@
 import SwiftUI
 import RealmSwift
 
-enum SentenceSortCriteriaType: String, CaseIterable {
-    case titleAscending = "제목 오름차순"
-    case titleDescending = "제목 내림차순"
-}
-
 struct BookShelfSentenceTextFieldView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -27,16 +22,19 @@ struct BookShelfSentenceTextFieldView: View {
     
     @Binding var inputQuery: String
     @Binding var searchQuery: String
-    @Binding var selectedSortType: SentenceSortCriteriaType
+    @Binding var selectedSortType: SentenceSortCriteria
     @Binding var selectedFilter: [String]
     @Binding var isPresentingShowAllButton: Bool
     let scrollProxy: ScrollViewProxy
     
     // MARK: - INTALIZER
     
-    init(inputQuery: Binding<String>, searchQuery: Binding<String>,
-         selectedSortType: Binding<SentenceSortCriteriaType>, selectedFilter: Binding<[String]>,
-         isPresentingShowAllButton: Binding<Bool>, scrollProxy: ScrollViewProxy) {
+    init(inputQuery: Binding<String>,
+         searchQuery: Binding<String>,
+         selectedSortType: Binding<SentenceSortCriteria>,
+         selectedFilter: Binding<[String]>,
+         isPresentingShowAllButton: Binding<Bool>,
+         scrollProxy: ScrollViewProxy) {
         self._inputQuery = inputQuery
         self._searchQuery = searchQuery
         self._selectedSortType = selectedSortType
@@ -91,7 +89,7 @@ extension BookShelfSentenceTextFieldView {
     }
     
     var sortButtons: some View {
-        ForEach(SentenceSortCriteriaType.allCases, id: \.self) { sort in
+        ForEach(SentenceSortCriteria.allCases, id: \.self) { sort in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {

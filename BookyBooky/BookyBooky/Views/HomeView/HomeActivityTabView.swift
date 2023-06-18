@@ -14,7 +14,7 @@ struct HomeActivityTabView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     // MARK: - BODY
     

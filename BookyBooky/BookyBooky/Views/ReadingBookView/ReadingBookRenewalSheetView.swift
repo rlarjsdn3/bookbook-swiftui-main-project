@@ -19,12 +19,12 @@ struct ReadingBookRenewalSheetView: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: CompleteBook
     @Binding var isPresentingReadingBookConfettiView: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook, isPresentingReadingBookConfettiView: Binding<Bool>) {
+    init(_ readingBook: CompleteBook, isPresentingReadingBookConfettiView: Binding<Bool>) {
         self.readingBook = readingBook
         self._isPresentingReadingBookConfettiView = isPresentingReadingBookConfettiView
     }
@@ -160,7 +160,7 @@ extension ReadingBookRenewalSheetView {
 struct ReadingBookRenewalSheetView_Previews: PreviewProvider {
     static var previews: some View {
         ReadingBookRenewalSheetView(
-            ReadingBook.preview,
+            CompleteBook.preview,
             isPresentingReadingBookConfettiView: .constant(false)
         )
         .environmentObject(RealmManager())

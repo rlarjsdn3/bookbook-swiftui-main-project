@@ -13,7 +13,7 @@ struct AnalysisScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @State private var startOffset: CGFloat = 0.0
     

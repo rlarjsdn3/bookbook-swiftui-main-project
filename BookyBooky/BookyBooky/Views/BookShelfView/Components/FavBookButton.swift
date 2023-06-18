@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct FavoriteBookCellButton: View {
+struct FavBookButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -18,47 +18,46 @@ struct FavoriteBookCellButton: View {
     
     // MARK: - PROPERTIES
     
-    let favoriteBook: FavoriteBook
-    let viewType: SearchBookViewType
+    let favBook: FavoriteBook
+    let type: ViewFromType
     
     // MARK: - INTIALIZER
     
-    init(_ favoriteBook: FavoriteBook, viewType: SearchBookViewType) {
-        self.favoriteBook = favoriteBook
-        self.viewType = viewType
+    init(_ favBook: FavoriteBook, type: ViewFromType) {
+        self.favBook = favBook
+        self.type = type
     }
-    
     
     // MARK: - BODY
     
     var body: some View {
-        favoriteBookCellButton
+        favBookButton
             .sheet(isPresented: $isPresentingSearchBookViewFromSheet) {
-                SearchBookView(favoriteBook.isbn13, type: .sheet)
+                SearchBookView(favBook.isbn13, type: .sheet)
             }
             .navigationDestination(isPresented: $isPresentingSearchBookViewFromNavigation) {
-                SearchBookView(favoriteBook.isbn13, type: .navigationStack)
+                SearchBookView(favBook.isbn13, type: .navigationStack)
             }
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension FavoriteBookCellButton {
-    var favoriteBookCellButton: some View {
+extension FavBookButton {
+    var favBookButton: some View {
         VStack {
             asyncCoverImage(
-                favoriteBook.cover,
+                favBook.cover,
                 width: 150, height: 200
             )
             .onAppear {
                 isLoadingCoverImage = false
             }
             
-            favoriteBookInfoLabel
+            InfoLabel
         }
         .onTapGesture {
-            switch viewType {
+            switch type {
             case .sheet:
                 isPresentingSearchBookViewFromSheet = true
             case .navigation:
@@ -67,16 +66,16 @@ extension FavoriteBookCellButton {
         }
     }
     
-    var favoriteBookInfoLabel: some View {
+    var InfoLabel: some View {
         VStack {
-            favoriteBookTitleText
+            bookTitleText
             
-            favoriteBookAuthorText
+            bookAuthorText
         }
     }
     
-    var favoriteBookTitleText: some View {
-        Text(favoriteBook.title)
+    var bookTitleText: some View {
+        Text(favBook.title)
             .font(.headline)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -88,8 +87,8 @@ extension FavoriteBookCellButton {
             .shimmering(active: isLoadingCoverImage)
     }
     
-    var favoriteBookAuthorText: some View {
-        Text(favoriteBook.author)
+    var bookAuthorText: some View {
+        Text(favBook.author)
             .font(.subheadline)
             .foregroundColor(.secondary)
             .lineLimit(1)
@@ -103,6 +102,6 @@ extension FavoriteBookCellButton {
 
 struct FavoriteBookCellView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteBookCellButton(FavoriteBook.preview, viewType: .sheet)
+        FavBookButton(FavoriteBook.preview, type: .sheet)
     }
 }

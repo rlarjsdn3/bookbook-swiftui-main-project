@@ -19,12 +19,12 @@ struct ReadingBookBottomTabView: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: CompleteBook
     @Binding var scrollYOffset: CGFloat
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook, scrollYOffset: Binding<CGFloat>) {
+    init(_ readingBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
         self.readingBook = readingBook
         self._scrollYOffset = scrollYOffset
     }
@@ -86,7 +86,7 @@ extension ReadingBookBottomTabView {
 struct ReadingBookTabSectionView_Previews: PreviewProvider {    
     static var previews: some View {
         ReadingBookBottomTabView(
-            ReadingBook.preview,
+            CompleteBook.preview,
             scrollYOffset: .constant(0.0)
         )
     }

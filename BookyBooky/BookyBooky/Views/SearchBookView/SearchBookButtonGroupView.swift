@@ -13,7 +13,7 @@ struct SearchBookButtonGroupView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @State private var isPresentingAddReadingBookView = false
     

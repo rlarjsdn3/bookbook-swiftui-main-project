@@ -14,19 +14,19 @@ struct BookShelfListScrollView: View {
     
     @EnvironmentObject var realmMananger: RealmManager
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     // MARK: - COMPUTED PROPERTIES
     
-    var filteredCompleteBooks: [ReadingBook] {
+    var filteredCompBooks: [CompleteBook] {
         readingBooks.getFilteredReadingBooks(
             .complete,
             searchQuery: searchQuery, bookSortType: selectedSortType
         )
     }
     
-    var filteredFavoriteBooks: [FavoriteBook] {
+    var filteredFavBooks: [FavoriteBook] {
         favoriteBooks.getFilteredFavoriteBooks(
             searchQuery: searchQuery,
             bookSortType: selectedSortType
@@ -42,56 +42,57 @@ struct BookShelfListScrollView: View {
     
     @Binding var searchQuery: String
     @Binding var selectedSortType: BookSortCriteria
-    let viewType: BookShelfListViewType
+    let type: BookShelfListViewType
     
     // MARK: - INITIALIZER
     
-    init(searchQuery: Binding<String>, selectedSortType: Binding<BookSortCriteria>,
-         viewType: BookShelfListViewType) {
+    init(searchQuery: Binding<String>,
+         selectedSortType: Binding<BookSortCriteria>,
+         type: BookShelfListViewType) {
         self._searchQuery = searchQuery
         self._selectedSortType = selectedSortType
-        self.viewType = viewType
+        self.type = type
     }
     
     // MARK: - BODY
     
     var body: some View {
-        bookShelfList
+        bookScrollContent
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookShelfListScrollView {
-    var bookShelfList: some View {
+    var bookScrollContent: some View {
         Group {
-            switch viewType {
+            switch type {
             case .complete:
-                if filteredCompleteBooks.isEmpty {
+                if filteredCompBooks.isEmpty {
                     noResultLabel
                 } else {
-                    scrollBooks
+                    bookButtonGroup
                 }
             case .favorite:
-                if filteredFavoriteBooks.isEmpty {
+                if filteredFavBooks.isEmpty {
                     noResultLabel
                 } else {
-                    scrollBooks
+                    bookButtonGroup
                 }
             }
         }
     }
     
-    var scrollBooks: some View {
+    var bookButtonGroup: some View {
         ScrollView {
             LazyVGrid(columns: coulmns, spacing: 15) {
-                switch viewType {
+                switch type {
                 case .favorite:
-                    ForEach(filteredFavoriteBooks) { favoriteBook in
-                        FavoriteBookCellButton(favoriteBook, viewType: .navigation)
+                    ForEach(filteredFavBooks) { favoriteBook in
+                        FavBookButton(favoriteBook, type: .navigation)
                     }
                 case .complete:
-                    ForEach(filteredCompleteBooks, id: \.self) { completeBook in
+                    ForEach(filteredCompBooks, id: \.self) { completeBook in
                         ReadingBookButton(completeBook, type: .shelf)
                     }
                 }
@@ -100,9 +101,7 @@ extension BookShelfListScrollView {
             .id("Scroll_To_Top")
         }
     }
-}
-
-extension BookShelfListScrollView {
+    
     var noResultLabel: some View {
         VStack {
             VStack {
@@ -128,7 +127,7 @@ struct FavoriteBooksScrollView_Previews: PreviewProvider {
         BookShelfListScrollView(
             searchQuery: .constant(""),
             selectedSortType: .constant(.titleAscendingOrder),
-            viewType: .favorite
+            type: .favorite
         )
         .environmentObject(RealmManager())
     }

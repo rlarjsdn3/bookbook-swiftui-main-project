@@ -19,11 +19,11 @@ struct ReadingBookDataSheetView: View {
     
     // MARK: - PROPERTIES
     
-    let readingBook: ReadingBook
+    let readingBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook) {
+    init(_ readingBook: CompleteBook) {
         self.readingBook = readingBook
     }
     
@@ -156,7 +156,7 @@ extension ReadingBookDataSheetView {
 
 struct ReadingDataSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookDataSheetView(ReadingBook.preview)
+        ReadingBookDataSheetView(CompleteBook.preview)
             .environmentObject(RealmManager())
     }
 }

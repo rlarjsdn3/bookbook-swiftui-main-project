@@ -19,11 +19,11 @@ struct ReadingBookTopInfoView: View {
    
     // MARK: - PROPERTIES
     
-    let readingBook: ReadingBook
+    let readingBook: CompleteBook
     
     // MARK: - INITIALIZER
     
-    init(_ readingBook: ReadingBook) {
+    init(_ readingBook: CompleteBook) {
         self.readingBook = readingBook
     }
     
@@ -240,7 +240,7 @@ extension ReadingBookTopInfoView {
 
 struct ReadingBookInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookTopInfoView(ReadingBook.preview)
+        ReadingBookTopInfoView(CompleteBook.preview)
             .environmentObject(RealmManager())
     }
 }

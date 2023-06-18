@@ -11,7 +11,7 @@ import Shimmer
 
 struct ReadingBookCollectSentencesView: View {
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: CompleteBook
     
     var body: some View {
         if readingBook.collectSentences.isEmpty {
@@ -47,6 +47,6 @@ extension ReadingBookCollectSentencesView {
 
 struct ReadingBookCollectSentencesView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookCollectSentencesView(readingBook: ReadingBook.preview)
+        ReadingBookCollectSentencesView(readingBook: CompleteBook.preview)
     }
 }

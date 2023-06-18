@@ -20,10 +20,10 @@ struct SentenceButton: View {
     @State private var isPresentingModifySentenceSheetView = false
     @State private var isPresentingDeleteConfirmationDialog = false
     
-    let readingBook: ReadingBook
+    let readingBook: CompleteBook
     let collectSentence: CollectSentences
     
-    init(_ readingBook: ReadingBook, collectSentence: CollectSentences) {
+    init(_ readingBook: CompleteBook, collectSentence: CollectSentences) {
         self.readingBook = readingBook
         self.collectSentence = collectSentence
     }
@@ -103,7 +103,7 @@ extension SentenceButton {
 struct SentenceCellButton_Previews: PreviewProvider {
     static var previews: some View {
         SentenceButton(
-            ReadingBook.preview,
+            CompleteBook.preview,
             collectSentence: CollectSentences.preview
         )
         .environmentObject(RealmManager())

@@ -69,7 +69,7 @@ extension SearchSheetTextFieldView {
         HStack {
             listModeMenu
 
-            searchInputField
+            inputField
             
             backButton
         }
@@ -120,7 +120,7 @@ extension SearchSheetTextFieldView {
             .background(Color(.background), in: .rect(cornerRadius: 15))
     }
     
-    var searchInputField: some View {
+    var inputField: some View {
         HStack {
             magnifyingGlassSFSymbolImage
             

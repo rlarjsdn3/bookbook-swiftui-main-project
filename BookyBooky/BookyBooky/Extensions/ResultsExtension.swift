@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-extension Results<ReadingBook> {
+extension Results<CompleteBook> {
     /// 도서 배열의 유형을 정의한 열거형입니다.
     enum ReadingBookType {
         case all
@@ -19,7 +19,7 @@ extension Results<ReadingBook> {
     /// 매개변수로 주어진 도서의 ISBN13과 동일한 값을 가지는 객체를 반환하는 함수입니다. 해당하는 객체가 존재하지 않는다면 nil을 반환합니다.
     /// - Parameter isbn13: 찾고자 하는 도서의 ISBN13
     /// - Returns: ReadingBook 타입의 Obect 객체
-    func findFirst(isbn13: String) -> ReadingBook? {
+    func findFirst(isbn13: String) -> CompleteBook? {
         if let readingBook = self.first(where: { $0.isbn13 == isbn13 }) {
             return readingBook
         }
@@ -29,7 +29,7 @@ extension Results<ReadingBook> {
     /// 매개변수로 주어진 도서의  키 값(ID)과 동일한 값을 가지는 객체를 반환하는 함수입니다. 해당하는 객체가 존재하지 않는다면 nil을 반환합니다.
     /// - Parameter isbn13: 찾고자 하는 도서의 키 값(ID)
     /// - Returns: ReadingBook타입의 Obect 객체
-    func findReadingBookFirst(id: ObjectId) -> ReadingBook? {
+    func findReadingBookFirst(id: ObjectId) -> CompleteBook? {
         if let readingBook = self.first(where: { $0._id == id }) {
             return readingBook
         }
@@ -40,7 +40,7 @@ extension Results<ReadingBook> {
     /// 모든 도서(.all)를 반환하거나, 읽고 있는 도서(.unfinished) 혹은 읽은 도서(.complete)를 반환합니다.
     /// - Parameter type: 도서 유형(.all, .complete, .unfinished)
     /// - Returns: ReadingBook 형의 배열
-    func get(_ type: ReadingBookType) -> [ReadingBook] {
+    func get(_ type: ReadingBookType) -> [CompleteBook] {
         switch type {
         case .all:
             return Array(self)
@@ -55,7 +55,7 @@ extension Results<ReadingBook> {
     /// - Parameters:
     ///   - sortType: 정렬 기준
     /// - Returns: 정렬된 Book 프로토콜을 준수하는 도서 배열
-    private func getSortReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria) -> [ReadingBook] {
+    private func getSortReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria) -> [CompleteBook] {
         let readingBookArray = get(bookType)
         
         switch sort {
@@ -75,7 +75,7 @@ extension Results<ReadingBook> {
     ///   - bookSortType: 도서 정렬 기준
     ///   - categoryType: 도서 필터 기준 (카테고리 별)
     /// - Returns: 정렬 및 필터링된 ReadingBook 형의 배열
-    func getFilteredReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria, category: Category) -> [ReadingBook] {
+    func getFilteredReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria, category: Category) -> [CompleteBook] {
         let sortedBookArray = getSortReadingBooks(bookType, sort: sort)
         
         if category == .all {
@@ -85,7 +85,7 @@ extension Results<ReadingBook> {
         }
     }
     
-    func getFilteredReadingBooks(_ bookType: ReadingBookType, searchQuery: String = "", bookSortType: BookSortCriteria) -> [ReadingBook] {
+    func getFilteredReadingBooks(_ bookType: ReadingBookType, searchQuery: String = "", bookSortType: BookSortCriteria) -> [CompleteBook] {
         let sortedBookArray = getSortReadingBooks(bookType ,sort: bookSortType)
         
         if searchQuery.isEmpty {
@@ -98,7 +98,7 @@ extension Results<ReadingBook> {
     }
 }
 
-extension Results<ReadingBook> {
+extension Results<CompleteBook> {
     /// 최근 3개의 활동 데이터를 반환하는 함수입니다.
     /// - Returns: Activity 형의 배열
     var recentReadingActivity: [ReadingActivity] {

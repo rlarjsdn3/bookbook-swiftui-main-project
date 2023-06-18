@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Array<ReadingBook> {
+extension Array<CompleteBook> {
     func getReadingBookCategoryType() -> [Category] {
         var categoryTypes: [Category] = [.all]
         

@@ -16,12 +16,12 @@ struct ReadingBookScrollView: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: CompleteBook
     @Binding var scrollYOffset: CGFloat
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook, scrollYOffset: Binding<CGFloat>) {
+    init(_ readingBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
         self.readingBook = readingBook
         self._scrollYOffset = scrollYOffset
     }
@@ -61,6 +61,6 @@ struct ReadingBookScrollView: View {
 
 struct ReadingBookDetailScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookScrollView(ReadingBook.preview, scrollYOffset: .constant(0.0))
+        ReadingBookScrollView(CompleteBook.preview, scrollYOffset: .constant(0.0))
     }
 }

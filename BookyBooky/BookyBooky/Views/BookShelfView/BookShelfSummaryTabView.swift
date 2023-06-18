@@ -53,7 +53,7 @@ struct BookShelfSummaryTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     // MARK: - COMPUTED PROPERTIES

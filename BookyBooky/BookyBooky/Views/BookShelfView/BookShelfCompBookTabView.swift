@@ -12,7 +12,7 @@ struct BookShelfCompBookTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @State private var isPresentingCompleteBookListView = false
     
@@ -28,7 +28,7 @@ struct BookShelfCompBookTabView: View {
     var body: some View {
         compBookTab
             .sheet(isPresented: $isPresentingCompleteBookListView) {
-                BookShelfListView(viewType: .complete)
+                BookShelfListView(type: .complete)
             }
     }
 }

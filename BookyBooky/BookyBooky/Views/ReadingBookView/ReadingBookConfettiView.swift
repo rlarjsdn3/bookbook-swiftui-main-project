@@ -39,11 +39,11 @@ struct ReadingBookConfettiView: View {
     
     // MARK: - PROPERTIES
     
-    let readingBook: ReadingBook
+    let readingBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook) {
+    init(_ readingBook: CompleteBook) {
         self.readingBook = readingBook
     }
     
@@ -132,6 +132,6 @@ extension ReadingBookConfettiView {
 
 struct CompleteConfettiView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookConfettiView(ReadingBook.preview)
+        ReadingBookConfettiView(CompleteBook.preview)
     }
 }

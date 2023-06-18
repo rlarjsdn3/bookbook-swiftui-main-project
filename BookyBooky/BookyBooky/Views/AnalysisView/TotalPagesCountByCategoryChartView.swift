@@ -15,7 +15,7 @@ struct TotalPagesCountByCategoryChartView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @State private var selectedCategory: Double? = nil
     

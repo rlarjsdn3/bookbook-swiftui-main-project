@@ -12,7 +12,7 @@ struct ActivityButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     // MARK: - PROPERTIES
     

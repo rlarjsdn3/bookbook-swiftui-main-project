@@ -13,7 +13,7 @@ struct BookShelfSentenceView: View {
     
     @State private var inputQuery = ""
     @State private var searchQuery = ""
-    @State private var selectedSort = SentenceSortCriteriaType.titleAscending
+    @State private var selectedSort = SentenceSortCriteria.titleAscending
     @State private var selectedFilter: [String] = []
     
     @State var isPresentingShowAllButton = false
@@ -60,12 +60,12 @@ extension BookShelfSentenceView {
                 isPresentingShowAllButton = false
             }
         } label: {
-            seeAllLabel
+            seeAllText
         }
         .offset(y: isPresentingShowAllButton ? -20 : 200)
     }
     
-    var seeAllLabel: some View {
+    var seeAllText: some View {
         Text("모두 보기")
             .font(.title3)
             .fontWeight(.semibold)

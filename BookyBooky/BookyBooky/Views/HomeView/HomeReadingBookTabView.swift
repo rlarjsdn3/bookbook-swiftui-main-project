@@ -15,7 +15,7 @@ struct HomeReadingBookTabView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @State private var selectedCategory: Category = .all
     @State private var selectedCategoryForAnimation: Category = .all

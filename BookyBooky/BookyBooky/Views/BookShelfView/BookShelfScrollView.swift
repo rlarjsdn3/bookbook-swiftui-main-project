@@ -15,7 +15,7 @@ struct BookShelfScrollView: View {
     @EnvironmentObject var realmManager: RealmManager
     
     @ObservedResults(FavoriteBook.self) var favoriteBooks
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @State private var startOffset: CGFloat = 0.0
     

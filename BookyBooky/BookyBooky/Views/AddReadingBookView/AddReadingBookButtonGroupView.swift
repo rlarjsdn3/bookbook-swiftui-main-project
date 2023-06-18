@@ -88,7 +88,7 @@ extension AddReadingBookButtonGroupView {
     
     var okButton: some View {
         Button("확인") {
-            let readingBook = ReadingBook(
+            let readingBook = CompleteBook(
                 value: [
                     "title": "\(bookInfo.title.refinedTitle)",
                     "author": "\(bookInfo.author.refinedAuthor)",

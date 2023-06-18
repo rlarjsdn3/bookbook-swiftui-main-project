@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SearchBookViewType {
+enum ViewFromType {
     case sheet
     case navigation
 }

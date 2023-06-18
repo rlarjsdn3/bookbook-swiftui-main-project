@@ -14,7 +14,6 @@ enum BookShelfListViewType {
     case complete
 }
 
-// 이름 바꿀 필요 있음
 struct BookShelfListView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -23,19 +22,18 @@ struct BookShelfListView: View {
     @State private var searchQuery = ""
     @State private var selectedSort: BookSortCriteria = .titleAscendingOrder
     
-    
     @State var isPresentingShowAllButton = false
     
     @FocusState var focusedField: Bool
     
     // MARK: - PROPERTIES
     
-    let viewType: BookShelfListViewType
+    let type: BookShelfListViewType
     
     // MARK: - INTAILIZER
     
-    init(viewType: BookShelfListViewType) {
-        self.viewType = viewType
+    init(type: BookShelfListViewType) {
+        self.type = type
     }
     
     // MARK: - BODY
@@ -55,7 +53,7 @@ struct BookShelfListView: View {
                     BookShelfListScrollView(
                         searchQuery: $searchQuery,
                         selectedSortType: $selectedSort,
-                        viewType: viewType
+                        type: type
                     )
                 }
                 .overlay(alignment: .bottom) {
@@ -78,12 +76,12 @@ extension BookShelfListView {
                 isPresentingShowAllButton = false
             }
         } label: {
-            seeAllLabel
+            seeAllText
         }
         .offset(y: isPresentingShowAllButton ? -20 : 200)
     }
     
-    var seeAllLabel: some View {
+    var seeAllText: some View {
         Text("모두 보기")
             .font(.title3)
             .fontWeight(.semibold)
@@ -99,6 +97,6 @@ extension BookShelfListView {
 
 struct FavoriteBooksView_Previews: PreviewProvider {
     static var previews: some View {
-        BookShelfListView(viewType: .favorite)
+        BookShelfListView(type: .favorite)
     }
 }

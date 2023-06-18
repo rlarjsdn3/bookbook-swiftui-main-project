@@ -15,21 +15,18 @@ enum ReadingBookButtonType {
 
 struct ReadingBookButton: View {
     
-    // MARK: - INNER ENUM
-    
-    
     // MARK: - WRAPPER PROPERTIES
     
     @State private var isPresentingReadingBookView = false
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: CompleteBook
     let type: ReadingBookButtonType
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook, type: ReadingBookButtonType) {
+    init(_ readingBook: CompleteBook, type: ReadingBookButtonType) {
         self.readingBook = readingBook
         self.type = type
     }

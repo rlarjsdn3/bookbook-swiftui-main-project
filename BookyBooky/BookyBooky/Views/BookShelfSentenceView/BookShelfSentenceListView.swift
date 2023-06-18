@@ -10,15 +10,18 @@ import RealmSwift
 
 struct BookShelfSentenceListView: View {
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    // MARK: - WRAPPER PROPERTIES
+    
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @Binding var searchQuery: String
-    @Binding var selectedSortType: SentenceSortCriteriaType
+    @Binding var selectedSortType: SentenceSortCriteria
     @Binding var selectedFilter: [String]
     
+    // 계산 프로퍼티 리팩토링 - Results Extension에 집어넣기
     
-    var sortedCollectSentence: [ReadingBook] {
-        var sorted: [ReadingBook] = []
+    var sortedCollectSentence: [CompleteBook] {
+        var sorted: [CompleteBook] = []
         
         switch selectedSortType {
         case .titleAscending:
@@ -35,8 +38,8 @@ struct BookShelfSentenceListView: View {
         // 도서 필터링 코드 추가 (전체 혹은 선택한 도서들)
     }
     
-    var filteredCollectSentence: [ReadingBook] {
-        var filtered: [ReadingBook]
+    var filteredCollectSentence: [CompleteBook] {
+        var filtered: [CompleteBook]
         
         if searchQuery.isEmpty {
             return sortedCollectSentence
@@ -48,6 +51,7 @@ struct BookShelfSentenceListView: View {
         }
     }
     
+    // MARK: - BODY
     
     var body: some View {
         Group {
@@ -94,6 +98,8 @@ struct BookShelfSentenceListView: View {
         }
     }
 }
+
+// MARK: - PREVIEW
 
 struct BookShelfSentenceListView_Previews: PreviewProvider {
     static var previews: some View {

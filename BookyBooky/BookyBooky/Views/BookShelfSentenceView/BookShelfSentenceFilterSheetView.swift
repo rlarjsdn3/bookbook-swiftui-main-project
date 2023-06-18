@@ -14,7 +14,7 @@ struct BookShelfSentenceFilterSheetView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @ObservedResults(ReadingBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @State private var unselectedFilterBook: [String] = []
     

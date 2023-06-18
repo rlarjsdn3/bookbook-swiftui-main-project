@@ -12,7 +12,7 @@ struct ReadingBookOutlineView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: CompleteBook
     
     // MARK: - BODY
     
@@ -176,6 +176,6 @@ extension ReadingBookOutlineView {
 
 struct ReadingBookOutlineView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookOutlineView(readingBook: ReadingBook.preview)
+        ReadingBookOutlineView(readingBook: CompleteBook.preview)
     }
 }

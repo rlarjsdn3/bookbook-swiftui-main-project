@@ -28,11 +28,11 @@ struct AddSentenceSheetView: View {
     // MARK: - PROPERTIES
     
     let characterLimit = 300
-    let readingBook: ReadingBook
+    let readingBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook) {
+    init(_ readingBook: CompleteBook) {
         self.readingBook = readingBook
     }
     
@@ -134,7 +134,7 @@ struct AddSentenceSheetView: View {
 
 struct AddSentenceView_Previews: PreviewProvider {
     static var previews: some View {
-        AddSentenceSheetView(ReadingBook.preview)
+        AddSentenceSheetView(CompleteBook.preview)
             .environmentObject(RealmManager())
     }
 }

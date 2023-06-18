@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class ReadingBook: Object, ObjectKeyIdentifiable {
+class CompleteBook: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var _id: ObjectId  // 주요 키
     @Persisted var title: String                    // 제목
     @Persisted var author: String                   // 저자
@@ -29,7 +29,7 @@ class ReadingBook: Object, ObjectKeyIdentifiable {
     @Persisted var targetDate: Date                 // 목표 날짜
 }
 
-extension ReadingBook {
+extension CompleteBook {
     /// 도서의 완독 여부에 따라 불린(Bool) 형을 반환하는 계산 프로퍼티입니다.
     /// 완독한 경우, 참(True)을 반환합니다.
     var isComplete: Bool {
@@ -88,8 +88,8 @@ extension ReadingBook {
     }
 }
 
-extension ReadingBook {
-    static var preview: ReadingBook = ReadingBook(
+extension CompleteBook {
+    static var preview: CompleteBook = CompleteBook(
         value: ["title": "Java의 정석",
                 "author": "남궁성",
                 "publisher": "도우출판",

@@ -18,7 +18,7 @@ struct ReadingBookAnalysisView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: CompleteBook
     
     @State private var scrollPosition: TimeInterval = 0.0
     
@@ -361,6 +361,6 @@ extension ReadingBookAnalysisView {
 
 struct ReadingBookAnalysisView_Previews: PreviewProvider {    
     static var previews: some View {
-        ReadingBookAnalysisView(readingBook: ReadingBook.preview)
+        ReadingBookAnalysisView(readingBook: CompleteBook.preview)
     }
 }

@@ -20,11 +20,11 @@ struct ReadingBookView: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: ReadingBook
+    @ObservedRealmObject var readingBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: ReadingBook) {
+    init(_ readingBook: CompleteBook) {
         self.readingBook = readingBook
     }
     
@@ -61,7 +61,7 @@ struct ReadingBookView: View {
 
 struct ReadingBookView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookView(ReadingBook.preview)
+        ReadingBookView(CompleteBook.preview)
             .environmentObject(RealmManager())
     }
 }
