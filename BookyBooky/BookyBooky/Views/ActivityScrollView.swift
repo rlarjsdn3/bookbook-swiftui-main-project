@@ -123,7 +123,7 @@ extension ActivityScrollView {
     func activityButtonGroup(_ activity: MonthlyReadingActivity) -> some View {
         VStack(spacing: 5) {
             ForEach(activity.readingActivity, id: \.self) { activity in
-                ActivityButton(activity)
+                ActivityCellButton(activity)
             }
         }
         .padding(.bottom, 20)

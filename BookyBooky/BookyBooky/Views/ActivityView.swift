@@ -9,6 +9,9 @@ import SwiftUI
 import RealmSwift
 
 struct ActivityView: View {
+    
+    // MARK: - WRAPPER RPOPERTIES
+    
     @Environment(\.dismiss) var dismiss
     
     // MARK: - BODY
@@ -25,8 +28,8 @@ struct ActivityView: View {
     }
 }
 
-struct ActivityView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActivityView()
-    }
+// MARK: - PREVIEW
+
+#Preview {
+    ActivityView()
 }

@@ -8,12 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-enum ReadingBookButtonType {
-    case home
-    case shelf
-}
-
-struct ReadingBookButton: View {
+struct CompleteBookButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -22,11 +17,11 @@ struct ReadingBookButton: View {
     // MARK: - PROPERTIES
     
     @ObservedRealmObject var readingBook: CompleteBook
-    let type: ReadingBookButtonType
+    let type: ButtonType.CompleteBookButton
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: CompleteBook, type: ReadingBookButtonType) {
+    init(_ readingBook: CompleteBook, type: ButtonType.CompleteBookButton) {
         self.readingBook = readingBook
         self.type = type
     }
@@ -34,21 +29,21 @@ struct ReadingBookButton: View {
     // MARK: - BODY
     
     var body: some View {
-        readingBookButton
+        compBookButton
     }
 }
 
-extension ReadingBookButton {
-    var readingBookButton: some View {
+extension CompleteBookButton {
+    var compBookButton: some View {
         NavigationLink {
-            ReadingBookView(readingBook)
+            CompleteBookView(readingBook)
         } label: {
-            readingBookGridLabel
+            compBookLabel
         }
         .buttonStyle(.plain)
     }
     
-    var readingBookGridLabel: some View {
+    var compBookLabel: some View {
         VStack {
             asyncCoverImage(
                 readingBook.cover,
@@ -65,9 +60,9 @@ extension ReadingBookButton {
                 progressBar
             }
             
-            readingBookTitleText
+            compBookTitleText
             
-            readingBookAuthorText
+            compBookAuthorText
         }
     }
     
@@ -96,7 +91,7 @@ extension ReadingBookButton {
         }
     }
     
-    var readingBookTitleText: some View {
+    var compBookTitleText: some View {
         Text("\(readingBook.title)")
             .font(.headline)
             .fontWeight(.bold)
@@ -107,7 +102,7 @@ extension ReadingBookButton {
             .padding([type == .home ? .top : [], .bottom], -5)
     }
     
-    var readingBookAuthorText: some View {
+    var compBookAuthorText: some View {
         Text("\(readingBook.author)")
             .font(.subheadline)
             .foregroundColor(.secondary)
@@ -115,8 +110,6 @@ extension ReadingBookButton {
     }
 }
 
-struct ReadingBookCellButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadingBookButton(.preview, type: .home)
-    }
+#Preview {
+    CompleteBookButton(.preview, type: .home)
 }

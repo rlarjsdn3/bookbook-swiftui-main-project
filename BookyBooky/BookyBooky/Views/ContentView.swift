@@ -40,7 +40,7 @@ extension ContentView {
             HomeView()
                 .tag(TabViewType.home)
             
-            SearchListView()
+            BookListView()
                 .tag(TabViewType.search)
             
             BookShelfView()

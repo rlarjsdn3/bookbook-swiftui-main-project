@@ -14,7 +14,7 @@ struct HomeActivityTabView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var compBooks
     
     // MARK: - BODY
     
@@ -56,12 +56,12 @@ extension HomeActivityTabView {
         NavigationLink("더 보기") {
             ActivityView()
         }
-        .disabled(readingBooks.isEmpty)
+        .disabled(compBooks.isEmpty)
     }
     
     var activityTabContent: some View {
         VStack(spacing: 5) {
-            let recentActivities = readingBooks.recentReadingActivity
+            let recentActivities = compBooks.recentReadingActivity
             
             if recentActivities.isEmpty {
                 noActivityLabel
@@ -73,7 +73,7 @@ extension HomeActivityTabView {
     
     func activityButtonGroup(_ activities: [ReadingActivity]) -> some View {
         ForEach(activities, id: \.self) { activity in
-            ActivityButton(activity)
+            ActivityCellButton(activity)
         }
     }
     

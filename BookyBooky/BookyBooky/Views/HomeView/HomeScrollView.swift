@@ -34,7 +34,7 @@ struct HomeScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        scrollContent
+        homeScrollContent
     }
     
     // MARK: - FUNCTIONS
@@ -62,7 +62,7 @@ struct HomeScrollView: View {
 // MARK: - EXTENSION
 
 extension HomeScrollView {
-    var scrollContent: some View {
+    var homeScrollContent: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 VStack {

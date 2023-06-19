@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct BookShelfSentenceListView: View {
+struct BookShelfSentenceScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -30,6 +30,14 @@ struct BookShelfSentenceListView: View {
     // MARK: - BODY
     
     var body: some View {
+        sentenceScrollContent
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension BookShelfSentenceScrollView {
+    var sentenceScrollContent: some View {
         Group {
             if filteredCompBooks.isEmpty {
                 noResultsLabel
@@ -38,11 +46,7 @@ struct BookShelfSentenceListView: View {
             }
         }
     }
-}
 
-// MARK: - EXTENSIONS
-
-extension BookShelfSentenceListView {
     var noResultsLabel: some View {
         VStack(spacing: 5) {
             Spacer()
@@ -89,7 +93,7 @@ extension BookShelfSentenceListView {
 
 struct BookShelfSentenceListView_Previews: PreviewProvider {
     static var previews: some View {
-        BookShelfSentenceListView(
+        BookShelfSentenceScrollView(
             searchQuery: .constant(""),
             selectedSort: .constant(.titleAscendingOrder)
         )

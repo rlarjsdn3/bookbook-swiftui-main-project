@@ -18,7 +18,7 @@ struct BookShelfTopBarView: View {
     var body: some View {
         navigationTopBar
             .fullScreenCover(isPresented: $isPresentingCollectSenetenceView) {
-                BookShelfSentenceView()
+                BookShelfSentenceListView()
             }
     }
 }

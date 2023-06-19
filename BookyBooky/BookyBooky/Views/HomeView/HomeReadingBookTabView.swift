@@ -15,7 +15,7 @@ struct HomeReadingBookTabView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var compBooks
     
     @State private var selectedCategory: Category = .all
     @State private var selectedCategoryForAnimation: Category = .all
@@ -36,7 +36,7 @@ struct HomeReadingBookTabView: View {
     // MARK: - COMPUTED PROPERTIES
     
     var dynamicBottomPaddingValue: CGFloat {
-        let filteredUnfinishedBooksCount = readingBooks.getFilteredReadingBooks(
+        let filteredUnfinishedBooksCount = compBooks.getFilteredReadingBooks(
             .unfinished, sort: selectedBookSortCriteria, category: selectedCategory
         ).count
         
@@ -67,14 +67,14 @@ struct HomeReadingBookTabView: View {
     // MARK: - BODY
     
     var body: some View {
-        readingBookTab
+        compBooksTab
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension HomeReadingBookTabView {
-    var readingBookTab: some View {
+    var compBooksTab: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             tabTitle
             
@@ -149,7 +149,7 @@ extension HomeReadingBookTabView {
     
     var tabContent: some View {
         Group {
-            let readingBook = readingBooks.get(.unfinished)
+            let readingBook = compBooks.get(.unfinished)
             
             if readingBook.isEmpty {
                 noReadingBookLabel
@@ -173,7 +173,7 @@ extension HomeReadingBookTabView {
     
     var readingBookButtonGroup: some View {
         Group {
-            let filterReadingBooks = readingBooks.getFilteredReadingBooks(
+            let filterReadingBooks = compBooks.getFilteredReadingBooks(
                 .unfinished,
                 sort: selectedBookSortCriteria,
                 category: selectedCategory
@@ -195,7 +195,7 @@ extension HomeReadingBookTabView {
         HStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    let categories = readingBooks.get(.unfinished).getReadingBookCategoryType()
+                    let categories = compBooks.get(.unfinished).getReadingBookCategoryType()
                     
                     ForEach(categories, id: \.self) { category in
                         HomeCategoryButton(

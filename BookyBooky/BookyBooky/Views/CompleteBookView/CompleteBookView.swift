@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 import AlertToast
 
-struct ReadingBookView: View {
+struct CompleteBookView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -37,22 +37,22 @@ struct ReadingBookView: View {
                 
                 ReadingBookScrollView(readingBook, scrollYOffset: $scrollYOffset)
             }
-            .toast(
-                isPresenting: $realmManager.isPresentingReadingBookEditSuccessToastAlert,
-                duration: 1.0) {
-                realmManager.showReadingBookEditSuccessToastAlert(readingBook.category.themeColor)
-            }
-            .toast(
-                isPresenting: $realmManager.isPresentingReadingBookRenewalSuccessToastAlert,
-                duration: 1.0) {
-                realmManager.showReadingBookRenewalSuccessToastAlert(readingBook.category.themeColor)
-            }
-            .toast(
-                isPresenting: $realmManager.isPresentingAddSentenceSuccessToastAlert,
-                duration: 1.0) {
-                realmManager.showAddSentenceSuccessToastAlert(readingBook.category.themeColor)
-            }
             .navigationBarBackButtonHidden()
+        }
+        .toast(
+            isPresenting: $realmManager.isPresentingReadingBookEditSuccessToastAlert,
+            duration: 1.0) {
+            realmManager.showReadingBookEditSuccessToastAlert(readingBook.category.themeColor)
+        }
+        .toast(
+            isPresenting: $realmManager.isPresentingReadingBookRenewalSuccessToastAlert,
+            duration: 1.0) {
+            realmManager.showReadingBookRenewalSuccessToastAlert(readingBook.category.themeColor)
+        }
+        .toast(
+            isPresenting: $realmManager.isPresentingAddSentenceSuccessToastAlert,
+            duration: 1.0) {
+            realmManager.showAddSentenceSuccessToastAlert(readingBook.category.themeColor)
         }
     }
 }
@@ -61,7 +61,7 @@ struct ReadingBookView: View {
 
 struct ReadingBookView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookView(CompleteBook.preview)
+        CompleteBookView(CompleteBook.preview)
             .environmentObject(RealmManager())
     }
 }

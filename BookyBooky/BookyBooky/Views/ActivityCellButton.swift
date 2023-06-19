@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ActivityButton: View {
+struct ActivityCellButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -33,11 +33,11 @@ struct ActivityButton: View {
 
 // MARK: - EXTENSIONS
 
-extension ActivityButton {
+extension ActivityCellButton {
     var activityButton: some View {
         NavigationLink {
             if let readingBook = readingBooks.findFirst(isbn13: activity.isbn13) {
-                ReadingBookView(readingBook)
+                CompleteBookView(readingBook)
             }
         } label: {
             activityLabel
@@ -119,6 +119,6 @@ extension ActivityButton {
 
 struct ActivityCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityButton(ReadingActivity.preview)
+        ActivityCellButton(ReadingActivity.preview)
     }
 }

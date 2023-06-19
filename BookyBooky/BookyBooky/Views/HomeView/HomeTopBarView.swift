@@ -12,7 +12,7 @@ struct HomeTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var compBooks
     
     @State private var isPresentingSettingsView = false
     @State private var isPresentingSearchSheetView = false
@@ -25,7 +25,7 @@ struct HomeTopBarView: View {
     // MARK: - COMPUTED PROPERTIES
     
     var recentActivityCount: Int {
-        readingBooks.recentReadingActivity.count
+        compBooks.recentReadingActivity.count
     }
     
     var showingTopBarDividerYPositionValue: CGFloat {
@@ -103,7 +103,7 @@ extension HomeTopBarView {
 
             Spacer()
             
-            settingsButton
+            profileButton
                 // scrollYOffset값이 10 ~ showingUtilYPositionValue 사이라면,
                 // SettingsButton을 숨기고, UtilMenu을 보이게 합니다.
                 .opacity(
@@ -135,7 +135,7 @@ extension HomeTopBarView {
             .navigationBarItemStyle()
     }
     
-    var settingsButton: some View {
+    var profileButton: some View {
         Button {
             isPresentingSettingsView = true
         } label: {

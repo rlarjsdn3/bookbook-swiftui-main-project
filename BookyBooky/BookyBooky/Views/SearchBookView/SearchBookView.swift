@@ -48,36 +48,6 @@ struct SearchBookView: View {
     // MARK: - BODY
     
     var body: some View {
-        searchBook
-            .onAppear {
-                aladinAPIManager.requestBookDetailAPI(isbn13)
-            }
-            .onDisappear {
-                aladinAPIManager.searchBookInfo = nil
-            }
-            // 도서 정보 불러오기에 실패한다면 이전 화면으로 넘어갑니다.
-            .onChange(of: aladinAPIManager.isPresentingDetailBookErrorToastAlert) { detailBookError in
-                if detailBookError {
-                    dismiss()
-                }
-            }
-            .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddSuccessToastAlert,
-                   duration: 1.0) {
-                realmManager.showFavoriteBookAddSuccessToastAlert(categoryAccentColor)
-            }
-            .toast(isPresenting: $realmManager.isPresentingReadingBookAddSuccessToastAlert,
-                  duration: 1.0) {
-               realmManager.showReadingBookAddSuccessToastAlert(categoryAccentColor)
-            }
-            .toolbar(.hidden, for: .navigationBar)
-            .presentationCornerRadius(30)
-    }
-}
-
-// MARK: - EXTENSIONS
-
-extension SearchBookView {
-    var searchBook: some View {
         NavigationStack {
             if let bookInfo = aladinAPIManager.searchBookInfo {
                 VStack {
@@ -124,6 +94,28 @@ extension SearchBookView {
                 }
             }
         }
+        .onAppear {
+            aladinAPIManager.requestBookDetailAPI(isbn13)
+        }
+        .onDisappear {
+            aladinAPIManager.searchBookInfo = nil
+        }
+        // 도서 정보 불러오기에 실패한다면 이전 화면으로 넘어갑니다.
+        .onChange(of: aladinAPIManager.isPresentingDetailBookErrorToastAlert) { detailBookError in
+            if detailBookError {
+                dismiss()
+            }
+        }
+        .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddSuccessToastAlert,
+               duration: 1.0) {
+            realmManager.showFavoriteBookAddSuccessToastAlert(categoryAccentColor)
+        }
+        .toast(isPresenting: $realmManager.isPresentingReadingBookAddSuccessToastAlert,
+              duration: 1.0) {
+           realmManager.showReadingBookAddSuccessToastAlert(categoryAccentColor)
+        }
+        .toolbar(.hidden, for: .navigationBar)
+        .presentationCornerRadius(30)
     }
 }
 

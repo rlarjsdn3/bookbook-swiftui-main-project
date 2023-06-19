@@ -1,15 +1,13 @@
 //
-//  FavoriteBooksView.swift
+//  BookShelfSentenceView.swift
 //  BookyBooky
 //
-//  Created by 김건우 on 2023/04/09.
+//  Created by 김건우 on 2023/06/03.
 //
 
 import SwiftUI
-import AlertToast
-import RealmSwift
 
-struct BookShelfListView: View {
+struct BookShelfSentenceListView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -19,23 +17,13 @@ struct BookShelfListView: View {
     
     @State var isPresentingShowAllButton = false
     
-    // MARK: - PROPERTIES
-    
-    let type: BookShelfList
-    
-    // MARK: - INTAILIZER
-    
-    init(type: BookShelfList) {
-        self.type = type
-    }
-    
     // MARK: - BODY
     
     var body: some View {
         NavigationStack {
             ScrollViewReader { scrollProxy in
                 VStack(spacing: 0) {
-                    BookShelfTextFieldView(
+                    BookShelfSentenceListTextFieldView(
                         inputQuery: $inputQuery,
                         searchQuery: $searchQuery,
                         selectedSort: $selectedSort,
@@ -43,24 +31,22 @@ struct BookShelfListView: View {
                         scrollProxy: scrollProxy
                     )
                     
-                    BookShelfListScrollView(
+                    BookShelfSentenceScrollView(
                         searchQuery: $searchQuery,
-                        selectedSortType: $selectedSort,
-                        type: type
+                        selectedSort: $selectedSort
                     )
                 }
-                .overlay(alignment: .bottom) {
-                    seeAllButton
-                }
+            }
+            .overlay(alignment: .bottom) {
+                seeAllButton
             }
         }
-        .presentationCornerRadius(30)
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension BookShelfListView {
+extension BookShelfSentenceListView {
     var seeAllButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
@@ -86,10 +72,6 @@ extension BookShelfListView {
     }
 }
 
-// MARK: - PREVIEWS
-
-struct FavoriteBooksView_Previews: PreviewProvider {
-    static var previews: some View {
-        BookShelfListView(type: .favorite)
-    }
+#Preview {
+    BookShelfSentenceListView()
 }

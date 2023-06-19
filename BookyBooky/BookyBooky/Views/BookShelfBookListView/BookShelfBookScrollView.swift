@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct BookShelfListScrollView: View {
+struct BookShelfBookScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -63,7 +63,7 @@ struct BookShelfListScrollView: View {
 
 // MARK: - EXTENSIONS
 
-extension BookShelfListScrollView {
+extension BookShelfBookScrollView {
     var bookScrollContent: some View {
         Group {
             switch type {
@@ -124,7 +124,7 @@ extension BookShelfListScrollView {
 
 struct FavoriteBooksScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        BookShelfListScrollView(
+        BookShelfBookScrollView(
             searchQuery: .constant(""),
             selectedSortType: .constant(.titleAscendingOrder),
             type: .favorite

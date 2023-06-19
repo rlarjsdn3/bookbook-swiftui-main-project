@@ -1,17 +1,20 @@
 //
-//  FavoriteBooksTextFieldView.swift
+//  BookShelfSentenceTextFieldView.swift
 //  BookyBooky
 //
-//  Created by 김건우 on 2023/04/10.
+//  Created by 김건우 on 2023/06/03.
 //
 
 import SwiftUI
+import RealmSwift
 
-struct BookShelfTextFieldView: View {
+struct BookShelfSentenceListTextFieldView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
+    
+    @State private var isPresentingBookShelfSentenceFilterSheetView = false
     
     @FocusState var focusedField: Bool
     
@@ -46,7 +49,7 @@ struct BookShelfTextFieldView: View {
 
 // MARK: - EXTENSIONS
 
-extension BookShelfTextFieldView {
+extension BookShelfSentenceListTextFieldView {
     var textFieldArea: some View {
         HStack {
             utilMenu
@@ -55,13 +58,22 @@ extension BookShelfTextFieldView {
             
             backButton
         }
-        .padding()
+        .padding([.horizontal, .top])
+        .padding(.bottom, 2)
     }
     
     var utilMenu: some View {
         Menu {
             Section {
                 sortButtonGroup
+                
+                Divider()
+                
+                Button {
+                    isPresentingBookShelfSentenceFilterSheetView = true
+                } label: {
+                    Label("도서 필터링", systemImage: "line.3.horizontal.decrease.circle")
+                }
             } header: {
                 Text("도서 정렬")
             }
@@ -71,7 +83,7 @@ extension BookShelfTextFieldView {
     }
     
     var sortButtonGroup: some View {
-        ForEach(BookSortCriteria.allCases) { criteria in
+        ForEach(BookSortCriteria.allCases, id: \.self) { sort in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {
@@ -80,15 +92,19 @@ extension BookShelfTextFieldView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedSort = criteria
+                            selectedSort = sort
                         }
                         HapticManager.shared.impact(.rigid)
                     }
                 }
             } label: {
-                Text(criteria.name)
-                if selectedSort == criteria {
-                    Text("적용됨")
+                HStack {
+                    Text(sort.name)
+
+                    // 현재 선택한 정렬 타입에 체크마크 표시
+                    if selectedSort == sort {
+                        checkMarkSFSymbolImage
+                    }
                 }
             }
         }
@@ -99,8 +115,7 @@ extension BookShelfTextFieldView {
             .font(.title2)
             .foregroundColor(.primary)
             .frame(width: 45, height: 45)
-            .background(Color("Background"))
-            .cornerRadius(15)
+            .background(Color(.background), in: .rect(cornerRadius: 15))
     }
     
     var checkMarkSFSymbolImage: some View {
@@ -109,7 +124,7 @@ extension BookShelfTextFieldView {
     }
 }
 
-extension BookShelfTextFieldView {
+extension BookShelfSentenceListTextFieldView {
     var inputField: some View {
         HStack {
             magnifyingGlassSFSymbolImage
@@ -143,10 +158,10 @@ extension BookShelfTextFieldView {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
                             searchQuery = inputQuery
-                            if !inputQuery.isEmpty {
-                                isPresentingShowAllButton = true
-                            } else {
+                            if inputQuery.isEmpty {
                                 isPresentingShowAllButton = false
+                            } else {
+                                isPresentingShowAllButton = true
                             }
                         }
                         HapticManager.shared.impact(.rigid)
@@ -175,7 +190,7 @@ extension BookShelfTextFieldView {
     }
 }
 
-extension BookShelfTextFieldView {
+extension BookShelfSentenceListTextFieldView {
     var backButton: some View {
         Button {
             dismiss()
@@ -196,10 +211,10 @@ extension BookShelfTextFieldView {
 
 // MARK: - PREVIEW
 
-struct BookShelfTextFieldView_Previews: PreviewProvider {
+struct BookShelfSentenceTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            BookShelfTextFieldView(
+            BookShelfSentenceListTextFieldView(
                 inputQuery: .constant(""),
                 searchQuery: .constant(""),
                 selectedSort: .constant(.titleAscendingOrder),
@@ -209,3 +224,4 @@ struct BookShelfTextFieldView_Previews: PreviewProvider {
         }
     }
 }
+

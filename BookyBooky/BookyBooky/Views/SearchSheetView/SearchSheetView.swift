@@ -30,7 +30,7 @@ struct SearchSheetView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 SearchSheetTextFieldView(
                     searchQuery: $searchQuery,
                     searchIndex: $searchIndex,
