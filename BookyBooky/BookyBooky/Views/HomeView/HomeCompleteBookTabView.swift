@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 import DeviceKit
 
-struct HomeReadingBookTabView: View {
+struct HomeCompleteBookTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -73,7 +73,7 @@ struct HomeReadingBookTabView: View {
 
 // MARK: - EXTENSIONS
 
-extension HomeReadingBookTabView {
+extension HomeCompleteBookTabView {
     var compBooksTab: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             tabTitle
@@ -107,7 +107,7 @@ extension HomeReadingBookTabView {
     var utilMenu: some View {
         Menu {
             Section {
-                sortButtons
+                sortButtonGroup
                 
                 // TODO: - 읽고 있는 도서 리스트를 '격자 모드' 혹은 '리스트 모드'로 보게 만들기 (버전 1.1)
             } header: {
@@ -125,7 +125,7 @@ extension HomeReadingBookTabView {
             .navigationBarItemStyle()
     }
     
-    var sortButtons: some View {
+    var sortButtonGroup: some View {
         ForEach(BookSortCriteria.allCases) { criteria in
             Button {
                 // 버튼을 클릭하면
@@ -154,7 +154,7 @@ extension HomeReadingBookTabView {
             if readingBook.isEmpty {
                 noReadingBookLabel
             } else {
-                readingBookButtonGroup
+                compBookButtonGroup
             }
         }
     }
@@ -171,7 +171,7 @@ extension HomeReadingBookTabView {
         .padding(.top, 50)
     }
     
-    var readingBookButtonGroup: some View {
+    var compBookButtonGroup: some View {
         Group {
             let filterReadingBooks = compBooks.getFilteredReadingBooks(
                 .unfinished,
@@ -183,7 +183,7 @@ extension HomeReadingBookTabView {
             
             LazyVGrid(columns: columns, spacing: 25) {
                 ForEach(filterReadingBooks) { readingBook in
-                    ReadingBookButton(readingBook, type: .home)
+                    CompleteBookButton(readingBook, type: .home)
                 }
             }
             .safeAreaPadding([.leading, .top, .trailing])
@@ -225,7 +225,7 @@ extension HomeReadingBookTabView {
 struct HomeReadingBookTabView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            HomeReadingBookTabView(
+            HomeCompleteBookTabView(
                 scrollYOffset: .constant(0.0),
                 selectedBookSortCriteria: .constant(.titleAscendingOrder),
                 scrollProxy: scrollProxy

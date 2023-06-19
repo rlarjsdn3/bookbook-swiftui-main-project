@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookTopBarView: View {
+struct CompleteBookTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -36,7 +36,7 @@ struct ReadingBookTopBarView: View {
     var body: some View {
         navigationTopBar
             .sheet(isPresented: $isPresentingEditBookInformationSheet) {
-                ReadingBookEditView(readingBook)
+                CompleteBookEditView(readingBook)
             }
             .sheet(isPresented: $isPresentingAddSentenceSheet) {
                 AddSentenceSheetView(readingBook)
@@ -52,7 +52,7 @@ struct ReadingBookTopBarView: View {
 
 // MARK: - EXTENSIONS
 
-extension ReadingBookTopBarView {
+extension CompleteBookTopBarView {
     var navigationTopBar: some View {
         HStack {
             Spacer()
@@ -151,9 +151,10 @@ extension ReadingBookTopBarView {
 
 // MARK: - PREVIEW
 
-struct TargetBookDetailHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadingBookTopBarView(CompleteBook.preview, scrollYOffset: .constant(0.0))
-            .environmentObject(RealmManager())
-    }
+#Preview {
+    CompleteBookTopBarView(
+        CompleteBook.preview,
+        scrollYOffset: .constant(0.0)
+    )
+    .environmentObject(RealmManager())
 }

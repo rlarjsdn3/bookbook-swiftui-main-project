@@ -13,7 +13,7 @@ enum SentenceCellButtonType {
     case shelf
 }
 
-struct SentenceButton: View {
+struct SentenceCellButton: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
@@ -43,7 +43,7 @@ struct SentenceButton: View {
     }
 }
 
-extension SentenceButton {
+extension SentenceCellButton {
     var sentenceButton: some View {
         VStack {
             // TODO: - 셀을 클릭하면 자세히 보기 뷰로 이동하도록 만들기
@@ -102,7 +102,7 @@ extension SentenceButton {
 
 struct SentenceCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        SentenceButton(
+        SentenceCellButton(
             CompleteBook.preview,
             collectSentence: CollectSentences.preview
         )

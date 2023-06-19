@@ -70,7 +70,7 @@ extension HomeScrollView {
                     
                     HomeActivityTabView()
                     
-                    HomeReadingBookTabView(
+                    HomeCompleteBookTabView(
                         scrollYOffset: $scrollYOffset,
                         selectedBookSortCriteria: $selectedBookSortCriteria,
                         scrollProxy: scrollProxy

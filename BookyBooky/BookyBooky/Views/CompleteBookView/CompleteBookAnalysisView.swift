@@ -11,14 +11,14 @@ import RealmSwift
 
 // 코드 리팩토링 중...
 
-struct ReadingBookAnalysisView: View {
+struct CompleteBookAnalysisView: View {
     
     // MARK: - INNER ENUM
     
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedRealmObject var readingBook: CompleteBook
+    @ObservedRealmObject var completeBook: CompleteBook
     
     @State private var scrollPosition: TimeInterval = 0.0
     
@@ -28,7 +28,7 @@ struct ReadingBookAnalysisView: View {
     // MARK: - COMPUTED PROPERTIES
 
     var mainReadingTime: MainReadingTime? {
-        guard !readingBook.readingRecords.isEmpty else {
+        guard !completeBook.readingRecords.isEmpty else {
             return nil
         }
         
@@ -36,7 +36,7 @@ struct ReadingBookAnalysisView: View {
         
         var readingDate: [Date] = []
         
-        for record in readingBook.readingRecords {
+        for record in completeBook.readingRecords {
             readingDate.append(record.date)
         }
         
@@ -77,7 +77,7 @@ struct ReadingBookAnalysisView: View {
     var consecutiveReadingDay: Int? {
         var readingDate: [Date] = []
         
-        for record in readingBook.readingRecords {
+        for record in completeBook.readingRecords {
             readingDate.append(record.date)
         }
         
@@ -126,27 +126,32 @@ struct ReadingBookAnalysisView: View {
         scrollPositionEnd.toFormat("M월 d일 (E)")
     }
     
+    // MARK: - INTILALZIER
+    init(_ completeBook: CompleteBook) {
+        self.completeBook = completeBook
+    }
+    
     // MARK: - BODY
     
     var body: some View {
         analysisContent
             .onAppear {
-                if let lastRecord = readingBook.lastRecord {
+                if let lastRecord = completeBook.lastRecord {
                     scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
                 }
             }
-            .onChange(of: readingBook.readingRecords) { _, _ in
-                if let lastRecord = readingBook.lastRecord {
+            .onChange(of: completeBook.readingRecords) { _, _ in
+                if let lastRecord = completeBook.lastRecord {
                     scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
                 }
             }
             .sheet(isPresented: $isPresentingAllReadingDataSheet) {
-                ReadingBookDataSheetView(readingBook)
+                CompleteBookDataSheetView(completeBook)
             }
     }
     
     func totalReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
-        readingBook.readingRecords.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.numOfPagesRead }
+        completeBook.readingRecords.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.numOfPagesRead }
     }
     
     func averageReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
@@ -154,17 +159,17 @@ struct ReadingBookAnalysisView: View {
     }
     
     func readPagesCountInPeriod(in range: ClosedRange<Date>) -> Int {
-        let count = readingBook.readingRecords.filter({ range.contains($0.date) }).count
+        let count = completeBook.readingRecords.filter({ range.contains($0.date) }).count
         return count != 0 ? count : 1
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension ReadingBookAnalysisView {
+extension CompleteBookAnalysisView {
     var analysisContent: some View {
         Group {
-            if readingBook.readingRecords.isEmpty {
+            if completeBook.readingRecords.isEmpty {
                 VStack(spacing: 5) {
                     Text("차트를 표시할 수 없음")
                         .font(.title3)
@@ -202,10 +207,10 @@ extension ReadingBookAnalysisView {
             HStack(alignment: .firstTextBaseline) {
                 Text("\(totalReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
                     .font(.title.weight(.bold))
-                    .foregroundStyle(readingBook.category.themeColor)
+                    .foregroundStyle(completeBook.category.themeColor)
                 Text("페이지")
                     .font(.headline)
-                    .foregroundStyle(readingBook.category.themeColor)
+                    .foregroundStyle(completeBook.category.themeColor)
                 Spacer()
             }
             
@@ -217,12 +222,12 @@ extension ReadingBookAnalysisView {
     
     var barChart: some View {
         Chart {
-            ForEach(readingBook.readingRecords, id: \.self) { record in
+            ForEach(completeBook.readingRecords, id: \.self) { record in
                 BarMark(
                     x: .value("date", record.date, unit: .day),
                     y: .value("page", record.numOfPagesRead)
                 )
-                .foregroundStyle(readingBook.category.themeColor)
+                .foregroundStyle(completeBook.category.themeColor)
             }
             
             if isPresentingAverageRuleMark {
@@ -233,11 +238,11 @@ extension ReadingBookAnalysisView {
                     )
                 )
                 .lineStyle(StrokeStyle(lineWidth: 3))
-                .foregroundStyle(readingBook.category.themeColor == Color.black ? Color.gray : Color.black)
+                .foregroundStyle(completeBook.category.themeColor == Color.black ? Color.gray : Color.black)
                 .annotation(position: .top, alignment: .leading) {
                     Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
                         .font(.headline)
-                        .foregroundStyle(readingBook.category.themeColor == Color.black ? Color.gray : Color.black)
+                        .foregroundStyle(completeBook.category.themeColor == Color.black ? Color.gray : Color.black)
                 }
             }
         }
@@ -342,7 +347,7 @@ extension ReadingBookAnalysisView {
                 
                 Spacer()
                 
-                if !readingBook.readingRecords.isEmpty {
+                if !completeBook.readingRecords.isEmpty {
                     Text("\(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
                 } else {
                     Text("-")
@@ -350,7 +355,7 @@ extension ReadingBookAnalysisView {
             }
             .padding()
             .foregroundColor(isPresentingAverageRuleMark ? Color.white : Color.black)
-            .background(isPresentingAverageRuleMark ? readingBook.category.themeColor : Color("Background"))
+            .background(isPresentingAverageRuleMark ? completeBook.category.themeColor : Color("Background"))
             .clipShape(.rect(cornerRadius: 20))
             .padding(.vertical, 5)
         }
@@ -361,6 +366,6 @@ extension ReadingBookAnalysisView {
 
 struct ReadingBookAnalysisView_Previews: PreviewProvider {    
     static var previews: some View {
-        ReadingBookAnalysisView(readingBook: CompleteBook.preview)
+        CompleteBookAnalysisView(CompleteBook.preview)
     }
 }

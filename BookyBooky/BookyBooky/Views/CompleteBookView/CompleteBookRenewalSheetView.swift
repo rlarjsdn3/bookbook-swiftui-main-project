@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookRenewalSheetView: View {
+struct CompleteBookRenewalSheetView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -19,13 +19,13 @@ struct ReadingBookRenewalSheetView: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: CompleteBook
+    @ObservedRealmObject var completeBook: CompleteBook
     @Binding var isPresentingReadingBookConfettiView: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: CompleteBook, isPresentingReadingBookConfettiView: Binding<Bool>) {
-        self.readingBook = readingBook
+    init(_ completeBook: CompleteBook, isPresentingReadingBookConfettiView: Binding<Bool>) {
+        self.completeBook = completeBook
         self._isPresentingReadingBookConfettiView = isPresentingReadingBookConfettiView
     }
     
@@ -34,10 +34,10 @@ struct ReadingBookRenewalSheetView: View {
     var body: some View {
         renewalContent
             .onAppear {
-                totalPagesRead = readingBook.lastRecord?.totalPagesRead ?? 0
+                totalPagesRead = completeBook.lastRecord?.totalPagesRead ?? 0
             }
             .onDisappear {
-                if readingBook.isComplete {
+                if completeBook.isComplete {
                     isPresentingReadingBookConfettiView = true
                 }
             }
@@ -46,7 +46,7 @@ struct ReadingBookRenewalSheetView: View {
     }
 }
 
-extension ReadingBookRenewalSheetView {
+extension CompleteBookRenewalSheetView {
     var renewalContent: some View {
         VStack {
             howManyPagesDidYouReadText
@@ -98,7 +98,7 @@ extension ReadingBookRenewalSheetView {
     
     var minusButton: some View {
         Group {
-            let lastRecordTotalPagesRead = readingBook.lastRecord?.totalPagesRead ?? 0
+            let lastRecordTotalPagesRead = completeBook.lastRecord?.totalPagesRead ?? 0
             
             // TODO: - ‘+’ 혹은 ‘-‘ 버튼을 길게 클릭하면 페이지 수가 감소하거나 증가하도록 업데이트하기
             Button {
@@ -109,7 +109,7 @@ extension ReadingBookRenewalSheetView {
                     .foregroundColor(.white)
                     .padding(.vertical, 23)
                     .padding(.horizontal)
-                    .background(readingBook.category.themeColor)
+                    .background(completeBook.category.themeColor)
                     .clipShape(Circle())
             }
             // TODO: -  ‘+’ 혹은 ‘-‘ 버튼을 클릭할 수 없을 때, 흔들기 애니메이션 효과 적용하기
@@ -120,7 +120,7 @@ extension ReadingBookRenewalSheetView {
     
     var plusButton: some View {
         Group {
-            let readingBookTotalPages = readingBook.itemPage
+            let readingBookTotalPages = completeBook.itemPage
             
             // TODO: - ‘+’ 혹은 ‘-‘ 버튼을 길게 클릭하면 페이지 수가 감소하거나 증가하도록 업데이트하기
             Button {
@@ -130,7 +130,7 @@ extension ReadingBookRenewalSheetView {
                     .font(.largeTitle)
                     .foregroundColor(.white)
                     .padding(10)
-                    .background(readingBook.category.themeColor)
+                    .background(completeBook.category.themeColor)
                     .clipShape(Circle())
             }
             // TODO: -  ‘+’ 혹은 ‘-‘ 버튼을 클릭할 수 없을 때, 흔들기 애니메이션 효과 적용하기
@@ -142,7 +142,7 @@ extension ReadingBookRenewalSheetView {
     var renewalButton: some View {
         Button {
             realmManager.addReadingBookRecord(
-                readingBook,
+                completeBook,
                 totalPagesRead: totalPagesRead
             )
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -159,7 +159,7 @@ extension ReadingBookRenewalSheetView {
 
 struct ReadingBookRenewalSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookRenewalSheetView(
+        CompleteBookRenewalSheetView(
             CompleteBook.preview,
             isPresentingReadingBookConfettiView: .constant(false)
         )

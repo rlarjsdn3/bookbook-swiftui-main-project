@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookTopInfoView: View {
+struct CompleteBookTopInfoView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -19,46 +19,46 @@ struct ReadingBookTopInfoView: View {
    
     // MARK: - PROPERTIES
     
-    let readingBook: CompleteBook
+    let completeBook: CompleteBook
     
     // MARK: - INITIALIZER
     
-    init(_ readingBook: CompleteBook) {
-        self.readingBook = readingBook
+    init(_ completeBook: CompleteBook) {
+        self.completeBook = completeBook
     }
     
     // MARK: - BODY
     
     var body: some View {
-        readingBookInfo
+        completeBookInfo
             .sheet(isPresented: $isPresentingRenewalSheet) {
-                ReadingBookRenewalSheetView(
-                    readingBook,
+                CompleteBookRenewalSheetView(
+                    completeBook,
                     isPresentingReadingBookConfettiView: $isPresentingReadingBookConfettiView
                 )
             }
             .fullScreenCover(isPresented: $isPresentingReadingBookConfettiView) {
-                ReadingBookConfettiView(readingBook)
+                CompleteBookConfettiView(completeBook)
             }
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension ReadingBookTopInfoView {
-    var readingBookInfo: some View {
+extension CompleteBookTopInfoView {
+    var completeBookInfo: some View {
         VStack {
-            readingBookCover
+            completeBookCover
             
-            readingRenewalStatus
+            completeBookStatus
         }
     }
     
-    var readingBookCover: some View {
+    var completeBookCover: some View {
         HStack {
             ZStack {
                 asyncCoverImage(
-                    readingBook.cover,
+                    completeBook.cover,
                     width: 130, height: 180,
                     coverShape: RoundedRectTRBR()
                 )
@@ -66,12 +66,12 @@ extension ReadingBookTopInfoView {
                 exclamationMarkSFSymbolImage
             }
             
-            readingBookInfoLabel
+            completeBookInfoLabel
         }
         .frame(height: 200)
     }
     
-    var readingRenewalStatus: some View {
+    var completeBookStatus: some View {
         HStack {
             renewalButton
             
@@ -85,7 +85,7 @@ extension ReadingBookTopInfoView {
     
     var exclamationMarkSFSymbolImage: some View {
         Group {
-            if readingBook.isBehindTargetDate {
+            if completeBook.isBehindTargetDate {
                 Image(systemName: "exclamationmark.circle.fill")
                     .font(.system(size: 50))
                     .foregroundColor(Color.red)
@@ -96,39 +96,39 @@ extension ReadingBookTopInfoView {
         }
     }
     
-    var readingBookInfoLabel: some View {
+    var completeBookInfoLabel: some View {
         VStack(alignment: .leading, spacing: 3) {
-            readingbBookTitleText
+            completeBookTitleText
             
-            readingBookSubInfoLabel
+            completeBookSubInfoLabel
             
             Spacer()
             
-            readingBookProgressLabel
+            completeBookProgressLabel
         }
         .padding()
     }
     
-    var readingbBookTitleText: some View {
-        Text(readingBook.title)
+    var completeBookTitleText: some View {
+        Text(completeBook.title)
             .font(.title3.weight(.bold))
             .lineLimit(1)
             .truncationMode(.middle)
     }
     
-    var readingBookSubInfoLabel: some View {
+    var completeBookSubInfoLabel: some View {
         VStack(alignment: .leading) {
-            Text(readingBook.author)
+            Text(completeBook.author)
                 .font(.body.weight(.semibold))
             
-            Text("\(readingBook.publisher) ・ \(readingBook.category.name)")
+            Text("\(completeBook.publisher) ・ \(completeBook.category.name)")
                 .font(.subheadline.weight(.semibold))
                 .foregroundColor(.secondary)
                 .lineLimit(1)
         }
     }
     
-    var readingBookProgressLabel: some View {
+    var completeBookProgressLabel: some View {
         HStack {
             progressLabel
             
@@ -140,7 +140,7 @@ extension ReadingBookTopInfoView {
     
     var progressLabel: some View {
         HStack {
-            Text("\(readingBook.readingProgressPage)")
+            Text("\(completeBook.readingProgressPage)")
                 .font(.largeTitle)
             
             Text("/")
@@ -148,7 +148,7 @@ extension ReadingBookTopInfoView {
                 .foregroundColor(.secondary)
             
             VStack(alignment: .leading) {
-                Text("\(readingBook.itemPage)")
+                Text("\(completeBook.itemPage)")
                     .font(.callout).foregroundColor(.secondary)
                     .minimumScaleFactor(0.5)
                 
@@ -160,32 +160,32 @@ extension ReadingBookTopInfoView {
     
     var progressGuage: some View {
         Group {
-            let readingProgressRate = readingBook.readingProgressRate
+            let progressRate = completeBook.readingProgressRate
             
-            Gauge(value: readingProgressRate, in: 0...100) {
+            Gauge(value: progressRate, in: 0...100) {
                 Text("ReadingProgressRate")
             } currentValueLabel: {
-                Text("\(readingProgressRate.formatted(.number.precision(.fractionLength(0))))%")
+                Text("\(progressRate.formatted(.number.precision(.fractionLength(0))))%")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
-            .tint(readingBook.category.themeColor.gradient)
+            .tint(completeBook.category.themeColor.gradient)
             .gaugeStyle(.accessoryCircularCapacity)
             .padding(10)
         }
     }
 }
 
-extension ReadingBookTopInfoView {
+extension CompleteBookTopInfoView {
     var renewalButton: some View {
         Button {
             isPresentingRenewalSheet = true
         } label: {
             Group {
-                if readingBook.isComplete {
+                if completeBook.isComplete {
                     Text("완독 도서")
                 } else {
-                    if readingBook.isBehindTargetDate {
+                    if completeBook.isBehindTargetDate {
                         Text("갱신 불가")
                             .opacity(0.75)
                     } else {
@@ -199,23 +199,23 @@ extension ReadingBookTopInfoView {
             .background(.gray.opacity(0.3))
             .clipShape(Capsule())
         }
-        .disabled(readingBook.isComplete)
-        .disabled(readingBook.isBehindTargetDate)
+        .disabled(completeBook.isComplete)
+        .disabled(completeBook.isBehindTargetDate)
     }
     
     var readingStatusText: some View {
         Group {
-            if readingBook.isComplete {
+            if completeBook.isComplete {
                 Text("도서를 완독했어요!")
             } else {
                 Group {
                     // 오늘 일자가 목표 일자를 초과하는 경우
-                    if readingBook.isBehindTargetDate {
+                    if completeBook.isBehindTargetDate {
                         Text("목표를 다시 설정해주세요!")
                         // 오늘 일자가 목표 일자와 같거나 더 빠른 경우
                     } else {
                         // 독서 데이터가 하나라도 존재하는 경우
-                        if let lastRecord = readingBook.lastRecord {
+                        if let lastRecord = completeBook.lastRecord {
                             // 오늘 일자에 독서를 한 경우
                             if Date().isEqual([.year, .month, .day], date: lastRecord.date) {
                                 Text("오늘 \(lastRecord.numOfPagesRead)페이지나 읽었어요!")
@@ -240,7 +240,7 @@ extension ReadingBookTopInfoView {
 
 struct ReadingBookInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookTopInfoView(CompleteBook.preview)
+        CompleteBookTopInfoView(CompleteBook.preview)
             .environmentObject(RealmManager())
     }
 }

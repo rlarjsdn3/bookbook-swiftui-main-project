@@ -33,9 +33,9 @@ struct CompleteBookView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                ReadingBookTopBarView(readingBook, scrollYOffset: $scrollYOffset)
+                CompleteBookTopBarView(readingBook, scrollYOffset: $scrollYOffset)
                 
-                ReadingBookScrollView(readingBook, scrollYOffset: $scrollYOffset)
+                CompleteBookScrollView(readingBook, scrollYOffset: $scrollYOffset)
             }
             .navigationBarBackButtonHidden()
         }

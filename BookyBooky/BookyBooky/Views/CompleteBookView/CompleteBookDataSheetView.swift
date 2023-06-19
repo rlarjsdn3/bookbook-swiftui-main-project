@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookDataSheetView: View {
+struct CompleteBookDataSheetView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -19,12 +19,12 @@ struct ReadingBookDataSheetView: View {
     
     // MARK: - PROPERTIES
     
-    let readingBook: CompleteBook
+    let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: CompleteBook) {
-        self.readingBook = readingBook
+    init(_ completeBook: CompleteBook) {
+        self.completeBook = completeBook
     }
     
     // MARK: - BODY
@@ -33,14 +33,14 @@ struct ReadingBookDataSheetView: View {
         recordCotent
             .confirmationDialog("마지막으로 추가된 독서 데이터를 삭제하시겠습니까?", isPresented: $isPresentingDeleteLastDataConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
-                    realmManager.deleteLastRecord(readingBook)
+                    realmManager.deleteLastRecord(completeBook)
                 }
             } message: {
                 Text("이 작업은 취소할 수 없습니다.")
             }
             .confirmationDialog("모든 독서 데이터를 삭제하시겠습니까?", isPresented: $isPresentingDeleteallDataConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
-                    realmManager.deleteAllRecord(readingBook)
+                    realmManager.deleteAllRecord(completeBook)
                 }
             } message: {
                 Text("이 작업은 취소할 수 없습니다.")
@@ -49,7 +49,7 @@ struct ReadingBookDataSheetView: View {
     }
 }
 
-extension ReadingBookDataSheetView {
+extension CompleteBookDataSheetView {
     var recordCotent: some View {
         NavigationStack {
             recordScroll
@@ -68,7 +68,7 @@ extension ReadingBookDataSheetView {
     
     var recordsSection: some View {
         Section {
-            if readingBook.readingRecords.isEmpty {
+            if completeBook.readingRecords.isEmpty {
                 noDataLabel
             } else {
                 recordCellGroup
@@ -86,7 +86,7 @@ extension ReadingBookDataSheetView {
     }
     
     var recordCellGroup: some View {
-        ForEach(readingBook.readingRecords, id: \.self) { record in
+        ForEach(completeBook.readingRecords, id: \.self) { record in
             recordCell(record)
         }
     }
@@ -129,8 +129,8 @@ extension ReadingBookDataSheetView {
             
             deleteAllRecordButton
         }
-        .disabled(readingBook.isComplete)
-        .disabled(readingBook.readingRecords.isEmpty)
+        .disabled(completeBook.isComplete)
+        .disabled(completeBook.readingRecords.isEmpty)
     }
     
     var deleteLastRecordButton: some View {
@@ -156,7 +156,7 @@ extension ReadingBookDataSheetView {
 
 struct ReadingDataSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookDataSheetView(CompleteBook.preview)
+        CompleteBookDataSheetView(CompleteBook.preview)
             .environmentObject(RealmManager())
     }
 }

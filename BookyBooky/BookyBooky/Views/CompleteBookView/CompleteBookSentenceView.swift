@@ -9,18 +9,28 @@ import SwiftUI
 import RealmSwift
 import Shimmer
 
-struct ReadingBookCollectSentencesView: View {
+struct CompleteBookSentenceView: View {
     
-    @ObservedRealmObject var readingBook: CompleteBook
+    // MARK: - PROPERTIES
+    
+    @ObservedRealmObject var completeBook: CompleteBook
+    
+    // MARK: - INTIALIZER
+    
+    init(_ completeBook: CompleteBook) {
+        self.completeBook = completeBook
+    }
+    
+    // MARK: - BODY
     
     var body: some View {
-        if readingBook.collectSentences.isEmpty {
+        if completeBook.collectSentences.isEmpty {
             noCollectSentenceLabel
         } else {
             ScrollView {
-                ForEach(readingBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
-                    SentenceButton(
-                        readingBook,
+                ForEach(completeBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
+                    SentenceCellButton(
+                        completeBook,
                         collectSentence: collect
                     )
                 }
@@ -30,7 +40,7 @@ struct ReadingBookCollectSentencesView: View {
     }
 }
 
-extension ReadingBookCollectSentencesView {
+extension CompleteBookSentenceView {
     var noCollectSentenceLabel: some View {
         VStack(spacing: 5) {
             Text("수집한 문장이 없음")
@@ -47,6 +57,6 @@ extension ReadingBookCollectSentencesView {
 
 struct ReadingBookCollectSentencesView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookCollectSentencesView(readingBook: CompleteBook.preview)
+        CompleteBookSentenceView(CompleteBook.preview)
     }
 }

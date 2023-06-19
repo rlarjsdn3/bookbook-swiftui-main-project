@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookBottomTabView: View {
+struct CompleteBookBottomTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -19,13 +19,13 @@ struct ReadingBookBottomTabView: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: CompleteBook
+    @ObservedRealmObject var completeBook: CompleteBook
     @Binding var scrollYOffset: CGFloat
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
-        self.readingBook = readingBook
+    init(_ completeBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
+        self.completeBook = completeBook
         self._scrollYOffset = scrollYOffset
     }
     
@@ -33,7 +33,7 @@ struct ReadingBookBottomTabView: View {
     
     var body: some View {
         Section {
-            tabView(selectedTabType)
+            bottomTabView(selectedTabType)
         } header: {
             tabButtonGroup
         }
@@ -42,16 +42,16 @@ struct ReadingBookBottomTabView: View {
 
 // MARK: - EXTENSIONS
 
-extension ReadingBookBottomTabView {
-    func tabView(_ selectedTabType: ReadingBookTab) -> some View {
+extension CompleteBookBottomTabView {
+    func bottomTabView(_ selected: ReadingBookTab) -> some View {
         Group {
-            switch selectedTabType {
+            switch selected {
             case .overview:
-                ReadingBookOutlineView(readingBook: readingBook)
+                CompleteBookOutlineView(completeBook)
             case .analysis:
-                ReadingBookAnalysisView(readingBook: readingBook)
+                CompleteBookAnalysisView(completeBook)
             case .collectSentences:
-                ReadingBookCollectSentencesView(readingBook: readingBook)
+                CompleteBookSentenceView(completeBook)
             }
         }
     }
@@ -61,10 +61,10 @@ extension ReadingBookBottomTabView {
             ForEach(ReadingBookTab.allCases, id: \.self) { type in
                 Spacer()
                 
-                ReadingBookTabButton(
+                CompleteBookTabButton(
                     type,
-                    selectedTabType: $selectedTabType,
-                    selectedTabTypeForAnimation: $selectedTabTypeForAnimation,
+                    selectedTab: $selectedTabType,
+                    selectedTabFA: $selectedTabTypeForAnimation,
                     namespace: namespace
                 )
                 
@@ -85,7 +85,7 @@ extension ReadingBookBottomTabView {
 
 struct ReadingBookTabSectionView_Previews: PreviewProvider {    
     static var previews: some View {
-        ReadingBookBottomTabView(
+        CompleteBookBottomTabView(
             CompleteBook.preview,
             scrollYOffset: .constant(0.0)
         )

@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ReadingBookEditView: View {
+struct CompleteBookEditView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -22,17 +22,25 @@ struct ReadingBookEditView: View {
     
     // MARK: - PROPERTIES
     
-    var readingBook: CompleteBook
+    var completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: CompleteBook) {
-        self.readingBook = readingBook
+    init(_ completeBook: CompleteBook) {
+        self.completeBook = completeBook
     }
     
     // MARK: - BODY
     
     var body: some View {
+        editBookInfo
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension CompleteBookEditView {
+    var editBookInfo: some View {
         NavigationStack {
             VStack {
                 inputFieldGroup
@@ -40,10 +48,10 @@ struct ReadingBookEditView: View {
                 editButton
             }
             .onAppear {
-                inputTitle = readingBook.title
-                inputPublisher = readingBook.publisher
-                inputCategory = readingBook.category
-                inputTargetDate = readingBook.targetDate
+                inputTitle = completeBook.title
+                inputPublisher = completeBook.publisher
+                inputCategory = completeBook.category
+                inputTargetDate = completeBook.targetDate
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -58,11 +66,7 @@ struct ReadingBookEditView: View {
         }
         .presentationCornerRadius(30)
     }
-}
-
-// MARK: - EXTENSIONS
-
-extension ReadingBookEditView {    
+    
     var inputFieldGroup: some View {
         VStack {
             titleTextField
@@ -137,7 +141,7 @@ extension ReadingBookEditView {
                     displayedComponents: [.date])
                 .datePickerStyle(.compact)
                 .labelsHidden()
-                .tint(readingBook.category.themeColor)
+                .tint(completeBook.category.themeColor)
                 .padding(.horizontal, 3)
         }
         .padding(.vertical, 14)
@@ -148,7 +152,7 @@ extension ReadingBookEditView {
     var editButton: some View {
         Button {
             realmManager.editReadingBook(
-                readingBook,
+                completeBook,
                 title: inputTitle,
                 publisher: inputPublisher,
                 category: inputCategory,
@@ -160,7 +164,7 @@ extension ReadingBookEditView {
         } label: {
             Text("수정하기")
         }
-        .buttonStyle(BottomButtonStyle(backgroundColor: readingBook.category.themeColor))
+        .buttonStyle(BottomButtonStyle(backgroundColor: completeBook.category.themeColor))
         // 베젤이 있는 아이폰은 하단 간격 주기
         .padding(safeAreaInsets.bottom == 0 ? .bottom : [])
     }
@@ -170,7 +174,7 @@ extension ReadingBookEditView {
 
 struct EditBookInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookEditView(CompleteBook.preview)
+        CompleteBookEditView(CompleteBook.preview)
             .environmentObject(RealmManager())
     }
 }

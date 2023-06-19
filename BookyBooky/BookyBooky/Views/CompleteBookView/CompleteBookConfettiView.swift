@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 import ConfettiSwiftUI
 
-struct ReadingBookConfettiView: View {
+struct CompleteBookConfettiView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -22,8 +22,8 @@ struct ReadingBookConfettiView: View {
     var dayToCompleteTheBook: Int {
         let component = Calendar.current.dateComponents(
             [.day],
-            from: readingBook.startDate,
-            to: readingBook.completeDate ?? Date()
+            from: completeBook.startDate,
+            to: completeBook.completeDate ?? Date()
         )
         return component.day!
     }
@@ -31,20 +31,20 @@ struct ReadingBookConfettiView: View {
     var dayRemainingUntilTheTargetDate: Int {
         let component = Calendar.current.dateComponents(
             [.day],
-            from: readingBook.completeDate ?? Date(),
-            to: readingBook.targetDate
+            from: completeBook.completeDate ?? Date(),
+            to: completeBook.targetDate
         )
         return component.day!
     }
     
     // MARK: - PROPERTIES
     
-    let readingBook: CompleteBook
+    let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: CompleteBook) {
-        self.readingBook = readingBook
+    init(_ completeBook: CompleteBook) {
+        self.completeBook = completeBook
     }
     
     // MARK: - BODY
@@ -68,7 +68,7 @@ struct ReadingBookConfettiView: View {
     }
 }
 
-extension ReadingBookConfettiView {
+extension CompleteBookConfettiView {
     var confettiContent: some View {
         VStack {
             Spacer()
@@ -76,7 +76,7 @@ extension ReadingBookConfettiView {
             congratuationLabel
             
             asyncCoverImage(
-                readingBook.cover,
+                completeBook.cover,
                 coverShape: RoundedRect()
             )
             
@@ -93,7 +93,7 @@ extension ReadingBookConfettiView {
             Text("축하합니다!")
                 .font(.largeTitle.weight(.bold))
             
-            Text("\(readingBook.title) 도서를 완독했어요!")
+            Text("\(completeBook.title) 도서를 완독했어요!")
                 .font(.title2.weight(.semibold))
                 .foregroundColor(Color.secondary)
         }
@@ -126,12 +126,12 @@ extension ReadingBookConfettiView {
         } label: {
              Text("확인")
         }
-        .buttonStyle(BottomButtonStyle(backgroundColor: readingBook.category.themeColor))
+        .buttonStyle(BottomButtonStyle(backgroundColor: completeBook.category.themeColor))
     }
 }
 
 struct CompleteConfettiView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingBookConfettiView(CompleteBook.preview)
+        CompleteBookConfettiView(CompleteBook.preview)
     }
 }

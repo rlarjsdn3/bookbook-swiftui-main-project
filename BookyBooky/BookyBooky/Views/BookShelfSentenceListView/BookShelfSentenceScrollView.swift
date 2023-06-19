@@ -70,7 +70,7 @@ extension BookShelfSentenceScrollView {
                         Section {
                             VStack {
                                 ForEach(readingBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
-                                    SentenceButton(readingBook, collectSentence: collect)
+                                    SentenceCellButton(readingBook, collectSentence: collect)
                                 }
                             }
                         } header: {

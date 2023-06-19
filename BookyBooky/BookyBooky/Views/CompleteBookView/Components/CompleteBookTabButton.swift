@@ -7,24 +7,24 @@
 
 import SwiftUI
 
-struct ReadingBookTabButton: View {
+struct CompleteBookTabButton: View {
     
     // MARK: - PROPERTIES
     
     let type: ReadingBookTab
-    @Binding var selectedTabType: ReadingBookTab
-    @Binding var selectedTabTypeForAnimation: ReadingBookTab
+    @Binding var selectedTab: ReadingBookTab
+    @Binding var selectedTabFA: ReadingBookTab
     let namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
     init(_ type: ReadingBookTab,
-         selectedTabType: Binding<ReadingBookTab>,
-         selectedTabTypeForAnimation: Binding<ReadingBookTab>,
+         selectedTab: Binding<ReadingBookTab>,
+         selectedTabFA: Binding<ReadingBookTab>,
          namespace: Namespace.ID) {
         self.type = type
-        self._selectedTabType = selectedTabType
-        self._selectedTabTypeForAnimation = selectedTabTypeForAnimation
+        self._selectedTab = selectedTab
+        self._selectedTabFA = selectedTabFA
         self.namespace = namespace
     }
     
@@ -35,7 +35,7 @@ struct ReadingBookTabButton: View {
     }
 }
 
-extension ReadingBookTabButton {
+extension CompleteBookTabButton {
     var tabButton: some View {
         Button {
             selectType(type)
@@ -49,18 +49,18 @@ extension ReadingBookTabButton {
     
     func selectType(_ type: ReadingBookTab) {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-            selectedTabTypeForAnimation = type
+            selectedTabFA = type
         }
-        selectedTabType = type
+        selectedTab = type
     }
     
     func tabLabel(_ type: ReadingBookTab) -> some View {
         Text(type.name)
             .font(.headline)
             .fontWeight(.bold)
-            .foregroundColor(selectedTabTypeForAnimation == type ? .black : .gray)
+            .foregroundColor(selectedTabFA == type ? .black : .gray)
             .overlay(alignment: .bottomLeading) {
-                if selectedTabTypeForAnimation == type {
+                if selectedTabFA == type {
                     Rectangle()
                         .offset(y: 15)
                         .fill(.black)
@@ -78,10 +78,10 @@ struct ReadingBookTabButton_Previews: PreviewProvider {
     @Namespace static var namespace
     
     static var previews: some View {
-        ReadingBookTabButton(
+        CompleteBookTabButton(
             .overview,
-            selectedTabType: .constant(.overview),
-            selectedTabTypeForAnimation: .constant(.overview),
+            selectedTab: .constant(.overview),
+            selectedTabFA: .constant(.overview),
             namespace: namespace
         )
     }
