@@ -166,7 +166,7 @@ struct AnalysisHighlightTabView: View {
         VStack {
             highlightHeaderText
             
-            highlightCells
+            highlightCellGroup
         }
     }
 }
@@ -181,23 +181,23 @@ extension AnalysisHighlightTabView {
             .padding(.bottom, -2)
     }
     
-    var highlightCells: some View {
+    var highlightCellGroup: some View {
         VStack {
             HStack {
-                mainReadingHourHighlight
+                mainReadingHourHighlightCell
                 
-                consecutiveReadingDaysHighlight
+                consecutiveReadingDaysHighlightCell
             }
             
             HStack {
-                mainReadingGenreHighlight
+                mainReadingGenreHighlightCell
                 
-                totalNumberOfBooksReadHighlight
+                totalNumberOfBooksReadHighlightCell
             }
         }
     }
     
-    var mainReadingHourHighlight: some View {
+    var mainReadingHourHighlightCell: some View {
         Group {
             let time = mainReadingTime
             
@@ -238,7 +238,7 @@ extension AnalysisHighlightTabView {
         }
     }
     
-    var consecutiveReadingDaysHighlight: some View {
+    var consecutiveReadingDaysHighlightCell: some View {
         Group {
             let days = consecutiveReadingDay
             
@@ -270,7 +270,7 @@ extension AnalysisHighlightTabView {
         }
     }
     
-    var mainReadingGenreHighlight: some View {
+    var mainReadingGenreHighlightCell: some View {
         Group {
             let chartData = totalPagesByCategoryChartData
             
@@ -309,7 +309,7 @@ extension AnalysisHighlightTabView {
         }
     }
     
-    var totalNumberOfBooksReadHighlight: some View {
+    var totalNumberOfBooksReadHighlightCell: some View {
         Group {
             let chartData = monthlyBooksCompletedChartData
             

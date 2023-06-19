@@ -35,24 +35,23 @@ struct SearchSheetTextFieldView: View {
             
             searchCategory
         }
-        // 검색 시트가 나타난 후, 0.05초 뒤에 키보드를 보이게 합니다.
         .onAppear {
             if aladinAPIManager.searchResults.isEmpty {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     focusedField = true
                 }
             }
         }
     }
     
-    func requestBookSearch(_ searchQuery: String) {
+    func requestSearchBook(_ query: String) {
         searchIndex = 0
         // 새로운 검색 시도 시, 스크롤을 제일 위로 올립니다.
         // searchIndex 변수값을 짧은 시간에 변경(0→1)함으로써 onChange 제어자가 이를 알아차려 스크롤을 위로 올립니다.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
             searchIndex = 1
         }
-        aladinAPIManager.requestBookSearchAPI(searchQuery)
+        aladinAPIManager.requestBookSearchAPI(query)
         
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
             selectedCategoryFA = .all
@@ -145,7 +144,7 @@ extension SearchSheetTextFieldView {
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
-                requestBookSearch(searchQuery)
+                requestSearchBook(searchQuery)
             }
             .focused($focusedField)
     }

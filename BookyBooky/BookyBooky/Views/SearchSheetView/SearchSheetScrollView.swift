@@ -24,8 +24,7 @@ struct SearchSheetScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    // 선택된 도서 카테고리에 맞게 리스트를 필터링한 결과를 반환하는 프로퍼티
-    var filteredSearchBook: [briefBookInfo.Item] {
+    var filteredSearchBooks: [briefBookInfo.Item] {
         var filtered: [briefBookInfo.Item] = []
         
         if selectedCategory == .all {
@@ -43,24 +42,24 @@ struct SearchSheetScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        searchSheetScroll
+        bookScrollContent
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchSheetScrollView {
-    var searchSheetScroll: some View {
+    var bookScrollContent: some View {
         Group {
             if aladinAPIManager.searchResults.isEmpty {
                 noResultLabel
             } else {
-                scrollSearchBooks
+                bookScroll
             }
         }
     }
     
-    var scrollSearchBooks: some View {
+    var bookScroll: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 switch selectedListMode {
@@ -91,7 +90,7 @@ extension SearchSheetScrollView {
     
     var buttonGroupInListMode: some View {
         LazyVStack {
-            ForEach(filteredSearchBook, id: \.self) { book in
+            ForEach(filteredSearchBooks, id: \.self) { book in
                 ListBookButton(book)
             }
         }
@@ -100,7 +99,7 @@ extension SearchSheetScrollView {
     
     var buttonGroupInGridMode: some View {
         LazyVGrid(columns: [.init(.flexible()), .init(.flexible())], spacing: 25) {
-            ForEach(filteredSearchBook, id: \.self) { book in
+            ForEach(filteredSearchBooks, id: \.self) { book in
                 GridBookButton(bookItem: book)
             }
         }
