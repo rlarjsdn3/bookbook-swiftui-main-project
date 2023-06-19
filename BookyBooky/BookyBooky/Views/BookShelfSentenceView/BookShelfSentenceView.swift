@@ -13,12 +13,9 @@ struct BookShelfSentenceView: View {
     
     @State private var inputQuery = ""
     @State private var searchQuery = ""
-    @State private var selectedSort = SentenceSortCriteria.titleAscending
-    @State private var selectedFilter: [String] = []
+    @State private var selectedSort: BookSortCriteria = .titleAscendingOrder
     
     @State var isPresentingShowAllButton = false
-    
-    @FocusState var focusedField: Bool
     
     // MARK: - BODY
     
@@ -29,16 +26,14 @@ struct BookShelfSentenceView: View {
                     BookShelfSentenceTextFieldView(
                         inputQuery: $inputQuery,
                         searchQuery: $searchQuery,
-                        selectedSortType: $selectedSort,
-                        selectedFilter: $selectedFilter,
+                        selectedSort: $selectedSort,
                         isPresentingShowAllButton: $isPresentingShowAllButton,
                         scrollProxy: scrollProxy
                     )
                     
                     BookShelfSentenceListView(
                         searchQuery: $searchQuery,
-                        selectedSortType: $selectedSort,
-                        selectedFilter: $selectedFilter
+                        selectedSort: $selectedSort
                     )
                 }
             }

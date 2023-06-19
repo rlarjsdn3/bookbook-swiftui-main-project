@@ -9,11 +9,6 @@ import SwiftUI
 import AlertToast
 import RealmSwift
 
-enum BookShelfListViewType {
-    case favorite
-    case complete
-}
-
 struct BookShelfListView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -24,15 +19,13 @@ struct BookShelfListView: View {
     
     @State var isPresentingShowAllButton = false
     
-    @FocusState var focusedField: Bool
-    
     // MARK: - PROPERTIES
     
-    let type: BookShelfListViewType
+    let type: BookShelfList
     
     // MARK: - INTAILIZER
     
-    init(type: BookShelfListViewType) {
+    init(type: BookShelfList) {
         self.type = type
     }
     
@@ -45,7 +38,7 @@ struct BookShelfListView: View {
                     BookShelfTextFieldView(
                         inputQuery: $inputQuery,
                         searchQuery: $searchQuery,
-                        selectedSortType: $selectedSort,
+                        selectedSort: $selectedSort,
                         isPresentingShowAllButton: $isPresentingShowAllButton,
                         scrollProxy: scrollProxy
                     )

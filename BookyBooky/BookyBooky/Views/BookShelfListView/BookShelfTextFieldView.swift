@@ -19,7 +19,7 @@ struct BookShelfTextFieldView: View {
     
     @Binding var inputQuery: String
     @Binding var searchQuery: String
-    @Binding var selectedSortType: BookSortCriteria
+    @Binding var selectedSort: BookSortCriteria
     @Binding var isPresentingShowAllButton: Bool
     let scrollProxy: ScrollViewProxy
     
@@ -27,12 +27,12 @@ struct BookShelfTextFieldView: View {
     
     init(inputQuery: Binding<String>,
          searchQuery: Binding<String>,
-         selectedSortType: Binding<BookSortCriteria>,
+         selectedSort: Binding<BookSortCriteria>,
          isPresentingShowAllButton: Binding<Bool>,
          scrollProxy: ScrollViewProxy) {
         self._inputQuery = inputQuery
         self._searchQuery = searchQuery
-        self._selectedSortType = selectedSortType
+        self._selectedSort = selectedSort
         self._isPresentingShowAllButton = isPresentingShowAllButton
         self.scrollProxy = scrollProxy
     }
@@ -40,7 +40,7 @@ struct BookShelfTextFieldView: View {
     // MARK: - BODY
     
     var body: some View {
-            textFieldArea
+        textFieldArea
     }
 }
 
@@ -80,14 +80,14 @@ extension BookShelfTextFieldView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedSortType = criteria
+                            selectedSort = criteria
                         }
                         HapticManager.shared.impact(.rigid)
                     }
                 }
             } label: {
                 Text(criteria.name)
-                if selectedSortType == criteria {
+                if selectedSort == criteria {
                     Text("적용됨")
                 }
             }
@@ -202,7 +202,7 @@ struct BookShelfTextFieldView_Previews: PreviewProvider {
             BookShelfTextFieldView(
                 inputQuery: .constant(""),
                 searchQuery: .constant(""),
-                selectedSortType: .constant(.titleAscendingOrder),
+                selectedSort: .constant(.titleAscendingOrder),
                 isPresentingShowAllButton: .constant(false),
                 scrollProxy: scrollProxy
             )

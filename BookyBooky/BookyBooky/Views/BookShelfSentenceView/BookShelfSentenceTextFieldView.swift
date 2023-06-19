@@ -22,8 +22,7 @@ struct BookShelfSentenceTextFieldView: View {
     
     @Binding var inputQuery: String
     @Binding var searchQuery: String
-    @Binding var selectedSortType: SentenceSortCriteria
-    @Binding var selectedFilter: [String]
+    @Binding var selectedSort: BookSortCriteria
     @Binding var isPresentingShowAllButton: Bool
     let scrollProxy: ScrollViewProxy
     
@@ -31,14 +30,12 @@ struct BookShelfSentenceTextFieldView: View {
     
     init(inputQuery: Binding<String>,
          searchQuery: Binding<String>,
-         selectedSortType: Binding<SentenceSortCriteria>,
-         selectedFilter: Binding<[String]>,
+         selectedSort: Binding<BookSortCriteria>,
          isPresentingShowAllButton: Binding<Bool>,
          scrollProxy: ScrollViewProxy) {
         self._inputQuery = inputQuery
         self._searchQuery = searchQuery
-        self._selectedSortType = selectedSortType
-        self._selectedFilter = selectedFilter
+        self._selectedSort = selectedSort
         self._isPresentingShowAllButton = isPresentingShowAllButton
         self.scrollProxy = scrollProxy
     }
@@ -46,32 +43,29 @@ struct BookShelfSentenceTextFieldView: View {
     // MARK: - BODY
     
     var body: some View {
-        bookShelfTextField
-            .sheet(isPresented: $isPresentingBookShelfSentenceFilterSheetView) {
-                BookShelfSentenceFilterSheetView(selectedFilterBook: $selectedFilter)
-            }
+        textFieldArea
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookShelfSentenceTextFieldView {
-    var bookShelfTextField: some View {
+    var textFieldArea: some View {
         HStack {
-            bookSortMenu
+            utilMenu
             
-            searchTextField
+            inputField
             
-            dismissButton
+            backButton
         }
         .padding([.horizontal, .top])
         .padding(.bottom, 2)
     }
     
-    var bookSortMenu: some View {
+    var utilMenu: some View {
         Menu {
             Section {
-                sortButtons
+                sortButtonGroup
                 
                 Divider()
                 
@@ -88,8 +82,8 @@ extension BookShelfSentenceTextFieldView {
         }
     }
     
-    var sortButtons: some View {
-        ForEach(SentenceSortCriteria.allCases, id: \.self) { sort in
+    var sortButtonGroup: some View {
+        ForEach(BookSortCriteria.allCases, id: \.self) { sort in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {
@@ -98,17 +92,17 @@ extension BookShelfSentenceTextFieldView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedSortType = sort
+                            selectedSort = sort
                         }
                         HapticManager.shared.impact(.rigid)
                     }
                 }
             } label: {
                 HStack {
-                    Text(sort.rawValue)
+                    Text(sort.name)
 
                     // 현재 선택한 정렬 타입에 체크마크 표시
-                    if selectedSortType == sort {
+                    if selectedSort == sort {
                         checkMarkSFSymbolImage
                     }
                 }
@@ -131,14 +125,14 @@ extension BookShelfSentenceTextFieldView {
 }
 
 extension BookShelfSentenceTextFieldView {
-    var searchTextField: some View {
+    var inputField: some View {
         HStack {
             magnifyingGlassSFSymbolImage
             
-            searchInputField
+            textField
             
             if !inputQuery.isEmpty {
-                inputEraseButton
+                eraseButton
             }
         }
         .padding(.horizontal, 10)
@@ -151,7 +145,7 @@ extension BookShelfSentenceTextFieldView {
             .foregroundColor(.gray)
     }
     
-    var searchInputField: some View {
+    var textField: some View {
         TextField("제목 / 저자 검색", text: $inputQuery)
             .frame(height: 45)
             .submitLabel(.search)
@@ -177,7 +171,7 @@ extension BookShelfSentenceTextFieldView {
             .focused($focusedField)
     }
     
-    var inputEraseButton: some View {
+    var eraseButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                 inputQuery.removeAll()
@@ -197,7 +191,7 @@ extension BookShelfSentenceTextFieldView {
 }
 
 extension BookShelfSentenceTextFieldView {
-    var dismissButton: some View {
+    var backButton: some View {
         Button {
             dismiss()
         } label: {
@@ -223,8 +217,7 @@ struct BookShelfSentenceTextFieldView_Previews: PreviewProvider {
             BookShelfSentenceTextFieldView(
                 inputQuery: .constant(""),
                 searchQuery: .constant(""),
-                selectedSortType: .constant(.titleAscending),
-                selectedFilter: .constant([""]),
+                selectedSort: .constant(.titleAscendingOrder),
                 isPresentingShowAllButton: .constant(false),
                 scrollProxy: scrollProxy
             )

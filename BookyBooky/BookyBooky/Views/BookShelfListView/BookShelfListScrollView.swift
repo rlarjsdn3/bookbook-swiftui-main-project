@@ -42,13 +42,13 @@ struct BookShelfListScrollView: View {
     
     @Binding var searchQuery: String
     @Binding var selectedSortType: BookSortCriteria
-    let type: BookShelfListViewType
+    let type: BookShelfList
     
     // MARK: - INITIALIZER
     
     init(searchQuery: Binding<String>,
          selectedSortType: Binding<BookSortCriteria>,
-         type: BookShelfListViewType) {
+         type: BookShelfList) {
         self._searchQuery = searchQuery
         self._selectedSortType = selectedSortType
         self.type = type
