@@ -11,15 +11,15 @@ struct TabButton: View {
     
     // MARK: - PROPERTIES
     
-    var type: TabViewType
-    @Binding var selectedTabViewType: TabViewType
+    var type: CustomMainTab
+    @Binding var selectedTabViewType: CustomMainTab
     var namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
     init(
-        _ type: TabViewType,
-        selectedTabViewType: Binding<TabViewType>,
+        _ type: CustomMainTab,
+        selectedTabViewType: Binding<CustomMainTab>,
         namespace: Namespace.ID) {
         self.type = type
         self._selectedTabViewType = selectedTabViewType

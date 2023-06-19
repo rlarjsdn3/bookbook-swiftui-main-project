@@ -12,8 +12,8 @@ struct CompleteBookBottomTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedTabType: ReadingBookTab = .overview
-    @State private var selectedTabTypeForAnimation: ReadingBookTab = .overview
+    @State private var selectedTabType: CompleteBookTab = .overview
+    @State private var selectedTabTypeForAnimation: CompleteBookTab = .overview
     
     @Namespace var namespace
     
@@ -43,7 +43,7 @@ struct CompleteBookBottomTabView: View {
 // MARK: - EXTENSIONS
 
 extension CompleteBookBottomTabView {
-    func bottomTabView(_ selected: ReadingBookTab) -> some View {
+    func bottomTabView(_ selected: CompleteBookTab) -> some View {
         Group {
             switch selected {
             case .overview:
@@ -58,7 +58,7 @@ extension CompleteBookBottomTabView {
     
     var tabButtonGroup: some View {
         HStack {
-            ForEach(ReadingBookTab.allCases, id: \.self) { type in
+            ForEach(CompleteBookTab.allCases, id: \.self) { type in
                 Spacer()
                 
                 CompleteBookTabButton(

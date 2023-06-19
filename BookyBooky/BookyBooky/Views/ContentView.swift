@@ -11,7 +11,7 @@ struct ContentView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedTabViewType: TabViewType = .home
+    @State private var selectedTabViewType: CustomTab = .home
     
     // MARK: - INTIALIZER
     
@@ -25,7 +25,7 @@ struct ContentView: View {
         VStack {
             defaultTabView
             
-            CustomTabView(selectedTabViewType: $selectedTabViewType)
+            CustomMainTabView(selectedTabViewType: $selectedTabViewType)
         }
         // 키보드가 나타나더라도 탭 뷰도 함께 올라가지 않도록 합니다.
         .ignoresSafeArea(.keyboard)
@@ -38,16 +38,16 @@ extension ContentView {
     var defaultTabView: some View {
         TabView(selection: $selectedTabViewType) {
             HomeView()
-                .tag(TabViewType.home)
+                .tag(CustomTab.home)
             
             BookListView()
-                .tag(TabViewType.search)
+                .tag(CustomTab.search)
             
             BookShelfView()
-                .tag(TabViewType.bookShelf)
+                .tag(CustomTab.bookShelf)
             
             AnalysisView()
-                .tag(TabViewType.analysis)
+                .tag(CustomTab.analysis)
         }
     }
 }

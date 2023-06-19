@@ -11,16 +11,16 @@ struct CompleteBookTabButton: View {
     
     // MARK: - PROPERTIES
     
-    let type: ReadingBookTab
-    @Binding var selectedTab: ReadingBookTab
-    @Binding var selectedTabFA: ReadingBookTab
+    let type: CompleteBookTab
+    @Binding var selectedTab: CompleteBookTab
+    @Binding var selectedTabFA: CompleteBookTab
     let namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
-    init(_ type: ReadingBookTab,
-         selectedTab: Binding<ReadingBookTab>,
-         selectedTabFA: Binding<ReadingBookTab>,
+    init(_ type: CompleteBookTab,
+         selectedTab: Binding<CompleteBookTab>,
+         selectedTabFA: Binding<CompleteBookTab>,
          namespace: Namespace.ID) {
         self.type = type
         self._selectedTab = selectedTab
@@ -47,14 +47,14 @@ extension CompleteBookTabButton {
         .id("\(type.name)")
     }
     
-    func selectType(_ type: ReadingBookTab) {
+    func selectType(_ type: CompleteBookTab) {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
             selectedTabFA = type
         }
         selectedTab = type
     }
     
-    func tabLabel(_ type: ReadingBookTab) -> some View {
+    func tabLabel(_ type: CompleteBookTab) -> some View {
         Text(type.name)
             .font(.headline)
             .fontWeight(.bold)

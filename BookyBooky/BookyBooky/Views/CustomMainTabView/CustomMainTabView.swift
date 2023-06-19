@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct CustomTabView: View {
+struct CustomMainTabView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedTabViewType: TabViewType
+    @Binding var selectedTabViewType: CustomMainTab
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -21,7 +21,7 @@ struct CustomTabView: View {
     
     var body: some View {
         HStack {
-            ForEach(TabViewType.allCases, id: \.self) { type in
+            ForEach(CustomMainTab.allCases, id: \.self) { type in
                 TabButton(
                     type,
                     selectedTabViewType: $selectedTabViewType,
@@ -50,6 +50,6 @@ struct CustomTabView: View {
 
 struct RoundedTabView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomTabView(selectedTabViewType: .constant(.home))
+        CustomMainTabView(selectedTabViewType: .constant(.home))
     }
 }

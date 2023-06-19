@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-enum TabViewType: CaseIterable {
+enum CustomMainTab: CaseIterable {
     case home, search, bookShelf, analysis
     
     var name: String {
