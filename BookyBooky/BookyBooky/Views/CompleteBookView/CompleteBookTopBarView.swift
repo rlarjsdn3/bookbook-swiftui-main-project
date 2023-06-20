@@ -21,13 +21,13 @@ struct CompleteBookTopBarView: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: CompleteBook
+    @ObservedRealmObject var completeBook: CompleteBook
     @Binding var scrollYOffset: CGFloat
     
     // MARK: - INTIALIZER
     
     init(_ readingBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
-        self.readingBook = readingBook
+        self.completeBook = readingBook
         self._scrollYOffset = scrollYOffset
     }
     
@@ -36,14 +36,14 @@ struct CompleteBookTopBarView: View {
     var body: some View {
         navigationTopBar
             .sheet(isPresented: $isPresentingEditBookInformationSheet) {
-                CompleteBookEditView(readingBook)
+                CompleteBookEditView(completeBook)
             }
             .sheet(isPresented: $isPresentingAddSentenceSheet) {
-                AddSentenceSheetView(readingBook)
+                AddSentenceSheetView(completeBook, type: .new)
             }
             .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
-                    realmManager.deleteReadingBook(readingBook)
+                    realmManager.deleteReadingBook(completeBook)
                     dismiss()
                 }
             }
@@ -74,7 +74,7 @@ extension CompleteBookTopBarView {
     var navigationTopBarTitle: some View {
         Group {
             if scrollYOffset > 30 {
-                Text(readingBook.title)
+                Text(completeBook.title)
                     .frame(width: mainScreen.width * 0.65)
                     .lineLimit(1)
                     .truncationMode(.middle)

@@ -11,11 +11,17 @@ struct CustomMainTabView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var selectedTabViewType: CustomMainTab
+    @Binding var selectedTab: CustomMainTab
     
     // MARK: - WRAPPER PROPERTIES
     
     @Namespace var namespace
+    
+    // MARK: - INTIALIZER
+    
+    init(selected: Binding<CustomMainTab>) {
+        self._selectedTab = selected
+    }
     
     // MARK: - BODY
     
@@ -24,7 +30,7 @@ struct CustomMainTabView: View {
             ForEach(CustomMainTab.allCases, id: \.self) { type in
                 TabButton(
                     type,
-                    selectedTabViewType: $selectedTabViewType,
+                    selectedTab: $selectedTab,
                     namespace: namespace
                 )
             }
@@ -50,6 +56,6 @@ struct CustomMainTabView: View {
 
 struct RoundedTabView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomMainTabView(selectedTabViewType: .constant(.home))
+        CustomMainTabView(selected: .constant(.home))
     }
 }

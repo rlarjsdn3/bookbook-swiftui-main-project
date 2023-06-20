@@ -33,7 +33,7 @@ struct SentenceCellButton: View {
     var body: some View {
         sentenceButton
             .sheet(isPresented: $isPresentingModifySentenceSheetView) {
-                ModifySentenceSheetView(readingBook, collectSentence: collectSentence)
+                AddSentenceSheetView(readingBook, sentence: collectSentence, type: .modify)
             }
             .confirmationDialog("해당 문장을 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {

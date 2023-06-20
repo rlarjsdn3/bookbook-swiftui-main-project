@@ -12,17 +12,17 @@ struct TabButton: View {
     // MARK: - PROPERTIES
     
     var type: CustomMainTab
-    @Binding var selectedTabViewType: CustomMainTab
+    @Binding var selectedTab: CustomMainTab
     var namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
     init(
         _ type: CustomMainTab,
-        selectedTabViewType: Binding<CustomMainTab>,
+        selectedTab: Binding<CustomMainTab>,
         namespace: Namespace.ID) {
         self.type = type
-        self._selectedTabViewType = selectedTabViewType
+        self._selectedTab = selectedTab
         self.namespace = namespace
     }
     
@@ -33,18 +33,18 @@ struct TabButton: View {
         
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                selectedTabViewType = type
+                selectedTab = type
             }
             HapticManager.shared.impact(.light)
         } label: {
             VStack(spacing: -5) {
                 Image(systemName: type.icon)
                     .font(.title3)
-                    .offset(y: selectedTabViewType == type ? -8 : 0)
-                    .foregroundColor(selectedTabViewType == type ? type.colorPressed : type.color)
-                    .scaleEffect(selectedTabViewType == type ? 1.0 : 0.9)
+                    .offset(y: selectedTab == type ? -8 : 0)
+                    .foregroundColor(selectedTab == type ? type.colorPressed : type.color)
+                    .scaleEffect(selectedTab == type ? 1.0 : 0.9)
                 
-                if selectedTabViewType == type {
+                if selectedTab == type {
                     Text(type.name)
                         .font(.caption2)
                         .foregroundColor(.black)
@@ -53,7 +53,7 @@ struct TabButton: View {
             .frame(height: 20)
             .padding(.bottom, 5)
             .overlay {
-                if selectedTabViewType == type {
+                if selectedTab == type {
                     RoundedRectBLBR()
                         .foregroundColor(.black)
                         .frame(width: 40, height: 5)
@@ -75,7 +75,7 @@ struct TabButtonView_Previews: PreviewProvider {
     static var previews: some View {
         TabButton(
             .home,
-            selectedTabViewType: .constant(.home),
+            selectedTab: .constant(.home),
             namespace: namespace
         )
     }
