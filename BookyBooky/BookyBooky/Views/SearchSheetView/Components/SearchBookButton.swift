@@ -46,12 +46,7 @@ struct SearchBookButton: View {
             isPresentingSearchBookView = true
         }
         .navigationDestination(isPresented: $isPresentingSearchBookView) {
-<<<<<<< HEAD
             SearchBookView(bookItem.isbn13, type: .navigation)
-=======
-            SearchBookView(bookItem.isbn13, type: .navigationStack)
->>>>>>> a719723b0eb40b2091e156d508dbc0598e01bae5
-            
         }
     }
     

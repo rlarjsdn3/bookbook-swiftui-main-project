@@ -23,6 +23,7 @@ struct BookListTopTabView: View {
     init(scrollYOffset: Binding<CGFloat>, selectedListTab: Binding<BookListTab>) {
         self._scrollYOffset = scrollYOffset
         self._selectedListTab = selectedListTab
+    }
     
     // MARK: - BODY
     
