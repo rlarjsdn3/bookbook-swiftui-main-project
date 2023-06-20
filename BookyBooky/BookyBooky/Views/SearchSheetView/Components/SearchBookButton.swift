@@ -75,7 +75,6 @@ extension SearchBookButton {
             
             bookInfoLabel
         }
-//        .padding(.top, 18)
     }
     
     var bookCoverImage: some View {

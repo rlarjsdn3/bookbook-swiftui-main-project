@@ -87,7 +87,7 @@ extension BookListScrollView {
     var bookButtonGroup: some View {
         LazyVGrid(columns: columns, spacing: 25) {
             ForEach(bookList, id: \.self) { item in
-                SearchListBookButton(item)
+                BookListBookButton(item)
             }
         }
         .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)

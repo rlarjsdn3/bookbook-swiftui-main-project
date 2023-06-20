@@ -31,7 +31,7 @@ struct SearchBookView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var categoryAccentColor: Color {
+    var categoryThemeColor: Color {
         if let bookDetail = aladinAPIManager.searchBookInfo {
             return bookDetail.bookCategory.themeColor
         }
@@ -49,50 +49,53 @@ struct SearchBookView: View {
     
     var body: some View {
         NavigationStack {
-            if let bookInfo = aladinAPIManager.searchBookInfo {
-                VStack {
-                    SearchBookCoverView(
-                        bookInfo,
-                        isLoadingCoverImage: $isLoadingCoverImage
-                    )
-                    .overlay(alignment: .topLeading) {
-                        if type == .navigationStack {
-                            Button {
-                                dismiss()
-                            } label: {
-                                Image(systemName: "chevron.left")
-                                    .foregroundColor(bookInfo.bookCategory.foregroundColor)
-                                    .navigationBarItemStyle()
+            Group {
+                if let bookInfo = aladinAPIManager.searchBookInfo {
+                    VStack {
+                        SearchBookCoverView(
+                            bookInfo,
+                            isLoadingCoverImage: $isLoadingCoverImage
+                        )
+                        .overlay(alignment: .topLeading) {
+                            if type == .navigationStack {
+                                Button {
+                                    dismiss()
+                                } label: {
+                                    Image(systemName: "chevron.left")
+                                        .foregroundColor(bookInfo.bookCategory.foregroundColor)
+                                        .navigationBarItemStyle()
+                                }
+                                .padding(.vertical, 5)
                             }
-                            .padding(.vertical, 5)
                         }
+                        
+                        SearchBookMainInfoView(
+                            bookInfo,
+                            isLoadingCoverImage: $isLoadingCoverImage
+                        )
+                        
+                        SearchBookSubInfoView(
+                            bookInfo,
+                            isLoadingCoverImage: $isLoadingCoverImage
+                        )
+                        
+                        Divider()
+                        
+                        SearchBookDescView(
+                            bookInfo,
+                            isLoadingCoverImage: $isLoadingCoverImage
+                        )
+                        
+                        Spacer()
+                        
+                        SearchBookButtonGroupView(
+                            bookInfo,
+                            isLoadingCoverImage: $isLoadingCoverImage
+                        )
                     }
-                    
-                    SearchBookMainInfoView(
-                        bookInfo,
-                        isLoadingCoverImage: $isLoadingCoverImage
-                    )
-                    
-                    SearchBookSubInfoView(
-                        bookInfo,
-                        isLoadingCoverImage: $isLoadingCoverImage
-                    )
-                    
-                    Divider()
-                    
-                    SearchBookDescView(
-                        bookInfo,
-                        isLoadingCoverImage: $isLoadingCoverImage
-                    )
-                    
-                    Spacer()
-                    
-                    SearchBookButtonGroupView(
-                        bookInfo,
-                        isLoadingCoverImage: $isLoadingCoverImage
-                    )
                 }
             }
+            .navigationBarBackButtonHidden()
         }
         .onAppear {
             aladinAPIManager.requestBookDetailAPI(isbn13)
@@ -108,13 +111,12 @@ struct SearchBookView: View {
         }
         .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddSuccessToastAlert,
                duration: 1.0) {
-            realmManager.showFavoriteBookAddSuccessToastAlert(categoryAccentColor)
+            realmManager.showFavoriteBookAddSuccessToastAlert(categoryThemeColor)
         }
         .toast(isPresenting: $realmManager.isPresentingReadingBookAddSuccessToastAlert,
               duration: 1.0) {
-           realmManager.showReadingBookAddSuccessToastAlert(categoryAccentColor)
+           realmManager.showReadingBookAddSuccessToastAlert(categoryThemeColor)
         }
-        .toolbar(.hidden, for: .navigationBar)
         .presentationCornerRadius(30)
     }
 }

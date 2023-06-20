@@ -39,7 +39,7 @@ extension BookListTopTabView {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(BookListTab.allCases, id: \.self) { type in
-                        SearchListTabButton(
+                        BookListTabButton(
                             type,
                             selectedListTab: $selectedListTab,
                             selectedListTabFA: $selectedAnimation,
