@@ -1,0 +1,140 @@
+//
+//  SearchLazyGridView.swift
+//  BookyBooky
+//
+//  Created by 김건우 on 2023/03/31.
+//
+
+import SwiftUI
+import AlertToast
+
+struct BookListScrollView: View {
+    
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    
+    @State private var startOffset: CGFloat = 0.0
+    
+    // MARK: - PROPERTIES
+    
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    @Binding var scrollYOffset: CGFloat
+    @Binding var selectedBookListTab: BookListTab
+    
+    // MARK: - INTALIZER
+    
+    init(scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTab>) {
+        self._scrollYOffset = scrollYOffset
+        self._selectedBookListTab = selectedListType
+    }
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    var bookList: [briefBookInfo.Item] {
+        switch selectedBookListTab {
+        case .bestSeller:
+            return aladinAPIManager.bestSeller
+        case .itemNewAll:
+            return aladinAPIManager.itemNewAll
+        case .itemNewSpecial:
+            return aladinAPIManager.itemNewSpecial
+        case .blogBest:
+            return aladinAPIManager.blogBest
+        }
+    }
+    
+    
+    // MARK: - BODY
+    
+    var body: some View {
+        ZStack {
+            Color(.background)
+            
+            if bookList.isEmpty {
+                networkErrorLabel
+            } else {
+                bookScrollContent
+            }
+        }
+    }
+}
+
+// MARK: - EXTENSIONS
+
+extension BookListScrollView {
+    var bookScrollContent: some View {
+        ScrollViewReader { scrollProxy in
+            ScrollView(showsIndicators: false) {
+                bookButtonGroup
+            }
+            // 도서 리스트 타입이 변경될 때마다 리스트의 스크롤을 제일 위로 올립니다.
+            .onChange(of: selectedBookListTab) {
+                withAnimation {
+                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
+                }
+            }
+            .safeAreaPadding(.top, 20)
+            .safeAreaPadding(.horizontal)
+            .safeAreaPadding(.bottom, 40)
+            .id("Scroll_To_Top")
+        }
+    }
+    
+    var bookButtonGroup: some View {
+        LazyVGrid(columns: columns, spacing: 25) {
+            ForEach(bookList, id: \.self) { item in
+                SearchListBookButton(item)
+            }
+        }
+        .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
+    }
+    
+    var networkErrorLabel: some View {
+        VStack {
+            ErrorLabel
+            
+            refreshButton
+        }
+    }
+    
+    var ErrorLabel: some View {
+        VStack(spacing: 5) {
+            Text("도서 정보 불러오기 실패")
+                .font(.title2)
+                .fontWeight(.bold)
+
+            Text("잠시 후 다시 시도하십시오.")
+                .font(.headline)
+                .foregroundColor(.secondary)
+        }
+        .padding(.bottom, 0)
+    }
+    
+    var refreshButton: some View {
+        Button("다시 불러오기") {
+            for type in BookListTab.allCases {
+                aladinAPIManager.requestBookListAPI(of: type)
+            }
+            HapticManager.shared.impact(.rigid)
+        }
+        .buttonStyle(.borderedProminent)
+        .padding()
+    }
+}
+
+// MARK: - PREVIEW
+
+struct SearchListScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookListScrollView(
+            scrollYOffset: .constant(0.0),
+            selectedListType: .constant(.bestSeller)
+        )
+        .environmentObject(AladinAPIManager())
+    }
+}
