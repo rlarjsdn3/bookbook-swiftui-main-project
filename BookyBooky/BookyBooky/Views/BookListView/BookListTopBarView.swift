@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchListTopBarView: View {
+struct BookListTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -25,7 +25,7 @@ struct SearchListTopBarView: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchListTopBarView {
+extension BookListTopBarView {
     var navigationTopBar: some View {
         HStack {
             Spacer()
@@ -65,8 +65,8 @@ extension SearchListTopBarView {
 
 // MARK: - PREVIEW
 
-struct SearchListTopBarView_Previews: PreviewProvider {
+struct BookListTopBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchListTopBarView()
+        BookListTopBarView()
     }
 }

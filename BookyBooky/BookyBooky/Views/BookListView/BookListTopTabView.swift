@@ -7,42 +7,44 @@
 
 import SwiftUI
 
-struct SearchListTopTabView: View {
+struct BookListTopTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
     @State private var selectedAnimation = BookListTab.bestSeller
     
     @Binding var scrollYOffset: CGFloat
-    @Binding var selectedListType: BookListTab
+    @Binding var selectedListTab: BookListTab
     @Namespace var namespace: Namespace.ID
     
-    init(scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTab>) {
+    // MARK: - INTIALIZER
+    
+    init(scrollYOffset: Binding<CGFloat>, selectedListTab: Binding<BookListTab>) {
         self._scrollYOffset = scrollYOffset
-        self._selectedListType = selectedListType
+        self._selectedListTab = selectedListTab
     }
     
     // MARK: - BODY
     
     var body: some View {
-        bookListTypeButtons
+        tabButtonGroup
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension SearchListTopTabView {
-    var bookListTypeButtons: some View {
+extension BookListTopTabView {
+    var tabButtonGroup: some View {
         ScrollViewReader { scrollProxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(BookListTab.allCases, id: \.self) { type in
                         SearchListTabButton(
-                            listTypeSelected: $selectedListType,
-                            type: type,
+                            type,
+                            selectedListTab: $selectedListTab,
+                            selectedListTabFA: $selectedAnimation,
                             scrollProxy: scrollProxy,
-                            selectedAnimation: $selectedAnimation,
-                            selectedNamespace: namespace
+                            namespace: namespace
                         )
                         .id(type.rawValue)
                         .padding(.horizontal, 8)
@@ -63,9 +65,9 @@ extension SearchListTopTabView {
 
 struct SearchListTopTabView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchListTopTabView(
+        BookListTopTabView(
             scrollYOffset: .constant(0.0),
-            selectedListType: .constant(.itemNewAll)
+            selectedListTab: .constant(.itemNewAll)
         )
     }
 }

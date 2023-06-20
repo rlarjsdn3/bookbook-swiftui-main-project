@@ -8,7 +8,7 @@
 import SwiftUI
 import AlertToast
 
-struct SearchListScrollView: View {
+struct BookListScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -35,7 +35,7 @@ struct SearchListScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var listBookType: [briefBookInfo.Item] {
+    var bookList: [briefBookInfo.Item] {
         switch selectedBookListTab {
         case .bestSeller:
             return aladinAPIManager.bestSeller
@@ -52,21 +52,20 @@ struct SearchListScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        ZStack {
-            Color(.background)
-            
-            if listBookType.isEmpty {
+        Group {
+            if bookList.isEmpty {
                 networkErrorLabel
             } else {
                 bookScrollContent
             }
         }
+        .background(Color(.background))
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension SearchListScrollView {
+extension BookListScrollView {
     var bookScrollContent: some View {
         ScrollViewReader { scrollProxy in
             ScrollView(showsIndicators: false) {
@@ -87,7 +86,7 @@ extension SearchListScrollView {
     
     var bookButtonGroup: some View {
         LazyVGrid(columns: columns, spacing: 25) {
-            ForEach(listBookType, id: \.self) { item in
+            ForEach(bookList, id: \.self) { item in
                 SearchListBookButton(item)
             }
         }
@@ -131,7 +130,7 @@ extension SearchListScrollView {
 
 struct SearchListScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchListScrollView(
+        BookListScrollView(
             scrollYOffset: .constant(0.0),
             selectedListType: .constant(.bestSeller)
         )

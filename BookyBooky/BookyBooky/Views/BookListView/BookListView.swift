@@ -14,22 +14,22 @@ struct BookListView: View {
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var scrollYOffset: CGFloat = 0.0
-    @State private var listTypeSelected: BookListTab = .bestSeller
+    @State private var selectedListTab: BookListTab = .bestSeller
     
     // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
-            SearchListTopBarView()
+            BookListTopBarView()
             
-            SearchListTopTabView(
+            BookListTopTabView(
                 scrollYOffset: $scrollYOffset,
-                selectedListType: $listTypeSelected
+                selectedListTab: $selectedListTab
             )
 
-            SearchListScrollView(
+            BookListScrollView(
                 scrollYOffset: $scrollYOffset,
-                selectedListType: $listTypeSelected
+                selectedListType: $selectedListTab
             )
         }
         .toast(isPresenting: $aladinAPIManager.isPresentingDetailBookErrorToastAlert,
@@ -41,9 +41,7 @@ struct BookListView: View {
 
 // MARK: - PREVIEW
 
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        BookListView()
-            .environmentObject(AladinAPIManager())
-    }
+#Preview {
+    BookListView()
+        .environmentObject(AladinAPIManager())
 }

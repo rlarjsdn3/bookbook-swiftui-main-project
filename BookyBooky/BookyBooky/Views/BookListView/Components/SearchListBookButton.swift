@@ -12,19 +12,19 @@ struct SearchListBookButton: View {
     
     // MARK: - PROPERTIES
     
-    let listOfBookItem: briefBookInfo.Item
+    let bookItem: briefBookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var readingBooks
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(FavoriteBook.self) var favBooks
     
     @State private var isPresentingBookInfoView = false
     
     // MARK: - INTIALIZER
     
-    init(_ listOfBookItem: briefBookInfo.Item) {
-        self.listOfBookItem = listOfBookItem
+    init(_ bookItem: briefBookInfo.Item) {
+        self.bookItem = bookItem
     }
     
     // MARK: - BODY
@@ -35,19 +35,19 @@ struct SearchListBookButton: View {
                 isPresentingBookInfoView = true
             }
             .sheet(isPresented: $isPresentingBookInfoView) {
-                SearchBookView(listOfBookItem.isbn13, type: .sheet)
+                SearchBookView(bookItem.isbn13, type: .sheet)
             }
     }
     
-    func isFavoriteBook() -> Bool {
-        for favoriteBook in favoriteBooks where listOfBookItem.isbn13 == favoriteBook.isbn13 {
+    func isFavBook() -> Bool {
+        for favBook in favBooks where bookItem.isbn13 == favBook.isbn13 {
             return true
         }
         return false
     }
     
-    func isReadingBook() -> Bool {
-        for targetBook in readingBooks where listOfBookItem.isbn13 == targetBook.isbn13 {
+    func isCompBook() -> Bool {
+        for compBook in compBooks where bookItem.isbn13 == compBook.isbn13 {
             return true
         }
         return false
@@ -60,7 +60,7 @@ extension SearchListBookButton {
     var searchCellButton: some View {
         VStack {
             asyncCoverImage(
-                listOfBookItem.cover,
+                bookItem.cover,
                 width: 150, height: 200,
                 coverShape: RoundedRect()
             )
@@ -77,14 +77,14 @@ extension SearchListBookButton {
                 .overlay {
                     HStack {
                         Group {
-                            if isReadingBook() {
+                            if isCompBook() {
                                 Image(systemName: "book.closed.fill")
                                     .foregroundColor(Color(uiColor: .darkGray))
                             }
                             
                             Spacer()
                             
-                            if isFavoriteBook() {
+                            if isFavBook() {
                                 Image(systemName: "heart.fill")
                                     .foregroundColor(.pink)
                             }
@@ -97,7 +97,7 @@ extension SearchListBookButton {
     }
     
     var bookTitleText: some View {
-        Text(listOfBookItem.title.refinedTitle)
+        Text(bookItem.title.refinedTitle)
             .font(.headline)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -108,7 +108,7 @@ extension SearchListBookButton {
     }
     
     var bookAuthorText: some View {
-        Text(listOfBookItem.author.refinedAuthor)
+        Text(bookItem.author.refinedAuthor)
             .font(.subheadline)
             .foregroundColor(.secondary)
             .lineLimit(1)

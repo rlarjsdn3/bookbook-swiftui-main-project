@@ -8,49 +8,58 @@
 import SwiftUI
 import RealmSwift
 
-struct ListBookButton: View {
+struct SearchBookButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var readingBooks
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(FavoriteBook.self) var favBooks
     
     @State private var isLoadingCoverImage = true
     @State private var isPresentingSearchBookView = false
     
     // MARK: - PROPERTIES
     
-    let book: briefBookInfo.Item
+    let bookItem: briefBookInfo.Item
+    let mode: ListMode
     
     // MARK: - INTIALIZER
     
-    init(_ book: briefBookInfo.Item) {
-        self.book = book
+    init(_ book: briefBookInfo.Item, mode: ListMode) {
+        self.bookItem = book
+        self.mode = mode
     }
     
     // MARK: - BODY
     
     var body: some View {
-        listBookButton
-            .onTapGesture {
-                hideKeyboard()
-                isPresentingSearchBookView = true
+        Group {
+            switch mode {
+            case .grid:
+                gridBookButton
+            case .list:
+                listBookButton
             }
-            .navigationDestination(isPresented: $isPresentingSearchBookView) {
-                SearchBookView(book.isbn13, type: .navigationStack)
-                
-            }
+        }
+        .onTapGesture {
+            hideKeyboard()
+            isPresentingSearchBookView = true
+        }
+        .navigationDestination(isPresented: $isPresentingSearchBookView) {
+            SearchBookView(bookItem.isbn13, type: .navigationStack)
+            
+        }
     }
     
-    func checkReadingBook() -> Bool {
-        for readingBook in readingBooks where book.isbn13 == readingBook.isbn13 {
+    func isCompBook() -> Bool {
+        for readingBook in compBooks where bookItem.isbn13 == readingBook.isbn13 {
             return true
         }
         return false
     }
     
-    func checkFavoriteBook() -> Bool {
-        for favoriteBook in favoriteBooks where book.isbn13 == favoriteBook.isbn13 {
+    func isFavBook() -> Bool {
+        for favoriteBook in favBooks where bookItem.isbn13 == favoriteBook.isbn13 {
             return true
         }
         return false
@@ -59,20 +68,20 @@ struct ListBookButton: View {
 
 // MARK: - EXTENSIONS
 
-extension ListBookButton {
+extension SearchBookButton {
     var listBookButton: some View {
         ZStack {
             bookCoverImage
             
             bookInfoLabel
         }
-        .padding(.top, 18)
+//        .padding(.top, 18)
     }
     
     var bookCoverImage: some View {
         HStack {
             asyncCoverImage(
-                book.cover,
+                bookItem.cover,
                 width: mainScreen.width * 0.32, height: 190,
                 coverShape: RoundedRectTRBR()
             )
@@ -90,7 +99,7 @@ extension ListBookButton {
             
             ZStack {
                 RoundedRectTLBL()
-                    .fill(book.categoryName.refinedCategory.themeColor)
+                    .fill(bookItem.categoryName.refinedCategory.themeColor)
                     .offset(y: 4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                 
@@ -109,13 +118,13 @@ extension ListBookButton {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .overlay(alignment: .bottomTrailing) {
                     HStack {
-                        if checkReadingBook() {
+                        if isCompBook() {
                             Image(systemName: "book.closed.fill")
                                 .font(.system(size: 21))
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }
                         
-                        if checkFavoriteBook() {
+                        if isFavBook() {
                             Image(systemName: "heart.fill")
                                 .font(.title2)
                                 .foregroundColor(.pink)
@@ -132,16 +141,28 @@ extension ListBookButton {
             )
         }
     }
-}
-
-extension ListBookButton {
+    
     var bookTitleText: some View {
-        Text(book.bookTitle)
-            .font(.title3)
-            .fontWeight(.bold)
-            .lineLimit(1)
-            .minimumScaleFactor(0.8)
-            .padding(.bottom, 2)
+        Group {
+            switch mode {
+            case .grid:
+                Text(bookItem.bookTitle)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .frame(height: 25)
+                    .padding(.horizontal)
+                    .padding(.bottom, -5)
+            case .list:
+                Text(bookItem.bookTitle)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .padding(.bottom, 2)
+            }
+        }
     }
     
     var bookSubInfoLabel: some View {
@@ -158,18 +179,47 @@ extension ListBookButton {
     }
     
     var bookAuthorText: some View {
-        Text(book.bookAuthor)
-            .foregroundColor(.primary)
-            .fontWeight(.bold)
+        Group {
+            switch mode {
+            case .grid:
+                Text(bookItem.bookAuthor)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .frame(width: 100)
+            case .list:
+                Text(bookItem.bookAuthor)
+                    .foregroundColor(.primary)
+                    .fontWeight(.bold)
+                
+            }
+        }
     }
     
     var bookPublisherText: some View {
-        Text("\(book.publisher) ・ \(book.bookCategory.name)")
+        Text("\(bookItem.publisher) ・ \(bookItem.bookCategory.name)")
             .fontWeight(.semibold)
     }
     
     var bookPubDateText: some View {
-        Text("\(book.pubDate.refinedPublishDate.standardDateFormat)")
+        Text("\(bookItem.pubDate.refinedPublishDate.standardDateFormat)")
+    }
+}
+
+extension SearchBookButton {
+    var gridBookButton: some View {
+        VStack {
+            asyncCoverImage(
+                bookItem.cover,
+                width: 150, height: 200,
+                coverShape: RoundedRect()
+            )
+            
+            bookTitleText
+            
+            bookAuthorText
+        }
     }
 }
 
@@ -177,7 +227,7 @@ extension ListBookButton {
 
 struct SearchBookCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        ListBookButton(briefBookInfo.Item.preview)
+        SearchBookButton(briefBookInfo.Item.preview, mode: .list)
             .previewLayout(.sizeThatFits)
     }
 }

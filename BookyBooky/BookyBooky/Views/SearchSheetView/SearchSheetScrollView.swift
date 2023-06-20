@@ -17,7 +17,12 @@ struct SearchSheetScrollView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var searchQuery: String
+    let coulmns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    @Binding var inputQuery: String
     @Binding var searchIndex: Int
     @Binding var selectedListMode: ListMode
     @Binding var selectedCategory: Category
@@ -62,12 +67,7 @@ extension SearchSheetScrollView {
     var bookScroll: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
-                switch selectedListMode {
-                case .grid:
-                    buttonGroupInGridMode
-                case .list:
-                    buttonGroupInListMode
-                }
+                buttonGroup
                 
                 seeMoreButton
             }
@@ -88,30 +88,34 @@ extension SearchSheetScrollView {
         }
     }
     
-    var buttonGroupInListMode: some View {
-        LazyVStack {
-            ForEach(filteredSearchBooks, id: \.self) { book in
-                ListBookButton(book)
+    var buttonGroup: some View {
+        Group {
+            switch selectedListMode {
+            case .grid:
+                LazyVGrid(columns: coulmns, spacing: 25) {
+                    ForEach(filteredSearchBooks, id: \.self) { book in
+                        SearchBookButton(book, mode: selectedListMode)
+                    }
+                }
+                .padding()
+                .id("Scroll_To_Top")
+            case .list:
+                LazyVStack {
+                    ForEach(filteredSearchBooks, id: \.self) { book in
+                        SearchBookButton(book, mode: selectedListMode)
+                    }
+                }
+                .padding(.vertical, 10)
+                .id("Scroll_To_Top")
             }
         }
-        .id("Scroll_To_Top")
-    }
-    
-    var buttonGroupInGridMode: some View {
-        LazyVGrid(columns: [.init(.flexible()), .init(.flexible())], spacing: 25) {
-            ForEach(filteredSearchBooks, id: \.self) { book in
-                GridBookButton(bookItem: book)
-            }
-        }
-        .safeAreaPadding()
-        .id("Scroll_To_Top")
     }
     
     var seeMoreButton: some View {
         Button {
             searchIndex += 1
             aladinAPIManager.requestBookSearchAPI(
-                searchQuery,
+                inputQuery,
                 page: searchIndex
             )
         } label: {
@@ -155,7 +159,7 @@ extension SearchSheetScrollView {
 struct SearchSheetScrollView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetScrollView(
-            searchQuery: .constant(""),
+            inputQuery: .constant(""),
             searchIndex: .constant(1),
             selectedListMode: .constant(.list),
             selectedCategory: .constant(.all)

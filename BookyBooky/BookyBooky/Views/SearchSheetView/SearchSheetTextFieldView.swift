@@ -21,7 +21,7 @@ struct SearchSheetTextFieldView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var searchQuery: String
+    @Binding var inputQuery: String
     @Binding var searchIndex: Int
     @Binding var selectedListMode: ListMode
     @Binding var selectedCategory: Category
@@ -125,7 +125,7 @@ extension SearchSheetTextFieldView {
             
             textField
             
-            if !searchQuery.isEmpty {
+            if !inputQuery.isEmpty {
                 eraseButton
             }
         }
@@ -140,18 +140,18 @@ extension SearchSheetTextFieldView {
     }
     
     var textField: some View {
-        TextField("제목 / 저자 검색", text: $searchQuery)
+        TextField("제목 / 저자 검색", text: $inputQuery)
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
-                requestSearchBook(searchQuery)
+                requestSearchBook(inputQuery)
             }
             .focused($focusedField)
     }
     
     var eraseButton: some View {
         Button {
-            searchQuery.removeAll()
+            inputQuery.removeAll()
             focusedField = true
         } label: {
             xmarkCircleSFSymbolImage
@@ -193,7 +193,7 @@ extension SearchSheetTextFieldView {
     var categoryButtonGroup: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
-                categoryButtons(scrollProxy: proxy)
+                scrollCategoryButton(scrollProxy: proxy)
             }
             .onChange(of: searchIndex) {
                 // 새로운 검색을 시도할 때만 카테고리 스크롤을 제일 앞으로 전진합니다.
@@ -204,11 +204,11 @@ extension SearchSheetTextFieldView {
                     }
                 }
             }
-            .frame(height: 35)
+            .padding(.bottom, 8)
         }
     }
     
-    func categoryButtons(scrollProxy proxy: ScrollViewProxy) -> some View {
+    func scrollCategoryButton(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack(spacing: -20) {
             ForEach(aladinAPIManager.categories, id: \.self) { type in
                 SearchCategoryButton(
@@ -231,7 +231,7 @@ extension SearchSheetTextFieldView {
 struct SearchSheetTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetTextFieldView(
-            searchQuery: .constant(""),
+            inputQuery: .constant(""),
             searchIndex: .constant(0),
             selectedListMode: .constant(.list),
             selectedCategory: .constant(.all),
