@@ -8,6 +8,11 @@
 import Foundation
 
 enum ViewType {
+    enum SearchBookViewType {
+        case sheet
+        case navigation
+    }
+    
     enum SentenceSheetView {
         case new
         case modify

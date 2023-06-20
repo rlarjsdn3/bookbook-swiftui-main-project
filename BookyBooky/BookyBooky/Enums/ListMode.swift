@@ -8,8 +8,8 @@
 import Foundation
 
 enum ListMode: String, CaseIterable {
-    case grid = "격자 모드"
-    case list = "리스트 모드"
+    case grid
+    case list
     
     var name: String {
         switch self {

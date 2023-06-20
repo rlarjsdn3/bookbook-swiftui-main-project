@@ -47,7 +47,7 @@ extension BookShelfFavBookTabView {
                 let recent10FavBooks = favoriteBooks.reversed().prefix(min(10, favoriteBooks.count))
                 
                 ForEach(recent10FavBooks) { book in
-                    FavBookButton(book, type: .sheet)
+                    ShelfFavBookButton(book, type: .sheet)
                 }
             }
             .padding(.top, 26)

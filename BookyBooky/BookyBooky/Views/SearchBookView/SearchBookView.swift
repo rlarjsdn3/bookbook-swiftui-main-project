@@ -8,26 +8,20 @@
 import SwiftUI
 import AlertToast
 
-enum SearchBookViewTypes {
-    case sheet
-    case navigationStack
-}
-
 struct SearchBookView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
-    
-    @Environment(\.dismiss) var dismiss
     
     @State private var isLoadingCoverImage = true
     
     // MARK: - PROPERTIES
     
     let isbn13: String
-    let type: SearchBookViewTypes
+    let type: ViewType.SearchBookViewType
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -40,7 +34,7 @@ struct SearchBookView: View {
     
     // MARK: - INTIALIZER
     
-    init(_ isbn13: String, type: SearchBookViewTypes) {
+    init(_ isbn13: String, type: ViewType.SearchBookViewType) {
         self.isbn13 = isbn13
         self.type = type
     }
@@ -50,19 +44,19 @@ struct SearchBookView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if let bookInfo = aladinAPIManager.searchBookInfo {
+                if let bookItem = aladinAPIManager.searchBookInfo {
                     VStack {
                         SearchBookCoverView(
-                            bookInfo,
+                            bookItem,
                             isLoadingCoverImage: $isLoadingCoverImage
                         )
                         .overlay(alignment: .topLeading) {
-                            if type == .navigationStack {
+                            if type == .navigation {
                                 Button {
                                     dismiss()
                                 } label: {
                                     Image(systemName: "chevron.left")
-                                        .foregroundColor(bookInfo.bookCategory.foregroundColor)
+                                        .foregroundColor(bookItem.bookCategory.foregroundColor)
                                         .navigationBarItemStyle()
                                 }
                                 .padding(.vertical, 5)
@@ -70,26 +64,26 @@ struct SearchBookView: View {
                         }
                         
                         SearchBookMainInfoView(
-                            bookInfo,
+                            bookItem,
                             isLoadingCoverImage: $isLoadingCoverImage
                         )
                         
                         SearchBookSubInfoView(
-                            bookInfo,
+                            bookItem,
                             isLoadingCoverImage: $isLoadingCoverImage
                         )
                         
                         Divider()
                         
                         SearchBookDescView(
-                            bookInfo,
+                            bookItem,
                             isLoadingCoverImage: $isLoadingCoverImage
                         )
                         
                         Spacer()
                         
                         SearchBookButtonGroupView(
-                            bookInfo,
+                            bookItem,
                             isLoadingCoverImage: $isLoadingCoverImage
                         )
                     }
@@ -103,9 +97,8 @@ struct SearchBookView: View {
         .onDisappear {
             aladinAPIManager.searchBookInfo = nil
         }
-        // 도서 정보 불러오기에 실패한다면 이전 화면으로 넘어갑니다.
-        .onChange(of: aladinAPIManager.isPresentingDetailBookErrorToastAlert) { detailBookError in
-            if detailBookError {
+        .onChange(of: aladinAPIManager.isPresentingDetailBookErrorToastAlert) { _, error in
+            if error {
                 dismiss()
             }
         }
@@ -125,7 +118,7 @@ struct SearchBookView: View {
 
 struct SearchInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookView("9788994492049", type: .navigationStack)
+        SearchBookView("9788994492049", type: .navigation)
             .environmentObject(RealmManager())
             .environmentObject(AladinAPIManager())
     }

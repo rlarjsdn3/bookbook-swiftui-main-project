@@ -15,13 +15,13 @@ struct SearchBookSubInfoView: View {
     
     // MARK: - PROPERTIES
     
-    var bookInfo: detailBookInfo.Item
+    let bookItem: detailBookInfo.Item
     @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ bookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
-        self.bookInfo = bookInfo
+    init(_ bookItem: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+        self.bookItem = bookItem
         self._isLoadingCoverImage = isLoadingCoverImage
     }
     
@@ -30,7 +30,7 @@ struct SearchBookSubInfoView: View {
     var body: some View {
         subInfo
             .sheet(isPresented: $isPresentingSalesPointDescriptionSheet) {
-                SalesPointDescSheetView(theme: bookInfo.bookCategory.themeColor)
+                SalesPointDescSheetView(theme: bookItem.bookCategory.themeColor)
             }
     }
 }
@@ -76,7 +76,7 @@ extension SearchBookSubInfoView {
                 }
             }
             
-            Text("\(bookInfo.salesPoint)")
+            Text("\(bookItem.salesPoint)")
                 .redacted(reason: isLoadingCoverImage ? .placeholder : [])
                 .shimmering(active: isLoadingCoverImage)
         }
@@ -89,7 +89,7 @@ extension SearchBookSubInfoView {
                 .font(.headline)
                 .fontWeight(.bold)
             
-            Text("\(bookInfo.subInfo.itemPage)")
+            Text("\(bookItem.subInfo.itemPage)")
                 .redacted(reason: isLoadingCoverImage ? .placeholder : [])
                 .shimmering(active: isLoadingCoverImage)
         }
@@ -102,7 +102,7 @@ extension SearchBookSubInfoView {
                 .font(.headline)
                 .fontWeight(.bold)
             
-            Text(bookInfo.bookCategory.name)
+            Text(bookItem.bookCategory.name)
                 .redacted(reason: isLoadingCoverImage ? .placeholder : [])
                 .shimmering(active: isLoadingCoverImage)
         }

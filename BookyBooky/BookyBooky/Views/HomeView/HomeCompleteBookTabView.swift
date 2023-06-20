@@ -30,14 +30,14 @@ struct HomeCompleteBookTabView: View {
     ]
     
     @Binding var scrollYOffset: CGFloat
-    @Binding var selectedBookSortCriteria: BookSortCriteria
+    @Binding var selectedBookSort: BookSortCriteria
     let scrollProxy: ScrollViewProxy
     
     // MARK: - COMPUTED PROPERTIES
     
     var dynamicBottomPaddingValue: CGFloat {
         let filteredUnfinishedBooksCount = compBooks.getFilteredReadingBooks(
-            .unfinished, sort: selectedBookSortCriteria, category: selectedCategory
+            .unfinished, sort: selectedBookSort, category: selectedCategory
         ).count
         
         switch filteredUnfinishedBooksCount {
@@ -60,7 +60,7 @@ struct HomeCompleteBookTabView: View {
          selectedBookSortCriteria: Binding<BookSortCriteria>,
          scrollProxy: ScrollViewProxy) {
         self._scrollYOffset = scrollYOffset
-        self._selectedBookSortCriteria = selectedBookSortCriteria
+        self._selectedBookSort = selectedBookSortCriteria
         self.scrollProxy = scrollProxy
     }
     
@@ -133,14 +133,14 @@ extension HomeCompleteBookTabView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedBookSortCriteria = criteria
+                            selectedBookSort = criteria
                         }
                         HapticManager.shared.impact(.rigid)
                     }
                 }
             } label: {
                 Text(criteria.name)
-                if selectedBookSortCriteria == criteria {
+                if selectedBookSort == criteria {
                     Text("적용됨")
                 }
             }
@@ -175,7 +175,7 @@ extension HomeCompleteBookTabView {
         Group {
             let filterReadingBooks = compBooks.getFilteredReadingBooks(
                 .unfinished,
-                sort: selectedBookSortCriteria,
+                sort: selectedBookSort,
                 category: selectedCategory
             )
             

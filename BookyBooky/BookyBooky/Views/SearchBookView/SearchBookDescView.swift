@@ -11,13 +11,13 @@ struct SearchBookDescView: View {
     
     // MARK: - PROPERTIES
     
-    let bookInfo: detailBookInfo.Item
+    let bookItem: detailBookInfo.Item
     @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ bookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
-        self.bookInfo = bookInfo
+    init(_ bookItem: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+        self.bookItem = bookItem
         self._isLoadingCoverImage = isLoadingCoverImage
     }
     
@@ -58,7 +58,7 @@ extension SearchBookDescView {
     
     var moreLinkButton: some View {
         Group {
-            if let url = URL(string: bookInfo.link) {
+            if let url = URL(string: bookItem.link) {
                 Link(destination: url) {
                     Text("자세히 보기")
                 }
@@ -69,7 +69,7 @@ extension SearchBookDescView {
     
     var bookDescText: some View {
         ScrollView(showsIndicators: false) {
-            Text(bookInfo.bookDescription)
+            Text(bookItem.bookDescription)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }

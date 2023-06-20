@@ -12,4 +12,9 @@ enum ButtonType {
         case home
         case shelf
     }
+    
+    enum ShelfFavBookButton {
+        case sheet
+        case navigation
+    }
 }

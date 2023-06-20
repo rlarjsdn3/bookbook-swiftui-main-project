@@ -21,11 +21,11 @@ struct BookShelfListView: View {
     
     // MARK: - PROPERTIES
     
-    let type: BookShelfList
+    let type: ListType.BookShelfList
     
     // MARK: - INTAILIZER
     
-    init(type: BookShelfList) {
+    init(type: ListType.BookShelfList) {
         self.type = type
     }
     
@@ -45,7 +45,7 @@ struct BookShelfListView: View {
                     
                     BookShelfBookScrollView(
                         searchQuery: $searchQuery,
-                        selectedSortType: $selectedSort,
+                        selectedSort: $selectedSort,
                         type: type
                     )
                 }

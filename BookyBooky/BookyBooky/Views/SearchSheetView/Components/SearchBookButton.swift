@@ -46,7 +46,7 @@ struct SearchBookButton: View {
             isPresentingSearchBookView = true
         }
         .navigationDestination(isPresented: $isPresentingSearchBookView) {
-            SearchBookView(bookItem.isbn13, type: .navigationStack)
+            SearchBookView(bookItem.isbn13, type: .navigation)
             
         }
     }
@@ -187,6 +187,26 @@ extension SearchBookButton {
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                     .frame(width: 100)
+                
+                    .overlay {
+                        HStack {
+                            Group {
+                                if isCompBook() {
+                                    Image(systemName: "book.closed.fill")
+                                        .foregroundColor(Color(uiColor: .darkGray))
+                                }
+                                
+                                Spacer()
+                                
+                                if isFavBook() {
+                                    Image(systemName: "heart.fill")
+                                        .foregroundColor(.pink)
+                                }
+                            }
+                            .font(.title3)
+                        }
+                        .frame(width: 150)
+                    }
             case .list:
                 Text(bookItem.bookAuthor)
                     .foregroundColor(.primary)

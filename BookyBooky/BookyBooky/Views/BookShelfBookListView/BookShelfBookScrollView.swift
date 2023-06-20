@@ -14,22 +14,22 @@ struct BookShelfBookScrollView: View {
     
     @EnvironmentObject var realmMananger: RealmManager
     
-    @ObservedResults(CompleteBook.self) var readingBooks
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
+    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(FavoriteBook.self) var favBooks
     
     // MARK: - COMPUTED PROPERTIES
     
     var filteredCompBooks: [CompleteBook] {
-        readingBooks.getFilteredReadingBooks(
+        compBooks.getFilteredReadingBooks(
             .complete,
-            searchQuery: searchQuery, bookSortType: selectedSortType
+            searchQuery: searchQuery, bookSortType: selectedBookSort
         )
     }
     
     var filteredFavBooks: [FavoriteBook] {
-        favoriteBooks.getFilteredFavoriteBooks(
+        favBooks.getFilteredFavoriteBooks(
             searchQuery: searchQuery,
-            bookSortType: selectedSortType
+            bookSortType: selectedBookSort
         )
     }
     
@@ -41,16 +41,16 @@ struct BookShelfBookScrollView: View {
     ]
     
     @Binding var searchQuery: String
-    @Binding var selectedSortType: BookSortCriteria
-    let type: BookShelfList
+    @Binding var selectedBookSort: BookSortCriteria
+    let type: ListType.BookShelfList
     
     // MARK: - INITIALIZER
     
     init(searchQuery: Binding<String>,
-         selectedSortType: Binding<BookSortCriteria>,
-         type: BookShelfList) {
+         selectedSort: Binding<BookSortCriteria>,
+         type: ListType.BookShelfList) {
         self._searchQuery = searchQuery
-        self._selectedSortType = selectedSortType
+        self._selectedBookSort = selectedSort
         self.type = type
     }
     
@@ -89,7 +89,7 @@ extension BookShelfBookScrollView {
                 switch type {
                 case .favorite:
                     ForEach(filteredFavBooks) { favoriteBook in
-                        FavBookButton(favoriteBook, type: .navigation)
+                        ShelfFavBookButton(favoriteBook, type: .navigation)
                     }
                 case .complete:
                     ForEach(filteredCompBooks, id: \.self) { completeBook in
@@ -126,7 +126,7 @@ struct FavoriteBooksScrollView_Previews: PreviewProvider {
     static var previews: some View {
         BookShelfBookScrollView(
             searchQuery: .constant(""),
-            selectedSortType: .constant(.titleAscendingOrder),
+            selectedSort: .constant(.titleAscendingOrder),
             type: .favorite
         )
         .environmentObject(RealmManager())

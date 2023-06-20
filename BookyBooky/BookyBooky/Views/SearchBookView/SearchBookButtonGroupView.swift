@@ -13,28 +13,19 @@ struct SearchBookButtonGroupView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var compBooks
     
     @State private var isPresentingAddReadingBookView = false
     
     // MARK: - PROPERTIES
     
-    let bookInfo: detailBookInfo.Item
+    let bookItem: detailBookInfo.Item
     @Binding var isLoadingCoverImage: Bool
-    
-    // MARK: - COMPUTED PROPERTIES
-    
-    var isExist: Bool {
-        for book in readingBooks where book.isbn13 == bookInfo.isbn13 {
-            return true
-        }
-        return false
-    }
     
     // MARK: - INTIALIZER
     
-    init(_ bookInfo: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
-        self.bookInfo = bookInfo
+    init(_ bookItem: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+        self.bookItem = bookItem
         self._isLoadingCoverImage = isLoadingCoverImage
     }
     
@@ -42,9 +33,13 @@ struct SearchBookButtonGroupView: View {
     
     var body: some View {
         ButtonGroup
-//            .navigationDestination(isPresented: $isPresentingAddReadingBookView) {
-//                AddReadingBookView(bookInfo)
-//            }
+    }
+    
+    func isExist() -> Bool {
+        for book in compBooks where book.isbn13 == bookItem.isbn13 {
+            return true
+        }
+        return false
     }
 }
 
@@ -80,7 +75,7 @@ extension SearchBookButtonGroupView {
     
     var backButton: some View {
         Group {
-            if isExist {
+            if isExist() {
                 Button {
                     dismiss()
                 } label: {
@@ -101,13 +96,13 @@ extension SearchBookButtonGroupView {
     var addButton: some View {
         // 이미 목표 도서에 추가되어 있는 경우, 버튼 잠그기 (안 보이게 하기)
         Group {
-            if !isExist {
+            if !isExist() {
                 NavigationLink {
-                    AddReadingBookView(bookInfo)
+                    AddReadingBookView(bookItem)
                 } label: {
                     Text("추가하기")
                 }
-                .buttonStyle(RightBottomButtonStyle(backgroundColor: bookInfo.bookCategory.themeColor))
+                .buttonStyle(RightBottomButtonStyle(backgroundColor: bookItem.bookCategory.themeColor))
                 .disabled(isLoadingCoverImage)
             }
         }

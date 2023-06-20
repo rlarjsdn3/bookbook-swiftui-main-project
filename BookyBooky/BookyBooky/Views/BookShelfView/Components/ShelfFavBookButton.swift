@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct FavBookButton: View {
+struct ShelfFavBookButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -19,11 +19,11 @@ struct FavBookButton: View {
     // MARK: - PROPERTIES
     
     let favBook: FavoriteBook
-    let type: ViewFromType
+    let type: ButtonType.ShelfFavBookButton
     
     // MARK: - INTIALIZER
     
-    init(_ favBook: FavoriteBook, type: ViewFromType) {
+    init(_ favBook: FavoriteBook, type: ButtonType.ShelfFavBookButton) {
         self.favBook = favBook
         self.type = type
     }
@@ -36,14 +36,14 @@ struct FavBookButton: View {
                 SearchBookView(favBook.isbn13, type: .sheet)
             }
             .navigationDestination(isPresented: $isPresentingSearchBookViewFromNavigation) {
-                SearchBookView(favBook.isbn13, type: .navigationStack)
+                SearchBookView(favBook.isbn13, type: .navigation)
             }
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension FavBookButton {
+extension ShelfFavBookButton {
     var favBookButton: some View {
         VStack {
             asyncCoverImage(
@@ -102,6 +102,6 @@ extension FavBookButton {
 
 struct FavoriteBookCellView_Previews: PreviewProvider {
     static var previews: some View {
-        FavBookButton(FavoriteBook.preview, type: .sheet)
+        ShelfFavBookButton(FavoriteBook.preview, type: .sheet)
     }
 }
