@@ -103,9 +103,9 @@ extension SearchSheetScrollView {
                 LazyVStack {
                     ForEach(filteredSearchBooks, id: \.self) { book in
                         SearchBookButton(book, mode: selectedListMode)
+                            .padding(.vertical, 8)
                     }
                 }
-                .padding(.vertical, 10)
                 .id("Scroll_To_Top")
             }
         }
