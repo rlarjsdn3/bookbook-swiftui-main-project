@@ -16,19 +16,22 @@ struct AddReadingBookCenterView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var dayInterval: Int {
-        return Int(round(selectedDate.timeIntervalSince(Date()) / 86_400.0))
+    var dayInterval: Int? {
+        let today = Date.now
+        let calendar = Calendar.current
+        let interval = calendar.dateComponents([.day], from: today, to: selectedDate)
+        return interval.day
     }
     
     // MARK: - PROPERTIES
     
-    let bookInfo: detailBookInfo.Item
+    let bookItem: detailBookInfo.Item
     @Binding var selectedDate: Date
     
     // MARK: - INTIALIZER
     
-    init(_ bookInfo: detailBookInfo.Item, selectedDate: Binding<Date>) {
-        self.bookInfo = bookInfo
+    init(_ bookItem: detailBookInfo.Item, selectedDate: Binding<Date>) {
+        self.bookItem = bookItem
         self._selectedDate = selectedDate
     }
     
@@ -38,7 +41,7 @@ struct AddReadingBookCenterView: View {
         centerLabel
             .sheet(isPresented: $isPresentingDatePickerSheet) {
                 DatePickerSheetView(
-                    theme: bookInfo.bookCategory.themeColor,
+                    theme: bookItem.bookCategory.themeColor,
                     selectedDate: $selectedDate)
             }
             .padding(.bottom, 40)
@@ -57,7 +60,7 @@ extension AddReadingBookCenterView {
             
             selectedTargetDateText
             
-            averageDailyPageLabel
+            averageDailyReadingPagesLabel
             
             datePickerButton
         }
@@ -75,12 +78,12 @@ extension AddReadingBookCenterView {
             .fontWeight(.bold)
     }
     
-    var averageDailyPageLabel: some View {
+    var averageDailyReadingPagesLabel: some View {
         Group {
-            if dayInterval != 0 {
-                Text("\(dayInterval)일 동안 하루 평균 \(String(format: "%.0f",  Double(bookInfo.subInfo.itemPage) / Double(dayInterval)))페이지를 읽어야 해요.")
-            } else {
-                Text("오늘까지 \(bookInfo.subInfo.itemPage)페이지를 읽어야 해요.")
+            if let dayInterval = dayInterval {
+                let day = dayInterval + 1
+                let averageDailyReadingPages = bookItem.subInfo.itemPage / day
+                Text("\(day)일 동안 하루 평균 \(averageDailyReadingPages)페이지를 읽어야 해요.")
             }
         }
         .font(.subheadline)

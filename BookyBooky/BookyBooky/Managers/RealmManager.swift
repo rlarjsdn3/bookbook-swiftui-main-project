@@ -92,7 +92,7 @@ extension RealmManager {
                 }                
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일하지 않은 경우
             } else {
-                let readingRecord = ReadingRecord(
+                let readingRecord = Record(
                     value: ["date": Date(),
                             "totalPagesRead": totalPagesRead,
                             "numOfPagesRead": totalPagesRead - lastRecord.totalPagesRead
@@ -105,7 +105,7 @@ extension RealmManager {
             }
         // 독서 데이터가 하나 이상 존재하지 않는 경우
         } else {
-            let readingRecord = ReadingRecord(
+            let readingRecord = Record(
                 value: ["date": Date(),
                         "totalPagesRead": totalPagesRead,
                         "numOfPagesRead": totalPagesRead
@@ -215,7 +215,7 @@ extension RealmManager {
             return
         }
         
-        let sentence = CollectSentences(
+        let sentence = Sentence(
             value: ["date": Date(),
                     "page": page,
                     "sentence": sentence] as [String: Any]

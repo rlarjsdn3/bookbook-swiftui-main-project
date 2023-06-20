@@ -21,9 +21,9 @@ struct SentenceCellButton: View {
     @State private var isPresentingDeleteConfirmationDialog = false
     
     let readingBook: CompleteBook
-    let collectSentence: CollectSentences
+    let collectSentence: Sentence
     
-    init(_ readingBook: CompleteBook, collectSentence: CollectSentences) {
+    init(_ readingBook: CompleteBook, collectSentence: Sentence) {
         self.readingBook = readingBook
         self.collectSentence = collectSentence
     }
@@ -104,7 +104,7 @@ struct SentenceCellButton_Previews: PreviewProvider {
     static var previews: some View {
         SentenceCellButton(
             CompleteBook.preview,
-            collectSentence: CollectSentences.preview
+            collectSentence: Sentence.preview
         )
         .environmentObject(RealmManager())
     }

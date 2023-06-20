@@ -19,13 +19,13 @@ struct AddReadingBookButtonGroupView: View {
     
     // MARK: - PROPERTIES
     
-    let bookInfo: detailBookInfo.Item
+    let bookItem: detailBookInfo.Item
     @Binding var selectedDate: Date
     
     // MARK: - INTIALIZER
     
-    init(_ bookInfo: detailBookInfo.Item, selectedDate: Binding<Date>) {
-        self.bookInfo = bookInfo
+    init(_ bookItem: detailBookInfo.Item, selectedDate: Binding<Date>) {
+        self.bookItem = bookItem
         self._selectedDate = selectedDate
     }
     
@@ -83,23 +83,23 @@ extension AddReadingBookButtonGroupView {
         } label: {
             Text("추가하기")
         }
-        .buttonStyle(RightBottomButtonStyle(backgroundColor: bookInfo.bookCategory.themeColor))
+        .buttonStyle(RightBottomButtonStyle(backgroundColor: bookItem.bookCategory.themeColor))
     }
     
     var okButton: some View {
         Button("확인") {
             let readingBook = CompleteBook(
                 value: [
-                    "title": "\(bookInfo.title.refinedTitle)",
-                    "author": "\(bookInfo.author.refinedAuthor)",
-                    "publisher": "\(bookInfo.publisher)",
-                    "pubDate": bookInfo.pubDate.refinedPublishDate,
-                    "cover": "\(bookInfo.cover)",
-                    "itemPage": bookInfo.subInfo.itemPage,
-                    "category": bookInfo.categoryName.refinedCategory,
-                    "introduction": bookInfo.description,
-                    "link": "\(bookInfo.link)",
-                    "isbn13": "\(bookInfo.isbn13)",
+                    "title": "\(bookItem.title.refinedTitle)",
+                    "author": "\(bookItem.author.refinedAuthor)",
+                    "publisher": "\(bookItem.publisher)",
+                    "pubDate": bookItem.pubDate.refinedPublishDate,
+                    "cover": "\(bookItem.cover)",
+                    "itemPage": bookItem.subInfo.itemPage,
+                    "category": bookItem.categoryName.refinedCategory,
+                    "introduction": bookItem.description,
+                    "link": "\(bookItem.link)",
+                    "isbn13": "\(bookItem.isbn13)",
                     "startDate": Date(),
                     "targetDate": selectedDate,
                     "isCompleted": false

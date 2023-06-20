@@ -8,18 +8,13 @@
 import SwiftUI
 import Charts
 
-enum TimeRange: String, CaseIterable {
-    case last14Days = "2주"
-    case last180Days = "6개월"
-}
-
 struct DailyPagesReadChartView: View {
 
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var selectedTimeRange: TimeRange = .last14Days
+    @State private var selectedTimeRange: ChartTimeRange = .last14Days
     
     @State private var scrollPosition: TimeInterval = 0.0
     @State private var isPresentingAverageRuleMark = false
@@ -89,9 +84,9 @@ struct DailyPagesReadChartView: View {
             ScrollView {
                 VStack {
                     Picker("", selection: $selectedTimeRange) {
-                        ForEach(TimeRange.allCases, id: \.self) { range in
-                            Text(range.rawValue)
-                                .tag(range.rawValue)
+                        ForEach(ChartTimeRange.allCases, id: \.self) { range in
+                            Text(range.name)
+                                .tag(range.name)
                         }
                     }
                     .pickerStyle(.segmented)

@@ -52,14 +52,15 @@ struct BookListScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        Group {
+        ZStack {
+            Color(.background)
+            
             if bookList.isEmpty {
                 networkErrorLabel
             } else {
                 bookScrollContent
             }
         }
-        .background(Color(.background))
     }
 }
 
@@ -71,6 +72,7 @@ extension BookListScrollView {
             ScrollView(showsIndicators: false) {
                 bookButtonGroup
             }
+            // 도서 리스트 타입이 변경될 때마다 리스트의 스크롤을 제일 위로 올립니다.
             .onChange(of: selectedBookListTab) {
                 withAnimation {
                     scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
@@ -86,7 +88,7 @@ extension BookListScrollView {
     var bookButtonGroup: some View {
         LazyVGrid(columns: columns, spacing: 25) {
             ForEach(bookList, id: \.self) { item in
-                BookListBookButton(item)
+                SearchListBookButton(item)
             }
         }
         .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)

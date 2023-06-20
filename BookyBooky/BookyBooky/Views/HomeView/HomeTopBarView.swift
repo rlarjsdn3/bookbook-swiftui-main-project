@@ -71,7 +71,7 @@ extension HomeTopBarView {
             Spacer()
         }
         .sheet(isPresented: $isPresentingSettingsView) {
-            SettingsView()
+            ProfileView()
         }
         .sheet(isPresented: $isPresentingSearchSheetView) {
             SearchSheetView()

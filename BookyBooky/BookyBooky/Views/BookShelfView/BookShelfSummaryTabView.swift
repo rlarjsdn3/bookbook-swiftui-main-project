@@ -12,40 +12,40 @@ struct BookShelfSummaryTabView: View {
     
     // MARK: - INNER ENUM
     
-    enum BookShelfSummary: CaseIterable {
-        case completeBooksCount
-        case favoriteBooksCount
-        case collectedSentenceCount
+    enum SummaryTabItem: CaseIterable {
+        case compBookCount
+        case favBookCount
+        case sentenceCount
         
         var name: String {
             switch self {
-            case .completeBooksCount:
+            case .compBookCount:
                 return "읽은 도서 수"
-            case .favoriteBooksCount:
+            case .favBookCount:
                 return "찜한 도서 수"
-            case .collectedSentenceCount:
+            case .sentenceCount:
                 return "수집 문장 수"
             }
         }
         
         var systemImage: String {
             switch self {
-            case .completeBooksCount:
+            case .compBookCount:
                 return "book"
-            case .favoriteBooksCount:
+            case .favBookCount:
                 return "heart.fill"
-            case .collectedSentenceCount:
+            case .sentenceCount:
                 return "bookmark.fill"
             }
         }
         
         var themeColor: AnyGradient {
             switch self {
-            case .completeBooksCount:
+            case .compBookCount:
                 return Color.blue.gradient
-            case .favoriteBooksCount:
+            case .favBookCount:
                 return Color.pink.gradient
-            case .collectedSentenceCount:
+            case .sentenceCount:
                 return Color.green.gradient
             }
         }
@@ -58,15 +58,15 @@ struct BookShelfSummaryTabView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var completeBookCount: Int {
+    var compBookCount: Int {
         return readingBooks.filter { $0.isComplete }.count
     }
     
-    var favoriteBookCount: Int {
+    var favBookCount: Int {
         return favoriteBooks.count
     }
     
-    var collectedSentenceCount: Int {
+    var sentenceCount: Int {
         var count: Int = 0
         
         for readingBook in readingBooks {
@@ -83,7 +83,7 @@ struct BookShelfSummaryTabView: View {
 extension BookShelfSummaryTabView {
     var summaryTab: some View {
         HStack {
-            ForEach(BookShelfSummary.allCases, id: \.self) { item in
+            ForEach(SummaryTabItem.allCases, id: \.self) { item in
                 Spacer()
                 
                 VStack(spacing: 5) {
@@ -101,7 +101,7 @@ extension BookShelfSummaryTabView {
         .padding(.bottom, 10)
     }
     
-    func summaryImage(_ item: BookShelfSummary) -> some View {
+    func summaryImage(_ item: SummaryTabItem) -> some View {
         Image(systemName: item.systemImage)
             .font(.largeTitle)
             .foregroundColor(.white)
@@ -113,20 +113,20 @@ extension BookShelfSummaryTabView {
             .frame(width: 80, height: 80)
     }
     
-    func summaryLabel(_ item: BookShelfSummary) -> some View {
+    func summaryLabel(_ item: SummaryTabItem) -> some View {
         Text(item.name)
             .fontWeight(.bold)
     }
     
-    func summaryCount(_ item: BookShelfSummary) -> some View {
+    func summaryCount(_ item: SummaryTabItem) -> some View {
         Group {
             switch item {
-            case .completeBooksCount:
-                return Text("\(completeBookCount)")
-            case .favoriteBooksCount:
-                return Text("\(favoriteBookCount)")
-            case .collectedSentenceCount:
-                return Text("\(collectedSentenceCount)")
+            case .compBookCount:
+                return Text("\(compBookCount)")
+            case .favBookCount:
+                return Text("\(favBookCount)")
+            case .sentenceCount:
+                return Text("\(sentenceCount)")
             }
         }
         .font(.title2)

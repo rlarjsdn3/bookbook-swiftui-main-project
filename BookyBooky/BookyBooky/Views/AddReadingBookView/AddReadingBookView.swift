@@ -14,42 +14,42 @@ struct AddReadingBookView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var selectedDate: Date = Date(timeIntervalSinceNow: 7 * 86_400)
+    @State private var selectedDate = Date(timeIntervalSinceNow: 7 * 86_400)
     @State private var isPresentingDateDescSheet = false
     @State private var isPresentingDatePickerSheet = false
     
     // MARK: - PROPERTIES
     
-    let bookInfo: detailBookInfo.Item
+    let bookItem: detailBookInfo.Item
     
     // MARK: - INTIALIZER
     
-    init(_ bookInfo: detailBookInfo.Item) {
-        self.bookInfo = bookInfo
+    init(_ bookItem: detailBookInfo.Item) {
+        self.bookItem = bookItem
     }
     
     // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
-            AddReadingBookTopBarView(title: bookInfo.bookTitle)
+            AddReadingBookTopBarView(title: bookItem.bookTitle)
             
             Spacer()
             
             AddReadingBookCenterView(
-                bookInfo,
+                bookItem,
                 selectedDate: $selectedDate
             )
         
             Spacer()
             
             AddReadingBookButtonGroupView(
-                bookInfo,
+                bookItem,
                 selectedDate: $selectedDate
             )
         }
         .background(linearGrayGradient)
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden()
     }
 }
 

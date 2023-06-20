@@ -91,7 +91,7 @@ extension CompleteBookDataSheetView {
         }
     }
     
-    func recordCell(_ record: ReadingRecord) -> some View {
+    func recordCell(_ record: Record) -> some View {
         HStack {
             pageLabel(record)
             
@@ -102,7 +102,7 @@ extension CompleteBookDataSheetView {
         .padding(.vertical, 1)
     }
     
-    func pageLabel(_ record: ReadingRecord) -> some View {
+    func pageLabel(_ record: Record) -> some View {
         VStack(alignment: .leading) {
             Text("\(record.numOfPagesRead)페이지")
             
@@ -113,7 +113,7 @@ extension CompleteBookDataSheetView {
         }
     }
     
-    func dateLabel(_ record: ReadingRecord) -> some View {
+    func dateLabel(_ record: Record) -> some View {
         VStack(alignment: HorizontalAlignment.trailing) {
             Text("\(record.date.standardDateFormat)")
             

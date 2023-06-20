@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct ProfileView: View {
     var body: some View {
-        Text("Settings View")
+        Text("Profile View")
             .presentationCornerRadius(30)
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        ProfileView()
     }
 }

@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import RealmSwift
 import Charts
+import RealmSwift
 
 struct TotalPagesReadByCategory: Identifiable, Hashable {
     var category: Category
@@ -35,7 +35,7 @@ struct AnalysisView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var compBooks
 
     @State private var startOffset: CGFloat = 0.0
     @State private var scrollYOffset: CGFloat = 0.0

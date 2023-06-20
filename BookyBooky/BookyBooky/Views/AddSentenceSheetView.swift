@@ -31,13 +31,13 @@ struct AddSentenceSheetView: View {
     let characterLimit = 300
     
     let completeBook: CompleteBook
-    let sentence: CollectSentences
+    let sentence: Sentence
     let type: ViewType.SentenceSheetView
     
     // MARK: - INTIALIZER
     
     init(_ completeBook: CompleteBook,
-         sentence: CollectSentences = .preview,
+         sentence: Sentence = .preview,
          type: ViewType.SentenceSheetView) {
         self.completeBook = completeBook
         self.sentence = sentence

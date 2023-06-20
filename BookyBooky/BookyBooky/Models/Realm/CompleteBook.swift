@@ -21,8 +21,8 @@ class CompleteBook: Object, ObjectKeyIdentifiable {
     @Persisted var link: String                     // 상품 페이지 링크
     @Persisted var isbn13: String                   // ISBN-13
     
-    @Persisted var readingRecords: List<ReadingRecord>     // 독서 기록
-    @Persisted var collectSentences: List<CollectSentences> // 문장 수집
+    @Persisted var readingRecords: List<Record>     // 독서 기록
+    @Persisted var collectSentences: List<Sentence> // 문장 수집
     
     @Persisted var startDate: Date                  // 시작 날짜
     @Persisted var completeDate: Date?              // 완독 날짜
@@ -45,7 +45,7 @@ extension CompleteBook {
     
     /// 도서의 제일 마지막 독서 기록을 반환하는 계산 프로퍼티입니다.
     /// 독서 기록이 없는 경우 nil을 반환합니다.
-    var lastRecord: ReadingRecord? {
+    var lastRecord: Record? {
         if let lastRecord = self.readingRecords.last {
             return lastRecord
         }

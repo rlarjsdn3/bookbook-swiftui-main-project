@@ -14,8 +14,8 @@ struct BookShelfScrollView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedResults(FavoriteBook.self) var favoriteBooks
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(FavoriteBook.self) var favBooks
     
     @State private var startOffset: CGFloat = 0.0
     
@@ -32,14 +32,14 @@ struct BookShelfScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        bookShelfScroll
+        shelfScrollContent
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookShelfScrollView {
-    var bookShelfScroll: some View {
+    var shelfScrollContent: some View {
         ScrollView {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 BookShelfSummaryTabView()
