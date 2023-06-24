@@ -24,11 +24,11 @@ struct CompleteBookSentenceView: View {
     // MARK: - BODY
     
     var body: some View {
-        if completeBook.collectSentences.isEmpty {
+        if completeBook.sentences.isEmpty {
             noCollectSentenceLabel
         } else {
             ScrollView {
-                ForEach(completeBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
+                ForEach(completeBook.sentences.sorted { $0.page < $1.page }, id: \.self) { collect in
                     SentenceCellButton(
                         completeBook,
                         collectSentence: collect

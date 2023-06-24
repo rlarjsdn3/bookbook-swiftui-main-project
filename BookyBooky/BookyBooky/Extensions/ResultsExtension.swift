@@ -105,7 +105,7 @@ extension Results<CompleteBook> {
         var activities: [ReadingActivity] = []
         
         for readingBook in self {
-            for record in readingBook.readingRecords {
+            for record in readingBook.records {
                 activities.append(
                     ReadingActivity(
                         date: record.date,
@@ -131,7 +131,7 @@ extension Results<CompleteBook> {
         var monthlyRecord: [MonthlyReadingActivity] = []
         
         for readingBook in self {
-            for record in readingBook.readingRecords {
+            for record in readingBook.records {
                 let activity = ReadingActivity(
                                     date: record.date,
                                     title: readingBook.title,

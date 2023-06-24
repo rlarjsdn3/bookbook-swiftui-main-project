@@ -21,13 +21,13 @@ struct CompleteBookTopBarView: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var completeBook: CompleteBook
+    let completeBook: CompleteBook
     @Binding var scrollYOffset: CGFloat
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
-        self.completeBook = readingBook
+    init(_ completeBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
+        self.completeBook = completeBook
         self._scrollYOffset = scrollYOffset
     }
     
@@ -151,10 +151,12 @@ extension CompleteBookTopBarView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CompleteBookTopBarView(
-        CompleteBook.preview,
-        scrollYOffset: .constant(0.0)
-    )
-    .environmentObject(RealmManager())
+struct CompleteBookTopBarView_Preview: PreviewProvider {    
+    static var previews: some View {
+        CompleteBookTopBarView(
+            CompleteBook.preview,
+            scrollYOffset: .constant(0.0)
+        )
+        .environmentObject(RealmManager())
+    }
 }

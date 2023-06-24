@@ -77,17 +77,17 @@ extension RealmManager {
         if let lastRecord = object.lastRecord {
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일한 경우
             if Date().isEqual([.year, .month, .day], date: lastRecord.date) {
-                if object.readingRecords.count <= 1 {
+                if object.records.count <= 1 {
                     try! realm.write {
-                        object.readingRecords.last?.date = Date()
-                        object.readingRecords.last?.totalPagesRead = totalPagesRead
-                        object.readingRecords.last?.numOfPagesRead = totalPagesRead
+                        object.records.last?.date = Date()
+                        object.records.last?.totalPagesRead = totalPagesRead
+                        object.records.last?.numOfPagesRead = totalPagesRead
                     }
                 } else {
                     try! realm.write {
-                        object.readingRecords.last?.date = Date()
-                        object.readingRecords.last?.totalPagesRead = totalPagesRead
-                        object.readingRecords.last?.numOfPagesRead = totalPagesRead - readingBook.readingRecords[readingBook.readingRecords.endIndex - 2].totalPagesRead
+                        object.records.last?.date = Date()
+                        object.records.last?.totalPagesRead = totalPagesRead
+                        object.records.last?.numOfPagesRead = totalPagesRead - readingBook.records[readingBook.records.endIndex - 2].totalPagesRead
                     }
                 }                
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일하지 않은 경우
@@ -100,7 +100,7 @@ extension RealmManager {
                 )
                 // 독서 데이터 추가하기
                 try! realm.write {
-                    object.readingRecords.append(readingRecord)
+                    object.records.append(readingRecord)
                 }
             }
         // 독서 데이터가 하나 이상 존재하지 않는 경우
@@ -113,7 +113,7 @@ extension RealmManager {
             )
             // 독서 데이터 추가하기
             try! realm.write {
-                object.readingRecords.append(readingRecord)
+                object.records.append(readingRecord)
             }
         }
         
@@ -143,7 +143,7 @@ extension RealmManager {
         if let object = realm.objects(CompleteBook.self)
             .filter({ $0.isbn13 == readingBook.isbn13 }).first {
             try! realm.write {
-                object.readingRecords.remove(at: object.readingRecords.endIndex - 1)
+                object.records.remove(at: object.records.endIndex - 1)
             }
         }
     }
@@ -155,7 +155,7 @@ extension RealmManager {
         if let object = realm.objects(CompleteBook.self)
             .filter({ $0.isbn13 == book.isbn13 }).first {
             try! realm.write {
-                object.readingRecords.removeAll()
+                object.records.removeAll()
             }
         }
     }
@@ -222,7 +222,7 @@ extension RealmManager {
         )
         
         try! realm.write {
-            object.collectSentences.append(sentence)
+            object.sentences.append(sentence)
         }
         
         isPresentingAddSentenceSuccessToastAlert = true
@@ -234,15 +234,15 @@ extension RealmManager {
             return
         }
         
-        guard let index = readingBook.collectSentences
+        guard let index = readingBook.sentences
             .firstIndex(where: { $0._id == id }) else {
             return
         }
         
         try! realm.write {
-            object.collectSentences[index].date = Date()
-            object.collectSentences[index].sentence = sentence
-            object.collectSentences[index].page = page
+            object.sentences[index].date = Date()
+            object.sentences[index].sentence = sentence
+            object.sentences[index].page = page
         }
     }
     
@@ -252,13 +252,13 @@ extension RealmManager {
             return
         }
         
-        guard let index = readingBook.collectSentences
+        guard let index = readingBook.sentences
             .firstIndex(where: { $0._id == id }) else {
             return
         }
         
         try! realm.write {
-            object.collectSentences.remove(at: index)
+            object.sentences.remove(at: index)
         }
     }
 }

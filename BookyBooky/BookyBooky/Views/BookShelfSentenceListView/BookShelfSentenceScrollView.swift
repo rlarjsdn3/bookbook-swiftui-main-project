@@ -12,7 +12,7 @@ struct BookShelfSentenceScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var completeBooks
     
     @Binding var searchQuery: String
     @Binding var selectedSort: BookSortCriteria
@@ -20,7 +20,7 @@ struct BookShelfSentenceScrollView: View {
     // MARK: - COMPUTED PROPERTIES
     
     var filteredCompBooks: [CompleteBook] {
-        readingBooks.getFilteredReadingBooks(
+        completeBooks.getFilteredReadingBooks(
             .all,
             searchQuery: searchQuery,
             bookSortType: selectedSort
@@ -32,6 +32,16 @@ struct BookShelfSentenceScrollView: View {
     var body: some View {
         sentenceScrollContent
     }
+    
+    // MARK: - FUNCTIONS
+    
+    func isExist() -> Bool {
+        let compBooks = filteredCompBooks
+        for compBook in compBooks where compBook.sentences.isEmpty {
+            return false
+        }
+        return true
+    }
 }
 
 // MARK: - EXTENSIONS
@@ -39,7 +49,7 @@ struct BookShelfSentenceScrollView: View {
 extension BookShelfSentenceScrollView {
     var sentenceScrollContent: some View {
         Group {
-            if filteredCompBooks.isEmpty {
+            if isExist() {
                 noResultsLabel
             } else {
                 sentenceButtonGroup
@@ -65,16 +75,19 @@ extension BookShelfSentenceScrollView {
     var sentenceButtonGroup: some View {
         ScrollView {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                ForEach(filteredCompBooks) { readingBook in
-                    if !readingBook.collectSentences.isEmpty {
+                ForEach(filteredCompBooks) { compBook in
+                    if !compBook.sentences.isEmpty {
                         Section {
                             VStack {
-                                ForEach(readingBook.collectSentences.sorted { $0.page < $1.page }, id: \.self) { collect in
-                                    SentenceCellButton(readingBook, collectSentence: collect)
+                                let sortedSentences = compBook.sentences.sorted(
+                                    by: { $0.page < $1.page }
+                                )
+                                ForEach(sortedSentences, id: \.self) { collect in
+                                    SentenceCellButton(compBook, collectSentence: collect)
                                 }
                             }
                         } header: {
-                            Text(readingBook.title)
+                            Text(compBook.title)
                                 .font(.title3.weight(.bold))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .lineLimit(1)

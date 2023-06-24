@@ -98,6 +98,7 @@ extension BookListScrollView {
             
             refreshButton
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     var ErrorLabel: some View {

@@ -21,8 +21,8 @@ class CompleteBook: Object, ObjectKeyIdentifiable {
     @Persisted var link: String                     // 상품 페이지 링크
     @Persisted var isbn13: String                   // ISBN-13
     
-    @Persisted var readingRecords: List<Record>     // 독서 기록
-    @Persisted var collectSentences: List<Sentence> // 문장 수집
+    @Persisted var records: List<Record>     // 독서 기록
+    @Persisted var sentences: List<Sentence> // 문장 수집
     
     @Persisted var startDate: Date                  // 시작 날짜
     @Persisted var completeDate: Date?              // 완독 날짜
@@ -34,7 +34,7 @@ extension CompleteBook {
     /// 완독한 경우, 참(True)을 반환합니다.
     var isComplete: Bool {
         // 독서 데이터가 하나라도 존재하는 경우
-        if let lastRecord = self.readingRecords.last {
+        if let lastRecord = self.records.last {
             // 마지막으로 읽은 도서 페이지와 도서 페이지가 동일한 경우
             return lastRecord.totalPagesRead == self.itemPage // True 반환
         // 독서 데이터가 존재하지 않는 경우
@@ -46,7 +46,7 @@ extension CompleteBook {
     /// 도서의 제일 마지막 독서 기록을 반환하는 계산 프로퍼티입니다.
     /// 독서 기록이 없는 경우 nil을 반환합니다.
     var lastRecord: Record? {
-        if let lastRecord = self.readingRecords.last {
+        if let lastRecord = self.records.last {
             return lastRecord
         }
         return nil
@@ -89,7 +89,7 @@ extension CompleteBook {
 }
 
 extension CompleteBook {
-    static var preview: CompleteBook = CompleteBook(
+    static var preview = CompleteBook(
         value: ["title": "Java의 정석",
                 "author": "남궁성",
                 "publisher": "도우출판",

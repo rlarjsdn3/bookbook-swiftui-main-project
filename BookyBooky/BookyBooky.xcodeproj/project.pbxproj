@@ -554,15 +554,15 @@
 			children = (
 				9EB749F629D5C3A500610D97 /* Category.swift */,
 				9E2C9D562A3C1C0500810B02 /* MainReadingTime.swift */,
+				9E9B35B42A413945009234ED /* ListMode.swift */,
 				9E9B35B22A41288C009234ED /* ViewType.swift */,
 				9ECE9A1A2A40743200987E99 /* ButtonType.swift */,
 				9E9B35B62A414583009234ED /* ListType.swift */,
 				9ECA326A29D12044004D6D5B /* CustomTab.swift */,
 				9E0C0A7C29D3D0F900F1F5F6 /* BookListTab.swift */,
 				9EFBE7CE29FFA90800308BAE /* CompleteBookTab.swift */,
-				9E0434AA29E28097009A2161 /* BookSortCriteria.swift */,
-				9E9B35B42A413945009234ED /* ListMode.swift */,
 				9E9B35B92A41C4DA009234ED /* ChartTimeRange.swift */,
+				9E0434AA29E28097009A2161 /* BookSortCriteria.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1040,6 +1040,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookyBooky/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "부크부크";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1077,6 +1078,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookyBooky/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "부크부크";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

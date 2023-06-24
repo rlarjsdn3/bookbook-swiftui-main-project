@@ -16,13 +16,13 @@ struct CompleteBookButton: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: CompleteBook
+    @ObservedRealmObject var completeBook: CompleteBook
     let type: ButtonType.CompleteBookButton
     
     // MARK: - INTIALIZER
     
     init(_ readingBook: CompleteBook, type: ButtonType.CompleteBookButton) {
-        self.readingBook = readingBook
+        self.completeBook = readingBook
         self.type = type
     }
     
@@ -36,7 +36,7 @@ struct CompleteBookButton: View {
 extension CompleteBookButton {
     var compBookButton: some View {
         NavigationLink {
-            CompleteBookView(readingBook)
+            CompleteBookView(completeBook)
         } label: {
             compBookLabel
         }
@@ -46,12 +46,12 @@ extension CompleteBookButton {
     var compBookLabel: some View {
         VStack {
             asyncCoverImage(
-                readingBook.cover,
+                completeBook.cover,
                 width: 150, height: 200,
                 coverShape: RoundedRect()
             )
             .overlay {
-                if readingBook.isBehindTargetDate {
+                if completeBook.isBehindTargetDate {
                     exclamationMarkSFSymbolImage
                 }
             }
@@ -79,7 +79,7 @@ extension CompleteBookButton {
     
     var progressBar: some View {
         HStack {
-            let progressRatio = readingBook.readingProgressRate
+            let progressRatio = completeBook.readingProgressRate
             
             ProgressView(value: progressRatio, total: 100.0)
                 .tint(Color.black.gradient)
@@ -92,7 +92,7 @@ extension CompleteBookButton {
     }
     
     var compBookTitleText: some View {
-        Text("\(readingBook.title)")
+        Text("\(completeBook.title)")
             .font(.headline)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -103,13 +103,16 @@ extension CompleteBookButton {
     }
     
     var compBookAuthorText: some View {
-        Text("\(readingBook.author)")
+        Text("\(completeBook.author)")
             .font(.subheadline)
             .foregroundColor(.secondary)
             .lineLimit(1)
     }
 }
 
-#Preview {
-    CompleteBookButton(.preview, type: .home)
-}
+//#Preview {
+//    CompleteBookButton(
+//        CompleteBook.preview,
+//        type: .home
+//    )
+//}

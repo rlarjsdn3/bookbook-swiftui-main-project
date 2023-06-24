@@ -68,7 +68,7 @@ extension CompleteBookDataSheetView {
     
     var recordsSection: some View {
         Section {
-            if completeBook.readingRecords.isEmpty {
+            if completeBook.records.isEmpty {
                 noDataLabel
             } else {
                 recordCellGroup
@@ -86,7 +86,7 @@ extension CompleteBookDataSheetView {
     }
     
     var recordCellGroup: some View {
-        ForEach(completeBook.readingRecords, id: \.self) { record in
+        ForEach(completeBook.records, id: \.self) { record in
             recordCell(record)
         }
     }
@@ -130,7 +130,7 @@ extension CompleteBookDataSheetView {
             deleteAllRecordButton
         }
         .disabled(completeBook.isComplete)
-        .disabled(completeBook.readingRecords.isEmpty)
+        .disabled(completeBook.records.isEmpty)
     }
     
     var deleteLastRecordButton: some View {

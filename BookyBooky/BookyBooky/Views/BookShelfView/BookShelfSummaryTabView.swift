@@ -70,7 +70,7 @@ struct BookShelfSummaryTabView: View {
         var count: Int = 0
         
         for readingBook in readingBooks {
-            count += readingBook.collectSentences.count
+            count += readingBook.sentences.count
         }
         return count
     }

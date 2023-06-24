@@ -28,7 +28,7 @@ struct CompleteBookAnalysisView: View {
     // MARK: - COMPUTED PROPERTIES
 
     var mainReadingTime: MainReadingTime? {
-        guard !completeBook.readingRecords.isEmpty else {
+        guard !completeBook.records.isEmpty else {
             return nil
         }
         
@@ -36,7 +36,7 @@ struct CompleteBookAnalysisView: View {
         
         var readingDate: [Date] = []
         
-        for record in completeBook.readingRecords {
+        for record in completeBook.records {
             readingDate.append(record.date)
         }
         
@@ -77,7 +77,7 @@ struct CompleteBookAnalysisView: View {
     var consecutiveReadingDay: Int? {
         var readingDate: [Date] = []
         
-        for record in completeBook.readingRecords {
+        for record in completeBook.records {
             readingDate.append(record.date)
         }
         
@@ -140,7 +140,7 @@ struct CompleteBookAnalysisView: View {
                     scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
                 }
             }
-            .onChange(of: completeBook.readingRecords) { _, _ in
+            .onChange(of: completeBook.records) { _, _ in
                 if let lastRecord = completeBook.lastRecord {
                     scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
                 }
@@ -151,7 +151,7 @@ struct CompleteBookAnalysisView: View {
     }
     
     func totalReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
-        completeBook.readingRecords.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.numOfPagesRead }
+        completeBook.records.filter({ range.contains($0.date) }).reduce(0) { $0 + $1.numOfPagesRead }
     }
     
     func averageReadPagesInPreiod(in range: ClosedRange<Date>) -> Int {
@@ -159,7 +159,7 @@ struct CompleteBookAnalysisView: View {
     }
     
     func readPagesCountInPeriod(in range: ClosedRange<Date>) -> Int {
-        let count = completeBook.readingRecords.filter({ range.contains($0.date) }).count
+        let count = completeBook.records.filter({ range.contains($0.date) }).count
         return count != 0 ? count : 1
     }
 }
@@ -169,7 +169,7 @@ struct CompleteBookAnalysisView: View {
 extension CompleteBookAnalysisView {
     var analysisContent: some View {
         Group {
-            if completeBook.readingRecords.isEmpty {
+            if completeBook.records.isEmpty {
                 VStack(spacing: 5) {
                     Text("차트를 표시할 수 없음")
                         .font(.title3)
@@ -222,7 +222,7 @@ extension CompleteBookAnalysisView {
     
     var barChart: some View {
         Chart {
-            ForEach(completeBook.readingRecords, id: \.self) { record in
+            ForEach(completeBook.records, id: \.self) { record in
                 BarMark(
                     x: .value("date", record.date, unit: .day),
                     y: .value("page", record.numOfPagesRead)
@@ -347,7 +347,7 @@ extension CompleteBookAnalysisView {
                 
                 Spacer()
                 
-                if !completeBook.readingRecords.isEmpty {
+                if !completeBook.records.isEmpty {
                     Text("\(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
                 } else {
                     Text("-")

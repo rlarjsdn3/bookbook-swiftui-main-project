@@ -38,7 +38,7 @@ struct AnalysisHighlightTabView: View {
         var dailyPages: [DailyPagesRead] = []
         
         for readingBook in readingBooks {
-            for record in readingBook.readingRecords {
+            for record in readingBook.records {
                 if let index = dailyPages.firstIndex(where: { $0.date.isEqual([.year, .month, .day], date: record.date) }) {
                     dailyPages[index].pages += record.numOfPagesRead
                 } else {
@@ -79,7 +79,7 @@ struct AnalysisHighlightTabView: View {
         var readingDate: [Date] = []
         
         for readingBook in readingBooks {
-            for record in readingBook.readingRecords {
+            for record in readingBook.records {
                 readingDate.append(record.date)
             }
         }
@@ -126,7 +126,7 @@ struct AnalysisHighlightTabView: View {
         var readingDate: [Date] = []
         
         for readingBook in readingBooks {
-            for record in readingBook.readingRecords {
+            for record in readingBook.records {
                 readingDate.append(record.date)
             }
         }
