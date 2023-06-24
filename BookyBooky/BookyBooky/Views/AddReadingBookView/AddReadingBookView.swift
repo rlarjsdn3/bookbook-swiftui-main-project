@@ -20,11 +20,11 @@ struct AddReadingBookView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: detailBookInfo.Item
+    let bookItem: detailBookItem.Item
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookInfo.Item) {
+    init(_ bookItem: detailBookItem.Item) {
         self.bookItem = bookItem
     }
     
@@ -70,6 +70,6 @@ extension AddReadingBookView {
 
 struct BookAddView_Previews: PreviewProvider {
     static var previews: some View {
-        AddReadingBookView(detailBookInfo.Item.preview)
+        AddReadingBookView(detailBookItem.Item.preview)
     }
 }

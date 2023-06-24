@@ -19,12 +19,12 @@ struct AddReadingBookButtonGroupView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: detailBookInfo.Item
+    let bookItem: detailBookItem.Item
     @Binding var selectedDate: Date
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookInfo.Item, selectedDate: Binding<Date>) {
+    init(_ bookItem: detailBookItem.Item, selectedDate: Binding<Date>) {
         self.bookItem = bookItem
         self._selectedDate = selectedDate
     }
@@ -119,7 +119,7 @@ extension AddReadingBookButtonGroupView {
 struct BookAddButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         AddReadingBookButtonGroupView(
-            detailBookInfo.Item.preview,
+            detailBookItem.Item.preview,
             selectedDate: .constant(Date())
         )
         .environmentObject(RealmManager())

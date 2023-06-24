@@ -19,7 +19,7 @@ struct MonthlyBooksCompletedChartView: View {
     
     // MARK: - PROPERTIES
     
-    let chartData: [MonthlyCompleteBook]
+    let chartData: [ChartData.MonthlyCompleteBook]
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -41,7 +41,7 @@ struct MonthlyBooksCompletedChartView: View {
     
     // MARK: - INTILAIZER
     
-    init(chartData: [MonthlyCompleteBook]) {
+    init(chartData: [ChartData.MonthlyCompleteBook]) {
         self.chartData = chartData
     }
     

@@ -29,8 +29,8 @@ struct SearchSheetScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var filteredSearchBooks: [briefBookInfo.Item] {
-        var filtered: [briefBookInfo.Item] = []
+    var filteredSearchBooks: [briefBookItem.Item] {
+        var filtered: [briefBookItem.Item] = []
         
         if selectedCategory == .all {
             return aladinAPIManager.searchResults

@@ -16,8 +16,8 @@ struct AnalysisHighlightTabView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var totalPagesByCategoryChartData: [TotalPagesReadByCategory] {
-        var totalPagesReadByCategory: [TotalPagesReadByCategory] = []
+    var totalPagesByCategoryChartData: [ChartData.TotalPagesReadByCategory] {
+        var totalPagesReadByCategory: [ChartData.TotalPagesReadByCategory] = []
         
         for readingBook in readingBooks {
             if let index = totalPagesReadByCategory.firstIndex(where: { $0.category == readingBook.category }) {
@@ -34,8 +34,8 @@ struct AnalysisHighlightTabView: View {
         return totalPagesReadByCategory.sorted { $0.pages > $1.pages }
     }
     
-    var totalDailyReadPagesChartData: [DailyPagesRead] {
-        var dailyPages: [DailyPagesRead] = []
+    var totalDailyReadPagesChartData: [ChartData.DailyPagesRead] {
+        var dailyPages: [ChartData.DailyPagesRead] = []
         
         for readingBook in readingBooks {
             for record in readingBook.records {
@@ -43,7 +43,7 @@ struct AnalysisHighlightTabView: View {
                     dailyPages[index].pages += record.numOfPagesRead
                 } else {
                     dailyPages.append(
-                        DailyPagesRead(date: record.date, pages: record.numOfPagesRead)
+                        ChartData.DailyPagesRead(date: record.date, pages: record.numOfPagesRead)
                     )
                 }
             }
@@ -52,8 +52,8 @@ struct AnalysisHighlightTabView: View {
         return dailyPages
     }
     
-    var monthlyBooksCompletedChartData: [MonthlyCompleteBook] {
-        var monthlyCompleteBook: [MonthlyCompleteBook] = []
+    var monthlyBooksCompletedChartData: [ChartData.MonthlyCompleteBook] {
+        var monthlyCompleteBook: [ChartData.MonthlyCompleteBook] = []
         
         for readingBook in readingBooks {
             if readingBook.isComplete {
@@ -61,7 +61,7 @@ struct AnalysisHighlightTabView: View {
                     monthlyCompleteBook[index].count += 1
                 } else {
                     monthlyCompleteBook.append(
-                        MonthlyCompleteBook(date: readingBook.completeDate ?? Date(), count: 1)
+                        ChartData.MonthlyCompleteBook(date: readingBook.completeDate ?? Date(), count: 1)
                     )
                 }
             }

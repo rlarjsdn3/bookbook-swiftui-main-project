@@ -23,13 +23,13 @@ class AladinAPIManager: ObservableObject {
     @Published var isPresentingSearchErrorToastAlert = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
     @Published var isPresentingDetailBookErrorToastAlert = false      // 도서 상세 에러 UI의 출력을 제어하는 변수
     
-    @Published var bestSeller: [briefBookInfo.Item] = []     // 베스트셀러 리스트를 저장하는 변수
-    @Published var itemNewAll: [briefBookInfo.Item] = []     // 신간 도서 리스트를 저장하는 변수
-    @Published var itemNewSpecial: [briefBookInfo.Item] = [] // 신간 베스트 리스트를 저장하는 변수
-    @Published var blogBest: [briefBookInfo.Item] = []       // 블로그 베스트 리스트를 저장하는 변수
+    @Published var bestSeller: [briefBookItem.Item] = []     // 베스트셀러 리스트를 저장하는 변수
+    @Published var itemNewAll: [briefBookItem.Item] = []     // 신간 도서 리스트를 저장하는 변수
+    @Published var itemNewSpecial: [briefBookItem.Item] = [] // 신간 베스트 리스트를 저장하는 변수
+    @Published var blogBest: [briefBookItem.Item] = []       // 블로그 베스트 리스트를 저장하는 변수
     
-    @Published var searchResults: [briefBookInfo.Item] = [] // 검색 결과 리스트를 저장하는 변수
-    @Published var searchBookInfo: detailBookInfo.Item?     // 상세 도서 결과값을 저장하는 변수
+    @Published var searchResults: [briefBookItem.Item] = [] // 검색 결과 리스트를 저장하는 변수
+    @Published var searchBookInfo: detailBookItem.Item?     // 상세 도서 결과값을 저장하는 변수
     
     
     // 아래 코드 리팩토링 예정
@@ -41,7 +41,7 @@ class AladinAPIManager: ObservableObject {
     /// 도서 목록 속의 카테고리 정보를 모아 categories 변수에 결과값을 저장하는 함수입니다.
     /// 카테고리는 오름차순 정렬되며, '전체'는 제일 앞에, '기타'는 제일 뒤에 배치됩니다.
     /// - Parameter list: 도서 리스트 배열
-    func getCategory(bookItems: [briefBookInfo.Item]) {
+    func getCategory(bookItems: [briefBookItem.Item]) {
         var categories: [Category] = []
         
         // 중복되지 않게 카테고리 항목 저장하기
@@ -97,7 +97,7 @@ class AladinAPIManager: ObservableObject {
             headers: nil
         )
         .validate(statusCode: 200...500)
-        .responseDecodable(of: briefBookInfo.self) { response in
+        .responseDecodable(of: briefBookItem.self) { response in
             switch response.result {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
@@ -155,7 +155,7 @@ class AladinAPIManager: ObservableObject {
             headers: nil
         )
         .validate(statusCode: 200...500)
-        .responseDecodable(of: briefBookInfo.self) { response in
+        .responseDecodable(of: briefBookItem.self) { response in
             switch response.result {
             case .success(let results):
                 guard let statusCode = response.response?.statusCode else { return }
@@ -209,7 +209,7 @@ class AladinAPIManager: ObservableObject {
             encoding: URLEncoding.default,
             headers: nil
         )
-        .responseDecodable(of: detailBookInfo.self) { response in
+        .responseDecodable(of: detailBookItem.self) { response in
             switch response.result {
             case .success(let detailBookInfo):
                 guard let statusCode = response.response?.statusCode else { return }

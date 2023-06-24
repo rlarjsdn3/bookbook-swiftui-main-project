@@ -9,28 +9,6 @@ import SwiftUI
 import Charts
 import RealmSwift
 
-struct TotalPagesReadByCategory: Identifiable, Hashable {
-    var category: Category
-    var pages: Int
-    
-    var id: Category { category }
-}
-
-struct DailyPagesRead: Identifiable, Hashable {
-    var date: Date
-    var pages: Int
-    
-    var id: Date { date }
-}
-
-struct MonthlyCompleteBook: Identifiable, Hashable {
-    var date: Date
-    var count: Int
-    
-    var id: Date { date }
-}
-
-
 struct AnalysisView: View {
     
     // MARK: - WRAPPER PROPERTIES

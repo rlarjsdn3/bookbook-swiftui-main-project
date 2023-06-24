@@ -21,12 +21,12 @@ struct TotalPagesCountByCategoryChartView: View {
     
     // MARK: - PROPERTIES
     
-    let chartData: [TotalPagesReadByCategory]
+    let chartData: [ChartData.TotalPagesReadByCategory]
     let cumulativeSalesRangesForStyles: [(category: String, range: Range<Double>)]
     
     // MARK: - COMPUTED PROPERTIES
     
-    var selectedStyle: TotalPagesReadByCategory? {
+    var selectedStyle: ChartData.TotalPagesReadByCategory? {
         if let selectedCategory,
            let selectedIndex = cumulativeSalesRangesForStyles
             .firstIndex(where: { $0.range.contains(selectedCategory) }) {
@@ -38,7 +38,7 @@ struct TotalPagesCountByCategoryChartView: View {
     
     // MARK: - INTILAIZER
 
-    init(chartData: [TotalPagesReadByCategory]) {
+    init(chartData: [ChartData.TotalPagesReadByCategory]) {
         self.chartData = chartData
         
         var cumulative = 0.0

@@ -35,7 +35,7 @@ struct BookListScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var bookList: [briefBookInfo.Item] {
+    var bookList: [briefBookItem.Item] {
         switch selectedBookListTab {
         case .bestSeller:
             return aladinAPIManager.bestSeller

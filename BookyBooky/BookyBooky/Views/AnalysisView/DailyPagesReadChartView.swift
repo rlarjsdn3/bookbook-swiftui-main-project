@@ -21,19 +21,19 @@ struct DailyPagesReadChartView: View {
     
     // MARK: - PROPERTIES
     
-    let dailyChartData: [DailyPagesRead]
+    let dailyChartData: [ChartData.DailyPagesRead]
     
     // MARK: - COMPUTED PROPERTIES
     
-    var monthlyChartData: [DailyPagesRead] {
-        var monthlyPages: [DailyPagesRead] = []
+    var monthlyChartData: [ChartData.DailyPagesRead] {
+        var monthlyPages: [ChartData.DailyPagesRead] = []
         
         for daily in dailyChartData {
             if let index = monthlyPages.firstIndex(where: { $0.date.isEqual([.year, .month], date: daily.date) }) {
                 monthlyPages[index].pages += daily.pages
             } else {
                 monthlyPages.append(
-                    DailyPagesRead(date: daily.date, pages: daily.pages)
+                    ChartData.DailyPagesRead(date: daily.date, pages: daily.pages)
                 )
             }
         }
@@ -71,7 +71,7 @@ struct DailyPagesReadChartView: View {
     
     // MARK: - INTIALIZER
     
-    init(dailyChartData: [DailyPagesRead]) {
+    init(dailyChartData: [ChartData.DailyPagesRead]) {
         self.dailyChartData = dailyChartData
     }
     

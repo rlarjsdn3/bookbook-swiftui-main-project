@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct briefBookInfo: Codable {
+struct briefBookItem: Codable {
     var totalResults: Int           // 검색 결과의 총 개수
     var startIndex: Int             // 현재 페이지 수
     
@@ -25,7 +25,7 @@ struct briefBookInfo: Codable {
 
 // MARK: - EXTENSIONS
 
-extension briefBookInfo.Item {
+extension briefBookItem.Item {
     var bookCategory: Category {
         return categoryName.refinedCategory
     }
@@ -47,8 +47,8 @@ extension briefBookInfo.Item {
     }
 }
 
-extension briefBookInfo.Item {
-    static var preview: briefBookInfo.Item = .init(
+extension briefBookItem.Item {
+    static var preview: briefBookItem.Item = .init(
         title: "Java의 정석 - 3rd Edition",
         author: "남궁성 (지은이)",
         publisher: "도우출판",

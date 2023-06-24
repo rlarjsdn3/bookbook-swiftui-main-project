@@ -11,12 +11,12 @@ struct SearchBookDescView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: detailBookInfo.Item
+    let bookItem: detailBookItem.Item
     @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+    init(_ bookItem: detailBookItem.Item, isLoadingCoverImage: Binding<Bool>) {
         self.bookItem = bookItem
         self._isLoadingCoverImage = isLoadingCoverImage
     }
@@ -82,7 +82,7 @@ extension SearchBookDescView {
 struct SearchBookIntroView_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookDescView(
-            detailBookInfo.Item.preview,
+            detailBookItem.Item.preview,
             isLoadingCoverImage: .constant(false)
         )
     }

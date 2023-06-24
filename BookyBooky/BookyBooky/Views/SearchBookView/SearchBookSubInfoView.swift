@@ -15,12 +15,12 @@ struct SearchBookSubInfoView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: detailBookInfo.Item
+    let bookItem: detailBookItem.Item
     @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookInfo.Item, isLoadingCoverImage: Binding<Bool>) {
+    init(_ bookItem: detailBookItem.Item, isLoadingCoverImage: Binding<Bool>) {
         self.bookItem = bookItem
         self._isLoadingCoverImage = isLoadingCoverImage
     }
@@ -115,7 +115,7 @@ extension SearchBookSubInfoView {
 struct SearchInfoBoxView_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookSubInfoView(
-            detailBookInfo.Item.preview,
+            detailBookItem.Item.preview,
             isLoadingCoverImage: .constant(false)
         )
     }
