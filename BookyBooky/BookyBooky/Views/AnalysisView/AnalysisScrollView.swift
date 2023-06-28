@@ -24,16 +24,16 @@ struct AnalysisScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        analysisScroll
+        analysisScrollContent
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension AnalysisScrollView {
-    var analysisScroll: some View {
+    var analysisScrollContent: some View {
         ScrollView {
-            analysisContent
+            analysisTabGroup
         }
         .scrollIndicators(.hidden)
         .safeAreaPadding([.leading, .top, .trailing])
@@ -41,7 +41,7 @@ extension AnalysisScrollView {
         .background(Color(.background))
     }
     
-    var analysisContent: some View {
+    var analysisTabGroup: some View {
         VStack(spacing: 20) {
             AnalysisChartsTabView()
             

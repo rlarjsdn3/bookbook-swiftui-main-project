@@ -8,6 +8,8 @@
 import SwiftUI
 import Charts
 
+// NOTE: - 해당 기능은 버전 1.1에 언락될 예정입니다.
+
 struct MonthlyBooksCompletedChartView: View {
     
     // MARK: - WRAPPER PROPERTIES
