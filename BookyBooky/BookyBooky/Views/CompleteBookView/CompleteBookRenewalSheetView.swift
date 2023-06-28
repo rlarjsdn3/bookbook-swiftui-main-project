@@ -100,7 +100,6 @@ extension CompleteBookRenewalSheetView {
         Group {
             let lastRecordTotalPagesRead = completeBook.lastRecord?.totalPagesRead ?? 0
             
-            // TODO: - ‘+’ 혹은 ‘-‘ 버튼을 길게 클릭하면 페이지 수가 감소하거나 증가하도록 업데이트하기
             Button {
                 totalPagesRead -= 1
             } label: {
@@ -112,7 +111,7 @@ extension CompleteBookRenewalSheetView {
                     .background(completeBook.category.themeColor)
                     .clipShape(Circle())
             }
-            // TODO: -  ‘+’ 혹은 ‘-‘ 버튼을 클릭할 수 없을 때, 흔들기 애니메이션 효과 적용하기
+            .buttonRepeatBehavior(.enabled)
             .opacity(lastRecordTotalPagesRead >= totalPagesRead  ? 0.5 : 1)
             .disabled(lastRecordTotalPagesRead >= totalPagesRead  ? true : false)
         }
@@ -122,7 +121,6 @@ extension CompleteBookRenewalSheetView {
         Group {
             let readingBookTotalPages = completeBook.itemPage
             
-            // TODO: - ‘+’ 혹은 ‘-‘ 버튼을 길게 클릭하면 페이지 수가 감소하거나 증가하도록 업데이트하기
             Button {
                 totalPagesRead  += 1
             } label: {
@@ -133,7 +131,7 @@ extension CompleteBookRenewalSheetView {
                     .background(completeBook.category.themeColor)
                     .clipShape(Circle())
             }
-            // TODO: -  ‘+’ 혹은 ‘-‘ 버튼을 클릭할 수 없을 때, 흔들기 애니메이션 효과 적용하기
+            .buttonRepeatBehavior(.enabled)
             .opacity(readingBookTotalPages <= totalPagesRead  ? 0.5 : 1)
             .disabled(readingBookTotalPages <= totalPagesRead  ? true : false)
         }

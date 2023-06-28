@@ -118,7 +118,7 @@ extension SearchBookButton {
                     HStack {
                         if isCompBook() {
                             Image(systemName: "book.closed.fill")
-                                .font(.system(size: 21))
+                                .font(.system(size: 18))
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }
                         

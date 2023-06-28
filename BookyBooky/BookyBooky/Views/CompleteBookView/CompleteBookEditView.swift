@@ -19,6 +19,7 @@ struct CompleteBookEditView: View {
     @State private var inputPublisher = ""
     @State private var inputCategory: Category = .all
     @State private var inputTargetDate = Date.now
+    @State private var isPresentingKeyboard = false
     
     // MARK: - PROPERTIES
     
@@ -33,14 +34,14 @@ struct CompleteBookEditView: View {
     // MARK: - BODY
     
     var body: some View {
-        editBookInfo
+        editBookContent
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension CompleteBookEditView {
-    var editBookInfo: some View {
+    var editBookContent: some View {
         NavigationStack {
             VStack {
                 inputFieldGroup
@@ -62,7 +63,6 @@ extension CompleteBookEditView {
             }
             .navigationTitle("도서 정보 수정하기")
             .navigationBarTitleDisplayMode(.inline)
-            .ignoresSafeArea(.keyboard)
         }
         .presentationCornerRadius(30)
     }
@@ -164,9 +164,13 @@ extension CompleteBookEditView {
         } label: {
             Text("수정하기")
         }
-        .buttonStyle(BottomButtonStyle(backgroundColor: completeBook.category.themeColor))
-        // 베젤이 있는 아이폰은 하단 간격 주기
-        .padding(safeAreaInsets.bottom == 0 ? .bottom : [])
+        .onReceive(keyboardPublisher) { value in
+            withAnimation {
+                isPresentingKeyboard = value
+            }
+        }
+        .buttonStyle(BottomButtonStyle(backgroundColor: Color.black))
+        .padding(.bottom, isPresentingKeyboard ? 20 : 0)
     }
 }
 

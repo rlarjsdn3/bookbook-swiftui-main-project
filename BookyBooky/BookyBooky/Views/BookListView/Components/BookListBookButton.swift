@@ -79,6 +79,7 @@ extension BookListBookButton {
                         Group {
                             if isCompBook() {
                                 Image(systemName: "book.closed.fill")
+                                    .font(.system(size: 18))
                                     .foregroundColor(Color(uiColor: .darkGray))
                             }
                             

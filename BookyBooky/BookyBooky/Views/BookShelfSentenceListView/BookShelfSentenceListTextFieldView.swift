@@ -100,7 +100,6 @@ extension BookShelfSentenceListTextFieldView {
             } label: {
                 HStack {
                     Text(sort.name)
-
                     // 현재 선택한 정렬 타입에 체크마크 표시
                     if selectedSort == sort {
                         checkMarkSFSymbolImage
