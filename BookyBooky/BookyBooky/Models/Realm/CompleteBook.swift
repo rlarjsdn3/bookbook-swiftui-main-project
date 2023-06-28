@@ -43,6 +43,14 @@ extension CompleteBook {
         }
     }
     
+    var isRecordsEmpty: Bool {
+        return records.isEmpty
+    }
+    
+    var isSentencesEmpty: Bool {
+        return sentences.isEmpty
+    }
+    
     /// 도서의 제일 마지막 독서 기록을 반환하는 계산 프로퍼티입니다.
     /// 독서 기록이 없는 경우 nil을 반환합니다.
     var lastRecord: Record? {

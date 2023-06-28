@@ -35,12 +35,12 @@ struct BookShelfSentenceScrollView: View {
     
     // MARK: - FUNCTIONS
     
-    func isExist() -> Bool {
+    func hasCollectedSentences() -> Bool {
         let compBooks = filteredCompBooks
-        for compBook in compBooks where compBook.sentences.isEmpty {
-            return false
+        for compBook in compBooks where !compBook.isSentencesEmpty {
+            return true
         }
-        return true
+        return false
     }
 }
 
@@ -49,10 +49,10 @@ struct BookShelfSentenceScrollView: View {
 extension BookShelfSentenceScrollView {
     var sentenceScrollContent: some View {
         Group {
-            if isExist() {
-                noResultsLabel
-            } else {
+            if hasCollectedSentences() {
                 sentenceButtonGroup
+            } else {
+                noResultsLabel
             }
         }
     }

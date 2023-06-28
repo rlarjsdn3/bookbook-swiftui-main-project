@@ -17,6 +17,8 @@ struct TotalPagesCountByCategoryChartView: View {
     
     @ObservedResults(CompleteBook.self) var readingBooks
     
+    @State private var startOffset: CGFloat = 0.0
+    @State private var scrollYOffset: CGFloat = 0.0
     @State private var selectedCategory: Double? = nil
     
     // MARK: - PROPERTIES
@@ -71,9 +73,12 @@ extension TotalPagesCountByCategoryChartView {
             navigationTopBar
                 
             ScrollView {
-                circleChart
-                
-                recordList
+                VStack {
+                    circleChart
+                    
+                    recordList
+                }
+                .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
             }
             .scrollIndicators(.hidden)
             .safeAreaPadding([.leading, .top, .trailing])
@@ -95,6 +100,10 @@ extension TotalPagesCountByCategoryChartView {
             navigationBarButtons
         }
         .padding(.vertical)
+        .overlay(alignment: .bottom) {
+            Divider()
+                .opacity(scrollYOffset > 3.0 ? 1 : 0)
+        }
     }
     
     var navigationBarButtons: some View {

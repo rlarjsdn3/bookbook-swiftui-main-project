@@ -96,6 +96,7 @@ extension CompleteBookConfettiView {
             Text("\(completeBook.title) 도서를 완독했어요!")
                 .font(.title2.weight(.semibold))
                 .foregroundColor(Color.secondary)
+                .minimumScaleFactor(0.8)
         }
         .padding(.bottom, 40)
     }

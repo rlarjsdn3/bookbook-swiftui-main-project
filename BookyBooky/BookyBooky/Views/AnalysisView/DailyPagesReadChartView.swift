@@ -14,8 +14,9 @@ struct DailyPagesReadChartView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State private var startOffset: CGFloat = 0.0
+    @State private var scrollYOffset: CGFloat = 0.0
     @State private var selectedTimeRange: ChartTimeRange = .last14Days
-    
     @State private var scrollPosition: TimeInterval = 0.0
     @State private var isPresentingAverageRuleMark = false
     
@@ -118,11 +119,14 @@ extension DailyPagesReadChartView {
             navigationTopBar
                 
             ScrollView {
-                chart
-                
-                averageRuleMarkButton
-                
-                recordList
+                VStack {
+                    chart
+                    
+                    averageRuleMarkButton
+                    
+                    recordList
+                }
+                .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
             }
             .scrollIndicators(.hidden)
             .safeAreaPadding([.leading, .top, .trailing])
@@ -144,6 +148,10 @@ extension DailyPagesReadChartView {
             navigationBarButtons
         }
         .padding(.vertical)
+        .overlay(alignment: .bottom) {
+            Divider()
+                .opacity(scrollYOffset > 3.0 ? 1 : 0)
+        }
     }
     
     var navigationBarButtons: some View {

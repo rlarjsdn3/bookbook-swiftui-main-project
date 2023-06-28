@@ -184,20 +184,35 @@ extension CompleteBookTopInfoView {
             Group {
                 if completeBook.isComplete {
                     Text("완독 도서")
+                        .font(.headline)
+                        .foregroundColor(.black)
+                        .frame(width: 112, height: 30)
+                        .overlay {
+                            Capsule()
+                                .stroke(Color.black, lineWidth: 1.0)
+                        }
                 } else {
-                    if completeBook.isBehindTargetDate {
-                        Text("갱신 불가")
-                            .opacity(0.75)
-                    } else {
-                        Text("읽었어요!")
+                    Group {
+                        if completeBook.isBehindTargetDate {
+                            Text("갱신 불가")
+                                .font(.headline)
+                                .foregroundColor(.black)
+                                .frame(width: 112, height: 30)
+                                .overlay {
+                                    Capsule()
+                                        .stroke(Color.red, lineWidth: 1.0)
+                                }
+                        } else {
+                            Text("읽었어요!")
+                                .font(.headline)
+                                .foregroundColor(.black)
+                                .frame(width: 112, height: 30)
+                                .background(.gray.opacity(0.3))
+                                .clipShape(Capsule())
+                        }
                     }
                 }
             }
-            .font(.headline)
-            .foregroundColor(.black)
-            .frame(width: 112, height: 30)
-            .background(.gray.opacity(0.3))
-            .clipShape(Capsule())
         }
         .disabled(completeBook.isComplete)
         .disabled(completeBook.isBehindTargetDate)
@@ -208,31 +223,30 @@ extension CompleteBookTopInfoView {
             if completeBook.isComplete {
                 Text("도서를 완독했어요!")
             } else {
-                Group {
-                    // 오늘 일자가 목표 일자를 초과하는 경우
-                    if completeBook.isBehindTargetDate {
-                        Text("목표를 다시 설정해주세요!")
-                        // 오늘 일자가 목표 일자와 같거나 더 빠른 경우
-                    } else {
-                        // 독서 데이터가 하나라도 존재하는 경우
-                        if let lastRecord = completeBook.lastRecord {
-                            // 오늘 일자에 독서를 한 경우
-                            if Date().isEqual([.year, .month, .day], date: lastRecord.date) {
-                                Text("오늘 \(lastRecord.numOfPagesRead)페이지나 읽었어요!")
-                                // 오늘 일자에 독서를 하지 않은 경우
-                            } else {
-                                Text("독서를 시작해보세요!")
-                            }
-                            // 독서 데이터가 없는 경우
+                // 오늘 일자가 목표 일자를 초과하는 경우
+                if completeBook.isBehindTargetDate {
+                    Text("목표를 다시 설정해주세요!")
+                    // 오늘 일자가 목표 일자와 같거나 더 빠른 경우
+                } else {
+                    // 독서 데이터가 하나라도 존재하는 경우
+                    if let lastRecord = completeBook.lastRecord {
+                        let today = Date()
+                        // 오늘 일자에 독서를 한 경우
+                        if today.isEqual([.year, .month, .day], date: lastRecord.date) {
+                            Text("오늘 \(lastRecord.numOfPagesRead)페이지나 읽었어요!")
+                            // 오늘 일자에 독서를 하지 않은 경우
                         } else {
                             Text("독서를 시작해보세요!")
                         }
+                        // 독서 데이터가 없는 경우
+                    } else {
+                        Text("독서를 시작해보세요!")
                     }
                 }
-                .font(.caption.weight(.light))
-                .padding(.horizontal)
             }
         }
+        .font(.caption.weight(.light))
+        .padding(.horizontal)
     }
 }
 

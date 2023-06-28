@@ -67,7 +67,7 @@ extension CompleteBookTopBarView {
         .padding(.vertical)
         .overlay(alignment: .bottom) {
             Divider()
-                .opacity(scrollYOffset > 10.0 ? 1 : 0)
+                .opacity(scrollYOffset > 5.0 && scrollYOffset < 191.0 ? 1 : 0)
         }
     }
     
