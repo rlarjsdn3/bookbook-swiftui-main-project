@@ -74,14 +74,17 @@ struct AnalysisHighlightTabView: View {
             return nil
         }
         
-        var period = ["dawn": 0, "morning": 0, "lunch": 0, "evening": 0]
-        
         var readingDate: [Date] = []
+        var period = ["dawn": 0, "morning": 0, "lunch": 0, "evening": 0]
         
         for readingBook in readingBooks {
             for record in readingBook.records {
                 readingDate.append(record.date)
             }
+        }
+        
+        guard !readingDate.isEmpty else {
+            return nil
         }
         
         for records in readingDate {
@@ -114,7 +117,7 @@ struct AnalysisHighlightTabView: View {
         case "evening":
             return .evening
         default:
-            return .morning
+            return nil
         }
     }
     
