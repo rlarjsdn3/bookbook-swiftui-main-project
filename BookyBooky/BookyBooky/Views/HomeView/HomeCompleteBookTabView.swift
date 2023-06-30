@@ -44,11 +44,11 @@ struct HomeCompleteBookTabView: View {
         case _ where filteredUnfinishedBooksCount <= 2:
             // iPhone 12Pro 기준, 하단 패딩 값
             // 추후 스크린 사이즈(기기) 별로 별도 다른 하단 패딩 값을 부여해야 함
-            return 315
+            return mainScreen.height * 0.39
         case _ where filteredUnfinishedBooksCount <= 4:
             // iPhone 12Pro 기준, 하단 패딩 값
             // 추후 스크린 사이즈(기기) 별로 별도 다른 하단 패딩 값을 부여해야 함
-            return 22
+            return mainScreen.height * 0.04
         default:
             return 0
         }

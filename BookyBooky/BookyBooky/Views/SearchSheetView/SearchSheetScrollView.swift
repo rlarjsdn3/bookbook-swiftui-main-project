@@ -85,6 +85,7 @@ extension SearchSheetScrollView {
                     scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }
             }
+            .scrollDismissesKeyboard(.interactively)
         }
     }
     

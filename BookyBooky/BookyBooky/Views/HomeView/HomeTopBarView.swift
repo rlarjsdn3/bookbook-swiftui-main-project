@@ -30,17 +30,17 @@ struct HomeTopBarView: View {
     
     var showingTopBarDividerYPositionValue: CGFloat {
         if recentActivityCount == 0 {
-            return 205.0
+            return 215.0
         } else {
-            return CGFloat(110 + (70 * recentActivityCount))
+            return CGFloat(120 + (70 * recentActivityCount))
         }
     }
     
     var showingUtilMenuYPositionValue: CGFloat {
         if recentActivityCount == 0 {
-            return 283.0
+            return 293.0
         } else {
-            return CGFloat(148 + (70 * recentActivityCount))
+            return CGFloat(158 + (70 * recentActivityCount))
         }
     }
     
@@ -85,7 +85,7 @@ extension HomeTopBarView {
                 // scrollYOffset값이 10 ~ showingTopBarDivierYPositionValue 사이라면,
                 // Divider를 보이게 합니다,
                 .opacity(
-                    (scrollYOffset > 10 &&
+                    (scrollYOffset > 10.0 &&
                      scrollYOffset < showingTopBarDividerYPositionValue) ? 1 : 0
                 )
         }
@@ -94,7 +94,7 @@ extension HomeTopBarView {
     var navigationTopBarTitle: some View {
         Text("홈")
             .navigationTitleStyle()
-            .opacity(scrollYOffset > 35 ? 1 : 0)
+            .opacity(scrollYOffset > 35.0 ? 1 : 0)
     }
     
     var navigationTopBarButtonGroup: some View {
