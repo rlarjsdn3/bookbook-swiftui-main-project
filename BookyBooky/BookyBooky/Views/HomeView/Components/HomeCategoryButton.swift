@@ -12,8 +12,8 @@ struct HomeCategoryButton: View {
     // MARK: - PROPERTIES
     
     let type: Category
-    @Binding var selectedCategoryType: Category
-    @Binding var selectedCategoryTypeForAnimation: Category
+    @Binding var selectedCategory: Category
+    @Binding var selectedCategoryFA: Category
     let scrollProxy: ScrollViewProxy
     let namespace: Namespace.ID
     
@@ -25,8 +25,8 @@ struct HomeCategoryButton: View {
          scrollProxy: ScrollViewProxy,
          namespace: Namespace.ID) {
         self.type = type
-        self._selectedCategoryType = selectedCategoryType
-        self._selectedCategoryTypeForAnimation = selectedCategoryTypeForAnimation
+        self._selectedCategory = selectedCategoryType
+        self._selectedCategoryFA = selectedCategoryTypeForAnimation
         self.scrollProxy = scrollProxy
         self.namespace = namespace
     }
@@ -42,11 +42,11 @@ struct HomeCategoryButton: View {
     
     func selectCategory(_ type: Category) {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-            selectedCategoryTypeForAnimation = type
+            selectedCategoryFA = type
             scrollProxy.scrollTo("Scroll_To_Category", anchor: .top)
             scrollProxy.scrollTo("\(type.rawValue)")
         }
-        selectedCategoryType = type
+        selectedCategory = type
     }
 }
 
@@ -65,9 +65,9 @@ extension HomeCategoryButton {
         Text(type.name)
             .font(.headline)
             .fontWeight(.bold)
-            .foregroundColor(selectedCategoryTypeForAnimation == type ? .black : .gray)
+            .foregroundColor(selectedCategoryFA == type ? .black : .gray)
             .overlay(alignment: .bottomLeading) {
-                if selectedCategoryTypeForAnimation == type {
+                if selectedCategoryFA == type {
                     Rectangle()
                         .offset(y: 15)
                         .fill(.black)

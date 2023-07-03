@@ -13,12 +13,13 @@ struct HomeCompleteBookTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @EnvironmentObject var homeViewData: HomeViewData
     @EnvironmentObject var realmManager: RealmManager
     
     @ObservedResults(CompleteBook.self) var compBooks
     
     @State private var selectedCategory: Category = .all
-    @State private var selectedCategoryForAnimation: Category = .all
+    @State private var selectedCategoryFA: Category = .all
     
     @Namespace var namespace
     
@@ -29,15 +30,13 @@ struct HomeCompleteBookTabView: View {
         GridItem(.flexible())
     ]
     
-    @Binding var scrollYOffset: CGFloat
-    @Binding var selectedBookSort: BookSortCriteria
     let scrollProxy: ScrollViewProxy
     
     // MARK: - COMPUTED PROPERTIES
     
     var dynamicBottomPaddingValue: CGFloat {
         let filteredUnfinishedBooksCount = compBooks.getFilteredReadingBooks(
-            .unfinished, sort: selectedBookSort, category: selectedCategory
+            .unfinished, sort: homeViewData.selectedBookSort, category: selectedCategory
         ).count
         
         switch filteredUnfinishedBooksCount {
@@ -56,11 +55,7 @@ struct HomeCompleteBookTabView: View {
     
     // MARK: - INTIALIZER
     
-    init(scrollYOffset: Binding<CGFloat>,
-         selectedBookSortCriteria: Binding<BookSortCriteria>,
-         scrollProxy: ScrollViewProxy) {
-        self._scrollYOffset = scrollYOffset
-        self._selectedBookSort = selectedBookSortCriteria
+    init(scrollProxy: ScrollViewProxy) {
         self.scrollProxy = scrollProxy
     }
     
@@ -126,21 +121,21 @@ extension HomeCompleteBookTabView {
     }
     
     var sortButtonGroup: some View {
-        ForEach(BookSortCriteria.allCases) { criteria in
+        ForEach(BookSortCriteria.allCases) { sort in
             Button {
                 // 버튼을 클릭하면
                 withAnimation(.spring()) {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedBookSort = criteria
+                            homeViewData.selectedBookSort = sort
                         }
                         HapticManager.shared.impact(.rigid)
                     }
                 }
             } label: {
-                Text(criteria.name)
-                if selectedBookSort == criteria {
+                Text(sort.name)
+                if homeViewData.selectedBookSort == sort {
                     Text("적용됨")
                 }
             }
@@ -175,7 +170,7 @@ extension HomeCompleteBookTabView {
         Group {
             let filterReadingBooks = compBooks.getFilteredReadingBooks(
                 .unfinished,
-                sort: selectedBookSort,
+                sort: homeViewData.selectedBookSort,
                 category: selectedCategory
             )
             
@@ -201,7 +196,7 @@ extension HomeCompleteBookTabView {
                         HomeCategoryButton(
                             category,
                             selectedCategoryType: $selectedCategory,
-                            selectedCategoryTypeForAnimation: $selectedCategoryForAnimation,
+                            selectedCategoryTypeForAnimation: $selectedCategoryFA,
                             scrollProxy: proxy,
                             namespace: namespace
                         )
@@ -225,12 +220,9 @@ extension HomeCompleteBookTabView {
 struct HomeReadingBookTabView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            HomeCompleteBookTabView(
-                scrollYOffset: .constant(0.0),
-                selectedBookSortCriteria: .constant(.titleAscendingOrder),
-                scrollProxy: scrollProxy
-            )
-            .environmentObject(RealmManager())
+            HomeCompleteBookTabView(scrollProxy: scrollProxy)
+                .environmentObject(HomeViewData())
+                .environmentObject(RealmManager())
         }
     }
 }

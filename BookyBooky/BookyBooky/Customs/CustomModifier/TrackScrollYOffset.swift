@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ScrollYOffset: ViewModifier {
+struct TrackScrollYOffset: ViewModifier {
     @Binding var startOffset: CGFloat
     @Binding var scrollYOffset: CGFloat
     
@@ -16,15 +16,15 @@ struct ScrollYOffset: ViewModifier {
             .overlay(alignment: .top) {
                 GeometryReader { proxy -> Color in
                     DispatchQueue.main.async {
-                        let offset = proxy.frame(in: .global).minY
+                        let globalMinX = proxy.frame(in: .global).minY
                         if startOffset == 0.0 {
-                            self.startOffset = offset
+                            self.startOffset = globalMinX
                         }
                         withAnimation(.easeInOut(duration: 0.1)) {
-                            scrollYOffset = startOffset - offset
+                            scrollYOffset = startOffset - globalMinX
                         }
                         
-                        print(scrollYOffset)
+                        print("yOffset: \(scrollYOffset)")
                     }
                     return Color.clear
                 }
@@ -34,7 +34,7 @@ struct ScrollYOffset: ViewModifier {
 }
 
 extension View {
-    func scrollYOffet(_ startOffset: Binding<CGFloat>, scrollYOffset: Binding<CGFloat>) -> some View {
-        modifier(ScrollYOffset(startOffset: startOffset, scrollYOffset: scrollYOffset))
+    func trackScrollYOffet(_ startOffset: Binding<CGFloat>, scrollYOffset: Binding<CGFloat>) -> some View {
+        modifier(TrackScrollYOffset(startOffset: startOffset, scrollYOffset: scrollYOffset))
     }
 }

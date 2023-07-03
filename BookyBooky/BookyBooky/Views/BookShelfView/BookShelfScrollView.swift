@@ -48,7 +48,7 @@ extension BookShelfScrollView {
                 
                 BookShelfCompBookTabView()
             }
-            .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
+            .trackScrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
         }
     }
 }

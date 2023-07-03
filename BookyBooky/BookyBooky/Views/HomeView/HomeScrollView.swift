@@ -12,22 +12,8 @@ struct HomeScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @EnvironmentObject var homeViewData: HomeViewData
     @EnvironmentObject var realmManager: RealmManager
-    
-    @State private var startOffset: CGFloat = 0.0
-    
-    // MARK: - PROPERTIES
-    
-    @Binding var scrollYOffset: CGFloat
-    @Binding var selectedBookSortCriteria: BookSortCriteria
-    
-    // MARK: - INTIALIZER
-    
-    init(scrollYOffset: Binding<CGFloat>,
-         selectedBookSortCriteria: Binding<BookSortCriteria>) {
-        self._scrollYOffset = scrollYOffset
-        self._selectedBookSortCriteria = selectedBookSortCriteria
-    }
     
     // MARK: - BODY
     
@@ -63,19 +49,14 @@ struct HomeScrollView: View {
 extension HomeScrollView {
     var homeScrollContent: some View {
         ScrollViewReader { scrollProxy in
-            ScrollView {
+            TrackableVerticalScrollView(yOffset: $homeViewData.scrollYOffset) {
                 VStack {
                     navigationTopBarTitle
                     
                     HomeActivityTabView()
                     
-                    HomeCompleteBookTabView(
-                        scrollYOffset: $scrollYOffset,
-                        selectedBookSortCriteria: $selectedBookSortCriteria,
-                        scrollProxy: scrollProxy
-                    )
+                    HomeCompleteBookTabView(scrollProxy: scrollProxy)
                 }
-                .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
             }
             .scrollIndicators(.hidden)
         }
@@ -96,7 +77,7 @@ extension HomeScrollView {
         Text(Date().toFormat("M월 d일 E요일"))
             .font(.callout.weight(.semibold))
             .foregroundStyle(Color.secondary)
-            .opacity(scrollYOffset > 10 ? 0 : 1)
+            .opacity(homeViewData.scrollYOffset > 10 ? 0 : 1)
     }
     
     var navigationTopBarMainTitle: some View {
@@ -114,10 +95,8 @@ extension HomeScrollView {
 
 struct HomeMainView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeScrollView(
-            scrollYOffset: .constant(0.0),
-            selectedBookSortCriteria: .constant(.titleAscendingOrder)
-        )
-        .environmentObject(RealmManager())
+        HomeScrollView()
+            .environmentObject(HomeViewData())
+            .environmentObject(RealmManager())
     }
 }

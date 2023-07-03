@@ -46,7 +46,7 @@ extension CompleteBookScrollView {
                     scrollYOffset: $scrollYOffset
                 )
             }
-            .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
+            .trackScrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
         }
     }
 }

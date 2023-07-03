@@ -135,7 +135,7 @@
 		9EF659D32A397C62003CF6A5 /* AnalysisScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D22A397C62003CF6A5 /* AnalysisScrollView.swift */; };
 		9EF659D52A39805A003CF6A5 /* AnalysisChartsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D42A39805A003CF6A5 /* AnalysisChartsTabView.swift */; };
 		9EF659D72A398191003CF6A5 /* AnalysisHighlightTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D62A398191003CF6A5 /* AnalysisHighlightTabView.swift */; };
-		9EF659D92A39A269003CF6A5 /* ScrollYOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D82A39A269003CF6A5 /* ScrollYOffset.swift */; };
+		9EF659D92A39A269003CF6A5 /* TrackScrollYOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D82A39A269003CF6A5 /* TrackScrollYOffset.swift */; };
 		9EFBE7CF29FFA90800308BAE /* CompleteBookTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* CompleteBookTab.swift */; };
 /* End PBXBuildFile section */
 
@@ -262,7 +262,7 @@
 		9EF659D22A397C62003CF6A5 /* AnalysisScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisScrollView.swift; sourceTree = "<group>"; };
 		9EF659D42A39805A003CF6A5 /* AnalysisChartsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisChartsTabView.swift; sourceTree = "<group>"; };
 		9EF659D62A398191003CF6A5 /* AnalysisHighlightTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisHighlightTabView.swift; sourceTree = "<group>"; };
-		9EF659D82A39A269003CF6A5 /* ScrollYOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollYOffset.swift; sourceTree = "<group>"; };
+		9EF659D82A39A269003CF6A5 /* TrackScrollYOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackScrollYOffset.swift; sourceTree = "<group>"; };
 		9EFBE7CE29FFA90800308BAE /* CompleteBookTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteBookTab.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -308,7 +308,7 @@
 			children = (
 				9E0434AF29E2AEFF009A2161 /* NavigationTitleStyle.swift */,
 				9E0434AD29E2A38D009A2161 /* NavigationBarItemStyle.swift */,
-				9EF659D82A39A269003CF6A5 /* ScrollYOffset.swift */,
+				9EF659D82A39A269003CF6A5 /* TrackScrollYOffset.swift */,
 			);
 			path = CustomModifier;
 			sourceTree = "<group>";
@@ -333,7 +333,7 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
-		9E06070C29DD5160000D542D /* ViewModel */ = {
+		9E06070C29DD5160000D542D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				9E9948592A52B5C800EA3490 /* ViewData */,
@@ -342,7 +342,7 @@
 				9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */,
 				9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		9E06071529DFDC05000D542D /* BookShelfView */ = {
@@ -561,14 +561,14 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
-		9E99485F2A52B6D400EA3490 /* Custom */ = {
+		9E99485F2A52B6D400EA3490 /* Customs */ = {
 			isa = PBXGroup;
 			children = (
 				9E99485C2A52B6B000EA3490 /* CustomViews */,
 				9EC71F922A174A2E0056C11C /* CustomStyles */,
 				9E0434AC29E2A374009A2161 /* CustomModifier */,
 			);
-			path = Custom;
+			path = Customs;
 			sourceTree = "<group>";
 		};
 		9EA198392A01F18300D385CD /* CompleteBookView */ = {
@@ -683,9 +683,9 @@
 				9ECD921029BF1FA600FCDD2F /* BookyBookyApp.swift */,
 				9ECA326529D11B93004D6D5B /* Views */,
 				9E0C0A6029D1D85500F1F5F6 /* Extensions */,
-				9E99485F2A52B6D400EA3490 /* Custom */,
 				9E524DF929D1D13700FD7B98 /* Shapes */,
-				9E06070C29DD5160000D542D /* ViewModel */,
+				9E99485F2A52B6D400EA3490 /* Customs */,
+				9E06070C29DD5160000D542D /* ViewModels */,
 				9ECA326729D11BC1004D6D5B /* Models */,
 				9EB749F329D5C26100610D97 /* Enums */,
 				9E0C0A7429D28C0600F1F5F6 /* Settings */,
@@ -895,7 +895,7 @@
 				9EE01FF12A020FAA00584F39 /* CompleteBookOutlineView.swift in Sources */,
 				9ED116C129ED04330072BA41 /* AddReadingBookButtonGroupView.swift in Sources */,
 				9EC71F942A174A410056C11C /* BottomButtonStyle.swift in Sources */,
-				9EF659D92A39A269003CF6A5 /* ScrollYOffset.swift in Sources */,
+				9EF659D92A39A269003CF6A5 /* TrackScrollYOffset.swift in Sources */,
 				9EA1983E2A01F18300D385CD /* CompleteBookView.swift in Sources */,
 				9E061D5C29FA90660042E3B1 /* CompleteBookButton.swift in Sources */,
 				9E0434B029E2AEFF009A2161 /* NavigationTitleStyle.swift in Sources */,

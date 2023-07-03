@@ -12,15 +12,12 @@ struct HomeTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @EnvironmentObject var homeViewData: HomeViewData
+    
     @ObservedResults(CompleteBook.self) var compBooks
     
     @State private var isPresentingSettingsView = false
     @State private var isPresentingSearchSheetView = false
-    
-    // MARK: - PROPERTIES
-    
-    @Binding var scrollYOffset: CGFloat
-    @Binding var selectedBookSortCriteria: BookSortCriteria
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -42,14 +39,6 @@ struct HomeTopBarView: View {
         } else {
             return CGFloat(158 + (70 * recentActivityCount))
         }
-    }
-    
-    // MARK: - INITALIZER
-    
-    init(scrollYOffset: Binding<CGFloat>,
-         selectedBookSortCriteria: Binding<BookSortCriteria>) {
-        self._scrollYOffset = scrollYOffset
-        self._selectedBookSortCriteria = selectedBookSortCriteria
     }
     
     // MARK: - BODY
@@ -85,8 +74,8 @@ extension HomeTopBarView {
                 // scrollYOffset값이 10 ~ showingTopBarDivierYPositionValue 사이라면,
                 // Divider를 보이게 합니다,
                 .opacity(
-                    (scrollYOffset > 10.0 &&
-                     scrollYOffset < showingTopBarDividerYPositionValue) ? 1 : 0
+                    (homeViewData.scrollYOffset > 10.0 &&
+                     homeViewData.scrollYOffset < showingTopBarDividerYPositionValue) ? 1 : 0
                 )
         }
     }
@@ -94,7 +83,7 @@ extension HomeTopBarView {
     var navigationTopBarTitle: some View {
         Text("홈")
             .navigationTitleStyle()
-            .opacity(scrollYOffset > 35.0 ? 1 : 0)
+            .opacity(homeViewData.scrollYOffset > 35.0 ? 1 : 0)
     }
     
     var navigationTopBarButtonGroup: some View {
@@ -107,15 +96,15 @@ extension HomeTopBarView {
                 // scrollYOffset값이 10 ~ showingUtilYPositionValue 사이라면,
                 // SettingsButton을 숨기고, UtilMenu을 보이게 합니다.
                 .opacity(
-                    scrollYOffset < showingUtilMenuYPositionValue ? 1 : 0
+                    homeViewData.scrollYOffset < showingUtilMenuYPositionValue ? 1 : 0
                 )
                 .overlay {
                     utilMenu
                         .offset(
-                            y: scrollYOffset < showingUtilMenuYPositionValue ? 5 : 0
+                            y: homeViewData.scrollYOffset < showingUtilMenuYPositionValue ? 5 : 0
                         )
                         .opacity(
-                            scrollYOffset < showingUtilMenuYPositionValue ? 0 : 1
+                            homeViewData.scrollYOffset < showingUtilMenuYPositionValue ? 0 : 1
                         )
                     
                 }
@@ -164,18 +153,18 @@ extension HomeTopBarView {
     }
     
     var sortButtons: some View {
-        ForEach(BookSortCriteria.allCases, id: \.self) { criteria in
+        ForEach(BookSortCriteria.allCases, id: \.self) { sort in
             Button {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                        selectedBookSortCriteria = criteria
+                        homeViewData.selectedBookSort = sort
                     }
                     HapticManager.shared.impact(.rigid)
                 }
             } label: {
                 HStack {
-                    Text(criteria.name)
-                    if selectedBookSortCriteria == criteria {
+                    Text(sort.name)
+                    if homeViewData.selectedBookSort == sort {
                         Text("적용됨")
                     }
                 }
@@ -188,9 +177,7 @@ extension HomeTopBarView {
 
 struct HomeHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeTopBarView(
-            scrollYOffset: .constant(0.0),
-            selectedBookSortCriteria: .constant(.titleAscendingOrder)
-        )
+        HomeTopBarView()
+            .environmentObject(HomeViewData())
     }
 }

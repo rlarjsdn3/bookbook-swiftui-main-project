@@ -89,7 +89,7 @@ extension BookListScrollView {
                 BookListBookButton(item)
             }
         }
-        .scrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
+        .trackScrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
     }
     
     var networkErrorLabel: some View {
