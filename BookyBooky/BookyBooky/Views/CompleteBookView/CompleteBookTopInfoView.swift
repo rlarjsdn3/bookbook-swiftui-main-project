@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MovingNumbersView
+import AnimateNumberText
 import RealmSwift
 
 struct CompleteBookTopInfoView: View {
@@ -15,6 +15,7 @@ struct CompleteBookTopInfoView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
+    @State private var readingProgressPage = 0.0
     @State private var isPresentingRenewalSheet = false
     @State private var isPresentingReadingBookConfettiView = false
    
@@ -26,6 +27,7 @@ struct CompleteBookTopInfoView: View {
     
     init(_ completeBook: CompleteBook) {
         self.completeBook = completeBook
+        self._readingProgressPage = State(initialValue: Double(completeBook.readingProgressPage))
     }
     
     // MARK: - BODY
@@ -35,6 +37,7 @@ struct CompleteBookTopInfoView: View {
             .sheet(isPresented: $isPresentingRenewalSheet) {
                 CompleteBookRenewalSheetView(
                     completeBook,
+                    readingProgressPage: $readingProgressPage,
                     isPresentingReadingBookConfettiView: $isPresentingReadingBookConfettiView
                 )
             }
@@ -141,8 +144,7 @@ extension CompleteBookTopInfoView {
     
     var progressLabel: some View {
         HStack {
-            Text("\(completeBook.readingProgressPage)")
-                .font(.largeTitle)
+            AnimateNumberText(font: .title, value: $readingProgressPage, textColor: .constant(Color.black))
             
             HStack {
                 Text("/")

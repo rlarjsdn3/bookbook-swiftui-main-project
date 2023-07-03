@@ -20,12 +20,16 @@ struct CompleteBookRenewalSheetView: View {
     // MARK: - PROPERTIES
     
     @ObservedRealmObject var completeBook: CompleteBook
+    @Binding var readingProgressPage: Double
     @Binding var isPresentingReadingBookConfettiView: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ completeBook: CompleteBook, isPresentingReadingBookConfettiView: Binding<Bool>) {
+    init(_ completeBook: CompleteBook,
+         readingProgressPage: Binding<Double>,
+         isPresentingReadingBookConfettiView: Binding<Bool>) {
         self.completeBook = completeBook
+        self._readingProgressPage = readingProgressPage
         self._isPresentingReadingBookConfettiView = isPresentingReadingBookConfettiView
     }
     
@@ -143,6 +147,7 @@ extension CompleteBookRenewalSheetView {
                 completeBook,
                 totalPagesRead: totalPagesRead
             )
+            readingProgressPage = Double(totalPagesRead)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 dismiss()
             }
@@ -159,6 +164,7 @@ struct ReadingBookRenewalSheetView_Previews: PreviewProvider {
     static var previews: some View {
         CompleteBookRenewalSheetView(
             CompleteBook.preview,
+            readingProgressPage: .constant(10.0),
             isPresentingReadingBookConfettiView: .constant(false)
         )
         .environmentObject(RealmManager())
