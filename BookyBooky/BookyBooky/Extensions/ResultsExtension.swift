@@ -104,6 +104,7 @@ extension Results<CompleteBook> {
     var recentReadingActivity: [ReadingActivity] {
         var activities: [ReadingActivity] = []
         
+        // NOTE: - O(n) 시간 복잡도로 활동을 가져올 수 있는 방안을 강구해야 함!
         for readingBook in self {
             for record in readingBook.records {
                 activities.append(

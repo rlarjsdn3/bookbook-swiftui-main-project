@@ -17,7 +17,7 @@ struct TrackableVerticalScrollView<Content>: View where Content: View {
     var body: some View {
         ScrollView {
             content()
-                .trackScrollYOffet($startOffset, scrollYOffset: $yOffset)
+                .trackScrollYOffet($startOffset, yOffset: $yOffset)
         }
     }
 }

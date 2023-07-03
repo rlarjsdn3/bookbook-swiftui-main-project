@@ -340,9 +340,6 @@
 			children = (
 				9E9948592A52B5C800EA3490 /* ViewData */,
 				9E9948582A52B5BD00EA3490 /* Managers */,
-				9E06070D29DD516D000D542D /* RealmManager.swift */,
-				9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */,
-				9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -543,6 +540,9 @@
 		9E9948582A52B5BD00EA3490 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				9E06070D29DD516D000D542D /* RealmManager.swift */,
+				9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */,
+				9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";

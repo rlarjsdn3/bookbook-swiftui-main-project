@@ -61,6 +61,8 @@ extension HomeActivityTabView {
     
     var activityTabContent: some View {
         VStack(spacing: 5) {
+            // NOTE: - 최근 활동 기록을 불러오는 중 시간 복잡도가 O(n2)이라 스크롤 시 프레임이 끊김.
+            //      - 매 스크롤 시, yOffset을 새로 가져오는 과정에서 화면이 새로 렌더링되기 때문... 
             let recentActivities = compBooks.recentReadingActivity
             
             if recentActivities.isEmpty {

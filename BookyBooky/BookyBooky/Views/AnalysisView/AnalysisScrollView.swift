@@ -47,7 +47,7 @@ extension AnalysisScrollView {
             
             AnalysisHighlightTabView()
         }
-        .trackScrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
+        .trackScrollYOffet($startOffset, yOffset: $scrollYOffset)
     }
 }
 

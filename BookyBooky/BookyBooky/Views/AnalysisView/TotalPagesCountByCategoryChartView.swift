@@ -78,7 +78,7 @@ extension TotalPagesCountByCategoryChartView {
                     
                     recordList
                 }
-                .trackScrollYOffet($startOffset, scrollYOffset: $scrollYOffset)
+                .trackScrollYOffet($startOffset, yOffset: $scrollYOffset)
             }
             .scrollIndicators(.hidden)
             .safeAreaPadding([.leading, .top, .trailing])
