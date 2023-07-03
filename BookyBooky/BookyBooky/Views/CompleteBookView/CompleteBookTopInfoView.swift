@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MovingNumbersView
 import RealmSwift
 
 struct CompleteBookTopInfoView: View {
@@ -143,17 +144,19 @@ extension CompleteBookTopInfoView {
             Text("\(completeBook.readingProgressPage)")
                 .font(.largeTitle)
             
-            Text("/")
-                .font(.title2.weight(.light))
-                .foregroundColor(.secondary)
-            
-            VStack(alignment: .leading) {
-                Text("\(completeBook.itemPage)")
-                    .font(.callout).foregroundColor(.secondary)
-                    .minimumScaleFactor(0.5)
+            HStack {
+                Text("/")
+                    .font(.title2.weight(.light))
+                    .foregroundColor(.secondary)
                 
-                Text("페이지")
-                    .font(.system(size: 11)).foregroundColor(.secondary)
+                VStack(alignment: .leading) {
+                    Text("\(completeBook.itemPage)")
+                        .font(.callout).foregroundColor(.secondary)
+                        .minimumScaleFactor(0.5)
+                    
+                    Text("페이지")
+                        .font(.system(size: 11)).foregroundColor(.secondary)
+                }
             }
         }
     }

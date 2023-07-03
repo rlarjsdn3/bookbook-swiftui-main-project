@@ -79,7 +79,6 @@
 		9E852F1729E1283C00A78EC2 /* BookShelfTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E852F1629E1283C00A78EC2 /* BookShelfTopBarView.swift */; };
 		9E99485B2A52B5D800EA3490 /* HomeViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E99485A2A52B5D800EA3490 /* HomeViewData.swift */; };
 		9E99485E2A52B6CA00EA3490 /* TrackableVerticalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E99485D2A52B6CA00EA3490 /* TrackableVerticalScrollView.swift */; };
-		9E9948622A52FC2000EA3490 /* NumberTicker in Frameworks */ = {isa = PBXBuildFile; productRef = 9E9948612A52FC2000EA3490 /* NumberTicker */; };
 		9E9B35B32A41288C009234ED /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B35B22A41288C009234ED /* ViewType.swift */; };
 		9E9B35B52A413945009234ED /* ListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B35B42A413945009234ED /* ListMode.swift */; };
 		9E9B35B72A414583009234ED /* ListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B35B62A414583009234ED /* ListType.swift */; };
@@ -274,7 +273,6 @@
 			files = (
 				9EB1360B2A30D6500081832D /* Shimmer in Frameworks */,
 				9EF659CF2A386034003CF6A5 /* DeviceKit in Frameworks */,
-				9E9948622A52FC2000EA3490 /* NumberTicker in Frameworks */,
 				9EB136082A30D63E0081832D /* RealmSwift in Frameworks */,
 				9EB136062A30D63E0081832D /* Realm in Frameworks */,
 				9EB1360E2A30D65B0081832D /* AlertToast in Frameworks */,
@@ -770,7 +768,6 @@
 				9EDEDD3E2A30D692002232B9 /* Lottie */,
 				9EDEDD412A30D6A8002232B9 /* ConfettiSwiftUI */,
 				9EF659CE2A386034003CF6A5 /* DeviceKit */,
-				9E9948612A52FC2000EA3490 /* NumberTicker */,
 			);
 			productName = BookyBooky;
 			productReference = 9ECD920D29BF1FA600FCDD2F /* BookyBooky.app */;
@@ -808,7 +805,6 @@
 				9EDEDD3D2A30D692002232B9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				9EDEDD402A30D6A8002232B9 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 				9EF659CD2A386034003CF6A5 /* XCRemoteSwiftPackageReference "DeviceKit" */,
-				9E9948602A52FC2000EA3490 /* XCRemoteSwiftPackageReference "NumberTicker" */,
 			);
 			productRefGroup = 9ECD920E29BF1FA600FCDD2F /* Products */;
 			projectDirPath = "";
@@ -1176,14 +1172,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9E9948602A52FC2000EA3490 /* XCRemoteSwiftPackageReference "NumberTicker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/uacaps/NumberTicker.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		9EB136012A30D61D0081832D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -1243,11 +1231,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9E9948612A52FC2000EA3490 /* NumberTicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9E9948602A52FC2000EA3490 /* XCRemoteSwiftPackageReference "NumberTicker" */;
-			productName = NumberTicker;
-		};
 		9EB136022A30D61D0081832D /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9EB136012A30D61D0081832D /* XCRemoteSwiftPackageReference "Alamofire" */;

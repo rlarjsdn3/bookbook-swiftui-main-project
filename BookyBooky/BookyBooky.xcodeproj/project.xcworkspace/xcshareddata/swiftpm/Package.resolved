@@ -46,15 +46,6 @@
       }
     },
     {
-      "identity" : "numberticker",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/uacaps/NumberTicker.git",
-      "state" : {
-        "revision" : "5c38bd9c87fb269c8d25356793d00b96591afd8c",
-        "version" : "1.0.0"
-      }
-    },
-    {
       "identity" : "realm-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core.git",
