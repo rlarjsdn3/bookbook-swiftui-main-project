@@ -10,10 +10,6 @@ import RealmSwift
 
 struct CompleteBookScrollView: View {
     
-    // MARK: - WRAPPER PROPERTIES
-    
-    @State private var startOffset: CGFloat = 0.0
-    
     // MARK: - PROPERTIES
     
     @ObservedRealmObject var completeBook: CompleteBook
@@ -37,7 +33,7 @@ struct CompleteBookScrollView: View {
 
 extension CompleteBookScrollView {
     var compBookScrollContent: some View {
-        ScrollView(showsIndicators: false) {
+        TrackableVerticalScrollView(yOffset: $scrollYOffset) {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 CompleteBookTopInfoView(completeBook)
                 
@@ -46,7 +42,6 @@ extension CompleteBookScrollView {
                     scrollYOffset: $scrollYOffset
                 )
             }
-            .trackScrollYOffet($startOffset, yOffset: $scrollYOffset)
         }
     }
 }

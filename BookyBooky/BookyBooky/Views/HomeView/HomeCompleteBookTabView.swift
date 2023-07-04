@@ -18,9 +18,6 @@ struct HomeCompleteBookTabView: View {
     
     @ObservedResults(CompleteBook.self) var compBooks
     
-    @State private var selectedCategory: Category = .all
-    @State private var selectedCategoryFA: Category = .all
-    
     @Namespace var namespace
     
     // MARK: - PROPERTIES
@@ -36,7 +33,7 @@ struct HomeCompleteBookTabView: View {
     
     var dynamicBottomPaddingValue: CGFloat {
         let filteredUnfinishedBooksCount = compBooks.getFilteredReadingBooks(
-            .unfinished, sort: homeViewData.selectedBookSort, category: selectedCategory
+            .unfinished, sort: homeViewData.selectedBookSort, category: homeViewData.selectedCategory
         ).count
         
         switch filteredUnfinishedBooksCount {
@@ -171,7 +168,7 @@ extension HomeCompleteBookTabView {
             let filterReadingBooks = compBooks.getFilteredReadingBooks(
                 .unfinished,
                 sort: homeViewData.selectedBookSort,
-                category: selectedCategory
+                category: homeViewData.selectedCategory
             )
             
             // TODO: - 읽고 있는 도서 리스트를 '격자 모드' 혹은 '리스트 모드'로 보게 만들기 (버전 1.1)
@@ -195,8 +192,8 @@ extension HomeCompleteBookTabView {
                     ForEach(categories, id: \.self) { category in
                         HomeCategoryButton(
                             category,
-                            selectedCategoryType: $selectedCategory,
-                            selectedCategoryTypeForAnimation: $selectedCategoryFA,
+                            selectedCategoryType: $homeViewData.selectedCategory,
+                            selectedCategoryTypeForAnimation: $homeViewData.selectedCategoryFA,
                             scrollProxy: proxy,
                             namespace: namespace
                         )

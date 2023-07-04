@@ -12,7 +12,7 @@ struct ActivityCellButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var compBooks
     
     // MARK: - PROPERTIES
     
@@ -36,8 +36,8 @@ struct ActivityCellButton: View {
 extension ActivityCellButton {
     var activityButton: some View {
         NavigationLink {
-            if let readingBook = readingBooks.findFirst(isbn13: activity.isbn13) {
-                CompleteBookView(readingBook)
+            if let compBook = compBooks.findFirst(isbn13: activity.isbn13) {
+                CompleteBookView(compBook)
             }
         } label: {
             activityLabel
