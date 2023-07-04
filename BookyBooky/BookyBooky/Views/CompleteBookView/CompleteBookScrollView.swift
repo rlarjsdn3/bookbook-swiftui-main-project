@@ -10,16 +10,18 @@ import RealmSwift
 
 struct CompleteBookScrollView: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var completeBookViewData: CompleteBookViewData
+    
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var completeBook: CompleteBook
-    @Binding var scrollYOffset: CGFloat
+    let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ completeBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
+    init(_ completeBook: CompleteBook) {
         self.completeBook = completeBook
-        self._scrollYOffset = scrollYOffset
     }
     
     // MARK: - BODY
@@ -33,14 +35,11 @@ struct CompleteBookScrollView: View {
 
 extension CompleteBookScrollView {
     var compBookScrollContent: some View {
-        TrackableVerticalScrollView(yOffset: $scrollYOffset) {
+        TrackableVerticalScrollView(yOffset: $completeBookViewData.scrollYOffset) {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 CompleteBookTopInfoView(completeBook)
                 
-                CompleteBookBottomTabView(
-                    completeBook,
-                    scrollYOffset: $scrollYOffset
-                )
+                CompleteBookBottomTabView(completeBook)
             }
         }
     }
@@ -50,6 +49,7 @@ extension CompleteBookScrollView {
 
 struct ReadingBookDetailScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        CompleteBookScrollView(CompleteBook.preview, scrollYOffset: .constant(0.0))
+        CompleteBookScrollView(CompleteBook.preview)
+            .environmentObject(CompleteBookViewData())
     }
 }

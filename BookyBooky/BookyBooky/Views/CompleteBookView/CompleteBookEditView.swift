@@ -23,7 +23,7 @@ struct CompleteBookEditView: View {
     
     // MARK: - PROPERTIES
     
-    var completeBook: CompleteBook
+    let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     

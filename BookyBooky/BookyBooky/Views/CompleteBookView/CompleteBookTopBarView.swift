@@ -13,6 +13,7 @@ struct CompleteBookTopBarView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var completeBookViewData: CompleteBookViewData
     @EnvironmentObject var realmManager: RealmManager
     
     @State private var isPresentingEditBookInformationSheet = false
@@ -22,13 +23,11 @@ struct CompleteBookTopBarView: View {
     // MARK: - PROPERTIES
     
     let completeBook: CompleteBook
-    @Binding var scrollYOffset: CGFloat
     
     // MARK: - INTIALIZER
     
-    init(_ completeBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
+    init(_ completeBook: CompleteBook) {
         self.completeBook = completeBook
-        self._scrollYOffset = scrollYOffset
     }
     
     // MARK: - BODY
@@ -67,13 +66,16 @@ extension CompleteBookTopBarView {
         .padding(.vertical)
         .overlay(alignment: .bottom) {
             Divider()
-                .opacity(scrollYOffset > 5.0 && scrollYOffset < 191.0 ? 1 : 0)
+                .opacity(
+                    (completeBookViewData.scrollYOffset > 5.0 &&
+                     completeBookViewData.scrollYOffset < 191.0) ? 1 : 0
+                )
         }
     }
     
     var navigationTopBarTitle: some View {
         Group {
-            if scrollYOffset > 30 {
+            if completeBookViewData.scrollYOffset > 30 {
                 Text(completeBook.title)
                     .frame(width: mainScreen.width * 0.65)
                     .lineLimit(1)
@@ -154,9 +156,9 @@ extension CompleteBookTopBarView {
 struct CompleteBookTopBarView_Preview: PreviewProvider {    
     static var previews: some View {
         CompleteBookTopBarView(
-            CompleteBook.preview,
-            scrollYOffset: .constant(0.0)
+            CompleteBook.preview
         )
+        .environmentObject(CompleteBookViewData())
         .environmentObject(RealmManager())
     }
 }

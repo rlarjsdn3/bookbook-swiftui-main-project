@@ -9,22 +9,20 @@ import SwiftUI
 
 struct CompleteBookTabButton: View {
     
+    // MARK: WRAPPER PROPERTIES
+    
+    @EnvironmentObject var completeBookViewData: CompleteBookViewData
+    
     // MARK: - PROPERTIES
     
     let type: CompleteBookTab
-    @Binding var selectedTab: CompleteBookTab
-    @Binding var selectedTabFA: CompleteBookTab
     let namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
     init(_ type: CompleteBookTab,
-         selectedTab: Binding<CompleteBookTab>,
-         selectedTabFA: Binding<CompleteBookTab>,
          namespace: Namespace.ID) {
         self.type = type
-        self._selectedTab = selectedTab
-        self._selectedTabFA = selectedTabFA
         self.namespace = namespace
     }
     
@@ -49,18 +47,18 @@ extension CompleteBookTabButton {
     
     func selectType(_ type: CompleteBookTab) {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-            selectedTabFA = type
+            completeBookViewData.selectedTabFA = type
         }
-        selectedTab = type
+        completeBookViewData.selectedTab = type
     }
     
     func tabLabel(_ type: CompleteBookTab) -> some View {
         Text(type.name)
             .font(.headline)
             .fontWeight(.bold)
-            .foregroundColor(selectedTabFA == type ? .black : .gray)
+            .foregroundColor(completeBookViewData.selectedTabFA == type ? .black : .gray)
             .overlay(alignment: .bottomLeading) {
-                if selectedTabFA == type {
+                if completeBookViewData.selectedTabFA == type {
                     Rectangle()
                         .offset(y: 15)
                         .fill(.black)
@@ -80,9 +78,8 @@ struct ReadingBookTabButton_Previews: PreviewProvider {
     static var previews: some View {
         CompleteBookTabButton(
             .overview,
-            selectedTab: .constant(.overview),
-            selectedTabFA: .constant(.overview),
             namespace: namespace
         )
+        .environmentObject(CompleteBookViewData())
     }
 }

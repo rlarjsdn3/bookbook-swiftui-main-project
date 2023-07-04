@@ -13,24 +13,19 @@ struct CompleteBookRenewalSheetView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var completeBookViewData: CompleteBookViewData
     @EnvironmentObject var realmManager: RealmManager
     
     @State private var totalPagesRead = 0
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var completeBook: CompleteBook
-    @Binding var readingProgressPage: Double
-    @Binding var isPresentingReadingBookConfettiView: Bool
+    let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ completeBook: CompleteBook,
-         readingProgressPage: Binding<Double>,
-         isPresentingReadingBookConfettiView: Binding<Bool>) {
+    init(_ completeBook: CompleteBook) {
         self.completeBook = completeBook
-        self._readingProgressPage = readingProgressPage
-        self._isPresentingReadingBookConfettiView = isPresentingReadingBookConfettiView
     }
     
     // MARK: - BODY
@@ -42,7 +37,7 @@ struct CompleteBookRenewalSheetView: View {
             }
             .onDisappear {
                 if completeBook.isComplete {
-                    isPresentingReadingBookConfettiView = true
+                    completeBookViewData.isPresentingConfettiView = true
                 }
             }
             .presentationCornerRadius(30)
@@ -147,7 +142,7 @@ extension CompleteBookRenewalSheetView {
                 completeBook,
                 totalPagesRead: totalPagesRead
             )
-            readingProgressPage = Double(totalPagesRead)
+            completeBookViewData.pageProgress = Double(totalPagesRead)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 dismiss()
             }
@@ -162,11 +157,8 @@ extension CompleteBookRenewalSheetView {
 
 struct ReadingBookRenewalSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        CompleteBookRenewalSheetView(
-            CompleteBook.preview,
-            readingProgressPage: .constant(10.0),
-            isPresentingReadingBookConfettiView: .constant(false)
-        )
-        .environmentObject(RealmManager())
+        CompleteBookRenewalSheetView(CompleteBook.preview)
+            .environmentObject(CompleteBookViewData())
+            .environmentObject(RealmManager())
     }
 }

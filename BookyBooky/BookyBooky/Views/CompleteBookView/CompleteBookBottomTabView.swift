@@ -12,28 +12,25 @@ struct CompleteBookBottomTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedTabType: CompleteBookTab = .overview
-    @State private var selectedTabTypeForAnimation: CompleteBookTab = .overview
+    @EnvironmentObject var completeBookViewData: CompleteBookViewData
     
     @Namespace var namespace
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var completeBook: CompleteBook
-    @Binding var scrollYOffset: CGFloat
+    let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ completeBook: CompleteBook, scrollYOffset: Binding<CGFloat>) {
+    init(_ completeBook: CompleteBook) {
         self.completeBook = completeBook
-        self._scrollYOffset = scrollYOffset
     }
     
     // MARK: - BODY
     
     var body: some View {
         Section {
-            bottomTabView(selectedTabType)
+            bottomTabView(completeBookViewData.selectedTab)
         } header: {
             tabButtonGroup
         }
@@ -63,8 +60,6 @@ extension CompleteBookBottomTabView {
                 
                 CompleteBookTabButton(
                     type,
-                    selectedTab: $selectedTabType,
-                    selectedTabFA: $selectedTabTypeForAnimation,
                     namespace: namespace
                 )
                 
@@ -85,9 +80,7 @@ extension CompleteBookBottomTabView {
 
 struct ReadingBookTabSectionView_Previews: PreviewProvider {    
     static var previews: some View {
-        CompleteBookBottomTabView(
-            CompleteBook.preview,
-            scrollYOffset: .constant(0.0)
-        )
+        CompleteBookBottomTabView(CompleteBook.preview)
+            .environmentObject(CompleteBookViewData())
     }
 }

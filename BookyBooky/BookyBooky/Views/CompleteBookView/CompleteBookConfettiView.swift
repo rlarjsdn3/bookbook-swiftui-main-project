@@ -109,7 +109,7 @@ extension CompleteBookConfettiView {
             if dayToCompleteTheReading == 0 {
                 Text("와우! 하루 만에 독서를 끝냈어요!")
             } else {
-                HStack(spacing: 10) {
+                VStack(spacing: 10) {
                     Text("완독하는 데 \(dayRemainingUntilTheTargetDate)일이 걸렸어요.")
                     
                     Text("목표보다 \(dayRemainingUntilTheTargetDate)일 더 빠르게 읽었어요!")

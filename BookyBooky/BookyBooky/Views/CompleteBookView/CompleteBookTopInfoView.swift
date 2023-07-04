@@ -13,21 +13,19 @@ struct CompleteBookTopInfoView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @EnvironmentObject var completeBookViewData: CompleteBookViewData
     @EnvironmentObject var realmManager: RealmManager
     
-    @State private var readingProgressPage = 0.0
     @State private var isPresentingRenewalSheet = false
-    @State private var isPresentingReadingBookConfettiView = false
    
     // MARK: - PROPERTIES
     
-    let completeBook: CompleteBook
+    @ObservedRealmObject var completeBook: CompleteBook // @Ob를 붙여야 도서 편집 혹은 문장 추가 시 화면이 리렌더링됨
     
     // MARK: - INITIALIZER
     
     init(_ completeBook: CompleteBook) {
         self.completeBook = completeBook
-        self._readingProgressPage = State(initialValue: Double(completeBook.readingProgressPage))
     }
     
     // MARK: - BODY
@@ -35,14 +33,13 @@ struct CompleteBookTopInfoView: View {
     var body: some View {
         completeBookInfo
             .sheet(isPresented: $isPresentingRenewalSheet) {
-                CompleteBookRenewalSheetView(
-                    completeBook,
-                    readingProgressPage: $readingProgressPage,
-                    isPresentingReadingBookConfettiView: $isPresentingReadingBookConfettiView
-                )
+                CompleteBookRenewalSheetView(completeBook)
             }
-            .fullScreenCover(isPresented: $isPresentingReadingBookConfettiView) {
+            .fullScreenCover(isPresented: $completeBookViewData.isPresentingConfettiView) {
                 CompleteBookConfettiView(completeBook)
+            }
+            .onAppear {
+                completeBookViewData.pageProgress = Double(completeBook.readingProgressPage)
             }
     }
 }
@@ -144,7 +141,7 @@ extension CompleteBookTopInfoView {
     
     var progressLabel: some View {
         HStack {
-            AnimateNumberText(font: .title, value: $readingProgressPage, textColor: .constant(Color.black))
+            AnimateNumberText(font: .title, value: $completeBookViewData.pageProgress, textColor: .constant(Color.black))
             
             HStack {
                 Text("/")
@@ -260,6 +257,7 @@ extension CompleteBookTopInfoView {
 struct ReadingBookInfoView_Previews: PreviewProvider {
     static var previews: some View {
         CompleteBookTopInfoView(CompleteBook.preview)
+            .environmentObject(CompleteBookViewData())
             .environmentObject(RealmManager())
     }
 }

@@ -44,6 +44,7 @@
 		9E1A36C72A3DF242001E5E11 /* BookShelfCompBookTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1A36C62A3DF242001E5E11 /* BookShelfCompBookTabView.swift */; };
 		9E1A36C92A3DF4D2001E5E11 /* BookShelfSummaryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1A36C82A3DF4D2001E5E11 /* BookShelfSummaryTabView.swift */; };
 		9E1C2F9E2A0BADAC00AB0BAE /* CompleteBookEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C2F9D2A0BADAC00AB0BAE /* CompleteBookEditView.swift */; };
+		9E1F24A22A53C5D80068F412 /* CompleteBookViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1F24A12A53C5D80068F412 /* CompleteBookViewData.swift */; };
 		9E24DD302A14F8B400366640 /* HomeActivityTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E24DD2D2A14F8B300366640 /* HomeActivityTabView.swift */; };
 		9E24DD312A14F8B400366640 /* HomeScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E24DD2E2A14F8B400366640 /* HomeScrollView.swift */; };
 		9E24DD322A14F8B400366640 /* HomeCompleteBookTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E24DD2F2A14F8B400366640 /* HomeCompleteBookTabView.swift */; };
@@ -179,6 +180,7 @@
 		9E1A36C62A3DF242001E5E11 /* BookShelfCompBookTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfCompBookTabView.swift; sourceTree = "<group>"; };
 		9E1A36C82A3DF4D2001E5E11 /* BookShelfSummaryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSummaryTabView.swift; sourceTree = "<group>"; };
 		9E1C2F9D2A0BADAC00AB0BAE /* CompleteBookEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteBookEditView.swift; sourceTree = "<group>"; };
+		9E1F24A12A53C5D80068F412 /* CompleteBookViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteBookViewData.swift; sourceTree = "<group>"; };
 		9E24DD2D2A14F8B300366640 /* HomeActivityTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeActivityTabView.swift; sourceTree = "<group>"; };
 		9E24DD2E2A14F8B400366640 /* HomeScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScrollView.swift; sourceTree = "<group>"; };
 		9E24DD2F2A14F8B400366640 /* HomeCompleteBookTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCompleteBookTabView.swift; sourceTree = "<group>"; };
@@ -551,6 +553,7 @@
 			isa = PBXGroup;
 			children = (
 				9E99485A2A52B5D800EA3490 /* HomeViewData.swift */,
+				9E1F24A12A53C5D80068F412 /* CompleteBookViewData.swift */,
 			);
 			path = ViewData;
 			sourceTree = "<group>";
@@ -891,6 +894,7 @@
 				9E524DF829D1CF3500FD7B98 /* TabButton.swift in Sources */,
 				9E0C0A6629D1DF4800F1F5F6 /* HomeTopBarView.swift in Sources */,
 				9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */,
+				9E1F24A22A53C5D80068F412 /* CompleteBookViewData.swift in Sources */,
 				9E24DD322A14F8B400366640 /* HomeCompleteBookTabView.swift in Sources */,
 				9E54A9FC29D5DC9800FE080C /* SearchCategoryButton.swift in Sources */,
 				9EF659D72A398191003CF6A5 /* AnalysisHighlightTabView.swift in Sources */,

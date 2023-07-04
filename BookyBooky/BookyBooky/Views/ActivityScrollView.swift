@@ -14,7 +14,7 @@ struct ActivityScrollView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var compBooks
     
     // MARK: - BODY
     
@@ -28,7 +28,7 @@ struct ActivityScrollView: View {
 extension ActivityScrollView {
     var activityScrollContent: some View {
         Group {
-            let activities = readingBooks.monthlyReadingActivity
+            let activities = compBooks.monthlyReadingActivity
             
             if activities.isEmpty {
                 noActivityLabel

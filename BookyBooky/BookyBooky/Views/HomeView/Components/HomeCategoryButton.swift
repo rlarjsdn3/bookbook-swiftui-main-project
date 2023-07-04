@@ -9,24 +9,20 @@ import SwiftUI
 
 struct HomeCategoryButton: View {
     
+    @EnvironmentObject var homeViewData: HomeViewData
+    
     // MARK: - PROPERTIES
     
     let type: Category
-    @Binding var selectedCategory: Category
-    @Binding var selectedCategoryFA: Category
     let scrollProxy: ScrollViewProxy
     let namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
     init(_ type: Category,
-         selectedCategoryType: Binding<Category>,
-         selectedCategoryTypeForAnimation: Binding<Category>,
          scrollProxy: ScrollViewProxy,
          namespace: Namespace.ID) {
         self.type = type
-        self._selectedCategory = selectedCategoryType
-        self._selectedCategoryFA = selectedCategoryTypeForAnimation
         self.scrollProxy = scrollProxy
         self.namespace = namespace
     }
@@ -42,11 +38,11 @@ struct HomeCategoryButton: View {
     
     func selectCategory(_ type: Category) {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-            selectedCategoryFA = type
+            homeViewData.selectedCategoryFA = type
             scrollProxy.scrollTo("Scroll_To_Category", anchor: .top)
             scrollProxy.scrollTo("\(type.rawValue)")
         }
-        selectedCategory = type
+        homeViewData.selectedCategory = type
     }
 }
 
@@ -65,9 +61,9 @@ extension HomeCategoryButton {
         Text(type.name)
             .font(.headline)
             .fontWeight(.bold)
-            .foregroundColor(selectedCategoryFA == type ? .black : .gray)
+            .foregroundColor(homeViewData.selectedCategoryFA == type ? .black : .gray)
             .overlay(alignment: .bottomLeading) {
-                if selectedCategoryFA == type {
+                if homeViewData.selectedCategoryFA == type {
                     Rectangle()
                         .offset(y: 15)
                         .fill(.black)
@@ -88,11 +84,10 @@ struct HomeCategoryButton_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
             HomeCategoryButton(.all,
-                               selectedCategoryType: .constant(.all),
-                               selectedCategoryTypeForAnimation: .constant(.all),
                                scrollProxy: scrollProxy,
                                namespace: namespace
             )
+            .environmentObject(HomeViewData())
         }
     }
 }

@@ -13,7 +13,7 @@ struct CompleteBookSentenceView: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var completeBook: CompleteBook
+    let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     

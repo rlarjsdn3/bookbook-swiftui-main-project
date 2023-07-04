@@ -16,16 +16,16 @@ struct CompleteBookView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
     
-    @State private var scrollYOffset: CGFloat = 0.0
+    @StateObject var completeBookViewData = CompleteBookViewData()
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var readingBook: CompleteBook
+    let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: CompleteBook) {
-        self.readingBook = readingBook
+    init(_ completeBook: CompleteBook) {
+        self.completeBook = completeBook
     }
     
     // MARK: - BODY
@@ -33,26 +33,27 @@ struct CompleteBookView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                CompleteBookTopBarView(readingBook, scrollYOffset: $scrollYOffset)
+                CompleteBookTopBarView(completeBook)
                 
-                CompleteBookScrollView(readingBook, scrollYOffset: $scrollYOffset)
+                CompleteBookScrollView(completeBook)
             }
             .navigationBarBackButtonHidden()
+            .environmentObject(completeBookViewData)
         }
         .toast(
             isPresenting: $realmManager.isPresentingReadingBookEditSuccessToastAlert,
             duration: 1.0) {
-            realmManager.showReadingBookEditSuccessToastAlert(readingBook.category.themeColor)
+            realmManager.showReadingBookEditSuccessToastAlert(completeBook.category.themeColor)
         }
         .toast(
             isPresenting: $realmManager.isPresentingReadingBookRenewalSuccessToastAlert,
             duration: 1.0) {
-            realmManager.showReadingBookRenewalSuccessToastAlert(readingBook.category.themeColor)
+                realmManager.showReadingBookRenewalSuccessToastAlert(completeBook.category.themeColor)
         }
         .toast(
             isPresenting: $realmManager.isPresentingAddSentenceSuccessToastAlert,
             duration: 1.0) {
-            realmManager.showAddSentenceSuccessToastAlert(readingBook.category.themeColor)
+            realmManager.showAddSentenceSuccessToastAlert(completeBook.category.themeColor)
         }
     }
 }

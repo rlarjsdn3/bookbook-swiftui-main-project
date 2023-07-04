@@ -18,7 +18,7 @@ struct CompleteBookAnalysisView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedRealmObject var completeBook: CompleteBook
+    let completeBook: CompleteBook
     
     @State private var scrollPosition: TimeInterval = 0.0
     

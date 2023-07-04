@@ -192,8 +192,6 @@ extension HomeCompleteBookTabView {
                     ForEach(categories, id: \.self) { category in
                         HomeCategoryButton(
                             category,
-                            selectedCategoryType: $homeViewData.selectedCategory,
-                            selectedCategoryTypeForAnimation: $homeViewData.selectedCategoryFA,
                             scrollProxy: proxy,
                             namespace: namespace
                         )

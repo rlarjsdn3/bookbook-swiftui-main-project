@@ -16,13 +16,13 @@ struct CompleteBookButton: View {
     
     // MARK: - PROPERTIES
     
-    @ObservedRealmObject var completeBook: CompleteBook
+    let completeBook: CompleteBook
     let type: ButtonType.CompleteBookButton
     
     // MARK: - INTIALIZER
     
-    init(_ readingBook: CompleteBook, type: ButtonType.CompleteBookButton) {
-        self.completeBook = readingBook
+    init(_ completeBook: CompleteBook, type: ButtonType.CompleteBookButton) {
+        self.completeBook = completeBook
         self.type = type
     }
     

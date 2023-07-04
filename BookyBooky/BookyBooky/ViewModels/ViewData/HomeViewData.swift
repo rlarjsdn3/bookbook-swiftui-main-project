@@ -9,9 +9,6 @@ import SwiftUI
 import Foundation
 
 final class HomeViewData: ObservableObject {
-    
-    @Namespace var namespace: Namespace.ID
-    
     @Published var scrollYOffset: CGFloat = 0.0
     
     @Published var selectedBookSort: BookSortCriteria = .titleAscendingOrder
