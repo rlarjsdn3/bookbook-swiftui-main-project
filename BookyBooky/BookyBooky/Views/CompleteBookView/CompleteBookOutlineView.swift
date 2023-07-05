@@ -12,7 +12,7 @@ struct CompleteBookOutlineView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    let completeBook: CompleteBook
+    @ObservedRealmObject var completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
