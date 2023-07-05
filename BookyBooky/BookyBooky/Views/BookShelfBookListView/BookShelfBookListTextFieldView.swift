@@ -42,6 +42,26 @@ struct BookShelfBookListTextFieldView: View {
     var body: some View {
         textFieldArea
     }
+    
+    func submitAction() {
+        // 버튼을 클릭하면
+        withAnimation(.spring()) {
+            // 곧바로 스크롤을 제일 위로 올리고
+            scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
+            // 0.3초 대기 후, 정렬 애니메이션 수행
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
+                    searchQuery = inputQuery
+                    if !inputQuery.isEmpty {
+                        isPresentingShowAllButton = true
+                    } else {
+                        isPresentingShowAllButton = false
+                    }
+                }
+                HapticManager.shared.impact(.rigid)
+            }
+        }
+    }
 }
 
 // MARK: - EXTENSIONS
@@ -134,25 +154,7 @@ extension BookShelfBookListTextFieldView {
         TextField("제목 / 저자 검색", text: $inputQuery)
             .frame(height: 45)
             .submitLabel(.search)
-            .onSubmit {
-                // 버튼을 클릭하면
-                withAnimation(.spring()) {
-                    // 곧바로 스크롤을 제일 위로 올리고
-                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
-                    // 0.3초 대기 후, 정렬 애니메이션 수행
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
-                            searchQuery = inputQuery
-                            if !inputQuery.isEmpty {
-                                isPresentingShowAllButton = true
-                            } else {
-                                isPresentingShowAllButton = false
-                            }
-                        }
-                        HapticManager.shared.impact(.rigid)
-                    }
-                }
-            }
+            .onSubmit(submitAction)
             .focused($focusedField)
     }
     

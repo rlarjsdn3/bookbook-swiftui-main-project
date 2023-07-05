@@ -106,7 +106,7 @@ extension AnalysisChartsTabView {
                 if totalPagesByCategoryChartData.isEmpty {
                     unableToDisplayChartLabel
                 } else {
-                    Chart(totalPagesByCategoryChartData, id: \.self) { element in
+                    Chart(totalPagesByCategoryChartData.prefix(5), id: \.self) { element in
                         BarMark(
                             x: .value("pages", element.pages),
                             stacking: .normalized
@@ -119,8 +119,7 @@ extension AnalysisChartsTabView {
             }
             .padding(.vertical, 15)
             .padding(.horizontal, 10)
-            .background(Color.white)
-            .clipShape(.rect(cornerRadius: 10))
+            .background(Color.white, in: .rect(cornerRadius: 10))
         }
         .disabled(totalPagesByCategoryChartData.isEmpty ? true : false)
         .buttonStyle(.plain)

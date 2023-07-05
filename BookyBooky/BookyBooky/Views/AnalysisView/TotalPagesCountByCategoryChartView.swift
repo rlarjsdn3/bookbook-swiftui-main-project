@@ -157,7 +157,7 @@ extension TotalPagesCountByCategoryChartView {
             }
         }
         .chartAngleSelection(value: $selectedCategory)
-        .frame(height: 300)
+        .frame(height: 320)
         .padding()
         .background(Color.white)
         .clipShape(.rect(cornerRadius: 15))
