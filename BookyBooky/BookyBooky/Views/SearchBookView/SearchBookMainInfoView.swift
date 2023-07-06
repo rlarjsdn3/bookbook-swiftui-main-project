@@ -13,6 +13,7 @@ struct SearchBookMainInfoView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var searchBookViewData: SearchBookViewData
     
     @ObservedResults(FavoriteBook.self) var favBooks
     
@@ -21,13 +22,11 @@ struct SearchBookMainInfoView: View {
     // MARK: - PROPERTIES
     
     let bookItem: detailBookItem.Item
-    @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTALIZER
     
-    init(_ bookItem: detailBookItem.Item, isLoadingCoverImage: Binding<Bool>) {
+    init(_ bookItem: detailBookItem.Item) {
         self.bookItem = bookItem
-        self._isLoadingCoverImage = isLoadingCoverImage
     }
     
     // MARK: - BODY
@@ -79,8 +78,8 @@ extension SearchBookMainInfoView {
         }
         .minimumScaleFactor(0.8)
         .lineLimit(1)
-        .redacted(reason: isLoadingCoverImage ? .placeholder : [])
-        .shimmering(active: isLoadingCoverImage)
+        .redacted(reason: searchBookViewData.isLoadingCoverImage ? .placeholder : [])
+        .shimmering(active: searchBookViewData.isLoadingCoverImage)
     }
     
     var addFavoriteBookButton: some View {
@@ -120,7 +119,7 @@ extension SearchBookMainInfoView {
                     }
             }
         }
-        .disabled(isLoadingCoverImage)
+        .disabled(searchBookViewData.isLoadingCoverImage)
     }
 }
 
@@ -128,11 +127,7 @@ extension SearchBookMainInfoView {
 
 struct SearchInfoTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookMainInfoView(
-            detailBookItem.Item.preview,
-            isLoadingCoverImage: .constant(false)
-        )
-        .environmentObject(RealmManager())
-        .previewLayout(.sizeThatFits)
+        SearchBookMainInfoView(detailBookItem.Item.preview)
+            .environmentObject(RealmManager())
     }
 }

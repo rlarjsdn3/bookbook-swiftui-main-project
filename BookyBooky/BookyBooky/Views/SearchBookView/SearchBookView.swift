@@ -16,7 +16,7 @@ struct SearchBookView: View {
     @EnvironmentObject var realmManager: RealmManager
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
-    @State private var isLoadingCoverImage = true
+    @StateObject var searchBookViewData = SearchBookViewData()
     
     // MARK: - PROPERTIES
     
@@ -46,50 +46,36 @@ struct SearchBookView: View {
             Group {
                 if let bookItem = aladinAPIManager.searchBookInfo {
                     VStack {
-                        SearchBookCoverView(
-                            bookItem,
-                            isLoadingCoverImage: $isLoadingCoverImage
-                        )
-                        .overlay(alignment: .topLeading) {
-                            if type == .navigation {
-                                Button {
-                                    dismiss()
-                                } label: {
-                                    Image(systemName: "chevron.left")
-                                        .foregroundColor(bookItem.bookCategory.foregroundColor)
-                                        .navigationBarItemStyle()
+                        SearchBookCoverView(bookItem)
+                            .overlay(alignment: .topLeading) {
+                                if type == .navigation {
+                                    Button {
+                                        dismiss()
+                                    } label: {
+                                        Image(systemName: "chevron.left")
+                                            .foregroundColor(bookItem.bookCategory.foregroundColor)
+                                            .navigationBarItemStyle()
+                                    }
+                                    .padding(.vertical, 5)
                                 }
-                                .padding(.vertical, 5)
                             }
-                        }
                         
-                        SearchBookMainInfoView(
-                            bookItem,
-                            isLoadingCoverImage: $isLoadingCoverImage
-                        )
+                        SearchBookMainInfoView(bookItem)
                         
-                        SearchBookSubInfoView(
-                            bookItem,
-                            isLoadingCoverImage: $isLoadingCoverImage
-                        )
+                        SearchBookSubInfoView(bookItem)
                         
                         Divider()
                         
-                        SearchBookDescView(
-                            bookItem,
-                            isLoadingCoverImage: $isLoadingCoverImage
-                        )
+                        SearchBookDescView(bookItem)
                         
                         Spacer()
                         
-                        SearchBookButtonGroupView(
-                            bookItem,
-                            isLoadingCoverImage: $isLoadingCoverImage
-                        )
+                        SearchBookButtonGroupView(bookItem)
                     }
                 }
             }
             .navigationBarBackButtonHidden()
+            .environmentObject(searchBookViewData)
         }
         .onAppear {
             aladinAPIManager.requestBookDetailAPI(isbn13)

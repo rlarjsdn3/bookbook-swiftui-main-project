@@ -13,17 +13,16 @@ struct SearchBookCoverView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    @EnvironmentObject var searchBookViewData: SearchBookViewData
     
     // MARK: - PROERTIES
     
-    var bookItem: detailBookItem.Item
-    @Binding var isLoadingCoverImage: Bool
-    
+    let bookItem: detailBookItem.Item
+
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookItem.Item, isLoadingCoverImage: Binding<Bool>) {
+    init(_ bookItem: detailBookItem.Item) {
         self.bookItem = bookItem
-        self._isLoadingCoverImage = isLoadingCoverImage
     }
     
     // MARK: - BODY
@@ -44,7 +43,7 @@ extension SearchBookCoverView {
                             width: 170, height: mainScreen.height * 0.27
             )
             .onAppear {
-                isLoadingCoverImage = false
+                searchBookViewData.isLoadingCoverImage = false
             }
         }
         .frame(height: mainScreen.height * 0.3)
@@ -61,11 +60,8 @@ extension SearchBookCoverView {
 
 struct SearchInfoCoverView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookCoverView(
-            detailBookItem.Item.preview,
-            isLoadingCoverImage: .constant(false)
-        )
-        .environmentObject(AladinAPIManager())
-        .previewLayout(.sizeThatFits)
+        SearchBookCoverView(detailBookItem.Item.preview)
+            .environmentObject(AladinAPIManager())
+            .environmentObject(SearchBookViewData())
     }
 }

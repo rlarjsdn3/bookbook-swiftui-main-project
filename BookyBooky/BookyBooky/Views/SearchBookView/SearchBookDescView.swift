@@ -9,16 +9,18 @@ import SwiftUI
 
 struct SearchBookDescView: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var searchBookViewData: SearchBookViewData
+    
     // MARK: - PROPERTIES
     
     let bookItem: detailBookItem.Item
-    @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookItem.Item, isLoadingCoverImage: Binding<Bool>) {
+    init(_ bookItem: detailBookItem.Item) {
         self.bookItem = bookItem
-        self._isLoadingCoverImage = isLoadingCoverImage
     }
     
     // MARK: - BODY
@@ -45,8 +47,8 @@ extension SearchBookDescView {
             
             bookDescText
         }
-        .redacted(reason: isLoadingCoverImage ? .placeholder : [])
-        .shimmering(active: isLoadingCoverImage)
+        .redacted(reason: searchBookViewData.isLoadingCoverImage ? .placeholder : [])
+        .shimmering(active: searchBookViewData.isLoadingCoverImage)
     }
     
     var aboutBookText: some View {
@@ -64,7 +66,7 @@ extension SearchBookDescView {
                 }
             }
         }
-        .redacted(reason: isLoadingCoverImage ? .placeholder : [])
+        .redacted(reason: searchBookViewData.isLoadingCoverImage ? .placeholder : [])
     }
     
     var bookDescText: some View {
@@ -81,9 +83,7 @@ extension SearchBookDescView {
 
 struct SearchBookIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookDescView(
-            detailBookItem.Item.preview,
-            isLoadingCoverImage: .constant(false)
-        )
+        SearchBookDescView(detailBookItem.Item.preview)
+            .environmentObject(SearchBookViewData())
     }
 }

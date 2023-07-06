@@ -11,18 +11,18 @@ struct SearchBookSubInfoView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @EnvironmentObject var searchBookViewData: SearchBookViewData
+    
     @State private var isPresentingSalesPointDescriptionSheet = false
     
     // MARK: - PROPERTIES
     
     let bookItem: detailBookItem.Item
-    @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookItem.Item, isLoadingCoverImage: Binding<Bool>) {
+    init(_ bookItem: detailBookItem.Item) {
         self.bookItem = bookItem
-        self._isLoadingCoverImage = isLoadingCoverImage
     }
     
     // MARK: - BODY
@@ -77,8 +77,8 @@ extension SearchBookSubInfoView {
             }
             
             Text("\(bookItem.salesPoint)")
-                .redacted(reason: isLoadingCoverImage ? .placeholder : [])
-                .shimmering(active: isLoadingCoverImage)
+                .redacted(reason: searchBookViewData.isLoadingCoverImage ? .placeholder : [])
+                .shimmering(active: searchBookViewData.isLoadingCoverImage)
         }
         .frame(maxWidth: .infinity)
     }
@@ -90,8 +90,8 @@ extension SearchBookSubInfoView {
                 .fontWeight(.bold)
             
             Text("\(bookItem.subInfo.itemPage)")
-                .redacted(reason: isLoadingCoverImage ? .placeholder : [])
-                .shimmering(active: isLoadingCoverImage)
+                .redacted(reason: searchBookViewData.isLoadingCoverImage ? .placeholder : [])
+                .shimmering(active: searchBookViewData.isLoadingCoverImage)
         }
         .frame(maxWidth: .infinity)
     }
@@ -103,8 +103,8 @@ extension SearchBookSubInfoView {
                 .fontWeight(.bold)
             
             Text(bookItem.bookCategory.name)
-                .redacted(reason: isLoadingCoverImage ? .placeholder : [])
-                .shimmering(active: isLoadingCoverImage)
+                .redacted(reason: searchBookViewData.isLoadingCoverImage ? .placeholder : [])
+                .shimmering(active: searchBookViewData.isLoadingCoverImage)
         }
         .frame(maxWidth: .infinity)
     }
@@ -114,9 +114,7 @@ extension SearchBookSubInfoView {
 
 struct SearchInfoBoxView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookSubInfoView(
-            detailBookItem.Item.preview,
-            isLoadingCoverImage: .constant(false)
-        )
+        SearchBookSubInfoView(detailBookItem.Item.preview)
+            .environmentObject(SearchBookViewData())
     }
 }

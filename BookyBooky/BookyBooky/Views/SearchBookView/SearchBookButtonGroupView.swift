@@ -13,6 +13,8 @@ struct SearchBookButtonGroupView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var searchBookViewData: SearchBookViewData
+    
     @ObservedResults(CompleteBook.self) var compBooks
     
     @State private var isPresentingAddReadingBookView = false
@@ -20,13 +22,11 @@ struct SearchBookButtonGroupView: View {
     // MARK: - PROPERTIES
     
     let bookItem: detailBookItem.Item
-    @Binding var isLoadingCoverImage: Bool
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookItem.Item, isLoadingCoverImage: Binding<Bool>) {
+    init(_ bookItem: detailBookItem.Item) {
         self.bookItem = bookItem
-        self._isLoadingCoverImage = isLoadingCoverImage
     }
     
     // MARK: - BODY
@@ -66,11 +66,11 @@ extension SearchBookButtonGroupView {
             Text("도서 DB 제공 : ")
             
             Link("알라딘 인터넷 서점", destination: URL(string: "https://www.aladin.co.kr")!)
-                .disabled(isLoadingCoverImage)
+                .disabled(searchBookViewData.isLoadingCoverImage)
         }
         .font(.caption)
-        .redacted(reason: isLoadingCoverImage ? .placeholder : [])
-        .shimmering(active: isLoadingCoverImage)
+        .redacted(reason: searchBookViewData.isLoadingCoverImage ? .placeholder : [])
+        .shimmering(active: searchBookViewData.isLoadingCoverImage)
     }
     
     var backButton: some View {
@@ -103,7 +103,7 @@ extension SearchBookButtonGroupView {
                     Text("추가하기")
                 }
                 .buttonStyle(RightBottomButtonStyle(backgroundColor: bookItem.bookCategory.themeColor))
-                .disabled(isLoadingCoverImage)
+                .disabled(searchBookViewData.isLoadingCoverImage)
             }
         }
     }
@@ -113,10 +113,7 @@ extension SearchBookButtonGroupView {
 
 struct SearchInfoButtonsView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookButtonGroupView(
-            detailBookItem.Item.preview,
-            isLoadingCoverImage: .constant(false)
-        )
-        .previewLayout(.sizeThatFits)
+        SearchBookButtonGroupView(detailBookItem.Item.preview)
+            .environmentObject(SearchBookViewData())
     }
 }
