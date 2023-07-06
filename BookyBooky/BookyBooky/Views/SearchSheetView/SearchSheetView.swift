@@ -14,33 +14,18 @@ struct SearchSheetView: View {
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
-    @State private var inputQuery = ""
-    @State private var searchIndex = 1
-    @State private var selectedCategory: Category = .all
-    @State private var selectedCategoryFA: Category = .all
-    
-    @AppStorage("SearchResultListMode") private var selectedListMode: ListMode = .list
+    @StateObject var searchSheetViewData = SearchSheetViewData()
     
     // MARK: - BODY
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                SearchSheetTextFieldView(
-                    inputQuery: $inputQuery,
-                    searchIndex: $searchIndex,
-                    selectedListMode: $selectedListMode,
-                    selectedCategory: $selectedCategory,
-                    selectedCategoryFA: $selectedCategoryFA
-                )
+                SearchSheetTextFieldView()
                 
-                SearchSheetScrollView(
-                    inputQuery: $inputQuery,
-                    searchIndex: $searchIndex,
-                    selectedListMode: $selectedListMode,
-                    selectedCategory: $selectedCategory
-                )
+                SearchSheetScrollView()
             }
+            .environmentObject(searchSheetViewData)
         }
         .onDisappear {
             aladinAPIManager.searchBookInfo = nil

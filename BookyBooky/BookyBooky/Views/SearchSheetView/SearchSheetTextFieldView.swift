@@ -13,19 +13,13 @@ struct SearchSheetTextFieldView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var searchSheetViewData: SearchSheetViewData
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @Namespace var namespace: Namespace.ID
     
     @FocusState var focusedField: Bool
     
-    // MARK: - PROPERTIES
-    
-    @Binding var inputQuery: String
-    @Binding var searchIndex: Int
-    @Binding var selectedListMode: ListMode
-    @Binding var selectedCategory: Category
-    @Binding var selectedCategoryFA: Category
     
     // MARK: - BODY
     
@@ -45,18 +39,18 @@ struct SearchSheetTextFieldView: View {
     }
     
     func requestSearchBook(_ query: String) {
-        searchIndex = 0
+        searchSheetViewData.searchIndex = 0
         // 새로운 검색 시도 시, 스크롤을 제일 위로 올립니다.
         // searchIndex 변수값을 짧은 시간에 변경(0→1)함으로써 onChange 제어자가 이를 알아차려 스크롤을 위로 올립니다.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
-            searchIndex = 1
+            searchSheetViewData.searchIndex = 1
         }
         aladinAPIManager.requestBookSearchAPI(query)
         
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-            selectedCategoryFA = .all
+            searchSheetViewData.selectedCategoryFA = .all
         }
-        selectedCategory = .all
+        searchSheetViewData.selectedCategory = .all
         HapticManager.shared.impact(.rigid)
     }
 }
@@ -91,10 +85,10 @@ extension SearchSheetTextFieldView {
     
     var listModeButton: some View {
         Button {
-            selectedListMode = .grid
+            searchSheetViewData.selectedListMode = .grid
         } label: {
             Label("격자 모드", systemImage: "square.grid.2x2")
-            if selectedListMode == .grid {
+            if searchSheetViewData.selectedListMode == .grid {
                 Text("적용됨")
             }
         }
@@ -102,10 +96,10 @@ extension SearchSheetTextFieldView {
     
     var gridModeButton: some View {
         Button {
-            selectedListMode = .list
+            searchSheetViewData.selectedListMode = .list
         } label: {
             Label("리스트 모드", systemImage: "list.dash")
-            if selectedListMode == .list {
+            if searchSheetViewData.selectedListMode == .list {
                 Text("적용됨")
             }
         }
@@ -125,7 +119,7 @@ extension SearchSheetTextFieldView {
             
             textField
             
-            if !inputQuery.isEmpty {
+            if !searchSheetViewData.inputQuery.isEmpty {
                 eraseButton
             }
         }
@@ -140,18 +134,18 @@ extension SearchSheetTextFieldView {
     }
     
     var textField: some View {
-        TextField("제목 / 저자 검색", text: $inputQuery)
+        TextField("제목 / 저자 검색", text: $searchSheetViewData.inputQuery)
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
-                requestSearchBook(inputQuery)
+                requestSearchBook(searchSheetViewData.inputQuery)
             }
             .focused($focusedField)
     }
     
     var eraseButton: some View {
         Button {
-            inputQuery.removeAll()
+            searchSheetViewData.inputQuery.removeAll()
             focusedField = true
         } label: {
             xmarkCircleSFSymbolImage
@@ -195,10 +189,10 @@ extension SearchSheetTextFieldView {
             ScrollView(.horizontal, showsIndicators: false) {
                 scrollCategoryButton(scrollProxy: proxy)
             }
-            .onChange(of: searchIndex) {
+            .onChange(of: searchSheetViewData.searchIndex) {
                 // 새로운 검색을 시도할 때만 카테고리 스크롤을 제일 앞으로 전진합니다.
                 // '더 보기' 버튼을 클릭해도 카테고리 스크롤이 이동하지 않습니다.
-                if searchIndex == 1 {
+                if searchSheetViewData.searchIndex == 1 {
                     withAnimation {
                         proxy.scrollTo("Scroll_To_Leading", anchor: .top)
                     }
@@ -213,8 +207,6 @@ extension SearchSheetTextFieldView {
             ForEach(aladinAPIManager.categories, id: \.self) { type in
                 SearchCategoryButton(
                     type,
-                    selectedCategory: $selectedCategory,
-                    selectedCategoryForAnimation: $selectedCategoryFA,
                     namespace: namespace,
                     scrollProxy: proxy
                 )
@@ -230,13 +222,8 @@ extension SearchSheetTextFieldView {
 
 struct SearchSheetTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetTextFieldView(
-            inputQuery: .constant(""),
-            searchIndex: .constant(0),
-            selectedListMode: .constant(.list),
-            selectedCategory: .constant(.all),
-            selectedCategoryFA: .constant(.all)
-        )
-        .environmentObject(AladinAPIManager())
+        SearchSheetTextFieldView()
+            .environmentObject(SearchSheetViewData())
+            .environmentObject(AladinAPIManager())
     }
 }

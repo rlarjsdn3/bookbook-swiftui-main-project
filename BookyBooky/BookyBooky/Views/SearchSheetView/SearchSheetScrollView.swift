@@ -11,6 +11,7 @@ struct SearchSheetScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @EnvironmentObject var searchSheetViewData: SearchSheetViewData
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var isPresentingSearchInfoView = false
@@ -22,21 +23,16 @@ struct SearchSheetScrollView: View {
         GridItem(.flexible())
     ]
     
-    @Binding var inputQuery: String
-    @Binding var searchIndex: Int
-    @Binding var selectedListMode: ListMode
-    @Binding var selectedCategory: Category
-    
     // MARK: - COMPUTED PROPERTIES
     
     var filteredSearchBooks: [briefBookItem.Item] {
         var filtered: [briefBookItem.Item] = []
         
-        if selectedCategory == .all {
+        if searchSheetViewData.selectedCategory == .all {
             return aladinAPIManager.searchResults
         } else {
             for item in aladinAPIManager.searchResults
-                where item.categoryName.refinedCategory == selectedCategory {
+            where item.categoryName.refinedCategory == searchSheetViewData.selectedCategory {
                 filtered.append(item)
             }
         }
@@ -68,19 +64,20 @@ extension SearchSheetScrollView {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 buttonGroup
+                    .id("Scroll_To_Top")
                 
                 seeMoreButton
             }
-            .onChange(of: searchIndex) {
+            .onChange(of: searchSheetViewData.searchIndex) {
                 // 새로운 검색을 시도할 때만 도서 스크롤을 제일 위로 올립니다.
                 // '더 보기' 버튼을 클릭해도 도서 스크롤이 이동하지 않습니다.
-                if searchIndex == 1 {
+                if searchSheetViewData.searchIndex == 1 {
                     withAnimation {
                         scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
                     }
                 }
             }
-            .onChange(of: selectedCategory) {
+            .onChange(of: searchSheetViewData.selectedCategory) {
                 withAnimation {
                     scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }
@@ -91,33 +88,31 @@ extension SearchSheetScrollView {
     
     var buttonGroup: some View {
         Group {
-            switch selectedListMode {
+            switch searchSheetViewData.selectedListMode {
             case .grid:
                 LazyVGrid(columns: coulmns, spacing: 25) {
                     ForEach(filteredSearchBooks, id: \.self) { book in
-                        SearchBookButton(book, mode: selectedListMode)
+                        SearchBookButton(book, mode: searchSheetViewData.selectedListMode)
                     }
                 }
                 .padding()
-                .id("Scroll_To_Top")
             case .list:
                 LazyVStack {
                     ForEach(filteredSearchBooks, id: \.self) { book in
-                        SearchBookButton(book, mode: selectedListMode)
+                        SearchBookButton(book, mode: searchSheetViewData.selectedListMode)
                             .padding(.vertical, 8)
                     }
                 }
-                .id("Scroll_To_Top")
             }
         }
     }
     
     var seeMoreButton: some View {
         Button {
-            searchIndex += 1
+            searchSheetViewData.searchIndex += 1
             aladinAPIManager.requestBookSearchAPI(
-                inputQuery,
-                page: searchIndex
+                searchSheetViewData.inputQuery,
+                page: searchSheetViewData.searchIndex
             )
         } label: {
             Text("더 보기")
@@ -159,12 +154,8 @@ extension SearchSheetScrollView {
 
 struct SearchSheetScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSheetScrollView(
-            inputQuery: .constant(""),
-            searchIndex: .constant(1),
-            selectedListMode: .constant(.list),
-            selectedCategory: .constant(.all)
-        )
-        .environmentObject(AladinAPIManager())
+        SearchSheetScrollView()
+            .environmentObject(SearchSheetViewData())
+            .environmentObject(AladinAPIManager())
     }
 }

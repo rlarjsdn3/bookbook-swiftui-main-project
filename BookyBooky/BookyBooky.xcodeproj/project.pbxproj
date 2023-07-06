@@ -140,6 +140,7 @@
 		9EF659D92A39A269003CF6A5 /* TrackScrollYOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D82A39A269003CF6A5 /* TrackScrollYOffset.swift */; };
 		9EFBE7CF29FFA90800308BAE /* CompleteBookTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFBE7CE29FFA90800308BAE /* CompleteBookTab.swift */; };
 		9EFC059B2A56633F004FCC1E /* BookListViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFC059A2A56633F004FCC1E /* BookListViewData.swift */; };
+		9EFC059D2A56780C004FCC1E /* ShearchSheetViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFC059C2A56780C004FCC1E /* ShearchSheetViewData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -269,6 +270,7 @@
 		9EF659D82A39A269003CF6A5 /* TrackScrollYOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackScrollYOffset.swift; sourceTree = "<group>"; };
 		9EFBE7CE29FFA90800308BAE /* CompleteBookTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteBookTab.swift; sourceTree = "<group>"; };
 		9EFC059A2A56633F004FCC1E /* BookListViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListViewData.swift; sourceTree = "<group>"; };
+		9EFC059C2A56780C004FCC1E /* ShearchSheetViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShearchSheetViewData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -557,6 +559,7 @@
 				9E99485A2A52B5D800EA3490 /* HomeViewData.swift */,
 				9E1F24A12A53C5D80068F412 /* CompleteBookViewData.swift */,
 				9EFC059A2A56633F004FCC1E /* BookListViewData.swift */,
+				9EFC059C2A56780C004FCC1E /* ShearchSheetViewData.swift */,
 			);
 			path = ViewData;
 			sourceTree = "<group>";
@@ -946,6 +949,7 @@
 				9E0EF6F62A0DF78000747847 /* ActivityView.swift in Sources */,
 				9E54AA0C29D7CF6600FE080C /* RoundedRectTLBL.swift in Sources */,
 				9E9B35B52A413945009234ED /* ListMode.swift in Sources */,
+				9EFC059D2A56780C004FCC1E /* ShearchSheetViewData.swift in Sources */,
 				9ED4B5D92A343D0D003BA12C /* TotalPagesCountByCategoryChartView.swift in Sources */,
 				9E06071429DF9847000D542D /* FavoriteBook.swift in Sources */,
 				9ECD921129BF1FA600FCDD2F /* BookyBookyApp.swift in Sources */,

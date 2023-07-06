@@ -9,22 +9,21 @@ import SwiftUI
 
 struct SearchCategoryButton: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var searchSheetViewData: SearchSheetViewData
+    
     // MARK: - PROPERTIES
     
     let type: Category
-    @Binding var selectedCategory: Category
-    @Binding var selectedCategoryForAnimation: Category
     let namespace: Namespace.ID
     let scrollProxy: ScrollViewProxy
     
     // MARK: - INTIALIZER
     
     init(_ type: Category,
-         selectedCategory: Binding<Category>, selectedCategoryForAnimation: Binding<Category>,
          namespace: Namespace.ID, scrollProxy: ScrollViewProxy) {
         self.type = type
-        self._selectedCategory = selectedCategory
-        self._selectedCategoryForAnimation = selectedCategoryForAnimation
         self.namespace = namespace
         self.scrollProxy = scrollProxy
     }
@@ -34,10 +33,10 @@ struct SearchCategoryButton: View {
     var body: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                selectedCategoryForAnimation = type
+                searchSheetViewData.selectedCategoryFA = type
                 scrollProxy.scrollTo(type.rawValue)
             }
-            selectedCategory = type
+            searchSheetViewData.selectedCategory = type
             HapticManager.shared.impact(.light)
         } label: {
             ZStack {
@@ -45,7 +44,7 @@ struct SearchCategoryButton: View {
                     .fill(.gray.opacity(0.1))
                     .frame(height: 30)
                 
-                if selectedCategoryForAnimation == type {
+                if searchSheetViewData.selectedCategoryFA == type {
                     RoundedRectangle(cornerRadius: 15)
                         .fill(.black)
                         .frame(height: 30)
@@ -55,8 +54,8 @@ struct SearchCategoryButton: View {
                 Text(type.name)
                     .font(.headline)
                     .fontWeight(.bold)
-                    .foregroundColor(selectedCategoryForAnimation == type ? .white : .black)
-                    .padding(.horizontal, selectedCategoryForAnimation == type ? 15 : 15)
+                    .foregroundColor(searchSheetViewData.selectedCategoryFA == type ? .white : .black)
+                    .padding(.horizontal, 15)
             }
         }
         .padding(.horizontal, 15)
@@ -72,11 +71,10 @@ struct CategoryButtonView_Previews: PreviewProvider {
         ScrollViewReader { proxy in
             SearchCategoryButton(
                 .all,
-                selectedCategory: .constant(.all),
-                selectedCategoryForAnimation: .constant(.all),
                 namespace: namespace,
                 scrollProxy: proxy
             )
+            .environmentObject(SearchSheetViewData())
         }
     }
 }
