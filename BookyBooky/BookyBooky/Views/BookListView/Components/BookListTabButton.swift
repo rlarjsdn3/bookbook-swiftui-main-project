@@ -9,24 +9,22 @@ import SwiftUI
 
 struct BookListTabButton: View {
     
+    // MARKL - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var bookListViewData: BookListViewData
+    
     // MARK: - PROPERTIES
     
     let type: BookListTab
-    @Binding var selectedListTab: BookListTab
-    @Binding var selectedListTabFA: BookListTab
     let scrollProxy: ScrollViewProxy
     let namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
     init(_ type: BookListTab,
-         selectedListTab: Binding<BookListTab>,
-         selectedListTabFA: Binding<BookListTab>,
          scrollProxy: ScrollViewProxy,
          namespace: Namespace.ID) {
         self.type = type
-        self._selectedListTab = selectedListTab
-        self._selectedListTabFA = selectedListTabFA
         self.scrollProxy = scrollProxy
         self.namespace = namespace
     }
@@ -39,11 +37,12 @@ struct BookListTabButton: View {
     
     func selectTab() {
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-            selectedListTabFA = type
+            bookListViewData.selectedListTabFA = type
             scrollProxy.scrollTo(type.rawValue)
             scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
         }
-        selectedListTab = type
+        bookListViewData.selectedListTab = type
+        print(bookListViewData.selectedListTab)
     }
 }
 
@@ -59,7 +58,7 @@ extension BookListTabButton {
         .padding(.vertical, 10)
         .padding([.horizontal, .bottom], 5)
         .overlay(alignment: .bottom) {
-            if selectedListTabFA == type {
+            if bookListViewData.selectedListTabFA == type {
                 RoundedRectangle(cornerRadius: 5)
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
@@ -72,7 +71,7 @@ extension BookListTabButton {
         Text(type.name)
             .font(.headline)
             .fontWeight(.bold)
-            .foregroundColor(selectedListTab == type ? .black : .gray)
+            .foregroundColor(bookListViewData.selectedListTab == type ? .black : .gray)
     }
 }
 
@@ -85,11 +84,10 @@ struct SearchTabButton_Previews: PreviewProvider {
         ScrollViewReader { proxy in
             BookListTabButton(
                 .bestSeller,
-                selectedListTab: .constant(.bestSeller),
-                selectedListTabFA: .constant(.bestSeller),
                 scrollProxy: proxy,
                 namespace: namespace
             )
+            .environmentObject(BookListViewData())
         }
     }
 }

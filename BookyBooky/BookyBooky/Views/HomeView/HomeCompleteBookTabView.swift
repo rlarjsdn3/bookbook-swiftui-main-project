@@ -171,8 +171,6 @@ extension HomeCompleteBookTabView {
                 category: homeViewData.selectedCategory
             )
             
-            // TODO: - 읽고 있는 도서 리스트를 '격자 모드' 혹은 '리스트 모드'로 보게 만들기 (버전 1.1)
-            
             LazyVGrid(columns: columns, spacing: 25) {
                 ForEach(filterReadingBooks) { readingBook in
                     CompleteBookButton(readingBook, type: .home)

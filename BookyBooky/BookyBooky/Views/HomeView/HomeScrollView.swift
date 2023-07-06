@@ -48,14 +48,14 @@ struct HomeScrollView: View {
 
 extension HomeScrollView {
     var homeScrollContent: some View {
-        ScrollViewReader { scrollProxy in
+        ScrollViewReader { proxy in
             TrackableVerticalScrollView(yOffset: $homeViewData.scrollYOffset) {
                 VStack {
                     navigationTopBarTitle
                     
                     HomeActivityTabView()
                     
-                    HomeCompleteBookTabView(scrollProxy: scrollProxy)
+                    HomeCompleteBookTabView(scrollProxy: proxy)
                 }
             }
             .scrollIndicators(.hidden)

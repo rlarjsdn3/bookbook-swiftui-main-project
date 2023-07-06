@@ -10,20 +10,10 @@ import SwiftUI
 struct BookListTopTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
-    
-    @State private var selectedListTabFA = BookListTab.bestSeller
-    
-    @Binding var scrollYOffset: CGFloat
-    @Binding var selectedListTab: BookListTab
 
+    @EnvironmentObject var bookListViewData: BookListViewData
+    
     @Namespace var namespace: Namespace.ID
-    
-    // MARK: - INTIALIZER
-    
-    init(scrollYOffset: Binding<CGFloat>, selectedListTab: Binding<BookListTab>) {
-        self._scrollYOffset = scrollYOffset
-        self._selectedListTab = selectedListTab
-    }
     
     // MARK: - BODY
     
@@ -36,15 +26,13 @@ struct BookListTopTabView: View {
 
 extension BookListTopTabView {
     var tabButtonGroup: some View {
-        ScrollViewReader { scrollProxy in
+        ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(BookListTab.allCases, id: \.self) { type in
                         BookListTabButton(
                             type,
-                            selectedListTab: $selectedListTab,
-                            selectedListTabFA: $selectedListTabFA,
-                            scrollProxy: scrollProxy,
+                            scrollProxy: proxy,
                             namespace: namespace
                         )
                         .id(type.rawValue)
@@ -55,7 +43,7 @@ extension BookListTopTabView {
                 .padding(.trailing, 8)
                 .overlay(alignment: .bottom) {
                     Divider()
-                        .opacity(scrollYOffset > 20.0 ? 1 : 0)
+                        .opacity(bookListViewData.scrollYOffset > 20.0 ? 1 : 0)
                 }
             }
         }
@@ -66,9 +54,7 @@ extension BookListTopTabView {
 
 struct SearchListTopTabView_Previews: PreviewProvider {
     static var previews: some View {
-        BookListTopTabView(
-            scrollYOffset: .constant(0.0),
-            selectedListTab: .constant(.itemNewAll)
-        )
+        BookListTopTabView()
+            .environmentObject(BookListViewData())
     }
 }

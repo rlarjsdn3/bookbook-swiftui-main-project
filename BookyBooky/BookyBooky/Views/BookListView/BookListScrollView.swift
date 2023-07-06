@@ -12,9 +12,8 @@ struct BookListScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @EnvironmentObject var bookListViewData: BookListViewData
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
-    
-    @State private var startOffset: CGFloat = 0.0
     
     // MARK: - PROPERTIES
     
@@ -23,20 +22,10 @@ struct BookListScrollView: View {
         GridItem(.flexible())
     ]
     
-    @Binding var scrollYOffset: CGFloat
-    @Binding var selectedBookListTab: BookListTab
-    
-    // MARK: - INTALIZER
-    
-    init(scrollYOffset: Binding<CGFloat>, selectedListType: Binding<BookListTab>) {
-        self._scrollYOffset = scrollYOffset
-        self._selectedBookListTab = selectedListType
-    }
-    
     // MARK: - COMPUTED PROPERTIES
     
     var bookList: [briefBookItem.Item] {
-        switch selectedBookListTab {
+        switch bookListViewData.selectedListTab {
         case .bestSeller:
             return aladinAPIManager.bestSeller
         case .itemNewAll:
@@ -52,14 +41,7 @@ struct BookListScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        Group {
-            if bookList.isEmpty {
-                networkErrorLabel
-            } else {
-                bookScrollContent
-            }
-        }
-        .background(Color(.background))
+        bookScrollContent
     }
 }
 
@@ -67,19 +49,28 @@ struct BookListScrollView: View {
 
 extension BookListScrollView {
     var bookScrollContent: some View {
-        ScrollViewReader { scrollProxy in
-            ScrollView(showsIndicators: false) {
-                bookButtonGroup
+        Group {
+            if bookList.isEmpty {
+                errorLabel
+            } else {
+                bookScroll
             }
-            .onChange(of: selectedBookListTab) {
+        }
+        .background(Color(.background))
+    }
+    
+    var bookScroll: some View {
+        ScrollViewReader { proxy in
+            TrackableVerticalScrollView(yOffset: $bookListViewData.scrollYOffset) {
+                bookButtonGroup
+                    .id("Scroll_To_Top")
+            }
+            .onChange(of: bookListViewData.selectedListTab, initial: true) {
                 withAnimation {
-                    scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
+                    proxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }
             }
-            .safeAreaPadding(.top, 20)
-            .safeAreaPadding(.horizontal)
-            .safeAreaPadding(.bottom, 40)
-            .id("Scroll_To_Top")
+            .scrollIndicators(.hidden)
         }
     }
     
@@ -89,10 +80,12 @@ extension BookListScrollView {
                 BookListBookButton(item)
             }
         }
-        .trackScrollYOffet($startOffset, yOffset: $scrollYOffset)
+        .safeAreaPadding(.top, 20)
+        .safeAreaPadding(.horizontal)
+        .safeAreaPadding(.bottom, 40)
     }
     
-    var networkErrorLabel: some View {
+    var errorLabel: some View {
         VStack {
             ErrorLabel
             
@@ -130,10 +123,8 @@ extension BookListScrollView {
 
 struct SearchListScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        BookListScrollView(
-            scrollYOffset: .constant(0.0),
-            selectedListType: .constant(.bestSeller)
-        )
-        .environmentObject(AladinAPIManager())
+        BookListScrollView()
+            .environmentObject(BookListViewData())
+            .environmentObject(AladinAPIManager())
     }
 }

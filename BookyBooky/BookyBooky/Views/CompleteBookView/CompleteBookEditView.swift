@@ -35,6 +35,12 @@ struct CompleteBookEditView: View {
     
     var body: some View {
         editBookContent
+            .onAppear {
+                inputTitle = completeBook.title
+                inputPublisher = completeBook.publisher
+                inputCategory = completeBook.category
+                inputTargetDate = completeBook.targetDate
+            }
     }
 }
 
@@ -47,12 +53,6 @@ extension CompleteBookEditView {
                 inputFieldGroup
                 
                 editButton
-            }
-            .onAppear {
-                inputTitle = completeBook.title
-                inputPublisher = completeBook.publisher
-                inputCategory = completeBook.category
-                inputTargetDate = completeBook.targetDate
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

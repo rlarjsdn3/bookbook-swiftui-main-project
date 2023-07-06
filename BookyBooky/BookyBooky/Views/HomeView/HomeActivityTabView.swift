@@ -26,7 +26,7 @@ struct HomeActivityTabView: View {
                 //       - 이로 인해, 콘텐츠 스크롤 시, 좌표 값이 변화됨에 따른 잦은 화면 갱신으로 인한 프레임 저하가 있었습니다.
                 //       - 이제는 HomeViewData 내에 활동 데이터를 저장하는 방식으로 변경하였습니다.
                 //       - 덕분에, 콘텐츠 스크롤 시, 화면 갱신에 따른 활동 데이터를 불러오는 함수를 호출할 필요가 없어져서
-                //       - 성능을 개선시켰습니다. 이제는 화면이 나타날 때 한번만 호출됩니다.
+                //       - 성능을 개선시켰습니다. 이제는 화면이 나타날 때 한번만 호출됩니다. (2023. 7. 5)
                 
                 homeViewData.getActivityData(compBooks)
                 
@@ -39,13 +39,13 @@ struct HomeActivityTabView: View {
 extension HomeActivityTabView {
     var activityTab: some View {
         VStack(spacing: 10) {
-            activityTabTitle
+            tabTitle
             
-            activityTabContent
+            tabContent
         }
     }
     
-    var activityTabTitle: some View {
+    var tabTitle: some View {
         HStack {
             headlineText
             
@@ -70,7 +70,7 @@ extension HomeActivityTabView {
         .disabled(compBooks.isEmpty)
     }
     
-    var activityTabContent: some View {
+    var tabContent: some View {
         VStack(spacing: 5) {
             // NOTE: - 최근 활동 기록을 불러오는 중 시간 복잡도가 O(n2)이라 스크롤 시 프레임이 끊김.
             //      - 매 스크롤 시, yOffset을 새로 가져오는 과정에서 화면이 새로 렌더링되기 때문... 
