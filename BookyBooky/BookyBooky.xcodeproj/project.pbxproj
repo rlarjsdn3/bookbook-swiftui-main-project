@@ -100,6 +100,7 @@
 		9EB995142A56D77E005CD964 /* BookShelfBookListViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB995132A56D77E005CD964 /* BookShelfBookListViewData.swift */; };
 		9EB995162A56D977005CD964 /* BookShelfSentenceListViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB995152A56D977005CD964 /* BookShelfSentenceListViewData.swift */; };
 		9EB995182A56DB71005CD964 /* AnalysisViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB995172A56DB71005CD964 /* AnalysisViewData.swift */; };
+		9EB9951A2A56E2B0005CD964 /* MailComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB995192A56E2B0005CD964 /* MailComposeView.swift */; };
 		9EC71F892A15D3A30056C11C /* ActivityTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F882A15D3A30056C11C /* ActivityTopBarView.swift */; };
 		9EC71F8B2A15D50F0056C11C /* ActivityScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F8A2A15D50F0056C11C /* ActivityScrollView.swift */; };
 		9EC71F8D2A15DEEE0056C11C /* MonthlyReadingActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F8C2A15DEEE0056C11C /* MonthlyReadingActivity.swift */; };
@@ -238,6 +239,7 @@
 		9EB995132A56D77E005CD964 /* BookShelfBookListViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfBookListViewData.swift; sourceTree = "<group>"; };
 		9EB995152A56D977005CD964 /* BookShelfSentenceListViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSentenceListViewData.swift; sourceTree = "<group>"; };
 		9EB995172A56DB71005CD964 /* AnalysisViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewData.swift; sourceTree = "<group>"; };
+		9EB995192A56E2B0005CD964 /* MailComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposeView.swift; sourceTree = "<group>"; };
 		9EC71F882A15D3A30056C11C /* ActivityTopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTopBarView.swift; sourceTree = "<group>"; };
 		9EC71F8A2A15D50F0056C11C /* ActivityScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScrollView.swift; sourceTree = "<group>"; };
 		9EC71F8C2A15DEEE0056C11C /* MonthlyReadingActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyReadingActivity.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				9E061D6029FAA8890042E3B1 /* ProfileView.swift */,
+				9EB995192A56E2B0005CD964 /* MailComposeView.swift */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";
@@ -885,6 +888,7 @@
 				9E0434BA29E53CA0009A2161 /* Record.swift in Sources */,
 				9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */,
 				9E0434A629E19C48009A2161 /* ShelfFavBookButton.swift in Sources */,
+				9EB9951A2A56E2B0005CD964 /* MailComposeView.swift in Sources */,
 				9E0C0A7329D28C0300F1F5F6 /* AladinAPI.swift in Sources */,
 				9E24DD302A14F8B400366640 /* HomeActivityTabView.swift in Sources */,
 				9EB995142A56D77E005CD964 /* BookShelfBookListViewData.swift in Sources */,
