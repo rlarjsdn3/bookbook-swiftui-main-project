@@ -12,18 +12,17 @@ struct BookShelfSentenceScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var completeBooks
+    @EnvironmentObject var bookShelfSentenceListViewData: BookShelfSentenceListViewData
     
-    @Binding var searchQuery: String
-    @Binding var selectedSort: BookSortCriteria
+    @ObservedResults(CompleteBook.self) var completeBooks
     
     // MARK: - COMPUTED PROPERTIES
     
     var filteredCompBooks: [CompleteBook] {
         completeBooks.getFilteredReadingBooks(
             .all,
-            searchQuery: searchQuery,
-            bookSortType: selectedSort
+            searchQuery: bookShelfSentenceListViewData.searchQuery,
+            bookSortType: bookShelfSentenceListViewData.selectedSort
         )
     }
 
@@ -106,9 +105,7 @@ extension BookShelfSentenceScrollView {
 
 struct BookShelfSentenceListView_Previews: PreviewProvider {
     static var previews: some View {
-        BookShelfSentenceScrollView(
-            searchQuery: .constant(""),
-            selectedSort: .constant(.titleAscendingOrder)
-        )
+        BookShelfSentenceScrollView()
+            .environmentObject(BookShelfSentenceListViewData())
     }
 }

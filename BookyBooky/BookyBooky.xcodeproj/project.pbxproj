@@ -97,6 +97,8 @@
 		9EB1360B2A30D6500081832D /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB1360A2A30D6500081832D /* Shimmer */; };
 		9EB1360E2A30D65B0081832D /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB1360D2A30D65B0081832D /* AlertToast */; };
 		9EB749FA29D5C43200610D97 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB749F629D5C3A500610D97 /* Category.swift */; };
+		9EB995142A56D77E005CD964 /* BookShelfBookListViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB995132A56D77E005CD964 /* BookShelfBookListViewData.swift */; };
+		9EB995162A56D977005CD964 /* BookShelfSentenceListViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB995152A56D977005CD964 /* BookShelfSentenceListViewData.swift */; };
 		9EC71F892A15D3A30056C11C /* ActivityTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F882A15D3A30056C11C /* ActivityTopBarView.swift */; };
 		9EC71F8B2A15D50F0056C11C /* ActivityScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F8A2A15D50F0056C11C /* ActivityScrollView.swift */; };
 		9EC71F8D2A15DEEE0056C11C /* MonthlyReadingActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC71F8C2A15DEEE0056C11C /* MonthlyReadingActivity.swift */; };
@@ -232,6 +234,8 @@
 		9EA1983B2A01F18300D385CD /* CompleteBookView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteBookView.swift; sourceTree = "<group>"; };
 		9EA1983C2A01F18300D385CD /* CompleteBookTopBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteBookTopBarView.swift; sourceTree = "<group>"; };
 		9EB749F629D5C3A500610D97 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		9EB995132A56D77E005CD964 /* BookShelfBookListViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfBookListViewData.swift; sourceTree = "<group>"; };
+		9EB995152A56D977005CD964 /* BookShelfSentenceListViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSentenceListViewData.swift; sourceTree = "<group>"; };
 		9EC71F882A15D3A30056C11C /* ActivityTopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTopBarView.swift; sourceTree = "<group>"; };
 		9EC71F8A2A15D50F0056C11C /* ActivityScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScrollView.swift; sourceTree = "<group>"; };
 		9EC71F8C2A15DEEE0056C11C /* MonthlyReadingActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyReadingActivity.swift; sourceTree = "<group>"; };
@@ -569,6 +573,8 @@
 				9E154A2D2A56B68A00B09A3A /* SearchBookViewData.swift */,
 				9E154A2F2A56B9E700B09A3A /* AddCompleteBookViewData.swift */,
 				9E154A312A56CC1A00B09A3A /* BookShelfViewData.swift */,
+				9EB995132A56D77E005CD964 /* BookShelfBookListViewData.swift */,
+				9EB995152A56D977005CD964 /* BookShelfSentenceListViewData.swift */,
 			);
 			path = ViewData;
 			sourceTree = "<group>";
@@ -878,6 +884,7 @@
 				9E0434A629E19C48009A2161 /* ShelfFavBookButton.swift in Sources */,
 				9E0C0A7329D28C0300F1F5F6 /* AladinAPI.swift in Sources */,
 				9E24DD302A14F8B400366640 /* HomeActivityTabView.swift in Sources */,
+				9EB995142A56D77E005CD964 /* BookShelfBookListViewData.swift in Sources */,
 				9EDEEF852A02963D0036FB1A /* CompleteBookSentenceView.swift in Sources */,
 				9E7BFC7929F0F24F00D72648 /* AnalysisView.swift in Sources */,
 				9EC71F912A1715690056C11C /* CompleteBookTabButton.swift in Sources */,
@@ -916,6 +923,7 @@
 				9EF659D72A398191003CF6A5 /* AnalysisHighlightTabView.swift in Sources */,
 				9EB749FA29D5C43200610D97 /* Category.swift in Sources */,
 				9E0434AB29E28097009A2161 /* BookSortCriteria.swift in Sources */,
+				9EB995162A56D977005CD964 /* BookShelfSentenceListViewData.swift in Sources */,
 				9EE01FF12A020FAA00584F39 /* CompleteBookOutlineView.swift in Sources */,
 				9ED116C129ED04330072BA41 /* AddCompleteBookButtonGroupView.swift in Sources */,
 				9EC71F942A174A410056C11C /* BottomButtonStyle.swift in Sources */,

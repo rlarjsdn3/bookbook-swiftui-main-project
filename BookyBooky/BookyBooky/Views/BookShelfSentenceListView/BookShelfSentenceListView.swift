@@ -11,31 +11,19 @@ struct BookShelfSentenceListView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var inputQuery = ""
-    @State private var searchQuery = ""
-    @State private var selectedSort: BookSortCriteria = .titleAscendingOrder
-    
-    @State var isPresentingShowAllButton = false
+    @StateObject var bookShelfSentenceListViewData = BookShelfSentenceListViewData()
     
     // MARK: - BODY
     
     var body: some View {
         NavigationStack {
-            ScrollViewReader { scrollProxy in
+            ScrollViewReader { proxy in
                 VStack(spacing: 0) {
-                    BookShelfSentenceListTextFieldView(
-                        inputQuery: $inputQuery,
-                        searchQuery: $searchQuery,
-                        selectedSort: $selectedSort,
-                        isPresentingShowAllButton: $isPresentingShowAllButton,
-                        scrollProxy: scrollProxy
-                    )
+                    BookShelfSentenceListTextFieldView(scrollProxy: proxy)
                     
-                    BookShelfSentenceScrollView(
-                        searchQuery: $searchQuery,
-                        selectedSort: $selectedSort
-                    )
+                    BookShelfSentenceScrollView()
                 }
+                .environmentObject(bookShelfSentenceListViewData)
             }
             .overlay(alignment: .bottom) {
                 seeAllButton
@@ -50,14 +38,14 @@ extension BookShelfSentenceListView {
     var seeAllButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                inputQuery.removeAll()
-                searchQuery.removeAll()
-                isPresentingShowAllButton = false
+                bookShelfSentenceListViewData.inputQuery.removeAll()
+                bookShelfSentenceListViewData.searchQuery.removeAll()
+                bookShelfSentenceListViewData.isPresentingShowAllButton = false
             }
         } label: {
             seeAllText
         }
-        .offset(y: isPresentingShowAllButton ? -20 : 200)
+        .offset(y: bookShelfSentenceListViewData.isPresentingShowAllButton ? -20 : 200)
     }
     
     var seeAllText: some View {

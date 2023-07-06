@@ -13,6 +13,7 @@ struct BookShelfBookScrollView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmMananger: RealmManager
+    @EnvironmentObject var bookShelfBookListViewData: BookShelfBookListViewData
     
     @ObservedResults(CompleteBook.self) var compBooks
     @ObservedResults(FavoriteBook.self) var favBooks
@@ -22,14 +23,14 @@ struct BookShelfBookScrollView: View {
     var filteredCompBooks: [CompleteBook] {
         compBooks.getFilteredReadingBooks(
             .complete,
-            searchQuery: searchQuery, bookSortType: selectedBookSort
+            searchQuery: bookShelfBookListViewData.searchQuery, bookSortType: bookShelfBookListViewData.selectedSort
         )
     }
     
     var filteredFavBooks: [FavoriteBook] {
         favBooks.getFilteredFavoriteBooks(
-            searchQuery: searchQuery,
-            bookSortType: selectedBookSort
+            searchQuery: bookShelfBookListViewData.searchQuery,
+            bookSortType: bookShelfBookListViewData.selectedSort
         )
     }
     
@@ -40,17 +41,11 @@ struct BookShelfBookScrollView: View {
         GridItem(.flexible())
     ]
     
-    @Binding var searchQuery: String
-    @Binding var selectedBookSort: BookSortCriteria
     let type: ListType.BookShelfList
     
     // MARK: - INITIALIZER
     
-    init(searchQuery: Binding<String>,
-         selectedSort: Binding<BookSortCriteria>,
-         type: ListType.BookShelfList) {
-        self._searchQuery = searchQuery
-        self._selectedBookSort = selectedSort
+    init(type: ListType.BookShelfList) {
         self.type = type
     }
     
@@ -124,11 +119,8 @@ extension BookShelfBookScrollView {
 
 struct FavoriteBooksScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        BookShelfBookScrollView(
-            searchQuery: .constant(""),
-            selectedSort: .constant(.titleAscendingOrder),
-            type: .favorite
-        )
-        .environmentObject(RealmManager())
+        BookShelfBookScrollView(type: .favorite)
+            .environmentObject(RealmManager())
+            .environmentObject(BookShelfBookListViewData())
     }
 }

@@ -13,11 +13,7 @@ struct BookShelfListView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var inputQuery = ""
-    @State private var searchQuery = ""
-    @State private var selectedSort: BookSortCriteria = .titleAscendingOrder
-    
-    @State var isPresentingShowAllButton = false
+    @StateObject var bookShelfBookListViewData = BookShelfBookListViewData()
     
     // MARK: - PROPERTIES
     
@@ -33,25 +29,16 @@ struct BookShelfListView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollViewReader { scrollProxy in
+            ScrollViewReader { proxy in
                 VStack(spacing: 0) {
-                    BookShelfBookListTextFieldView(
-                        inputQuery: $inputQuery,
-                        searchQuery: $searchQuery,
-                        selectedSort: $selectedSort,
-                        isPresentingShowAllButton: $isPresentingShowAllButton,
-                        scrollProxy: scrollProxy
-                    )
+                    BookShelfBookListTextFieldView(scrollProxy: proxy)
                     
-                    BookShelfBookScrollView(
-                        searchQuery: $searchQuery,
-                        selectedSort: $selectedSort,
-                        type: type
-                    )
+                    BookShelfBookScrollView(type: type)
                 }
                 .overlay(alignment: .bottom) {
                     seeAllButton
                 }
+                .environmentObject(bookShelfBookListViewData)
             }
         }
         .presentationCornerRadius(30)
@@ -64,14 +51,14 @@ extension BookShelfListView {
     var seeAllButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                inputQuery.removeAll()
-                searchQuery.removeAll()
-                isPresentingShowAllButton = false
+                bookShelfBookListViewData.inputQuery.removeAll()
+                bookShelfBookListViewData.searchQuery.removeAll()
+                bookShelfBookListViewData.isPresentingShowAllButton = false
             }
         } label: {
             seeAllText
         }
-        .offset(y: isPresentingShowAllButton ? -20 : 200)
+        .offset(y: bookShelfBookListViewData.isPresentingShowAllButton ? -20 : 200)
     }
     
     var seeAllText: some View {

@@ -13,6 +13,7 @@ struct BookShelfSentenceListTextFieldView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var bookShelfSentenceListViewData: BookShelfSentenceListViewData
     
     @State private var isPresentingBookShelfSentenceFilterSheetView = false
     
@@ -20,23 +21,11 @@ struct BookShelfSentenceListTextFieldView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var inputQuery: String
-    @Binding var searchQuery: String
-    @Binding var selectedSort: BookSortCriteria
-    @Binding var isPresentingShowAllButton: Bool
     let scrollProxy: ScrollViewProxy
     
     // MARK: - INTALIZER
     
-    init(inputQuery: Binding<String>,
-         searchQuery: Binding<String>,
-         selectedSort: Binding<BookSortCriteria>,
-         isPresentingShowAllButton: Binding<Bool>,
-         scrollProxy: ScrollViewProxy) {
-        self._inputQuery = inputQuery
-        self._searchQuery = searchQuery
-        self._selectedSort = selectedSort
-        self._isPresentingShowAllButton = isPresentingShowAllButton
+    init(scrollProxy: ScrollViewProxy) {
         self.scrollProxy = scrollProxy
     }
     
@@ -84,14 +73,14 @@ extension BookShelfSentenceListTextFieldView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                            selectedSort = sort
+                            bookShelfSentenceListViewData.selectedSort = sort
                         }
                         HapticManager.shared.impact(.rigid)
                     }
                 }
             } label: {
                 Text(sort.name)
-                if selectedSort == sort {
+                if bookShelfSentenceListViewData.selectedSort == sort {
                     Text("적용됨")
                 }
             }
@@ -119,7 +108,7 @@ extension BookShelfSentenceListTextFieldView {
             
             textField
             
-            if !inputQuery.isEmpty {
+            if !bookShelfSentenceListViewData.inputQuery.isEmpty {
                 eraseButton
             }
         }
@@ -134,7 +123,7 @@ extension BookShelfSentenceListTextFieldView {
     }
     
     var textField: some View {
-        TextField("제목 / 저자 검색", text: $inputQuery)
+        TextField("제목 / 저자 검색", text: $bookShelfSentenceListViewData.inputQuery)
             .frame(height: 45)
             .submitLabel(.search)
             .onSubmit {
@@ -145,11 +134,11 @@ extension BookShelfSentenceListTextFieldView {
                     // 0.3초 대기 후, 정렬 애니메이션 수행
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
-                            searchQuery = inputQuery
-                            if inputQuery.isEmpty {
-                                isPresentingShowAllButton = false
+                            bookShelfSentenceListViewData.searchQuery = bookShelfSentenceListViewData.inputQuery
+                            if bookShelfSentenceListViewData.inputQuery.isEmpty {
+                                bookShelfSentenceListViewData.isPresentingShowAllButton = false
                             } else {
-                                isPresentingShowAllButton = true
+                                bookShelfSentenceListViewData.isPresentingShowAllButton = true
                             }
                         }
                         HapticManager.shared.impact(.rigid)
@@ -162,10 +151,10 @@ extension BookShelfSentenceListTextFieldView {
     var eraseButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                inputQuery.removeAll()
-                searchQuery.removeAll()
+                bookShelfSentenceListViewData.inputQuery.removeAll()
+                bookShelfSentenceListViewData.searchQuery.removeAll()
+                bookShelfSentenceListViewData.isPresentingShowAllButton = false
                 focusedField = true
-                isPresentingShowAllButton = false
             }
         } label: {
             xmarkCircleSFSymbolsImage
@@ -201,14 +190,9 @@ extension BookShelfSentenceListTextFieldView {
 
 struct BookShelfSentenceTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
-        ScrollViewReader { scrollProxy in
-            BookShelfSentenceListTextFieldView(
-                inputQuery: .constant(""),
-                searchQuery: .constant(""),
-                selectedSort: .constant(.titleAscendingOrder),
-                isPresentingShowAllButton: .constant(false),
-                scrollProxy: scrollProxy
-            )
+        ScrollViewReader { proxy in
+            BookShelfSentenceListTextFieldView(scrollProxy: proxy)
+                .environmentObject(BookShelfSentenceListViewData())
         }
     }
 }
