@@ -86,7 +86,7 @@ extension CompleteBookTopInfoView {
     
     var exclamationMarkSFSymbolImage: some View {
         Group {
-            if completeBook.isBehindTargetDate {
+            if completeBook.isBehindTargetDate && !completeBook.isComplete {
                 Image(systemName: "exclamationmark.circle.fill")
                     .font(.system(size: 50))
                     .foregroundColor(Color.red)

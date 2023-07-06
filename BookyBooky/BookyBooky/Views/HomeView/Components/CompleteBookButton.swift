@@ -51,7 +51,7 @@ extension CompleteBookButton {
                 coverShape: RoundedRect()
             )
             .overlay {
-                if completeBook.isBehindTargetDate {
+                if completeBook.isBehindTargetDate && !completeBook.isComplete {
                     exclamationMarkSFSymbolImage
                 }
             }

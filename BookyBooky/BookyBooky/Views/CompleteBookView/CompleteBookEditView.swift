@@ -75,7 +75,9 @@ extension CompleteBookEditView {
             
             categoryField
             
-            targetDateField
+            if !completeBook.isComplete {
+                targetDateField
+            }
             
             Spacer()
         }

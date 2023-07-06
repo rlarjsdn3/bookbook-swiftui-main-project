@@ -36,6 +36,8 @@ class AladinAPIManager: ObservableObject {
     
     @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
     
+    //
+    
     // MARK: - FUNCTIONS
     
     /// 도서 목록 속의 카테고리 정보를 모아 categories 변수에 결과값을 저장하는 함수입니다.
@@ -160,7 +162,7 @@ class AladinAPIManager: ObservableObject {
             case .success(let results):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
-                    DispatchQueue.main.async { [self] in
+//                    DispatchQueue.main.async { [weak self] in
                         // 다른 도서를 새로 검색한다면 검색 결과 초기화하기
                         if index == 1 {
                             self.searchResults.removeAll()
@@ -168,9 +170,9 @@ class AladinAPIManager: ObservableObject {
                         // 도서 검색 결과 및 카테고리 목록이 자연스럽게 나타나도록 함
                         withAnimation(.easeInOut(duration: 0.1)) {
                             self.searchResults.append(contentsOf: results.item)
-                            self.getCategory(bookItems: searchResults) // 리팩토링 예정
+//                            self.getCategory(bookItems: searchResults) // 리팩토링 예정
                         }
-                    }
+//                    }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         self.isPresentingSearchLoadingToastAlert = false

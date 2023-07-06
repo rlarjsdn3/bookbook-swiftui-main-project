@@ -140,7 +140,7 @@ extension HomeTopBarView {
     var utilMenu: some View {
         Menu {
             Section {
-                sortButtons
+                sortButtonGroup
             } header: {
                 Text("도서 정렬")
             }
@@ -152,7 +152,7 @@ extension HomeTopBarView {
         .navigationBarItemStyle()
     }
     
-    var sortButtons: some View {
+    var sortButtonGroup: some View {
         ForEach(BookSortCriteria.allCases, id: \.self) { sort in
             Button {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -162,11 +162,9 @@ extension HomeTopBarView {
                     HapticManager.shared.impact(.rigid)
                 }
             } label: {
-                HStack {
-                    Text(sort.name)
-                    if homeViewData.selectedBookSort == sort {
-                        Text("적용됨")
-                    }
+                Text(sort.name)
+                if homeViewData.selectedBookSort == sort {
+                    Text("적용됨")
                 }
             }
         }

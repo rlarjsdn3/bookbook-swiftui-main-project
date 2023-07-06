@@ -66,14 +66,6 @@ extension BookShelfSentenceListTextFieldView {
         Menu {
             Section {
                 sortButtonGroup
-                
-                Divider()
-                
-                Button {
-                    isPresentingBookShelfSentenceFilterSheetView = true
-                } label: {
-                    Label("도서 필터링", systemImage: "line.3.horizontal.decrease.circle")
-                }
             } header: {
                 Text("도서 정렬")
             }
@@ -98,12 +90,9 @@ extension BookShelfSentenceListTextFieldView {
                     }
                 }
             } label: {
-                HStack {
-                    Text(sort.name)
-                    // 현재 선택한 정렬 타입에 체크마크 표시
-                    if selectedSort == sort {
-                        checkMarkSFSymbolImage
-                    }
+                Text(sort.name)
+                if selectedSort == sort {
+                    Text("적용됨")
                 }
             }
         }
