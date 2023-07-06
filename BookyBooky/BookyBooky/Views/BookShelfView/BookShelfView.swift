@@ -12,7 +12,7 @@ struct BookShelfView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var scrollYOffset: CGFloat = 0.0
+    @StateObject var bookShelfViewData = BookShelfViewData()
     
     // MARK: - BODY
     
@@ -21,8 +21,9 @@ struct BookShelfView: View {
             VStack(spacing: 0) {
                 BookShelfTopBarView()
                 
-                BookShelfScrollView($scrollYOffset)
+                BookShelfScrollView()
             }
+            .environmentObject(bookShelfViewData)
         }
     }
 }

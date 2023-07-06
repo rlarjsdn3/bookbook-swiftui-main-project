@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddReadingBookTopBarView: View {
+struct AddCompleteBookTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -32,7 +32,7 @@ struct AddReadingBookTopBarView: View {
 
 // MARK: - EXTENSIONS
 
-extension AddReadingBookTopBarView {
+extension AddCompleteBookTopBarView {
     var navigationTopBar: some View {
         HStack {
             backButton
@@ -58,6 +58,6 @@ extension AddReadingBookTopBarView {
 
 struct BookAddHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        AddReadingBookTopBarView(title: "자바의 정석")
+        AddCompleteBookTopBarView(title: "자바의 정석")
     }
 }

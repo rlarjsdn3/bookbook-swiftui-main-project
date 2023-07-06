@@ -98,7 +98,7 @@ extension SearchBookButtonGroupView {
         Group {
             if !isExist() {
                 NavigationLink {
-                    AddReadingBookView(bookItem)
+                    AddCompleteBookView(bookItem)
                 } label: {
                     Text("추가하기")
                 }

@@ -8,13 +8,14 @@
 import SwiftUI
 import AlertToast
 
-struct AddReadingBookView: View {
+struct AddCompleteBookView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var selectedDate = Date(timeIntervalSinceNow: 7 * 86_400)
+    @StateObject var addCompleteBookViewData =  AddCompleteBookViewData()
+    
     @State private var isPresentingDateDescSheet = false
     @State private var isPresentingDatePickerSheet = false
     
@@ -32,30 +33,25 @@ struct AddReadingBookView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            AddReadingBookTopBarView(title: bookItem.bookTitle)
+            AddCompleteBookTopBarView(title: bookItem.bookTitle)
             
             Spacer()
             
-            AddReadingBookCenterView(
-                bookItem,
-                selectedDate: $selectedDate
-            )
+            AddCompleteBookCenterView(bookItem)
         
             Spacer()
             
-            AddReadingBookButtonGroupView(
-                bookItem,
-                selectedDate: $selectedDate
-            )
+            AddCompleteBookButtonGroupView(bookItem)
         }
         .background(linearGrayGradient)
         .navigationBarBackButtonHidden()
+        .environmentObject(addCompleteBookViewData)
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension AddReadingBookView {
+extension AddCompleteBookView {
     var linearGrayGradient: some View {
         LinearGradient(
             colors: [.gray.opacity(0.4), .gray.opacity(0.01)],
@@ -70,6 +66,6 @@ extension AddReadingBookView {
 
 struct BookAddView_Previews: PreviewProvider {
     static var previews: some View {
-        AddReadingBookView(detailBookItem.Item.preview)
+        AddCompleteBookView(detailBookItem.Item.preview)
     }
 }

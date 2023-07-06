@@ -13,21 +13,10 @@ struct BookShelfScrollView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var bookShelfViewData: BookShelfViewData
     
     @ObservedResults(CompleteBook.self) var compBooks
     @ObservedResults(FavoriteBook.self) var favBooks
-    
-    @State private var startOffset: CGFloat = 0.0
-    
-    // MARK: - PROPERTIES
-    
-    @Binding var scrollYOffset: CGFloat
-    
-    // MARK: - INTIALIZER
-    
-    init(_ scrollOffset: Binding<CGFloat>) {
-        self._scrollYOffset = scrollOffset
-    }
     
     // MARK: - BODY
     
@@ -40,7 +29,7 @@ struct BookShelfScrollView: View {
 
 extension BookShelfScrollView {
     var shelfScrollContent: some View {
-        ScrollView {
+        TrackableVerticalScrollView(yOffset: $bookShelfViewData.scrollYOffset) {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 BookShelfSummaryTabView()
                 
@@ -48,28 +37,16 @@ extension BookShelfScrollView {
                 
                 BookShelfCompBookTabView()
             }
-            .trackScrollYOffet($startOffset, yOffset: $scrollYOffset)
         }
     }
-}
-
-extension BookShelfScrollView {
-    
-}
-
-extension BookShelfScrollView {
-    
-}
-
-extension BookShelfScrollView {
-    
 }
 
 // MARK: - PREVIEW
 
 struct BookShelfScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        BookShelfScrollView(.constant(0.0))
+        BookShelfScrollView()
             .environmentObject(RealmManager())
+            .environmentObject(BookShelfViewData())
     }
 }

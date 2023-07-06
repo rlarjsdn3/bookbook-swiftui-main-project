@@ -8,25 +8,24 @@
 import SwiftUI
 import RealmSwift
 
-struct AddReadingBookButtonGroupView: View {
+struct AddCompleteBookButtonGroupView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var addCompleteBookViewData: AddCompleteBookViewData
     
     @State private var isPresentingAddReadingBookConfirmDialog = false
     
     // MARK: - PROPERTIES
     
     let bookItem: detailBookItem.Item
-    @Binding var selectedDate: Date
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookItem.Item, selectedDate: Binding<Date>) {
+    init(_ bookItem: detailBookItem.Item) {
         self.bookItem = bookItem
-        self._selectedDate = selectedDate
     }
     
     // MARK: - BODY
@@ -46,7 +45,7 @@ struct AddReadingBookButtonGroupView: View {
     }
 }
 
-extension AddReadingBookButtonGroupView {
+extension AddCompleteBookButtonGroupView {
     var buttonGroup: some View {
         VStack {
             dbProviderLabel
@@ -101,7 +100,7 @@ extension AddReadingBookButtonGroupView {
                     "link": "\(bookItem.link)",
                     "isbn13": "\(bookItem.isbn13)",
                     "startDate": Date(),
-                    "targetDate": selectedDate,
+                    "targetDate": addCompleteBookViewData.selectedTargetDate,
                     "isCompleted": false
                 ] as [String : Any])
             realmManager.addReadingBook(readingBook)
@@ -118,11 +117,8 @@ extension AddReadingBookButtonGroupView {
 
 struct BookAddButtonsView_Previews: PreviewProvider {
     static var previews: some View {
-        AddReadingBookButtonGroupView(
-            detailBookItem.Item.preview,
-            selectedDate: .constant(Date())
-        )
-        .environmentObject(RealmManager())
-        .previewLayout(.sizeThatFits)
+        AddCompleteBookButtonGroupView(detailBookItem.Item.preview)
+            .environmentObject(RealmManager())
+            .environmentObject(AddCompleteBookViewData())
     }
 }

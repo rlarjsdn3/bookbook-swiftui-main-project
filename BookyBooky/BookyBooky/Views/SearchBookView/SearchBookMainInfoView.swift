@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Shimmer
 import RealmSwift
 
 struct SearchBookMainInfoView: View {

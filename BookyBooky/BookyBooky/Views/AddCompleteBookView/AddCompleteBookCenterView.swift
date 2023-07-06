@@ -7,32 +7,34 @@
 
 import SwiftUI
 
-struct AddReadingBookCenterView: View {
+struct AddCompleteBookCenterView: View {
     
     // MARK: - WRAPPER PROPERTIES
+    
+    @EnvironmentObject var addCompleteBookViewData: AddCompleteBookViewData
     
     @State private var isPresentingDateDescSheet = false
     @State private var isPresentingDatePickerSheet = false
     
     // MARK: - COMPUTED PROPERTIES
     
-    var dayInterval: Int? {
+    var dayInterval: Int {
         let today = Date.now
         let calendar = Calendar.current
-        let interval = calendar.dateComponents([.day], from: today, to: selectedDate)
-        return interval.day
+        let interval = calendar.dateComponents(
+            [.day], from: today, to: addCompleteBookViewData.selectedTargetDate
+        )
+        return (interval.day ?? 0) + 1
     }
     
     // MARK: - PROPERTIES
     
     let bookItem: detailBookItem.Item
-    @Binding var selectedDate: Date
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookItem.Item, selectedDate: Binding<Date>) {
+    init(_ bookItem: detailBookItem.Item) {
         self.bookItem = bookItem
-        self._selectedDate = selectedDate
     }
     
     // MARK: - BODY
@@ -40,9 +42,7 @@ struct AddReadingBookCenterView: View {
     var body: some View {
         centerLabel
             .sheet(isPresented: $isPresentingDatePickerSheet) {
-                DatePickerSheetView(
-                    theme: bookItem.bookCategory.themeColor,
-                    selectedDate: $selectedDate)
+                DatePickerSheetView(theme: bookItem.bookCategory.themeColor)
             }
             .padding(.bottom, 40)
     }
@@ -50,7 +50,7 @@ struct AddReadingBookCenterView: View {
 
 // MARK: - EXTENSIONS
 
-extension AddReadingBookCenterView {
+extension AddCompleteBookCenterView {
     var centerLabel: some View {
         VStack(spacing: 10) {
             LottieBookView()
@@ -73,18 +73,15 @@ extension AddReadingBookCenterView {
     }
     
     var selectedTargetDateText: some View {
-        Text("\(selectedDate.standardDateFormat)")
+        Text("\(addCompleteBookViewData.selectedTargetDate.standardDateFormat)")
             .font(.title)
             .fontWeight(.bold)
     }
     
     var averageDailyReadingPagesLabel: some View {
         Group {
-            if let dayInterval = dayInterval {
-                let day = dayInterval + 1
-                let averageDailyReadingPages = bookItem.subInfo.itemPage / day
-                Text("\(day)일 동안 하루 평균 \(averageDailyReadingPages)페이지를 읽어야 해요.")
-            }
+            let averageDailyReadingPages = bookItem.subInfo.itemPage / dayInterval
+            Text("\(dayInterval)일 동안 하루 평균 \(averageDailyReadingPages)페이지를 읽어야 해요.")
         }
         .font(.subheadline)
         .foregroundColor(.secondary)
@@ -110,9 +107,7 @@ extension AddReadingBookCenterView {
 
 struct BookAddCenterView_Previews: PreviewProvider {
     static var previews: some View {
-        AddReadingBookCenterView(
-            detailBookItem.Item.preview,
-            selectedDate: .constant(Date())
-        )
+        AddCompleteBookCenterView(detailBookItem.Item.preview)
+            .environmentObject(AddCompleteBookViewData())
     }
 }

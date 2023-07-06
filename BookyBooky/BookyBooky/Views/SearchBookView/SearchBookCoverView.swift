@@ -43,7 +43,11 @@ extension SearchBookCoverView {
                             width: 170, height: mainScreen.height * 0.27
             )
             .onAppear {
-                searchBookViewData.isLoadingCoverImage = false
+                // NOTE: - DispatchQueue를 사용해 일정 텀을 주지 않는다면
+                //       - 화면이 제대로 리-렌더링되지 않습니다. (2023. 7. 6)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    searchBookViewData.isLoadingCoverImage = false
+                }
             }
         }
         .frame(height: mainScreen.height * 0.3)

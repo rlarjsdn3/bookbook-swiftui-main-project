@@ -12,18 +12,17 @@ struct DatePickerSheetView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var addCompleteBookViewData: AddCompleteBookViewData
     
     @State private var inputDate: Date = Date()
     
     // MARK: - PROPERTIES
     
     let theme: Color
-    @Binding var selectedDate: Date
     
     
-    init(theme: Color, selectedDate: Binding<Date>) {
+    init(theme: Color) {
         self.theme = theme
-        self._selectedDate = selectedDate
     }
     
     // MARK: - BODY
@@ -41,7 +40,7 @@ struct DatePickerSheetView: View {
             .padding()
             
             Button {
-                selectedDate = inputDate
+                addCompleteBookViewData.selectedTargetDate = inputDate
                 dismiss()
             } label: {
                 Text("적용하기")
@@ -49,7 +48,7 @@ struct DatePickerSheetView: View {
             .buttonStyle(BottomButtonStyle(backgroundColor: theme))
         }
         .onAppear {
-            self.inputDate = selectedDate
+            self.inputDate = addCompleteBookViewData.selectedTargetDate
         }
         .presentationCornerRadius(30)
         .presentationDetents([.height(420)])
@@ -61,9 +60,7 @@ struct DatePickerSheetView: View {
 
 struct DatePickerSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        DatePickerSheetView(
-            theme: Color.black,
-            selectedDate: .constant(Date())
-        )
+        DatePickerSheetView(theme: Color.black)
+            .environmentObject(AddCompleteBookViewData())
     }
 }
