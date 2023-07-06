@@ -17,6 +17,8 @@ struct AnalysisChartsTabView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
+    
+    // 이러한 차트 데이터를 개별 뷰가 아닌 한 곳에서 받아오도록 한번 코드 작성해보기
     var totalPagesByCategoryChartData: [ChartData.TotalPagesReadByCategory] {
         var totalPagesReadByCategory: [ChartData.TotalPagesReadByCategory] = []
         

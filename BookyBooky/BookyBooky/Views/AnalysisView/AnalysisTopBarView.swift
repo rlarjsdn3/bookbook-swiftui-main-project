@@ -11,7 +11,7 @@ struct AnalysisTopBarView: View {
     
     // MARK: - PROPERTIES
     
-    @Binding var scrollYOffset: CGFloat
+    @EnvironmentObject var analysisViewData: AnalysisViewData
     
     // MARK: - BODY
     
@@ -34,7 +34,7 @@ extension AnalysisTopBarView {
         }
         .padding(.vertical)
         .overlay(alignment: .bottom) {
-            if scrollYOffset > 10.0 {
+            if analysisViewData.scrollYOffset > 10.0 {
                 Divider()
             }
         }
@@ -44,5 +44,6 @@ extension AnalysisTopBarView {
 // MARK: - PREVIEW
 
 #Preview {
-    AnalysisTopBarView(scrollYOffset: .constant(0.0))
+    AnalysisTopBarView()
+        .environmentObject(AnalysisViewData())
 }

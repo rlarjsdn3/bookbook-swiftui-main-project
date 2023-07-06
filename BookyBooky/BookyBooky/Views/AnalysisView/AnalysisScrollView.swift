@@ -13,13 +13,9 @@ struct AnalysisScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @EnvironmentObject var analysisViewData: AnalysisViewData
+    
     @ObservedResults(CompleteBook.self) var readingBooks
-    
-    @State private var startOffset: CGFloat = 0.0
-    
-    // MARK: - PROPERTIES
-    
-    @Binding var scrollYOffset: CGFloat
     
     // MARK: - BODY
     
@@ -32,7 +28,7 @@ struct AnalysisScrollView: View {
 
 extension AnalysisScrollView {
     var analysisScrollContent: some View {
-        ScrollView {
+        TrackableVerticalScrollView(yOffset: $analysisViewData.scrollYOffset) {
             analysisTabGroup
         }
         .scrollIndicators(.hidden)
@@ -47,10 +43,10 @@ extension AnalysisScrollView {
             
             AnalysisHighlightTabView()
         }
-        .trackScrollYOffet($startOffset, yOffset: $scrollYOffset)
     }
 }
 
 #Preview {
-    AnalysisScrollView(scrollYOffset: .constant(0.0))
+    AnalysisScrollView()
+        .environmentObject(AnalysisViewData())
 }

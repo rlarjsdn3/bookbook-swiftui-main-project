@@ -13,20 +13,20 @@ struct AnalysisView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+    @StateObject var analysisViewData = AnalysisViewData()
+    
     @ObservedResults(CompleteBook.self) var compBooks
-
-    @State private var startOffset: CGFloat = 0.0
-    @State private var scrollYOffset: CGFloat = 0.0
     
     // MARK: - BODY
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                AnalysisTopBarView(scrollYOffset: $scrollYOffset)
+                AnalysisTopBarView()
                     
-                AnalysisScrollView(scrollYOffset: $scrollYOffset)
+                AnalysisScrollView()
             }
+            .environmentObject(analysisViewData)
         }
     }
 }
