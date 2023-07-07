@@ -10,51 +10,42 @@ import MessageUI
 
 struct ProfileView: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
     @State private var isPresentMailComposeView: Bool = false
+    @State private var isPresentSafariBrowserSheetView: Bool = false
     @State private var isPresentAlertSendMailErrorAlert: Bool = false
+    
+    // MARK: - PROPERTIES
+    
+    let receiverAddress = ["rlarjsdn3@naver.com"]
+    let mailBody = "✅ 버그 수정, 기능 개선 요청, 기타 등등 개발자에게 문의를 남겨주세요."
+    
+    let googleFormAddress = URL(string: "https://forms.gle/zA7GwG2zqRGLkEha7")!
+    
+    // MARK: - BODY
     
     var body: some View {
         NavigationStack {
             List {
-                Section {
-                    Button {
-                        if MFMailComposeViewController.canSendMail() {
-                            isPresentMailComposeView = true
-                        } else {
-                            isPresentAlertSendMailErrorAlert = true
-                        }
-                    } label: {
-                        rowLabel("envelope.fill", title: "개발자에게 문의하기", color: Color.blue)
-                    }
-//                    .buttonStyle(.plain)
-                    
-                    Link(destination: URL(string: "https://www.apple.com")!) {
-                        rowLabel("ladybug.fill", title: "건의 및 버그 리포트", color: Color.orange)
-                    }
-//                    .buttonStyle(.plain)
-                } header: {
-                    Text("문의")
-                } footer: {
-                    Text("앱 이용 중 궁금한 점이 생기면 언제든지 개발자에게 문의해주세요 :)")
-                }
+                inquirySection
                 
-                Section {
-                    NavigationLink {
-                        Text("heart.fill") // 임시
-                    } label: {
-                        rowLabel("heart.fill", title: "개발자에게 커피 사주기", color: Color.pink)
-                    }
-                } header: {
-                    Text("후원")
-                } footer: {
-                    Text("여러분의 후원이 개발자를 행복하게 합니다♥︎")
-                }
+                assistSection
             }
             .navigationTitle("설정")
         }
-        .presentationCornerRadius(30)
         .sheet(isPresented: $isPresentMailComposeView) {
-            MailComposeView(toRecipients: ["rlarjsdn3@naver.com"], mailBody: "안녕")
+            MailComposeView(
+                toRecipients: receiverAddress,
+                mailBody: mailBody
+            )
+            // 이 구문을 써주지 않으면 시트 하단이 뻥 비어보이게 됨!
+            .ignoresSafeArea(.container, edges: .bottom)
+            .presentationCornerRadius(30)
+        }
+        .sheet(isPresented: $isPresentSafariBrowserSheetView) {
+            SafariBrowserView(url: googleFormAddress)
+                .ignoresSafeArea(.container, edges: .bottom)
                 .presentationCornerRadius(30)
         }
         .alert("메일을 보낼 수 없습니다.", isPresented: $isPresentAlertSendMailErrorAlert) {
@@ -62,10 +53,11 @@ struct ProfileView: View {
         } message: {
             Text("기기에 메일 계정을 추가해주세요.")
         }
+        .presentationCornerRadius(30)
     }
-}
-
-extension ProfileView {
+    
+    // MARK: - FUNCTIONS
+    
     func rowLabel(_ systemImageName: String, title: String, color: Color) -> some View {
         HStack {
             Image(systemName: systemImageName)
@@ -78,6 +70,62 @@ extension ProfileView {
         }
     }
 }
+
+// MARK: - EXTENSIONS
+
+extension ProfileView {
+    var inquirySection: some View {
+        Section {
+            inquiryButton
+            
+            bugReportButton
+        } header: {
+            Text("문의")
+        } footer: {
+            Text("앱 이용 중 궁금한 점이 생기면 언제든지 개발자에게 문의해주세요 :)")
+        }
+    }
+    
+    var inquiryButton: some View {
+        Button {
+            if MFMailComposeViewController.canSendMail() {
+                isPresentMailComposeView = true
+            } else {
+                isPresentAlertSendMailErrorAlert = true
+            }
+        } label: {
+            rowLabel("envelope.fill", title: "개발자에게 문의하기", color: Color.blue)
+        }
+    }
+    
+    var bugReportButton: some View {
+        Button {
+            isPresentSafariBrowserSheetView = true
+        } label: {
+            rowLabel("ladybug.fill", title: "건의 및 버그 리포트", color: Color.orange)
+        }
+    }
+    
+    var assistSection: some View {
+        Section {
+           assistDeveloperButton
+        } header: {
+            Text("후원")
+        } footer: {
+            Text("여러분의 후원이 개발자를 행복하게 합니다♥︎")
+        }
+    }
+    
+    var assistDeveloperButton: some View {
+        NavigationLink {
+            Text("heart.fill")
+        } label: {
+            rowLabel("heart.fill", title: "개발자에게 커피 사주기", color: Color.pink)
+        }
+    }
+}
+
+// MARK: - PREVIEW
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
