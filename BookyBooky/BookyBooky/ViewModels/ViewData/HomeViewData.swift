@@ -8,15 +8,9 @@
 import SwiftUI
 import RealmSwift
 
-final class HomeViewData: ObservableObject {
-    @Published var activityData: [ReadingActivity] = []
-    
+final class HomeViewData: ObservableObject {    
     @Published var scrollYOffset: CGFloat = 0.0
     @Published var selectedBookSort: BookSortCriteria = .titleAscendingOrder
     @Published var selectedCategory: Category = .all
     @Published var selectedCategoryFA: Category = .all
-    
-    func getActivityData(_ completeBooks: Results<CompleteBook>) {
-        activityData = completeBooks.recentReadingActivity
-    }
 }

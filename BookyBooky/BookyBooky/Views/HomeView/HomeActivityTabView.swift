@@ -17,19 +17,19 @@ struct HomeActivityTabView: View {
     
     @ObservedResults(CompleteBook.self) var compBooks
     
+    @State private var activityData: [ReadingActivity] = []
+    
     // MARK: - BODY
     
     var body: some View {
         activityTab
             .onAppear {
-                // NOTE: - 이전 방식은 View 내에서 함수를 호출해 직접 활동 데이터를 불러오는(O(n^2)) 방식이었습니다.
-                //       - 이로 인해, 콘텐츠 스크롤 시, 좌표 값이 변화됨에 따른 잦은 화면 갱신으로 인한 프레임 저하가 있었습니다.
-                //       - 이제는 HomeViewData 내에 활동 데이터를 저장하는 방식으로 변경하였습니다.
-                //       - 덕분에, 콘텐츠 스크롤 시, 화면 갱신에 따른 활동 데이터를 불러오는 함수를 호출할 필요가 없어져서
-                //       - 성능을 개선시켰습니다. 이제는 화면이 나타날 때 한번만 호출됩니다. (2023. 7. 5)
-                
-                homeViewData.getActivityData(compBooks)
+                getActivityData(compBooks)
             }
+    }
+    
+    func getActivityData(_ completeBooks: Results<CompleteBook>) {
+        activityData = completeBooks.recentReadingActivity
     }
 }
 
@@ -71,10 +71,10 @@ extension HomeActivityTabView {
     
     var tabContent: some View {
         VStack(spacing: 5) {            
-            if homeViewData.activityData.isEmpty {
+            if activityData.isEmpty {
                 noActivityLabel
             } else {
-                activityButtonGroup(homeViewData.activityData)
+                activityButtonGroup(activityData)
             }
         }
     }
