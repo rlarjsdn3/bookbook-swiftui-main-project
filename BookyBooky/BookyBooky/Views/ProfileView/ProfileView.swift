@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MessageUI
+import StoreKit
 
 struct ProfileView: View {
     
@@ -29,6 +30,8 @@ struct ProfileView: View {
         NavigationStack {
             List {
                 inquirySection
+                
+                reviewSection
                 
                 assistSection
             }
@@ -69,6 +72,13 @@ struct ProfileView: View {
                 .foregroundStyle(Color.black)
         }
     }
+    
+    func requestReview() {
+        if let scene = UIApplication.shared.connectedScenes
+                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                  SKStoreReviewController.requestReview(in: scene)
+        }
+    }
 }
 
 // MARK: - EXTENSIONS
@@ -103,6 +113,18 @@ extension ProfileView {
             isPresentSafariBrowserSheetView = true
         } label: {
             rowLabel("ladybug.fill", title: "건의 및 버그 리포트", color: Color.orange)
+        }
+    }
+    
+    var reviewSection: some View {
+        Section {
+            Button {
+                requestReview()
+            } label: {
+                rowLabel("pencil", title: "리뷰 남기기", color: Color.mint)
+            }
+        } header: {
+            Text("평가")
         }
     }
     

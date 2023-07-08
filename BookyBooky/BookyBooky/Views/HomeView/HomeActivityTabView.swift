@@ -29,7 +29,6 @@ struct HomeActivityTabView: View {
                 //       - 성능을 개선시켰습니다. 이제는 화면이 나타날 때 한번만 호출됩니다. (2023. 7. 5)
                 
                 homeViewData.getActivityData(compBooks)
-                
             }
     }
 }
@@ -71,11 +70,7 @@ extension HomeActivityTabView {
     }
     
     var tabContent: some View {
-        VStack(spacing: 5) {
-            // NOTE: - 최근 활동 기록을 불러오는 중 시간 복잡도가 O(n2)이라 스크롤 시 프레임이 끊김.
-            //      - 매 스크롤 시, yOffset을 새로 가져오는 과정에서 화면이 새로 렌더링되기 때문... 
-//            let recentActivities = compBooks.recentReadingActivity
-            
+        VStack(spacing: 5) {            
             if homeViewData.activityData.isEmpty {
                 noActivityLabel
             } else {
