@@ -52,7 +52,7 @@ struct AnalysisChartsTabView: View {
             }
         }
         
-        return dailyPages
+        return dailyPages.sorted(by: { $0.date > $1.date })
     }
     
     var monthlyBooksCompletedChartData: [ChartData.MonthlyCompleteBook] {
@@ -137,22 +137,36 @@ extension AnalysisChartsTabView {
                 if totalPagesByCategoryChartData.isEmpty {
                     unableToDisplayChartLabel
                 } else {
-                    Chart(totalDailyReadPagesChartData, id: \.self) { element in
-                        BarMark(
-                            x: .value("date", element.date, unit: .day),
-                            y: .value("pages", element.pages)
+                    HStack(alignment: .bottom) {
+                        Text("\(totalDailyReadPagesChartData[0].pages)")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.orange)
+                        Text("페이지 읽음")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .offset(x: -1, y: -3)
+                        
+                        Spacer()
+                    
+                        Chart(totalDailyReadPagesChartData.filter({ data in
+                            data.date.compare(Date().addingTimeInterval(-7*86400)) == .orderedDescending
+                        }), id: \.self) { element in
+                            BarMark(
+                                x: .value("date", element.date, unit: .day),
+                                y: .value("pages", element.pages)
+                            )
+                            .cornerRadius(5.0)
+                            .foregroundStyle(element.date.isEqual([.year, .month, .day], date: Date()) ? Color.orange : Color.gray)
+                        }
+                        .chartXAxis(.hidden)
+                        .chartYAxis(.hidden)
+                        .chartXScale(
+                            domain: Date().addingTimeInterval(-7*86400)...Date()
                         )
-                        .cornerRadius(5.0)
-                        .foregroundStyle(element.date.isEqual([.year, .month, .day], date: Date()) ? Color.orange : Color.gray)
+                        .frame(width: mainScreen.width * 0.35, height: 50)
+                        .padding(5)
                     }
-                    .chartXAxis(.hidden)
-                    .chartYAxis(.hidden)
-                    .chartXScale(
-                        domain: Date().addingTimeInterval(-14*86400)...Date(),
-                        range: .plotDimension(startPadding: 10, endPadding: 10)
-                    )
-                    .frame(height: 50)
-                    .padding(5)
                 }
             }
             .padding(.vertical, 15)
@@ -161,6 +175,12 @@ extension AnalysisChartsTabView {
         }
         .disabled(totalPagesByCategoryChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
+        
+        .onAppear {
+            print(totalDailyReadPagesChartData.filter({ data in
+                data.date.compare(Date().addingTimeInterval(-7*86400)) == .orderedDescending
+            }))
+        }
     }
     
     var totalNumberOfBooksReadPerMonthChartCellButton: some View {
