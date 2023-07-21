@@ -46,8 +46,11 @@ extension ContentView {
             BookShelfView()
                 .tag(CustomMainTab.bookShelf)
             
-            AnalysisView()
-                .tag(CustomMainTab.analysis)
+            // for iOS 17.0
+            #if false
+                AnalysisView()
+                    .tag(CustomMainTab.analysis)
+            #endif
         }
     }
 }

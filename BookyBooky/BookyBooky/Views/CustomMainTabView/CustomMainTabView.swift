@@ -27,12 +27,28 @@ struct CustomMainTabView: View {
     
     var body: some View {
         HStack {
+            // for iOS 17.0
+            #if false
             ForEach(CustomMainTab.allCases, id: \.self) { type in
+                Spacer()
                 TabButton(
                     type,
                     selectedTab: $selectedTab,
                     namespace: namespace
                 )
+                Spacer()
+            }
+            #endif
+            ForEach(CustomMainTab.allCases, id: \.self) { type in
+                if type != .analysis {
+                    Spacer()
+                    TabButton(
+                        type,
+                        selectedTab: $selectedTab,
+                        namespace: namespace
+                    )
+                    Spacer()
+                }
             }
         }
         .background {

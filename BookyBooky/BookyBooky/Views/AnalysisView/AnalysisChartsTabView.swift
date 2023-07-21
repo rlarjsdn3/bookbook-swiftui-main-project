@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 import RealmSwift
 
+@available(iOS 17.0, *)
 struct AnalysisChartsTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -90,6 +91,7 @@ struct AnalysisChartsTabView: View {
 
 // MARK: - EXTENSIONS
 
+@available(iOS 17.0, *)
 extension AnalysisChartsTabView {
     var summaryHeaderText: some View {
         Text("요약")
@@ -264,6 +266,7 @@ extension AnalysisChartsTabView {
 
 // MARK: - PREVIEW
 
+@available(iOS 17.0, *)
 #Preview {
     AnalysisChartsTabView()
 }

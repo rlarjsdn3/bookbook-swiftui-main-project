@@ -65,7 +65,7 @@ extension BookListScrollView {
                 bookButtonGroup
                     .id("Scroll_To_Top")
             }
-            .onChange(of: bookListViewData.selectedListTab, initial: true) {
+            .onChange(of: bookListViewData.selectedListTab) { _ in
                 withAnimation {
                     proxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }
@@ -80,9 +80,9 @@ extension BookListScrollView {
                 BookListBookButton(item)
             }
         }
-        .safeAreaPadding(.top, 20)
-        .safeAreaPadding(.horizontal)
-        .safeAreaPadding(.bottom, 40)
+        .padding(.top, 20)
+        .padding(.horizontal)
+        .padding(.bottom, 40)
     }
     
     var errorLabel: some View {

@@ -176,8 +176,8 @@ extension HomeCompleteBookTabView {
                     CompleteBookButton(readingBook, type: .home)
                 }
             }
-            .safeAreaPadding([.leading, .top, .trailing])
-            .safeAreaPadding(.bottom, dynamicBottomPaddingValue)
+            .padding([.leading, .top, .trailing])
+            .padding(.bottom, dynamicBottomPaddingValue)
         }
     }
     

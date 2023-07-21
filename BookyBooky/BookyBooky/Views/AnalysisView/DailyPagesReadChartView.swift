@@ -8,6 +8,7 @@
 import SwiftUI
 import Charts
 
+@available(iOS 17.0, *)
 struct DailyPagesReadChartView: View {
 
     // MARK: - WRAPPER PROPERTIES
@@ -80,7 +81,7 @@ struct DailyPagesReadChartView: View {
     
     var body: some View {
         chartContent
-            .onChange(of: selectedTimeRange, initial: true) { _, _ in
+            .onChange(of: selectedTimeRange, initial: true) { _, _  in
                 switch selectedTimeRange {
                 case .last14Days:
                     scrollPosition = dailyChartData.last?.date.addingTimeInterval(-1 * 86400 * 14).timeIntervalSinceReferenceDate ?? 0.0
@@ -113,6 +114,7 @@ struct DailyPagesReadChartView: View {
 
 // MARK: - EXTENSIONS
 
+@available(iOS 17.0, *)
 extension DailyPagesReadChartView {
     var chartContent: some View {
         VStack(spacing: 0) {
@@ -412,6 +414,7 @@ extension DailyPagesReadChartView {
 
 // MARK: - PREVIEW
 
+@available(iOS 17.0, *)
 #Preview {
     DailyPagesReadChartView(dailyChartData: [])
 }

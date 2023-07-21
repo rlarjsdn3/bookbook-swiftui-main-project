@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 import RealmSwift
 
+@available(iOS 17.0, *)
 struct AnalysisScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -26,14 +27,15 @@ struct AnalysisScrollView: View {
 
 // MARK: - EXTENSIONS
 
+@available(iOS 17.0, *)
 extension AnalysisScrollView {
     var analysisScrollContent: some View {
         TrackableVerticalScrollView(yOffset: $analysisViewData.scrollYOffset) {
             analysisTabGroup
         }
         .scrollIndicators(.hidden)
-        .safeAreaPadding([.leading, .top, .trailing])
-        .safeAreaPadding(.bottom, 40)
+        .padding([.leading, .top, .trailing])
+        .padding(.bottom, 40)
         .background(Color(.background))
     }
     
@@ -46,6 +48,7 @@ extension AnalysisScrollView {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     AnalysisScrollView()
         .environmentObject(AnalysisViewData())

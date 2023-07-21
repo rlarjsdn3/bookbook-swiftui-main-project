@@ -10,6 +10,7 @@ import Charts
 
 // NOTE: - 해당 기능은 버전 1.1에 언락될 예정입니다.
 
+@available(iOS 17.0, *)
 struct MonthlyBooksCompletedChartView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -211,6 +212,7 @@ struct MonthlyBooksCompletedChartView: View {
     }
 }
 
+@available(iOS 17.0, *)
 extension MonthlyBooksCompletedChartView {
     var navigationBarButtons: some View {
         HStack {
@@ -226,6 +228,7 @@ extension MonthlyBooksCompletedChartView {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     MonthlyBooksCompletedChartView(chartData: [])
 }

@@ -68,7 +68,7 @@ extension SearchSheetScrollView {
                 
                 seeMoreButton
             }
-            .onChange(of: searchSheetViewData.searchIndex) {
+            .onChange(of: searchSheetViewData.searchIndex) { _ in
                 // 새로운 검색을 시도할 때만 도서 스크롤을 제일 위로 올립니다.
                 // '더 보기' 버튼을 클릭해도 도서 스크롤이 이동하지 않습니다.
                 if searchSheetViewData.searchIndex == 1 {
@@ -77,7 +77,7 @@ extension SearchSheetScrollView {
                     }
                 }
             }
-            .onChange(of: searchSheetViewData.selectedCategory) {
+            .onChange(of: searchSheetViewData.selectedCategory) { _ in
                 withAnimation {
                     scrollProxy.scrollTo("Scroll_To_Top", anchor: .top)
                 }

@@ -29,8 +29,6 @@ struct TabButton: View {
     // MARK: - BODY
     
     var body: some View {
-        Spacer()
-        
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                 selectedTab = type
@@ -62,8 +60,6 @@ struct TabButton: View {
                 }
             }
         }
-        
-        Spacer()
     }
 }
 

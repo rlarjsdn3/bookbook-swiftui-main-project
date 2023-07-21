@@ -52,7 +52,7 @@ extension BookShelfFavBookTabView {
             }
             .padding(.top, 26)
         }
-        .safeAreaPadding([.leading, .bottom, .trailing])
+        .padding([.leading, .bottom, .trailing])
     }
     
     var noFavBooksLabel: some View {

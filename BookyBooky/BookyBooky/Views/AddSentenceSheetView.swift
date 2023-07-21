@@ -121,7 +121,7 @@ extension AddSentenceSheetView {
                         .padding(18)
                 }
             }
-            .onChange(of: inputText) {
+            .onChange(of: inputText) { _ in
                 if inputText.count > characterLimit {
                     inputText = String(inputText.prefix(characterLimit))
                 }

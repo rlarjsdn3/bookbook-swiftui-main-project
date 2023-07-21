@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 import RealmSwift
 
+@available(iOS 17.0, *)
 struct AnalysisView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -33,6 +34,7 @@ struct AnalysisView: View {
 
 // MARK: - PREVIEW
 
+@available(iOS 17.0, *)
 #Preview {
     AnalysisView()
 }

@@ -170,7 +170,7 @@ class AladinAPIManager: ObservableObject {
                         // 도서 검색 결과 및 카테고리 목록이 자연스럽게 나타나도록 함
                         withAnimation(.easeInOut(duration: 0.1)) {
                             self.searchResults.append(contentsOf: results.item)
-//                            self.getCategory(bookItems: searchResults) // 리팩토링 예정
+                            self.getCategory(bookItems: self.searchResults)
                         }
 //                    }
                     

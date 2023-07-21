@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 import RealmSwift
 
+@available(iOS 17.0, *)
 struct TotalPagesCountByCategoryChartView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -67,6 +68,7 @@ struct TotalPagesCountByCategoryChartView: View {
     }
 }
 
+@available(iOS 17.0, *)
 extension TotalPagesCountByCategoryChartView {
     var chartContent: some View {
         VStack(spacing: 0) {
@@ -81,8 +83,8 @@ extension TotalPagesCountByCategoryChartView {
                 .trackScrollYOffet($startOffset, yOffset: $scrollYOffset)
             }
             .scrollIndicators(.hidden)
-            .safeAreaPadding([.leading, .top, .trailing])
-            .safeAreaPadding(.bottom, 40)
+            .padding([.leading, .top, .trailing])
+            .padding(.bottom, 40)
             .background(Color(.background))
         }
     }
@@ -205,6 +207,7 @@ extension TotalPagesCountByCategoryChartView {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     TotalPagesCountByCategoryChartView(chartData: [])
 }

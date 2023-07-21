@@ -110,7 +110,7 @@ extension CompleteBookRenewalSheetView {
                     .background(completeBook.category.themeColor)
                     .clipShape(Circle())
             }
-            .buttonRepeatBehavior(.enabled)
+            //.buttonRepeatBehavior(.enabled) // for iOS 17.0
             .opacity(lastRecordTotalPagesRead >= totalPagesRead  ? 0.5 : 1)
             .disabled(lastRecordTotalPagesRead >= totalPagesRead  ? true : false)
         }
@@ -121,7 +121,7 @@ extension CompleteBookRenewalSheetView {
             let readingBookTotalPages = completeBook.itemPage
             
             Button {
-                totalPagesRead  += 1
+                totalPagesRead += 1
             } label: {
                 Image(systemName: "plus")
                     .font(.largeTitle)
@@ -130,7 +130,7 @@ extension CompleteBookRenewalSheetView {
                     .background(completeBook.category.themeColor)
                     .clipShape(Circle())
             }
-            .buttonRepeatBehavior(.enabled)
+            //.buttonRepeatBehavior(.enabled) // for iOS 17.0
             .opacity(readingBookTotalPages <= totalPagesRead  ? 0.5 : 1)
             .disabled(readingBookTotalPages <= totalPagesRead  ? true : false)
         }

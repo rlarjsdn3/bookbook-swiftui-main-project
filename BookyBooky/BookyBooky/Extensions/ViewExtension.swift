@@ -43,8 +43,10 @@ extension View {
     }
 }
  
-extension View {
-    
+public extension View {
+    func modify<Content>(@ViewBuilder _ transform: (Self) -> Content) -> Content {
+        transform(self)
+    }
 }
 
 extension View {

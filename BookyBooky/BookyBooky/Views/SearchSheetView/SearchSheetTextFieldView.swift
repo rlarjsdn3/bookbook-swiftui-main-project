@@ -189,7 +189,7 @@ extension SearchSheetTextFieldView {
             ScrollView(.horizontal, showsIndicators: false) {
                 scrollCategoryButton(scrollProxy: proxy)
             }
-            .onChange(of: searchSheetViewData.searchIndex) {
+            .onChange(of: searchSheetViewData.searchIndex) { _ in
                 // 새로운 검색을 시도할 때만 카테고리 스크롤을 제일 앞으로 전진합니다.
                 // '더 보기' 버튼을 클릭해도 카테고리 스크롤이 이동하지 않습니다.
                 if searchSheetViewData.searchIndex == 1 {

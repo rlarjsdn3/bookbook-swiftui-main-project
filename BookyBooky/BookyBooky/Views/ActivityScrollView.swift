@@ -65,7 +65,7 @@ extension ActivityScrollView {
                 }
             }
         }
-        .safeAreaPadding(.bottom, 40)
+        .padding(.bottom, 40)
     }
     
     func summaryLabel(_ activity: MonthlyReadingActivity) -> some View {

@@ -57,12 +57,10 @@ extension CompleteBookBottomTabView {
         HStack {
             ForEach(CompleteBookTab.allCases, id: \.self) { type in
                 Spacer()
-                
                 CompleteBookTabButton(
                     type,
                     namespace: namespace
                 )
-                
                 Spacer()
             }
             .id("Scroll_To_Category")

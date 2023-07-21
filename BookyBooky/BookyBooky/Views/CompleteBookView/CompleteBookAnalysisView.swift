@@ -9,8 +9,6 @@ import SwiftUI
 import Charts
 import RealmSwift
 
-// 코드 리팩토링 중...
-
 struct CompleteBookAnalysisView: View {
     
     // MARK: - INNER ENUM
@@ -140,7 +138,7 @@ struct CompleteBookAnalysisView: View {
                     scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
                 }
             }
-            .onChange(of: completeBook.records) { _, _ in
+            .onChange(of: completeBook.records) { _ in
                 if let lastRecord = completeBook.lastRecord {
                     scrollPosition = lastRecord.date.addingTimeInterval(3600 * 24 * 14 * -1).timeIntervalSinceReferenceDate
                 }
@@ -182,22 +180,26 @@ extension CompleteBookAnalysisView {
                 .padding(.bottom, 40)
             } else {
                 VStack {
+                    // for iOS 17.0
+                    #if false
                     chartTitle
                     
                     barChart
                     
                     dailyAverageValueButton
+                    #endif
                     
                     hightlightLabel
                     
                     seeAllRecordButton
                 }
-                .padding([.leading, .bottom, .trailing])
-                .padding(.top, 5)
+                //.padding([.leading, .bottom, .trailing]) // for iOS 17.0
+                //.padding(.top, 5) // for iOS 17.0
             }
         }
     }
     
+    @available(iOS 17.0, *)
     var chartTitle: some View {
         VStack(alignment: .leading, spacing: -2) {
             Text("총 읽은 페이지")
@@ -220,6 +222,7 @@ extension CompleteBookAnalysisView {
         }
     }
     
+    @available(iOS 17.0, *)
     var barChart: some View {
         Chart {
             ForEach(completeBook.records, id: \.self) { record in
@@ -270,7 +273,6 @@ extension CompleteBookAnalysisView {
             Text("하이라이트")
                 .font(.title3.weight(.bold))
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.horizontal, .top])
             
             HStack {
             
@@ -294,7 +296,6 @@ extension CompleteBookAnalysisView {
                 }
                 .padding()
                 .background(Color(.background), in: .rect(cornerRadius: 20))
-                .padding([.bottom])
                 
                 HStack {
                     if let days = consecutiveReadingDay {
@@ -313,11 +314,11 @@ extension CompleteBookAnalysisView {
                     Spacer()
                 }
                 .padding()
-                .background(Color("Background"))
-                .cornerRadius(20)
-                .padding([.bottom])
+                .background(Color(.background), in: .rect(cornerRadius: 20))
             }
         }
+        .padding(.top, 5)
+        .padding([.horizontal, .bottom])
     }
     
     var seeAllRecordButton: some View {
@@ -332,6 +333,7 @@ extension CompleteBookAnalysisView {
                 .background(Color("Background"))
                 .clipShape(.capsule(style: .continuous))
         }
+        .padding(.horizontal)
         .padding(.bottom, 20)
     }
     
@@ -364,7 +366,7 @@ extension CompleteBookAnalysisView {
 
 // MARK: - PREVIEW
 
-struct ReadingBookAnalysisView_Previews: PreviewProvider {    
+struct ReadingBookAnalysisView_Previews: PreviewProvider {
     static var previews: some View {
         CompleteBookAnalysisView(CompleteBook.preview)
     }
