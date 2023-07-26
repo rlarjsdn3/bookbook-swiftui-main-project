@@ -71,6 +71,7 @@
 		9E595E422A2AD8EC00F46F74 /* BookShelfSentenceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E412A2AD8EC00F46F74 /* BookShelfSentenceListView.swift */; };
 		9E595E442A2AD9C400F46F74 /* BookShelfSentenceListTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E432A2AD9C400F46F74 /* BookShelfSentenceListTextFieldView.swift */; };
 		9E595E462A2ADDB900F46F74 /* BookShelfSentenceScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E595E452A2ADDB900F46F74 /* BookShelfSentenceScrollView.swift */; };
+		9E59C36E2A71476000CF7EA7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E59C36D2A71476000CF7EA7 /* Launch Screen.storyboard */; };
 		9E7A794329DA5B8F00A51856 /* SearchBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794229DA5B8F00A51856 /* SearchBookView.swift */; };
 		9E7A794529DA6AFF00A51856 /* SearchBookCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794429DA6AFF00A51856 /* SearchBookCoverView.swift */; };
 		9E7A794729DA854D00A51856 /* SearchBookMainInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794629DA854D00A51856 /* SearchBookMainInfoView.swift */; };
@@ -217,6 +218,7 @@
 		9E595E412A2AD8EC00F46F74 /* BookShelfSentenceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSentenceListView.swift; sourceTree = "<group>"; };
 		9E595E432A2AD9C400F46F74 /* BookShelfSentenceListTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSentenceListTextFieldView.swift; sourceTree = "<group>"; };
 		9E595E452A2ADDB900F46F74 /* BookShelfSentenceScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfSentenceScrollView.swift; sourceTree = "<group>"; };
+		9E59C36D2A71476000CF7EA7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		9E7A794229DA5B8F00A51856 /* SearchBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookView.swift; sourceTree = "<group>"; };
 		9E7A794429DA6AFF00A51856 /* SearchBookCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookCoverView.swift; sourceTree = "<group>"; };
 		9E7A794629DA854D00A51856 /* SearchBookMainInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookMainInfoView.swift; sourceTree = "<group>"; };
@@ -715,6 +717,7 @@
 			isa = PBXGroup;
 			children = (
 				9E0C0A7529D28D3400F1F5F6 /* Info.plist */,
+				9E59C36D2A71476000CF7EA7 /* Launch Screen.storyboard */,
 				9ECD921029BF1FA600FCDD2F /* BookyBookyApp.swift */,
 				9ECA326529D11B93004D6D5B /* Views */,
 				9E0C0A6029D1D85500F1F5F6 /* Extensions */,
@@ -859,6 +862,7 @@
 			files = (
 				9ECD921829BF1FA700FCDD2F /* Preview Assets.xcassets in Resources */,
 				9ECD921529BF1FA700FCDD2F /* Assets.xcassets in Resources */,
+				9E59C36E2A71476000CF7EA7 /* Launch Screen.storyboard in Resources */,
 				9EDC2FBE29EA3898004E792A /* book.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1137,6 +1141,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1152,6 +1157,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1175,6 +1181,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1190,6 +1197,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
