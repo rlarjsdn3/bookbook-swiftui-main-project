@@ -43,6 +43,8 @@ struct AddCompleteBookCenterView: View {
         centerLabel
             .sheet(isPresented: $isPresentingDatePickerSheet) {
                 DatePickerSheetView(theme: bookItem.bookCategory.themeColor)
+                    .presentationCornerRadius(30)
+                    .presentationDetents([.height(440)])
             }
             .padding(.bottom, 40)
     }

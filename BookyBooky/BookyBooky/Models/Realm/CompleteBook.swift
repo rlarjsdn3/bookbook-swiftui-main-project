@@ -92,7 +92,7 @@ extension CompleteBook {
     }
     
     var bookDescription: String {
-        return self.desc.isEmpty ? "(설명 없음)" : description
+        return self.desc.isEmpty ? "(설명 없음)" : desc
     }
 }
 

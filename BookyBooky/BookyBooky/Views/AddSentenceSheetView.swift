@@ -79,7 +79,6 @@ struct AddSentenceSheetView: View {
                 modifySentence()
             }
         }
-        .presentationCornerRadius(30)
     }
     
     func modifySentence() {

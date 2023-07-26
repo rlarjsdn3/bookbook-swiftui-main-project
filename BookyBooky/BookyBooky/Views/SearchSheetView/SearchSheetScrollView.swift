@@ -11,8 +11,8 @@ struct SearchSheetScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var searchSheetViewData: SearchSheetViewData
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    @EnvironmentObject var searchSheetViewData: SearchSheetViewData
     
     @State private var isPresentingSearchInfoView = false
     

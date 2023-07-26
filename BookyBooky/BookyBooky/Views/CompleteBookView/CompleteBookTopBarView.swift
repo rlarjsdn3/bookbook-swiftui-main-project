@@ -36,9 +36,11 @@ struct CompleteBookTopBarView: View {
         navigationTopBar
             .sheet(isPresented: $isPresentingEditBookInformationSheet) {
                 CompleteBookEditView(completeBook)
+                    .presentationCornerRadius(30)
             }
             .sheet(isPresented: $isPresentingAddSentenceSheet) {
                 AddSentenceSheetView(completeBook, type: .new)
+                    .presentationCornerRadius(30)
             }
             .confirmationDialog("도서를 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {

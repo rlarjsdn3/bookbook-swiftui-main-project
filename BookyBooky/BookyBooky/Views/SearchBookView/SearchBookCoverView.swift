@@ -39,8 +39,10 @@ extension SearchBookCoverView {
         ZStack {
             coverBackgroundColor
             
-            asyncCoverImage(bookItem.cover,
-                            width: 170, height: mainScreen.height * 0.27
+            asyncCoverImage(
+                bookItem.cover,
+                width: safeAreaInsets.bottom == 0 ? 140 : 170,
+                height: mainScreen.height * 0.27
             )
             .onAppear {
                 // NOTE: - DispatchQueue를 사용해 일정 텀을 주지 않는다면
@@ -48,6 +50,7 @@ extension SearchBookCoverView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                     searchBookViewData.isLoadingCoverImage = false
                 }
+                print(mainScreen.width * 0.45)
             }
         }
         .frame(height: mainScreen.height * 0.3)

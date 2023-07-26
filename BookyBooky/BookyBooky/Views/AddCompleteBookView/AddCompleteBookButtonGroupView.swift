@@ -96,7 +96,7 @@ extension AddCompleteBookButtonGroupView {
                     "cover": "\(bookItem.cover)",
                     "itemPage": bookItem.subInfo.itemPage,
                     "category": bookItem.categoryName.refinedCategory,
-                    "introduction": bookItem.description,
+                    "desc": bookItem.description,
                     "link": "\(bookItem.link)",
                     "isbn13": "\(bookItem.isbn13)",
                     "startDate": Date(),

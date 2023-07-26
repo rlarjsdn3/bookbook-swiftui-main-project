@@ -50,7 +50,10 @@ extension CompleteBookEditView {
     var editBookContent: some View {
         NavigationStack {
             VStack {
-                inputFieldGroup
+                ScrollView {
+                    inputFieldGroup
+                }
+                .scrollIndicators(.hidden)
                 
                 editButton
             }
@@ -64,7 +67,6 @@ extension CompleteBookEditView {
             .navigationTitle("도서 정보 수정하기")
             .navigationBarTitleDisplayMode(.inline)
         }
-        .presentationCornerRadius(30)
     }
     
     var inputFieldGroup: some View {
@@ -118,8 +120,10 @@ extension CompleteBookEditView {
             
             Picker("Category Picker", selection: $inputCategory) {
                 ForEach(Category.allCases, id: \.self) { category in
-                    Text(category.name)
-                        .tag(category.name)
+                    if category != .all {
+                        Text(category.name)
+                            .tag(category.name)
+                    }
                 }
             }
         }
@@ -172,7 +176,8 @@ extension CompleteBookEditView {
             }
         }
         .buttonStyle(BottomButtonStyle(backgroundColor: Color.black))
-        .padding(.bottom, isPresentingKeyboard ? 20 : 0)
+        .padding(.bottom, isPresentingKeyboard ? (safeAreaInsets.bottom != 0 ? 10 : -10) : 0)
+        .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
     }
 }
 

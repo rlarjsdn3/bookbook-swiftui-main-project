@@ -50,9 +50,7 @@ struct DatePickerSheetView: View {
         .onAppear {
             self.inputDate = addCompleteBookViewData.selectedTargetDate
         }
-        .presentationCornerRadius(30)
-        .presentationDetents([.height(420)])
-        
+        .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
     }
 }
 

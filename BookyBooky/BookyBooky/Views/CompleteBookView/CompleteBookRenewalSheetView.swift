@@ -150,6 +150,7 @@ extension CompleteBookRenewalSheetView {
             Text("갱신하기")
         }
         .buttonStyle(.bottomButtonStyle)
+        .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
     }
 }
 
