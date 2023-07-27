@@ -13,13 +13,14 @@ struct CompleteBookDataSheetView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var completeBookViewData: CompleteBookViewData
     
     @State private var isPresentingDeleteLastDataConfirmationDialog = false
     @State private var isPresentingDeleteallDataConfirmationDialog = false
     
     // MARK: - PROPERTIES
     
-    let completeBook: CompleteBook
+    @ObservedRealmObject var completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
@@ -34,6 +35,7 @@ struct CompleteBookDataSheetView: View {
             .confirmationDialog("마지막으로 추가된 독서 데이터를 삭제하시겠습니까?", isPresented: $isPresentingDeleteLastDataConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
                     realmManager.deleteLastRecord(completeBook)
+                    completeBookViewData.pageProgress = Double(completeBook.readingProgressPage)
                 }
             } message: {
                 Text("이 작업은 취소할 수 없습니다.")
@@ -41,11 +43,11 @@ struct CompleteBookDataSheetView: View {
             .confirmationDialog("모든 독서 데이터를 삭제하시겠습니까?", isPresented: $isPresentingDeleteallDataConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
                     realmManager.deleteAllRecord(completeBook)
+                    completeBookViewData.pageProgress = Double(completeBook.readingProgressPage)
                 }
             } message: {
                 Text("이 작업은 취소할 수 없습니다.")
             }
-            .presentationCornerRadius(30)
     }
 }
 
@@ -158,5 +160,6 @@ struct ReadingDataSheetView_Previews: PreviewProvider {
     static var previews: some View {
         CompleteBookDataSheetView(CompleteBook.preview)
             .environmentObject(RealmManager())
+            .environmentObject(CompleteBookViewData())
     }
 }

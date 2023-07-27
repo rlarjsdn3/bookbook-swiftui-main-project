@@ -33,7 +33,9 @@ struct ProfileView: View {
                 
                 reviewSection
                 
+                #if false
                 assistSection
+                #endif
             }
             .navigationTitle("설정")
         }

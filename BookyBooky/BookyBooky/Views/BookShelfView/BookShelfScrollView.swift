@@ -38,6 +38,7 @@ extension BookShelfScrollView {
                 BookShelfCompBookTabView()
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 

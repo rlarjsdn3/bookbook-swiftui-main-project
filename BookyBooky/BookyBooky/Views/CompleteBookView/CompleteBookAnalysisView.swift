@@ -145,6 +145,7 @@ struct CompleteBookAnalysisView: View {
             }
             .sheet(isPresented: $isPresentingAllReadingDataSheet) {
                 CompleteBookDataSheetView(completeBook)
+                    .presentationCornerRadius(30)
             }
     }
     

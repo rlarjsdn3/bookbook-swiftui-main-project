@@ -155,7 +155,8 @@ extension AddSentenceSheetView {
                 isPresentingKeyboard = value
             }
         }
-        .padding(.bottom, isPresentingKeyboard ? 20 : 0)
+        .padding(.bottom, isPresentingKeyboard ? (safeAreaInsets.bottom != 0 ? 20 : -10) : 0)
+        .padding(.bottom, safeAreaInsets.bottom != 0 ? 0 : 20)
     }
     
     var backButton: some View {
