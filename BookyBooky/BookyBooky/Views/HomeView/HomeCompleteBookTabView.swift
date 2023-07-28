@@ -31,7 +31,9 @@ struct HomeCompleteBookTabView: View {
     
     @Namespace var namespace
     
+    @State private var filteredCompleteBooks: [CompleteBook] = []
     @State private var selectedTabBookCount = 0
+    @State private var bookCategories: [Category] = []
     
     // MARK: - PROPERTIES
     
@@ -40,6 +42,7 @@ struct HomeCompleteBookTabView: View {
         GridItem(.flexible())
     ]
     let scrollProxy: ScrollViewProxy
+    var defaultBottomPaddingValue: CGFloat = 30.0
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -48,35 +51,35 @@ struct HomeCompleteBookTabView: View {
         
         switch getDeviceSceenSize(device) {
         case .device4_7inch where selectedTabBookCount <= 2:
-            return 192.0
+            return 192.0 - defaultBottomPaddingValue
         case .device4_7inch where selectedTabBookCount <= 4:
-            return 30.0 // 기본 패딩 값
+            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
         case .device5_4inch where selectedTabBookCount <= 2:
-            return 295.0
+            return 295.0 - defaultBottomPaddingValue
         case .device5_4inch where selectedTabBookCount <= 4:
-            return 30.0 // 기본 패딩 값
+            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
         case .device5_5inch where selectedTabBookCount <= 2:
-            return 263.0
+            return 263.0 - defaultBottomPaddingValue
         case .device5_5inch where selectedTabBookCount <= 4:
-            return 30.0 // 기본 패딩 값
+            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
         case .device5_8inch where selectedTabBookCount <= 2:
-            return 302.0
+            return 302.0 - defaultBottomPaddingValue
         case .device5_8inch where selectedTabBookCount <= 4:
-            return 30.0 // 기본 패딩 값
+            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
         case .device6_1inch where selectedTabBookCount <= 2:
-            return 330.0
+            return 324.0 - defaultBottomPaddingValue
         case .device6_1inch where selectedTabBookCount <= 4:
-            return 100.0
+            return 20.0 - defaultBottomPaddingValue
         case .device6_5inch where selectedTabBookCount <= 2:
-            return 385.0
+            return 385.0 - defaultBottomPaddingValue
         case .device6_5inch where selectedTabBookCount <= 4:
-            return 80.0
+            return 80.0 - defaultBottomPaddingValue
         case .device6_7inch where selectedTabBookCount <= 2:
-            return 406.0
+            return 406.0 - defaultBottomPaddingValue
         case .device6_7inch where selectedTabBookCount <= 4:
-            return 100.0
+            return 100.0 - defaultBottomPaddingValue
         default:
-            return 30.0 // 기본 패딩 값
+            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
         }
     }
     
@@ -120,12 +123,14 @@ struct HomeCompleteBookTabView: View {
     var body: some View {
         compBooksTab
             .onAppear {
+                bookCategories = compBooks.get(.unfinished).getReadingBookCategoryType()
+            }
+            .onAppear {
                 selectedTabBookCount = compBooks.getFilteredReadingBooks(
                     .unfinished,
                     sort: homeViewData.selectedBookSort,
                     category: homeViewData.selectedCategory
                 ).count
-                print(selectedTabBookCount)
             }
             .onChange(of: homeViewData.selectedCategory) { _ in
                 selectedTabBookCount = compBooks.getFilteredReadingBooks(
@@ -133,6 +138,27 @@ struct HomeCompleteBookTabView: View {
                     sort: homeViewData.selectedBookSort,
                     category: homeViewData.selectedCategory
                 ).count
+            }
+            .onAppear {
+                filteredCompleteBooks = compBooks.getFilteredReadingBooks(
+                    .unfinished,
+                    sort: homeViewData.selectedBookSort,
+                    category: homeViewData.selectedCategory
+                )
+            }
+            .onChange(of: homeViewData.selectedBookSort) { _ in
+                filteredCompleteBooks = compBooks.getFilteredReadingBooks(
+                    .unfinished,
+                    sort: homeViewData.selectedBookSort,
+                    category: homeViewData.selectedCategory
+                )
+            }
+            .onChange(of: homeViewData.selectedCategory) { _ in
+                filteredCompleteBooks = compBooks.getFilteredReadingBooks(
+                    .unfinished,
+                    sort: homeViewData.selectedBookSort,
+                    category: homeViewData.selectedCategory
+                )
             }
     }
 }
@@ -240,18 +266,14 @@ extension HomeCompleteBookTabView {
     var compBookButtonGroup: some View {
         Group {
             // 리팩토링
-            let filterReadingBooks = compBooks.getFilteredReadingBooks(
-                .unfinished,
-                sort: homeViewData.selectedBookSort,
-                category: homeViewData.selectedCategory
-            )
             
             LazyVGrid(columns: columns, spacing: 25) {
-                ForEach(filterReadingBooks) { readingBook in
-                    CompleteBookButton(readingBook, type: .home)
+                ForEach(filteredCompleteBooks) { completeBook in
+                    CompleteBookButton(completeBook, type: .home)
                 }
             }
             .padding([.leading, .top, .trailing])
+            .padding(.bottom, defaultBottomPaddingValue)
             .padding(.bottom, dynamicBottomPaddingValue)
         }
     }
@@ -260,9 +282,7 @@ extension HomeCompleteBookTabView {
         HStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    let categories = compBooks.get(.unfinished).getReadingBookCategoryType()
-                    
-                    ForEach(categories, id: \.self) { category in
+                    ForEach(bookCategories, id: \.self) { category in
                         HomeCategoryButton(
                             category,
                             scrollProxy: proxy,
