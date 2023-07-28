@@ -31,12 +31,7 @@ class AladinAPIManager: ObservableObject {
     @Published var searchResults: [briefBookItem.Item] = [] // 검색 결과 리스트를 저장하는 변수
     @Published var searchBookInfo: detailBookItem.Item?     // 상세 도서 결과값을 저장하는 변수
     
-    
-    // 아래 코드 리팩토링 예정
-    
-    @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수
-    
-    //
+    @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수 - 리팩토링 예정
     
     // MARK: - FUNCTIONS
     
@@ -66,8 +61,6 @@ class AladinAPIManager: ObservableObject {
         
         self.categories = categories
     }
-    
-    
     
     // MARK: - ALADIN API FUNCTIONS
     
@@ -104,17 +97,15 @@ class AladinAPIManager: ObservableObject {
             case .success(let data):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
-                    DispatchQueue.main.async {
-                        switch queryType {
-                        case .bestSeller:
-                            self.bestSeller = data.item
-                        case .itemNewAll:
-                            self.itemNewAll = data.item
-                        case .itemNewSpecial:
-                            self.itemNewSpecial = data.item
-                        case .blogBest:
-                            self.blogBest = data.item
-                        }
+                    switch queryType {
+                    case .bestSeller:
+                        self.bestSeller = data.item
+                    case .itemNewAll:
+                        self.itemNewAll = data.item
+                    case .itemNewSpecial:
+                        self.itemNewSpecial = data.item
+                    case .blogBest:
+                        self.blogBest = data.item
                     }
                 }
             case .failure(let error):
@@ -162,17 +153,14 @@ class AladinAPIManager: ObservableObject {
             case .success(let results):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
-//                    DispatchQueue.main.async { [weak self] in
-                        // 다른 도서를 새로 검색한다면 검색 결과 초기화하기
-                        if index == 1 {
-                            self.searchResults.removeAll()
-                        }
-                        // 도서 검색 결과 및 카테고리 목록이 자연스럽게 나타나도록 함
-                        withAnimation(.easeInOut(duration: 0.1)) {
-                            self.searchResults.append(contentsOf: results.item)
-                            self.getCategory(bookItems: self.searchResults)
-                        }
-//                    }
+                    if index == 1 {
+                        self.searchResults.removeAll()
+                    }
+
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        self.searchResults.append(contentsOf: results.item)
+                        self.getCategory(bookItems: self.searchResults)
+                    }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         self.isPresentingSearchLoadingToastAlert = false
@@ -216,12 +204,8 @@ class AladinAPIManager: ObservableObject {
             case .success(let detailBookInfo):
                 guard let statusCode = response.response?.statusCode else { return }
                 if statusCode == 200 {
-                    print(detailBookInfo)
-                    DispatchQueue.main.async {
-                        // 도서 상세 화면으로 넘어갈 때, 뷰가 자연스럽게 나타나도록 함
-                        withAnimation(.easeInOut(duration: 0.1)) {
-                            self.searchBookInfo = detailBookInfo.item[0]
-                        }
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        self.searchBookInfo = detailBookInfo.item[0]
                     }
                 }
             case .failure(let error):

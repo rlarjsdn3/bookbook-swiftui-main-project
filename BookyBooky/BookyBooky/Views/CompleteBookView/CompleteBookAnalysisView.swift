@@ -11,9 +11,6 @@ import RealmSwift
 
 struct CompleteBookAnalysisView: View {
     
-    // MARK: - INNER ENUM
-    
-    
     // MARK: - WRAPPER PROPERTIES
     
     @ObservedRealmObject var completeBook: CompleteBook
