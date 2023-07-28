@@ -8,6 +8,7 @@
 import SwiftUI
 import MessageUI
 import StoreKit
+import DeviceKit
 
 struct ProfileView: View {
     
@@ -20,9 +21,13 @@ struct ProfileView: View {
     // MARK: - PROPERTIES
     
     let receiverAddress = ["rlarjsdn3@naver.com"]
-    let mailBody = "✅ 버그 수정, 기능 개선 요청, 기타 등등 개발자에게 문의를 남겨주세요."
-    
-    let googleFormAddress = URL(string: "https://forms.gle/zA7GwG2zqRGLkEha7")!
+    let mailBody = """
+    ✅ 버그 수정, 기능 개선 요청, 기타 등등 개발자에게 문의를 남겨주세요.
+
+    ▪︎ 기종: \(Device.current.realDevice) - \(Device.current.diagonal)인치
+    ▪︎ 버전: \(Device.current.systemName ?? "(알 수 없음)") \(Device.current.systemVersion ?? "(알 수 없음)")
+    ▪︎ Soc: \(Device.current.cpu.description)
+    """
     
     // MARK: - BODY
     
@@ -47,11 +52,6 @@ struct ProfileView: View {
             // 이 구문을 써주지 않으면 시트 하단이 뻥 비어보이게 됨!
             .ignoresSafeArea(.container, edges: .bottom)
             .presentationCornerRadius(30)
-        }
-        .sheet(isPresented: $isPresentSafariBrowserSheetView) {
-            SafariBrowserView(url: googleFormAddress)
-                .ignoresSafeArea(.container, edges: .bottom)
-                .presentationCornerRadius(30)
         }
         .alert("메일을 보낼 수 없습니다.", isPresented: $isPresentAlertSendMailErrorAlert) {
             // ...
@@ -89,8 +89,6 @@ extension ProfileView {
     var inquirySection: some View {
         Section {
             inquiryButton
-            
-            bugReportButton
         } header: {
             Text("문의")
         } footer: {
@@ -107,14 +105,6 @@ extension ProfileView {
             }
         } label: {
             rowLabel("envelope.fill", title: "개발자에게 문의하기", color: Color.blue)
-        }
-    }
-    
-    var bugReportButton: some View {
-        Button {
-            isPresentSafariBrowserSheetView = true
-        } label: {
-            rowLabel("ladybug.fill", title: "건의 및 버그 리포트", color: Color.orange)
         }
     }
     
