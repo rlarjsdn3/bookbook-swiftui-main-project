@@ -8,32 +8,27 @@
 import DeviceKit
 import Foundation
 
-class AppDeviceInfoProvider {
+struct AppDeviceInfoProvider {
     
-    let device = Device.current
-    
-    // 싱글톤(Singleton)
-    static let current = AppDeviceInfoProvider()
-    
-    private init() { }
-    
-    var deviceName: String {
-        return device.realDevice.description
+    static private let device = Device.current
+
+    static var deviceName: String {
+        return "\(device.realDevice.description)"
     }
     
-    var deviceOS: String {
+    static var deviceOS: String {
         return "\(device.systemName ?? "Unknown OS") \(device.systemVersion ?? "Unknown Version")"
     }
     
-    var deviceDiagonal: String {
-        return "\(device.diagonal)인치"
+    static var deviceDiagonal: String {
+        return "\(device.diagonal)"
     }
     
-    var appVersion: String {
+    static var appVersion: String {
         return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     }
     
-    var appBuild: String {
+    static var appBuild: String {
         return Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     }
 }

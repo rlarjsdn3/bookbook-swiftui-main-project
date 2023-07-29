@@ -21,21 +21,15 @@ struct ProfileView: View {
     // MARK: - PROPERTIES
     
     let receiverAddress = ["rlarjsdn3@naver.com"]
-    let mailBody: String
-    
-    init() {
-        let appDeviceInfo = AppDeviceInfoProvider.current
-        
-        mailBody = """
-        ✅ 버그 수정, 기능 개선 요청, 기타 등등 개발자에게 문의를 남겨주세요.
+    let mailBody: String = """
+    ✅ 버그 수정, 기능 개선 요청, 기타 등등 개발자에게 문의를 남겨주세요.
 
-        -----------------------------
-        ▪︎ 앱 버전(빌드): \(appDeviceInfo.appVersion) (\(appDeviceInfo.appBuild))
-        ▪︎ 디바이스 기종: \(appDeviceInfo.deviceName) (\(appDeviceInfo.deviceDiagonal))
-        ▪︎ 디바이스 버전: \(appDeviceInfo.deviceOS)
-        -----------------------------
-        """
-    }
+    -----------------------------
+    ▪︎ 앱 버전(빌드): \(AppDeviceInfoProvider.appVersion) (\(AppDeviceInfoProvider.appBuild))
+    ▪︎ 디바이스 기종: \(AppDeviceInfoProvider.deviceName) (\(AppDeviceInfoProvider.deviceDiagonal)인치)
+    ▪︎ 디바이스 버전: \(AppDeviceInfoProvider.deviceOS)
+    -----------------------------
+    """
     
     // MARK: - BODY
     
@@ -56,7 +50,7 @@ struct ProfileView: View {
                         
                         Spacer()
                         
-                        Text(AppDeviceInfoProvider.current.appVersion)
+                        Text(AppDeviceInfoProvider.appVersion)
                             .foregroundStyle(Color.secondary)
                     }
                     
@@ -65,7 +59,7 @@ struct ProfileView: View {
                         
                         Spacer()
                         
-                        Text(AppDeviceInfoProvider.current.appBuild)
+                        Text(AppDeviceInfoProvider.appBuild)
                             .foregroundStyle(Color.secondary)
                     }
                 } header: {
@@ -144,7 +138,7 @@ extension ProfileView {
             Button {
                 requestReview()
             } label: {
-                rowLabel("pencil", title: "리뷰 남기기", color: Color.mint)
+                rowLabel("pencil", title: "평가 및 리뷰 남기기", color: Color.mint)
             }
         } header: {
             Text("평가")
