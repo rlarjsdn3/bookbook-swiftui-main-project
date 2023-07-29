@@ -90,6 +90,7 @@
 		9E9B35B52A413945009234ED /* ListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B35B42A413945009234ED /* ListMode.swift */; };
 		9E9B35B72A414583009234ED /* ListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B35B62A414583009234ED /* ListType.swift */; };
 		9E9B35BA2A41C4DA009234ED /* ChartTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B35B92A41C4DA009234ED /* ChartTimeRange.swift */; };
+		9E9F351F2A74B7980071070B /* AppDeviceInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F351E2A74B7980071070B /* AppDeviceInfoProvider.swift */; };
 		9EA1983D2A01F18300D385CD /* CompleteBookTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1983A2A01F18300D385CD /* CompleteBookTopInfoView.swift */; };
 		9EA1983E2A01F18300D385CD /* CompleteBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1983B2A01F18300D385CD /* CompleteBookView.swift */; };
 		9EA1983F2A01F18300D385CD /* CompleteBookTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1983C2A01F18300D385CD /* CompleteBookTopBarView.swift */; };
@@ -236,6 +237,7 @@
 		9E9B35B42A413945009234ED /* ListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMode.swift; sourceTree = "<group>"; };
 		9E9B35B62A414583009234ED /* ListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListType.swift; sourceTree = "<group>"; };
 		9E9B35B92A41C4DA009234ED /* ChartTimeRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTimeRange.swift; sourceTree = "<group>"; };
+		9E9F351E2A74B7980071070B /* AppDeviceInfoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDeviceInfoProvider.swift; sourceTree = "<group>"; };
 		9EA1983A2A01F18300D385CD /* CompleteBookTopInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteBookTopInfoView.swift; sourceTree = "<group>"; };
 		9EA1983B2A01F18300D385CD /* CompleteBookView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteBookView.swift; sourceTree = "<group>"; };
 		9EA1983C2A01F18300D385CD /* CompleteBookTopBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteBookTopBarView.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				9E0C0A7229D28C0300F1F5F6 /* AladinAPI.swift */,
+				9E9F351E2A74B7980071070B /* AppDeviceInfoProvider.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -982,6 +985,7 @@
 				9E54AA0829D7C9B500FE080C /* SearchBookButton.swift in Sources */,
 				9EC71F9A2A1782B70056C11C /* ArrayExtension.swift in Sources */,
 				9EF659D32A397C62003CF6A5 /* AnalysisScrollView.swift in Sources */,
+				9E9F351F2A74B7980071070B /* AppDeviceInfoProvider.swift in Sources */,
 				9E0EF6F62A0DF78000747847 /* ActivityView.swift in Sources */,
 				9E54AA0C29D7CF6600FE080C /* RoundedRectTLBL.swift in Sources */,
 				9E9B35B52A413945009234ED /* ListMode.swift in Sources */,

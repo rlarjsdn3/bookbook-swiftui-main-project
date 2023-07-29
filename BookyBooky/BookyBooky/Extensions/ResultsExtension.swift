@@ -29,7 +29,7 @@ extension Results<CompleteBook> {
     /// 매개변수로 주어진 도서의  키 값(ID)과 동일한 값을 가지는 객체를 반환하는 함수입니다. 해당하는 객체가 존재하지 않는다면 nil을 반환합니다.
     /// - Parameter isbn13: 찾고자 하는 도서의 키 값(ID)
     /// - Returns: ReadingBook타입의 Obect 객체
-    func findReadingBookFirst(id: ObjectId) -> CompleteBook? {
+    func findFirst(id: ObjectId) -> CompleteBook? {
         if let readingBook = self.first(where: { $0._id == id }) {
             return readingBook
         }
