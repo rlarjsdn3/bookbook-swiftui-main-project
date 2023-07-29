@@ -29,9 +29,11 @@ struct ProfileView: View {
         mailBody = """
         ✅ 버그 수정, 기능 개선 요청, 기타 등등 개발자에게 문의를 남겨주세요.
 
+        -----------------------------
         ▪︎ 앱 버전(빌드): \(appDeviceInfo.appVersion) (\(appDeviceInfo.appBuild))
-        ▪︎ 디바이스 기종: \(appDeviceInfo.deviceName) - \(appDeviceInfo.deviceDiagonal)
+        ▪︎ 디바이스 기종: \(appDeviceInfo.deviceName) (\(appDeviceInfo.deviceDiagonal))
         ▪︎ 디바이스 버전: \(appDeviceInfo.deviceOS)
+        -----------------------------
         """
     }
     
@@ -47,6 +49,29 @@ struct ProfileView: View {
                 #if false
                 assistSection
                 #endif
+                
+                Section {
+                    HStack {
+                        Text("버전")
+                        
+                        Spacer()
+                        
+                        Text(AppDeviceInfoProvider.current.appVersion)
+                            .foregroundStyle(Color.secondary)
+                    }
+                    
+                    HStack {
+                        Text("빌드")
+                        
+                        Spacer()
+                        
+                        Text(AppDeviceInfoProvider.current.appBuild)
+                            .foregroundStyle(Color.secondary)
+                    }
+                } header: {
+                    Text("앱 정보")
+                }
+
             }
             .navigationTitle("설정")
         }
