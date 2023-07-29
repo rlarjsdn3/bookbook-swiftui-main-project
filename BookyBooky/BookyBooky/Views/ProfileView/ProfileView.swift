@@ -21,13 +21,19 @@ struct ProfileView: View {
     // MARK: - PROPERTIES
     
     let receiverAddress = ["rlarjsdn3@naver.com"]
-    let mailBody = """
-    ✅ 버그 수정, 기능 개선 요청, 기타 등등 개발자에게 문의를 남겨주세요.
+    let mailBody: String
+    
+    init() {
+        let appDeviceInfo = AppDeviceInfoProvider.current
+        
+        mailBody = """
+        ✅ 버그 수정, 기능 개선 요청, 기타 등등 개발자에게 문의를 남겨주세요.
 
-    ▪︎ 기종: \(Device.current.realDevice) - \(Device.current.diagonal)인치
-    ▪︎ 버전: \(Device.current.systemName ?? "(알 수 없음)") \(Device.current.systemVersion ?? "(알 수 없음)")
-    ▪︎ Soc: \(Device.current.cpu.description)
-    """
+        ▪︎ 앱 버전(빌드): \(appDeviceInfo.appVersion) (\(appDeviceInfo.appBuild))
+        ▪︎ 디바이스 기종: \(appDeviceInfo.deviceName) - \(appDeviceInfo.deviceDiagonal)
+        ▪︎ 디바이스 버전: \(appDeviceInfo.deviceOS)
+        """
+    }
     
     // MARK: - BODY
     
