@@ -83,6 +83,7 @@
 		9E7D40892A284285007368CF /* AddSentenceSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D40882A284285007368CF /* AddSentenceSheetView.swift */; };
 		9E8350B32A57AB9B00844233 /* SafariBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8350B22A57AB9B00844233 /* SafariBrowserView.swift */; };
 		9E852F1729E1283C00A78EC2 /* BookShelfTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E852F1629E1283C00A78EC2 /* BookShelfTopBarView.swift */; };
+		9E8FCDEA2A7946B100A78BED /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8FCDE92A7946B100A78BED /* AlertManager.swift */; };
 		9E99485B2A52B5D800EA3490 /* HomeViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E99485A2A52B5D800EA3490 /* HomeViewData.swift */; };
 		9E99485E2A52B6CA00EA3490 /* TrackableVerticalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E99485D2A52B6CA00EA3490 /* TrackableVerticalScrollView.swift */; };
 		9E9948682A53071700EA3490 /* AnimateNumberText in Frameworks */ = {isa = PBXBuildFile; productRef = 9E9948672A53071700EA3490 /* AnimateNumberText */; };
@@ -231,6 +232,7 @@
 		9E7D40882A284285007368CF /* AddSentenceSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSentenceSheetView.swift; sourceTree = "<group>"; };
 		9E8350B22A57AB9B00844233 /* SafariBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariBrowserView.swift; sourceTree = "<group>"; };
 		9E852F1629E1283C00A78EC2 /* BookShelfTopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfTopBarView.swift; sourceTree = "<group>"; };
+		9E8FCDE92A7946B100A78BED /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		9E99485A2A52B5D800EA3490 /* HomeViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewData.swift; sourceTree = "<group>"; };
 		9E99485D2A52B6CA00EA3490 /* TrackableVerticalScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableVerticalScrollView.swift; sourceTree = "<group>"; };
 		9E9B35B22A41288C009234ED /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
@@ -364,8 +366,6 @@
 		9E06070C29DD5160000D542D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				9E9948592A52B5C800EA3490 /* ViewData */,
-				9E9948582A52B5BD00EA3490 /* Managers */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -566,14 +566,15 @@
 			name = AddSentenceSheetView;
 			sourceTree = "<group>";
 		};
-		9E9948582A52B5BD00EA3490 /* Managers */ = {
+		9E9948582A52B5BD00EA3490 /* Servieces */ = {
 			isa = PBXGroup;
 			children = (
 				9E06070D29DD516D000D542D /* RealmManager.swift */,
 				9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */,
 				9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */,
+				9E8FCDE92A7946B100A78BED /* AlertManager.swift */,
 			);
-			path = Managers;
+			path = Servieces;
 			sourceTree = "<group>";
 		};
 		9E9948592A52B5C800EA3490 /* ViewData */ = {
@@ -677,6 +678,7 @@
 				9E7BFC7729F0F23D00D72648 /* AnalysisView */,
 				9E061D5F29FAA87C0042E3B1 /* ProfileView */,
 				9ECA326629D11BB4004D6D5B /* CustomMainTabView */,
+				9E9948592A52B5C800EA3490 /* ViewData */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -726,6 +728,7 @@
 				9E0C0A6029D1D85500F1F5F6 /* Extensions */,
 				9E524DF929D1D13700FD7B98 /* Shapes */,
 				9E99485F2A52B6D400EA3490 /* Customs */,
+				9E9948582A52B5BD00EA3490 /* Servieces */,
 				9E06070C29DD5160000D542D /* ViewModels */,
 				9ECA326729D11BC1004D6D5B /* Models */,
 				9EB749F329D5C26100610D97 /* Enums */,
@@ -933,6 +936,7 @@
 				9E54AA0029D6704900FE080C /* SearchSheetScrollView.swift in Sources */,
 				9E524DF829D1CF3500FD7B98 /* TabButton.swift in Sources */,
 				9E0C0A6629D1DF4800F1F5F6 /* HomeTopBarView.swift in Sources */,
+				9E8FCDEA2A7946B100A78BED /* AlertManager.swift in Sources */,
 				9E0C0A5F29D1D85200F1F5F6 /* ViewExtension.swift in Sources */,
 				9E1F24A22A53C5D80068F412 /* CompleteBookViewData.swift in Sources */,
 				9E24DD322A14F8B400366640 /* HomeCompleteBookTabView.swift in Sources */,

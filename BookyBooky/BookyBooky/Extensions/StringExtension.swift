@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    func contains(contentsOf elements: [String]) -> Bool {
+    func contains(contentsOf elements: [String]) ->  Bool {
         for element in elements {
             if self == element {
                 return true

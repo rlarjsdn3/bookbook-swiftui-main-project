@@ -15,12 +15,6 @@ class RealmManager: ObservableObject {
     
     lazy var realm: Realm! = openLocalRealm()
     
-    @Published var isPresentingReadingBookAddSuccessToastAlert = false
-    @Published var isPresentingReadingBookEditSuccessToastAlert = false
-    @Published var isPresentingReadingBookRenewalSuccessToastAlert = false
-    @Published var isPresentingFavoriteBookAddSuccessToastAlert = false
-    @Published var isPresentingAddSentenceSuccessToastAlert = false
-    
     // MARK: - FUNCTIONS
     
     func openLocalRealm() -> Realm? {
@@ -260,27 +254,5 @@ extension RealmManager {
         try! realm.write {
             object.sentences.remove(at: index)
         }
-    }
-}
-
-extension RealmManager {
-    func showReadingBookAddSuccessToastAlert(_ color: Color) -> AlertToast {
-        AlertToast(displayMode: .alert, type: .complete(color), title: "도서 추가 완료")
-    }
-    
-    func showReadingBookEditSuccessToastAlert(_ color: Color) -> AlertToast {
-        AlertToast(displayMode: .alert, type: .complete(color), title: "도서 편집 완료")
-    }
-    
-    func showReadingBookRenewalSuccessToastAlert(_ color: Color) -> AlertToast {
-        AlertToast(displayMode: .alert, type: .complete(color), title: "도서 갱신 완료")
-    }
-    
-    func showFavoriteBookAddSuccessToastAlert(_ color: Color) -> AlertToast {
-        AlertToast(displayMode: .alert, type: .complete(color), title: "찜하기 완료")
-    }
-    
-    func showAddSentenceSuccessToastAlert(_ color: Color) -> AlertToast {
-        AlertToast(displayMode: .alert, type: .complete(color), title: "문장 추가 완료")
     }
 }

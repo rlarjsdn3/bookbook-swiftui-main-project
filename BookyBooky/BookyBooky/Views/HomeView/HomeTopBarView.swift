@@ -27,7 +27,7 @@ struct HomeTopBarView: View {
     
     var showingTopBarDividerYPositionValue: CGFloat {
         if recentActivityCount == 0 {
-            return 215.0
+            return CGFloat(215.0)
         } else {
             return CGFloat(120 + (70 * recentActivityCount))
         }
@@ -35,7 +35,7 @@ struct HomeTopBarView: View {
     
     var showingUtilMenuYPositionValue: CGFloat {
         if recentActivityCount == 0 {
-            return 293.0
+            return CGFloat(293.0)
         } else {
             return CGFloat(158 + (70 * recentActivityCount))
         }

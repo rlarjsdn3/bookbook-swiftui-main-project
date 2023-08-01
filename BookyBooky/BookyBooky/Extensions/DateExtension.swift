@@ -10,9 +10,8 @@ import Foundation
 extension Date {
     /// 앱에서 사용되는 가장 일반적인 형식의 날짜 문자열을 만들어 반환하는 함수입니다.
     var standardDateFormat: String {
-        print(self.description)
-        return self.formatted(
-            .dateTime.year().month().day().weekday().hour().minute().locale(Locale(identifier: "ko_kr"))
+        self.formatted(
+            .dateTime.year().month().day().weekday().locale(Locale(identifier: "ko_kr"))
         )
     }
     
@@ -23,10 +22,11 @@ extension Date {
     }
     
     /// 사용자가 원하는 형식의 날짜 문자열을 만들어 반환하는 함수입니다.
-    func toFormat(_ format: String, locale: Locale = Locale(identifier: "ko_kr")) -> String {
+    func toFormat(_ format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        dateFormatter.locale = locale
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return dateFormatter.string(from: self)
     }
     

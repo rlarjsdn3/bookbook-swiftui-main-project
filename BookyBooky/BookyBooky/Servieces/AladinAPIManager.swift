@@ -19,9 +19,13 @@ class AladinAPIManager: ObservableObject {
     
     // MARK: - WRAPPER PROPERTIES
     
+    // 알럿
+    
     @Published var isPresentingSearchLoadingToastAlert = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
     @Published var isPresentingSearchErrorToastAlert = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
     @Published var isPresentingDetailBookErrorToastAlert = false      // 도서 상세 에러 UI의 출력을 제어하는 변수
+    
+    // 이건 뷰 데이터 속으로 옮겨도 될거 같음
     
     @Published var bestSeller: [briefBookItem.Item] = []     // 베스트셀러 리스트를 저장하는 변수
     @Published var itemNewAll: [briefBookItem.Item] = []     // 신간 도서 리스트를 저장하는 변수
@@ -32,6 +36,9 @@ class AladinAPIManager: ObservableObject {
     @Published var searchBookInfo: detailBookItem.Item?     // 상세 도서 결과값을 저장하는 변수
     
     @Published var categories: [Category] = [.all] // 도서 카테고리 분류 정보를 저장하는 변수 - 리팩토링 예정
+    
+    
+    // alamofire는 콜백 함수 형식으로 수정 -> Result 반환
     
     // MARK: - FUNCTIONS
     

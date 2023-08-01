@@ -10,7 +10,7 @@ import RealmSwift
 
 struct CompleteBookButton: View {
     
-    // MARK: - WRAPPER PROPERTIES
+    // MARK: - WRAPPER PROPERTIE
     
     @State private var isPresentingReadingBookView = false
     
@@ -110,9 +110,9 @@ extension CompleteBookButton {
     }
 }
 
-//#Preview {
-//    CompleteBookButton(
-//        CompleteBook.preview,
-//        type: .home
-//    )
-//}
+#Preview {
+    CompleteBookButton(
+        CompleteBook.preview,
+        type: .home
+    )
+}
