@@ -17,6 +17,8 @@ struct BookListScrollView: View {
     
     // MARK: - PROPERTIES
     
+    let haptic = HapticManager()
+    
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -24,7 +26,7 @@ struct BookListScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var tabBookList: [briefBookItem.Item] {
+    var tabBookList: [SimpleBookInfo.Item] {
         switch bookListViewData.selectedListTab {
         case .bestSeller:
             return bookListViewData.bestSeller
@@ -42,27 +44,6 @@ struct BookListScrollView: View {
     
     var body: some View {
         bookScrollContent
-    }
-    
-    func requestBookListInfo() {
-        for type in BookListTab.allCases {
-            aladinAPIManager.requestBookListAPI(of: type) { book in
-                DispatchQueue.main.async {
-                    if let book = book {
-                        switch type {
-                        case .bestSeller:
-                            bookListViewData.bestSeller = book.item
-                        case .itemNewAll:
-                            bookListViewData.itemNewAll = book.item
-                        case .itemNewSpecial:
-                            bookListViewData.itemNewSpecial = book.item
-                        case .blogBest:
-                            bookListViewData.blogBest = book.item
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -94,37 +75,6 @@ extension BookListScrollView {
         .padding(.top, 20)
         .padding(.horizontal)
         .padding(.bottom, 40)
-    }
-    
-    var errorLabel: some View {
-        VStack {
-            ErrorLabel
-            
-            refreshButton
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-    
-    var ErrorLabel: some View {
-        VStack(spacing: 5) {
-            Text("도서 정보 불러오기 실패")
-                .font(.title2)
-                .fontWeight(.bold)
-
-            Text("잠시 후 다시 시도하십시오.")
-                .font(.headline)
-                .foregroundColor(.secondary)
-        }
-        .padding(.bottom, 0)
-    }
-    
-    var refreshButton: some View {
-        Button("다시 불러오기") {
-            
-            HapticManager.shared.impact(.rigid)
-        }
-        .buttonStyle(.borderedProminent)
-        .padding()
     }
 }
 

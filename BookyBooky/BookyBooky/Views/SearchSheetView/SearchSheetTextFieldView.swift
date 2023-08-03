@@ -21,6 +21,8 @@ struct SearchSheetTextFieldView: View {
     
     @FocusState var focusedField: Bool
     
+    let haptic = HapticManager()
+    
     
     // MARK: - BODY
     
@@ -47,7 +49,7 @@ struct SearchSheetTextFieldView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
             searchSheetViewData.searchIndex = 1
         }
-        aladinAPIManager.requestBookSearchAPI(query) { book in
+        aladinAPIManager.requestBookSearchResult(query) { book in
             DispatchQueue.main.async {
                 if let book = book {
                     searchSheetViewData.bookSearchResult = book.item
@@ -65,10 +67,10 @@ struct SearchSheetTextFieldView: View {
             searchSheetViewData.selectedCategoryFA = .all
         }
         searchSheetViewData.selectedCategory = .all
-        HapticManager.shared.impact(.rigid)
+        haptic.impact(.rigid)
     }
     
-    func getCategory(bookItems: [briefBookItem.Item]) -> [Category] {
+    func getCategory(bookItems: [SimpleBookInfo.Item]) -> [Category] {
         var categories: [Category] = []
         
         // 중복되지 않게 카테고리 항목 저장하기

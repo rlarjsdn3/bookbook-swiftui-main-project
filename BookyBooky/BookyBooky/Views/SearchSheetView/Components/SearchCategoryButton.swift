@@ -19,6 +19,8 @@ struct SearchCategoryButton: View {
     let namespace: Namespace.ID
     let scrollProxy: ScrollViewProxy
     
+    let haptic = HapticManager()
+    
     // MARK: - INTIALIZER
     
     init(_ type: Category,
@@ -37,7 +39,7 @@ struct SearchCategoryButton: View {
                 scrollProxy.scrollTo(type.rawValue)
             }
             searchSheetViewData.selectedCategory = type
-            HapticManager.shared.impact(.light)
+            haptic.impact(.light)
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 15)

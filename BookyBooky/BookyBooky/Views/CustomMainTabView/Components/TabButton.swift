@@ -15,6 +15,8 @@ struct TabButton: View {
     @Binding var selectedTab: CustomMainTab
     var namespace: Namespace.ID
     
+    let haptic = HapticManager()
+    
     // MARK: - INTIALIZER
     
     init(
@@ -33,7 +35,7 @@ struct TabButton: View {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                 selectedTab = type
             }
-            HapticManager.shared.impact(.light)
+            haptic.impact(.light)
         } label: {
             VStack(spacing: -5) {
                 Image(systemName: type.icon)

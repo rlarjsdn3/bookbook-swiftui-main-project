@@ -23,11 +23,13 @@ struct SearchBookMainInfoView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: detailBookItem.Item
+    let bookItem: DetailBookInfo.Item
+    
+    let haptic = HapticManager()
     
     // MARK: - INTALIZER
     
-    init(_ bookItem: detailBookItem.Item) {
+    init(_ bookItem: DetailBookInfo.Item) {
         self.bookItem = bookItem
     }
     
@@ -105,7 +107,7 @@ extension SearchBookMainInfoView {
                     realmManager.deleteFavoriteBook(bookItem.isbn13)
                 }
             }
-            HapticManager.shared.impact(.rigid)
+            haptic.impact(.rigid)
         } label: {
             if isFavorite {
                 Image(systemName: "heart.fill")
@@ -130,7 +132,7 @@ extension SearchBookMainInfoView {
 
 struct SearchInfoTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookMainInfoView(detailBookItem.Item.preview)
+        SearchBookMainInfoView(DetailBookInfo.Item.preview)
             .environmentObject(RealmManager())
             .environmentObject(AlertManager())
     }

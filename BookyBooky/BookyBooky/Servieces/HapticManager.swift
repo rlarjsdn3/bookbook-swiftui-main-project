@@ -9,9 +9,8 @@
 import UIKit
 
 class HapticManager {
-    static let shared = HapticManager()
     
-    private init() { }
+    init() { }
     
     func impact(_ feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle) {
         UIImpactFeedbackGenerator(style: feedbackStyle).impactOccurred()

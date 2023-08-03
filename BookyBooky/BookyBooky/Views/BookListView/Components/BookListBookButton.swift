@@ -12,7 +12,7 @@ struct BookListBookButton: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: briefBookItem.Item
+    let bookItem: SimpleBookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -23,7 +23,7 @@ struct BookListBookButton: View {
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: briefBookItem.Item) {
+    init(_ bookItem: SimpleBookInfo.Item) {
         self.bookItem = bookItem
     }
     
@@ -123,6 +123,6 @@ extension BookListBookButton {
 
 struct SearchCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        BookListBookButton(briefBookItem.Item.preview)
+        BookListBookButton(SimpleBookInfo.Item.preview)
     }
 }

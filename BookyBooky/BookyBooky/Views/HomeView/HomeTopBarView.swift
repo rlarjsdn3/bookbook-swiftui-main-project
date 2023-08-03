@@ -19,6 +19,9 @@ struct HomeTopBarView: View {
     @State private var isPresentingSettingsView = false
     @State private var isPresentingSearchSheetView = false
     
+    
+    let haptic = HapticManager()
+    
     // MARK: - COMPUTED PROPERTIES
     
     var recentActivityCount: Int {
@@ -159,7 +162,7 @@ extension HomeTopBarView {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                         homeViewData.selectedBookSort = sort
                     }
-                    HapticManager.shared.impact(.rigid)
+                    haptic.impact(.rigid)
                 }
             } label: {
                 Text(sort.name)

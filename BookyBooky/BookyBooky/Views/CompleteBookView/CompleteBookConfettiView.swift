@@ -40,6 +40,7 @@ struct CompleteBookConfettiView: View {
     // MARK: - PROPERTIES
     
     let completeBook: CompleteBook
+    let haptic = HapticManager()
     
     // MARK: - INTIALIZER
     
@@ -61,7 +62,7 @@ struct CompleteBookConfettiView: View {
             }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    HapticManager.shared.notification(type: .success)
+                    haptic.notification(type: .success)
                     counter += 1
                 }
             }

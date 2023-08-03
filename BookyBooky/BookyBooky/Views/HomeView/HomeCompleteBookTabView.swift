@@ -39,6 +39,8 @@ struct HomeCompleteBookTabView: View {
     
     @State private var bookCategories: [Category] = []
     
+    
+    
     // MARK: - PROPERTIES
     
     let columns = [
@@ -46,7 +48,9 @@ struct HomeCompleteBookTabView: View {
         GridItem(.flexible())
     ]
     let scrollProxy: ScrollViewProxy
+    
     var defaultBottomPaddingValue: CGFloat = 30.0
+    let haptic = HapticManager()
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -229,7 +233,7 @@ extension HomeCompleteBookTabView {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                             homeViewData.selectedBookSort = sort
                         }
-                        HapticManager.shared.impact(.rigid)
+                        haptic.impact(.rigid)
                     }
                 }
             } label: {

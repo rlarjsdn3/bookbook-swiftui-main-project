@@ -43,7 +43,7 @@ struct BookListView: View {
     func requestBookListInfo() {
         alertManager.isPresentingBookListLoadingToastAlert = true
         for type in BookListTab.allCases {
-            aladinAPIManager.requestBookListAPI(of: type) { book in
+            aladinAPIManager.requestBookList(of: type) { book in
                 DispatchQueue.main.async {
                     if let book = book {
                         switch type {

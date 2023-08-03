@@ -20,12 +20,12 @@ struct SearchBookButton: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: briefBookItem.Item
+    let bookItem: SimpleBookInfo.Item
     let mode: ListMode
     
     // MARK: - INTIALIZER
     
-    init(_ book: briefBookItem.Item, mode: ListMode) {
+    init(_ book: SimpleBookInfo.Item, mode: ListMode) {
         self.bookItem = book
         self.mode = mode
     }
@@ -245,7 +245,7 @@ extension SearchBookButton {
 
 struct SearchBookCellButton_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookButton(briefBookItem.Item.preview, mode: .list)
+        SearchBookButton(SimpleBookInfo.Item.preview, mode: .list)
             .previewLayout(.sizeThatFits)
     }
 }

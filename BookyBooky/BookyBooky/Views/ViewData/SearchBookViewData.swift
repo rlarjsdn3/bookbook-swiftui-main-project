@@ -8,5 +8,6 @@
 import SwiftUI
 
 final class SearchBookViewData: ObservableObject {
+    @Published var detailBookInfo: DetailBookInfo.Item?
     @Published var isLoadingCoverImage = true
 }

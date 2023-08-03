@@ -20,6 +20,8 @@ struct BookShelfBookListTextFieldView: View {
     
     let scrollProxy: ScrollViewProxy
     
+    let haptic = HapticManager()
+    
     // MARK: - INTALIZER
     
     init(scrollProxy: ScrollViewProxy) {
@@ -47,7 +49,7 @@ struct BookShelfBookListTextFieldView: View {
                         bookShelfBookListViewData.isPresentingShowAllButton = false
                     }
                 }
-                HapticManager.shared.impact(.rigid)
+                haptic.impact(.rigid)
             }
         }
     }
@@ -91,7 +93,7 @@ extension BookShelfBookListTextFieldView {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
                             bookShelfBookListViewData.selectedSort = criteria
                         }
-                        HapticManager.shared.impact(.rigid)
+                        haptic.impact(.rigid)
                     }
                 }
             } label: {

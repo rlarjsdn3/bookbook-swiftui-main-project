@@ -26,8 +26,8 @@ struct SearchSheetScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var filteredSearchBooks: [briefBookItem.Item] {
-        var filtered: [briefBookItem.Item] = []
+    var filteredSearchBooks: [SimpleBookInfo.Item] {
+        var filtered: [SimpleBookInfo.Item] = []
         
         if searchSheetViewData.selectedCategory == .all {
             return searchSheetViewData.bookSearchResult
@@ -112,7 +112,7 @@ extension SearchSheetScrollView {
         Button {
             searchSheetViewData.searchIndex += 1
             alertManager.isPresentingSearchLoadingToastAlert = true
-            aladinAPIManager.requestBookSearchAPI(
+            aladinAPIManager.requestBookSearchResult(
                 searchSheetViewData.inputQuery,
                 page: searchSheetViewData.searchIndex
             ) { book in

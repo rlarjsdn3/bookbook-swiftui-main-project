@@ -10,7 +10,7 @@ import RealmSwift
 
 // MARK: - STRUCT
 
-struct detailBookItem: Codable {
+struct DetailBookInfo: Codable {
     var totalResults: Int           // 검색 결과의 총 개수
     
     var item: [Item]
@@ -35,7 +35,7 @@ struct detailBookItem: Codable {
 
 // MARK: - EXTENSIONS
 
-extension detailBookItem.Item {
+extension DetailBookInfo.Item {
     var bookCategory: Category {
         return categoryName.refinedCategory
     }
@@ -61,8 +61,8 @@ extension detailBookItem.Item {
     }
 }
 
-extension detailBookItem.Item {
-    static var preview: detailBookItem.Item = .init(
+extension DetailBookInfo.Item {
+    static var preview: DetailBookInfo.Item = .init(
         title: "Java의 정석 - 3rd Edition",
         author: "남궁성 (지은이)",
         publisher: "도우출판",

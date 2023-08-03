@@ -16,11 +16,11 @@ struct SearchBookDescView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: detailBookItem.Item
+    let bookItem: DetailBookInfo.Item
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookItem.Item) {
+    init(_ bookItem: DetailBookInfo.Item) {
         self.bookItem = bookItem
     }
     
@@ -84,7 +84,7 @@ extension SearchBookDescView {
 
 struct SearchBookIntroView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookDescView(detailBookItem.Item.preview)
+        SearchBookDescView(DetailBookInfo.Item.preview)
             .environmentObject(SearchBookViewData())
     }
 }

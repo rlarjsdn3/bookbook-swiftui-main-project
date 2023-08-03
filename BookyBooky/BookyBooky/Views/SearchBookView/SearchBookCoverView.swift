@@ -17,11 +17,11 @@ struct SearchBookCoverView: View {
     
     // MARK: - PROERTIES
     
-    let bookItem: detailBookItem.Item
+    let bookItem: DetailBookInfo.Item
 
     // MARK: - INTIALIZER
     
-    init(_ bookItem: detailBookItem.Item) {
+    init(_ bookItem: DetailBookInfo.Item) {
         self.bookItem = bookItem
     }
     
@@ -67,7 +67,7 @@ extension SearchBookCoverView {
 
 struct SearchInfoCoverView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookCoverView(detailBookItem.Item.preview)
+        SearchBookCoverView(DetailBookInfo.Item.preview)
             .environmentObject(AladinAPIManager())
             .environmentObject(SearchBookViewData())
     }

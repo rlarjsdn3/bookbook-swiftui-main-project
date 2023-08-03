@@ -27,7 +27,7 @@ struct SearchBookView: View {
     // MARK: - COMPUTED PROPERTIES
     
     var categoryThemeColor: Color {
-        if let bookDetail = aladinAPIManager.searchBookInfo {
+        if let bookDetail = searchBookViewData.detailBookInfo {
             return bookDetail.bookCategory.themeColor
         }
         return Color.black
@@ -45,7 +45,7 @@ struct SearchBookView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if let bookItem = aladinAPIManager.searchBookInfo {
+                if let bookItem = searchBookViewData.detailBookInfo {
                     VStack {
                         SearchBookCoverView(bookItem)
                             .overlay(alignment: .topLeading) {
@@ -79,10 +79,16 @@ struct SearchBookView: View {
             .environmentObject(searchBookViewData)
         }
         .onAppear {
-            aladinAPIManager.requestBookDetailAPI(isbn13)
+            aladinAPIManager.requestBookDetailInfo(isbn13) { book in
+                if let book = book {
+                    searchBookViewData.detailBookInfo = book.item[0]
+                } else {
+                    alertManager.isPresentingDetailBookErrorToastAlert = true
+                }
+            }
         }
         .onDisappear {
-            aladinAPIManager.searchBookInfo = nil
+            searchBookViewData.detailBookInfo = nil
         }
         .onChange(of: alertManager.isPresentingDetailBookErrorToastAlert) { error in
             if error {

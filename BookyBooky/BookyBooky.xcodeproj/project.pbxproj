@@ -30,9 +30,9 @@
 		9E0C0A6929D281BF00F1F5F6 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */; };
 		9E0C0A6C29D284FD00F1F5F6 /* BookListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6B29D284FD00F1F5F6 /* BookListView.swift */; };
 		9E0C0A6F29D2856B00F1F5F6 /* AladinAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */; };
-		9E0C0A7129D2866100F1F5F6 /* briefBookItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7029D2866100F1F5F6 /* briefBookItem.swift */; };
+		9E0C0A7129D2866100F1F5F6 /* SimpleBookInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7029D2866100F1F5F6 /* SimpleBookInfo.swift */; };
 		9E0C0A7329D28C0300F1F5F6 /* AladinAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7229D28C0300F1F5F6 /* AladinAPI.swift */; };
-		9E0C0A7729D2B5BC00F1F5F6 /* detailBookItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7629D2B5BC00F1F5F6 /* detailBookItem.swift */; };
+		9E0C0A7729D2B5BC00F1F5F6 /* DetailBookInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7629D2B5BC00F1F5F6 /* DetailBookInfo.swift */; };
 		9E0C0A7D29D3D0F900F1F5F6 /* BookListTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7C29D3D0F900F1F5F6 /* BookListTab.swift */; };
 		9E0C0A7F29D3D56A00F1F5F6 /* BookListTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C0A7E29D3D56A00F1F5F6 /* BookListTopBarView.swift */; };
 		9E0EF6F02A0DF4F600747847 /* ActivityCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0EF6EF2A0DF4F600747847 /* ActivityCellButton.swift */; };
@@ -178,10 +178,10 @@
 		9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		9E0C0A6B29D284FD00F1F5F6 /* BookListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListView.swift; sourceTree = "<group>"; };
 		9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AladinAPIManager.swift; sourceTree = "<group>"; };
-		9E0C0A7029D2866100F1F5F6 /* briefBookItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = briefBookItem.swift; sourceTree = "<group>"; };
+		9E0C0A7029D2866100F1F5F6 /* SimpleBookInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleBookInfo.swift; sourceTree = "<group>"; };
 		9E0C0A7229D28C0300F1F5F6 /* AladinAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AladinAPI.swift; sourceTree = "<group>"; };
 		9E0C0A7529D28D3400F1F5F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		9E0C0A7629D2B5BC00F1F5F6 /* detailBookItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = detailBookItem.swift; sourceTree = "<group>"; };
+		9E0C0A7629D2B5BC00F1F5F6 /* DetailBookInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBookInfo.swift; sourceTree = "<group>"; };
 		9E0C0A7C29D3D0F900F1F5F6 /* BookListTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListTab.swift; sourceTree = "<group>"; };
 		9E0C0A7E29D3D56A00F1F5F6 /* BookListTopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListTopBarView.swift; sourceTree = "<group>"; };
 		9E0EF6EF2A0DF4F600747847 /* ActivityCellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCellButton.swift; sourceTree = "<group>"; };
@@ -346,8 +346,8 @@
 		9E0434B729E53C5A009A2161 /* AladinAPI */ = {
 			isa = PBXGroup;
 			children = (
-				9E0C0A7029D2866100F1F5F6 /* briefBookItem.swift */,
-				9E0C0A7629D2B5BC00F1F5F6 /* detailBookItem.swift */,
+				9E0C0A7029D2866100F1F5F6 /* SimpleBookInfo.swift */,
+				9E0C0A7629D2B5BC00F1F5F6 /* DetailBookInfo.swift */,
 			);
 			path = AladinAPI;
 			sourceTree = "<group>";
@@ -910,7 +910,7 @@
 				9E0C0A7D29D3D0F900F1F5F6 /* BookListTab.swift in Sources */,
 				9E7A794729DA854D00A51856 /* SearchBookMainInfoView.swift in Sources */,
 				9E1A36C72A3DF242001E5E11 /* BookShelfCompBookTabView.swift in Sources */,
-				9E0C0A7129D2866100F1F5F6 /* briefBookItem.swift in Sources */,
+				9E0C0A7129D2866100F1F5F6 /* SimpleBookInfo.swift in Sources */,
 				9E24DD312A14F8B400366640 /* HomeScrollView.swift in Sources */,
 				9E595E442A2AD9C400F46F74 /* BookShelfSentenceListTextFieldView.swift in Sources */,
 				9E595E3A2A28BE8E00F46F74 /* SentenceCellButton.swift in Sources */,
@@ -999,7 +999,7 @@
 				9EF659D12A397549003CF6A5 /* AnalysisTopBarView.swift in Sources */,
 				9E0434AE29E2A38D009A2161 /* NavigationBarItemStyle.swift in Sources */,
 				9E54AA0429D6F54B00FE080C /* BookListBookButton.swift in Sources */,
-				9E0C0A7729D2B5BC00F1F5F6 /* detailBookItem.swift in Sources */,
+				9E0C0A7729D2B5BC00F1F5F6 /* DetailBookInfo.swift in Sources */,
 				9ED4B5DB2A34A0B0003BA12C /* DailyPagesReadChartView.swift in Sources */,
 				9E1C2F9E2A0BADAC00AB0BAE /* CompleteBookEditView.swift in Sources */,
 				9EC71F982A177D930056C11C /* ResultsExtension.swift in Sources */,
