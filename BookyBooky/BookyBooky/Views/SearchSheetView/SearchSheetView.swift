@@ -13,6 +13,7 @@ struct SearchSheetView: View {
     // MARK: - WRAPPPER PROPERTIES
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    @EnvironmentObject var alertManager: AlertManager
     
     @StateObject var searchSheetViewData = SearchSheetViewData()
     
@@ -31,16 +32,16 @@ struct SearchSheetView: View {
             aladinAPIManager.searchBookInfo = nil
             aladinAPIManager.searchResults.removeAll()
         }
-        .toast(isPresenting: $aladinAPIManager.isPresentingSearchLoadingToastAlert)  {
-            aladinAPIManager.showSearchLoadingToastAlert
+        .toast(isPresenting: $alertManager.isPresentingSearchLoadingToastAlert)  {
+            alertManager.showSearchLoadingToastAlert
         }
-        .toast(isPresenting: $aladinAPIManager.isPresentingSearchErrorToastAlert,
+        .toast(isPresenting: $alertManager.isPresentingSearchErrorToastAlert,
                duration: 2.0)  {
-            aladinAPIManager.showSearchErrorToastAlert
+            alertManager.showSearchErrorToastAlert
         }
-        .toast(isPresenting: $aladinAPIManager.isPresentingDetailBookErrorToastAlert,
+        .toast(isPresenting: $alertManager.isPresentingDetailBookErrorToastAlert,
               duration: 2.0) {
-           aladinAPIManager.showDetailBookErrorToastAlert
+           alertManager.showDetailBookErrorToastAlert
         }
         .presentationCornerRadius(30)
     }
@@ -52,5 +53,6 @@ struct SearchSheetView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSheetView()
             .environmentObject(AladinAPIManager())
+            .environmentObject(AlertManager())
     }
 }

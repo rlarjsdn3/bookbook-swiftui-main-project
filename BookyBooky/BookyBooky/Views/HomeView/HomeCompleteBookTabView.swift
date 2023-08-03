@@ -24,15 +24,19 @@ struct HomeCompleteBookTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var homeViewData: HomeViewData
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var homeViewData: HomeViewData
     
     @ObservedResults(CompleteBook.self) var compBooks
     
     @Namespace var namespace
     
     @State private var filteredCompleteBooks: [CompleteBook] = []
+    
+    
     @State private var selectedTabBookCount = 0
+    
+    
     @State private var bookCategories: [Category] = []
     
     // MARK: - PROPERTIES
@@ -200,8 +204,6 @@ extension HomeCompleteBookTabView {
         Menu {
             Section {
                 sortButtonGroup
-                
-                // TODO: - 읽고 있는 도서 리스트를 '격자 모드' 혹은 '리스트 모드'로 보게 만들기 (버전 1.1)
             } header: {
                 Text("도서 정렬")
             }
@@ -241,9 +243,7 @@ extension HomeCompleteBookTabView {
     
     var tabContent: some View {
         Group {
-            let readingBook = compBooks.get(.unfinished)
-            
-            if readingBook.isEmpty {
+            if filteredCompleteBooks.isEmpty {
                 noReadingBookLabel
             } else {
                 compBookButtonGroup
@@ -265,8 +265,6 @@ extension HomeCompleteBookTabView {
     
     var compBookButtonGroup: some View {
         Group {
-            // 리팩토링
-            
             LazyVGrid(columns: columns, spacing: 25) {
                 ForEach(filteredCompleteBooks) { completeBook in
                     CompleteBookButton(completeBook, type: .home)

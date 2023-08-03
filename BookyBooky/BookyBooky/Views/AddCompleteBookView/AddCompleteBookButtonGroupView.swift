@@ -105,7 +105,7 @@ extension AddCompleteBookButtonGroupView {
                     "isCompleted": false
                 ] as [String : Any])
             realmManager.addReadingBook(readingBook)
-            alertManager.isPresentingReadingBookEditSuccessToastAlert = true
+            alertManager.isPresentingReadingBookAddSuccessToastAlert = true
             dismiss()
         }
     }

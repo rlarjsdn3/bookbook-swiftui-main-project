@@ -12,6 +12,7 @@ struct BookListView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    @EnvironmentObject var alertManager: AlertManager
     
     @StateObject var bookListViewData = BookListViewData()
     
@@ -25,11 +26,35 @@ struct BookListView: View {
 
             BookListScrollView()
         }
-        .toast(isPresenting: $aladinAPIManager.isPresentingDetailBookErrorToastAlert,
+        .toast(isPresenting: $alertManager.isPresentingDetailBookErrorToastAlert,
                duration: 2.0, offsetY: -5) {
-            aladinAPIManager.showDetailBookErrorToastAlert
+            alertManager.showDetailBookErrorToastAlert
         }
+       .onAppear {
+           requestBookListInfo()
+       }
        .environmentObject(bookListViewData)
+    }
+    
+    func requestBookListInfo() {
+        for type in BookListTab.allCases {
+            aladinAPIManager.requestBookListAPI(of: type) { book in
+                DispatchQueue.main.async {
+                    if let book = book {
+                        switch type {
+                        case .bestSeller:
+                            bookListViewData.bestSeller = book.item
+                        case .itemNewAll:
+                            bookListViewData.itemNewAll = book.item
+                        case .itemNewSpecial:
+                            bookListViewData.itemNewSpecial = book.item
+                        case .blogBest:
+                            bookListViewData.blogBest = book.item
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -38,4 +63,5 @@ struct BookListView: View {
 #Preview {
     BookListView()
         .environmentObject(AladinAPIManager())
+        .environmentObject(AlertManager())
 }

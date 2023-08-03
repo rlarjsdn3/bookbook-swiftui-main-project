@@ -84,7 +84,7 @@ struct SearchBookView: View {
         .onDisappear {
             aladinAPIManager.searchBookInfo = nil
         }
-        .onChange(of: aladinAPIManager.isPresentingDetailBookErrorToastAlert) { error in
+        .onChange(of: alertManager.isPresentingDetailBookErrorToastAlert) { error in
             if error {
                 dismiss()
             }

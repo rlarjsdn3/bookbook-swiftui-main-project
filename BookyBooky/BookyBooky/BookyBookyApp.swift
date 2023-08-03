@@ -22,11 +22,15 @@ struct BookyBookyApp: App {
         WindowGroup {
             if let _ = realmManager.realm {
                 ContentView()
-                    .onAppear {
-                        for type in BookListTab.allCases {
-                            aladinAPIManager.requestBookListAPI(of: type)
-                        }
-                    }
+//                    .onAppear {
+//                        for type in BookListTab.allCases {
+//                            aladinAPIManager.requestBookListAPI(of: type) { item in
+//                                DispatchQueue.main.async {
+//                                    print(item)
+//                                }
+//                            }
+//                        }
+//                    }
                     .environmentObject(realmManager)
                     .environmentObject(aladinAPIManager)
                     .environmentObject(alertManager)

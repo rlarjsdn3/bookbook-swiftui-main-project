@@ -10,7 +10,7 @@ import AlertToast
 
 final class AlertManager: ObservableObject {
     
-    // MARK: - WRAPPER PROPERTIES (Realm 관련)
+    // MARK: - WRAPPER PROPERTIES (CRUD 관련)
     
     @Published var isPresentingReadingBookAddSuccessToastAlert = false
     @Published var isPresentingReadingBookEditSuccessToastAlert = false
@@ -18,7 +18,13 @@ final class AlertManager: ObservableObject {
     @Published var isPresentingFavoriteBookAddSuccessToastAlert = false
     @Published var isPresentingAddSentenceSuccessToastAlert = false
     
-    // MARK: - ALERT FUNCTIONS (Realm 관련)
+    // MARK: - WRAPPER PROPERTIES (API 통신 관련)
+    
+    @Published var isPresentingSearchLoadingToastAlert = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
+    @Published var isPresentingSearchErrorToastAlert = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
+    @Published var isPresentingDetailBookErrorToastAlert = false      // 도서 상세 에러 UI의 출력을 제어하는 변수
+    
+    // MARK: - ALERT FUNCTIONS (CRUD 관련)
     
     func showReadingBookAddSuccessToastAlert(_ color: Color) -> AlertToast {
         AlertToast(displayMode: .alert, type: .complete(color), title: "도서 추가 완료")
@@ -39,4 +45,10 @@ final class AlertManager: ObservableObject {
     func showAddSentenceSuccessToastAlert(_ color: Color) -> AlertToast {
         AlertToast(displayMode: .alert, type: .complete(color), title: "문장 추가 완료")
     }
+    
+    // MARK: - ALERT PROPERTIES (API 통신 관련)
+    
+    let showSearchLoadingToastAlert = AlertToast(displayMode: .banner(.pop), type: .loading, title: "도서 정보 불러오는 중...")
+    let showSearchErrorToastAlert = AlertToast(displayMode: .banner(.pop), type: .error(.red), title: "도서 정보 불러오기 실패", subTitle: "       잠시 후 다시 시도하십시오.")
+    let showDetailBookErrorToastAlert = AlertToast(displayMode: .banner(.pop), type: .error(.red), title: "도서 정보 불러오기 실패", subTitle: "       해당 도서 정보를 찾을 수 없습니다.")
 }

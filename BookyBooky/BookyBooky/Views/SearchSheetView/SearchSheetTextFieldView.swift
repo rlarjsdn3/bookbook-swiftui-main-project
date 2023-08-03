@@ -53,6 +53,30 @@ struct SearchSheetTextFieldView: View {
         searchSheetViewData.selectedCategory = .all
         HapticManager.shared.impact(.rigid)
     }
+    
+    func getCategory(bookItems: [briefBookItem.Item]) -> [Category] {
+        var categories: [Category] = []
+        
+        // 중복되지 않게 카테고리 항목 저장하기
+        for item in bookItems where !categories.contains(item.categoryName.refinedCategory) {
+            categories.append(item.categoryName.refinedCategory)
+        }
+        // 카테고리 항목에 '기타'가 있다면
+        if let index = categories.firstIndex(of: .etc) {
+            categories.remove(at: index) // '기타' 항목 제거
+            // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬
+            categories.sort {
+                $0.rawValue < $1.rawValue
+            }
+            // '기타'를 제일 뒤로 보내기
+            categories.append(.etc)
+        }
+        
+        // 카테고리의 첫 번째에 '전체' 항목 추가
+        categories.insert(.all, at: 0)
+        
+        return categories
+    }
 }
 
 // MARK: - EXTENSIONS
@@ -204,7 +228,7 @@ extension SearchSheetTextFieldView {
     
     func scrollCategoryButton(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack(spacing: -20) {
-            ForEach(aladinAPIManager.categories, id: \.self) { type in
+            ForEach(getCategory(bookItems: aladinAPIManager.searchResults), id: \.self) { type in
                 SearchCategoryButton(
                     type,
                     namespace: namespace,

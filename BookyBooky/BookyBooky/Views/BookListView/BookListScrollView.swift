@@ -24,16 +24,16 @@ struct BookListScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var bookList: [briefBookItem.Item] {
+    var tabBookList: [briefBookItem.Item] {
         switch bookListViewData.selectedListTab {
         case .bestSeller:
-            return aladinAPIManager.bestSeller
+            return bookListViewData.bestSeller
         case .itemNewAll:
-            return aladinAPIManager.itemNewAll
+            return bookListViewData.itemNewAll
         case .itemNewSpecial:
-            return aladinAPIManager.itemNewSpecial
+            return bookListViewData.itemNewSpecial
         case .blogBest:
-            return aladinAPIManager.blogBest
+            return bookListViewData.blogBest
         }
     }
     
@@ -43,6 +43,27 @@ struct BookListScrollView: View {
     var body: some View {
         bookScrollContent
     }
+    
+    func requestBookListInfo() {
+        for type in BookListTab.allCases {
+            aladinAPIManager.requestBookListAPI(of: type) { book in
+                DispatchQueue.main.async {
+                    if let book = book {
+                        switch type {
+                        case .bestSeller:
+                            bookListViewData.bestSeller = book.item
+                        case .itemNewAll:
+                            bookListViewData.itemNewAll = book.item
+                        case .itemNewSpecial:
+                            bookListViewData.itemNewSpecial = book.item
+                        case .blogBest:
+                            bookListViewData.blogBest = book.item
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: - EXTENSIONS
@@ -50,7 +71,7 @@ struct BookListScrollView: View {
 extension BookListScrollView {
     var bookScrollContent: some View {
         Group {
-            if bookList.isEmpty {
+            if tabBookList.isEmpty {
                 errorLabel
             } else {
                 bookScroll
@@ -76,7 +97,7 @@ extension BookListScrollView {
     
     var bookButtonGroup: some View {
         LazyVGrid(columns: columns, spacing: 25) {
-            ForEach(bookList, id: \.self) { item in
+            ForEach(tabBookList, id: \.self) { item in
                 BookListBookButton(item)
             }
         }
@@ -110,7 +131,11 @@ extension BookListScrollView {
     var refreshButton: some View {
         Button("다시 불러오기") {
             for type in BookListTab.allCases {
-                aladinAPIManager.requestBookListAPI(of: type)
+                aladinAPIManager.requestBookListAPI(of: type) { item in
+                    DispatchQueue.main.async {
+                        print("통신 완료")
+                    }
+                }
             }
             HapticManager.shared.impact(.rigid)
         }
