@@ -12,6 +12,7 @@ struct SearchSheetScrollView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    @EnvironmentObject var alertManager: AlertManager
     @EnvironmentObject var searchSheetViewData: SearchSheetViewData
     
     @State private var isPresentingSearchInfoView = false
@@ -29,9 +30,9 @@ struct SearchSheetScrollView: View {
         var filtered: [briefBookItem.Item] = []
         
         if searchSheetViewData.selectedCategory == .all {
-            return aladinAPIManager.searchResults
+            return searchSheetViewData.bookSearchResult
         } else {
-            for item in aladinAPIManager.searchResults
+            for item in searchSheetViewData.bookSearchResult
             where item.categoryName.refinedCategory == searchSheetViewData.selectedCategory {
                 filtered.append(item)
             }
@@ -52,7 +53,7 @@ struct SearchSheetScrollView: View {
 extension SearchSheetScrollView {
     var bookScrollContent: some View {
         Group {
-            if aladinAPIManager.searchResults.isEmpty {
+            if searchSheetViewData.bookSearchResult.isEmpty {
                 noResultLabel
             } else {
                 bookScroll
@@ -110,10 +111,21 @@ extension SearchSheetScrollView {
     var seeMoreButton: some View {
         Button {
             searchSheetViewData.searchIndex += 1
+            alertManager.isPresentingSearchLoadingToastAlert = true
             aladinAPIManager.requestBookSearchAPI(
                 searchSheetViewData.inputQuery,
                 page: searchSheetViewData.searchIndex
-            )
+            ) { book in
+                if let book = book {
+                    searchSheetViewData.bookSearchResult.append(contentsOf: book.item)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        alertManager.isPresentingSearchLoadingToastAlert = false
+                    }
+                } else {
+                    alertManager.isPresentingSearchLoadingToastAlert = false
+                    alertManager.isPresentingDetailBookErrorToastAlert = true
+                }
+            }
         } label: {
             Text("더 보기")
                 .font(.title3)
@@ -157,5 +169,6 @@ struct SearchSheetScrollView_Previews: PreviewProvider {
         SearchSheetScrollView()
             .environmentObject(SearchSheetViewData())
             .environmentObject(AladinAPIManager())
+            .environmentObject(AlertManager())
     }
 }

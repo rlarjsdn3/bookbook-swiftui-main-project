@@ -8,6 +8,7 @@
 import SwiftUI
 
 final class SearchSheetViewData: ObservableObject {
+    @Published var bookSearchResult: [briefBookItem.Item] = [] // 검색 결과 리스트를 저장하는 변수
     @AppStorage("SearchResultListMode") var selectedListMode: ListMode = .list
     
     @Published var inputQuery = ""

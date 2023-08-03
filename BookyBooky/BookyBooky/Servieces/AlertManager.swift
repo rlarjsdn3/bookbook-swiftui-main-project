@@ -20,6 +20,7 @@ final class AlertManager: ObservableObject {
     
     // MARK: - WRAPPER PROPERTIES (API 통신 관련)
     
+    @Published var isPresentingBookListLoadingToastAlert = false
     @Published var isPresentingSearchLoadingToastAlert = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
     @Published var isPresentingSearchErrorToastAlert = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
     @Published var isPresentingDetailBookErrorToastAlert = false      // 도서 상세 에러 UI의 출력을 제어하는 변수
@@ -48,6 +49,7 @@ final class AlertManager: ObservableObject {
     
     // MARK: - ALERT PROPERTIES (API 통신 관련)
     
+    let showBookListLoadingToastAlert = AlertToast(displayMode: .alert, type: .loading, title: "도서 정보 불러오는 중")
     let showSearchLoadingToastAlert = AlertToast(displayMode: .banner(.pop), type: .loading, title: "도서 정보 불러오는 중...")
     let showSearchErrorToastAlert = AlertToast(displayMode: .banner(.pop), type: .error(.red), title: "도서 정보 불러오기 실패", subTitle: "       잠시 후 다시 시도하십시오.")
     let showDetailBookErrorToastAlert = AlertToast(displayMode: .banner(.pop), type: .error(.red), title: "도서 정보 불러오기 실패", subTitle: "       해당 도서 정보를 찾을 수 없습니다.")

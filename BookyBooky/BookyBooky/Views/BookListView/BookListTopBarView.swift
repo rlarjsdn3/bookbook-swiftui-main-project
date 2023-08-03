@@ -11,6 +11,7 @@ struct BookListTopBarView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
+//    @EnvironmentObject var searchSheetViewData: SearchSheetViewData
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
     
     @State private var isPresentingSearchSheetView = false
@@ -21,7 +22,7 @@ struct BookListTopBarView: View {
         navigationTopBar
             .sheet(isPresented: $isPresentingSearchSheetView) {
                 SearchSheetView()
-                    .interactiveDismissDisabled(!aladinAPIManager.searchResults.isEmpty)
+//                    .interactiveDismissDisabled(!searchSheetViewData.bookSearchResult.isEmpty)
             }
     }
 }
@@ -71,6 +72,7 @@ extension BookListTopBarView {
 struct BookListTopBarView_Previews: PreviewProvider {
     static var previews: some View {
         BookListTopBarView()
+//            .environmentObject(SearchSheetViewData())
             .environmentObject(AladinAPIManager())
     }
 }

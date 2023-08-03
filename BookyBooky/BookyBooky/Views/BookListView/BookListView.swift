@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct BookListView: View {
     
@@ -26,17 +27,21 @@ struct BookListView: View {
 
             BookListScrollView()
         }
+        .toast(isPresenting: $alertManager.isPresentingBookListLoadingToastAlert) {
+            alertManager.showBookListLoadingToastAlert
+        }
         .toast(isPresenting: $alertManager.isPresentingDetailBookErrorToastAlert,
                duration: 2.0, offsetY: -5) {
             alertManager.showDetailBookErrorToastAlert
         }
-       .onAppear {
+        .onAppear {
            requestBookListInfo()
-       }
+        }
        .environmentObject(bookListViewData)
     }
     
     func requestBookListInfo() {
+        alertManager.isPresentingBookListLoadingToastAlert = true
         for type in BookListTab.allCases {
             aladinAPIManager.requestBookListAPI(of: type) { book in
                 DispatchQueue.main.async {
@@ -51,6 +56,9 @@ struct BookListView: View {
                         case .blogBest:
                             bookListViewData.blogBest = book.item
                         }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        alertManager.isPresentingBookListLoadingToastAlert = false
                     }
                 }
             }

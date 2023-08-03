@@ -564,8 +564,8 @@
 			children = (
 				9E06070D29DD516D000D542D /* RealmManager.swift */,
 				9E0C0A6E29D2856B00F1F5F6 /* AladinAPIManager.swift */,
-				9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */,
 				9E8FCDE92A7946B100A78BED /* AlertManager.swift */,
+				9E0C0A6829D281BF00F1F5F6 /* HapticManager.swift */,
 			);
 			path = Servieces;
 			sourceTree = "<group>";

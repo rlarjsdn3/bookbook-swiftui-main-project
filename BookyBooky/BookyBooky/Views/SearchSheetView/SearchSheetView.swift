@@ -29,8 +29,7 @@ struct SearchSheetView: View {
             .environmentObject(searchSheetViewData)
         }
         .onDisappear {
-            aladinAPIManager.searchBookInfo = nil
-            aladinAPIManager.searchResults.removeAll()
+            searchSheetViewData.bookSearchResult.removeAll()
         }
         .toast(isPresenting: $alertManager.isPresentingSearchLoadingToastAlert)  {
             alertManager.showSearchLoadingToastAlert

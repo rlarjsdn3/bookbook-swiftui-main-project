@@ -70,17 +70,6 @@ struct BookListScrollView: View {
 
 extension BookListScrollView {
     var bookScrollContent: some View {
-        Group {
-            if tabBookList.isEmpty {
-                errorLabel
-            } else {
-                bookScroll
-            }
-        }
-        .background(Color(.background))
-    }
-    
-    var bookScroll: some View {
         ScrollViewReader { proxy in
             TrackableVerticalScrollView(yOffset: $bookListViewData.scrollYOffset) {
                 bookButtonGroup
@@ -93,6 +82,7 @@ extension BookListScrollView {
             }
             .scrollIndicators(.hidden)
         }
+        .background(Color(.background))
     }
     
     var bookButtonGroup: some View {
@@ -130,13 +120,7 @@ extension BookListScrollView {
     
     var refreshButton: some View {
         Button("다시 불러오기") {
-            for type in BookListTab.allCases {
-                aladinAPIManager.requestBookListAPI(of: type) { item in
-                    DispatchQueue.main.async {
-                        print("통신 완료")
-                    }
-                }
-            }
+            
             HapticManager.shared.impact(.rigid)
         }
         .buttonStyle(.borderedProminent)

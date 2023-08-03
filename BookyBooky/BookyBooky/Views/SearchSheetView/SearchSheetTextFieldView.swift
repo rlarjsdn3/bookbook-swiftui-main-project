@@ -15,6 +15,7 @@ struct SearchSheetTextFieldView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var searchSheetViewData: SearchSheetViewData
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    @EnvironmentObject var alertManager: AlertManager
     
     @Namespace var namespace: Namespace.ID
     
@@ -30,7 +31,7 @@ struct SearchSheetTextFieldView: View {
             searchCategory
         }
         .onAppear {
-            if aladinAPIManager.searchResults.isEmpty {
+            if searchSheetViewData.bookSearchResult.isEmpty {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     focusedField = true
                 }
@@ -40,12 +41,25 @@ struct SearchSheetTextFieldView: View {
     
     func requestSearchBook(_ query: String) {
         searchSheetViewData.searchIndex = 0
+        alertManager.isPresentingSearchLoadingToastAlert = true
         // 새로운 검색 시도 시, 스크롤을 제일 위로 올립니다.
         // searchIndex 변수값을 짧은 시간에 변경(0→1)함으로써 onChange 제어자가 이를 알아차려 스크롤을 위로 올립니다.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
             searchSheetViewData.searchIndex = 1
         }
-        aladinAPIManager.requestBookSearchAPI(query)
+        aladinAPIManager.requestBookSearchAPI(query) { book in
+            DispatchQueue.main.async {
+                if let book = book {
+                    searchSheetViewData.bookSearchResult = book.item
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        alertManager.isPresentingSearchLoadingToastAlert = false
+                    }
+                } else {
+                    alertManager.isPresentingSearchLoadingToastAlert = false
+                    alertManager.isPresentingDetailBookErrorToastAlert = true
+                }
+            }
+        }
         
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
             searchSheetViewData.selectedCategoryFA = .all
@@ -200,7 +214,7 @@ extension SearchSheetTextFieldView {
     
     var searchCategory: some View {
         Group {
-            if aladinAPIManager.searchResults.isEmpty {
+            if searchSheetViewData.bookSearchResult.isEmpty {
                 EmptyView()
             } else {
                 categoryButtonGroup
@@ -228,7 +242,7 @@ extension SearchSheetTextFieldView {
     
     func scrollCategoryButton(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack(spacing: -20) {
-            ForEach(getCategory(bookItems: aladinAPIManager.searchResults), id: \.self) { type in
+            ForEach(getCategory(bookItems: searchSheetViewData.bookSearchResult), id: \.self) { type in
                 SearchCategoryButton(
                     type,
                     namespace: namespace,
