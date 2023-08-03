@@ -80,10 +80,12 @@ struct SearchBookView: View {
         }
         .onAppear {
             aladinAPIManager.requestBookDetailInfo(isbn13) { book in
-                if let book = book {
-                    searchBookViewData.detailBookInfo = book.item[0]
-                } else {
-                    alertManager.isPresentingDetailBookErrorToastAlert = true
+                DispatchQueue.main.async {
+                    if let book = book {
+                        searchBookViewData.detailBookInfo = book.item[0]
+                    } else {
+                        alertManager.isPresentingDetailBookErrorToastAlert = true
+                    }
                 }
             }
         }
