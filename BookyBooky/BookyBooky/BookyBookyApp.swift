@@ -14,6 +14,7 @@ struct BookyBookyApp: App {
     
     @StateObject var realmManager = RealmManager()
     @StateObject var aladinAPIManager = AladinAPIManager()
+    @StateObject var alertManager = AlertManager()
     
     // MARK: - BODY
     
@@ -28,6 +29,7 @@ struct BookyBookyApp: App {
                     }
                     .environmentObject(realmManager)
                     .environmentObject(aladinAPIManager)
+                    .environmentObject(alertManager)
             } else {
                 Text("Error")
             }

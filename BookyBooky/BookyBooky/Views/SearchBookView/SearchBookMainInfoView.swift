@@ -14,6 +14,7 @@ struct SearchBookMainInfoView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var alertManager: AlertManager
     @EnvironmentObject var searchBookViewData: SearchBookViewData
     
     @ObservedResults(FavoriteBook.self) var favBooks
@@ -98,6 +99,7 @@ extension SearchBookMainInfoView {
                     ]
                 )
                 realmManager.addFavoriteBook(favoriteBook)
+                alertManager.isPresentingFavoriteBookAddSuccessToastAlert = true
             } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     realmManager.deleteFavoriteBook(bookItem.isbn13)
@@ -130,5 +132,6 @@ struct SearchInfoTitleView_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookMainInfoView(detailBookItem.Item.preview)
             .environmentObject(RealmManager())
+            .environmentObject(AlertManager())
     }
 }

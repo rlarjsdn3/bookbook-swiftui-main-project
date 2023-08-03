@@ -14,6 +14,7 @@ struct CompleteBookEditView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var alertManager: AlertManager
     
     @State private var inputTitle = ""
     @State private var inputPublisher = ""
@@ -164,6 +165,7 @@ extension CompleteBookEditView {
                 category: inputCategory,
                 targetDate: inputTargetDate
             )
+            alertManager.isPresentingReadingBookEditSuccessToastAlert = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 dismiss()
             }

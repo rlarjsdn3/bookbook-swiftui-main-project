@@ -27,13 +27,15 @@ extension ReadingActivity {
 }
 
 extension ReadingActivity {
-    static var preview: ReadingActivity = ReadingActivity(
-                                        date: Date.now,
-                                        title: "Java의 정석",
-                                        category: Category.computer,
-                                        itemPage: 300,
-                                        isbn13: "123456789012",
-                                        numOfPagesRead: 3,
-                                        totalPagesRead: 3
-                                    )
+    static var preview: ReadingActivity {
+        ReadingActivity(
+            date: Date.now,
+            title: "Java의 정석",
+            category: Category.computer,
+            itemPage: 300,
+            isbn13: "123456789012",
+            numOfPagesRead: 3,
+            totalPagesRead: 3
+        )
+    }
 }

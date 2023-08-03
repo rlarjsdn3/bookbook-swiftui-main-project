@@ -9,7 +9,6 @@ import SwiftUI
 import RealmSwift
 
 /// 애플리케이션 내부에 출력되는 카테고리 열거형입니다.
-///
 enum Category: String, PersistableEnum {
     
     // Realm은 내부적으로 Enum값을 저장할 때 원시값을 활용하므로, 원시값과 별개로 카테고리명을 출력하게 해주는 name 계산 프로퍼티를 정의할 필요가 있어보임

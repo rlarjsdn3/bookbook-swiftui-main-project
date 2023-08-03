@@ -16,6 +16,7 @@ struct AddSentenceSheetView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var alertManager: AlertManager
     
     @State private var isPresentingKeyboard = true
     @State private var isPresentingAddConrimationDialog = false
@@ -71,6 +72,7 @@ struct AddSentenceSheetView: View {
         .confirmationDialog("문장이 위치한 페이지가 맞나요? 설정대로 추가하시겠습니까?", isPresented: $isPresentingAddConrimationDialog, titleVisibility: .visible) {
             Button("추가") {
                 realmManager.addSentence(completeBook, sentence: inputText, page: inputPage)
+                alertManager.isPresentingAddSentenceSuccessToastAlert = true
                 dismiss()
             }
         }
@@ -83,6 +85,7 @@ struct AddSentenceSheetView: View {
     
     func modifySentence() {
         realmManager.modifySentence(completeBook, id: sentence._id, sentence: inputText, page: inputPage)
+        alertManager.isPresentingReadingBookRenewalSuccessToastAlert = true
         dismiss()
     }
 }
@@ -205,5 +208,6 @@ struct AddSentenceView_Previews: PreviewProvider {
     static var previews: some View {
         AddSentenceSheetView(CompleteBook.preview, type: .new)
             .environmentObject(RealmManager())
+            .environmentObject(AlertManager())
     }
 }

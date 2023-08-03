@@ -15,6 +15,7 @@ struct CompleteBookView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var alertManager: AlertManager
     
     @StateObject var completeBookViewData = CompleteBookViewData()
     
@@ -41,19 +42,19 @@ struct CompleteBookView: View {
             .environmentObject(completeBookViewData)
         }
         .toast(
-            isPresenting: $realmManager.isPresentingReadingBookEditSuccessToastAlert,
+            isPresenting: $alertManager.isPresentingReadingBookEditSuccessToastAlert,
             duration: 1.0) {
-            realmManager.showReadingBookEditSuccessToastAlert(completeBook.category.themeColor)
+            alertManager.showReadingBookEditSuccessToastAlert(completeBook.category.themeColor)
         }
         .toast(
-            isPresenting: $realmManager.isPresentingReadingBookRenewalSuccessToastAlert,
+            isPresenting: $alertManager.isPresentingReadingBookRenewalSuccessToastAlert,
             duration: 1.0) {
-                realmManager.showReadingBookRenewalSuccessToastAlert(completeBook.category.themeColor)
+                alertManager.showReadingBookRenewalSuccessToastAlert(completeBook.category.themeColor)
         }
         .toast(
-            isPresenting: $realmManager.isPresentingAddSentenceSuccessToastAlert,
+            isPresenting: $alertManager.isPresentingAddSentenceSuccessToastAlert,
             duration: 1.0) {
-            realmManager.showAddSentenceSuccessToastAlert(completeBook.category.themeColor)
+            alertManager.showAddSentenceSuccessToastAlert(completeBook.category.themeColor)
         }
     }
 }
@@ -64,5 +65,6 @@ struct ReadingBookView_Previews: PreviewProvider {
     static var previews: some View {
         CompleteBookView(CompleteBook.preview)
             .environmentObject(RealmManager())
+            .environmentObject(AlertManager())
     }
 }

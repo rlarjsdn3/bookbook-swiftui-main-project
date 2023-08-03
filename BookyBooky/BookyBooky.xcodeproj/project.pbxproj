@@ -363,13 +363,6 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
-		9E06070C29DD5160000D542D /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		9E06071529DFDC05000D542D /* BookShelfView */ = {
 			isa = PBXGroup;
 			children = (
@@ -729,7 +722,6 @@
 				9E524DF929D1D13700FD7B98 /* Shapes */,
 				9E99485F2A52B6D400EA3490 /* Customs */,
 				9E9948582A52B5BD00EA3490 /* Servieces */,
-				9E06070C29DD5160000D542D /* ViewModels */,
 				9ECA326729D11BC1004D6D5B /* Models */,
 				9EB749F329D5C26100610D97 /* Enums */,
 				9E0C0A7429D28C0600F1F5F6 /* Settings */,

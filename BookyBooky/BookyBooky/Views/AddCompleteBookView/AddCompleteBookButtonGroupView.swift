@@ -14,6 +14,7 @@ struct AddCompleteBookButtonGroupView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var alertManager: AlertManager
     @EnvironmentObject var addCompleteBookViewData: AddCompleteBookViewData
     
     @State private var isPresentingAddReadingBookConfirmDialog = false
@@ -104,6 +105,7 @@ extension AddCompleteBookButtonGroupView {
                     "isCompleted": false
                 ] as [String : Any])
             realmManager.addReadingBook(readingBook)
+            alertManager.isPresentingReadingBookEditSuccessToastAlert = true
             dismiss()
         }
     }
@@ -119,6 +121,7 @@ struct BookAddButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         AddCompleteBookButtonGroupView(detailBookItem.Item.preview)
             .environmentObject(RealmManager())
+            .environmentObject(AlertManager())
             .environmentObject(AddCompleteBookViewData())
     }
 }

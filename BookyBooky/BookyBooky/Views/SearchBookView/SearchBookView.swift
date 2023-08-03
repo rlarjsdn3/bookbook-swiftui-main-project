@@ -15,6 +15,7 @@ struct SearchBookView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
     @EnvironmentObject var aladinAPIManager: AladinAPIManager
+    @EnvironmentObject var alertManager: AlertManager
     
     @StateObject var searchBookViewData = SearchBookViewData()
     
@@ -88,13 +89,13 @@ struct SearchBookView: View {
                 dismiss()
             }
         }
-        .toast(isPresenting: $realmManager.isPresentingFavoriteBookAddSuccessToastAlert,
+        .toast(isPresenting: $alertManager.isPresentingFavoriteBookAddSuccessToastAlert,
                duration: 1.0) {
-            realmManager.showFavoriteBookAddSuccessToastAlert(categoryThemeColor)
+            alertManager.showFavoriteBookAddSuccessToastAlert(categoryThemeColor)
         }
-        .toast(isPresenting: $realmManager.isPresentingReadingBookAddSuccessToastAlert,
+        .toast(isPresenting: $alertManager.isPresentingReadingBookAddSuccessToastAlert,
               duration: 1.0) {
-           realmManager.showReadingBookAddSuccessToastAlert(categoryThemeColor)
+           alertManager.showReadingBookAddSuccessToastAlert(categoryThemeColor)
         }
         .presentationCornerRadius(30)
     }
@@ -107,5 +108,6 @@ struct SearchInfoView_Previews: PreviewProvider {
         SearchBookView("9788994492049", type: .navigation)
             .environmentObject(RealmManager())
             .environmentObject(AladinAPIManager())
+            .environmentObject(AlertManager())
     }
 }

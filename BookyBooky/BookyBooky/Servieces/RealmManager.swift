@@ -38,7 +38,6 @@ extension RealmManager {
         try! realm.write {
             realm.add(object)
         }
-        self.isPresentingReadingBookAddSuccessToastAlert = true
     }
     
     
@@ -118,7 +117,7 @@ extension RealmManager {
     /// - Parameter readingBook: 읽고 있는 도서 객체
     private func checkReadingBookComplete(_ readingBook: CompleteBook) {
         guard let object = realm.objects(CompleteBook.self)
-            .filter({ $0.isbn13 == readingBook.isbn13 }).first else {
+            .findFirst(isbn13: readingBook.isbn13) else {
             return
         }
         
@@ -126,8 +125,6 @@ extension RealmManager {
             try! realm.write {
                 object.completeDate = Date()
             }
-        } else {
-            self.isPresentingReadingBookRenewalSuccessToastAlert = true
         }
     }
     
@@ -163,10 +160,6 @@ extension RealmManager {
             object.category = category
             object.targetDate = targetDate
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.isPresentingReadingBookEditSuccessToastAlert = true
-        }
     }
 }
 
@@ -178,8 +171,6 @@ extension RealmManager {
         try! realm.write {
             realm.add(object)
         }
-        
-        isPresentingFavoriteBookAddSuccessToastAlert = true
     }
     
     /// 찜한 도서를 삭제합니다.
@@ -218,8 +209,6 @@ extension RealmManager {
         try! realm.write {
             object.sentences.append(sentence)
         }
-        
-        isPresentingAddSentenceSuccessToastAlert = true
     }
     
     func modifySentence(_ readingBook: CompleteBook, id: ObjectId, sentence: String, page: Int) {
