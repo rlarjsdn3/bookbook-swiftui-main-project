@@ -33,10 +33,10 @@ struct ShelfFavBookButton: View {
     var body: some View {
         favBookButton
             .sheet(isPresented: $isPresentingSearchBookViewFromSheet) {
-                SearchBookView(favBook.isbn13, type: .sheet)
+                SearchBookView(favBook.isbn13, in: .sheet)
             }
             .navigationDestination(isPresented: $isPresentingSearchBookViewFromNavigation) {
-                SearchBookView(favBook.isbn13, type: .navigation)
+                SearchBookView(favBook.isbn13, in: .navigation)
             }
     }
 }

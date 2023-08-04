@@ -46,7 +46,7 @@ struct SearchBookButton: View {
             isPresentingSearchBookView = true
         }
         .navigationDestination(isPresented: $isPresentingSearchBookView) {
-            SearchBookView(book.isbn13, type: .navigation)
+            SearchBookView(book.isbn13, in: .navigation)
         }
     }
     

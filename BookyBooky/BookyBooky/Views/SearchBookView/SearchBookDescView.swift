@@ -16,25 +16,25 @@ struct SearchBookDescView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: DetailBookInfo.Item
+    let book: DetailBookInfo.Item
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: DetailBookInfo.Item) {
-        self.bookItem = bookItem
+    init(_ book: DetailBookInfo.Item) {
+        self.book = book
     }
     
     // MARK: - BODY
     
     var body: some View {
-        bookDescLabel
+        descriptionLabel
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchBookDescView {
-    var bookDescLabel: some View {
+    var descriptionLabel: some View {
         VStack {
             HStack {
                 aboutBookText
@@ -46,7 +46,7 @@ extension SearchBookDescView {
             .padding(.top, 5)
             .padding(.horizontal)
             
-            bookDescText
+            descriptionText
         }
         .redacted(reason: searchBookViewData.isLoadingCoverImage ? .placeholder : [])
         .shimmering(active: searchBookViewData.isLoadingCoverImage)
@@ -61,7 +61,7 @@ extension SearchBookDescView {
     
     var moreLinkButton: some View {
         Group {
-            if let url = URL(string: bookItem.link) {
+            if let url = URL(string: book.link) {
                 Link(destination: url) {
                     Text("자세히 보기")
                 }
@@ -70,9 +70,9 @@ extension SearchBookDescView {
         .redacted(reason: searchBookViewData.isLoadingCoverImage ? .placeholder : [])
     }
     
-    var bookDescText: some View {
+    var descriptionText: some View {
         ScrollView(showsIndicators: false) {
-            Text(bookItem.bookDescription)
+            Text(book.bookDescription)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -82,9 +82,7 @@ extension SearchBookDescView {
 
 // MARK: - PREVIEW
 
-struct SearchBookIntroView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchBookDescView(DetailBookInfo.Item.preview)
-            .environmentObject(SearchBookViewData())
-    }
+#Preview {
+    SearchBookDescView(DetailBookInfo.Item.preview)
+        .environmentObject(SearchBookViewData())
 }

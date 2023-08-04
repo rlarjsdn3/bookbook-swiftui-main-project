@@ -17,30 +17,30 @@ struct SearchBookCoverView: View {
     
     // MARK: - PROERTIES
     
-    let bookItem: DetailBookInfo.Item
+    let book: DetailBookInfo.Item
 
     // MARK: - INTIALIZER
     
-    init(_ bookItem: DetailBookInfo.Item) {
-        self.bookItem = bookItem
+    init(_ book: DetailBookInfo.Item) {
+        self.book = book
     }
     
     // MARK: - BODY
     
     var body: some View {
-        bookCover
+        bookCoverArea
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchBookCoverView {
-    var bookCover: some View {
+    var bookCoverArea: some View {
         ZStack {
-            coverBackgroundColor
+            backgroundColor
             
             asyncCoverImage(
-                bookItem.cover,
+                book.cover,
                 width: safeAreaInsets.bottom == 0 ? 140 : 170,
                 height: mainScreen.height * 0.27
             )
@@ -56,19 +56,17 @@ extension SearchBookCoverView {
         .frame(height: mainScreen.height * 0.3)
     }
     
-    var coverBackgroundColor: some View {
+    var backgroundColor: some View {
         Rectangle()
-            .fill(bookItem.categoryName.refinedCategory.themeColor.gradient)
+            .fill(book.categoryName.refinedCategory.themeColor.gradient)
             .ignoresSafeArea()
     }
 }
 
 // MARK: - PREVIEW
 
-struct SearchInfoCoverView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchBookCoverView(DetailBookInfo.Item.preview)
-            .environmentObject(AladinAPIManager())
-            .environmentObject(SearchBookViewData())
-    }
+#Preview {
+    SearchBookCoverView(DetailBookInfo.Item.preview)
+        .environmentObject(AladinAPIManager())
+        .environmentObject(SearchBookViewData())
 }

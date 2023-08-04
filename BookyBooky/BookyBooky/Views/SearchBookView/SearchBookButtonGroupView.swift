@@ -15,31 +15,33 @@ struct SearchBookButtonGroupView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var searchBookViewData: SearchBookViewData
     
-    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(CompleteBook.self) var completeBooks
     
     @State private var isPresentingAddReadingBookView = false
     
     // MARK: - PROPERTIES
     
-    let bookItem: DetailBookInfo.Item
+    let book: DetailBookInfo.Item
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    var isAlreadyExistBook: Bool {
+        for cBook in completeBooks where book.isbn13 == cBook.isbn13 {
+            return true
+        }
+        return false
+    }
     
     // MARK: - INTIALIZER
     
     init(_ bookItem: DetailBookInfo.Item) {
-        self.bookItem = bookItem
+        self.book = bookItem
     }
     
     // MARK: - BODY
     
     var body: some View {
         ButtonGroup
-    }
-    
-    func isExist() -> Bool {
-        for book in compBooks where book.isbn13 == bookItem.isbn13 {
-            return true
-        }
-        return false
     }
 }
 
@@ -75,7 +77,7 @@ extension SearchBookButtonGroupView {
     
     var backButton: some View {
         Group {
-            if isExist() {
+            if isAlreadyExistBook {
                 Button {
                     dismiss()
                 } label: {
@@ -96,13 +98,13 @@ extension SearchBookButtonGroupView {
     var addButton: some View {
         // 이미 목표 도서에 추가되어 있는 경우, 버튼 잠그기 (안 보이게 하기)
         Group {
-            if !isExist() {
+            if !isAlreadyExistBook {
                 NavigationLink {
-                    AddCompleteBookView(bookItem)
+                    AddCompleteBookView(book)
                 } label: {
                     Text("추가하기")
                 }
-                .buttonStyle(RightBottomButtonStyle(backgroundColor: bookItem.bookCategory.themeColor))
+                .buttonStyle(RightBottomButtonStyle(backgroundColor: book.bookCategory.themeColor))
                 .disabled(searchBookViewData.isLoadingCoverImage)
             }
         }

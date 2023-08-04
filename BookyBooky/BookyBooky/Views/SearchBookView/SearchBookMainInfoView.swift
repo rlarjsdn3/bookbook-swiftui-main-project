@@ -17,52 +17,45 @@ struct SearchBookMainInfoView: View {
     @EnvironmentObject var alertManager: AlertManager
     @EnvironmentObject var searchBookViewData: SearchBookViewData
     
-    @ObservedResults(FavoriteBook.self) var favBooks
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @State private var isFavorite: Bool = false
     
     // MARK: - PROPERTIES
     
-    let bookItem: DetailBookInfo.Item
-    
     let haptic = HapticManager()
+    
+    let book: DetailBookInfo.Item
     
     // MARK: - INTALIZER
     
     init(_ bookItem: DetailBookInfo.Item) {
-        self.bookItem = bookItem
+        self.book = bookItem
     }
     
     // MARK: - BODY
     
     var body: some View {
-        mainInfo
-    }
-    
-    // MARK: - FUNCTIONS
-    
-    func isFavoriteBook() {
-        for favBook in favBooks {
-            if bookItem.isbn13 == favBook.isbn13 {
-                isFavorite = true; break
-            }
-        }
+        mainInfoArea
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchBookMainInfoView {
-    var mainInfo: some View {
+    var mainInfoArea: some View {
         HStack {
             bookTitleLabel
             
             Spacer()
             
-            addFavoriteBookButton
+            addFavoriteButton
         }
         .onAppear {
-            isFavoriteBook()
+            for fBook in favoriteBooks where book.isbn13 == fBook.isbn13 {
+                isFavorite = true
+                break
+            }
         }
         .frame(height: 60)
         .padding(.top, 5)
@@ -72,11 +65,11 @@ extension SearchBookMainInfoView {
     
     var bookTitleLabel: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(bookItem.bookTitle)
+            Text(book.bookTitle)
                 .font(.title)
                 .fontWeight(.bold)
             
-            Text("\(Text(bookItem.bookAuthor)) ・ \(Text(bookItem.publisher))")
+            Text("\(Text(book.bookAuthor)) ・ \(Text(book.publisher))")
                 .font(.headline)
                 .foregroundColor(.secondary)
         }
@@ -86,25 +79,25 @@ extension SearchBookMainInfoView {
         .shimmering(active: searchBookViewData.isLoadingCoverImage)
     }
     
-    var addFavoriteBookButton: some View {
+    var addFavoriteButton: some View {
         Button {
             isFavorite.toggle()
             
             if isFavorite {
                 let favoriteBook = FavoriteBook(
                     value: [
-                        "title": "\(bookItem.title.refinedTitle)",
-                        "author": "\(bookItem.author.refinedAuthor)",
-                        "cover": "\(bookItem.cover)",
-                        "salesPoint": "\(bookItem.salesPoint)",
-                        "isbn13": "\(bookItem.isbn13)"
+                        "title": "\(book.title.refinedTitle)",
+                        "author": "\(book.author.refinedAuthor)",
+                        "cover": "\(book.cover)",
+                        "salesPoint": "\(book.salesPoint)",
+                        "isbn13": "\(book.isbn13)"
                     ]
                 )
                 realmManager.addFavoriteBook(favoriteBook)
                 alertManager.isPresentingFavoriteBookAddSuccessToastAlert = true
             } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    realmManager.deleteFavoriteBook(bookItem.isbn13)
+                    realmManager.deleteFavoriteBook(book.isbn13)
                 }
             }
             haptic.impact(.rigid)
@@ -113,14 +106,14 @@ extension SearchBookMainInfoView {
                 Image(systemName: "heart.fill")
                     .foregroundColor(.white)
                     .padding()
-                    .background(bookItem.bookCategory.themeColor, in: .circle)
+                    .background(book.bookCategory.themeColor, in: .circle)
             } else {
                 Image(systemName: "heart.fill")
-                    .foregroundColor(bookItem.categoryName.refinedCategory.themeColor)
+                    .foregroundColor(book.categoryName.refinedCategory.themeColor)
                     .padding()
                     .background {
                         Circle()
-                            .stroke(bookItem.categoryName.refinedCategory.themeColor, lineWidth: 1.8)
+                            .stroke(book.categoryName.refinedCategory.themeColor, lineWidth: 1.8)
                     }
             }
         }
@@ -130,10 +123,8 @@ extension SearchBookMainInfoView {
 
 // MARK: - PREVIEW
 
-struct SearchInfoTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchBookMainInfoView(DetailBookInfo.Item.preview)
-            .environmentObject(RealmManager())
-            .environmentObject(AlertManager())
-    }
+#Preview {
+    SearchBookMainInfoView(DetailBookInfo.Item.preview)
+        .environmentObject(RealmManager())
+        .environmentObject(AlertManager())
 }

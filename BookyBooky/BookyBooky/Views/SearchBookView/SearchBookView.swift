@@ -26,7 +26,7 @@ struct SearchBookView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var categoryThemeColor: Color {
+    var themeColor: Color {
         if let bookDetail = searchBookViewData.detailBookInfo {
             return bookDetail.bookCategory.themeColor
         }
@@ -35,7 +35,7 @@ struct SearchBookView: View {
     
     // MARK: - INTIALIZER
     
-    init(_ isbn13: String, type: ViewType.SearchBookViewType) {
+    init(_ isbn13: String, in type: ViewType.SearchBookViewType) {
         self.isbn13 = isbn13
         self.type = type
     }
@@ -99,11 +99,11 @@ struct SearchBookView: View {
         }
         .toast(isPresenting: $alertManager.isPresentingFavoriteBookAddSuccessToastAlert,
                duration: 1.0) {
-            alertManager.showFavoriteBookAddSuccessToastAlert(categoryThemeColor)
+            alertManager.showFavoriteBookAddSuccessToastAlert(themeColor)
         }
         .toast(isPresenting: $alertManager.isPresentingReadingBookAddSuccessToastAlert,
               duration: 1.0) {
-           alertManager.showReadingBookAddSuccessToastAlert(categoryThemeColor)
+           alertManager.showReadingBookAddSuccessToastAlert(themeColor)
         }
         .presentationCornerRadius(30)
     }
@@ -111,11 +111,9 @@ struct SearchBookView: View {
 
 // MARK: - PREVIEW
 
-struct SearchInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchBookView("9788994492049", type: .navigation)
-            .environmentObject(RealmManager())
-            .environmentObject(AladinAPIManager())
-            .environmentObject(AlertManager())
-    }
+#Preview {
+    SearchBookView("9788994492049", in: .navigation)
+        .environmentObject(RealmManager())
+        .environmentObject(AladinAPIManager())
+        .environmentObject(AlertManager())
 }
