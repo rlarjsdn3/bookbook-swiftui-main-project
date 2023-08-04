@@ -26,7 +26,7 @@ struct SearchSheetScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var filteredSearchBooks: [SimpleBookInfo.Item] {
+    var filteredBooks: [SimpleBookInfo.Item] {
         var filtered: [SimpleBookInfo.Item] = []
         
         if searchSheetViewData.selectedCategory == .all {
@@ -44,24 +44,24 @@ struct SearchSheetScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        bookScrollContent
+        scrollContent
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchSheetScrollView {
-    var bookScrollContent: some View {
+    var scrollContent: some View {
         Group {
             if searchSheetViewData.bookSearchResult.isEmpty {
                 noResultLabel
             } else {
-                bookScroll
+                resultScroll
             }
         }
     }
     
-    var bookScroll: some View {
+    var resultScroll: some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 buttonGroup
@@ -92,14 +92,14 @@ extension SearchSheetScrollView {
             switch searchSheetViewData.selectedListMode {
             case .grid:
                 LazyVGrid(columns: coulmns, spacing: 25) {
-                    ForEach(filteredSearchBooks, id: \.self) { book in
+                    ForEach(filteredBooks, id: \.self) { book in
                         SearchBookButton(book, mode: searchSheetViewData.selectedListMode)
                     }
                 }
                 .padding()
             case .list:
                 LazyVStack {
-                    ForEach(filteredSearchBooks, id: \.self) { book in
+                    ForEach(filteredBooks, id: \.self) { book in
                         SearchBookButton(book, mode: searchSheetViewData.selectedListMode)
                             .padding(.vertical, 8)
                     }
@@ -164,11 +164,9 @@ extension SearchSheetScrollView {
 
 // MARK: - PREVIEW
 
-struct SearchSheetScrollView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchSheetScrollView()
-            .environmentObject(SearchSheetViewData())
-            .environmentObject(AladinAPIManager())
-            .environmentObject(AlertManager())
-    }
+#Preview {
+    SearchSheetScrollView()
+        .environmentObject(AladinAPIManager())
+        .environmentObject(AlertManager())
+        .environmentObject(SearchSheetViewData())
 }

@@ -48,10 +48,8 @@ struct SearchSheetView: View {
 
 // MARK: - PREVIEW
 
-struct SearchSheetView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchSheetView()
-            .environmentObject(AladinAPIManager())
-            .environmentObject(AlertManager())
-    }
+#Preview {
+    SearchSheetView()
+        .environmentObject(AladinAPIManager())
+        .environmentObject(AlertManager())
 }

@@ -21,8 +21,9 @@ struct SearchSheetTextFieldView: View {
     
     @FocusState var focusedField: Bool
     
-    let haptic = HapticManager()
+    // MARK: - PROPERTIES
     
+    let haptic = HapticManager()
     
     // MARK: - BODY
     
@@ -62,7 +63,6 @@ struct SearchSheetTextFieldView: View {
                 }
             }
         }
-        
         withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
             searchSheetViewData.selectedCategoryFA = .all
         }
@@ -70,24 +70,28 @@ struct SearchSheetTextFieldView: View {
         haptic.impact(.rigid)
     }
     
-    func getCategory(bookItems: [SimpleBookInfo.Item]) -> [Category] {
+    func getCategory(_ books: [SimpleBookInfo.Item]) -> [Category] {
         var categories: [Category] = []
         
         // 중복되지 않게 카테고리 항목 저장하기
-        for item in bookItems where !categories.contains(item.categoryName.refinedCategory) {
-            categories.append(item.categoryName.refinedCategory)
+        for book in books where !categories.contains(book.categoryName.refinedCategory) {
+            categories.append(book.categoryName.refinedCategory)
         }
         // 카테고리 항목에 '기타'가 있다면
         if let index = categories.firstIndex(of: .etc) {
             categories.remove(at: index) // '기타' 항목 제거
             // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬
             categories.sort {
-                $0.rawValue < $1.rawValue
+                $0.name < $1.name
             }
             // '기타'를 제일 뒤로 보내기
             categories.append(.etc)
+        } else {
+            // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬
+            categories.sort {
+                $0.name < $1.name
+            }
         }
-        
         // 카테고리의 첫 번째에 '전체' 항목 추가
         categories.insert(.all, at: 0)
         
@@ -216,9 +220,7 @@ extension SearchSheetTextFieldView {
     
     var searchCategory: some View {
         Group {
-            if searchSheetViewData.bookSearchResult.isEmpty {
-                EmptyView()
-            } else {
+            if !searchSheetViewData.bookSearchResult.isEmpty {
                 categoryButtonGroup
             }
         }
@@ -227,7 +229,19 @@ extension SearchSheetTextFieldView {
     var categoryButtonGroup: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
-                scrollCategoryButton(scrollProxy: proxy)
+                HStack(spacing: -20) {
+                    let categories = getCategory(searchSheetViewData.bookSearchResult)
+                    
+                    ForEach(categories, id: \.self) { category in
+                        SearchCategoryButton(
+                            category,
+                            namespace: namespace,
+                            scrollProxy: proxy
+                        )
+                        .id(category.rawValue)
+                    }
+                    .id("Scroll_To_Leading")
+                }
             }
             .onChange(of: searchSheetViewData.searchIndex) { _ in
                 // 새로운 검색을 시도할 때만 카테고리 스크롤을 제일 앞으로 전진합니다.
@@ -240,22 +254,7 @@ extension SearchSheetTextFieldView {
             }
             .padding(.bottom, 8)
         }
-    }
-    
-    func scrollCategoryButton(scrollProxy proxy: ScrollViewProxy) -> some View {
-        HStack(spacing: -20) {
-            ForEach(getCategory(bookItems: searchSheetViewData.bookSearchResult), id: \.self) { type in
-                SearchCategoryButton(
-                    type,
-                    namespace: namespace,
-                    scrollProxy: proxy
-                )
-                .id(type.rawValue)
-            }
-            .id("Scroll_To_Leading")
-        }
-    }
-    
+    }    
 }
 
 // MARK: - PREVIEW

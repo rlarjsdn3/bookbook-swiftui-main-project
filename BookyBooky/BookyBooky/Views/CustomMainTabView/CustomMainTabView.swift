@@ -29,10 +29,10 @@ struct CustomMainTabView: View {
         HStack {
             // for iOS 17.0
             #if false
-            ForEach(CustomMainTab.allCases, id: \.self) { type in
+            ForEach(CustomMainTab.allCases, id: \.self) { category in
                 Spacer()
                 TabButton(
-                    type,
+                    category,
                     selectedTab: $selectedTab,
                     namespace: namespace
                 )

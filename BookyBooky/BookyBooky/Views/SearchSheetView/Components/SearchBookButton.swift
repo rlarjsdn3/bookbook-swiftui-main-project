@@ -20,13 +20,13 @@ struct SearchBookButton: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: SimpleBookInfo.Item
+    let book: SimpleBookInfo.Item
     let mode: ListMode
     
     // MARK: - INTIALIZER
     
     init(_ book: SimpleBookInfo.Item, mode: ListMode) {
-        self.bookItem = book
+        self.book = book
         self.mode = mode
     }
     
@@ -46,19 +46,19 @@ struct SearchBookButton: View {
             isPresentingSearchBookView = true
         }
         .navigationDestination(isPresented: $isPresentingSearchBookView) {
-            SearchBookView(bookItem.isbn13, type: .navigation)
+            SearchBookView(book.isbn13, type: .navigation)
         }
     }
     
     func isCompBook() -> Bool {
-        for readingBook in compBooks where bookItem.isbn13 == readingBook.isbn13 {
+        for readingBook in compBooks where book.isbn13 == readingBook.isbn13 {
             return true
         }
         return false
     }
     
     func isFavBook() -> Bool {
-        for favoriteBook in favBooks where bookItem.isbn13 == favoriteBook.isbn13 {
+        for favoriteBook in favBooks where book.isbn13 == favoriteBook.isbn13 {
             return true
         }
         return false
@@ -79,7 +79,7 @@ extension SearchBookButton {
     var bookCoverImage: some View {
         HStack {
             asyncCoverImage(
-                bookItem.cover,
+                book.cover,
                 width: mainScreen.width * 0.32, height: 190,
                 coverShape: RoundedRectTRBR()
             )
@@ -96,12 +96,12 @@ extension SearchBookButton {
             Spacer()
             
             ZStack {
-                RoundedRectTLBL()
-                    .fill(bookItem.categoryName.refinedCategory.themeColor)
+                RoundedRect(byRoundingCorners: [.topLeft, .bottomLeft])
+                    .fill(book.categoryName.refinedCategory.themeColor)
                     .offset(y: 4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: -5, y: 5)
                 
-                RoundedRectTLBL()
+                RoundedRect(byRoundingCorners: [.topLeft, .bottomLeft])
                     .fill(.white)
                     .offset(y: -4)
                     .shadow(color: .black.opacity(0.1), radius: 8, x: 5, y: 5)
@@ -110,7 +110,7 @@ extension SearchBookButton {
                 VStack( alignment: .leading, spacing: 2) {
                     bookTitleText
                     
-                    bookSubInfoLabel
+                    subInfoLabel
                 }
                 .font(.subheadline)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -144,7 +144,7 @@ extension SearchBookButton {
         Group {
             switch mode {
             case .grid:
-                Text(bookItem.bookTitle)
+                Text(book.bookTitle)
                     .font(.headline)
                     .fontWeight(.bold)
                     .lineLimit(1)
@@ -153,7 +153,7 @@ extension SearchBookButton {
                     .padding(.horizontal)
                     .padding(.bottom, -5)
             case .list:
-                Text(bookItem.bookTitle)
+                Text(book.bookTitle)
                     .font(.title3)
                     .fontWeight(.bold)
                     .lineLimit(1)
@@ -163,7 +163,7 @@ extension SearchBookButton {
         }
     }
     
-    var bookSubInfoLabel: some View {
+    var subInfoLabel: some View {
         VStack (alignment: .leading) {
             bookAuthorText
             
@@ -180,7 +180,7 @@ extension SearchBookButton {
         Group {
             switch mode {
             case .grid:
-                Text(bookItem.bookAuthor)
+                Text(book.bookAuthor)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
@@ -207,7 +207,7 @@ extension SearchBookButton {
                         .frame(width: 150)
                     }
             case .list:
-                Text(bookItem.bookAuthor)
+                Text(book.bookAuthor)
                     .foregroundColor(.primary)
                     .fontWeight(.bold)
                 
@@ -216,19 +216,19 @@ extension SearchBookButton {
     }
     
     var bookPublisherText: some View {
-        Text("\(bookItem.publisher) ・ \(bookItem.bookCategory.name)")
+        Text("\(book.publisher) ・ \(book.bookCategory.name)")
             .fontWeight(.semibold)
     }
     
     var bookPubDateText: some View {
-        Text("\(bookItem.pubDate.refinedPublishDate.standardDateFormat)")
+        Text("\(book.pubDate.refinedPublishDate.standardDateFormat)")
     }
 }
 
 extension SearchBookButton {
     var gridBookButton: some View {
         VStack {
-            asyncCoverImage(bookItem.cover)
+            asyncCoverImage(book.cover)
             
             bookTitleText
             

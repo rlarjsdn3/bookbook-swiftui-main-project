@@ -31,9 +31,9 @@ struct HomeReadingBookTabView: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    let scrollProxy: ScrollViewProxy
-    
     var defaultBottomPaddingValue: CGFloat = 30.0
+    
+    let scrollProxy: ScrollViewProxy
     
     // MARK: - COMPUTED PROPERTIES
     
