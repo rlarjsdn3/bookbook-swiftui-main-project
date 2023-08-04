@@ -8,23 +8,39 @@
 import SwiftUI
 import RealmSwift
 
-struct BookListBookButton: View {
+struct ListBookButton: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: SimpleBookInfo.Item
+    let book: SimpleBookInfo.Item
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var compBooks
-    @ObservedResults(FavoriteBook.self) var favBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(FavoriteBook.self) var favoriteBooks
     
     @State private var isPresentingBookInfoView = false
     
+    // MARK: - COMPUTED PROPERTIES
+    
+    var isFavoriteBook: Bool {
+        for fBook in favoriteBooks where book.isbn13 == fBook.isbn13 {
+            return true
+        }
+        return false
+    }
+    
+    var isReadingBook: Bool {
+        for rBook in readingBooks where book.isbn13 == rBook.isbn13 {
+            return true
+        }
+        return false
+    }
+    
     // MARK: - INTIALIZER
     
-    init(_ bookItem: SimpleBookInfo.Item) {
-        self.bookItem = bookItem
+    init(_ book: SimpleBookInfo.Item) {
+        self.book = book
     }
     
     // MARK: - BODY
@@ -35,37 +51,19 @@ struct BookListBookButton: View {
                 isPresentingBookInfoView = true
             }
             .sheet(isPresented: $isPresentingBookInfoView) {
-                SearchBookView(bookItem.isbn13, type: .sheet)
+                SearchBookView(book.isbn13, type: .sheet)
             }
-    }
-    
-    func isFavBook() -> Bool {
-        for favBook in favBooks where bookItem.isbn13 == favBook.isbn13 {
-            return true
-        }
-        return false
-    }
-    
-    func isCompBook() -> Bool {
-        for compBook in compBooks where bookItem.isbn13 == compBook.isbn13 {
-            return true
-        }
-        return false
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension BookListBookButton {
+extension ListBookButton {
     var searchCellButton: some View {
         VStack {
             asyncCoverImage(
-                bookItem.cover,
-                width: 150, height: 200,
-                coverShape: RoundedRect(
-                    cornerRadii: CGSize(width: 25, height: 25),
-                    byRoundingCorners: [.allCorners]
-                )
+                book.cover,
+                coverShape: RoundedRect(byRoundingCorners: [.allCorners])
             )
             
             bookInfoLabel
@@ -80,7 +78,7 @@ extension BookListBookButton {
                 .overlay {
                     HStack {
                         Group {
-                            if isCompBook() {
+                            if isReadingBook {
                                 Image(systemName: "book.closed.fill")
                                     .font(.system(size: 18))
                                     .foregroundColor(Color(uiColor: .darkGray))
@@ -88,7 +86,7 @@ extension BookListBookButton {
                             
                             Spacer()
                             
-                            if isFavBook() {
+                            if isFavoriteBook {
                                 Image(systemName: "heart.fill")
                                     .foregroundColor(.pink)
                             }
@@ -101,7 +99,7 @@ extension BookListBookButton {
     }
     
     var bookTitleText: some View {
-        Text(bookItem.title.refinedTitle)
+        Text(book.title.refinedTitle)
             .font(.headline)
             .fontWeight(.bold)
             .lineLimit(1)
@@ -112,7 +110,7 @@ extension BookListBookButton {
     }
     
     var bookAuthorText: some View {
-        Text(bookItem.author.refinedAuthor)
+        Text(book.author.refinedAuthor)
             .font(.subheadline)
             .foregroundColor(.secondary)
             .lineLimit(1)
@@ -124,8 +122,6 @@ extension BookListBookButton {
 
 // MARK: - RREVIEW
 
-struct SearchCellButton_Previews: PreviewProvider {
-    static var previews: some View {
-        BookListBookButton(SimpleBookInfo.Item.preview)
-    }
+#Preview {
+    ListBookButton(SimpleBookInfo.Item.preview)
 }

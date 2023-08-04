@@ -23,7 +23,7 @@ struct BookListView: View {
         VStack(spacing: 0) {
             BookListTopBarView()
             
-            BookListTopTabView()
+            BookListTabView()
 
             BookListScrollView()
         }
@@ -41,7 +41,6 @@ struct BookListView: View {
     }
     
     func requestBookListInfo() {
-        alertManager.isPresentingBookListLoadingToastAlert = true
         for type in BookListTab.allCases {
             aladinAPIManager.requestBookList(of: type) { book in
                 DispatchQueue.main.async {
@@ -56,9 +55,6 @@ struct BookListView: View {
                         case .blogBest:
                             bookListViewData.blogBest = book.item
                         }
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        alertManager.isPresentingBookListLoadingToastAlert = false
                     }
                 }
             }

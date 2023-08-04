@@ -24,10 +24,16 @@ struct BookListScrollView: View {
         GridItem(.flexible())
     ]
     
-    // MARK: - COMPUTED PROPERTIES
+    // MARK: - BODY
     
-    var tabBookList: [SimpleBookInfo.Item] {
-        switch bookListViewData.selectedListTab {
+    var body: some View {
+        scrollContent
+    }
+    
+    // MARK: - FUNCTIONS
+    
+    func getBookList(_ tab: BookListTab) -> [SimpleBookInfo.Item] {
+        switch tab {
         case .bestSeller:
             return bookListViewData.bestSeller
         case .itemNewAll:
@@ -38,19 +44,12 @@ struct BookListScrollView: View {
             return bookListViewData.blogBest
         }
     }
-    
-    
-    // MARK: - BODY
-    
-    var body: some View {
-        bookScrollContent
-    }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookListScrollView {
-    var bookScrollContent: some View {
+    var scrollContent: some View {
         ScrollViewReader { proxy in
             TrackableVerticalScrollView(yOffset: $bookListViewData.scrollYOffset) {
                 bookButtonGroup
@@ -68,8 +67,10 @@ extension BookListScrollView {
     
     var bookButtonGroup: some View {
         LazyVGrid(columns: columns, spacing: 25) {
-            ForEach(tabBookList, id: \.self) { item in
-                BookListBookButton(item)
+            let bookList = getBookList(bookListViewData.selectedListTab)
+            
+            ForEach(bookList, id: \.self) { book in
+                ListBookButton(book)
             }
         }
         .padding(.top, 20)
@@ -80,10 +81,8 @@ extension BookListScrollView {
 
 // MARK: - PREVIEW
 
-struct SearchListScrollView_Previews: PreviewProvider {
-    static var previews: some View {
-        BookListScrollView()
-            .environmentObject(BookListViewData())
-            .environmentObject(AladinAPIManager())
-    }
+#Preview {
+    BookListScrollView()
+        .environmentObject(BookListViewData())
+        .environmentObject(AladinAPIManager())
 }

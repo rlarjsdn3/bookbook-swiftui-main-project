@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BookListTopTabView: View {
+struct BookListTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
 
@@ -24,7 +24,7 @@ struct BookListTopTabView: View {
 
 // MARK: - EXTENSIONS
 
-extension BookListTopTabView {
+extension BookListTabView {
     var tabButtonGroup: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
@@ -52,9 +52,7 @@ extension BookListTopTabView {
 
 // MARK: - PREVIEW
 
-struct SearchListTopTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        BookListTopTabView()
-            .environmentObject(BookListViewData())
-    }
+#Preview {
+    BookListTabView()
+        .environmentObject(BookListViewData())
 }
