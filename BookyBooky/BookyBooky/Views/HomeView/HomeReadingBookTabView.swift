@@ -19,8 +19,7 @@ struct HomeReadingBookTabView: View {
     @ObservedResults(CompleteBook.self) var readingBooks
     
     @Namespace var namespace
-    
-    @State private var filteredBooks: [CompleteBook] = []
+
     @State private var bookCategories: [Category] = []
     @State private var bookTappedCount = 0
     
@@ -36,6 +35,15 @@ struct HomeReadingBookTabView: View {
     let scrollProxy: ScrollViewProxy
     
     // MARK: - COMPUTED PROPERTIES
+    
+    var filteredBooks: [CompleteBook] {
+        var filteredBooks: [CompleteBook] = readingBooks.getFilteredReadingBooks(
+            .unfinished,
+            sort: homeViewData.selectedBookSort,
+            category: homeViewData.selectedCategory
+        )
+        return filteredBooks
+    }
     
     var dynamicBottomPaddingValue: CGFloat {
         let device = Device.current.realDevice
@@ -100,29 +108,6 @@ struct HomeReadingBookTabView: View {
                     sort: homeViewData.selectedBookSort,
                     category: homeViewData.selectedCategory
                 ).count
-            }
-            .onAppear {
-                filteredBooks = readingBooks.getFilteredReadingBooks(
-                    .unfinished,
-                    sort: homeViewData.selectedBookSort,
-                    category: homeViewData.selectedCategory
-                )
-            }
-            .onChange(of: homeViewData.selectedBookSort) { _ in
-                withAnimation(.spring(duration: 0.3)) {
-                    filteredBooks = readingBooks.getFilteredReadingBooks(
-                        .unfinished,
-                        sort: homeViewData.selectedBookSort,
-                        category: homeViewData.selectedCategory
-                    )
-                }
-            }
-            .onChange(of: homeViewData.selectedCategory) { _ in
-                filteredBooks = readingBooks.getFilteredReadingBooks(
-                    .unfinished,
-                    sort: homeViewData.selectedBookSort,
-                    category: homeViewData.selectedCategory
-                )
             }
     }
     

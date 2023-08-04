@@ -27,18 +27,18 @@ struct SearchSheetScrollView: View {
     // MARK: - COMPUTED PROPERTIES
     
     var filteredBooks: [SimpleBookInfo.Item] {
-        var filtered: [SimpleBookInfo.Item] = []
+        var filteredBooks: [SimpleBookInfo.Item] = []
         
         if searchSheetViewData.selectedCategory == .all {
             return searchSheetViewData.bookSearchResult
         } else {
             for item in searchSheetViewData.bookSearchResult
             where item.categoryName.refinedCategory == searchSheetViewData.selectedCategory {
-                filtered.append(item)
+                filteredBooks.append(item)
             }
         }
         
-        return filtered
+        return filteredBooks
     }
     
     // MARK: - BODY
