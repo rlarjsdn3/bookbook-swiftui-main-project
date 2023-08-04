@@ -16,33 +16,24 @@ struct AddCompleteBookCenterView: View {
     @State private var isPresentingDateDescSheet = false
     @State private var isPresentingDatePickerSheet = false
     
-    // MARK: - COMPUTED PROPERTIES
-    
-    var dayInterval: Int {
-        let today = Date.now
-        let calendar = Calendar.current
-        let interval = calendar.dateComponents(
-            [.day], from: today, to: addCompleteBookViewData.selectedTargetDate
-        )
-        return (interval.day ?? 0) + 1
-    }
-    
     // MARK: - PROPERTIES
     
-    let bookItem: DetailBookInfo.Item
+    let today = Date()
+    
+    let book: DetailBookInfo.Item
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: DetailBookInfo.Item) {
-        self.bookItem = bookItem
+    init(_ book: DetailBookInfo.Item) {
+        self.book = book
     }
     
     // MARK: - BODY
     
     var body: some View {
-        centerLabel
+        centerArea
             .sheet(isPresented: $isPresentingDatePickerSheet) {
-                DatePickerSheetView(theme: bookItem.bookCategory.themeColor)
+                DatePickerSheetView(theme: book.bookCategory.themeColor)
                     .presentationCornerRadius(30)
                     .presentationDetents([.height(440)])
             }
@@ -53,7 +44,7 @@ struct AddCompleteBookCenterView: View {
 // MARK: - EXTENSIONS
 
 extension AddCompleteBookCenterView {
-    var centerLabel: some View {
+    var centerArea: some View {
         VStack(spacing: 10) {
             LottieBookView()
                 .frame(height: 200)
@@ -82,8 +73,9 @@ extension AddCompleteBookCenterView {
     
     var averageDailyReadingPagesLabel: some View {
         Group {
-            let averageDailyReadingPages = bookItem.subInfo.itemPage / dayInterval
-            Text("\(dayInterval)일 동안 하루 평균 \(averageDailyReadingPages)페이지를 읽어야 해요.")
+            let dayInterval = today.getDayInterval(to: addCompleteBookViewData.selectedTargetDate)
+            let averageDailyReadingPage = book.subInfo.itemPage / dayInterval
+            Text("\(dayInterval)일 동안 하루 평균 \(averageDailyReadingPage)페이지를 읽어야 해요.")
         }
         .font(.subheadline)
         .foregroundColor(.secondary)
@@ -107,9 +99,7 @@ extension AddCompleteBookCenterView {
 
 // MARK: - PREVIEW
 
-struct BookAddCenterView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddCompleteBookCenterView(DetailBookInfo.Item.preview)
-            .environmentObject(AddCompleteBookViewData())
-    }
+#Preview {
+    AddCompleteBookCenterView(DetailBookInfo.Item.preview)
+        .environmentObject(AddCompleteBookViewData())
 }

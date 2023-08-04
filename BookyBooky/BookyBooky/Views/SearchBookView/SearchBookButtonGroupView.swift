@@ -41,14 +41,14 @@ struct SearchBookButtonGroupView: View {
     // MARK: - BODY
     
     var body: some View {
-        ButtonGroup
+        buttonGroup
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension SearchBookButtonGroupView {
-    var ButtonGroup: some View {
+    var buttonGroup: some View {
         VStack {
             dbProviderText
             

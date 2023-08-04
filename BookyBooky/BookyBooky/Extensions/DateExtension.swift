@@ -51,4 +51,9 @@ extension Date {
         
         return true // True 반환
     }
+    
+    func getDayInterval(to date: Date) -> Int {
+        let calendar = Calendar.current
+        return calendar.dateComponents([.day], from: self, to: date).day! + 1
+    }
 }

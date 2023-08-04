@@ -21,12 +21,12 @@ struct AddCompleteBookButtonGroupView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: DetailBookInfo.Item
+    let book: DetailBookInfo.Item
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: DetailBookInfo.Item) {
-        self.bookItem = bookItem
+    init(_ book: DetailBookInfo.Item) {
+        self.book = book
     }
     
     // MARK: - BODY
@@ -83,23 +83,23 @@ extension AddCompleteBookButtonGroupView {
         } label: {
             Text("추가하기")
         }
-        .buttonStyle(RightBottomButtonStyle(backgroundColor: bookItem.bookCategory.themeColor))
+        .buttonStyle(RightBottomButtonStyle(backgroundColor: book.bookCategory.themeColor))
     }
     
     var okButton: some View {
         Button("확인") {
             let readingBook = CompleteBook(
                 value: [
-                    "title": "\(bookItem.title.refinedTitle)",
-                    "author": "\(bookItem.author.refinedAuthor)",
-                    "publisher": "\(bookItem.publisher)",
-                    "pubDate": bookItem.pubDate.refinedPublishDate,
-                    "cover": "\(bookItem.cover)",
-                    "itemPage": bookItem.subInfo.itemPage,
-                    "category": bookItem.categoryName.refinedCategory,
-                    "desc": bookItem.description,
-                    "link": "\(bookItem.link)",
-                    "isbn13": "\(bookItem.isbn13)",
+                    "title": "\(book.title.refinedTitle)",
+                    "author": "\(book.author.refinedAuthor)",
+                    "publisher": "\(book.publisher)",
+                    "pubDate": book.pubDate.refinedPublishDate,
+                    "cover": "\(book.cover)",
+                    "itemPage": book.subInfo.itemPage,
+                    "category": book.categoryName.refinedCategory,
+                    "desc": book.description,
+                    "link": "\(book.link)",
+                    "isbn13": "\(book.isbn13)",
                     "startDate": Date(),
                     "targetDate": addCompleteBookViewData.selectedTargetDate,
                     "isCompleted": false

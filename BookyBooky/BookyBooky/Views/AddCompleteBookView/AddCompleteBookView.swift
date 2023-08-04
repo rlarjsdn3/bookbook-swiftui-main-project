@@ -21,27 +21,27 @@ struct AddCompleteBookView: View {
     
     // MARK: - PROPERTIES
     
-    let bookItem: DetailBookInfo.Item
+    let book: DetailBookInfo.Item
     
     // MARK: - INTIALIZER
     
-    init(_ bookItem: DetailBookInfo.Item) {
-        self.bookItem = bookItem
+    init(_ book: DetailBookInfo.Item) {
+        self.book = book
     }
     
     // MARK: - BODY
     
     var body: some View {
         VStack(spacing: 0) {
-            AddCompleteBookTopBarView(title: bookItem.bookTitle)
+            AddCompleteBookTopBarView(title: book.bookTitle)
             
             Spacer()
             
-            AddCompleteBookCenterView(bookItem)
+            AddCompleteBookCenterView(book)
         
             Spacer()
             
-            AddCompleteBookButtonGroupView(bookItem)
+            AddCompleteBookButtonGroupView(book)
         }
         .background(linearGrayGradient)
         .navigationBarBackButtonHidden()
@@ -64,8 +64,6 @@ extension AddCompleteBookView {
 
 // MARK: - PREVIEW
 
-struct BookAddView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddCompleteBookView(DetailBookInfo.Item.preview)
-    }
+#Preview {
+    AddCompleteBookView(DetailBookInfo.Item.preview)
 }

@@ -56,8 +56,6 @@ extension AddCompleteBookTopBarView {
 
 // MARK: - PREVIEW
 
-struct BookAddHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddCompleteBookTopBarView(title: "자바의 정석")
-    }
+#Preview {
+    AddCompleteBookTopBarView(title: "자바의 정석")
 }

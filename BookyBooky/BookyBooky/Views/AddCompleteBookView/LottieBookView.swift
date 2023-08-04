@@ -20,8 +20,6 @@ struct LottieBookView: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) { }
 }
 
-struct LottieView_Previews: PreviewProvider {
-    static var previews: some View {
-        LottieBookView()
-    }
+#Preview {
+    LottieBookView()
 }

@@ -18,11 +18,17 @@ struct DatePickerSheetView: View {
     
     // MARK: - PROPERTIES
     
+    let today = Date()
+    let datePickerRange: ClosedRange<Date>
+    
     let theme: Color
     
+    // MARK: - INTIALIZER
     
     init(theme: Color) {
         self.theme = theme
+        
+        datePickerRange = today.addingDay(1)...today.addingDay(365)
     }
     
     // MARK: - BODY
@@ -32,7 +38,7 @@ struct DatePickerSheetView: View {
             DatePicker(
                 "DatePicker",
                 selection: $inputDate,
-                in: Date(timeIntervalSinceNow: 86_400)...Date(timeIntervalSinceNow: 365 * 86_400),
+                in: datePickerRange,
                 displayedComponents: [.date]).datePickerStyle(.graphical
             )
             .tint(theme)
@@ -56,9 +62,7 @@ struct DatePickerSheetView: View {
 
 // MARK: - PREVIEW
 
-struct DatePickerSheetView_Previews: PreviewProvider {
-    static var previews: some View {
-        DatePickerSheetView(theme: Color.black)
-            .environmentObject(AddCompleteBookViewData())
-    }
+#Preview {
+    DatePickerSheetView(theme: Color.black)
+        .environmentObject(AddCompleteBookViewData())
 }
