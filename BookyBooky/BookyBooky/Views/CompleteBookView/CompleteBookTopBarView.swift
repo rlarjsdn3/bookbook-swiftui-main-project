@@ -13,12 +13,12 @@ struct CompleteBookTopBarView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var completeBookViewData: CompleteBookViewData
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var completeBookViewData: CompleteBookViewData
     
+    @State private var isPresentingAddSentenceSheet = false
     @State private var isPresentingEditBookInformationSheet = false
     @State private var isPresentingDeleteConfirmationDialog = false
-    @State private var isPresentingAddSentenceSheet = false
     
     // MARK: - PROPERTIES
     
@@ -63,7 +63,7 @@ extension CompleteBookTopBarView {
             Spacer()
         }
         .overlay {
-            navigationTopBarButtonGroup
+            topBarButtonGroup
         }
         .padding(.vertical)
         .overlay(alignment: .bottom) {
@@ -90,7 +90,7 @@ extension CompleteBookTopBarView {
         }
     }
     
-    var navigationTopBarButtonGroup: some View {
+    var topBarButtonGroup: some View {
         HStack {
             backButton
             
@@ -155,12 +155,10 @@ extension CompleteBookTopBarView {
 
 // MARK: - PREVIEW
 
-struct CompleteBookTopBarView_Preview: PreviewProvider {    
-    static var previews: some View {
-        CompleteBookTopBarView(
-            CompleteBook.preview
-        )
-        .environmentObject(CompleteBookViewData())
-        .environmentObject(RealmManager())
-    }
+#Preview {
+    CompleteBookTopBarView(
+        CompleteBook.preview
+    )
+    .environmentObject(CompleteBookViewData())
+    .environmentObject(RealmManager())
 }

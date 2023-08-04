@@ -35,7 +35,7 @@ struct CompleteBookDataSheetView: View {
             .confirmationDialog("마지막으로 추가된 독서 데이터를 삭제하시겠습니까?", isPresented: $isPresentingDeleteLastDataConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
                     realmManager.deleteLastRecord(completeBook)
-                    completeBookViewData.pageProgress = Double(completeBook.readingProgressPage)
+                    completeBookViewData.pageRead = Double(completeBook.readingProgressPage)
                 }
             } message: {
                 Text("이 작업은 취소할 수 없습니다.")
@@ -43,13 +43,15 @@ struct CompleteBookDataSheetView: View {
             .confirmationDialog("모든 독서 데이터를 삭제하시겠습니까?", isPresented: $isPresentingDeleteallDataConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
                     realmManager.deleteAllRecord(completeBook)
-                    completeBookViewData.pageProgress = Double(completeBook.readingProgressPage)
+                    completeBookViewData.pageRead = Double(completeBook.readingProgressPage)
                 }
             } message: {
                 Text("이 작업은 취소할 수 없습니다.")
             }
     }
 }
+
+// MARK: - EXTENSIONS
 
 extension CompleteBookDataSheetView {
     var recordCotent: some View {
@@ -156,10 +158,10 @@ extension CompleteBookDataSheetView {
     }
 }
 
-struct ReadingDataSheetView_Previews: PreviewProvider {
-    static var previews: some View {
-        CompleteBookDataSheetView(CompleteBook.preview)
-            .environmentObject(RealmManager())
-            .environmentObject(CompleteBookViewData())
-    }
+// MARK: - PREVIEW
+
+#Preview {
+    CompleteBookDataSheetView(CompleteBook.preview)
+        .environmentObject(RealmManager())
+        .environmentObject(CompleteBookViewData())
 }

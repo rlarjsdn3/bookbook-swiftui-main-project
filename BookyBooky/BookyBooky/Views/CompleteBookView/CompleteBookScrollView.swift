@@ -27,19 +27,19 @@ struct CompleteBookScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        compBookScrollContent
+        scrollContent
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension CompleteBookScrollView {
-    var compBookScrollContent: some View {
+    var scrollContent: some View {
         TrackableVerticalScrollView(yOffset: $completeBookViewData.scrollYOffset) {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                CompleteBookTopInfoView(completeBook)
+                CompleteBookMainInfoView(completeBook)
                 
-                CompleteBookBottomTabView(completeBook)
+                CompleteBookTabView(completeBook)
             }
         }
     }
@@ -47,9 +47,7 @@ extension CompleteBookScrollView {
 
 // MARK: - PREVIEW
 
-struct ReadingBookDetailScrollView_Previews: PreviewProvider {
-    static var previews: some View {
-        CompleteBookScrollView(CompleteBook.preview)
-            .environmentObject(CompleteBookViewData())
-    }
+#Preview {
+    CompleteBookScrollView(CompleteBook.preview)
+        .environmentObject(CompleteBookViewData())
 }

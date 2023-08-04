@@ -36,7 +36,7 @@ struct CompleteBookTabButton: View {
 extension CompleteBookTabButton {
     var tabButton: some View {
         Button {
-            selectType(type)
+            selectTab(type)
         } label: {
             tabLabel(type)
         }
@@ -45,7 +45,7 @@ extension CompleteBookTabButton {
         .id("\(type.name)")
     }
     
-    func selectType(_ type: CompleteBookTab) {
+    func selectTab(_ type: CompleteBookTab) {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
             completeBookViewData.selectedTabFA = type
         }

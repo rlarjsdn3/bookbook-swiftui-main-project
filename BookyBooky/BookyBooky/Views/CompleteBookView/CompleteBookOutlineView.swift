@@ -32,18 +32,18 @@ struct CompleteBookOutlineView: View {
 extension CompleteBookOutlineView {
     var outlineContent: some View {
         VStack {
-            InfoTable
+            infoTable
             
             Divider()
             
-            descLabel
+            descriptionLabel
             
             dbProviderLabel
         }
         .padding(.bottom, 40)
     }
     
-    var InfoTable: some View {
+    var infoTable: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text("기본 정보")
                 .font(.headline.weight(.bold))
@@ -155,7 +155,7 @@ extension CompleteBookOutlineView {
         .padding(.vertical, 1)
     }
     
-    var descLabel: some View {
+    var descriptionLabel: some View {
         VStack {
             HStack {
                 aboutBookText
@@ -167,7 +167,7 @@ extension CompleteBookOutlineView {
             .padding(.vertical, 3)
             .padding(.horizontal)
             
-            bookDescText
+            descriptionText
         }
         .padding(.bottom, 20)
     }
@@ -185,7 +185,7 @@ extension CompleteBookOutlineView {
         }
     }
     
-    var bookDescText: some View {
+    var descriptionText: some View {
         Text(completeBook.bookDescription)
             .multilineTextAlignment(.leading)
             .padding(.horizontal)

@@ -15,6 +15,7 @@ extension Date {
         )
     }
     
+    /// 앱에서 사용되는 가장 일반적인 형식의 시간 문자열을 만들어 반환하는 함수입니다.
     var standardTimeFormat: String {
         self.formatted(
             .dateTime.hour().minute().locale(Locale(identifier: "ko_kr"))
@@ -28,6 +29,11 @@ extension Date {
         dateFormatter.locale = Locale(identifier: "ko_kr")
         dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return dateFormatter.string(from: self)
+    }
+    
+    func addingDay(_ day: Int) -> Date {
+        let calendar = Calendar.current
+        return calendar.date(byAdding: .day, value: day, to: self) ?? Date()
     }
     
     /// 두 날짜를 주어진 요소(components)에 한하여 비교한 결과값(Boolean)을 반환하는 함수입니다.

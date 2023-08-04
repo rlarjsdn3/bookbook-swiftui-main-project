@@ -8,11 +8,6 @@
 import SwiftUI
 import RealmSwift
 
-enum SentenceCellButtonType {
-    case home
-    case shelf
-}
-
 struct SentenceCellButton: View {
     
     @EnvironmentObject var realmManager: RealmManager
@@ -20,57 +15,51 @@ struct SentenceCellButton: View {
     @State private var isPresentingModifySentenceSheetView = false
     @State private var isPresentingDeleteConfirmationDialog = false
     
-    let readingBook: CompleteBook
-    let collectSentence: Sentence
+    let completeBook: CompleteBook
+    let sentence: Sentence
     
-    init(_ readingBook: CompleteBook, collectSentence: Sentence) {
-        self.readingBook = readingBook
-        self.collectSentence = collectSentence
+    init(_ completeBook: CompleteBook, sentence: Sentence) {
+        self.completeBook = completeBook
+        self.sentence = sentence
     }
-    
-    // 문장 상세보기 화면 추가는 보류하기
     
     var body: some View {
         sentenceButton
             .sheet(isPresented: $isPresentingModifySentenceSheetView) {
-                AddSentenceSheetView(readingBook, sentence: collectSentence, type: .modify)
+                AddSentenceSheetView(completeBook, sentence: sentence, type: .modify)
             }
             .confirmationDialog("해당 문장을 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
-                    realmManager.deleteSentence(readingBook, id: collectSentence._id)
+                    realmManager.deleteSentence(completeBook, id: sentence._id)
                 }
             }
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension SentenceCellButton {
     var sentenceButton: some View {
         VStack {
-            // TODO: - 셀을 클릭하면 자세히 보기 뷰로 이동하도록 만들기
             HStack(alignment: .firstTextBaseline) {
-                Text(collectSentence.sentence)
+                Text(sentence.sentence)
                     .fontWeight(.bold)
-                
-                Spacer()
-                
-                //Image(systemName: "chevron.right")
-                //    .foregroundColor(.secondary)
             }
             .padding([.leading, .top, .trailing])
             
             HStack {
-                Text(collectSentence.date.standardDateFormat)
+                Text(sentence.date.standardDateFormat)
                     .font(.caption)
                     .foregroundColor(.secondary)
                 
                 Spacer()
                 
-                Text("\(collectSentence.page)페이지")
+                Text("\(sentence.page)페이지")
                     .padding(.vertical, 3.2)
                     .padding(.horizontal, 15)
                     .font(.caption)
                     .foregroundColor(Color.white)
-                    .background(readingBook.category.themeColor)
+                    .background(completeBook.category.themeColor)
                     .clipShape(Capsule())
                     .padding(.trailing)
                 
@@ -89,7 +78,7 @@ extension SentenceCellButton {
                 } label: {
                     Image(systemName: "ellipsis.circle.fill")
                         .font(.title2)
-                        .foregroundColor(readingBook.category.themeColor)
+                        .foregroundColor(completeBook.category.themeColor)
                 }
             }
             .padding(.horizontal)
@@ -100,12 +89,12 @@ extension SentenceCellButton {
     }
 }
 
-struct SentenceCellButton_Previews: PreviewProvider {
-    static var previews: some View {
-        SentenceCellButton(
-            CompleteBook.preview,
-            collectSentence: Sentence.preview
-        )
-        .environmentObject(RealmManager())
-    }
+// MARK: - PREVIEW
+
+#Preview {
+    SentenceCellButton(
+        CompleteBook.preview,
+        sentence: Sentence.preview
+    )
+    .environmentObject(RealmManager())
 }

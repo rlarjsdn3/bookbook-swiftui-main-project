@@ -13,10 +13,10 @@ struct CompleteBookRenewalSheetView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var completeBookViewData: CompleteBookViewData
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var completeBookViewData: CompleteBookViewData
     
-    @State private var totalPagesRead = 0
+    @State private var totalPageRead = 0
     @State private var isLongPressing: Bool = false
     
     // MARK: - PROPERTIES
@@ -36,7 +36,7 @@ struct CompleteBookRenewalSheetView: View {
     var body: some View {
         renewalContent
             .onAppear {
-                totalPagesRead = completeBook.lastRecord?.totalPagesRead ?? 0
+                totalPageRead = completeBook.lastRecord?.totalPagesRead ?? 0
             }
             .onDisappear {
                 if completeBook.isComplete {
@@ -48,14 +48,16 @@ struct CompleteBookRenewalSheetView: View {
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension CompleteBookRenewalSheetView {
     var renewalContent: some View {
         VStack {
-            howManyPagesDidYouReadText
+            titleText
             
             Spacer()
         
-            totalPagesReadLabel
+            totalPageReadLabel
             
             Spacer()
             
@@ -63,15 +65,15 @@ extension CompleteBookRenewalSheetView {
         }
     }
     
-    var howManyPagesDidYouReadText: some View {
+    var titleText: some View {
         Text("어디까지 읽으셨나요?")
             .font(.title.weight(.bold))
             .padding(.top, 45)
     }
     
-    var totalPagesReadLabel: some View {
+    var totalPageReadLabel: some View {
         VStack {
-            Text("\(totalPagesRead)")
+            Text("\(totalPageRead)")
                 .font(.system(size: 60, weight: .bold, design: .rounded))
                 .padding(.vertical, 2)
             
@@ -100,10 +102,10 @@ extension CompleteBookRenewalSheetView {
     
     var minusButton: some View {
         Group {
-            let lastRecordTotalPagesRead = completeBook.lastRecord?.totalPagesRead ?? 0
+            let previousPageRead = completeBook.lastRecord?.totalPagesRead ?? 0
             
             Button {
-                totalPagesRead -= 1
+                totalPageRead -= 1
             } label: {
                 Image(systemName: "minus")
                     .font(.largeTitle)
@@ -112,17 +114,17 @@ extension CompleteBookRenewalSheetView {
                     .padding(.horizontal)
                     .background(completeBook.category.themeColor, in: .circle)
             }
-            .opacity(lastRecordTotalPagesRead >= totalPagesRead  ? 0.5 : 1)
-            .disabled(lastRecordTotalPagesRead >= totalPagesRead  ? true : false)
+            .opacity(previousPageRead >= totalPageRead  ? 0.5 : 1)
+            .disabled(previousPageRead >= totalPageRead  ? true : false)
             .simultaneousGesture(
                 LongPressGesture(minimumDuration: 0.2)
                     .onEnded { _ in
                         self.isLongPressing = true
                         // 타이머를 실행시켜 0.1초마다 페이지 쪽수가 증가하도록 하기
                         self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-                            self.totalPagesRead -= 1
+                            self.totalPageRead -= 1
                             // 읽은 페이지 수가 마지막으로 읽은 페이지 미만으로 내려간다면
-                            if lastRecordTotalPagesRead >= totalPagesRead {
+                            if previousPageRead >= totalPageRead {
                                 timer.invalidate()
                             }
                         }
@@ -131,7 +133,7 @@ extension CompleteBookRenewalSheetView {
                 // NOTE: - 일반적으로 버튼의 동작은 '눌렀다 떼는 경우' 발생합니다.
                 //       - simutaneousGesture를 통해 여러 제스처를 동시에 입력 받으므로,
                 //       - 버튼을 0.2초 이상 누르고 있다면 LongPressGesture가 실행(되어 끝나며)되며,
-                //       - 그러면 타이머가 실행되어 0.1초마다 페이지 수를 증가시킵니다.
+                //       - 그러면 타이머가 실행되어 0.1초마다 페이지 수를 감소시킵니다.
                 //       - 이때, 다시 버튼에서 손을 뗀다면, 비로소 그때 버튼의 동작이 실행되며
                 //       - isLongPressing에 따라 버튼의 동작이 분기됩니다.
             )
@@ -140,14 +142,14 @@ extension CompleteBookRenewalSheetView {
     
     var plusButton: some View {
         Group {
-            let readingBookTotalPages = completeBook.itemPage
+            let totalPage = completeBook.itemPage
             
             Button {
                 if isLongPressing {
                     isLongPressing = false
                     timer?.invalidate()
                 } else {
-                    totalPagesRead += 1
+                    totalPageRead += 1
                 }
             } label: {
                 Image(systemName: "plus")
@@ -156,28 +158,21 @@ extension CompleteBookRenewalSheetView {
                     .padding(10)
                     .background(completeBook.category.themeColor, in: .circle)
             }
-            .opacity(readingBookTotalPages <= totalPagesRead  ? 0.5 : 1)
-            .disabled(readingBookTotalPages <= totalPagesRead  ? true : false)
+            .opacity(totalPage <= totalPageRead  ? 0.5 : 1)
+            .disabled(totalPage <= totalPageRead  ? true : false)
             .simultaneousGesture(
                 LongPressGesture(minimumDuration: 0.2)
                     .onEnded { _ in
                         self.isLongPressing = true
                         // 타이머를 실행시켜 0.1초마다 페이지 쪽수가 증가하도록 하기
                         self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-                            self.totalPagesRead += 1
+                            self.totalPageRead += 1
                             // 읽은 페이지 수가 도서 총 페이지를 초과한다면
-                            if readingBookTotalPages <= totalPagesRead {
+                            if totalPage <= totalPageRead {
                                 timer.invalidate()
                             }
                         }
                     }
-                
-                // NOTE: - 일반적으로 버튼의 동작은 '눌렀다 떼는 경우' 발생합니다.
-                //       - simutaneousGesture를 통해 여러 제스처를 동시에 입력 받으므로,
-                //       - 버튼을 0.2초 이상 누르고 있다면 LongPressGesture가 실행(되어 끝나며)되며,
-                //       - 그러면 타이머가 실행되어 0.1초마다 페이지 수를 증가시킵니다.
-                //       - 이때, 다시 버튼에서 손을 뗀다면, 비로소 그때 버튼의 동작이 실행되며
-                //       - isLongPressing에 따라 버튼의 동작이 분기됩니다.
             )
         }
     }
@@ -186,12 +181,12 @@ extension CompleteBookRenewalSheetView {
         Button {
             realmManager.addReadingBookRecord(
                 completeBook,
-                totalPagesRead: totalPagesRead
+                totalPagesRead: totalPageRead
             )
-            completeBookViewData.pageProgress = Double(totalPagesRead)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 dismiss()
             }
+            completeBookViewData.pageRead = Double(totalPageRead)
         } label: {
             Text("갱신하기")
         }
@@ -202,10 +197,8 @@ extension CompleteBookRenewalSheetView {
 
 // MARK: - PREVIEW
 
-struct ReadingBookRenewalSheetView_Previews: PreviewProvider {
-    static var previews: some View {
-        CompleteBookRenewalSheetView(CompleteBook.preview)
-            .environmentObject(CompleteBookViewData())
-            .environmentObject(RealmManager())
-    }
+#Preview {
+    CompleteBookRenewalSheetView(CompleteBook.preview)
+        .environmentObject(CompleteBookViewData())
+        .environmentObject(RealmManager())
 }

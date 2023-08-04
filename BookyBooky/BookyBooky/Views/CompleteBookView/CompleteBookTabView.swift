@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct CompleteBookBottomTabView: View {
+struct CompleteBookTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -39,7 +39,7 @@ struct CompleteBookBottomTabView: View {
 
 // MARK: - EXTENSIONS
 
-extension CompleteBookBottomTabView {
+extension CompleteBookTabView {
     func bottomTabView(_ selected: CompleteBookTab) -> some View {
         Group {
             switch selected {
@@ -76,9 +76,7 @@ extension CompleteBookBottomTabView {
 
 // MARK: - PREVIEW
 
-struct ReadingBookTabSectionView_Previews: PreviewProvider {    
-    static var previews: some View {
-        CompleteBookBottomTabView(CompleteBook.preview)
-            .environmentObject(CompleteBookViewData())
-    }
+#Preview {
+    CompleteBookTabView(CompleteBook.preview)
+        .environmentObject(CompleteBookViewData())
 }

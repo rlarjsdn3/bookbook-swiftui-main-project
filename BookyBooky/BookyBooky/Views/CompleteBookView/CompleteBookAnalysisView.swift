@@ -5,6 +5,8 @@
 //  Created by 김건우 on 2023/05/03.
 //
 
+// NOTICE: - 본 파일에 구현된 기능은 아직 미완성입니다.
+
 import SwiftUI
 import Charts
 import RealmSwift

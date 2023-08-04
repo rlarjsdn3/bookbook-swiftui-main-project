@@ -24,24 +24,34 @@ struct CompleteBookSentenceView: View {
     // MARK: - BODY
     
     var body: some View {
-        if completeBook.sentences.isEmpty {
-            noCollectSentenceLabel
-        } else {
-            ScrollView {
-                ForEach(completeBook.sentences.sorted { $0.page < $1.page }, id: \.self) { collect in
-                    SentenceCellButton(
-                        completeBook,
-                        collectSentence: collect
-                    )
-                }
-            }
-            .padding(.bottom, 40)
-        }
+        scrollContent
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension CompleteBookSentenceView {
-    var noCollectSentenceLabel: some View {
+    var scrollContent: some View {
+        Group {
+            if completeBook.sentences.isEmpty {
+                noSentencesLabel
+            } else {
+                ScrollView {
+                    let sentences = completeBook.sentences.sorted(by: { $0.page < $1.page })
+                    
+                    ForEach(sentences, id: \.self) { sentence in
+                        SentenceCellButton(
+                            completeBook,
+                            collectSentence: sentence
+                        )
+                    }
+                }
+                .padding(.bottom, 40)
+            }
+        }
+    }
+    
+    var noSentencesLabel: some View {
         VStack(spacing: 5) {
             Text("수집한 문장이 없음")
                 .font(.title3)
@@ -50,13 +60,12 @@ extension CompleteBookSentenceView {
             Text("문장을 수집해보세요.")
                 .foregroundColor(.secondary)
         }
-        .padding(.top, 50)
-        .padding(.bottom, 40)
+        .padding(.vertical, 50)
     }
 }
 
-struct ReadingBookCollectSentencesView_Previews: PreviewProvider {
-    static var previews: some View {
-        CompleteBookSentenceView(CompleteBook.preview)
-    }
+// MARK: - PREVIEW
+
+#Preview {
+    CompleteBookSentenceView(CompleteBook.preview)
 }

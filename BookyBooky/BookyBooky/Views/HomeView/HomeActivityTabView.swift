@@ -58,7 +58,7 @@ extension HomeActivityTabView {
         NavigationLink("더 보기") {
             ActivityView()
         }
-        .disabled(readingBooks.isEmpty)
+        .disabled(activities.isEmpty)
     }
     
     var tabContent: some View {

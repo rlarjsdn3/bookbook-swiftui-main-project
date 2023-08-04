@@ -24,12 +24,17 @@ struct CompleteBookEditView: View {
     
     // MARK: - PROPERTIES
     
+    let today = Date()
+    let datePickerRange: ClosedRange<Date>
+    
     let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
     init(_ completeBook: CompleteBook) {
         self.completeBook = completeBook
+        
+        self.datePickerRange = today.addingDay(1)...today.addingDay(365)
     }
     
     // MARK: - BODY
@@ -127,6 +132,7 @@ extension CompleteBookEditView {
                     }
                 }
             }
+            .labelsHidden()
         }
         .padding(.vertical, 14)
         .padding(.horizontal)
@@ -144,12 +150,14 @@ extension CompleteBookEditView {
             DatePicker(
                     "DatePicker",
                     selection: $inputTargetDate,
-                    in: Date(timeIntervalSinceNow: 86400)...(Calendar.current.date(byAdding: .day, value: 365, to: Date())!),
-                    displayedComponents: [.date])
-                .datePickerStyle(.compact)
-                .labelsHidden()
-                .tint(completeBook.category.themeColor)
-                .padding(.horizontal, 3)
+                    in: datePickerRange,
+                    displayedComponents: [.date]
+            )
+            .labelsHidden()
+            .tint(completeBook.category.themeColor)
+            .environment(\.locale, Locale(identifier: "ko_kr"))
+            .datePickerStyle(.compact)
+            .padding(.horizontal, 3)
         }
         .padding(.vertical, 14)
         .padding(.horizontal)
@@ -165,10 +173,10 @@ extension CompleteBookEditView {
                 category: inputCategory,
                 targetDate: inputTargetDate
             )
-            alertManager.isPresentingReadingBookEditSuccessToastAlert = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 dismiss()
             }
+            alertManager.isPresentingReadingBookEditSuccessToastAlert = true
         } label: {
             Text("수정하기")
         }
@@ -185,9 +193,7 @@ extension CompleteBookEditView {
 
 // MARK: - PREVIEW
 
-struct EditBookInformationView_Previews: PreviewProvider {
-    static var previews: some View {
-        CompleteBookEditView(CompleteBook.preview)
-            .environmentObject(RealmManager())
-    }
+#Preview {
+    CompleteBookEditView(CompleteBook.preview)
+        .environmentObject(RealmManager())
 }

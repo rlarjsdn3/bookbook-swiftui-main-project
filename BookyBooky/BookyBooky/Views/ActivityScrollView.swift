@@ -50,6 +50,7 @@ extension ActivityScrollView {
             Text("독서 데이터를 추가하십시오.")
                 .foregroundColor(.secondary)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     var activityScroll: some View {

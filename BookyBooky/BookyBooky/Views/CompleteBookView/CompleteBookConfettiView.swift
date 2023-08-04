@@ -19,7 +19,7 @@ struct CompleteBookConfettiView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var dayToCompleteTheBook: Int {
+    var dayToComplete: Int {
         let component = Calendar.current.dateComponents(
             [.day],
             from: completeBook.startDate,
@@ -28,7 +28,7 @@ struct CompleteBookConfettiView: View {
         return component.day!
     }
     
-    var dayRemainingUntilTheTargetDate: Int {
+    var dayRemainingUntilTargetDate: Int {
         let component = Calendar.current.dateComponents(
             [.day],
             from: completeBook.completeDate ?? Date(),
@@ -39,8 +39,9 @@ struct CompleteBookConfettiView: View {
     
     // MARK: - PROPERTIES
     
-    let completeBook: CompleteBook
     let haptic = HapticManager()
+    
+    let completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     
@@ -103,16 +104,15 @@ extension CompleteBookConfettiView {
     
     var timeToCompleteBookText: some View {
         Group {
-            let dayToCompleteTheReading = dayToCompleteTheBook
-            let dayRemainingUntilTheTargetDate = dayRemainingUntilTheTargetDate
+            let dayRemaining = dayRemainingUntilTargetDate
             
-            if dayToCompleteTheReading == 0 {
+            if dayToComplete == 0 {
                 Text("와우! 하루 만에 독서를 끝냈어요!")
             } else {
                 VStack(spacing: 10) {
-                    Text("완독하는 데 \(dayRemainingUntilTheTargetDate)일이 걸렸어요.")
+                    Text("완독하는 데 \(dayRemaining)일이 걸렸어요.")
                     
-                    Text("목표보다 \(dayRemainingUntilTheTargetDate)일 더 빠르게 읽었어요!")
+                    Text("목표보다 \(dayRemaining)일 더 빠르게 읽었어요!")
                 }
             }
         }

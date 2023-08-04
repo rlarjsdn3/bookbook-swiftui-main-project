@@ -44,13 +44,17 @@ extension ActivityTopBarView {
     
     var TopBarButtonGroup: some View {
         HStack {
-            Button {
-                dismiss()
-            } label: {
-               chevronLeftSFSymbolImage
-            }
+            backButton
 
             Spacer()
+        }
+    }
+    
+    var backButton: some View {
+        Button {
+            dismiss()
+        } label: {
+           chevronLeftSFSymbolImage
         }
     }
     
