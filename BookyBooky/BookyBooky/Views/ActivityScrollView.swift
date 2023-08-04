@@ -160,7 +160,7 @@ extension ActivityScrollView {
             Spacer()
             
             VStack(alignment: .trailing) {
-                Text("\(activity.averageDailyReadingPage)페이지")
+                Text("\(activity.totalPagesRead)페이지")
                     .foregroundColor(Color.pink)
                 
                 Text("하루 평균 \(activity.averageDailyReadingPage)페이지")

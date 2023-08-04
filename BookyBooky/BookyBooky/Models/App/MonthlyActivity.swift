@@ -24,13 +24,14 @@ extension MonthlyActivity {
     var readingDayCount: Int {
         var date: [Date] = []
         
-        for activity in self.activities {
+        for activity in activities {
             if !date.contains(
                 where: { $0.isEqual([.year, .month, .day], date: activity.date) }
             ) {
                 date.append(activity.date)
             }
         }
+        print(date)
         return date.count
     }
     

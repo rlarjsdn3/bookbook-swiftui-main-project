@@ -39,9 +39,7 @@ struct SalesPointDescSheetView: View {
                 
                 salesPointDescLabel
             }
-            // 베젤이 없는 아이폰(iPhone 14 등)은 수평 간격 25으로 설정
-            // 베젤이 있는 아이폰(iPhone SE 등)은 수평 간격 15으로 설정
-            .padding(.horizontal, safeAreaInsets.bottom == 0 ? 15 : 25)
+            .padding(.horizontal, 25)
             
             Spacer()
             
@@ -49,10 +47,7 @@ struct SalesPointDescSheetView: View {
         }
         // 베젤이 없는 아이폰(iPhone 14 등)은 하단 간격 0으로 설정
         // 베젤이 있는 아이폰(iPhone SE 등)은 하단 간격 18으로 설정
-        .padding(safeAreaInsets.bottom == 0 ? 18 : 0)
-        // 베젤이 없는 아이폰(iPhone 14 등)은 시트 높이를 380으로 설정
-        // 베젤이 있는 아이폰(iPhone SE 등)은 시트 높이를 420으로 설정
-        .presentationDetents([.height(safeAreaInsets.bottom == 0 ? 450 : 410)])        
+        .padding(.bottom, safeAreaInsets.bottom == 0 ? 20 : 0)
     }
 }
 
@@ -93,8 +88,6 @@ extension SalesPointDescSheetView {
 
 // MARK: - PREVIEW
 
-struct SalesPointDescriptionSheetView_Previews: PreviewProvider {
-    static var previews: some View {
-        SalesPointDescSheetView(theme: Color.black)
-    }
+#Preview {
+    SalesPointDescSheetView(theme: Color.black)
 }

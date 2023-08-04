@@ -14,6 +14,7 @@ struct CompleteBookRenewalSheetView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var realmManager: RealmManager
+    @EnvironmentObject var alertManager: AlertManager
     @EnvironmentObject var completeBookViewData: CompleteBookViewData
     
     @State private var totalPageRead = 0
@@ -186,6 +187,7 @@ extension CompleteBookRenewalSheetView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 dismiss()
             }
+            alertManager.isPresentingReadingBookRenewalSuccessToastAlert = true
             completeBookViewData.pageRead = Double(totalPageRead)
         } label: {
             Text("갱신하기")
@@ -199,6 +201,7 @@ extension CompleteBookRenewalSheetView {
 
 #Preview {
     CompleteBookRenewalSheetView(CompleteBook.preview)
-        .environmentObject(CompleteBookViewData())
         .environmentObject(RealmManager())
+        .environmentObject(AlertManager())
+        .environmentObject(CompleteBookViewData())
 }
