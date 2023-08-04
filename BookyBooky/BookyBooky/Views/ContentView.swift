@@ -25,7 +25,7 @@ struct ContentView: View {
         VStack {
             defaultTabView
             
-            CustomMainTabView(selected: $selectedMainTab)
+            CustomMainTabView(selection: $selectedMainTab)
         }
         .ignoresSafeArea(.keyboard)
     }

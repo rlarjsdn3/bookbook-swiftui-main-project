@@ -31,6 +31,7 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    /// 주어진 일수(day)만큼 날짜를 더한 결과를 반환하는 반수입니다.
     func addingDay(_ day: Int) -> Date {
         let calendar = Calendar.current
         return calendar.date(byAdding: .day, value: day, to: self) ?? Date()
@@ -52,6 +53,7 @@ extension Date {
         return true // True 반환
     }
     
+    // 두 날짜 사이의 일수(day) 간격을 반환하는 함수입니다.
     func getDayInterval(to date: Date) -> Int {
         let calendar = Calendar.current
         return calendar.dateComponents([.day], from: self, to: date).day! + 1

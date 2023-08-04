@@ -12,8 +12,11 @@ import Combine
 extension View {
     /// 실행 중인 기기의 SafeArea 영역의 크기를 반환합니다.
     var safeAreaInsets: UIEdgeInsets {
-        // 코드 수정 필요
-        UIApplication.shared.windows.first?.safeAreaInsets ?? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        UIApplication
+            .shared
+            .connectedScenes
+            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+            .first { $0.isKeyWindow }?.safeAreaInsets ?? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
     // 실행 중인 기기의 가로 및 세로 길이를 반환합니다.
@@ -33,7 +36,7 @@ extension View {
                     .default
                     .publisher(for: UIResponder.keyboardWillHideNotification)
                     .map { _ in false })
-//            .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
+            .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
             .eraseToAnyPublisher()
     }
     

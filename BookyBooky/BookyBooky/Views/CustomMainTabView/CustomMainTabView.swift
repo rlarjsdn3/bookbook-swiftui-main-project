@@ -9,18 +9,18 @@ import SwiftUI
 
 struct CustomMainTabView: View {
     
-    // MARK: - PROPERTIES
-    
-    @Binding var selectedTab: CustomMainTab
-    
     // MARK: - WRAPPER PROPERTIES
     
     @Namespace var namespace
     
+    // MARK: - PROPERTIES
+    
+    @Binding var selectedTab: CustomMainTab
+    
     // MARK: - INTIALIZER
     
-    init(selected: Binding<CustomMainTab>) {
-        self._selectedTab = selected
+    init(selection selectedTab: Binding<CustomMainTab>) {
+        self._selectedTab = selectedTab
     }
     
     // MARK: - BODY
@@ -70,8 +70,6 @@ struct CustomMainTabView: View {
 
 // MARK: - PREVIEW
 
-struct RoundedTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomMainTabView(selected: .constant(.home))
-    }
+#Preview {
+    CustomMainTabView(selection: .constant(.home))
 }

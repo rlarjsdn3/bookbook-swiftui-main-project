@@ -125,8 +125,7 @@ extension Results<CompleteBook> {
         )
     }
     
-    /// <#Description#>
-    /// - Returns: <#description#>
+    // 코드 다듬어보기
     var monthlyReadingActivity: [MonthlyReadingActivity] {
         var monthlyRecord: [MonthlyReadingActivity] = []
         

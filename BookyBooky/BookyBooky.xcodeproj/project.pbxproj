@@ -79,7 +79,6 @@
 		9E7A795029DAABA000A51856 /* SearchBookButtonGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7A794F29DAABA000A51856 /* SearchBookButtonGroupView.swift */; };
 		9E7BFC7929F0F24F00D72648 /* AnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BFC7829F0F24F00D72648 /* AnalysisView.swift */; };
 		9E7D40892A284285007368CF /* AddSentenceSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D40882A284285007368CF /* AddSentenceSheetView.swift */; };
-		9E8350B32A57AB9B00844233 /* SafariBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8350B22A57AB9B00844233 /* SafariBrowserView.swift */; };
 		9E852F1729E1283C00A78EC2 /* BookShelfTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E852F1629E1283C00A78EC2 /* BookShelfTopBarView.swift */; };
 		9E8FCDEA2A7946B100A78BED /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8FCDE92A7946B100A78BED /* AlertManager.swift */; };
 		9E99485B2A52B5D800EA3490 /* HomeViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E99485A2A52B5D800EA3490 /* HomeViewData.swift */; };
@@ -226,7 +225,6 @@
 		9E7A794F29DAABA000A51856 /* SearchBookButtonGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookButtonGroupView.swift; sourceTree = "<group>"; };
 		9E7BFC7829F0F24F00D72648 /* AnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisView.swift; sourceTree = "<group>"; };
 		9E7D40882A284285007368CF /* AddSentenceSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSentenceSheetView.swift; sourceTree = "<group>"; };
-		9E8350B22A57AB9B00844233 /* SafariBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariBrowserView.swift; sourceTree = "<group>"; };
 		9E852F1629E1283C00A78EC2 /* BookShelfTopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelfTopBarView.swift; sourceTree = "<group>"; };
 		9E8FCDE92A7946B100A78BED /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		9E99485A2A52B5D800EA3490 /* HomeViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewData.swift; sourceTree = "<group>"; };
@@ -387,7 +385,6 @@
 			children = (
 				9E061D6029FAA8890042E3B1 /* ProfileView.swift */,
 				9EB995192A56E2B0005CD964 /* MailComposeView.swift */,
-				9E8350B22A57AB9B00844233 /* SafariBrowserView.swift */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";
@@ -932,7 +929,6 @@
 				9E0434AB29E28097009A2161 /* BookSortCriteria.swift in Sources */,
 				9EB995162A56D977005CD964 /* BookShelfSentenceListViewData.swift in Sources */,
 				9EE01FF12A020FAA00584F39 /* CompleteBookOutlineView.swift in Sources */,
-				9E8350B32A57AB9B00844233 /* SafariBrowserView.swift in Sources */,
 				9ED116C129ED04330072BA41 /* AddCompleteBookButtonGroupView.swift in Sources */,
 				9EC71F942A174A410056C11C /* BottomButtonStyle.swift in Sources */,
 				9EF659D92A39A269003CF6A5 /* TrackScrollYOffset.swift in Sources */,

@@ -15,7 +15,6 @@ struct ProfileView: View {
     // MARK: - WRAPPER PROPERTIES
     
     @State private var isPresentMailComposeView: Bool = false
-    @State private var isPresentSafariBrowserSheetView: Bool = false
     @State private var isPresentAlertSendMailErrorAlert: Bool = false
     
     // MARK: - PROPERTIES
