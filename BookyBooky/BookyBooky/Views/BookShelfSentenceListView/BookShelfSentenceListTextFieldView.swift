@@ -43,7 +43,7 @@ struct BookShelfSentenceListTextFieldView: View {
 extension BookShelfSentenceListTextFieldView {
     var textFieldArea: some View {
         HStack {
-            utilMenu
+            bookSortMenu
             
             inputField
             
@@ -53,7 +53,7 @@ extension BookShelfSentenceListTextFieldView {
         .padding(.bottom, 2)
     }
     
-    var utilMenu: some View {
+    var bookSortMenu: some View {
         Menu {
             Section {
                 sortButtonGroup
@@ -190,12 +190,10 @@ extension BookShelfSentenceListTextFieldView {
 
 // MARK: - PREVIEW
 
-struct BookShelfSentenceTextFieldView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScrollViewReader { proxy in
-            BookShelfSentenceListTextFieldView(scrollProxy: proxy)
-                .environmentObject(BookShelfSentenceListViewData())
-        }
+#Preview {
+    ScrollViewReader { proxy in
+        BookShelfSentenceListTextFieldView(scrollProxy: proxy)
+            .environmentObject(BookShelfSentenceListViewData())
     }
 }
 

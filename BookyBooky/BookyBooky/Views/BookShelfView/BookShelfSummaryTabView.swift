@@ -58,30 +58,34 @@ struct BookShelfSummaryTabView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var compBookCount: Int {
+    var numOfCompleteBook: Int {
         return readingBooks.filter { $0.isComplete }.count
     }
     
-    var favBookCount: Int {
+    var numOfFavoriteBook: Int {
         return favoriteBooks.count
     }
     
-    var sentenceCount: Int {
+    var numOfCollectedSentence: Int {
         var count: Int = 0
         
-        for readingBook in readingBooks {
-            count += readingBook.sentences.count
+        for book in readingBooks {
+            count += book.sentences.count
         }
         return count
     }
     
+    // MARK: - BODY
+    
     var body: some View {
-        summaryTab
+        summaryTabArea
     }
 }
 
+// MARK: - EXTENSIONS
+
 extension BookShelfSummaryTabView {
-    var summaryTab: some View {
+    var summaryTabArea: some View {
         HStack {
             ForEach(SummaryTabItem.allCases, id: \.self) { item in
                 Spacer()
@@ -122,16 +126,18 @@ extension BookShelfSummaryTabView {
         Group {
             switch item {
             case .compBookCount:
-                return Text("\(compBookCount)")
+                return Text("\(numOfCompleteBook)")
             case .favBookCount:
-                return Text("\(favBookCount)")
+                return Text("\(numOfFavoriteBook)")
             case .sentenceCount:
-                return Text("\(sentenceCount)")
+                return Text("\(numOfCollectedSentence)")
             }
         }
         .font(.title2)
     }
 }
+
+// MARK: - PREVIEW
 
 #Preview {
     BookShelfSummaryTabView()

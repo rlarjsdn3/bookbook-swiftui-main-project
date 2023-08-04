@@ -81,7 +81,7 @@ extension SearchBookButton {
             asyncCoverImage(
                 book.cover,
                 width: mainScreen.width * 0.32, height: 190,
-                coverShape: RoundedRectTRBR()
+                coverShape: RoundedRect(byRoundingCorners: [.topRight, .bottomRight])
             )
             .onAppear {
                 isLoadingCoverImage = false

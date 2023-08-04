@@ -12,7 +12,7 @@ struct BookShelfCompBookTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var readingBooks
+    @ObservedResults(CompleteBook.self) var completeBooks
     
     @State private var isPresentingCompleteBookListView = false
     
@@ -26,31 +26,29 @@ struct BookShelfCompBookTabView: View {
     // MARK: - BODY
     
     var body: some View {
-        compBookTab
-            .sheet(isPresented: $isPresentingCompleteBookListView) {
-                BookShelfListView(type: .complete)
+        Section {
+            let completeBooks = completeBooks.get(.complete)
+            if completeBooks.isEmpty {
+                noBooksLabel
+            } else {
+                scrollContent
             }
+        } header: {
+            tabTitle
+        }
+        .sheet(isPresented: $isPresentingCompleteBookListView) {
+            BookShelfListView(type: .complete)
+        }
     }
 }
 
 // MARK: - EXTENSION
 
 extension BookShelfCompBookTabView {
-    var compBookTab: some View {
-            Section {
-                if readingBooks.get(.complete).isEmpty {
-                    noCompleteBooksLabel
-                } else {
-                    compBookScrollContent
-                }
-            } header: {
-                compBookHeaderLabel
-            }
-    }
-    
-    var compBookScrollContent: some View {
+    var scrollContent: some View {
         LazyVGrid(columns: columns, spacing: 15) {
-            ForEach(readingBooks.get(.complete), id: \.self) { book in
+            let completeBooks = completeBooks.get(.complete)
+            ForEach(completeBooks, id: \.self) { book in
                 HomeReadingBookButton(book)
                     .padding(.top, 10)
             }
@@ -58,7 +56,7 @@ extension BookShelfCompBookTabView {
         .padding()
     }
     
-    var noCompleteBooksLabel: some View {
+    var noBooksLabel: some View {
         VStack(spacing: 5) {
             Text("읽은 도서가 없음")
                 .font(.title3)
@@ -71,7 +69,7 @@ extension BookShelfCompBookTabView {
         .padding(.bottom, 200) // 임시
     }
     
-    var compBookHeaderLabel: some View {
+    var tabTitle: some View {
         HStack {
             Text("읽은 도서")
                 .font(.headline)
@@ -84,7 +82,7 @@ extension BookShelfCompBookTabView {
             } label: {
                 Text("더 보기")
             }
-            .disabled(readingBooks.get(.complete).isEmpty)
+            .disabled(completeBooks.get(.complete).isEmpty)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 10)

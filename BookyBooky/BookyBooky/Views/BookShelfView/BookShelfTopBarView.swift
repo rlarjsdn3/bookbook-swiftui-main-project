@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BookShelfTopBarView: View {
     
-    // MARKL - WRAPPER PROPERTIES
+    // MARK: - WRAPPER PROPERTIES
     
     @State private var isPresentingCollectSenetenceView = false
     
@@ -35,7 +35,7 @@ extension BookShelfTopBarView {
             Spacer()
         }
         .overlay(alignment: .trailing) {
-            navigationTopBarButtonGroup
+            topBarButtonGroup
         }
         .padding(.vertical)
     }
@@ -45,7 +45,7 @@ extension BookShelfTopBarView {
             .navigationTitleStyle()
     }
     
-    var navigationTopBarButtonGroup: some View {
+    var topBarButtonGroup: some View {
         Button {
             isPresentingCollectSenetenceView = true
         } label: {
@@ -57,8 +57,6 @@ extension BookShelfTopBarView {
 
 // MARK: - PREVIEW
 
-struct BookShelfHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        BookShelfTopBarView()
-    }
+#Preview {
+    BookShelfTopBarView()
 }

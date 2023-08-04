@@ -18,37 +18,35 @@ struct BookShelfSentenceScrollView: View {
     
     // MARK: - COMPUTED PROPERTIES
     
-    var filteredCompBooks: [CompleteBook] {
+    var filteredCompleteBooks: [CompleteBook] {
         completeBooks.getFilteredReadingBooks(
             .all,
             searchQuery: bookShelfSentenceListViewData.searchQuery,
             bookSortType: bookShelfSentenceListViewData.selectedSort
         )
     }
+    
+    var isExistSentences: Bool {
+        let completeBooks = filteredCompleteBooks
+        for book in completeBooks where !book.isSentencesEmpty {
+            return true
+        }
+        return false
+    }
 
     // MARK: - BODY
     
     var body: some View {
-        sentenceScrollContent
-    }
-    
-    // MARK: - FUNCTIONS
-    
-    func hasCollectedSentences() -> Bool {
-        let compBooks = filteredCompBooks
-        for compBook in compBooks where !compBook.isSentencesEmpty {
-            return true
-        }
-        return false
+        scrollContent
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookShelfSentenceScrollView {
-    var sentenceScrollContent: some View {
+    var scrollContent: some View {
         Group {
-            if hasCollectedSentences() {
+            if isExistSentences {
                 sentenceButtonGroup
             } else {
                 noResultsLabel
@@ -74,38 +72,42 @@ extension BookShelfSentenceScrollView {
     var sentenceButtonGroup: some View {
         ScrollView {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                ForEach(filteredCompBooks) { compBook in
-                    if !compBook.sentences.isEmpty {
+                ForEach(filteredCompleteBooks) { book in
+                    if !book.isSentencesEmpty {
                         Section {
                             VStack {
-                                let sortedSentences = compBook.sentences.sorted(
+                                // ...
+                                let sortedSentences = book.sentences.sorted(
                                     by: { $0.page < $1.page }
                                 )
+                                // ...
                                 ForEach(sortedSentences, id: \.self) { collect in
-                                    SentenceCellButton(compBook, sentence: collect)
+                                    SentenceCellButton(book, sentence: collect)
                                 }
                             }
                         } header: {
-                            Text(compBook.title)
-                                .font(.title3.weight(.bold))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .lineLimit(1)
-                                .truncationMode(.middle)
-                                .padding([.horizontal, .top, .bottom])
-                                .background(Color.white)
+                            bookTitle(book)
                         }
                     }
                 }
             }
         }
     }
+    
+    func bookTitle(_ book: CompleteBook) -> some View {
+        Text(book.title)
+            .font(.title3.weight(.bold))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .lineLimit(1)
+            .truncationMode(.middle)
+            .padding([.horizontal, .top, .bottom])
+            .background(Color.white)
+    }
 }
 
 // MARK: - PREVIEW
 
-struct BookShelfSentenceListView_Previews: PreviewProvider {
-    static var previews: some View {
-        BookShelfSentenceScrollView()
-            .environmentObject(BookShelfSentenceListViewData())
-    }
+#Preview {
+    BookShelfSentenceScrollView()
+        .environmentObject(BookShelfSentenceListViewData())
 }

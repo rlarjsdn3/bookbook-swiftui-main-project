@@ -23,7 +23,7 @@ struct HomeActivityTabView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            tabHeader
+            tabTitle
             
             tabContent
         }
@@ -36,7 +36,7 @@ struct HomeActivityTabView: View {
 // MARK: - EXTENSIONS
 
 extension HomeActivityTabView {
-    var tabHeader: some View {
+    var tabTitle: some View {
         HStack {
             headlineText
             

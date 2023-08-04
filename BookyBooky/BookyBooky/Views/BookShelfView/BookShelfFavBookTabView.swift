@@ -19,35 +19,31 @@ struct BookShelfFavBookTabView: View {
     // MARK: - BODY
     
     var body: some View {
-        favBookTab
-            .sheet(isPresented: $isPresentingFavoriteBookListView) {
-                BookShelfListView(type: .favorite)
+        Section {
+            if favoriteBooks.isEmpty {
+                noBooksLabel
+            } else {
+                scrollContent
             }
+        } header: {
+            tabTitle
+        }
+        .sheet(isPresented: $isPresentingFavoriteBookListView) {
+            BookShelfListView(type: .favorite)
+        }
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension BookShelfFavBookTabView {
-    var favBookTab: some View {
-        Section {
-            if favoriteBooks.isEmpty {
-                noFavBooksLabel
-            } else {
-                favBookScrollContent
-            }
-        } header: {
-            favBookHeaderLabel
-        }
-    }
-    
-    var favBookScrollContent: some View {
+    var scrollContent: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
                 let recent10FavBooks = favoriteBooks.reversed().prefix(min(10, favoriteBooks.count))
                 
                 ForEach(recent10FavBooks) { book in
-                    ShelfFavBookButton(book, type: .sheet)
+                    ShelfFavoriteBookButton(book, type: .sheet)
                 }
             }
             .padding(.top, 26)
@@ -55,7 +51,7 @@ extension BookShelfFavBookTabView {
         .padding([.leading, .bottom, .trailing])
     }
     
-    var noFavBooksLabel: some View {
+    var noBooksLabel: some View {
         VStack(spacing: 5) {
             Text("찜한 도서가 없음")
                 .font(.title3)
@@ -67,7 +63,7 @@ extension BookShelfFavBookTabView {
         .padding(.vertical, 50)
     }
     
-    var favBookHeaderLabel: some View {
+    var tabTitle: some View {
         HStack {
             Text("찜한 도서")
                 .font(.headline)

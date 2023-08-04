@@ -75,8 +75,6 @@ extension BookShelfListView {
 
 // MARK: - PREVIEWS
 
-struct FavoriteBooksView_Previews: PreviewProvider {
-    static var previews: some View {
-        BookShelfListView(type: .favorite)
-    }
+#Preview {
+    BookShelfListView(type: .favorite)
 }

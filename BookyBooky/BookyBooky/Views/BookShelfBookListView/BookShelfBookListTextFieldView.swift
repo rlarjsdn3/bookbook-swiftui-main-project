@@ -18,9 +18,9 @@ struct BookShelfBookListTextFieldView: View {
     
     // MARK: - PROPERTIES
     
-    let scrollProxy: ScrollViewProxy
-    
     let haptic = HapticManager()
+    
+    let scrollProxy: ScrollViewProxy
     
     // MARK: - INTALIZER
     
@@ -60,7 +60,7 @@ struct BookShelfBookListTextFieldView: View {
 extension BookShelfBookListTextFieldView {
     var textFieldArea: some View {
         HStack {
-            utilMenu
+            bookSortMenu
             
             inputField
             
@@ -69,7 +69,7 @@ extension BookShelfBookListTextFieldView {
         .padding()
     }
     
-    var utilMenu: some View {
+    var bookSortMenu: some View {
         Menu {
             Section {
                 sortButtonGroup
@@ -189,10 +189,8 @@ extension BookShelfBookListTextFieldView {
 
 // MARK: - PREVIEW
 
-struct BookShelfTextFieldView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScrollViewReader { proxy in
-            BookShelfBookListTextFieldView(scrollProxy: proxy)
-        }
+#Preview {
+    ScrollViewReader { proxy in
+        BookShelfBookListTextFieldView(scrollProxy: proxy)
     }
 }
