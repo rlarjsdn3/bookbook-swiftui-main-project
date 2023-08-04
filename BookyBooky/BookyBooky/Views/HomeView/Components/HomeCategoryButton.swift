@@ -53,11 +53,11 @@ extension HomeCategoryButton {
         Button {
             selectCategory(type)
         } label: {
-            categoryLabel(type)
+            label(type)
         }
     }
     
-    func categoryLabel(_ type: Category) -> some View {
+    func label(_ type: Category) -> some View {
         Text(type.name)
             .font(.headline)
             .fontWeight(.bold)

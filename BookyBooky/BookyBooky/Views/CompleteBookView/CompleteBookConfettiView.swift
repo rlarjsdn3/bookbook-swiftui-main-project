@@ -77,8 +77,7 @@ extension CompleteBookConfettiView {
             congratuationLabel
             
             asyncCoverImage(
-                completeBook.cover,
-                coverShape: RoundedRect()
+                completeBook.cover
             )
             
             timeToCompleteBookText

@@ -18,7 +18,7 @@ struct HomeScrollView: View {
     // MARK: - BODY
     
     var body: some View {
-        homeScrollContent
+        scrollContent
     }
     
     // MARK: - FUNCTIONS
@@ -47,7 +47,7 @@ struct HomeScrollView: View {
 // MARK: - EXTENSION
 
 extension HomeScrollView {
-    var homeScrollContent: some View {
+    var scrollContent: some View {
         ScrollViewReader { proxy in
             TrackableVerticalScrollView(yOffset: $homeViewData.scrollYOffset) {
                 VStack {
@@ -55,7 +55,7 @@ extension HomeScrollView {
                     
                     HomeActivityTabView()
                     
-                    HomeCompleteBookTabView(scrollProxy: proxy)
+                    HomeReadingBookTabView(scrollProxy: proxy)
                 }
             }
             .scrollIndicators(.hidden)
@@ -82,21 +82,15 @@ extension HomeScrollView {
     
     var navigationTopBarMainTitle: some View {
         Text("홈")
-            .font(.system(size: 34.0 /* + getTopBarTitleFontSize(scrollYOffset)*/))
+            .font(.system(size: 34.0 + getTopBarTitleFontSize(homeViewData.scrollYOffset)))
             .fontWeight(.bold)
-        //  .minimumScaleFactor(0.001)
-        
-        // NOTE: - iOS 17부터 하단으로 스크롤 시, 텍스트의 크기가 동적으로 변하지 않게 됨
-        //       - 추후, iOS 17 정식 버전 출시 시, 추가 확인이 필요해 보임
     }
 }
 
 // MARK: - PREVIEW
 
-struct HomeMainView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeScrollView()
-            .environmentObject(HomeViewData())
-            .environmentObject(RealmManager())
-    }
+#Preview {
+    HomeScrollView()
+        .environmentObject(HomeViewData())
+        .environmentObject(RealmManager())
 }

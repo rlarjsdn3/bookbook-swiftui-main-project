@@ -88,7 +88,7 @@ extension BookShelfBookScrollView {
                     }
                 case .complete:
                     ForEach(filteredCompBooks, id: \.self) { completeBook in
-                        CompleteBookButton(completeBook, type: .shelf)
+                        HomeReadingBookButton(completeBook)
                     }
                 }
             }

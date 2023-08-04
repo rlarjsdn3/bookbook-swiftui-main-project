@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct CompleteBookButton: View {
+struct HomeReadingBookButton: View {
     
     // MARK: - WRAPPER PROPERTIE
     
@@ -16,53 +16,47 @@ struct CompleteBookButton: View {
     
     // MARK: - PROPERTIES
     
-    let completeBook: CompleteBook
-    let type: ButtonType.CompleteBookButton
+    let readingBook: CompleteBook
     
     // MARK: - INTIALIZER
     
-    init(_ completeBook: CompleteBook, type: ButtonType.CompleteBookButton) {
-        self.completeBook = completeBook
-        self.type = type
+    init(_ completeBook: CompleteBook) {
+        self.readingBook = completeBook
     }
     
     // MARK: - BODY
     
     var body: some View {
-        compBookButton
+        readingBookButton
     }
 }
 
-extension CompleteBookButton {
-    var compBookButton: some View {
+extension HomeReadingBookButton {
+    var readingBookButton: some View {
         NavigationLink {
-            CompleteBookView(completeBook)
+            CompleteBookView(readingBook)
         } label: {
-            compBookLabel
+            readingBookLabel
         }
         .buttonStyle(.plain)
     }
     
-    var compBookLabel: some View {
+    var readingBookLabel: some View {
         VStack {
-            asyncCoverImage(
-                completeBook.cover,
-                width: 150, height: 200,
-                coverShape: RoundedRect()
-            )
-            .overlay {
-                if completeBook.isBehindTargetDate && !completeBook.isComplete {
-                    exclamationMarkSFSymbolImage
+            asyncCoverImage(readingBook.cover)
+                .overlay {
+                    if readingBook.isBehindTargetDate && !readingBook.isComplete {
+                        exclamationMarkSFSymbolImage
+                    }
                 }
-            }
             
-            if type == .home {
+            if !readingBook.isComplete {
                 progressBar
             }
             
-            compBookTitleText
+            titleText
             
-            compBookAuthorText
+            authorText
         }
     }
     
@@ -73,37 +67,38 @@ extension CompleteBookButton {
             .frame(width: 150, height: 200)
             .background(
                 Color.gray.opacity(0.15),
-                in: .rect(cornerRadius: 25)
+                in: RoundedRect(byRoundingCorners: [.allCorners])
             )
     }
     
     var progressBar: some View {
         HStack {
-            let progressRatio = completeBook.readingProgressRate
+            let readingRate = readingBook.readingProgressRate
+            let format = readingRate.formatted(.number.precision(.fractionLength(0)))
             
-            ProgressView(value: progressRatio, total: 100.0)
+            ProgressView(value: readingRate, total: 100.0)
                 .tint(Color.black.gradient)
                 .frame(width: 100, alignment: .leading)
             
-            Text("\(progressRatio.formatted(.number.precision(.fractionLength(0))))%")
+            Text("\(format)%")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
     }
     
-    var compBookTitleText: some View {
-        Text("\(completeBook.title)")
+    var titleText: some View {
+        Text("\(readingBook.title)")
             .font(.headline)
             .fontWeight(.bold)
             .lineLimit(1)
             .minimumScaleFactor(0.8)
             .frame(width: 150, height: 25)
             .padding(.horizontal)
-            .padding([type == .home ? .top : [], .bottom], -5)
+            .padding([!readingBook.isComplete ? .top : [], .bottom], -5)
     }
     
-    var compBookAuthorText: some View {
-        Text("\(completeBook.author)")
+    var authorText: some View {
+        Text("\(readingBook.author)")
             .font(.subheadline)
             .foregroundColor(.secondary)
             .lineLimit(1)
@@ -111,8 +106,5 @@ extension CompleteBookButton {
 }
 
 #Preview {
-    CompleteBookButton(
-        CompleteBook.preview,
-        type: .home
-    )
+    HomeReadingBookButton(CompleteBook.preview)
 }

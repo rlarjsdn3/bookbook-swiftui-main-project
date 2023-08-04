@@ -9,40 +9,24 @@ import SwiftUI
 import RealmSwift
 import DeviceKit
 
-enum DeviceScreenSize {
-    case device4_7inch
-    case device5_4inch
-    case device5_5inch
-    case device5_8inch
-    case device6_1inch
-    case device6_5inch
-    case device6_7inch
-    case otherSize
-}
-
-struct HomeCompleteBookTabView: View {
+struct HomeReadingBookTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @EnvironmentObject var realmManager: RealmManager
     @EnvironmentObject var homeViewData: HomeViewData
+    @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @Namespace var namespace
     
-    @State private var filteredCompleteBooks: [CompleteBook] = []
-    
-    
-    @State private var selectedTabBookCount = 0
-    
-    
+    @State private var filteredBooks: [CompleteBook] = []
     @State private var bookCategories: [Category] = []
-    
-    
+    @State private var bookTappedCount = 0
     
     // MARK: - PROPERTIES
     
+    let haptic = HapticManager()
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -50,7 +34,6 @@ struct HomeCompleteBookTabView: View {
     let scrollProxy: ScrollViewProxy
     
     var defaultBottomPaddingValue: CGFloat = 30.0
-    let haptic = HapticManager()
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -58,38 +41,90 @@ struct HomeCompleteBookTabView: View {
         let device = Device.current.realDevice
         
         switch getDeviceSceenSize(device) {
-        case .device4_7inch where selectedTabBookCount <= 2:
+        case .device4_7inch where bookTappedCount <= 2:
             return 192.0 - defaultBottomPaddingValue
-        case .device4_7inch where selectedTabBookCount <= 4:
+        case .device4_7inch where bookTappedCount <= 4:
             return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
-        case .device5_4inch where selectedTabBookCount <= 2:
+        case .device5_4inch where bookTappedCount <= 2:
             return 295.0 - defaultBottomPaddingValue
-        case .device5_4inch where selectedTabBookCount <= 4:
+        case .device5_4inch where bookTappedCount <= 4:
             return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
-        case .device5_5inch where selectedTabBookCount <= 2:
+        case .device5_5inch where bookTappedCount <= 2:
             return 263.0 - defaultBottomPaddingValue
-        case .device5_5inch where selectedTabBookCount <= 4:
+        case .device5_5inch where bookTappedCount <= 4:
             return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
-        case .device5_8inch where selectedTabBookCount <= 2:
+        case .device5_8inch where bookTappedCount <= 2:
             return 302.0 - defaultBottomPaddingValue
-        case .device5_8inch where selectedTabBookCount <= 4:
+        case .device5_8inch where bookTappedCount <= 4:
             return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
-        case .device6_1inch where selectedTabBookCount <= 2:
+        case .device6_1inch where bookTappedCount <= 2:
             return 324.0 - defaultBottomPaddingValue
-        case .device6_1inch where selectedTabBookCount <= 4:
+        case .device6_1inch where bookTappedCount <= 4:
             return 20.0 - defaultBottomPaddingValue
-        case .device6_5inch where selectedTabBookCount <= 2:
+        case .device6_5inch where bookTappedCount <= 2:
             return 385.0 - defaultBottomPaddingValue
-        case .device6_5inch where selectedTabBookCount <= 4:
+        case .device6_5inch where bookTappedCount <= 4:
             return 80.0 - defaultBottomPaddingValue
-        case .device6_7inch where selectedTabBookCount <= 2:
+        case .device6_7inch where bookTappedCount <= 2:
             return 406.0 - defaultBottomPaddingValue
-        case .device6_7inch where selectedTabBookCount <= 4:
+        case .device6_7inch where bookTappedCount <= 4:
             return 100.0 - defaultBottomPaddingValue
         default:
             return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
         }
     }
+    
+    // MARK: - INTIALIZER
+    
+    init(scrollProxy: ScrollViewProxy) {
+        self.scrollProxy = scrollProxy
+    }
+    
+    // MARK: - BODY
+    
+    var body: some View {
+        tabHeader
+            .onAppear {
+                bookCategories = readingBooks.get(.unfinished).getReadingBookCategoryType()
+            }
+            .onAppear {
+                bookTappedCount = readingBooks.getFilteredReadingBooks(
+                    .unfinished,
+                    sort: homeViewData.selectedBookSort,
+                    category: homeViewData.selectedCategory
+                ).count
+            }
+            .onChange(of: homeViewData.selectedCategory) { _ in
+                bookTappedCount = readingBooks.getFilteredReadingBooks(
+                    .unfinished,
+                    sort: homeViewData.selectedBookSort,
+                    category: homeViewData.selectedCategory
+                ).count
+            }
+            .onAppear {
+                filteredBooks = readingBooks.getFilteredReadingBooks(
+                    .unfinished,
+                    sort: homeViewData.selectedBookSort,
+                    category: homeViewData.selectedCategory
+                )
+            }
+            .onChange(of: homeViewData.selectedBookSort) { _ in
+                filteredBooks = readingBooks.getFilteredReadingBooks(
+                    .unfinished,
+                    sort: homeViewData.selectedBookSort,
+                    category: homeViewData.selectedCategory
+                )
+            }
+            .onChange(of: homeViewData.selectedCategory) { _ in
+                filteredBooks = readingBooks.getFilteredReadingBooks(
+                    .unfinished,
+                    sort: homeViewData.selectedBookSort,
+                    category: homeViewData.selectedCategory
+                )
+            }
+    }
+    
+    // MARK: - FUNCTIONS
     
     func getDeviceSceenSize(_ device: Device) -> DeviceScreenSize {
         let device4_7inch: [Device] = [.iPhone8, .iPhoneSE2, .iPhoneSE3]
@@ -119,67 +154,17 @@ struct HomeCompleteBookTabView: View {
             return .otherSize
         }
     }
-    
-    // MARK: - INTIALIZER
-    
-    init(scrollProxy: ScrollViewProxy) {
-        self.scrollProxy = scrollProxy
-    }
-    
-    // MARK: - BODY
-    
-    var body: some View {
-        compBooksTab
-            .onAppear {
-                bookCategories = compBooks.get(.unfinished).getReadingBookCategoryType()
-            }
-            .onAppear {
-                selectedTabBookCount = compBooks.getFilteredReadingBooks(
-                    .unfinished,
-                    sort: homeViewData.selectedBookSort,
-                    category: homeViewData.selectedCategory
-                ).count
-            }
-            .onChange(of: homeViewData.selectedCategory) { _ in
-                selectedTabBookCount = compBooks.getFilteredReadingBooks(
-                    .unfinished,
-                    sort: homeViewData.selectedBookSort,
-                    category: homeViewData.selectedCategory
-                ).count
-            }
-            .onAppear {
-                filteredCompleteBooks = compBooks.getFilteredReadingBooks(
-                    .unfinished,
-                    sort: homeViewData.selectedBookSort,
-                    category: homeViewData.selectedCategory
-                )
-            }
-            .onChange(of: homeViewData.selectedBookSort) { _ in
-                filteredCompleteBooks = compBooks.getFilteredReadingBooks(
-                    .unfinished,
-                    sort: homeViewData.selectedBookSort,
-                    category: homeViewData.selectedCategory
-                )
-            }
-            .onChange(of: homeViewData.selectedCategory) { _ in
-                filteredCompleteBooks = compBooks.getFilteredReadingBooks(
-                    .unfinished,
-                    sort: homeViewData.selectedBookSort,
-                    category: homeViewData.selectedCategory
-                )
-            }
-    }
 }
 
 // MARK: - EXTENSIONS
 
-extension HomeCompleteBookTabView {
-    var compBooksTab: some View {
+extension HomeReadingBookTabView {
+    var tabHeader: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             tabTitle
             
             Section {
-                tabContent
+                booksContent
             } header: {
                 categoryButtonGroup(scrollProxy: scrollProxy)
             }
@@ -190,7 +175,7 @@ extension HomeCompleteBookTabView {
         HStack {
             headlineText
             
-            utilMenu
+            bookSortMenu
         }
         .padding(.top, 10)
         .padding(.bottom, -10)
@@ -204,7 +189,7 @@ extension HomeCompleteBookTabView {
             .padding(.leading, 15)
     }
     
-    var utilMenu: some View {
+    var bookSortMenu: some View {
         Menu {
             Section {
                 sortButtonGroup
@@ -245,17 +230,17 @@ extension HomeCompleteBookTabView {
         }
     }
     
-    var tabContent: some View {
+    var booksContent: some View {
         Group {
-            if filteredCompleteBooks.isEmpty {
-                noReadingBookLabel
+            if filteredBooks.isEmpty {
+                noBooksLabel
             } else {
-                compBookButtonGroup
+                bookButtonGroup
             }
         }
     }
     
-    var noReadingBookLabel: some View {
+    var noBooksLabel: some View {
         VStack(spacing: 5) {
             Text("읽고 있는 도서가 없음")
                 .font(.title3)
@@ -267,11 +252,11 @@ extension HomeCompleteBookTabView {
         .padding(.top, 50)
     }
     
-    var compBookButtonGroup: some View {
+    var bookButtonGroup: some View {
         Group {
             LazyVGrid(columns: columns, spacing: 25) {
-                ForEach(filteredCompleteBooks) { completeBook in
-                    CompleteBookButton(completeBook, type: .home)
+                ForEach(filteredBooks) { completeBook in
+                    HomeReadingBookButton(completeBook)
                 }
             }
             .padding([.leading, .top, .trailing])
@@ -307,12 +292,10 @@ extension HomeCompleteBookTabView {
 
 // MARK: - PREVIEW
 
-struct HomeReadingBookTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScrollViewReader { scrollProxy in
-            HomeCompleteBookTabView(scrollProxy: scrollProxy)
-                .environmentObject(HomeViewData())
-                .environmentObject(RealmManager())
-        }
+#Preview {
+    ScrollViewReader { scrollProxy in
+        HomeReadingBookTabView(scrollProxy: scrollProxy)
+            .environmentObject(HomeViewData())
+            .environmentObject(RealmManager())
     }
 }

@@ -14,33 +14,34 @@ struct HomeTopBarView: View {
     
     @EnvironmentObject var homeViewData: HomeViewData
     
-    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @State private var isPresentingSettingsView = false
     @State private var isPresentingSearchSheetView = false
     
+    // MARK: - PROPERTIES
     
     let haptic = HapticManager()
     
     // MARK: - COMPUTED PROPERTIES
     
-    var recentActivityCount: Int {
-        compBooks.recentReadingActivity.count
+    var recentReadingActivityCount: Int {
+        readingBooks.recentReadingActivity.count
     }
     
     var showingTopBarDividerYPositionValue: CGFloat {
-        if recentActivityCount == 0 {
+        if recentReadingActivityCount == 0 {
             return CGFloat(215.0)
         } else {
-            return CGFloat(120 + (70 * recentActivityCount))
+            return CGFloat(120 + (70 * recentReadingActivityCount))
         }
     }
     
     var showingUtilMenuYPositionValue: CGFloat {
-        if recentActivityCount == 0 {
+        if recentReadingActivityCount == 0 {
             return CGFloat(293.0)
         } else {
-            return CGFloat(158 + (70 * recentActivityCount))
+            return CGFloat(158 + (70 * recentReadingActivityCount))
         }
     }
     
@@ -102,7 +103,7 @@ extension HomeTopBarView {
                     homeViewData.scrollYOffset < showingUtilMenuYPositionValue ? 1 : 0
                 )
                 .overlay {
-                    utilMenu
+                    bookSortMenu
                         .offset(
                             y: homeViewData.scrollYOffset < showingUtilMenuYPositionValue ? 5 : 0
                         )
@@ -140,7 +141,7 @@ extension HomeTopBarView {
             .navigationBarItemStyle()
     }
     
-    var utilMenu: some View {
+    var bookSortMenu: some View {
         Menu {
             Section {
                 sortButtonGroup
@@ -176,9 +177,7 @@ extension HomeTopBarView {
 
 // MARK: - PREVIEW
 
-struct HomeHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeTopBarView()
-            .environmentObject(HomeViewData())
-    }
+#Preview {
+    HomeTopBarView()
+        .environmentObject(HomeViewData())
 }

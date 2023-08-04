@@ -228,11 +228,7 @@ extension SearchBookButton {
 extension SearchBookButton {
     var gridBookButton: some View {
         VStack {
-            asyncCoverImage(
-                bookItem.cover,
-                width: 150, height: 200,
-                coverShape: RoundedRect()
-            )
+            asyncCoverImage(bookItem.cover)
             
             bookTitleText
             
@@ -246,6 +242,5 @@ extension SearchBookButton {
 struct SearchBookCellButton_Previews: PreviewProvider {
     static var previews: some View {
         SearchBookButton(SimpleBookInfo.Item.preview, mode: .list)
-            .previewLayout(.sizeThatFits)
     }
 }

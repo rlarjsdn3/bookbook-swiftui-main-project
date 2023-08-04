@@ -51,7 +51,7 @@ extension BookShelfCompBookTabView {
     var compBookScrollContent: some View {
         LazyVGrid(columns: columns, spacing: 15) {
             ForEach(readingBooks.get(.complete), id: \.self) { book in
-                CompleteBookButton(book, type: .shelf)
+                HomeReadingBookButton(book)
                     .padding(.top, 10)
             }
         }

@@ -15,36 +15,28 @@ struct HomeActivityTabView: View {
     @EnvironmentObject var homeViewData: HomeViewData
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     @State private var activityData: [ReadingActivity] = []
     
     // MARK: - BODY
     
     var body: some View {
-        activityTab
-            .onAppear {
-                getActivityData(compBooks)
-            }
-    }
-    
-    func getActivityData(_ completeBooks: Results<CompleteBook>) {
-        activityData = completeBooks.recentReadingActivity
+        VStack(spacing: 10) {
+            tabHeader
+            
+            tabContent
+        }
+        .onAppear {
+            activityData = readingBooks.recentReadingActivity
+        }
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension HomeActivityTabView {
-    var activityTab: some View {
-        VStack(spacing: 10) {
-            tabTitle
-            
-            tabContent
-        }
-    }
-    
-    var tabTitle: some View {
+    var tabHeader: some View {
         HStack {
             headlineText
             
@@ -66,26 +58,26 @@ extension HomeActivityTabView {
         NavigationLink("더 보기") {
             ActivityView()
         }
-        .disabled(compBooks.isEmpty)
+        .disabled(readingBooks.isEmpty)
     }
     
     var tabContent: some View {
         VStack(spacing: 5) {            
             if activityData.isEmpty {
-                noActivityLabel
+                noActivitiesLabel
             } else {
-                activityButtonGroup(activityData)
+                activityButtonGroup
             }
         }
     }
     
-    func activityButtonGroup(_ activities: [ReadingActivity]) -> some View {
-        ForEach(activities, id: \.self) { activity in
+    var activityButtonGroup: some View {
+        ForEach(activityData, id: \.self) { activity in
             ActivityCellButton(activity)
         }
     }
     
-    var noActivityLabel: some View {
+    var noActivitiesLabel: some View {
         VStack(spacing: 5) {
             Text("독서 데이터가 없음")
                 .font(.title3)

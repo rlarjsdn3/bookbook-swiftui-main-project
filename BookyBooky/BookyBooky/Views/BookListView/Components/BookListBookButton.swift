@@ -62,7 +62,10 @@ extension BookListBookButton {
             asyncCoverImage(
                 bookItem.cover,
                 width: 150, height: 200,
-                coverShape: RoundedRect()
+                coverShape: RoundedRect(
+                    cornerRadii: CGSize(width: 25, height: 25),
+                    byRoundingCorners: [.allCorners]
+                )
             )
             
             bookInfoLabel

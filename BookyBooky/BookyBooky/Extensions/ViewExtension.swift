@@ -61,7 +61,7 @@ extension View {
     /// - Returns: 이미지(Image)
     func asyncCoverImage(_ url: String,
                     width: CGFloat = 150, height: CGFloat = 200,
-                    coverShape: some Shape = RoundedRect()) -> some View {
+                         coverShape: some Shape = RoundedRect(byRoundingCorners: [.allCorners])) -> some View {
         AsyncImage(url: URL(string: url),
                    transaction: Transaction(animation: .default)
         ) { phase in
