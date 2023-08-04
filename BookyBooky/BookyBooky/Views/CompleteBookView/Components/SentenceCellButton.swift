@@ -10,23 +10,31 @@ import RealmSwift
 
 struct SentenceCellButton: View {
     
+    // MARK: - WRAPPER PROPERTIES
+    
     @EnvironmentObject var realmManager: RealmManager
     
     @State private var isPresentingModifySentenceSheetView = false
     @State private var isPresentingDeleteConfirmationDialog = false
     
+    // MARK: - PROPERTIES
+    
     let completeBook: CompleteBook
     let sentence: Sentence
+    
+    // MARK: - INTIALIZER
     
     init(_ completeBook: CompleteBook, sentence: Sentence) {
         self.completeBook = completeBook
         self.sentence = sentence
     }
     
+    // MARK: - BODY
+    
     var body: some View {
         sentenceButton
             .sheet(isPresented: $isPresentingModifySentenceSheetView) {
-                AddSentenceSheetView(completeBook, sentence: sentence, type: .modify)
+                AddSentenceSheetView(completeBook, sentence: sentence)
             }
             .confirmationDialog("해당 문장을 삭제하시겠습니까?", isPresented: $isPresentingDeleteConfirmationDialog, titleVisibility: .visible) {
                 Button("삭제", role: .destructive) {
@@ -44,6 +52,7 @@ extension SentenceCellButton {
             HStack(alignment: .firstTextBaseline) {
                 Text(sentence.sentence)
                     .fontWeight(.bold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding([.leading, .top, .trailing])
             

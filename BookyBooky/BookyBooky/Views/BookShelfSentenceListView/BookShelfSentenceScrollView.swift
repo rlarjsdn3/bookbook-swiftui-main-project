@@ -82,7 +82,7 @@ extension BookShelfSentenceScrollView {
                                     by: { $0.page < $1.page }
                                 )
                                 ForEach(sortedSentences, id: \.self) { collect in
-                                    SentenceCellButton(compBook, collectSentence: collect)
+                                    SentenceCellButton(compBook, sentence: collect)
                                 }
                             }
                         } header: {

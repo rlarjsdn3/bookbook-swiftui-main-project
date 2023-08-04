@@ -42,7 +42,7 @@ extension CompleteBookSentenceView {
                     ForEach(sentences, id: \.self) { sentence in
                         SentenceCellButton(
                             completeBook,
-                            collectSentence: sentence
+                            sentence: sentence
                         )
                     }
                 }

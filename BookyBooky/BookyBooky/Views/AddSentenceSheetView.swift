@@ -8,8 +8,6 @@
 import SwiftUI
 import RealmSwift
 
-// TODO: - ModifySentenceSheetView와 통합 방안 찾아보기 (리팩토링 보류)
-
 struct AddSentenceSheetView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -20,7 +18,7 @@ struct AddSentenceSheetView: View {
     
     @State private var isPresentingKeyboard = true
     @State private var isPresentingAddConrimationDialog = false
-    @State private var isPresentingEditConrimationDialog = false
+    @State private var isPresentingModifyConrimationDialog = false
     
     @State private var inputText: String = ""
     @State private var inputPage: Int = 1
@@ -32,17 +30,13 @@ struct AddSentenceSheetView: View {
     let characterLimit = 300
     
     let completeBook: CompleteBook
-    let sentence: Sentence
-    let type: ViewType.SentenceSheetView
+    let sentence: Sentence?
     
     // MARK: - INTIALIZER
     
-    init(_ completeBook: CompleteBook,
-         sentence: Sentence = .preview,
-         type: ViewType.SentenceSheetView) {
+    init(_ completeBook: CompleteBook, sentence: Sentence? = nil) {
         self.completeBook = completeBook
         self.sentence = sentence
-        self.type = type
     }
     
     // MARK: - BODY
@@ -56,14 +50,12 @@ struct AddSentenceSheetView: View {
                 
                 buttonGroup
             }
-            .navigationTitle(type == .new ? "수집 문장 추가하기" : "수집 문장 수정하기")
+            .navigationTitle(sentence == nil ? "수집 문장 추가하기" : "수집 문장 수정하기")
             .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
-            if type == .modify {
-                inputText = sentence.sentence
-                inputPage = sentence.page
-            }
+            inputText = sentence?.sentence ?? ""
+            inputPage = sentence?.page ?? 1
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 focusedEditor = true
@@ -71,22 +63,35 @@ struct AddSentenceSheetView: View {
         }
         .confirmationDialog("문장이 위치한 페이지가 맞나요? 설정대로 추가하시겠습니까?", isPresented: $isPresentingAddConrimationDialog, titleVisibility: .visible) {
             Button("추가") {
-                realmManager.addSentence(completeBook, sentence: inputText, page: inputPage)
-                alertManager.isPresentingAddSentenceSuccessToastAlert = true
-                dismiss()
+               addSentence()
             }
         }
-        .confirmationDialog("문장이 위치한 페이지가 맞나요? 설정대로 수정하시겠습니까?", isPresented: $isPresentingEditConrimationDialog, titleVisibility: .visible) {
+        .confirmationDialog("문장이 위치한 페이지가 맞나요? 설정대로 수정하시겠습니까?", isPresented: $isPresentingModifyConrimationDialog, titleVisibility: .visible) {
             Button("수정") {
                 modifySentence()
             }
         }
     }
     
+    func addSentence() {
+        realmManager.addSentence(completeBook, sentence: inputText, page: inputPage)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            dismiss()
+        }
+        alertManager.isPresentingAddSentenceSuccessToastAlert = true
+    }
+    
     func modifySentence() {
-        realmManager.modifySentence(completeBook, id: sentence._id, sentence: inputText, page: inputPage)
+        realmManager.modifySentence(
+            completeBook,
+            id: sentence!._id,
+            sentence: inputText,
+            page: inputPage
+        )
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            dismiss()
+        }
         alertManager.isPresentingReadingBookRenewalSuccessToastAlert = true
-        dismiss()
     }
 }
 
@@ -173,22 +178,20 @@ extension AddSentenceSheetView {
     
     var addButton: some View {
         Group {
-            switch type {
-            case .new:
+            if sentence == nil {
                 Button {
                     if inputPage == 1 {
                         isPresentingAddConrimationDialog = true
                     } else {
-                        realmManager.addSentence(completeBook, sentence: inputText, page: inputPage)
-                        dismiss()
+                        addSentence()
                     }
                 } label: {
                     Text("추가하기")
                 }
-            case .modify:
+            } else {
                 Button {
                     if inputPage == 1 {
-                        isPresentingAddConrimationDialog = true
+                        isPresentingModifyConrimationDialog = true
                     } else {
                         modifySentence()
                     }
@@ -204,10 +207,8 @@ extension AddSentenceSheetView {
 
 // MARK: - PREVIEW
 
-struct AddSentenceView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddSentenceSheetView(CompleteBook.preview, type: .new)
-            .environmentObject(RealmManager())
-            .environmentObject(AlertManager())
-    }
+#Preview {
+    AddSentenceSheetView(CompleteBook.preview)
+        .environmentObject(RealmManager())
+        .environmentObject(AlertManager())
 }
