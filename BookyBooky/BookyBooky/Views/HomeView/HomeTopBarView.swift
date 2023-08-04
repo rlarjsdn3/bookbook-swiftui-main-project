@@ -26,7 +26,7 @@ struct HomeTopBarView: View {
     // MARK: - COMPUTED PROPERTIES
     
     var recentReadingActivityCount: Int {
-        readingBooks.recentReadingActivity.count
+        readingBooks.getActivity(prefix: 3).count
     }
     
     var showingTopBarDividerYPositionValue: CGFloat {

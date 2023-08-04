@@ -12,9 +12,4 @@ enum ViewType {
         case sheet
         case navigation
     }
-    
-    enum SentenceSheetView {
-        case new
-        case modify
-    }
 }

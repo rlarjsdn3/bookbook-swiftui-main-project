@@ -89,20 +89,20 @@ extension Results<CompleteBook> {
 }
 
 extension Results<CompleteBook> {
-    /// 최근 3개의 활동 데이터를 반환하는 함수입니다.
+    /// 최근 index개의 활동 데이터를 반환하는 함수입니다.
     /// - Returns: Activity 형의 배열
-    var recentReadingActivity: [ReadingActivityData] {
-        var activities: [ReadingActivityData] = []
+    func getActivity(prefix index: Int? = nil) -> [Activity] {
+        var activities: [Activity] = []
         
-        for readingBook in self {
-            for record in readingBook.records {
+        for book in self {
+            for record in book.records {
                 activities.append(
-                    ReadingActivityData(
+                    Activity(
                         date: record.date,
-                        title: readingBook.title,
-                        category: readingBook.category,
-                        itemPage: readingBook.itemPage,
-                        isbn13: readingBook.isbn13,
+                        title: book.title,
+                        category: book.category,
+                        itemPage: book.itemPage,
+                        isbn13: book.isbn13,
                         numOfPagesRead: record.numOfPagesRead,
                         totalPagesRead: record.totalPagesRead
                     )
@@ -110,48 +110,13 @@ extension Results<CompleteBook> {
             }
         }
         
-        return Array(
-            activities.sorted { $0.date > $1.date }.prefix(Swift.min(activities.count, 3))
-        )
-    }
-    
-    // 코드 다듬어보기
-    var monthlyReadingActivity: [MonthlyReadingActivity] {
-        var monthlyRecord: [MonthlyReadingActivity] = []
+        activities = activities.sorted(by: { $0.date > $1.date })
         
-        for readingBook in self {
-            for record in readingBook.records {
-                let activity = ReadingActivityData(
-                                    date: record.date,
-                                    title: readingBook.title,
-                                    category: readingBook.category,
-                                    itemPage: readingBook.itemPage,
-                                    isbn13: readingBook.isbn13,
-                                    numOfPagesRead: record.numOfPagesRead,
-                                    totalPagesRead: record.totalPagesRead
-                                )
-                
-                if let index = monthlyRecord.firstIndex(where: {
-                    $0.month.isEqual([.year, .month], date: record.date)
-                }) {
-                    monthlyRecord[index].activities.append(activity)
-                } else {
-                    monthlyRecord.append(
-                        MonthlyReadingActivity(
-                            month: record.date,
-                            activities: [activity]
-                        )
-                    )
-                }
-            }
+        if let index = index {
+            activities = Array(activities.prefix(Swift.min(index, activities.count)))
         }
         
-        for index in monthlyRecord.indices {
-            monthlyRecord[index].activities.sort { $0.date < $1.date }
-        }
-        monthlyRecord.sort { $0.month > $1.month }
-        
-        return monthlyRecord
+        return activities
     }
 }
 
@@ -173,14 +138,14 @@ extension Results<FavoriteBook> {
         }
     }
     
-    func getFilteredFavoriteBooks(searchQuery: String = "", bookSortType: BookSortCriteria) -> [FavoriteBook] {
-        let sortedBookArray = getSortFavoriteBooks(sort: bookSortType)
+    func getFilteredFavoriteBooks(sort: BookSortCriteria, query: String = "") -> [FavoriteBook] {
+        let sortedBooks = getSortFavoriteBooks(sort: sort)
         
-        if searchQuery.isEmpty {
-            return sortedBookArray
+        if query.isEmpty {
+            return sortedBooks
         } else {
-            return sortedBookArray.filter {
-                $0.title.contains(searchQuery) || $0.author.contains(searchQuery)
+            return sortedBooks.filter {
+                $0.title.contains(query) || $0.author.contains(query)
             }
         }
     }

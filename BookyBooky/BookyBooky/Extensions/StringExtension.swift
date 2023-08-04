@@ -12,7 +12,7 @@ extension String {
     func toDate(_ format: String = "yyyy-MM-dd") -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        return dateFormatter.date(from: self) ?? Date.now
+        return dateFormatter.date(from: self) ?? Date()
     }
     
     /// 도서 제목을 반환하는 프로퍼티입니다.

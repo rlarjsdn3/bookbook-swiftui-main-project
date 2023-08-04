@@ -16,11 +16,11 @@ struct ActivityCellButton: View {
     
     // MARK: - PROPERTIES
     
-    let activity: ReadingActivityData
+    let activity: Activity
     
     // MARK: - INITALIZER
     
-    init(_ activity: ReadingActivityData) {
+    init(_ activity: Activity) {
         self.activity = activity
     }
     
@@ -121,5 +121,5 @@ extension ActivityCellButton {
 // MARK: - PREVIEW
 
 #Preview {
-    ActivityCellButton(ReadingActivityData.preview)
+    ActivityCellButton(Activity.preview)
 }

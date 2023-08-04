@@ -83,7 +83,7 @@ struct HomeReadingBookTabView: View {
     // MARK: - BODY
     
     var body: some View {
-        tabHeader
+        tabContent
             .onAppear {
                 bookCategories = getCategory(readingBooks.get(of: .unfinished))
             }
@@ -109,11 +109,13 @@ struct HomeReadingBookTabView: View {
                 )
             }
             .onChange(of: homeViewData.selectedBookSort) { _ in
-                filteredBooks = readingBooks.getFilteredReadingBooks(
-                    .unfinished,
-                    sort: homeViewData.selectedBookSort,
-                    category: homeViewData.selectedCategory
-                )
+                withAnimation(.spring(duration: 0.3)) {
+                    filteredBooks = readingBooks.getFilteredReadingBooks(
+                        .unfinished,
+                        sort: homeViewData.selectedBookSort,
+                        category: homeViewData.selectedCategory
+                    )
+                }
             }
             .onChange(of: homeViewData.selectedCategory) { _ in
                 filteredBooks = readingBooks.getFilteredReadingBooks(
@@ -186,7 +188,7 @@ struct HomeReadingBookTabView: View {
 // MARK: - EXTENSIONS
 
 extension HomeReadingBookTabView {
-    var tabHeader: some View {
+    var tabContent: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             tabTitle
             
@@ -282,8 +284,8 @@ extension HomeReadingBookTabView {
     var bookButtonGroup: some View {
         Group {
             LazyVGrid(columns: columns, spacing: 25) {
-                ForEach(filteredBooks) { completeBook in
-                    HomeReadingBookButton(completeBook)
+                ForEach(filteredBooks) { book in
+                    HomeReadingBookButton(book)
                 }
             }
             .padding([.leading, .top, .trailing])

@@ -30,8 +30,8 @@ struct BookShelfBookScrollView: View {
     
     var filteredFavoriteBooks: [FavoriteBook] {
         favoriteBooks.getFilteredFavoriteBooks(
-            searchQuery: bookShelfBookListViewData.searchQuery,
-            bookSortType: bookShelfBookListViewData.selectedSort
+            sort: bookShelfBookListViewData.selectedSort,
+            query: bookShelfBookListViewData.searchQuery
         )
     }
     

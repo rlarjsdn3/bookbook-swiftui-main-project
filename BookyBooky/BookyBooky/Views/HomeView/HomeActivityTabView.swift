@@ -17,7 +17,7 @@ struct HomeActivityTabView: View {
     
     @ObservedResults(CompleteBook.self) var readingBooks
     
-    @State private var activities: [ReadingActivityData] = []
+    @State private var activities: [Activity] = []
     
     // MARK: - BODY
     
@@ -28,7 +28,7 @@ struct HomeActivityTabView: View {
             tabContent
         }
         .onAppear {
-            activities = readingBooks.recentReadingActivity
+            activities = readingBooks.getActivity(prefix: 3)
         }
     }
 }

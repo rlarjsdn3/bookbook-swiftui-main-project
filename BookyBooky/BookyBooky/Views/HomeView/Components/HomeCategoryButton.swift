@@ -13,16 +13,16 @@ struct HomeCategoryButton: View {
     
     // MARK: - PROPERTIES
     
-    let type: Category
+    let category: Category
     let scrollProxy: ScrollViewProxy
     let namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
-    init(_ type: Category,
+    init(_ category: Category,
          scrollProxy: ScrollViewProxy,
          namespace: Namespace.ID) {
-        self.type = type
+        self.category = category
         self.scrollProxy = scrollProxy
         self.namespace = namespace
     }
@@ -43,6 +43,7 @@ struct HomeCategoryButton: View {
             scrollProxy.scrollTo("\(type.rawValue)")
         }
         homeViewData.selectedCategory = type
+        print(homeViewData.selectedCategory)
     }
 }
 
@@ -51,9 +52,9 @@ struct HomeCategoryButton: View {
 extension HomeCategoryButton {
     var categoryButton: some View {
         Button {
-            selectCategory(type)
+            selectCategory(category)
         } label: {
-            categoryLabel(type)
+            categoryLabel(category)
         }
     }
     

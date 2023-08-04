@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct MonthlyReadingActivity {
-    var month: Date
-    var activities: [ReadingActivityData]
+struct MonthlyActivity {
+    var date: String
+    var activities: [Activity]
 }
 
-extension MonthlyReadingActivity {
+extension MonthlyActivity {
     var totalPagesRead: Int {
         activities.reduce(0, { $0 + $1.numOfPagesRead })
     }
@@ -39,4 +39,4 @@ extension MonthlyReadingActivity {
     }
 }
 
-extension MonthlyReadingActivity: Hashable { }
+extension MonthlyActivity: Hashable { }
