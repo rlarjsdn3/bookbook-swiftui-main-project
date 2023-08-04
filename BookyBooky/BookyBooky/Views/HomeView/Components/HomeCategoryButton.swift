@@ -53,11 +53,11 @@ extension HomeCategoryButton {
         Button {
             selectCategory(type)
         } label: {
-            label(type)
+            categoryLabel(type)
         }
     }
     
-    func label(_ type: Category) -> some View {
+    func categoryLabel(_ type: Category) -> some View {
         Text(type.name)
             .font(.headline)
             .fontWeight(.bold)
@@ -78,7 +78,7 @@ extension HomeCategoryButton {
 
 // MARK: - PREVIEW
 
-struct HomeCategoryButton_Previews: PreviewProvider {
+struct HomeCategoryButton_Preview: PreviewProvider {
     @Namespace static var namespace: Namespace.ID
     
     static var previews: some View {

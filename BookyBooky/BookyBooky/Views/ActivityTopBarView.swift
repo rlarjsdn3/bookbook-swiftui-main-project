@@ -32,7 +32,7 @@ extension ActivityTopBarView {
             Spacer()
         }
         .overlay {
-            navigationTopBarButtonGroup
+            TopBarButtonGroup
         }
         .padding(.vertical)
     }
@@ -42,7 +42,7 @@ extension ActivityTopBarView {
             .navigationTitleStyle()
     }
     
-    var navigationTopBarButtonGroup: some View {
+    var TopBarButtonGroup: some View {
         HStack {
             Button {
                 dismiss()

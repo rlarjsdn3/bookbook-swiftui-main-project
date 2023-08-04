@@ -12,15 +12,15 @@ struct ActivityCellButton: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
     
     // MARK: - PROPERTIES
     
-    let activity: ReadingActivity
+    let activity: ReadingActivityData
     
     // MARK: - INITALIZER
     
-    init(_ activity: ReadingActivity) {
+    init(_ activity: ReadingActivityData) {
         self.activity = activity
     }
     
@@ -36,8 +36,8 @@ struct ActivityCellButton: View {
 extension ActivityCellButton {
     var activityButton: some View {
         NavigationLink {
-            if let compBook = compBooks.findFirst(isbn13: activity.isbn13) {
-                CompleteBookView(compBook)
+            if let book = readingBooks.firstObject(isbn13: activity.isbn13) {
+                CompleteBookView(book)
             }
         } label: {
             activityLabel
@@ -63,7 +63,7 @@ extension ActivityCellButton {
             // 도서를 완독한 경우
             if activity.isComplete {
                 Image(systemName: "book.closed.circle.fill")
-            // 도서를 완독하지 않은 경우 (읽고 있는 중인 경우)
+            // 도서를 읽고 있는 중인 경우
             } else {
                 Image(systemName: "book.circle.fill")
             }
@@ -77,11 +77,11 @@ extension ActivityCellButton {
             bookTitleText
             
             HStack(alignment: VerticalAlignment.firstTextBaseline) {
-                numOfPagesReadText
+                numOfPageReadText
                 
                 Spacer()
                 
-                moreDateText
+                dateText
             }
         }
     }
@@ -94,7 +94,7 @@ extension ActivityCellButton {
             .minimumScaleFactor(0.8)
     }
     
-    var numOfPagesReadText: some View {
+    var numOfPageReadText: some View {
         Group {
             if activity.isComplete {
                 Text("완독함")
@@ -106,7 +106,7 @@ extension ActivityCellButton {
         .foregroundColor(activity.category.themeColor)
     }
     
-    var moreDateText: some View {
+    var dateText: some View {
         Group {
             Text(activity.date.toFormat("yyyy. M. d."))
             
@@ -117,8 +117,9 @@ extension ActivityCellButton {
     }
 }
 
-struct ActivityCellButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ActivityCellButton(ReadingActivity.preview)
-    }
+
+// MARK: - PREVIEW
+
+#Preview {
+    ActivityCellButton(ReadingActivityData.preview)
 }

@@ -71,7 +71,7 @@ extension HomeTopBarView {
         }
         .padding(.vertical)
         .overlay {
-            navigationTopBarButtonGroup
+            TopBarButtonGroup
         }
         .overlay(alignment: .bottom) {
             Divider()
@@ -90,7 +90,7 @@ extension HomeTopBarView {
             .opacity(homeViewData.scrollYOffset > 35.0 ? 1 : 0)
     }
     
-    var navigationTopBarButtonGroup: some View {
+    var TopBarButtonGroup: some View {
         HStack {
             addReadingBookButton
 

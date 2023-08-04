@@ -17,7 +17,7 @@ struct HomeActivityTabView: View {
     
     @ObservedResults(CompleteBook.self) var readingBooks
     
-    @State private var activityData: [ReadingActivity] = []
+    @State private var activities: [ReadingActivityData] = []
     
     // MARK: - BODY
     
@@ -28,7 +28,7 @@ struct HomeActivityTabView: View {
             tabContent
         }
         .onAppear {
-            activityData = readingBooks.recentReadingActivity
+            activities = readingBooks.recentReadingActivity
         }
     }
 }
@@ -63,7 +63,7 @@ extension HomeActivityTabView {
     
     var tabContent: some View {
         VStack(spacing: 5) {            
-            if activityData.isEmpty {
+            if activities.isEmpty {
                 noActivitiesLabel
             } else {
                 activityButtonGroup
@@ -72,7 +72,7 @@ extension HomeActivityTabView {
     }
     
     var activityButtonGroup: some View {
-        ForEach(activityData, id: \.self) { activity in
+        ForEach(activities, id: \.self) { activity in
             ActivityCellButton(activity)
         }
     }

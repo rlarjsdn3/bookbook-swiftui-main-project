@@ -45,7 +45,7 @@ extension RealmManager {
     /// - Parameter object: 삭제할 완독 목표 도서 객체
     func deleteReadingBook(_ object: CompleteBook) {
         guard let object = realm.objects(CompleteBook.self)
-            .findFirst(isbn13: object.isbn13) else {
+            .firstObject(isbn13: object.isbn13) else {
             return
         }
         
@@ -62,7 +62,7 @@ extension RealmManager {
     ///   - totalPagesRead: 읽은 총 페이지 수
     func addReadingBookRecord(_ readingBook: CompleteBook, totalPagesRead: Int) {
         guard let object = realm.objects(CompleteBook.self)
-            .findFirst(isbn13: readingBook.isbn13) else {
+            .firstObject(isbn13: readingBook.isbn13) else {
             return
         }
         
@@ -117,7 +117,7 @@ extension RealmManager {
     /// - Parameter readingBook: 읽고 있는 도서 객체
     private func checkReadingBookComplete(_ readingBook: CompleteBook) {
         guard let object = realm.objects(CompleteBook.self)
-            .findFirst(isbn13: readingBook.isbn13) else {
+            .firstObject(isbn13: readingBook.isbn13) else {
             return
         }
         
@@ -196,7 +196,7 @@ extension RealmManager {
 extension RealmManager {
     func addSentence(_ readingBook: CompleteBook, sentence: String, page: Int) {
         guard let object = realm.objects(CompleteBook.self)
-            .findFirst(isbn13: readingBook.isbn13) else {
+            .firstObject(isbn13: readingBook.isbn13) else {
             return
         }
         
@@ -213,7 +213,7 @@ extension RealmManager {
     
     func modifySentence(_ readingBook: CompleteBook, id: ObjectId, sentence: String, page: Int) {
         guard let object = realm.objects(CompleteBook.self)
-            .findFirst(isbn13: readingBook.isbn13) else {
+            .firstObject(isbn13: readingBook.isbn13) else {
             return
         }
         
@@ -231,7 +231,7 @@ extension RealmManager {
     
     func deleteSentence(_ readingBook: CompleteBook, id: ObjectId) {
         guard let object = realm.objects(CompleteBook.self)
-            .findFirst(isbn13: readingBook.isbn13) else {
+            .firstObject(isbn13: readingBook.isbn13) else {
             return
         }
         

@@ -7,24 +7,24 @@
 
 import Foundation
 
-struct MonthlyReadingActivity: Hashable {
+struct MonthlyReadingActivity {
     var month: Date
-    var readingActivity: [ReadingActivity]
+    var activities: [ReadingActivityData]
 }
 
 extension MonthlyReadingActivity {
     var totalPagesRead: Int {
-        readingActivity.reduce(0, { $0 + $1.numOfPagesRead })
+        activities.reduce(0, { $0 + $1.numOfPagesRead })
     }
     
-    var completeBookCount: Int {
-        readingActivity.reduce(0, { $1.isComplete ? $0 + 1 : $0 })
+    var numOfCompleteReading: Int {
+        activities.reduce(0, { $1.isComplete ? $0 + 1 : $0 })
     }
     
     var readingDayCount: Int {
         var date: [Date] = []
         
-        for activity in self.readingActivity {
+        for activity in self.activities {
             if !date.contains(
                 where: { $0.isEqual([.year, .month, .day], date: activity.date) }
             ) {
@@ -34,7 +34,9 @@ extension MonthlyReadingActivity {
         return date.count
     }
     
-    var averagePagesRead: Int {
+    var averageDailyReadingPage: Int {
         totalPagesRead / readingDayCount
     }
 }
+
+extension MonthlyReadingActivity: Hashable { }

@@ -14,31 +14,34 @@ struct ActivityScrollView: View {
     
     @EnvironmentObject var realmManager: RealmManager
     
-    @ObservedResults(CompleteBook.self) var compBooks
+    @ObservedResults(CompleteBook.self) var readingBooks
+    
+    @State private var activities: [MonthlyReadingActivity] = []
     
     // MARK: - BODY
     
     var body: some View {
-        activityScrollContent
+        scrollContent
+            .onAppear {
+                activities = readingBooks.monthlyReadingActivity
+            }
     }
 }
 
 // MARK: - EXTENSIONS
 
 extension ActivityScrollView {
-    var activityScrollContent: some View {
+    var scrollContent: some View {
         Group {
-            let activities = compBooks.monthlyReadingActivity
-            
             if activities.isEmpty {
-                noActivityLabel
+                noActivitiesLabel
             } else {
-                activityScroll(activities)
+                activityScroll
             }
         }
     }
     
-    var noActivityLabel: some View {
+    var noActivitiesLabel: some View {
         VStack(spacing: 5) {
             Text("독서 데이터가 없음")
                 .font(.title3)
@@ -49,18 +52,18 @@ extension ActivityScrollView {
         }
     }
     
-    func activityScroll(_ activities: [MonthlyReadingActivity]) -> some View {
+    var activityScroll: some View {
         ScrollView {
             LazyVStack(spacing: 5, pinnedViews: [.sectionHeaders]) {
                 ForEach(activities, id: \.self) { activity in
                     Section {
                         VStack {
-                            summaryLabel(activity)
+                            activitySummaryLabel(activity)
                             
                             activityButtonGroup(activity)
                         }
                     } header: {
-                        dateHeaderText(activity.month)
+                        dateText(activity.month)
                     }
                 }
             }
@@ -68,13 +71,31 @@ extension ActivityScrollView {
         .padding(.bottom, 40)
     }
     
-    func summaryLabel(_ activity: MonthlyReadingActivity) -> some View {
+    func activityButtonGroup(_ activity: MonthlyReadingActivity) -> some View {
+        VStack(spacing: 5) {
+            ForEach(activity.activities, id: \.self) { activity in
+                ActivityCellButton(activity)
+            }
+        }
+        .padding(.bottom, 20)
+    }
+    
+    func dateText(_ date: Date) -> some View {
+        Text(date.toFormat("yyyy년 M월"))
+            .font(.headline.weight(.bold))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 10)
+            .padding([.bottom, .leading], 15)
+            .background(.white)
+    }
+    
+    func activitySummaryLabel(_ activity: MonthlyReadingActivity) -> some View {
         VStack(spacing: 10) {
             readingDayCountLabel(activity)
             
-            completeBookCountLabel(activity)
+            numOfCompleteReadingLabel(activity)
             
-            totalPagesReadLabel(activity)
+            totalReadPageLabel(activity)
         }
         .padding(.horizontal)
     }
@@ -90,19 +111,19 @@ extension ActivityScrollView {
         }
     }
     
-    func completeBookCountLabel(_ activity: MonthlyReadingActivity) -> some View {
+    func numOfCompleteReadingLabel(_ activity: MonthlyReadingActivity) -> some View {
         HStack {
             Label("완독한 권수", systemImage: "book.closed.circle.fill")
                 .font(.headline.weight(.bold))
             
             Spacer()
             
-            Text("\(activity.completeBookCount)권")
+            Text("\(activity.numOfCompleteReading)권")
                 .foregroundColor(Color.purple)
         }
     }
     
-    func totalPagesReadLabel(_ activity: MonthlyReadingActivity) -> some View {
+    func totalReadPageLabel(_ activity: MonthlyReadingActivity) -> some View {
         HStack(alignment: .firstTextBaseline) {
             Label("읽은 페이지", systemImage: "paperclip.circle.fill")
                 .font(.headline.weight(.bold))
@@ -110,40 +131,20 @@ extension ActivityScrollView {
             Spacer()
             
             VStack(alignment: .trailing) {
-                Text("\(activity.averagePagesRead)페이지")
+                Text("\(activity.averageDailyReadingPage)페이지")
                     .foregroundColor(Color.pink)
                 
-                Text("하루 평균 \(activity.averagePagesRead)페이지")
+                Text("하루 평균 \(activity.averageDailyReadingPage)페이지")
                     .font(.footnote)
                     .foregroundColor(Color.secondary)
             }
         }
     }
-    
-    func activityButtonGroup(_ activity: MonthlyReadingActivity) -> some View {
-        VStack(spacing: 5) {
-            ForEach(activity.readingActivity, id: \.self) { activity in
-                ActivityCellButton(activity)
-            }
-        }
-        .padding(.bottom, 20)
-    }
-    
-    func dateHeaderText(_ date: Date) -> some View {
-        Text(date.toFormat("yyyy년 M월"))
-            .font(.headline.weight(.bold))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 10)
-            .padding([.bottom, .leading], 15)
-            .background(.white)
-    }
 }
 
 // MARK: - PREVIEW
 
-struct ActivityScrollView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActivityScrollView()
-            .environmentObject(RealmManager())
-    }
+#Preview {
+    ActivityScrollView()
+        .environmentObject(RealmManager())
 }

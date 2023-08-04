@@ -19,9 +19,9 @@ extension Results<CompleteBook> {
     /// 매개변수로 주어진 도서의 ISBN13과 동일한 값을 가지는 객체를 반환하는 함수입니다. 해당하는 객체가 존재하지 않는다면 nil을 반환합니다.
     /// - Parameter isbn13: 찾고자 하는 도서의 ISBN13
     /// - Returns: ReadingBook 타입의 Obect 객체
-    func findFirst(isbn13: String) -> CompleteBook? {
-        if let readingBook = self.first(where: { $0.isbn13 == isbn13 }) {
-            return readingBook
+    func firstObject(isbn13: String) -> CompleteBook? {
+        if let book = self.first(where: { $0.isbn13 == isbn13 }) {
+            return book
         }
         return nil
     }
@@ -29,7 +29,7 @@ extension Results<CompleteBook> {
     /// 매개변수로 주어진 도서의  키 값(ID)과 동일한 값을 가지는 객체를 반환하는 함수입니다. 해당하는 객체가 존재하지 않는다면 nil을 반환합니다.
     /// - Parameter isbn13: 찾고자 하는 도서의 키 값(ID)
     /// - Returns: ReadingBook타입의 Obect 객체
-    func findFirst(id: ObjectId) -> CompleteBook? {
+    func firstObject(id: ObjectId) -> CompleteBook? {
         if let readingBook = self.first(where: { $0._id == id }) {
             return readingBook
         }
@@ -101,13 +101,13 @@ extension Results<CompleteBook> {
 extension Results<CompleteBook> {
     /// 최근 3개의 활동 데이터를 반환하는 함수입니다.
     /// - Returns: Activity 형의 배열
-    var recentReadingActivity: [ReadingActivity] {
-        var activities: [ReadingActivity] = []
+    var recentReadingActivity: [ReadingActivityData] {
+        var activities: [ReadingActivityData] = []
         
         for readingBook in self {
             for record in readingBook.records {
                 activities.append(
-                    ReadingActivity(
+                    ReadingActivityData(
                         date: record.date,
                         title: readingBook.title,
                         category: readingBook.category,
@@ -132,7 +132,7 @@ extension Results<CompleteBook> {
         
         for readingBook in self {
             for record in readingBook.records {
-                let activity = ReadingActivity(
+                let activity = ReadingActivityData(
                                     date: record.date,
                                     title: readingBook.title,
                                     category: readingBook.category,
@@ -145,12 +145,12 @@ extension Results<CompleteBook> {
                 if let index = monthlyRecord.firstIndex(where: {
                     $0.month.isEqual([.year, .month], date: record.date)
                 }) {
-                    monthlyRecord[index].readingActivity.append(activity)
+                    monthlyRecord[index].activities.append(activity)
                 } else {
                     monthlyRecord.append(
                         MonthlyReadingActivity(
                             month: record.date,
-                            readingActivity: [activity]
+                            activities: [activity]
                         )
                     )
                 }
@@ -158,7 +158,7 @@ extension Results<CompleteBook> {
         }
         
         for index in monthlyRecord.indices {
-            monthlyRecord[index].readingActivity.sort { $0.date < $1.date }
+            monthlyRecord[index].activities.sort { $0.date < $1.date }
         }
         monthlyRecord.sort { $0.month > $1.month }
         

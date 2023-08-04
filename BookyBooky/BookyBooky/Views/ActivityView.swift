@@ -6,13 +6,8 @@
 //
 
 import SwiftUI
-import RealmSwift
 
 struct ActivityView: View {
-    
-    // MARK: - WRAPPER RPOPERTIES
-    
-    @Environment(\.dismiss) var dismiss
     
     // MARK: - BODY
     
