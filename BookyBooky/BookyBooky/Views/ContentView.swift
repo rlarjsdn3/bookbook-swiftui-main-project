@@ -6,12 +6,22 @@
 //
 
 import SwiftUI
+import Network
+import AlertToast
 
 struct ContentView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
-    @State private var selectedMainTab: CustomMainTab = .home
+    @EnvironmentObject var alertManager: AlertManager
+    
+    @State private var selectedTab: CustomMainTab = .home
+    
+    // MARK: - COMPUTED PROPERTIES
+    
+    var alertToastOffsetY: Double {
+        safeAreaInsets.bottom == 0 ? -25.0 : 5.0
+    }
     
     // MARK: - INTIALIZER
     
@@ -25,7 +35,22 @@ struct ContentView: View {
         VStack {
             defaultTabView
             
-            CustomMainTabView(selection: $selectedMainTab)
+            CustomMainTabView(selection: $selectedTab)
+        }
+        .onAppear {
+            let monitor = NWPathMonitor()
+            
+            monitor.pathUpdateHandler = { path in
+                DispatchQueue.main.async {
+                    alertManager.isPresentingNetworkErrorToastAlert = (path.status == .unsatisfied)
+                }
+            }
+
+            let queue = DispatchQueue.global()
+            monitor.start(queue: queue)
+        }
+        .toast(isPresenting: $alertManager.isPresentingNetworkErrorToastAlert, duration: .infinity, tapToDismiss: true, offsetY: alertToastOffsetY) {
+            alertManager.showNetworkErrorToastAlert
         }
         .ignoresSafeArea(.keyboard)
     }
@@ -35,7 +60,7 @@ struct ContentView: View {
 
 extension ContentView {
     var defaultTabView: some View {
-        TabView(selection: $selectedMainTab) {
+        TabView(selection: $selectedTab) {
             HomeView()
                 .tag(CustomMainTab.home)
             
@@ -58,4 +83,5 @@ extension ContentView {
 
 #Preview {
     ContentView()
+        .environmentObject(AlertManager())
 }

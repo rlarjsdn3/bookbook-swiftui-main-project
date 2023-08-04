@@ -10,6 +10,10 @@ import AlertToast
 
 final class AlertManager: ObservableObject {
     
+    // MARK: - WRAPPER PROPERTIES (네트워크 관련)
+    
+    @Published var isPresentingNetworkErrorToastAlert = false
+    
     // MARK: - WRAPPER PROPERTIES (CRUD 관련)
     
     @Published var isPresentingReadingBookAddSuccessToastAlert = false
@@ -24,6 +28,10 @@ final class AlertManager: ObservableObject {
     @Published var isPresentingSearchLoadingToastAlert = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
     @Published var isPresentingSearchErrorToastAlert = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
     @Published var isPresentingDetailBookErrorToastAlert = false      // 도서 상세 에러 UI의 출력을 제어하는 변수
+    
+    // MARK: - ALERT PROPERTIES (네트워크 관련)
+    
+    let showNetworkErrorToastAlert = AlertToast(displayMode: .hud, type: .error(Color.red), title: "인터넷 연결이 끊어짐", subTitle: "인터넷 연결을 확인해주세요.")
     
     // MARK: - ALERT FUNCTIONS (CRUD 관련)
     
