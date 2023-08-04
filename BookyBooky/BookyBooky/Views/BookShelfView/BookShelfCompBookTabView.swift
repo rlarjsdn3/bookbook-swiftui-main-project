@@ -27,7 +27,7 @@ struct BookShelfCompBookTabView: View {
     
     var body: some View {
         Section {
-            let completeBooks = completeBooks.get(.complete)
+            let completeBooks = completeBooks.get(of: .complete)
             if completeBooks.isEmpty {
                 noBooksLabel
             } else {
@@ -47,7 +47,7 @@ struct BookShelfCompBookTabView: View {
 extension BookShelfCompBookTabView {
     var scrollContent: some View {
         LazyVGrid(columns: columns, spacing: 15) {
-            let completeBooks = completeBooks.get(.complete)
+            let completeBooks = completeBooks.get(of: .complete)
             ForEach(completeBooks, id: \.self) { book in
                 HomeReadingBookButton(book)
                     .padding(.top, 10)
@@ -82,7 +82,7 @@ extension BookShelfCompBookTabView {
             } label: {
                 Text("더 보기")
             }
-            .disabled(completeBooks.get(.complete).isEmpty)
+            .disabled(completeBooks.get(of: .complete).isEmpty)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 10)

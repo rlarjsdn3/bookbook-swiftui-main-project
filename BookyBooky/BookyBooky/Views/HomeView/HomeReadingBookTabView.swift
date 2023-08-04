@@ -85,7 +85,7 @@ struct HomeReadingBookTabView: View {
     var body: some View {
         tabHeader
             .onAppear {
-                bookCategories = readingBooks.get(.unfinished).getReadingBookCategoryType()
+                bookCategories = getCategory(readingBooks.get(of: .unfinished))
             }
             .onAppear {
                 bookTappedCount = readingBooks.getFilteredReadingBooks(
@@ -153,6 +153,33 @@ struct HomeReadingBookTabView: View {
         default:
             return .otherSize
         }
+    }
+    
+    func getCategory(_ books: [CompleteBook]) -> [Category] {
+        var categories: [Category] = []
+        
+        // 중복되지 않게 카테고리 항목 저장하기
+        for book in books where !categories.contains(book.category) {
+            categories.append(book.category)
+        }
+        // 카테고리 항목에 '기타'가 있다면
+        if let index = categories.firstIndex(of: .etc) {
+            categories.remove(at: index) // '기타' 항목 제거
+            // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬
+            categories.sort {
+                $0.name < $1.name
+            }
+            // '기타'를 제일 뒤로 보내기
+            categories.append(.etc)
+        } else {
+            // 카테고리 이름을 오름차순(가, 나, 다)으로 정렬
+            categories.sort {
+                $0.name < $1.name
+            }
+        }
+        // 카테고리의 첫 번째에 '전체' 항목 추가
+        categories.insert(.all, at: 0)
+        return categories
     }
 }
 

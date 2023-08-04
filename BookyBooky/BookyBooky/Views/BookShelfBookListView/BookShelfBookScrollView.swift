@@ -23,7 +23,8 @@ struct BookShelfBookScrollView: View {
     var filteredCompleteBooks: [CompleteBook] {
         completeBooks.getFilteredReadingBooks(
             .complete,
-            searchQuery: bookShelfBookListViewData.searchQuery, bookSortType: bookShelfBookListViewData.selectedSort
+            sort: bookShelfBookListViewData.selectedSort,
+            query: bookShelfBookListViewData.searchQuery
         )
     }
     

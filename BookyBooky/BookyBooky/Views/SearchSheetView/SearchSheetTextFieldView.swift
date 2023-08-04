@@ -21,6 +21,8 @@ struct SearchSheetTextFieldView: View {
     
     @FocusState var focusedField: Bool
     
+    @State private var bookCategories: [Category] = []
+    
     // MARK: - PROPERTIES
     
     let haptic = HapticManager()
@@ -31,7 +33,7 @@ struct SearchSheetTextFieldView: View {
         VStack(spacing: 10) {
             TextFieldArea
             
-            searchCategory
+            categoryArea
         }
         .onAppear {
             if searchSheetViewData.bookSearchResult.isEmpty {
@@ -39,6 +41,9 @@ struct SearchSheetTextFieldView: View {
                     focusedField = true
                 }
             }
+        }
+        .onChange(of: searchSheetViewData.bookSearchResult) { _ in
+            bookCategories = getCategory(searchSheetViewData.bookSearchResult)
         }
     }
     
@@ -74,8 +79,8 @@ struct SearchSheetTextFieldView: View {
         var categories: [Category] = []
         
         // 중복되지 않게 카테고리 항목 저장하기
-        for book in books where !categories.contains(book.categoryName.refinedCategory) {
-            categories.append(book.categoryName.refinedCategory)
+        for book in books where !categories.contains(book.bookCategory) {
+            categories.append(book.bookCategory)
         }
         // 카테고리 항목에 '기타'가 있다면
         if let index = categories.firstIndex(of: .etc) {
@@ -94,7 +99,7 @@ struct SearchSheetTextFieldView: View {
         }
         // 카테고리의 첫 번째에 '전체' 항목 추가
         categories.insert(.all, at: 0)
-        
+        print("호출됨")
         return categories
     }
 }
@@ -218,7 +223,7 @@ extension SearchSheetTextFieldView {
     }
     
     
-    var searchCategory: some View {
+    var categoryArea: some View {
         Group {
             if !searchSheetViewData.bookSearchResult.isEmpty {
                 categoryButtonGroup
@@ -230,9 +235,7 @@ extension SearchSheetTextFieldView {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: -20) {
-                    let categories = getCategory(searchSheetViewData.bookSearchResult)
-                    
-                    ForEach(categories, id: \.self) { category in
+                    ForEach(bookCategories, id: \.self) { category in
                         SearchCategoryButton(
                             category,
                             namespace: namespace,

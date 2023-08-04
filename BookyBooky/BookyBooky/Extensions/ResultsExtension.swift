@@ -26,21 +26,11 @@ extension Results<CompleteBook> {
         return nil
     }
     
-    /// 매개변수로 주어진 도서의  키 값(ID)과 동일한 값을 가지는 객체를 반환하는 함수입니다. 해당하는 객체가 존재하지 않는다면 nil을 반환합니다.
-    /// - Parameter isbn13: 찾고자 하는 도서의 키 값(ID)
-    /// - Returns: ReadingBook타입의 Obect 객체
-    func firstObject(id: ObjectId) -> CompleteBook? {
-        if let readingBook = self.first(where: { $0._id == id }) {
-            return readingBook
-        }
-        return nil
-    }
-    
     /// 도서 배열을 반환하는 함수입니다.
     /// 모든 도서(.all)를 반환하거나, 읽고 있는 도서(.unfinished) 혹은 읽은 도서(.complete)를 반환합니다.
     /// - Parameter type: 도서 유형(.all, .complete, .unfinished)
     /// - Returns: ReadingBook 형의 배열
-    func get(_ type: ReadingBookType) -> [CompleteBook] {
+    func get(of type: ReadingBookType) -> [CompleteBook] {
         switch type {
         case .all:
             return Array(self)
@@ -55,18 +45,18 @@ extension Results<CompleteBook> {
     /// - Parameters:
     ///   - sortType: 정렬 기준
     /// - Returns: 정렬된 Book 프로토콜을 준수하는 도서 배열
-    private func getSortReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria) -> [CompleteBook] {
-        let readingBookArray = get(bookType)
+    private func getSortReadingBooks(_ type: ReadingBookType, sort: BookSortCriteria) -> [CompleteBook] {
+        let books = get(of: type)
         
         switch sort {
         case .titleAscendingOrder:
-            return readingBookArray.sorted { $0.title < $1.title }
+            return books.sorted { $0.title < $1.title }
         case .titleDescendingOrder:
-            return readingBookArray.sorted { $0.title > $1.title }
+            return books.sorted { $0.title > $1.title }
         case .authorAscendingOrder:
-            return readingBookArray.sorted { $0.author < $1.author }
+            return books.sorted { $0.author < $1.author }
         case .authorDescendingOrder:
-            return readingBookArray.sorted { $0.author > $1.author }
+            return books.sorted { $0.author > $1.author }
         }
     }
     
@@ -75,24 +65,24 @@ extension Results<CompleteBook> {
     ///   - bookSortType: 도서 정렬 기준
     ///   - categoryType: 도서 필터 기준 (카테고리 별)
     /// - Returns: 정렬 및 필터링된 ReadingBook 형의 배열
-    func getFilteredReadingBooks(_ bookType: ReadingBookType, sort: BookSortCriteria, category: Category) -> [CompleteBook] {
-        let sortedBookArray = getSortReadingBooks(bookType, sort: sort)
+    func getFilteredReadingBooks(_ type: ReadingBookType, sort: BookSortCriteria, category: Category) -> [CompleteBook] {
+        let sortedBooks = getSortReadingBooks(type, sort: sort)
         
         if category == .all {
-            return sortedBookArray.filter { !$0.isComplete }
+            return sortedBooks.filter { !$0.isComplete }
         } else {
-            return sortedBookArray.filter { category == $0.category && !$0.isComplete }
+            return sortedBooks.filter { category == $0.category && !$0.isComplete }
         }
     }
     
-    func getFilteredReadingBooks(_ bookType: ReadingBookType, searchQuery: String = "", bookSortType: BookSortCriteria) -> [CompleteBook] {
-        let sortedBookArray = getSortReadingBooks(bookType ,sort: bookSortType)
+    func getFilteredReadingBooks(_ type: ReadingBookType, sort: BookSortCriteria, query: String = "") -> [CompleteBook] {
+        let sortedBooks = getSortReadingBooks(type, sort: sort)
         
-        if searchQuery.isEmpty {
-            return sortedBookArray
+        if query.isEmpty {
+            return sortedBooks
         } else {
-            return sortedBookArray.filter {
-                $0.title.contains(searchQuery) || $0.author.contains(searchQuery)
+            return sortedBooks.filter {
+                $0.title.contains(query) || $0.author.contains(query)
             }
         }
     }
