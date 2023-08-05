@@ -87,7 +87,7 @@ extension TotalPagesCountByCategoryChartView {
             .scrollIndicators(.hidden)
             .padding([.leading, .top, .trailing])
             .padding(.bottom, 40)
-            .background(Color(.background))
+            .background(Color.customBackground)
         }
     }
     

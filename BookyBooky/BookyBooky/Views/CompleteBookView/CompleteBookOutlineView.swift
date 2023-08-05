@@ -66,7 +66,7 @@ extension CompleteBookOutlineView {
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
-        .background(Color(.background), in: .rect(cornerRadius: 15))
+        .background(Color.customBackground, in: .rect(cornerRadius: 15))
         .padding(.horizontal)
         .padding(.vertical, 10)
     }

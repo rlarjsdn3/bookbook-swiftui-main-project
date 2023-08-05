@@ -62,7 +62,7 @@ extension BookListScrollView {
             }
             .scrollIndicators(.hidden)
         }
-        .background(Color(.background))
+        .background(Color.customBackground)
     }
     
     var bookButtonGroup: some View {

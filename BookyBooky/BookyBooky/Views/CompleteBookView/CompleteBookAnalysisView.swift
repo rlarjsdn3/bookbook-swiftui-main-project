@@ -295,7 +295,7 @@ extension CompleteBookAnalysisView {
                     Spacer()
                 }
                 .padding()
-                .background(Color(.background), in: .rect(cornerRadius: 20))
+                .background(Color.customBackground, in: .rect(cornerRadius: 20))
                 
                 HStack {
                     if let days = consecutiveReadingDay {
@@ -314,7 +314,7 @@ extension CompleteBookAnalysisView {
                     Spacer()
                 }
                 .padding()
-                .background(Color(.background), in: .rect(cornerRadius: 20))
+                .background(Color.customBackground, in: .rect(cornerRadius: 20))
             }
         }
         .padding(.top, 5)

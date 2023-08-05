@@ -189,7 +189,7 @@ struct MonthlyBooksCompletedChartView: View {
             .scrollIndicators(.hidden)
             .safeAreaPadding([.leading, .top, .trailing])
             .safeAreaPadding(.bottom, 40)
-            .background(Color(.background))
+            .background(Color.customBackground)
         }
         .onAppear {
             scrollPosition = chartData.last?.date.addingTimeInterval(-1 * 86400 * 30 * 6).timeIntervalSinceReferenceDate ?? 0.0

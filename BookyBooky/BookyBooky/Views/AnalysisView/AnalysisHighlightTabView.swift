@@ -41,7 +41,7 @@ struct AnalysisHighlightTabView: View {
         
         for readingBook in readingBooks {
             for record in readingBook.records {
-                if let index = dailyPages.firstIndex(where: { $0.date.isEqual([.year, .month, .day], date: record.date) }) {
+                if let index = dailyPages.firstIndex(where: { $0.date.isEqual([.year, .month, .day], with: record.date) }) {
                     dailyPages[index].pages += record.numOfPagesRead
                 } else {
                     dailyPages.append(
@@ -59,7 +59,7 @@ struct AnalysisHighlightTabView: View {
         
         for readingBook in readingBooks {
             if readingBook.isComplete {
-                if let index = monthlyCompleteBook.firstIndex(where: { $0.date.isEqual([.year ,.month], date: readingBook.completeDate ?? Date()) } ) {
+                if let index = monthlyCompleteBook.firstIndex(where: { $0.date.isEqual([.year ,.month], with: readingBook.completeDate ?? Date()) } ) {
                     monthlyCompleteBook[index].count += 1
                 } else {
                     monthlyCompleteBook.append(

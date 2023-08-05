@@ -101,7 +101,7 @@ extension CompleteBookEditView {
         }
         .padding(.vertical, 18)
         .padding(.horizontal)
-        .background(Color(.background), in: .rect(cornerRadius: 10))
+        .background(Color.customBackground, in: .rect(cornerRadius: 10))
     }
     
     var publisherTextField: some View {
@@ -113,7 +113,7 @@ extension CompleteBookEditView {
         }
         .padding(.vertical, 18)
         .padding(.horizontal)
-        .background(Color(.background), in: .rect(cornerRadius: 10))
+        .background(Color.customBackground, in: .rect(cornerRadius: 10))
     }
     
     var categoryField: some View {
@@ -136,7 +136,7 @@ extension CompleteBookEditView {
         }
         .padding(.vertical, 14)
         .padding(.horizontal)
-        .background(Color(.background), in: .rect(cornerRadius: 10))
+        .background(Color.customBackground, in: .rect(cornerRadius: 10))
     }
     
     var targetDateField: some View {
@@ -161,7 +161,7 @@ extension CompleteBookEditView {
         }
         .padding(.vertical, 14)
         .padding(.horizontal)
-        .background(Color(.background), in: .rect(cornerRadius: 10))
+        .background(Color.customBackground, in: .rect(cornerRadius: 10))
     }
     
     var editButton: some View {

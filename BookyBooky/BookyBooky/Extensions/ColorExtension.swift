@@ -9,15 +9,15 @@ import UIKit
 import SwiftUI
 
 extension Color {
-    static var lightGray: Color {
+    static var customLightGray: Color {
         return Color.gray.opacity(0.08)
     }
     
-    static var darkGray: Color {
+    static var customDarkGray: Color {
         return Color.gray.opacity(0.2)
     }
     
-    static var background: Color {
+    static var customBackground: Color {
         return Color("Background")
     }
 }

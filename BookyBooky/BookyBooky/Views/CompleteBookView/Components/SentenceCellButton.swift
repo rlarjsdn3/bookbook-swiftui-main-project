@@ -94,7 +94,7 @@ extension SentenceCellButton {
             .padding(.bottom, 10)
         }
         .frame(maxWidth: .infinity)
-        .background(Color.background)
+        .background(Color.customBackground)
     }
 }
 

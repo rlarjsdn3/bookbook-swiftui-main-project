@@ -159,7 +159,7 @@ extension SearchSheetTextFieldView {
             .font(.title2)
             .foregroundColor(.primary)
             .frame(width: 45, height: 45)
-            .background(Color(.background), in: .rect(cornerRadius: 15))
+            .background(Color.customBackground, in: .rect(cornerRadius: 15))
     }
     
     var inputField: some View {
@@ -173,7 +173,7 @@ extension SearchSheetTextFieldView {
             }
         }
         .padding(.horizontal, 10)
-        .background(Color(.background), in: .rect(cornerRadius: 15))
+        .background(Color.customBackground, in: .rect(cornerRadius: 15))
         .cornerRadius(15)
     }
     
@@ -219,7 +219,7 @@ extension SearchSheetTextFieldView {
             .font(.title2)
             .foregroundColor(.primary)
             .frame(width: 45, height: 45)
-            .background(Color(.background), in: .rect(cornerRadius: 15))
+            .background(Color.customBackground, in: .rect(cornerRadius: 15))
     }
     
     
