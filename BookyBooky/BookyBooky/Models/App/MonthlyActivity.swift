@@ -26,7 +26,7 @@ extension MonthlyActivity {
         
         for activity in activities {
             if !date.contains(
-                where: { $0.isEqual([.year, .month, .day], date: activity.date) }
+                where: { $0.isEqual([.year, .month, .day], with: activity.date) }
             ) {
                 date.append(activity.date)
             }

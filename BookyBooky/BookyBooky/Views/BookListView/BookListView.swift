@@ -41,7 +41,7 @@ struct BookListView: View {
     }
     
     func requestBookListInfo() {
-        for type in BookListTab.allCases {
+        for type in BookListType.allCases {
             aladinAPIManager.requestBookList(of: type) { book in
                 DispatchQueue.main.async {
                     if let book = book {

@@ -45,7 +45,7 @@ struct AnalysisChartsTabView: View {
         
         for readingBook in readingBooks {
             for record in readingBook.records {
-                if let index = dailyPages.firstIndex(where: { $0.date.isEqual([.year, .month, .day], date: record.date) }) {
+                if let index = dailyPages.firstIndex(where: { $0.date.isEqual([.year, .month, .day], with: record.date) }) {
                     dailyPages[index].pages += record.numOfPagesRead
                 } else {
                     dailyPages.append(
@@ -63,7 +63,7 @@ struct AnalysisChartsTabView: View {
         
         for readingBook in readingBooks {
             if readingBook.isComplete {
-                if let index = monthlyCompleteBook.firstIndex(where: { $0.date.isEqual([.year ,.month], date: readingBook.completeDate ?? Date()) } ) {
+                if let index = monthlyCompleteBook.firstIndex(where: { $0.date.isEqual([.year ,.month], with: readingBook.completeDate ?? Date()) } ) {
                     monthlyCompleteBook[index].count += 1
                 } else {
                     monthlyCompleteBook.append(
@@ -161,7 +161,7 @@ extension AnalysisChartsTabView {
                                 y: .value("pages", element.pages)
                             )
                             .cornerRadius(5.0)
-                            .foregroundStyle(element.date.isEqual([.year, .month, .day], date: Date()) ? Color.orange : Color.gray)
+                            .foregroundStyle(element.date.isEqual([.year, .month, .day], with: Date()) ? Color.orange : Color.gray)
                         }
                         .chartXAxis(.hidden)
                         .chartYAxis(.hidden)
@@ -216,7 +216,7 @@ extension AnalysisChartsTabView {
                             y: .value("pages", element.count)
                         )
                         .cornerRadius(5.0)
-                        .foregroundStyle(element.date.isEqual([.year, .month], date: Date()) ? Color.blue : Color.gray)
+                        .foregroundStyle(element.date.isEqual([.year, .month], with: Date()) ? Color.blue : Color.gray)
                     }
                     .chartXAxis(.hidden)
                     .chartYAxis(.hidden)

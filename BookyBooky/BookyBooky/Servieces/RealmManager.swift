@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 import AlertToast
 
-class RealmManager: ObservableObject {
+final class RealmManager: ObservableObject {
         
     // MARK: - PROPERTIES
     
@@ -69,7 +69,7 @@ extension RealmManager {
         // 독서 데이터가 하나 이상 존재하는 경우
         if let lastRecord = object.lastRecord {
             // 오늘 날짜와 마지막 독서 데이터의 날짜가 동일한 경우
-            if Date().isEqual([.year, .month, .day], date: lastRecord.date) {
+            if Date().isEqual([.year, .month, .day], with: lastRecord.date) {
                 if object.records.count <= 1 {
                     try! realm.write {
                         object.records.last?.date = Date()

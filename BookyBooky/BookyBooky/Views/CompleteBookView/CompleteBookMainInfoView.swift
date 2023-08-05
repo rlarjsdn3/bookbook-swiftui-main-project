@@ -141,7 +141,7 @@ extension CompleteBookMainInfoView {
                     if let lastRecord = completeBook.lastRecord {
                         let today = Date()
                         // 오늘 일자에 독서를 한 경우
-                        if today.isEqual([.year, .month, .day], date: lastRecord.date) {
+                        if today.isEqual([.year, .month, .day], with: lastRecord.date) {
                             Text("오늘 \(lastRecord.numOfPagesRead)페이지나 읽었어요!")
                             // 오늘 일자에 독서를 하지 않은 경우
                         } else {

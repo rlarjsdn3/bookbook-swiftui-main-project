@@ -119,7 +119,7 @@ extension AddSentenceSheetView {
             .padding(10)
             .overlay {
                 RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(Color.darkGray ,lineWidth: 2)
+                    .strokeBorder(Color.customDarkGray ,lineWidth: 2)
             }
             .overlay(alignment: .topLeading) {
                 if inputText.isEmpty {

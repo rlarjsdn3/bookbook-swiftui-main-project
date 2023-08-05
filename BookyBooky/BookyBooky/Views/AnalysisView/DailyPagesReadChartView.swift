@@ -33,7 +33,7 @@ struct DailyPagesReadChartView: View {
         var monthlyPages: [ChartData.DailyPagesRead] = []
         
         for daily in dailyChartData {
-            if let index = monthlyPages.firstIndex(where: { $0.date.isEqual([.year, .month], date: daily.date) }) {
+            if let index = monthlyPages.firstIndex(where: { $0.date.isEqual([.year, .month], with: daily.date) }) {
                 monthlyPages[index].pages += daily.pages
             } else {
                 monthlyPages.append(
@@ -135,7 +135,7 @@ extension DailyPagesReadChartView {
             .scrollIndicators(.hidden)
             .safeAreaPadding([.leading, .top, .trailing])
             .safeAreaPadding(.bottom, 40)
-            .background(Color(.background))
+            .background(Color.customBackground)
         }
     }
     

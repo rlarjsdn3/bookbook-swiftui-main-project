@@ -38,7 +38,7 @@ extension AnalysisScrollView {
         .scrollIndicators(.hidden)
         .padding([.leading, .top, .trailing])
         .padding(.bottom, 40)
-        .background(Color(.background))
+        .background(Color.customBackground)
     }
     
     var analysisTabGroup: some View {
