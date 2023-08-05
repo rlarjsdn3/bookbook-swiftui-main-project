@@ -15,13 +15,13 @@ struct BookListTabButton: View {
     
     // MARK: - PROPERTIES
     
-    let type: BookListTab
+    let type: BookListType
     let scrollProxy: ScrollViewProxy
     let namespace: Namespace.ID
     
     // MARK: - INTIALIZER
     
-    init(_ type: BookListTab,
+    init(_ type: BookListType,
          scrollProxy: ScrollViewProxy,
          namespace: Namespace.ID) {
         self.type = type

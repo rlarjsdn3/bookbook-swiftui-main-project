@@ -12,22 +12,22 @@ final class AlertManager: ObservableObject {
     
     // MARK: - WRAPPER PROPERTIES (네트워크 관련)
     
-    @Published var isPresentingNetworkErrorToastAlert = false
+    @Published var isPresentingNetworkErrorToastAlert = false // 네트워크 연걸 끊김 에러 알림을 제어하는 변수
     
     // MARK: - WRAPPER PROPERTIES (CRUD 관련)
     
-    @Published var isPresentingReadingBookAddSuccessToastAlert = false
-    @Published var isPresentingReadingBookEditSuccessToastAlert = false
-    @Published var isPresentingReadingBookRenewalSuccessToastAlert = false
-    @Published var isPresentingFavoriteBookAddSuccessToastAlert = false
-    @Published var isPresentingAddSentenceSuccessToastAlert = false
+    @Published var isPresentingReadingBookAddSuccessToastAlert = false // 읽을 도서 추가 알림을 제어하는 변수
+    @Published var isPresentingReadingBookEditSuccessToastAlert = false // 도서 편집 성공 알림을 제어하는 변수
+    @Published var isPresentingReadingBookRenewalSuccessToastAlert = false // 도서 갱신 성공 알림을 제어하는 변수
+    @Published var isPresentingFavoriteBookAddSuccessToastAlert = false // 찜한 도서 추가 알림을 제어하는 변수
+    @Published var isPresentingAddSentenceSuccessToastAlert = false // 한줄 문장 추가 알림을 제어하는 변수
     
     // MARK: - WRAPPER PROPERTIES (API 통신 관련)
     
     @Published var isPresentingBookListLoadingToastAlert = false
-    @Published var isPresentingSearchLoadingToastAlert = false  // 도서 검색 로딩 UI의 출력을 제어하는 변수
-    @Published var isPresentingSearchErrorToastAlert = false    // 도서 검색 에러 UI의 출력을 제어하는 변수
-    @Published var isPresentingDetailBookErrorToastAlert = false      // 도서 상세 에러 UI의 출력을 제어하는 변수
+    @Published var isPresentingSearchLoadingToastAlert = false // 도서 검색 로딩 알림을 제어하는 변수
+    @Published var isPresentingSearchErrorToastAlert = false // 도서 검색 에러 알림을 제어하는 변수
+    @Published var isPresentingDetailBookErrorToastAlert = false // 도서 상세 에러 알림을 제어하는 변수
     
     // MARK: - ALERT PROPERTIES (네트워크 관련)
     

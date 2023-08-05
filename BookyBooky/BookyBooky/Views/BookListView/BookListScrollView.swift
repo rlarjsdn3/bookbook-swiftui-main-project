@@ -32,7 +32,7 @@ struct BookListScrollView: View {
     
     // MARK: - FUNCTIONS
     
-    func getBookList(_ tab: BookListTab) -> [SimpleBookInfo.Item] {
+    func getBookList(_ tab: BookListType) -> [SimpleBookInfo.Item] {
         switch tab {
         case .bestSeller:
             return bookListViewData.bestSeller

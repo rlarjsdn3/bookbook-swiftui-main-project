@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 import AlertToast
 
-class RealmManager: ObservableObject {
+final class RealmManager: ObservableObject {
         
     // MARK: - PROPERTIES
     

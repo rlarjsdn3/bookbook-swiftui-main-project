@@ -9,8 +9,8 @@ import SwiftUI
 
 final class BookListViewData: ObservableObject {
     @Published var scrollYOffset: CGFloat = 0.0
-    @Published var selectedListTab: BookListTab = .bestSeller
-    @Published var selectedListTabFA: BookListTab = .bestSeller
+    @Published var selectedListTab: BookListType = .bestSeller
+    @Published var selectedListTabFA: BookListType = .bestSeller
     
     @Published var bestSeller: [SimpleBookInfo.Item] = []     // 베스트셀러 리스트를 저장하는 변수
     @Published var itemNewAll: [SimpleBookInfo.Item] = []     // 신간 도서 리스트를 저장하는 변수

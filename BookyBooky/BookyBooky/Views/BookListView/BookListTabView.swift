@@ -29,7 +29,7 @@ extension BookListTabView {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(BookListTab.allCases, id: \.self) { type in
+                    ForEach(BookListType.allCases, id: \.self) { type in
                         BookListTabButton(
                             type,
                             scrollProxy: proxy,
