@@ -7,13 +7,8 @@
 
 import Foundation
 
-enum ButtonType {
-    enum CompleteBookButton {
-        case home
-        case shelf
-    }
-    
-    enum ShelfFavBookButton {
+enum ButtonType {    
+    enum ShelfFavoriteBookButton {
         case sheet
         case navigation
     }

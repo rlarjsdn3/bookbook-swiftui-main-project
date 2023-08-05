@@ -10,7 +10,7 @@ import Foundation
 enum CompleteBookTab: CaseIterable {
     case overview
     case analysis
-    case collectSentences
+    case sentences
     
     var name: String {
         switch self {
@@ -18,7 +18,7 @@ enum CompleteBookTab: CaseIterable {
             return "개요"
         case .analysis:
             return "분석"
-        case .collectSentences:
+        case .sentences:
             return "문장 수집"
         }
     }

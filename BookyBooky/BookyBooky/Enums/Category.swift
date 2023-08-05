@@ -10,9 +10,6 @@ import RealmSwift
 
 /// 애플리케이션 내부에 출력되는 카테고리 열거형입니다.
 enum Category: String, PersistableEnum {
-    
-    // Realm은 내부적으로 Enum값을 저장할 때 원시값을 활용하므로, 원시값과 별개로 카테고리명을 출력하게 해주는 name 계산 프로퍼티를 정의할 필요가 있어보임
-    
     case all, action, autobiography
     case cartoon, children, chinese, classic, comedy, computer, cook, craft, criticalBiography, culture
     case design, documentary
@@ -31,9 +28,8 @@ enum Category: String, PersistableEnum {
     case science, selfImprovement, socialScience, society, sports
     case technical, teenager, thriller, toddler, travel
     case etc
-    
-    // 이거 추가 작성하기
-    
+
+    /// 실제 화면에 표시될 카테고리 명을 반환하는 프로퍼티입니다.
     var name: String {
         switch self {
         case .all:

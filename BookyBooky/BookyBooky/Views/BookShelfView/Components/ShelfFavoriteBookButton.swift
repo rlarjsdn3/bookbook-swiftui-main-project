@@ -19,11 +19,11 @@ struct ShelfFavoriteBookButton: View {
     // MARK: - PROPERTIES
     
     let favoriteBook: FavoriteBook
-    let type: ButtonType.ShelfFavBookButton
+    let type: ButtonType.ShelfFavoriteBookButton
     
     // MARK: - INTIALIZER
     
-    init(_ favoriteBook: FavoriteBook, type: ButtonType.ShelfFavBookButton) {
+    init(_ favoriteBook: FavoriteBook, type: ButtonType.ShelfFavoriteBookButton) {
         self.favoriteBook = favoriteBook
         self.type = type
     }

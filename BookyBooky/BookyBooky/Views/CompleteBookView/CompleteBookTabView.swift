@@ -47,7 +47,7 @@ extension CompleteBookTabView {
                 CompleteBookOutlineView(completeBook)
             case .analysis:
                 CompleteBookAnalysisView(completeBook)
-            case .collectSentences:
+            case .sentences:
                 CompleteBookSentenceView(completeBook)
             }
         }
