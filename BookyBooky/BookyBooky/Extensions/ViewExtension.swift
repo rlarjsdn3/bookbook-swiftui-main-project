@@ -8,20 +8,21 @@
 import UIKit
 import SwiftUI
 import Combine
+import Shimmer
 
 extension View {
-    /// 실행 중인 기기의 SafeArea 영역의 크기를 반환합니다.
+    // 실행 중인 기기의 가로 및 세로 길이 정보를 반환합니다.
+    var mainScreen: CGRect {
+        UIScreen.main.bounds
+    }
+    
+    /// 실행 중인 기기의 SafeArea 영역 정보를 반환합니다.
     var safeAreaInsets: UIEdgeInsets {
         UIApplication
             .shared
             .connectedScenes
             .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
             .first { $0.isKeyWindow }?.safeAreaInsets ?? UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-    
-    // 실행 중인 기기의 가로 및 세로 길이를 반환합니다.
-    var mainScreen: CGRect {
-        UIScreen.main.bounds
     }
     
     // 키보드의 표시 유무를 뷰에 알려줍니다. (코드 출처: https://url.kr/qnl2ws)
@@ -45,25 +46,18 @@ extension View {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
- 
-public extension View {
-    func modify<Content>(@ViewBuilder _ transform: (Self) -> Content) -> Content {
-        transform(self)
-    }
-}
 
 extension View {
     
-    ///  매개변수로 주어진 이미지 URL의 이미지를 비동기적으로 불러와 이미지를 반환하는 함수입니다. 기본적으로 너비는 150, 높이는 200 크기의 이미지를 반환합니다.
-    ///  이미지를 불러오는 중이거나 불러오는 데 실패하면, 회색 로딩 이미지가 출력됩니다.
+    ///  첫 번째 매개변수로 주어진 이미지 URL에 담긴 이미지를 불러와 반환하는 함수입니다. 해당 작업은 비동기적으로 처리됩니다.
     /// - Parameters:
     ///   - url: 이미지 URL
-    ///   - width: 이미지 너비
-    ///   - height: 이미지 높이
-    ///   - coverShape: 이미지 모양
-    /// - Returns: 이미지(Image)
+    ///   - width: 이미지 너비 (기본값: 150)
+    ///   - height: 이미지 높이 (기본값: 200)
+    ///   - coverShape: 이미지 모양 (기본값: 둥근 직사각형 )
+    /// - Returns: 뷰(View) 프로토콜을 준수하는 타입
     func asyncCoverImage(_ url: String,
-                    width: CGFloat = 150, height: CGFloat = 200,
+                         width: CGFloat = 150, height: CGFloat = 200,
                          coverShape: some Shape = RoundedRect(byRoundingCorners: [.allCorners])) -> some View {
         AsyncImage(url: URL(string: url),
                    transaction: Transaction(animation: .default)
@@ -84,13 +78,13 @@ extension View {
         }
     }
     
-    /// 이미지 URL의 이미지를 불러오는 중이거나 불러오는 데 실패하면, 매개변수로 주어진 크기와 모양의 회색 로딩 이미지를 반환합니다.
+    /// 회색 로딩 이미지를 반환합니다.
     /// - Parameters:
     ///   - width: 이미지 너비
     ///   - height: 이미지 높이
     ///   - coverShape: 이미지 모양
     /// - Returns: 색상(Color)
-    func loadingImage(width: CGFloat, height: CGFloat, coverShape: some Shape) -> some View {
+    private func loadingImage(width: CGFloat, height: CGFloat, coverShape: some Shape) -> some View {
         Color.gray.opacity(0.2)
             .frame(width: width, height: height)
             .clipShape(coverShape)
