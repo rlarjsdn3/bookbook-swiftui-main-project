@@ -31,17 +31,17 @@ struct HomeTopBarView: View {
     
     var showingTopBarDividerYPositionValue: CGFloat {
         if recentReadingActivityCount == 0 {
-            return CGFloat(215.0)
+            return CGFloat(215)
         } else {
-            return CGFloat(120 + (70 * recentReadingActivityCount))
+            return CGFloat(110 + (70 * recentReadingActivityCount))
         }
     }
     
     var showingUtilMenuYPositionValue: CGFloat {
         if recentReadingActivityCount == 0 {
-            return CGFloat(293.0)
+            return CGFloat(282)
         } else {
-            return CGFloat(158 + (70 * recentReadingActivityCount))
+            return CGFloat(142 + (70 * recentReadingActivityCount))
         }
     }
     

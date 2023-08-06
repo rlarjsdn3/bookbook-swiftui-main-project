@@ -50,12 +50,12 @@ extension HomeScrollView {
     var scrollContent: some View {
         ScrollViewReader { proxy in
             TrackableVerticalScrollView(yOffset: $homeViewData.scrollYOffset) {
-                VStack {
+                VStack(spacing: 0) {
                     navigationTopBarTitle
                     
-                    HomeActivityTabView()
+                    HomeActivitySectionView()
                     
-                    HomeReadingBookTabView(scrollProxy: proxy)
+                    HomeReadingBookSectionView(scrollProxy: proxy)
                 }
             }
             .scrollIndicators(.hidden)

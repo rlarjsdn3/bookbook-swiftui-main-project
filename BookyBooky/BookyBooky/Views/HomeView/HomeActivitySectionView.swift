@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct HomeActivityTabView: View {
+struct HomeActivitySectionView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -35,7 +35,7 @@ struct HomeActivityTabView: View {
 
 // MARK: - EXTENSIONS
 
-extension HomeActivityTabView {
+extension HomeActivitySectionView {
     var tabTitle: some View {
         HStack {
             headlineText
@@ -94,7 +94,7 @@ extension HomeActivityTabView {
 
 struct HomeActivityView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeActivityTabView()
+        HomeActivitySectionView()
             .environmentObject(HomeViewData())
             .environmentObject(RealmManager())
     }
