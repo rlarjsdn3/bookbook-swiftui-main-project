@@ -113,7 +113,7 @@ extension CompleteBookRenewalSheetView {
                     .foregroundColor(.white)
                     .padding(.vertical, 23)
                     .padding(.horizontal)
-                    .background(completeBook.category.themeColor, in: .circle)
+                    .background(completeBook.category.themeColor, in: Circle())
             }
             .opacity(previousPageRead >= totalPageRead  ? 0.5 : 1)
             .disabled(previousPageRead >= totalPageRead  ? true : false)
@@ -157,7 +157,7 @@ extension CompleteBookRenewalSheetView {
                     .font(.largeTitle)
                     .foregroundColor(.white)
                     .padding(10)
-                    .background(completeBook.category.themeColor, in: .circle)
+                    .background(completeBook.category.themeColor, in: Circle())
             }
             .opacity(totalPage <= totalPageRead  ? 0.5 : 1)
             .disabled(totalPage <= totalPageRead  ? true : false)
@@ -199,9 +199,11 @@ extension CompleteBookRenewalSheetView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CompleteBookRenewalSheetView(CompleteBook.preview)
-        .environmentObject(RealmManager())
-        .environmentObject(AlertManager())
-        .environmentObject(CompleteBookViewData())
+struct CompleteBookRenewalSheetView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompleteBookRenewalSheetView(CompleteBook.preview)
+            .environmentObject(RealmManager())
+            .environmentObject(AlertManager())
+            .environmentObject(CompleteBookViewData())
+    }
 }

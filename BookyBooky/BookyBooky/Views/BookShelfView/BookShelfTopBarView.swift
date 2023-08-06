@@ -57,6 +57,8 @@ extension BookShelfTopBarView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookShelfTopBarView()
+struct BookShelfTopBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookShelfTopBarView()
+    }
 }

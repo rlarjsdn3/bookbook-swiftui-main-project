@@ -160,8 +160,10 @@ extension CompleteBookDataSheetView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CompleteBookDataSheetView(CompleteBook.preview)
-        .environmentObject(RealmManager())
-        .environmentObject(CompleteBookViewData())
+struct CompleteBookDataSheetView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompleteBookDataSheetView(CompleteBook.preview)
+            .environmentObject(RealmManager())
+            .environmentObject(CompleteBookViewData())
+    }
 }

@@ -70,7 +70,7 @@ extension BookListScrollView {
             let bookList = getBookList(bookListViewData.selectedListTab)
             
             ForEach(bookList, id: \.self) { book in
-                ListBookButton(book)
+                BookListButton(book)
             }
         }
         .padding(.top, 20)
@@ -81,8 +81,10 @@ extension BookListScrollView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookListScrollView()
-        .environmentObject(BookListViewData())
-        .environmentObject(AladinAPIManager())
+struct BookListScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookListScrollView()
+            .environmentObject(BookListViewData())
+            .environmentObject(AladinAPIManager())
+    }
 }

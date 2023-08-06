@@ -173,7 +173,9 @@ extension ActivityScrollView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    ActivityScrollView()
-        .environmentObject(RealmManager())
+struct ActivityScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        ActivityScrollView()
+            .environmentObject(RealmManager())
+    }
 }

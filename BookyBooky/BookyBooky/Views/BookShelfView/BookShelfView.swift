@@ -30,6 +30,8 @@ struct BookShelfView: View {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookShelfView()
+struct BookShelfView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookShelfView()
+    }
 }

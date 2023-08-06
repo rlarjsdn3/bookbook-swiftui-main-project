@@ -21,7 +21,7 @@ struct BookShelfSentenceListView: View {
                 VStack(spacing: 0) {
                     BookShelfSentenceListTextFieldView(scrollProxy: proxy)
                     
-                    BookShelfSentenceScrollView()
+                    BookShelfSentenceListScrollView()
                 }
                 .environmentObject(bookShelfSentenceListViewData)
             }
@@ -62,6 +62,8 @@ extension BookShelfSentenceListView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookShelfSentenceListView()
+struct BookShelfSentenceListView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookShelfSentenceListView()
+    }
 }

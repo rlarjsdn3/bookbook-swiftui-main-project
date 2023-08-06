@@ -155,10 +155,10 @@ extension CompleteBookTopBarView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CompleteBookTopBarView(
-        CompleteBook.preview
-    )
-    .environmentObject(CompleteBookViewData())
-    .environmentObject(RealmManager())
+struct CompleteBookTopBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompleteBookTopBarView(CompleteBook.preview)
+            .environmentObject(CompleteBookViewData())
+            .environmentObject(RealmManager())
+    }
 }

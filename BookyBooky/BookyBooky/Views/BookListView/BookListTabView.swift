@@ -52,7 +52,9 @@ extension BookListTabView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookListTabView()
-        .environmentObject(BookListViewData())
+struct BookListTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookListTabView()
+            .environmentObject(BookListViewData())
+    }
 }

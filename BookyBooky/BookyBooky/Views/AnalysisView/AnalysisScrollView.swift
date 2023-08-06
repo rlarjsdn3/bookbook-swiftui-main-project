@@ -43,15 +43,17 @@ extension AnalysisScrollView {
     
     var analysisTabGroup: some View {
         VStack(spacing: 20) {
-            AnalysisChartsTabView()
+            AnalysisChartsSectionView()
             
-            AnalysisHighlightTabView()
+            AnalysisHighlightSectionView()
         }
     }
 }
 
 @available(iOS 17.0, *)
-#Preview {
-    AnalysisScrollView()
-        .environmentObject(AnalysisViewData())
+struct AnalysisScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        AnalysisScrollView()
+            .environmentObject(AnalysisViewData())
+    }
 }

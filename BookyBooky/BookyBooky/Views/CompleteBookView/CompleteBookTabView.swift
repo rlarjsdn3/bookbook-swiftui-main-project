@@ -76,7 +76,9 @@ extension CompleteBookTabView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CompleteBookTabView(CompleteBook.preview)
-        .environmentObject(CompleteBookViewData())
+struct CompleteBookTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompleteBookTabView(CompleteBook.preview)
+            .environmentObject(CompleteBookViewData())
+    }
 }

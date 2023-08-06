@@ -31,7 +31,7 @@ struct SearchBookSubInfoView: View {
     var body: some View {
         subInfoArea
             .sheet(isPresented: $isPresentingSalesPointDescriptionSheet) {
-                SalesPointDescSheetView(theme: book.bookCategory.themeColor)
+                SalesPointDescriptionView(theme: book.bookCategory.themeColor)
                     .presentationCornerRadius(30)
                     // 베젤이 없는 아이폰(iPhone 14 등)은 시트 높이를 420으로 설정
                     // 베젤이 있는 아이폰(iPhone SE 등)은 시트 높이를 450으로 설정
@@ -117,7 +117,9 @@ extension SearchBookSubInfoView {
 
 // MARK: - RPEVIEW
 
-#Preview {
-    SearchBookSubInfoView(DetailBookInfo.Item.preview)
-        .environmentObject(SearchBookViewData())
+struct SearchBookSubInfoView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchBookSubInfoView(DetailBookInfo.Item.preview)
+            .environmentObject(SearchBookViewData())
+    }
 }

@@ -64,8 +64,10 @@ struct BookListView: View {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookListView()
-        .environmentObject(AladinAPIManager())
-        .environmentObject(AlertManager())
+struct BookListView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookListView()
+            .environmentObject(AladinAPIManager())
+            .environmentObject(AlertManager())
+    }
 }

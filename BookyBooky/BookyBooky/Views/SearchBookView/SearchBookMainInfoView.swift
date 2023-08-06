@@ -106,7 +106,7 @@ extension SearchBookMainInfoView {
                 Image(systemName: "heart.fill")
                     .foregroundColor(.white)
                     .padding()
-                    .background(book.bookCategory.themeColor, in: .circle)
+                    .background(book.bookCategory.themeColor, in: Circle())
             } else {
                 Image(systemName: "heart.fill")
                     .foregroundColor(book.categoryName.refinedCategory.themeColor)
@@ -123,8 +123,10 @@ extension SearchBookMainInfoView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    SearchBookMainInfoView(DetailBookInfo.Item.preview)
-        .environmentObject(RealmManager())
-        .environmentObject(AlertManager())
+struct SearchBookMainInfoView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchBookMainInfoView(DetailBookInfo.Item.preview)
+            .environmentObject(RealmManager())
+            .environmentObject(AlertManager())
+    }
 }

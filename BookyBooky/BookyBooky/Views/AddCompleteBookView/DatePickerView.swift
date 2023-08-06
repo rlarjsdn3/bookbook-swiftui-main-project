@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DatePickerSheetView: View {
+struct DatePickerView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -62,7 +62,9 @@ struct DatePickerSheetView: View {
 
 // MARK: - PREVIEW
 
-#Preview {
-    DatePickerSheetView(theme: Color.black)
-        .environmentObject(AddCompleteBookViewData())
+struct DatePickerView_Previews: PreviewProvider {
+    static var previews: some View {
+        DatePickerView(theme: Color.black)
+            .environmentObject(AddCompleteBookViewData())
+    }
 }

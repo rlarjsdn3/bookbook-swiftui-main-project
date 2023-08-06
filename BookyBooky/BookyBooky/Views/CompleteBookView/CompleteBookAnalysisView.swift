@@ -222,51 +222,51 @@ extension CompleteBookAnalysisView {
         }
     }
     
-    @available(iOS 17.0, *)
-    var barChart: some View {
-        Chart {
-            ForEach(completeBook.records, id: \.self) { record in
-                BarMark(
-                    x: .value("date", record.date, unit: .day),
-                    y: .value("page", record.numOfPagesRead)
-                )
-                .foregroundStyle(completeBook.category.themeColor)
-            }
-            
-            if isPresentingAverageRuleMark {
-                RuleMark(
-                    y: .value(
-                        "average",
-                        averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd)
-                    )
-                )
-                .lineStyle(StrokeStyle(lineWidth: 3))
-                .foregroundStyle(completeBook.category.themeColor == Color.black ? Color.gray : Color.black)
-                .annotation(position: .top, alignment: .leading) {
-                    Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
-                        .font(.headline)
-                        .foregroundStyle(completeBook.category.themeColor == Color.black ? Color.gray : Color.black)
-                }
-            }
-        }
-        .chartScrollableAxes(.horizontal)
-        .chartXVisibleDomain(length: 3600 * 24 * 14)
-        .chartScrollTargetBehavior(
-            .valueAligned(
-                matching: DateComponents(hour: 0),
-                majorAlignment: .matching(.init(day: 1))
-            )
-        )
-        .chartScrollPosition(x: $scrollPosition)
-        .chartXAxis {
-            AxisMarks(values: .stride(by: .day, count: 7)) {
-                AxisTick()
-                AxisGridLine()
-                AxisValueLabel(format: .dateTime.month().day())
-            }
-        }
-        .frame(height: 250)
-    }
+//    @available(iOS 17.0, *)
+//    var barChart: some View {
+//        Chart {
+//            ForEach(completeBook.records, id: \.self) { record in
+//                BarMark(
+//                    x: .value("date", record.date, unit: .day),
+//                    y: .value("page", record.numOfPagesRead)
+//                )
+//                .foregroundStyle(completeBook.category.themeColor)
+//            }
+//
+//            if isPresentingAverageRuleMark {
+//                RuleMark(
+//                    y: .value(
+//                        "average",
+//                        averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd)
+//                    )
+//                )
+//                .lineStyle(StrokeStyle(lineWidth: 3))
+//                .foregroundStyle(completeBook.category.themeColor == Color.black ? Color.gray : Color.black)
+//                .annotation(position: .top, alignment: .leading) {
+//                    Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...scrollPositionEnd))")
+//                        .font(.headline)
+//                        .foregroundStyle(completeBook.category.themeColor == Color.black ? Color.gray : Color.black)
+//                }
+//            }
+//        }
+//        .chartScrollableAxes(.horizontal)
+//        .chartXVisibleDomain(length: 3600 * 24 * 14)
+//        .chartScrollTargetBehavior(
+//            .valueAligned(
+//                matching: DateComponents(hour: 0),
+//                majorAlignment: .matching(.init(day: 1))
+//            )
+//        )
+//        .chartScrollPosition(x: $scrollPosition)
+//        .chartXAxis {
+//            AxisMarks(values: .stride(by: .day, count: 7)) {
+//                AxisTick()
+//                AxisGridLine()
+//                AxisValueLabel(format: .dateTime.month().day())
+//            }
+//        }
+//        .frame(height: 250)
+//    }
     
     var hightlightLabel: some View {
         VStack {
@@ -295,7 +295,7 @@ extension CompleteBookAnalysisView {
                     Spacer()
                 }
                 .padding()
-                .background(Color.customBackground, in: .rect(cornerRadius: 20))
+                .background(Color.customBackground, in: RoundedRectangle(cornerRadius: 20))
                 
                 HStack {
                     if let days = consecutiveReadingDay {
@@ -314,7 +314,7 @@ extension CompleteBookAnalysisView {
                     Spacer()
                 }
                 .padding()
-                .background(Color.customBackground, in: .rect(cornerRadius: 20))
+                .background(Color.customBackground, in: RoundedRectangle(cornerRadius: 20))
             }
         }
         .padding(.top, 5)
@@ -331,7 +331,7 @@ extension CompleteBookAnalysisView {
                 .frame(height: 45)
                 .frame(maxWidth: .infinity)
                 .background(Color("Background"))
-                .clipShape(.capsule(style: .continuous))
+                .clipShape(Capsule(style: .circular))
         }
         .padding(.horizontal)
         .padding(.bottom, 20)
@@ -357,8 +357,10 @@ extension CompleteBookAnalysisView {
             }
             .padding()
             .foregroundColor(isPresentingAverageRuleMark ? Color.white : Color.black)
-            .background(isPresentingAverageRuleMark ? completeBook.category.themeColor : Color("Background"))
-            .clipShape(.rect(cornerRadius: 20))
+            .background(
+                isPresentingAverageRuleMark ? completeBook.category.themeColor : Color("Background"),
+                in: RoundedRectangle(cornerRadius: 20)
+            )
             .padding(.vertical, 5)
         }
     }

@@ -47,7 +47,9 @@ extension CompleteBookScrollView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CompleteBookScrollView(CompleteBook.preview)
-        .environmentObject(CompleteBookViewData())
+struct CompleteBookScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompleteBookScrollView(CompleteBook.preview)
+            .environmentObject(CompleteBookViewData())
+    }
 }

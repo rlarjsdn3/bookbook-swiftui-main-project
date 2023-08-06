@@ -10,7 +10,7 @@
 import SwiftUI
 import RealmSwift
 
-struct AnalysisHighlightTabView: View {
+struct AnalysisHighlightSectionView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -178,7 +178,7 @@ struct AnalysisHighlightTabView: View {
 
 // MARK: - EXTENSIONS
 
-extension AnalysisHighlightTabView {
+extension AnalysisHighlightSectionView {
     var highlightHeaderText: some View {
         Text("하이라이트")
             .font(.title2.weight(.bold))
@@ -349,6 +349,8 @@ extension AnalysisHighlightTabView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    AnalysisHighlightTabView()
+struct AnalysisHighlightSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        AnalysisHighlightSectionView()
+    }
 }

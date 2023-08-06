@@ -29,6 +29,8 @@ struct HomeView: View {
 
 // MARK: - PREVIEW
 
-#Preview {
-    HomeView()
+struct HeomView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
+    }
 }

@@ -89,8 +89,10 @@ extension HomeScrollView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    HomeScrollView()
-        .environmentObject(HomeViewData())
-        .environmentObject(RealmManager())
+struct HomeScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeScrollView()
+            .environmentObject(HomeViewData())
+            .environmentObject(RealmManager())
+    }
 }

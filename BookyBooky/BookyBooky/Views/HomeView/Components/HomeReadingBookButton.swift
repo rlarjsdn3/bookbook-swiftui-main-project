@@ -105,6 +105,8 @@ extension HomeReadingBookButton {
     }
 }
 
-#Preview {
-    HomeReadingBookButton(CompleteBook.preview)
+struct HomeReadingBookButton_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeReadingBookButton(CompleteBook.preview)
+    }
 }

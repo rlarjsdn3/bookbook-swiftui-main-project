@@ -83,14 +83,14 @@ struct DailyPagesReadChartView: View {
     
     var body: some View {
         chartContent
-            .onChange(of: selectedTimeRange, initial: true) { _, _  in
-                switch selectedTimeRange {
-                case .last14Days:
-                    scrollPosition = dailyChartData.last?.date.addingTimeInterval(-1 * 86400 * 14).timeIntervalSinceReferenceDate ?? 0.0
-                case .last180Days:
-                    scrollPosition = dailyChartData.last?.date.addingTimeInterval(-1 * 86400 * 30 * 6).timeIntervalSinceReferenceDate ?? 0.0
-                }
-            }
+//            .onChange(of: selectedTimeRange, initial: true) { _, _  in
+//                switch selectedTimeRange {
+//                case .last14Days:
+//                    scrollPosition = dailyChartData.last?.date.addingTimeInterval(-1 * 86400 * 14).timeIntervalSinceReferenceDate ?? 0.0
+//                case .last180Days:
+//                    scrollPosition = dailyChartData.last?.date.addingTimeInterval(-1 * 86400 * 30 * 6).timeIntervalSinceReferenceDate ?? 0.0
+//                }
+//            }
             .navigationBarBackButtonHidden()
     }
     
@@ -133,8 +133,8 @@ extension DailyPagesReadChartView {
                 .trackScrollYOffet($startOffset, yOffset: $scrollYOffset)
             }
             .scrollIndicators(.hidden)
-            .safeAreaPadding([.leading, .top, .trailing])
-            .safeAreaPadding(.bottom, 40)
+//            .safeAreaPadding([.leading, .top, .trailing])
+//            .safeAreaPadding(.bottom, 40)
             .background(Color.customBackground)
         }
     }
@@ -177,11 +177,11 @@ extension DailyPagesReadChartView {
             
             chartTitle
             
-            barChart
+//            barChart
         }
         .padding()
         .background(Color.white)
-        .clipShape(.rect(cornerRadius: 15))
+//        .clipShape(.rect(cornerRadius: 15))
     }
     
     var pickTimeRange: some View {
@@ -238,89 +238,89 @@ extension DailyPagesReadChartView {
         }
     }
     
-    var barChart: some View {
-        Chart {
-            switch selectedTimeRange {
-            case .last14Days:
-                ForEach(dailyChartData, id: \.self) { element in
-                    BarMark(
-                        x: .value("date", element.date, unit: .day),
-                        y: .value("page", element.pages)
-                    )
-                    .foregroundStyle(Color.orange)
-                }
-            case .last180Days:
-                ForEach(monthlyChartData, id: \.self) { element in
-                    BarMark(
-                        x: .value("date", element.date, unit: .month),
-                        y: .value("page", element.pages)
-                    )
-                    .foregroundStyle(Color.orange)
-                }
-            }
-            
-            if isPresentingAverageRuleMark {
-                switch selectedTimeRange {
-                case .last14Days:
-                    RuleMark(
-                        y: .value(
-                            "average",
-                            averageReadPagesInPreiod(in: scrollPositionStart...dailyScrollPositionEnd)
-                        )
-                    )
-                    .lineStyle(StrokeStyle(lineWidth: 3))
-                    .foregroundStyle(Color.black)
-                    .annotation(position: .top, alignment: .leading) {
-                        Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...dailyScrollPositionEnd))")
-                            .font(.headline)
-                            .foregroundStyle(Color.black)
-                    }
-                case .last180Days:
-                    RuleMark(
-                        y: .value(
-                            "average",
-                            averageReadPagesInPreiod(in: scrollPositionStart...monthlyScrollPositionEnd)
-                        )
-                    )
-                    .lineStyle(StrokeStyle(lineWidth: 3))
-                    .foregroundStyle(Color.black)
-                    .annotation(position: .top, alignment: .leading) {
-                        Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...monthlyScrollPositionEnd))")
-                            .font(.headline)
-                            .foregroundStyle(Color.black)
-                    }
-                }
-            }
-        }
-        .chartScrollableAxes(.horizontal)
-        .chartXVisibleDomain(
-            length: selectedTimeRange == .last14Days ? 86400 * 14 : 86400 * 30 * 6
-        )
-        .chartScrollTargetBehavior(
-            .valueAligned(
-                matching: DateComponents(hour: 0),
-                majorAlignment: .matching(.init(day: 1))
-            )
-        )
-        .chartScrollPosition(x: $scrollPosition)
-        .chartXAxis {
-            switch selectedTimeRange {
-            case .last14Days:
-                AxisMarks(values: .stride(by: .day, count: 7)) {
-                    AxisTick()
-                    AxisGridLine()
-                    AxisValueLabel(format: .dateTime.month().day())
-                }
-            case .last180Days:
-                AxisMarks(values: .stride(by: .month)) {
-                    AxisTick()
-                    AxisGridLine()
-                    AxisValueLabel(format: .dateTime.month(.abbreviated), centered: true)
-                }
-            }
-        }
-        .frame(height: 300)
-    }
+//    var barChart: some View {
+//        Chart {
+//            switch selectedTimeRange {
+//            case .last14Days:
+//                ForEach(dailyChartData, id: \.self) { element in
+//                    BarMark(
+//                        x: .value("date", element.date, unit: .day),
+//                        y: .value("page", element.pages)
+//                    )
+//                    .foregroundStyle(Color.orange)
+//                }
+//            case .last180Days:
+//                ForEach(monthlyChartData, id: \.self) { element in
+//                    BarMark(
+//                        x: .value("date", element.date, unit: .month),
+//                        y: .value("page", element.pages)
+//                    )
+//                    .foregroundStyle(Color.orange)
+//                }
+//            }
+//
+//            if isPresentingAverageRuleMark {
+//                switch selectedTimeRange {
+//                case .last14Days:
+//                    RuleMark(
+//                        y: .value(
+//                            "average",
+//                            averageReadPagesInPreiod(in: scrollPositionStart...dailyScrollPositionEnd)
+//                        )
+//                    )
+//                    .lineStyle(StrokeStyle(lineWidth: 3))
+//                    .foregroundStyle(Color.black)
+//                    .annotation(position: .top, alignment: .leading) {
+//                        Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...dailyScrollPositionEnd))")
+//                            .font(.headline)
+//                            .foregroundStyle(Color.black)
+//                    }
+//                case .last180Days:
+//                    RuleMark(
+//                        y: .value(
+//                            "average",
+//                            averageReadPagesInPreiod(in: scrollPositionStart...monthlyScrollPositionEnd)
+//                        )
+//                    )
+//                    .lineStyle(StrokeStyle(lineWidth: 3))
+//                    .foregroundStyle(Color.black)
+//                    .annotation(position: .top, alignment: .leading) {
+//                        Text("일 평균 독서 페이지: \(averageReadPagesInPreiod(in: scrollPositionStart...monthlyScrollPositionEnd))")
+//                            .font(.headline)
+//                            .foregroundStyle(Color.black)
+//                    }
+//                }
+//            }
+//        }
+//        .chartScrollableAxes(.horizontal)
+//        .chartXVisibleDomain(
+//            length: selectedTimeRange == .last14Days ? 86400 * 14 : 86400 * 30 * 6
+//        )
+//        .chartScrollTargetBehavior(
+//            .valueAligned(
+//                matching: DateComponents(hour: 0),
+//                majorAlignment: .matching(.init(day: 1))
+//            )
+//        )
+//        .chartScrollPosition(x: $scrollPosition)
+//        .chartXAxis {
+//            switch selectedTimeRange {
+//            case .last14Days:
+//                AxisMarks(values: .stride(by: .day, count: 7)) {
+//                    AxisTick()
+//                    AxisGridLine()
+//                    AxisValueLabel(format: .dateTime.month().day())
+//                }
+//            case .last180Days:
+//                AxisMarks(values: .stride(by: .month)) {
+//                    AxisTick()
+//                    AxisGridLine()
+//                    AxisValueLabel(format: .dateTime.month(.abbreviated), centered: true)
+//                }
+//            }
+//        }
+//        .frame(height: 300)
+//    }
     
     var averageRuleMarkButton: some View {
         Button {
@@ -344,7 +344,7 @@ extension DailyPagesReadChartView {
             .padding()
             .foregroundColor(isPresentingAverageRuleMark ? Color.white : Color.black)
             .background(isPresentingAverageRuleMark ? Color.orange : Color.white)
-            .clipShape(.rect(cornerRadius: 20))
+//            .clipShape(.rect(cornerRadius: 20))
         }
         .padding(.bottom, 15)
     }
@@ -383,7 +383,7 @@ extension DailyPagesReadChartView {
                     }
                 }
                 .background(Color.white)
-                .clipShape(.rect(cornerRadius: 15))
+//                .clipShape(.rect(cornerRadius: 15))
             case .last180Days:
                 VStack(spacing: 0) {
                     ForEach(monthlyChartData) { element in
@@ -408,7 +408,7 @@ extension DailyPagesReadChartView {
                     }
                 }
                 .background(Color.white)
-                .clipShape(.rect(cornerRadius: 15))
+//                .clipShape(.rect(cornerRadius: 15))
             }
         }
     }
@@ -417,6 +417,8 @@ extension DailyPagesReadChartView {
 // MARK: - PREVIEW
 
 @available(iOS 17.0, *)
-#Preview {
-    DailyPagesReadChartView(dailyChartData: [])
+struct DailyPagesReadChartView_Previews: PreviewProvider {
+    static var previews: some View {
+        DailyPagesReadChartView(dailyChartData: [])
+    }
 }

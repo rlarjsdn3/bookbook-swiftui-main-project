@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct ListBookButton: View {
+struct BookListButton: View {
     
     // MARK: - PROPERTIES
     
@@ -58,7 +58,7 @@ struct ListBookButton: View {
 
 // MARK: - EXTENSIONS
 
-extension ListBookButton {
+extension BookListButton {
     var searchCellButton: some View {
         VStack {
             asyncCoverImage(
@@ -122,6 +122,8 @@ extension ListBookButton {
 
 // MARK: - RREVIEW
 
-#Preview {
-    ListBookButton(SimpleBookInfo.Item.preview)
+struct BookListButton_Previews: PreviewProvider {
+    static var previews: some View {
+        BookListButton(SimpleBookInfo.Item.preview)
+    }
 }

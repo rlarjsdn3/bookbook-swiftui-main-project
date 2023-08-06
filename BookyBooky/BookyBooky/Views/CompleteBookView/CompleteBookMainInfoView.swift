@@ -252,8 +252,10 @@ extension CompleteBookMainInfoView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CompleteBookMainInfoView(CompleteBook.preview)
-        .environmentObject(CompleteBookViewData())
-        .environmentObject(RealmManager())
+struct CompleteBookMainInfoView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompleteBookMainInfoView(CompleteBook.preview)
+            .environmentObject(CompleteBookViewData())
+            .environmentObject(RealmManager())
+    }
 }

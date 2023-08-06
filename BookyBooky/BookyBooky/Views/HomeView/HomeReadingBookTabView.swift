@@ -306,10 +306,12 @@ extension HomeReadingBookTabView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    ScrollViewReader { scrollProxy in
-        HomeReadingBookTabView(scrollProxy: scrollProxy)
-            .environmentObject(HomeViewData())
-            .environmentObject(RealmManager())
+struct HomeReadingBookTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        ScrollViewReader { scrollProxy in
+            HomeReadingBookTabView(scrollProxy: scrollProxy)
+                .environmentObject(HomeViewData())
+                .environmentObject(RealmManager())
+        }
     }
 }

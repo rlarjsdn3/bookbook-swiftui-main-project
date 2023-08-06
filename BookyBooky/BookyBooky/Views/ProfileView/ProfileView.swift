@@ -92,7 +92,7 @@ struct ProfileView: View {
             Image(systemName: systemImageName)
                 .foregroundStyle(Color.white)
                 .frame(width: 28, height: 28)
-                .background(color, in: .rect(cornerRadius: 8))
+                .background(color, in: RoundedRectangle(cornerRadius: 8))
                 .padding(.trailing, 8)
             Text(title)
                 .foregroundStyle(Color.black)

@@ -94,7 +94,7 @@ extension BookShelfSentenceListTextFieldView {
             .font(.title2)
             .foregroundColor(.primary)
             .frame(width: 45, height: 45)
-            .background(Color.customBackground, in: .rect(cornerRadius: 15))
+            .background(Color.customBackground, in: RoundedRectangle(cornerRadius: 15))
     }
     
     var checkMarkSFSymbolImage: some View {
@@ -190,10 +190,12 @@ extension BookShelfSentenceListTextFieldView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    ScrollViewReader { proxy in
-        BookShelfSentenceListTextFieldView(scrollProxy: proxy)
-            .environmentObject(BookShelfSentenceListViewData())
+struct BookShelfSentenceListTextFieldView_Previews: PreviewProvider {
+    static var previews: some View {
+        ScrollViewReader { proxy in
+            BookShelfSentenceListTextFieldView(scrollProxy: proxy)
+                .environmentObject(BookShelfSentenceListViewData())
+        }
     }
 }
 

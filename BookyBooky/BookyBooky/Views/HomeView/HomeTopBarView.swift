@@ -177,7 +177,9 @@ extension HomeTopBarView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    HomeTopBarView()
-        .environmentObject(HomeViewData())
+struct HomeTopBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeTopBarView()
+            .environmentObject(HomeViewData())
+    }
 }

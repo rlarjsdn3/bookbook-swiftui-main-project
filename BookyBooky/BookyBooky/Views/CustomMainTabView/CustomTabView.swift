@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CustomMainTabView: View {
+struct CustomTabView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -70,6 +70,8 @@ struct CustomMainTabView: View {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CustomMainTabView(selection: .constant(.home))
+struct CustomTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        CustomTabView(selection: .constant(.home))
+    }
 }

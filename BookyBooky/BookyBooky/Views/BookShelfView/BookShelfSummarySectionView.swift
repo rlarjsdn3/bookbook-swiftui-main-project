@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct BookShelfSummaryTabView: View {
+struct BookShelfSummarySectionView: View {
     
     // MARK: - INNER ENUM
     
@@ -78,14 +78,14 @@ struct BookShelfSummaryTabView: View {
     // MARK: - BODY
     
     var body: some View {
-        summaryTabArea
+        summarySectionArea
     }
 }
 
 // MARK: - EXTENSIONS
 
-extension BookShelfSummaryTabView {
-    var summaryTabArea: some View {
+extension BookShelfSummarySectionView {
+    var summarySectionArea: some View {
         HStack {
             ForEach(SummaryTabItem.allCases, id: \.self) { item in
                 Spacer()
@@ -139,6 +139,8 @@ extension BookShelfSummaryTabView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookShelfSummaryTabView()
+struct BookShelfSummarySectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookShelfSummarySectionView()
+    }
 }

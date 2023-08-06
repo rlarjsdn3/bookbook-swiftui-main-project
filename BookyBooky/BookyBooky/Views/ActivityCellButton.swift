@@ -120,6 +120,8 @@ extension ActivityCellButton {
 
 // MARK: - PREVIEW
 
-#Preview {
-    ActivityCellButton(Activity.preview)
+struct ActivityCellButton_Previews: PreviewProvider {
+    static var previews: some View {
+        ActivityCellButton(Activity.preview)
+    }
 }

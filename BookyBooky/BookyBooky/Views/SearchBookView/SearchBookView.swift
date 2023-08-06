@@ -67,7 +67,7 @@ struct SearchBookView: View {
                         
                         Divider()
                         
-                        SearchBookDescView(bookItem)
+                        SearchBookDescriptionView(bookItem)
                         
                         Spacer()
                         
@@ -111,9 +111,11 @@ struct SearchBookView: View {
 
 // MARK: - PREVIEW
 
-#Preview {
-    SearchBookView("9788994492049", in: .navigation)
-        .environmentObject(RealmManager())
-        .environmentObject(AladinAPIManager())
-        .environmentObject(AlertManager())
+struct SearchBookView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchBookView("9788994492049", in: .navigation)
+            .environmentObject(RealmManager())
+            .environmentObject(AladinAPIManager())
+            .environmentObject(AlertManager())
+    }
 }

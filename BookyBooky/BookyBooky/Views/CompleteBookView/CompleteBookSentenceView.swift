@@ -66,6 +66,8 @@ extension CompleteBookSentenceView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CompleteBookSentenceView(CompleteBook.preview)
+struct CompleteBookSentenceView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompleteBookSentenceView(CompleteBook.preview)
+    }
 }

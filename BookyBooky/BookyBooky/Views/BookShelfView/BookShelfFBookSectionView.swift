@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct BookShelfFavBookTabView: View {
+struct BookShelfFBookSectionView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -36,7 +36,7 @@ struct BookShelfFavBookTabView: View {
 
 // MARK: - EXTENSIONS
 
-extension BookShelfFavBookTabView {
+extension BookShelfFBookSectionView {
     var scrollContent: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
@@ -92,6 +92,8 @@ extension BookShelfFavBookTabView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookShelfFavBookTabView()
+struct BookShelfFBookSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookShelfFBookSectionView()
+    }
 }

@@ -67,7 +67,9 @@ extension BookListTopBarView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookListTopBarView()
-        .environmentObject(AladinAPIManager())
+struct BookListTopBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookListTopBarView()
+            .environmentObject(AladinAPIManager())
+    }
 }

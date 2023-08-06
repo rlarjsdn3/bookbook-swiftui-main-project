@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SalesPointDescSheetView: View {
+struct SalesPointDescriptionView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -53,7 +53,7 @@ struct SalesPointDescSheetView: View {
 
 // MARK: - EXTENSIONS
 
-extension SalesPointDescSheetView {
+extension SalesPointDescriptionView {
     var aboutSalesPointText: some View {
         Text("판매 포인트란?")
             .font(.title2)
@@ -88,6 +88,8 @@ extension SalesPointDescSheetView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    SalesPointDescSheetView(theme: Color.black)
+struct SalesPointDescriptionView_Previews: PreviewProvider {
+    static var previews: some View {
+        SalesPointDescriptionView(theme: Color.black)
+    }
 }

@@ -33,7 +33,7 @@ struct AddCompleteBookCenterView: View {
     var body: some View {
         centerArea
             .sheet(isPresented: $isPresentingDatePickerSheet) {
-                DatePickerSheetView(theme: book.bookCategory.themeColor)
+                DatePickerView(theme: book.bookCategory.themeColor)
                     .presentationCornerRadius(30)
                     .presentationDetents([.height(440)])
             }
@@ -91,7 +91,7 @@ extension AddCompleteBookCenterView {
                 .fontWeight(.bold)
                 .foregroundColor(.black)
                 .frame(width: 200, height: 35)
-                .background(.gray.opacity(0.2), in: .capsule(style: .circular))
+                .background(.gray.opacity(0.2), in: Capsule(style: .circular))
         }
         .padding(.top, 20)
     }
@@ -99,7 +99,9 @@ extension AddCompleteBookCenterView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    AddCompleteBookCenterView(DetailBookInfo.Item.preview)
-        .environmentObject(AddCompleteBookViewData())
+struct AddCompleteBookCenterView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddCompleteBookCenterView(DetailBookInfo.Item.preview)
+            .environmentObject(AddCompleteBookViewData())
+    }
 }

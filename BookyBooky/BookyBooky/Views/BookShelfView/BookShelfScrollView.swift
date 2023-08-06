@@ -31,11 +31,11 @@ extension BookShelfScrollView {
     var scrollContent: some View {
         TrackableVerticalScrollView(yOffset: $bookShelfViewData.scrollYOffset) {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                BookShelfSummaryTabView()
+                BookShelfSummarySectionView()
                 
-                BookShelfFavBookTabView()
+                BookShelfFBookSectionView()
                 
-                BookShelfCompBookTabView()
+                BookShelfCBookSectionView()
             }
         }
         .scrollIndicators(.hidden)
@@ -44,8 +44,10 @@ extension BookShelfScrollView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookShelfScrollView()
-        .environmentObject(RealmManager())
-        .environmentObject(BookShelfViewData())
+struct BookShelfScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookShelfScrollView()
+            .environmentObject(RealmManager())
+            .environmentObject(BookShelfViewData())
+    }
 }

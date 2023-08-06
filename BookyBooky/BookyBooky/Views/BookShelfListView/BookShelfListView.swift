@@ -31,9 +31,9 @@ struct BookShelfListView: View {
         NavigationStack {
             ScrollViewReader { proxy in
                 VStack(spacing: 0) {
-                    BookShelfBookListTextFieldView(scrollProxy: proxy)
+                    BookShelfListTextFieldView(scrollProxy: proxy)
                     
-                    BookShelfBookScrollView(type: type)
+                    BookShelfListScrollView(type: type)
                 }
                 .overlay(alignment: .bottom) {
                     seeAllButton
@@ -75,6 +75,8 @@ extension BookShelfListView {
 
 // MARK: - PREVIEWS
 
-#Preview {
-    BookShelfListView(type: .favorite)
+struct BookShelfListView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookShelfListView(type: .favorite)
+    }
 }

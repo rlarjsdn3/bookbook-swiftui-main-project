@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct BookShelfSentenceScrollView: View {
+struct BookShelfSentenceListScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -43,7 +43,7 @@ struct BookShelfSentenceScrollView: View {
 
 // MARK: - EXTENSIONS
 
-extension BookShelfSentenceScrollView {
+extension BookShelfSentenceListScrollView {
     var scrollContent: some View {
         Group {
             if isExistSentences {
@@ -107,7 +107,9 @@ extension BookShelfSentenceScrollView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookShelfSentenceScrollView()
-        .environmentObject(BookShelfSentenceListViewData())
+struct BookShelfSentenceListScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookShelfSentenceListScrollView()
+            .environmentObject(BookShelfSentenceListViewData())
+    }
 }

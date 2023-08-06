@@ -35,7 +35,7 @@ struct ContentView: View {
         VStack {
             defaultTabView
             
-            CustomMainTabView(selection: $selectedTab)
+            CustomTabView(selection: $selectedTab)
         }
         .onAppear {
             let monitor = NWPathMonitor()
@@ -81,7 +81,9 @@ extension ContentView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    ContentView()
-        .environmentObject(AlertManager())
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .environmentObject(AlertManager())
+    }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct BookShelfCompBookTabView: View {
+struct BookShelfCBookSectionView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -44,7 +44,7 @@ struct BookShelfCompBookTabView: View {
 
 // MARK: - EXTENSION
 
-extension BookShelfCompBookTabView {
+extension BookShelfCBookSectionView {
     var scrollContent: some View {
         LazyVGrid(columns: columns, spacing: 15) {
             let completeBooks = completeBooks.get(of: .complete)
@@ -97,6 +97,8 @@ extension BookShelfCompBookTabView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    BookShelfCompBookTabView()
+struct BookShelfCBookSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        BookShelfCBookSectionView()
+    }
 }

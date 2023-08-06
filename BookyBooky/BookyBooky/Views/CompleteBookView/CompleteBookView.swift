@@ -61,8 +61,10 @@ struct CompleteBookView: View {
 
 // MARK: - PREVIEW
 
-#Preview {
-    CompleteBookView(CompleteBook.preview)
-        .environmentObject(RealmManager())
-        .environmentObject(AlertManager())
+struct CompleteBookView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompleteBookView(CompleteBook.preview)
+            .environmentObject(RealmManager())
+            .environmentObject(AlertManager())
+    }
 }

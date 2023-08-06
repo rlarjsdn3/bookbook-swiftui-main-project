@@ -112,27 +112,27 @@ struct MonthlyBooksCompletedChartView: View {
                             }
                         }
                     }
-                    .chartScrollableAxes(.horizontal)
-                    .chartXVisibleDomain(length: 3600 * 24 * 14)
-                    .chartScrollTargetBehavior(
-                        .valueAligned(
-                            matching: DateComponents(hour: 0),
-                            majorAlignment: .matching(.init(day: 1))
-                        )
-                    )
-                    .chartScrollPosition(x: $scrollPosition)
-                    .chartXAxis {
-                        AxisMarks(values: .stride(by: .day, count: 7)) {
-                            AxisTick()
-                            AxisGridLine()
-                            AxisValueLabel(format: .dateTime.month().day())
-                        }
-                    }
-                    .frame(height: 250)
+//                    .chartScrollableAxes(.horizontal)
+//                    .chartXVisibleDomain(length: 3600 * 24 * 14)
+//                    .chartScrollTargetBehavior(
+//                        .valueAligned(
+//                            matching: DateComponents(hour: 0),
+//                            majorAlignment: .matching(.init(day: 1))
+//                        )
+//                    )
+//                    .chartScrollPosition(x: $scrollPosition)
+//                    .chartXAxis {
+//                        AxisMarks(values: .stride(by: .day, count: 7)) {
+//                            AxisTick()
+//                            AxisGridLine()
+//                            AxisValueLabel(format: .dateTime.month().day())
+//                        }
+//                    }
+//                    .frame(height: 250)
                     
                 }
                 .padding()
-                .background(Color.white, in: .rect(cornerRadius: 15))
+//                .background(Color.white, in: .rect(cornerRadius: 15))
                 
                 Button {
                     withAnimation(.easeInOut(duration: 0.2)) {
@@ -150,7 +150,7 @@ struct MonthlyBooksCompletedChartView: View {
                     .padding()
                     .foregroundColor(isPresentingAverageRuleMark ? Color.white : Color.black)
                     .background(isPresentingAverageRuleMark ? Color.blue : Color.white)
-                    .clipShape(.rect(cornerRadius: 20))
+//                    .clipShape(.rect(cornerRadius: 20))
                 }
                 .padding(.bottom, 15)
                 
@@ -184,11 +184,11 @@ struct MonthlyBooksCompletedChartView: View {
                     }
                 }
                 .background(Color.white)
-                .clipShape(.rect(cornerRadius: 15))
+//                .clipShape(.rect(cornerRadius: 15))
             }
             .scrollIndicators(.hidden)
-            .safeAreaPadding([.leading, .top, .trailing])
-            .safeAreaPadding(.bottom, 40)
+//            .safeAreaPadding([.leading, .top, .trailing])
+//            .safeAreaPadding(.bottom, 40)
             .background(Color.customBackground)
         }
         .onAppear {
@@ -229,6 +229,8 @@ extension MonthlyBooksCompletedChartView {
 }
 
 @available(iOS 17.0, *)
-#Preview {
-    MonthlyBooksCompletedChartView(chartData: [])
+struct MonthlyBooksCompletedChartView_Previews: PreviewProvider {
+    static var previews: some View {
+        MonthlyBooksCompletedChartView(chartData: [])
+    }
 }

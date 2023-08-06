@@ -60,8 +60,10 @@ extension SearchBookCoverView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    SearchBookCoverView(DetailBookInfo.Item.preview)
-        .environmentObject(AladinAPIManager())
-        .environmentObject(SearchBookViewData())
+struct SearchBookCoverView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchBookCoverView(DetailBookInfo.Item.preview)
+            .environmentObject(AladinAPIManager())
+            .environmentObject(SearchBookViewData())
+    }
 }

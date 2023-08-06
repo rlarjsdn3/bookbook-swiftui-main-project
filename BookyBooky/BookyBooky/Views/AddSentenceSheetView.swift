@@ -207,8 +207,10 @@ extension AddSentenceSheetView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    AddSentenceSheetView(CompleteBook.preview)
-        .environmentObject(RealmManager())
-        .environmentObject(AlertManager())
+struct AddSentenceSheetView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddSentenceSheetView(CompleteBook.preview)
+            .environmentObject(RealmManager())
+            .environmentObject(AlertManager())
+    }
 }

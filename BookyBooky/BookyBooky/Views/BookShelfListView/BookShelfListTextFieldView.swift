@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BookShelfBookListTextFieldView: View {
+struct BookShelfListTextFieldView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -57,7 +57,7 @@ struct BookShelfBookListTextFieldView: View {
 
 // MARK: - EXTENSIONS
 
-extension BookShelfBookListTextFieldView {
+extension BookShelfListTextFieldView {
     var textFieldArea: some View {
         HStack {
             bookSortMenu
@@ -120,7 +120,7 @@ extension BookShelfBookListTextFieldView {
     }
 }
 
-extension BookShelfBookListTextFieldView {
+extension BookShelfListTextFieldView {
     var inputField: some View {
         HStack {
             magnifyingGlassSFSymbolImage
@@ -168,7 +168,7 @@ extension BookShelfBookListTextFieldView {
     }
 }
 
-extension BookShelfBookListTextFieldView {
+extension BookShelfListTextFieldView {
     var backButton: some View {
         Button {
             dismiss()
@@ -189,8 +189,10 @@ extension BookShelfBookListTextFieldView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    ScrollViewReader { proxy in
-        BookShelfBookListTextFieldView(scrollProxy: proxy)
+struct BookShelfListTextFieldView_Previews: PreviewProvider {
+    static var previews: some View {
+        ScrollViewReader { proxy in
+            BookShelfListTextFieldView(scrollProxy: proxy)
+        }
     }
 }

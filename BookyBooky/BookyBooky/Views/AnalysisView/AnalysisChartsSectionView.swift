@@ -12,7 +12,7 @@ import Charts
 import RealmSwift
 
 @available(iOS 17.0, *)
-struct AnalysisChartsTabView: View {
+struct AnalysisChartsSectionView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -94,7 +94,7 @@ struct AnalysisChartsTabView: View {
 // MARK: - EXTENSIONS
 
 @available(iOS 17.0, *)
-extension AnalysisChartsTabView {
+extension AnalysisChartsSectionView {
     var summaryHeaderText: some View {
         Text("요약")
             .font(.title2.weight(.bold))
@@ -125,7 +125,7 @@ extension AnalysisChartsTabView {
             }
             .padding(.vertical, 15)
             .padding(.horizontal, 10)
-            .background(Color.white, in: .rect(cornerRadius: 10))
+            .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
         }
         .disabled(totalPagesByCategoryChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
@@ -175,7 +175,7 @@ extension AnalysisChartsTabView {
             }
             .padding(.vertical, 15)
             .padding(.horizontal, 10)
-            .background(Color.white, in: .rect(cornerRadius: 10))
+            .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
         }
         .disabled(totalPagesByCategoryChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
@@ -230,7 +230,7 @@ extension AnalysisChartsTabView {
             }
             .padding(.vertical, 15)
             .padding(.horizontal, 10)
-            .background(Color.white, in: .rect(cornerRadius: 10))
+            .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
         }
         .disabled(monthlyBooksCompletedChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
@@ -269,6 +269,8 @@ extension AnalysisChartsTabView {
 // MARK: - PREVIEW
 
 @available(iOS 17.0, *)
-#Preview {
-    AnalysisChartsTabView()
+struct AnalysisChartsSectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        AnalysisChartsSectionView()
+    }
 }

@@ -164,9 +164,11 @@ extension SearchSheetScrollView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    SearchSheetScrollView()
-        .environmentObject(AladinAPIManager())
-        .environmentObject(AlertManager())
-        .environmentObject(SearchSheetViewData())
+struct SearchSheetScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchSheetScrollView()
+            .environmentObject(AladinAPIManager())
+            .environmentObject(AlertManager())
+            .environmentObject(SearchSheetViewData())
+    }
 }

@@ -9,6 +9,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct AnalysisTopBarView: View {
     
     // MARK: - PROPERTIES
@@ -24,6 +25,7 @@ struct AnalysisTopBarView: View {
 
 // MARK: - EXTENSIONS
 
+@available(iOS 17.0, *)
 extension AnalysisTopBarView {
     var navigationTopBar: some View {
         HStack {
@@ -45,7 +47,10 @@ extension AnalysisTopBarView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    AnalysisTopBarView()
-        .environmentObject(AnalysisViewData())
+@available(iOS 17.0, *)
+struct AnalysisTopBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        AnalysisTopBarView()
+            .environmentObject(AnalysisViewData())
+    }
 }

@@ -37,6 +37,8 @@ struct AnalysisView: View {
 // MARK: - PREVIEW
 
 @available(iOS 17.0, *)
-#Preview {
-    AnalysisView()
+struct AnalysisView_Previews: PreviewProvider {
+    static var previews: some View {
+        AnalysisView()
+    }
 }

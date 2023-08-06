@@ -64,6 +64,8 @@ extension AddCompleteBookView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    AddCompleteBookView(DetailBookInfo.Item.preview)
+struct AddCompleteBookView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddCompleteBookView(DetailBookInfo.Item.preview)
+    }
 }

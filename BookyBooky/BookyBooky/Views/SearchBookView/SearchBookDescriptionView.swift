@@ -8,7 +8,7 @@
 import SwiftUI
 import Shimmer
 
-struct SearchBookDescView: View {
+struct SearchBookDescriptionView: View {
     
     // MARK: - WRAPPER PROPERTIES
     
@@ -33,7 +33,7 @@ struct SearchBookDescView: View {
 
 // MARK: - EXTENSIONS
 
-extension SearchBookDescView {
+extension SearchBookDescriptionView {
     var descriptionLabel: some View {
         VStack {
             HStack {
@@ -82,7 +82,9 @@ extension SearchBookDescView {
 
 // MARK: - PREVIEW
 
-#Preview {
-    SearchBookDescView(DetailBookInfo.Item.preview)
-        .environmentObject(SearchBookViewData())
+struct SearchBookDescriptionView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchBookDescriptionView(DetailBookInfo.Item.preview)
+            .environmentObject(SearchBookViewData())
+    }
 }

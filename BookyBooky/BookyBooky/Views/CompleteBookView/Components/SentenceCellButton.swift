@@ -100,10 +100,12 @@ extension SentenceCellButton {
 
 // MARK: - PREVIEW
 
-#Preview {
-    SentenceCellButton(
-        CompleteBook.preview,
-        sentence: Sentence.preview
-    )
-    .environmentObject(RealmManager())
+struct SentenceCellButton_Previews: PreviewProvider {
+    static var previews: some View {
+        SentenceCellButton(
+            CompleteBook.preview,
+            sentence: Sentence.preview
+        )
+        .environmentObject(RealmManager())
+    }
 }
