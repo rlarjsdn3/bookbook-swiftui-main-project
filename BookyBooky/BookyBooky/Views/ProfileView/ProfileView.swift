@@ -61,6 +61,10 @@ struct ProfileView: View {
                         Text(AppDeviceInfoProvider.appBuild)
                             .foregroundStyle(Color.secondary)
                     }
+                    
+                    NavigationLink("저작권") {
+                        CopyRightView()
+                    }
                 } header: {
                     Text("앱 정보")
                 }
@@ -73,7 +77,6 @@ struct ProfileView: View {
                 toRecipients: receiverAddress,
                 mailBody: mailBody
             )
-            // 이 구문을 써주지 않으면 시트 하단이 뻥 비어보이게 됨!
             .ignoresSafeArea(.container, edges: .bottom)
             .presentationCornerRadius(30)
         }

@@ -83,7 +83,7 @@ extension HomeActivitySectionView {
                 .font(.title3)
                 .fontWeight(.bold)
             
-            Text("독서 데이터를 추가하십시오.")
+            Text("독서를 시작해보세요.")
                 .foregroundColor(.secondary)
         }
         .padding(.vertical, 40)
