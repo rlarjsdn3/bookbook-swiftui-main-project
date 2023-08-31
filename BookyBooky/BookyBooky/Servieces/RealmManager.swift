@@ -18,12 +18,9 @@ final class RealmManager: ObservableObject {
     // MARK: - FUNCTIONS
     
     func openLocalRealm() -> Realm? {
-        let config = Realm.Configuration(
-            schemaVersion: 0,
-            deleteRealmIfMigrationNeeded: true
-        )
-        print("Realm DB 저장소의 위치: \(config.fileURL!)")
+        let config = Realm.Configuration(schemaVersion: 0)
         
+        print("Realm DB 저장소의 위치: \(config.fileURL!)")
         return try? Realm(configuration: config)
     }
 }
