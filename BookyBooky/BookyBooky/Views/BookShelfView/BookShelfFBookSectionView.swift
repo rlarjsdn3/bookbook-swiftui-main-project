@@ -47,8 +47,9 @@ extension BookShelfFBookSectionView {
                 }
             }
             .padding(.top, 26)
+            .padding(.horizontal)
         }
-        .padding([.leading, .bottom, .trailing])
+        .padding(.bottom)
     }
     
     var noBooksLabel: some View {
