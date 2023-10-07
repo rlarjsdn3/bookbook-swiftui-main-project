@@ -5,8 +5,6 @@
 //  Created by 김건우 on 2023/05/03.
 //
 
-// NOTICE: - 본 파일에 구현된 기능은 아직 미완성입니다.
-
 import SwiftUI
 import Charts
 import RealmSwift
@@ -180,26 +178,22 @@ extension CompleteBookAnalysisView {
                 .padding(.bottom, 40)
             } else {
                 VStack {
-                    // for iOS 17.0
-                    #if false
                     chartTitle
                     
                     barChart
                     
                     dailyAverageValueButton
-                    #endif
                     
                     hightlightLabel
                     
                     seeAllRecordButton
                 }
-                //.padding([.leading, .bottom, .trailing]) // for iOS 17.0
-                //.padding(.top, 5) // for iOS 17.0
+                .padding([.leading, .bottom, .trailing])
+                .padding(.top, 5)
             }
         }
     }
     
-    @available(iOS 17.0, *)
     var chartTitle: some View {
         VStack(alignment: .leading, spacing: -2) {
             Text("총 읽은 페이지")
@@ -222,17 +216,16 @@ extension CompleteBookAnalysisView {
         }
     }
     
-//    @available(iOS 17.0, *)
-//    var barChart: some View {
-//        Chart {
-//            ForEach(completeBook.records, id: \.self) { record in
-//                BarMark(
-//                    x: .value("date", record.date, unit: .day),
-//                    y: .value("page", record.numOfPagesRead)
-//                )
-//                .foregroundStyle(completeBook.category.themeColor)
-//            }
-//
+    var barChart: some View {
+        Chart {
+            ForEach(completeBook.records, id: \.self) { record in
+                BarMark(
+                    x: .value("date", record.date, unit: .day),
+                    y: .value("page", record.numOfPagesRead)
+                )
+                .foregroundStyle(completeBook.category.themeColor)
+            }
+
 //            if isPresentingAverageRuleMark {
 //                RuleMark(
 //                    y: .value(
@@ -248,25 +241,26 @@ extension CompleteBookAnalysisView {
 //                        .foregroundStyle(completeBook.category.themeColor == Color.black ? Color.gray : Color.black)
 //                }
 //            }
-//        }
-//        .chartScrollableAxes(.horizontal)
-//        .chartXVisibleDomain(length: 3600 * 24 * 14)
-//        .chartScrollTargetBehavior(
-//            .valueAligned(
-//                matching: DateComponents(hour: 0),
-//                majorAlignment: .matching(.init(day: 1))
-//            )
-//        )
-//        .chartScrollPosition(x: $scrollPosition)
-//        .chartXAxis {
-//            AxisMarks(values: .stride(by: .day, count: 7)) {
-//                AxisTick()
-//                AxisGridLine()
-//                AxisValueLabel(format: .dateTime.month().day())
-//            }
-//        }
-//        .frame(height: 250)
-//    }
+        }
+        .chartScrollPosition(initialX: Date().addingTimeInterval(86400 * -14))
+        .chartScrollableAxes(.horizontal)
+        .chartXVisibleDomain(length: 3600 * 24 * 14)
+        .chartScrollTargetBehavior(
+            .valueAligned(
+                matching: DateComponents(hour: 0),
+                majorAlignment: .matching(.init(day: 1))
+            )
+        )
+        .chartScrollPosition(x: $scrollPosition)
+        .chartXAxis {
+            AxisMarks(values: .stride(by: .day, count: 7)) {
+                AxisTick()
+                AxisGridLine()
+                AxisValueLabel(format: .dateTime.month().day())
+            }
+        }
+        .frame(height: 250)
+    }
     
     var hightlightLabel: some View {
         VStack {
@@ -318,7 +312,7 @@ extension CompleteBookAnalysisView {
             }
         }
         .padding(.top, 5)
-        .padding([.horizontal, .bottom])
+        .padding([/*.horizontal,*/ .bottom])
     }
     
     var seeAllRecordButton: some View {
@@ -333,16 +327,16 @@ extension CompleteBookAnalysisView {
                 .background(Color("Background"))
                 .clipShape(Capsule(style: .circular))
         }
-        .padding(.horizontal)
+//        .padding(.horizontal)
         .padding(.bottom, 20)
     }
     
     var dailyAverageValueButton: some View {
-        Button {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                isPresentingAverageRuleMark.toggle()
-            }
-        } label: {
+//        Button {
+//            withAnimation(.easeInOut(duration: 0.2)) {
+//                isPresentingAverageRuleMark.toggle()
+//            }
+//        } label: {
             HStack {
                 Text("일 평균 독서 페이지")
                     .fontWeight(.bold)
@@ -356,13 +350,13 @@ extension CompleteBookAnalysisView {
                 }
             }
             .padding()
-            .foregroundColor(isPresentingAverageRuleMark ? Color.white : Color.black)
+            .foregroundColor(/*isPresentingAverageRuleMark ? Color.white :*/ Color.black)
             .background(
-                isPresentingAverageRuleMark ? completeBook.category.themeColor : Color("Background"),
+                /*isPresentingAverageRuleMark ? completeBook.category.themeColor :*/ Color("Background"),
                 in: RoundedRectangle(cornerRadius: 20)
             )
             .padding(.vertical, 5)
-        }
+//        }
     }
 }
 
