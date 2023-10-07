@@ -48,22 +48,50 @@ struct HomeScrollView: View {
 
 extension HomeScrollView {
     var scrollContent: some View {
-        ScrollViewReader { proxy in
-            TrackableVerticalScrollView(yOffset: $homeViewData.scrollYOffset) {
-                VStack(spacing: 0) {
-                    navigationTopBarTitle
-                    
-                    HomeActivitySectionView()
-                    
-                    HomeReadingBookSectionView(scrollProxy: proxy)
-                }
+        ScrollView {
+            VStack(spacing: 0) {
+                navigationTopBarTitle
+                    .padding(.bottom, 20)
+                
+                HomeActivitySectionView()
+                
+                HomeReadingBookSectionView()
             }
-            .scrollIndicators(.hidden)
         }
+        .scrollIndicators(.hidden)
+        
+//        ScrollViewReader { proxy in
+//            ScrollView {
+//            ScrollViewOffset { offset in
+//                print(-offset)
+//                homeViewData.scrollYOffset = -offset
+//            } content: {
+//                VStack(spacing: 0) {
+////                    navigationTopBarTitle
+//                    
+//                    HomeActivitySectionView()
+//                    
+//                    HomeReadingBookSectionView()
+////                    HomeReadingBookSectionView(scrollProxy: proxy)
+//                }
+//            }
+//            .scrollIndicators(.hidden)
+//
+//            TrackableVerticalScrollView(yOffset: $homeViewData.scrollYOffset) {
+//                VStack(spacing: 0) {
+//                    navigationTopBarTitle
+//                    
+//                    HomeActivitySectionView()
+//                    
+//                    HomeReadingBookSectionView(scrollProxy: proxy)
+//                }
+//            }
+//            .scrollIndicators(.hidden)
+//        }
     }
     
     var navigationTopBarTitle: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 5) {
             navigationTopBarSubTitle
             
             navigationTopBarMainTitle
@@ -77,14 +105,18 @@ extension HomeScrollView {
         Text(Date().toFormat("M월 d일 E요일"))
             .font(.callout.weight(.semibold))
             .foregroundStyle(Color.secondary)
-            .opacity(homeViewData.scrollYOffset > 10 ? 0 : 1)
+//            .opacity(homeViewData.scrollYOffset > 10 ? 0 : 1)
     }
     
     var navigationTopBarMainTitle: some View {
-        Text("홈")
-            .font(.largeTitle)
-//            .font(.system(size: 34.0 + getTopBarTitleFontSize(homeViewData.scrollYOffset)))
-            .fontWeight(.bold)
+        VStack(alignment: .leading) {
+            Text("오늘은")
+                .font(.title)
+            //            .font(.system(size: 34.0 + getTopBarTitleFontSize(homeViewData.scrollYOffset)))
+            Text("무슨 책을 읽으셨나요?")
+                .font(.headline)
+                .fontWeight(.bold)
+        }
     }
 }
 

@@ -74,20 +74,20 @@ extension HomeTopBarView {
             TopBarButtonGroup
         }
         .overlay(alignment: .bottom) {
-            Divider()
+//            Divider()
                 // scrollYOffset값이 10 ~ showingTopBarDivierYPositionValue 사이라면,
                 // Divider를 보이게 합니다,
-                .opacity(
-                    (homeViewData.scrollYOffset > 10.0 &&
-                     homeViewData.scrollYOffset < showingTopBarDividerYPositionValue) ? 1 : 0
-                )
+//                .opacity(
+//                    (homeViewData.scrollYOffset > 10.0 &&
+//                     homeViewData.scrollYOffset < showingTopBarDividerYPositionValue) ? 1 : 0
+//                )
         }
     }
     
     var navigationTopBarTitle: some View {
         Text("홈")
             .navigationTitleStyle()
-            .opacity(homeViewData.scrollYOffset > 35.0 ? 1 : 0)
+//            .opacity(homeViewData.scrollYOffset > 35.0 ? 1 : 0)
     }
     
     var TopBarButtonGroup: some View {

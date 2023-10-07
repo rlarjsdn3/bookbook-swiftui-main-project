@@ -20,6 +20,7 @@ struct HomeReadingBookSectionView: View {
     
     @Namespace var namespace
 
+    @State private var unfinishedBook: [CompleteBook] = []
     @State private var bookCategories: [Category] = []
     @State private var bookTappedCount = 0
     
@@ -32,7 +33,7 @@ struct HomeReadingBookSectionView: View {
     ]
     var defaultBottomPaddingValue: CGFloat = 30.0
     
-    let scrollProxy: ScrollViewProxy
+//    let scrollProxy: ScrollViewProxy
     
     // MARK: - COMPUTED PROPERTIES
     
@@ -41,6 +42,15 @@ struct HomeReadingBookSectionView: View {
             .unfinished,
             sort: homeViewData.selectedBookSort,
             category: homeViewData.selectedCategory
+        )
+        return filteredBooks
+    }
+    
+    func filteredBooksArray(category: Category) -> [CompleteBook] {
+        let filteredBooks: [CompleteBook] = readingBooks.getFilteredReadingBooks(
+            .unfinished,
+            sort: homeViewData.selectedBookSort,
+            category: category
         )
         return filteredBooks
     }
@@ -84,16 +94,17 @@ struct HomeReadingBookSectionView: View {
     
     // MARK: - INTIALIZER
     
-    init(scrollProxy: ScrollViewProxy) {
-        self.scrollProxy = scrollProxy
-    }
+//    init(scrollProxy: ScrollViewProxy) {
+//        self.scrollProxy = scrollProxy
+//    }
     
     // MARK: - BODY
     
     var body: some View {
         tabContent
             .onAppear {
-                bookCategories = getCategory(readingBooks.get(of: .unfinished))
+                unfinishedBook = readingBooks.get(of: .unfinished)
+                bookCategories = getCategory(unfinishedBook)
             }
             .onAppear {
                 bookTappedCount = readingBooks.getFilteredReadingBooks(
@@ -165,7 +176,7 @@ struct HomeReadingBookSectionView: View {
             }
         }
         // 카테고리의 첫 번째에 '전체' 항목 추가
-        categories.insert(.all, at: 0)
+//        categories.insert(.all, at: 0)
         return categories
     }
 }
@@ -177,10 +188,42 @@ extension HomeReadingBookSectionView {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             tabTitle
             
-            Section {
-                booksContent
-            } header: {
-                categoryButtonGroup(scrollProxy: scrollProxy)
+//            Section {
+//                booksContent
+//            } header: {
+//                categoryButtonGroup(scrollProxy: scrollProxy)
+//            }
+            
+            
+            ForEach(bookCategories, id: \.self) { category in
+                Section {
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(filteredBooksArray(category: category), id: \.self) { book in
+                                HomeReadingBookButton(book)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 10)
+                    }
+//                    booksContent
+                } header: {
+                    HStack {
+                        Text(category.name)
+                            .font(.headline)
+                            .foregroundStyle(Color.secondary)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal)
+                    .padding([.bottom], 5)
+                    .background(Color.white)
+                    .overlay(alignment: .bottom) {
+                        Divider()
+                    }
+//                    categoryButtonGroup(scrollProxy: scrollProxy)
+                }
+
             }
         }
     }
@@ -267,21 +310,19 @@ extension HomeReadingBookSectionView {
     }
     
     var bookButtonGroup: some View {
-        Group {
-            LazyVGrid(columns: columns, spacing: 25) {
-                ForEach(filteredBooks) { book in
-                    HomeReadingBookButton(book)
-                }
+        LazyVGrid(columns: columns, spacing: 25) {
+            ForEach(filteredBooks) { book in
+                HomeReadingBookButton(book)
             }
-            .padding([.leading, .top, .trailing])
-            .padding(.bottom, defaultBottomPaddingValue)
-            .padding(.bottom, dynamicBottomPaddingValue)
         }
+        .padding([.leading, .top, .trailing])
+        .padding(.bottom, defaultBottomPaddingValue)
+        .padding(.bottom, dynamicBottomPaddingValue)
     }
     
     func categoryButtonGroup(scrollProxy proxy: ScrollViewProxy) -> some View {
         HStack {
-            ScrollView(.horizontal, showsIndicators: false) {
+            ScrollView(.horizontal) {
                 HStack {
                     ForEach(bookCategories, id: \.self) { category in
                         HomeCategoryButton(
@@ -296,6 +337,7 @@ extension HomeReadingBookSectionView {
                 .padding([.horizontal, .bottom], 5)
             }
             .id("Scroll_To_Category")
+            .scrollIndicators(.hidden)
         }
         .background(.white)
         .overlay(alignment: .bottom) {
@@ -309,7 +351,8 @@ extension HomeReadingBookSectionView {
 struct HomeReadingBookTabView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollViewReader { scrollProxy in
-            HomeReadingBookSectionView(scrollProxy: scrollProxy)
+            HomeReadingBookSectionView()
+//            HomeReadingBookSectionView(scrollProxy: scrollProxy)
                 .environmentObject(HomeViewData())
                 .environmentObject(RealmManager())
         }

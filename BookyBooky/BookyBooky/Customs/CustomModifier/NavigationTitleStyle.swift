@@ -10,7 +10,7 @@ import SwiftUI
 struct NavigationTitleStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.title3)
+            .font(.headline)
             .fontWeight(.semibold)
     }
 }
