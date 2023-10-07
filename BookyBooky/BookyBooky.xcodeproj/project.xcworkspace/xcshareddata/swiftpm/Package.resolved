@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire",
       "state" : {
-        "revision" : "bc268c28fb170f494de9e9927c371b8342979ece",
-        "version" : "5.7.1"
+        "revision" : "b2fa556e4e48cbf06cf8c63def138c98f4b811fa",
+        "version" : "5.8.0"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/simibac/ConfettiSwiftUI",
       "state" : {
-        "revision" : "8d3a15d0aa2991e0761749b767ef8d89bca6275a",
-        "version" : "1.0.1"
+        "revision" : "f45961f97bbae6fff6e2e64546fea0189425ad92",
+        "version" : "1.1.0"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/devicekit/DeviceKit",
       "state" : {
-        "revision" : "691fe8112cca20ebf0020a1709d4e0205400311c",
-        "version" : "5.0.0"
+        "revision" : "66837ecf1516e41fd4251bbb684dc4b1997f08ab",
+        "version" : "5.1.0"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-ios",
       "state" : {
-        "revision" : "d6feea26a370019b4d3a85f5984cb95a2734776f",
-        "version" : "4.2.0"
+        "revision" : "45517c3cfec9469bbdd4f86e32393c28ae9df0bc",
+        "version" : "4.3.3"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core.git",
       "state" : {
-        "revision" : "36b2df44453ba5e830369c76ab0683799a287605",
-        "version" : "13.13.0"
+        "revision" : "e836317e8238bd32f06086dd7ce6768ef574beb6",
+        "version" : "13.22.0"
       }
     },
     {
@@ -69,7 +69,7 @@
       "location" : "https://github.com/realm/realm-swift",
       "state" : {
         "branch" : "master",
-        "revision" : "45ea4a0ec4bb3161c807be0a9a4921161dbe60a2"
+        "revision" : "16273bd3968468e0c947dfe8577975c34d8d4360"
       }
     },
     {
@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/markiv/SwiftUI-Shimmer",
       "state" : {
-        "revision" : "17b66b0e7d94d2d3f220bbcb021b5026436f06c7",
-        "version" : "1.3.0"
+        "revision" : "1f3a620e4abe890d00008cb2af7023d810b433a7",
+        "version" : "1.4.0"
       }
     }
   ],

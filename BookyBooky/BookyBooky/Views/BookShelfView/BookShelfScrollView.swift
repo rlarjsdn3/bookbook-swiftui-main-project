@@ -29,15 +29,17 @@ struct BookShelfScrollView: View {
 
 extension BookShelfScrollView {
     var scrollContent: some View {
-        TrackableVerticalScrollView(yOffset: $bookShelfViewData.scrollYOffset) {
-            LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                BookShelfSummarySectionView()
-                
-                BookShelfFBookSectionView()
-                
-                BookShelfCBookSectionView()
+        ScrollView {
+            // TrackableVerticalScrollView(yOffset: $bookShelfViewData.scrollYOffset) {
+                LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                    BookShelfSummarySectionView()
+                    
+                    BookShelfFBookSectionView()
+                    
+                    BookShelfCBookSectionView()
+                }
             }
-        }
+//        }
         .scrollIndicators(.hidden)
     }
 }
