@@ -57,7 +57,7 @@ struct SearchBookView: View {
                                             .foregroundColor(bookItem.bookCategory.foregroundColor)
                                             .navigationBarItemStyle()
                                     }
-                                    .padding(.vertical, 5)
+                                    .padding(.vertical, 10)
                                 }
                             }
                         
