@@ -194,38 +194,42 @@ extension HomeReadingBookSectionView {
 //                categoryButtonGroup(scrollProxy: scrollProxy)
 //            }
             
-            
-            ForEach(bookCategories, id: \.self) { category in
-                Section {
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(filteredBooksArray(category: category), id: \.self) { book in
-                                HomeReadingBookButton(book)
+            if !bookCategories.isEmpty {
+                ForEach(bookCategories, id: \.self) { category in
+                    Section {
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(filteredBooksArray(category: category), id: \.self) { book in
+                                    HomeReadingBookButton(book)
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 10)
                         }
+                        //                    booksContent
+                    } header: {
+                        HStack {
+                            Text(category.name)
+                                .font(.headline)
+                                .foregroundStyle(Color.secondary)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 10)
                         .padding(.horizontal)
-                        .padding(.top, 10)
+                        .padding([.bottom], 5)
+                        .background(Color.white)
+                        .overlay(alignment: .bottom) {
+                            Divider()
+                        }
+                        //                    categoryButtonGroup(scrollProxy: scrollProxy)
                     }
-//                    booksContent
-                } header: {
-                    HStack {
-                        Text(category.name)
-                            .font(.headline)
-                            .foregroundStyle(Color.secondary)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal)
-                    .padding([.bottom], 5)
-                    .background(Color.white)
-                    .overlay(alignment: .bottom) {
-                        Divider()
-                    }
-//                    categoryButtonGroup(scrollProxy: scrollProxy)
+                    
                 }
-
+            } else {
+                noBooksLabel
             }
         }
+        .padding(.bottom, 30)
     }
     
     var tabTitle: some View {
