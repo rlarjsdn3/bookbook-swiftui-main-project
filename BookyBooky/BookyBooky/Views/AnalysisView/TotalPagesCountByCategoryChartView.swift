@@ -5,13 +5,10 @@
 //  Created by 김건우 on 6/10/23.
 //
 
-// NOTICE: - 본 파일에 구현된 기능은 아직 미완성입니다.
-
 import SwiftUI
 import Charts
 import RealmSwift
 
-@available(iOS 17.0, *)
 struct TotalPagesCountByCategoryChartView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -70,7 +67,6 @@ struct TotalPagesCountByCategoryChartView: View {
     }
 }
 
-@available(iOS 17.0, *)
 extension TotalPagesCountByCategoryChartView {
     var chartContent: some View {
         VStack(spacing: 0) {
@@ -78,7 +74,7 @@ extension TotalPagesCountByCategoryChartView {
                 
             ScrollView {
                 VStack {
-//                    circleChart
+                    circleChart
                     
                     recordList
                 }
@@ -123,50 +119,50 @@ extension TotalPagesCountByCategoryChartView {
         }
     }
     
-//    var circleChart: some View {
-//        Chart(chartData) { element in
-//            SectorMark(
-//                angle: .value("pages", element.pages),
-//                innerRadius: .ratio(0.618),
-//                angularInset: 1.5
-//            )
-//            .cornerRadius(5.0)
-//            .opacity(selectedStyle == nil ? 1 : (selectedStyle?.category == element.category ? 1 : 0.3))
-//            .foregroundStyle(by: .value("category", element.category.name))
-//        }
-//        .chartLegend(alignment: .center, spacing: 18)
-//        .chartBackground { chartProxy  in
-//            GeometryReader { geometry in
-//                let frame = geometry[chartProxy.plotAreaFrame]
-//                VStack {
-//                    if let selectedStyle = selectedStyle {
-//                        Text(selectedStyle.category.name)
-//                            .font(.caption)
-//                            .foregroundStyle(Color.secondary)
-//                        Text("\(selectedStyle.pages)페이지")
-//                            .font(.callout.weight(.bold))
-//                        Text("\(pageCountByCategoryRatio(selectedStyle.pages))%")
-//                            .font(.caption)
-//                    } else {
-//                        VStack {
-//                            Text("분야 별")
-//                                .font(.caption)
-//                                .foregroundStyle(Color.secondary)
-//                            Text("총 읽은 페이지")
-//                                .font(.callout.weight(.bold))
-//                        }
-//                    }
-//                }
-//                .position(x: frame.midX, y: frame.midY)
-//            }
-//        }
-//        .chartAngleSelection(value: $selectedCategory)
-//        .frame(height: 320)
-//        .padding()
-//        .background(Color.white)
-//        .clipShape(.rect(cornerRadius: 15))
-//        .padding(.bottom, 15)
-//    }
+    var circleChart: some View {
+        Chart(chartData) { element in
+            SectorMark(
+                angle: .value("pages", element.pages),
+                innerRadius: .ratio(0.618),
+                angularInset: 1.5
+            )
+            .cornerRadius(5.0)
+            .opacity(selectedStyle == nil ? 1 : (selectedStyle?.category == element.category ? 1 : 0.3))
+            .foregroundStyle(by: .value("category", element.category.name))
+        }
+        .chartLegend(alignment: .center, spacing: 18)
+        .chartBackground { chartProxy  in
+            GeometryReader { geometry in
+                let frame = geometry[chartProxy.plotAreaFrame]
+                VStack {
+                    if let selectedStyle = selectedStyle {
+                        Text(selectedStyle.category.name)
+                            .font(.caption)
+                            .foregroundStyle(Color.secondary)
+                        Text("\(selectedStyle.pages)페이지")
+                            .font(.callout.weight(.bold))
+                        Text("\(pageCountByCategoryRatio(selectedStyle.pages))%")
+                            .font(.caption)
+                    } else {
+                        VStack {
+                            Text("분야 별")
+                                .font(.caption)
+                                .foregroundStyle(Color.secondary)
+                            Text("총 읽은 페이지")
+                                .font(.callout.weight(.bold))
+                        }
+                    }
+                }
+                .position(x: frame.midX, y: frame.midY)
+            }
+        }
+        .chartAngleSelection(value: $selectedCategory)
+        .frame(height: 320)
+        .padding()
+        .background(Color.white)
+        .clipShape(.rect(cornerRadius: 15))
+        .padding(.bottom, 15)
+    }
     
     var recordList: some View {
         VStack {
@@ -204,12 +200,11 @@ extension TotalPagesCountByCategoryChartView {
                 }
             }
             .background(Color.white)
-//            .clipShape(.rect(cornerRadius: 15))
+            .clipShape(.rect(cornerRadius: 15))
         }
     }
 }
 
-@available(iOS 17.0, *)
 struct TotalPagesCountByCategoryChartView_Previews: PreviewProvider {
     static var previews: some View {
         TotalPagesCountByCategoryChartView(chartData: [])

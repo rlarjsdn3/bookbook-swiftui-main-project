@@ -5,13 +5,10 @@
 //  Created by 김건우 on 6/14/23.
 //
 
-// NOTICE: - 본 파일에 구현된 기능은 아직 미완성입니다.
-
 import SwiftUI
 import Charts
 import RealmSwift
 
-@available(iOS 17.0, *)
 struct AnalysisScrollView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -29,15 +26,12 @@ struct AnalysisScrollView: View {
 
 // MARK: - EXTENSIONS
 
-@available(iOS 17.0, *)
 extension AnalysisScrollView {
     var analysisScrollContent: some View {
         TrackableVerticalScrollView(yOffset: $analysisViewData.scrollYOffset) {
             analysisTabGroup
         }
         .scrollIndicators(.hidden)
-        .padding([.leading, .top, .trailing])
-        .padding(.bottom, 40)
         .background(Color.customBackground)
     }
     
@@ -47,10 +41,11 @@ extension AnalysisScrollView {
             
             AnalysisHighlightSectionView()
         }
+        .padding([.leading, .top, .trailing])
+        .padding(.bottom, 40)
     }
 }
 
-@available(iOS 17.0, *)
 struct AnalysisScrollView_Previews: PreviewProvider {
     static var previews: some View {
         AnalysisScrollView()

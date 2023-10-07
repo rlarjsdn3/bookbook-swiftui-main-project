@@ -32,7 +32,7 @@ struct ContentView: View {
     // MARK: - BODY
     
     var body: some View {
-        VStack {
+        VStack {            
             defaultTabView
             
             CustomTabView(selection: $selectedTab)
@@ -70,11 +70,8 @@ extension ContentView {
             BookShelfView()
                 .tag(CustomMainTab.bookShelf)
             
-            // for iOS 17.0
-            #if false
-                AnalysisView()
-                    .tag(CustomMainTab.analysis)
-            #endif
+            AnalysisView()
+                .tag(CustomMainTab.analysis)
         }
     }
 }
