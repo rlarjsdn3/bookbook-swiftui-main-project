@@ -49,6 +49,7 @@ struct AnalysisHighlightSectionView: View {
             }
         }
         
+        print(dailyPages)
         return dailyPages
     }
     

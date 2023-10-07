@@ -39,7 +39,7 @@ struct DailyPagesReadChartView: View {
             }
         }
         
-        return monthlyPages
+        return monthlyPages.sorted(by: { $0.date < $1.date })
     }
     
     var scrollPositionStart: Date {
@@ -80,10 +80,17 @@ struct DailyPagesReadChartView: View {
     
     var body: some View {
         chartContent
+//            .onAppear {
+//                if let lastDate = dailyChartData.last?.date {
+//                    scrollPosition = lastDate.timeIntervalSinceReferenceDate
+//                }
+//            }
             .onChange(of: selectedTimeRange, initial: true) { _, _  in
                 switch selectedTimeRange {
                 case .last14Days:
                     scrollPosition = dailyChartData.last?.date.addingTimeInterval(-1 * 86400 * 14).timeIntervalSinceReferenceDate ?? 0.0
+                    print(dailyChartData.last?.date)
+                    print(Date(timeIntervalSinceReferenceDate: scrollPosition))
                 case .last180Days:
                     scrollPosition = dailyChartData.last?.date.addingTimeInterval(-1 * 86400 * 30 * 6).timeIntervalSinceReferenceDate ?? 0.0
                 }
@@ -113,7 +120,6 @@ struct DailyPagesReadChartView: View {
 
 // MARK: - EXTENSIONS
 
-@available(iOS 17.0, *)
 extension DailyPagesReadChartView {
     var chartContent: some View {
         VStack(spacing: 0) {
@@ -289,8 +295,8 @@ extension DailyPagesReadChartView {
 //                }
 //            }
         }
-        .chartScrollPosition(initialX: Date().addingTimeInterval(14*86400))
         .chartScrollableAxes(.horizontal)
+        .chartScrollPosition(x: $scrollPosition)
         .chartXVisibleDomain(
             length: selectedTimeRange == .last14Days ? 86400 * 14 : 86400 * 30 * 6
         )
@@ -300,7 +306,6 @@ extension DailyPagesReadChartView {
                 majorAlignment: .matching(.init(day: 1))
             )
         )
-        .chartScrollPosition(x: $scrollPosition)
         .chartXAxis {
             switch selectedTimeRange {
             case .last14Days:

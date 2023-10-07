@@ -54,6 +54,7 @@ extension BookShelfCBookSectionView {
             }
         }
         .padding()
+        .padding(.bottom, 20)
     }
     
     var noBooksLabel: some View {

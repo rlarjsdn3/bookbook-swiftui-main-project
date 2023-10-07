@@ -52,7 +52,7 @@ struct AnalysisChartsSectionView: View {
             }
         }
         
-        return dailyPages.sorted(by: { $0.date > $1.date })
+        return dailyPages.sorted(by: { $0.date < $1.date })
     }
     
     var monthlyBooksCompletedChartData: [ChartData.MonthlyCompleteBook] {
