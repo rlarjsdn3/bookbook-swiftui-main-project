@@ -48,6 +48,17 @@
 		9E1A36C92A3DF4D2001E5E11 /* BookShelfSummarySectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1A36C82A3DF4D2001E5E11 /* BookShelfSummarySectionView.swift */; };
 		9E1C2F9E2A0BADAC00AB0BAE /* CompleteBookEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C2F9D2A0BADAC00AB0BAE /* CompleteBookEditView.swift */; };
 		9E1F24A22A53C5D80068F412 /* CompleteBookViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1F24A12A53C5D80068F412 /* CompleteBookViewData.swift */; };
+		9E217A972AD14E0200EC3266 /* AnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7BFC7829F0F24F00D72648 /* AnalysisView.swift */; };
+		9E217A982AD14E0500EC3266 /* AnalysisTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D02A397549003CF6A5 /* AnalysisTopBarView.swift */; };
+		9E217A992AD14E0700EC3266 /* AnalysisScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D22A397C62003CF6A5 /* AnalysisScrollView.swift */; };
+		9E217A9A2AD14E0900EC3266 /* AnalysisChartsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D42A39805A003CF6A5 /* AnalysisChartsSectionView.swift */; };
+		9E217A9B2AD14E0B00EC3266 /* AnalysisHighlightSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF659D62A398191003CF6A5 /* AnalysisHighlightSectionView.swift */; };
+		9E217A9C2AD14E0C00EC3266 /* DailyPagesReadChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4B5DA2A34A0B0003BA12C /* DailyPagesReadChartView.swift */; };
+		9E217A9D2AD14E0E00EC3266 /* TotalPagesCountByCategoryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4B5D82A343D0D003BA12C /* TotalPagesCountByCategoryChartView.swift */; };
+		9E217A9E2AD14E1000EC3266 /* MonthlyBooksCompletedChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4B5DC2A35F60E003BA12C /* MonthlyBooksCompletedChartView.swift */; };
+		9E217A9F2AD14E2E00EC3266 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E19E61A2A46C1A4000806EB /* ChartData.swift */; };
+		9E217AA02AD14E3C00EC3266 /* AnalysisViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB995172A56DB71005CD964 /* AnalysisViewData.swift */; };
+		9E217AA12AD14E4C00EC3266 /* ChartTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B35B92A41C4DA009234ED /* ChartTimeRange.swift */; };
 		9E21EAE92A8078CA00E699E4 /* CopyRightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E21EAE82A8078CA00E699E4 /* CopyRightView.swift */; };
 		9E24DD312A14F8B400366640 /* HomeScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E24DD2E2A14F8B400366640 /* HomeScrollView.swift */; };
 		9E2BA9062A04CBF600FD2E93 /* CompleteBookRenewalSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2BA9052A04CBF600FD2E93 /* CompleteBookRenewalSheetView.swift */; };
@@ -869,6 +880,7 @@
 				9E0434BC29E53CD8009A2161 /* Sentence.swift in Sources */,
 				9E54AA0E29D7D84100FE080C /* StringExtension.swift in Sources */,
 				9EDC2FB129E6E48C004E792A /* UINavigationControllerExtension.swift in Sources */,
+				9E217A9E2AD14E1000EC3266 /* MonthlyBooksCompletedChartView.swift in Sources */,
 				9EC71F892A15D3A30056C11C /* ActivityTopBarView.swift in Sources */,
 				9E0434BA29E53CA0009A2161 /* Record.swift in Sources */,
 				9EDA9AFF29D4419B00B4F169 /* SearchSheetTextFieldView.swift in Sources */,
@@ -896,6 +908,7 @@
 				9ED116BD29ED01610072BA41 /* AddCompleteBookTopBarView.swift in Sources */,
 				9E0434A029E164CA009A2161 /* BookShelfScrollView.swift in Sources */,
 				9EC71F962A17512A0056C11C /* RoundedRect.swift in Sources */,
+				9E217A9B2AD14E0B00EC3266 /* AnalysisHighlightSectionView.swift in Sources */,
 				9ED116BF29ED034D0072BA41 /* AddCompleteBookCenterView.swift in Sources */,
 				9EC71F8B2A15D50F0056C11C /* ActivityScrollView.swift in Sources */,
 				9E154A2E2A56B68A00B09A3A /* SearchBookViewData.swift in Sources */,
@@ -914,6 +927,7 @@
 				9EE01FF12A020FAA00584F39 /* CompleteBookOutlineView.swift in Sources */,
 				9ED116C129ED04330072BA41 /* AddCompleteBookButtonGroupView.swift in Sources */,
 				9EC71F942A174A410056C11C /* BottomButtonStyle.swift in Sources */,
+				9E217A9A2AD14E0900EC3266 /* AnalysisChartsSectionView.swift in Sources */,
 				9EF659D92A39A269003CF6A5 /* TrackScrollYOffset.swift in Sources */,
 				9EFC059B2A56633F004FCC1E /* BookListViewData.swift in Sources */,
 				9EA1983E2A01F18300D385CD /* CompleteBookView.swift in Sources */,
@@ -922,6 +936,7 @@
 				9E99485E2A52B6CA00EA3490 /* TrackableVerticalScrollView.swift in Sources */,
 				9E7A794929DA8D7500A51856 /* SearchBookSubInfoView.swift in Sources */,
 				9EA1983D2A01F18300D385CD /* CompleteBookMainInfoView.swift in Sources */,
+				9E217AA02AD14E3C00EC3266 /* AnalysisViewData.swift in Sources */,
 				9E187E072A06853100930388 /* DateExtension.swift in Sources */,
 				9E54AA0629D706F500FE080C /* BookListScrollView.swift in Sources */,
 				9E4C91FA2A7FDF9A003B7169 /* HomeActivitySectionView.swift in Sources */,
@@ -932,13 +947,17 @@
 				9E0434B429E39920009A2161 /* BookShelfListScrollView.swift in Sources */,
 				9ECA326B29D12044004D6D5B /* CustomMainTab.swift in Sources */,
 				9E459B0D2A19DA9900DB248F /* RightBottomButtonStyle.swift in Sources */,
+				9E217A9F2AD14E2E00EC3266 /* ChartData.swift in Sources */,
 				9E0EF6F02A0DF4F600747847 /* ActivityCellButton.swift in Sources */,
+				9E217A982AD14E0500EC3266 /* AnalysisTopBarView.swift in Sources */,
+				9E217A9D2AD14E0E00EC3266 /* TotalPagesCountByCategoryChartView.swift in Sources */,
 				9E154A322A56CC1A00B09A3A /* BookShelfViewData.swift in Sources */,
 				9E7A794529DA6AFF00A51856 /* SearchBookCoverView.swift in Sources */,
 				9E1A36C92A3DF4D2001E5E11 /* BookShelfSummarySectionView.swift in Sources */,
 				9E06070E29DD516D000D542D /* RealmManager.swift in Sources */,
 				9EE01FEE2A01FAF800584F39 /* CompleteBookTabView.swift in Sources */,
 				9E595E462A2ADDB900F46F74 /* BookShelfSentenceScrollView.swift in Sources */,
+				9E217A992AD14E0700EC3266 /* AnalysisScrollView.swift in Sources */,
 				9E99485B2A52B5D800EA3490 /* HomeViewData.swift in Sources */,
 				9E124E952A7C890D0026DE9B /* DeviceScreenSize.swift in Sources */,
 				9E154A302A56B9E700B09A3A /* AddCompleteBookViewData.swift in Sources */,
@@ -950,10 +969,13 @@
 				9EDC2FB729E92E90004E792A /* DatePickerView.swift in Sources */,
 				9E5283862A223D3200687385 /* ColorExtension.swift in Sources */,
 				9E9B35B72A414583009234ED /* ListType.swift in Sources */,
+				9E217A972AD14E0200EC3266 /* AnalysisView.swift in Sources */,
 				9E7A794329DA5B8F00A51856 /* SearchBookView.swift in Sources */,
+				9E217AA12AD14E4C00EC3266 /* ChartTimeRange.swift in Sources */,
 				9E54AA0829D7C9B500FE080C /* SearchBookButton.swift in Sources */,
 				9E9F351F2A74B7980071070B /* AppDeviceInfoProvider.swift in Sources */,
 				9E0EF6F62A0DF78000747847 /* ActivityView.swift in Sources */,
+				9E217A9C2AD14E0C00EC3266 /* DailyPagesReadChartView.swift in Sources */,
 				9E9B35B52A413945009234ED /* ListMode.swift in Sources */,
 				9EFC059D2A56780C004FCC1E /* ShearchSheetViewData.swift in Sources */,
 				9E06071429DF9847000D542D /* FavoriteBook.swift in Sources */,

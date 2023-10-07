@@ -27,8 +27,6 @@ struct CustomTabView: View {
     
     var body: some View {
         HStack {
-            // for iOS 17.0
-            #if false
             ForEach(CustomMainTab.allCases, id: \.self) { category in
                 Spacer()
                 TabButton(
@@ -37,18 +35,6 @@ struct CustomTabView: View {
                     namespace: namespace
                 )
                 Spacer()
-            }
-            #endif
-            ForEach(CustomMainTab.allCases, id: \.self) { type in
-                if type != .analysis {
-                    Spacer()
-                    TabButton(
-                        type,
-                        selectedTab: $selectedTab,
-                        namespace: namespace
-                    )
-                    Spacer()
-                }
             }
         }
         .background {

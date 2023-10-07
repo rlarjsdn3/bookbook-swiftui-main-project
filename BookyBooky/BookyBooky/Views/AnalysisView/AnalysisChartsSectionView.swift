@@ -5,13 +5,10 @@
 //  Created by 김건우 on 6/14/23.
 //
 
-// NOTICE: - 본 파일에 구현된 기능은 아직 미완성입니다.
-
 import SwiftUI
 import Charts
 import RealmSwift
 
-@available(iOS 17.0, *)
 struct AnalysisChartsSectionView: View {
     
     // MARK: - WRAPPER PROPERTIES
@@ -93,7 +90,6 @@ struct AnalysisChartsSectionView: View {
 
 // MARK: - EXTENSIONS
 
-@available(iOS 17.0, *)
 extension AnalysisChartsSectionView {
     var summaryHeaderText: some View {
         Text("요약")
@@ -268,7 +264,6 @@ extension AnalysisChartsSectionView {
 
 // MARK: - PREVIEW
 
-@available(iOS 17.0, *)
 struct AnalysisChartsSectionView_Previews: PreviewProvider {
     static var previews: some View {
         AnalysisChartsSectionView()
