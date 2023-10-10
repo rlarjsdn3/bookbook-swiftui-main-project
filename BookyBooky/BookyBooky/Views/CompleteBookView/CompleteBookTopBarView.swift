@@ -22,7 +22,7 @@ struct CompleteBookTopBarView: View {
     
     // MARK: - PROPERTIES
     
-    let completeBook: CompleteBook
+    @ObservedRealmObject var completeBook: CompleteBook
     
     // MARK: - INTIALIZER
     

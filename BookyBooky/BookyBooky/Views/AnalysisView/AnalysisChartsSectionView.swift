@@ -152,7 +152,7 @@ extension AnalysisChartsSectionView {
                         Spacer()
                     
                         Chart(totalDailyReadPagesChartData.filter({ data in
-                            data.date.compare(Date().addingTimeInterval(-7*86400)) == .orderedDescending
+                            data.date.compare(Date().addingTimeInterval(-5*86400)) == .orderedDescending
                         }), id: \.self) { element in
                             BarMark(
                                 x: .value("date", element.date, unit: .day),
@@ -178,11 +178,6 @@ extension AnalysisChartsSectionView {
         }
         .disabled(totalPagesByCategoryChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
-        .onAppear {
-            print(totalDailyReadPagesChartData.filter({ data in
-                data.date.compare(Date().addingTimeInterval(-7*86400)) == .orderedDescending
-            }))
-        }
     }
     
     var totalNumberOfBooksReadPerMonthChartCellButton: some View {
