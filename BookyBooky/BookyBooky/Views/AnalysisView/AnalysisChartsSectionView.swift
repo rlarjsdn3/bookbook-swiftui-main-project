@@ -164,9 +164,9 @@ extension AnalysisChartsSectionView {
                         .chartXAxis(.hidden)
                         .chartYAxis(.hidden)
                         .chartXScale(
-                            domain: Date().addingTimeInterval(-7*86400)...Date()
+                            domain: Date().addingTimeInterval(-5*86400)...Date()
                         )
-                        .frame(width: mainScreen.width * 0.35, height: 50)
+                        .frame(width: mainScreen.width * 0.3, height: 50)
                         .padding(.horizontal)
                         .padding(.vertical, 5)
                     }

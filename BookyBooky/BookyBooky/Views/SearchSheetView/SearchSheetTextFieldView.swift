@@ -58,13 +58,17 @@ struct SearchSheetTextFieldView: View {
         aladinAPIManager.requestBookSearchResult(query) { book in
             DispatchQueue.main.async {
                 if let book = book {
-                    searchSheetViewData.bookSearchResult = book.item
+                    DispatchQueue.main.async {
+                        searchSheetViewData.bookSearchResult = book.item
+                    }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         alertManager.isPresentingSearchLoadingToastAlert = false
                     }
                 } else {
-                    alertManager.isPresentingSearchLoadingToastAlert = false
-                    alertManager.isPresentingDetailBookErrorToastAlert = true
+                    DispatchQueue.main.async {
+                        alertManager.isPresentingSearchLoadingToastAlert = false
+                        alertManager.isPresentingDetailBookErrorToastAlert = true
+                    }
                 }
             }
         }
