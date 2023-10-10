@@ -55,42 +55,42 @@ struct HomeReadingBookSectionView: View {
         return filteredBooks
     }
     
-    var dynamicBottomPaddingValue: CGFloat {
-        let device = Device.current.realDevice
-        
-        switch getDeviceSceenSize(device) {
-        case .device4_7inch where bookTappedCount <= 2:
-            return 198.0 - defaultBottomPaddingValue
-        case .device4_7inch where bookTappedCount <= 4:
-            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
-        case .device5_4inch where bookTappedCount <= 2:
-            return 301.0 - defaultBottomPaddingValue
-        case .device5_4inch where bookTappedCount <= 4:
-            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
-        case .device5_5inch where bookTappedCount <= 2:
-            return 269.0 - defaultBottomPaddingValue
-        case .device5_5inch where bookTappedCount <= 4:
-            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
-        case .device5_8inch where bookTappedCount <= 2:
-            return 308.0 - defaultBottomPaddingValue
-        case .device5_8inch where bookTappedCount <= 4:
-            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
-        case .device6_1inch where bookTappedCount <= 2:
-            return 330.0 - defaultBottomPaddingValue
-        case .device6_1inch where bookTappedCount <= 4:
-            return 26.0 - defaultBottomPaddingValue
-        case .device6_5inch where bookTappedCount <= 2:
-            return 391.0 - defaultBottomPaddingValue
-        case .device6_5inch where bookTappedCount <= 4:
-            return 86.0 - defaultBottomPaddingValue
-        case .device6_7inch where bookTappedCount <= 2:
-            return 412.0 - defaultBottomPaddingValue
-        case .device6_7inch where bookTappedCount <= 4:
-            return 106.0 - defaultBottomPaddingValue
-        default:
-            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
-        }
-    }
+//    var dynamicBottomPaddingValue: CGFloat {
+//        let device = Device.current.realDevice
+//        
+//        switch getDeviceSceenSize(device) {
+//        case .device4_7inch where bookTappedCount <= 2:
+//            return 198.0 - defaultBottomPaddingValue
+//        case .device4_7inch where bookTappedCount <= 4:
+//            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
+//        case .device5_4inch where bookTappedCount <= 2:
+//            return 301.0 - defaultBottomPaddingValue
+//        case .device5_4inch where bookTappedCount <= 4:
+//            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
+//        case .device5_5inch where bookTappedCount <= 2:
+//            return 269.0 - defaultBottomPaddingValue
+//        case .device5_5inch where bookTappedCount <= 4:
+//            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
+//        case .device5_8inch where bookTappedCount <= 2:
+//            return 308.0 - defaultBottomPaddingValue
+//        case .device5_8inch where bookTappedCount <= 4:
+//            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
+//        case .device6_1inch where bookTappedCount <= 2:
+//            return 330.0 - defaultBottomPaddingValue
+//        case .device6_1inch where bookTappedCount <= 4:
+//            return 26.0 - defaultBottomPaddingValue
+//        case .device6_5inch where bookTappedCount <= 2:
+//            return 391.0 - defaultBottomPaddingValue
+//        case .device6_5inch where bookTappedCount <= 4:
+//            return 86.0 - defaultBottomPaddingValue
+//        case .device6_7inch where bookTappedCount <= 2:
+//            return 412.0 - defaultBottomPaddingValue
+//        case .device6_7inch where bookTappedCount <= 4:
+//            return 106.0 - defaultBottomPaddingValue
+//        default:
+//            return 30.0 - defaultBottomPaddingValue // 기본 패딩 값
+//        }
+//    }
     
     // MARK: - INTIALIZER
     
@@ -188,12 +188,6 @@ extension HomeReadingBookSectionView {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             tabTitle
             
-//            Section {
-//                booksContent
-//            } header: {
-//                categoryButtonGroup(scrollProxy: scrollProxy)
-//            }
-            
             if !bookCategories.isEmpty {
                 ForEach(bookCategories, id: \.self) { category in
                     Section {
@@ -203,10 +197,8 @@ extension HomeReadingBookSectionView {
                                     HomeReadingBookButton(book)
                                 }
                             }
-                            .padding(.horizontal)
-                            .padding(.top, 10)
+                            .padding()
                         }
-                        //                    booksContent
                     } header: {
                         HStack {
                             Text(category.name)
@@ -321,7 +313,7 @@ extension HomeReadingBookSectionView {
         }
         .padding([.leading, .top, .trailing])
         .padding(.bottom, defaultBottomPaddingValue)
-        .padding(.bottom, dynamicBottomPaddingValue)
+//        .padding(.bottom, dynamicBottomPaddingValue)
     }
     
     func categoryButtonGroup(scrollProxy proxy: ScrollViewProxy) -> some View {
