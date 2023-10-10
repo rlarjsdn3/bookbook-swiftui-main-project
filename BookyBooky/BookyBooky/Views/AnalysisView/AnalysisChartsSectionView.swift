@@ -138,10 +138,12 @@ extension AnalysisChartsSectionView {
                     unableToDisplayChartLabel
                 } else {
                     HStack(alignment: .bottom) {
-                        Text("\(totalDailyReadPagesChartData[0].pages)")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.orange)
+                        if let last = totalDailyReadPagesChartData.last {
+                            Text("\(last.date.isEqual([.year, .month, .day], with: Date()) ? last.pages : 0)")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color.orange)
+                        }
                         Text("페이지 읽음")
                             .font(.title2)
                             .fontWeight(.semibold)
@@ -165,7 +167,8 @@ extension AnalysisChartsSectionView {
                             domain: Date().addingTimeInterval(-7*86400)...Date()
                         )
                         .frame(width: mainScreen.width * 0.35, height: 50)
-                        .padding(5)
+                        .padding(.horizontal)
+                        .padding(.vertical, 5)
                     }
                 }
             }
@@ -175,7 +178,6 @@ extension AnalysisChartsSectionView {
         }
         .disabled(totalPagesByCategoryChartData.isEmpty ? true : false)
         .buttonStyle(.plain)
-        
         .onAppear {
             print(totalDailyReadPagesChartData.filter({ data in
                 data.date.compare(Date().addingTimeInterval(-7*86400)) == .orderedDescending
