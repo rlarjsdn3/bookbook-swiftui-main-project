@@ -15,6 +15,8 @@ struct SearchSheetScrollView: View {
     @EnvironmentObject var alertManager: AlertManager
     @EnvironmentObject var searchSheetViewData: SearchSheetViewData
     
+    let hapticManager = HapticManager()
+    
     @State private var isPresentingSearchInfoView = false
     
     // MARK: - PROPERTIES
@@ -117,15 +119,20 @@ extension SearchSheetScrollView {
                 page: searchSheetViewData.searchIndex
             ) { book in
                 if let book = book {
-                    searchSheetViewData.bookSearchResult.append(contentsOf: book.item)
+                    DispatchQueue.main.async {
+                        searchSheetViewData.bookSearchResult.append(contentsOf: book.item)
+                    }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         alertManager.isPresentingSearchLoadingToastAlert = false
                     }
                 } else {
-                    alertManager.isPresentingSearchLoadingToastAlert = false
-                    alertManager.isPresentingDetailBookErrorToastAlert = true
+                    DispatchQueue.main.async {
+                        alertManager.isPresentingSearchLoadingToastAlert = false
+                        alertManager.isPresentingDetailBookErrorToastAlert = true
+                    }
                 }
             }
+            hapticManager.impact(.light)
         } label: {
             Text("더 보기")
                 .font(.title3)
