@@ -167,7 +167,7 @@ extension AnalysisChartsSectionView {
                             domain: Date().addingTimeInterval(-5*86400)...Date()
                         )
                         .frame(width: mainScreen.width * 0.3, height: 50)
-                        .padding(.horizontal)
+                        .padding(.horizontal, 8)
                         .padding(.vertical, 5)
                     }
                 }
