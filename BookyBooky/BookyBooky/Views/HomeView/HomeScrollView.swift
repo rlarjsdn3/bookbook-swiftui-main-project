@@ -54,6 +54,7 @@ extension HomeScrollView {
                     .padding(.bottom, 20)
                 
                 HomeActivitySectionView()
+                    .padding(.bottom, 10)
                 
                 HomeReadingBookSectionView()
             }
