@@ -77,7 +77,7 @@ extension CompleteBookConfettiView {
             
             congratuationLabel
             
-            asyncCoverImage(
+            kingFisherCoverImage(
                 completeBook.cover
             )
             

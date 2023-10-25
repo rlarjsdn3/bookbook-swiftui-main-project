@@ -46,7 +46,7 @@ struct ShelfFavoriteBookButton: View {
 extension ShelfFavoriteBookButton {
     var favoriteBookButton: some View {
         VStack {
-            asyncCoverImage(favoriteBook.cover)
+            kingFisherCoverImage(favoriteBook.cover)
                 .onAppear {
                     isLoadingCoverImage = false
                 }

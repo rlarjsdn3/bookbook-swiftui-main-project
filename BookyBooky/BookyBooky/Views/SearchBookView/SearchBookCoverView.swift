@@ -39,7 +39,7 @@ extension SearchBookCoverView {
         ZStack {
             backgroundColor
             
-            asyncCoverImage(
+            kingFisherCoverImage(
                 book.cover,
                 width: safeAreaInsets.bottom == 0 ? 140 : 170,
                 height: mainScreen.height * 0.27

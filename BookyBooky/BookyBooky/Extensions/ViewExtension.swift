@@ -9,6 +9,7 @@ import UIKit
 import SwiftUI
 import Combine
 import Shimmer
+import Kingfisher
 
 extension View {
     // 실행 중인 기기의 가로 및 세로 길이 정보를 반환합니다.
@@ -56,38 +57,22 @@ extension View {
     ///   - height: 이미지 높이 (기본값: 200)
     ///   - coverShape: 이미지 모양 (기본값: 둥근 직사각형 )
     /// - Returns: 뷰(View) 프로토콜을 준수하는 타입
-    func asyncCoverImage(_ url: String,
+    func kingFisherCoverImage(_ url: String,
                          width: CGFloat = 150, height: CGFloat = 200,
                          coverShape: some Shape = RoundedRect(byRoundingCorners: [.allCorners])) -> some View {
-        AsyncImage(url: URL(string: url),
-                   transaction: Transaction(animation: .default)
-        ) { phase in
-            switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFill()
+        KFImage(URL(string: url))
+            .placeholder { _ in
+                Color.gray.opacity(0.2)
                     .frame(width: width, height: height)
                     .clipShape(coverShape)
-                    .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
-            case .failure(_), .empty:
-                loadingImage(width: width, height: height, coverShape: coverShape)
-            @unknown default:
-                loadingImage(width: width, height: height, coverShape: coverShape)
+                    .shimmering()
             }
-        }
-    }
-    
-    /// 회색 로딩 이미지를 반환합니다.
-    /// - Parameters:
-    ///   - width: 이미지 너비
-    ///   - height: 이미지 높이
-    ///   - coverShape: 이미지 모양
-    /// - Returns: 색상(Color)
-    private func loadingImage(width: CGFloat, height: CGFloat, coverShape: some Shape) -> some View {
-        Color.gray.opacity(0.2)
+            .fade(duration: 0.25)
+            .retry(maxCount: 3, interval: .seconds(3))
+            .resizable()
+            .scaledToFill()
             .frame(width: width, height: height)
             .clipShape(coverShape)
-            .shimmering()
+            .shadow(color: .black.opacity(0.2), radius: 8, x: -5, y: 5)
     }
 }
