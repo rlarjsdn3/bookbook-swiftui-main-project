@@ -43,7 +43,7 @@ extension HomeReadingBookButton {
     
     var readingBookLabel: some View {
         VStack {
-            asyncCoverImage(readingBook.cover)
+            kingFisherCoverImage(readingBook.cover)
                 .overlay {
                     if readingBook.isBehindTargetDate && !readingBook.isComplete {
                         exclamationMarkSFSymbolImage

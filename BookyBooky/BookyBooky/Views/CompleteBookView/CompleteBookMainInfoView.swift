@@ -58,7 +58,7 @@ extension CompleteBookMainInfoView {
     var infoLabel: some View {
         HStack {
             ZStack {
-                asyncCoverImage(
+                kingFisherCoverImage(
                     completeBook.cover,
                     width: 130, height: 180,
                     coverShape: RoundedRect(byRoundingCorners: [.topRight, .bottomRight])

@@ -61,7 +61,7 @@ struct BookListButton: View {
 extension BookListButton {
     var searchCellButton: some View {
         VStack {
-            asyncCoverImage(
+            kingFisherCoverImage(
                 book.cover,
                 coverShape: RoundedRect(byRoundingCorners: [.allCorners])
             )

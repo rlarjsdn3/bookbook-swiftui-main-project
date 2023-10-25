@@ -78,7 +78,7 @@ extension SearchBookButton {
     
     var bookCoverImage: some View {
         HStack {
-            asyncCoverImage(
+            kingFisherCoverImage(
                 book.cover,
                 width: mainScreen.width * 0.32, height: 190,
                 coverShape: RoundedRect(byRoundingCorners: [.topRight, .bottomRight])
@@ -228,7 +228,7 @@ extension SearchBookButton {
 extension SearchBookButton {
     var gridBookButton: some View {
         VStack {
-            asyncCoverImage(book.cover)
+            kingFisherCoverImage(book.cover)
             
             bookTitleText
             
