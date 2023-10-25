@@ -8,7 +8,7 @@
 import SwiftUI
 import MessageUI
 import StoreKit
-import DeviceKit
+import Kingfisher
 
 struct ProfileView: View {
     
@@ -16,6 +16,8 @@ struct ProfileView: View {
     
     @State private var isPresentMailComposeView: Bool = false
     @State private var isPresentAlertSendMailErrorAlert: Bool = false
+    
+    @State private var diskCacheSize: String = "0.0"
     
     // MARK: - PROPERTIES
     
@@ -37,11 +39,10 @@ struct ProfileView: View {
             List {
                 inquirySection
                 
+                cacheSection
+                
                 reviewSection
                 
-                #if false
-                assistSection
-                #endif
                 
                 Section {
                     HStack {
@@ -71,6 +72,20 @@ struct ProfileView: View {
 
             }
             .navigationTitle("설정")
+        }
+        .onAppear {
+            let imageCache = ImageCache.default
+            imageCache.calculateDiskStorageSize { result in
+                switch result {
+                case .success(let size):
+                    let size = Float(size) / 1024.0 / 1024.0
+                    let formatter = NumberFormatter()
+                    formatter.minimumFractionDigits = 1
+                    diskCacheSize = formatter.string(from: size as NSNumber) ?? "0.0"
+                case .failure:
+                    print("캐시 사이즈 계산 실패")
+                }
+            }
         }
         .sheet(isPresented: $isPresentMailComposeView) {
             MailComposeView(
@@ -147,21 +162,24 @@ extension ProfileView {
         }
     }
     
-    var assistSection: some View {
+    var cacheSection: some View {
         Section {
-           assistDeveloperButton
+            HStack {
+                rowLabel("externaldrive.fill", title: "캐시", color: Color.gray)
+                Spacer()
+                Text("\(diskCacheSize)MB")
+                    .foregroundStyle(Color.secondary)
+            }
+            Button("캐시 비우기") {
+                let imageCache = ImageCache.default
+                imageCache.clearDiskCache {
+                    self.diskCacheSize = "0"
+                }
+            }
         } header: {
-            Text("후원")
+            Text("캐시")
         } footer: {
-            Text("여러분의 후원이 개발자를 행복하게 합니다♥︎")
-        }
-    }
-    
-    var assistDeveloperButton: some View {
-        NavigationLink {
-            Text("heart.fill")
-        } label: {
-            rowLabel("heart.fill", title: "개발자에게 커피 사주기", color: Color.pink)
+            Text("자주 보는 도서 표지 이미지를 빠르게 불러오기 위해 데이터를 캐시에 저장합니다. 이 작업은 자동으로 수행되며, 임의로 켜거나 끌 수 없습니다.")
         }
     }
 }

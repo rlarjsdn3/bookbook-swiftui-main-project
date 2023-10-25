@@ -24,7 +24,7 @@ struct MailComposeView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: UIViewControllerRepresentableContext<MailComposeView>) { }
     
     func makeCoordinator() -> CoordinatorMailComposeView {
-        return Coordinator()
+        return CoordinatorMailComposeView()
     }
 }
 
