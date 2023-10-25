@@ -23,6 +23,7 @@
 * [Confetti-SwiftUI](https://github.com/simibac/ConfettiSwiftUI)
 * [DeviceKit](https://github.com/devicekit/DeviceKit)
 * [Lottie-iOS](https://github.com/airbnb/lottie-ios)
+* [Kingfisher](https://github.com/onevcat/Kingfisher)
 * [RealmDatabase](https://github.com/realm/realm-swift)
 * [SwiftUI-Shimmer](https://github.com/markiv/SwiftUI-Shimmer)
 
