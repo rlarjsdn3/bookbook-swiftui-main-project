@@ -2,7 +2,7 @@
 
 # 부크부크
 ## 🍎Overview
-`프로젝트` 부크부크 <br>
+`프로젝트` 부크부크 (v1.1.2) <br>
 `기술스택` <img src="https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=Swift&logoColor=white"/> <img src="https://img.shields.io/badge/Xcode-147EFB?style=flat-square&logo=Xcode&logoColor=white"/> <br>
 `게시일자` 2023년 3월 15일(수) <br>
 
